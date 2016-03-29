@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/top"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/top_bar_height"
+        layout="@layout/top_layout" />
+
+    <com.me.resume.views.CommScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/llout01"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dip"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:minHeight="55dip"
+                android:orientation="horizontal"
+                android:paddingLeft="20dip" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:layout_weight="2"
+                    android:text="是否每次启动简历预览界面" />
+                
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_weight="2"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioyes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="是" >
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/radiono"
+                        android:layout_marginLeft="20dip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="否" >
+                    </RadioButton>
+                </RadioGroup>
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.me.resume.views.CommScrollView>
+
+</RelativeLayout>

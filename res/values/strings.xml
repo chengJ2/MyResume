@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">个人简历</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">设置</string>
+
+    <string name="crash">App发生异常,请重启</string>
+    
+    <string name="resume_center">简历中心</string>
+    <string name="make_resume">定制简历</string>
+    
+    <string name="resume_baseinfo">基本资料</string>
+    <string name="resume_workexperience">工作经历</string>
+    <string name="resume_jobintension">求职意向</string>
+    <string name="resume_evaluation">自我评价</string>
+    <string name="resume_education">教育背景/培训经历</string>
+    <string name="resume_otherinfo">其他信息</string>
+</resources>
