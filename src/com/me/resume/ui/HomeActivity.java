@@ -55,21 +55,20 @@ public class HomeActivity extends BaseActivity implements OnClickListener{
 		if(getPreferenceData("firstInstall",1) == 1){
 			ActivityUtils.startActivity(HomeActivity.this, MyApplication.PACKAGENAME 
 					+ ".MainActivity",true);
+		}else{
+			topText = findView(R.id.top_text);
+			rightIcon = findView(R.id.right_icon);	
+			
+			makeResume = findView(R.id.go);
+			setData();
+	        setGridView();
 		}
-		
-		topText = findView(R.id.top_text);
-		rightIcon = findView(R.id.right_icon);	
-		
-		makeResume = findView(R.id.go);
-		setData();
-        setGridView();
 	}
 	
 	/**设置数据*/
     private void setData() {
     	topText.setText(CommUtil.getStrValue(HomeActivity.this, R.string.resume_center));
     	
-    	rightIcon.setOnClickListener(this);
     	rightIcon.setOnClickListener(this);
     	makeResume.setOnClickListener(this);
     	

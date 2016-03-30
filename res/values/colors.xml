@@ -3,6 +3,7 @@
     <color name="top_bar">#00CC00</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="red">#CC0000</color>
     
     <color name="button_cancle_select">#70BFBFBF</color>
     <color name="line">#DFDFDF</color>

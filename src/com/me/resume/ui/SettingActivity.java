@@ -1,8 +1,12 @@
-package com.me.resume;
+package com.me.resume.ui;
 
 import android.os.Bundle;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import com.me.resume.BaseActivity;
+import com.me.resume.R;
+import com.me.resume.utils.L;
 
 /**
  * 
@@ -14,7 +18,7 @@ import android.widget.RadioGroup;
  */
 public class SettingActivity extends BaseActivity {
 
-	private RadioGroup radioButton;
+	private RadioGroup radioGroup;
 	private RadioButton mRadio1, mRadio2;
 	
 	@Override
@@ -22,21 +26,20 @@ public class SettingActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting);
-		radioButton = findView(R.id.radioGroup);
+		radioGroup = findView(R.id.radioGroup);
 		mRadio1 = findView(R.id.radioyes);
 		mRadio2 = findView(R.id.radiono);
 		
 		mRadio1.setChecked(true);
 		mRadio2.setChecked(false);
-		radioButton.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				// TODO Auto-generated method stub
 				if (checkedId == mRadio1.getId()) {
-					setPreferenceData("firstInstall","1");
+					setPreferenceData("firstInstall",1);
 				}else{
-					setPreferenceData("firstInstall","0");
+					setPreferenceData("firstInstall",0);
 				}
 			}
 		});

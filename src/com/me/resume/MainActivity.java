@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.me.resume.utils.ActivityUtils;
+import com.me.resume.utils.CommUtil;
 import com.me.resume.views.JazzyViewPager;
 import com.me.resume.views.JazzyViewPager.TransitionEffect;
 
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * 
@@ -40,7 +42,7 @@ public class MainActivity extends BaseActivity {
 	
 	private static final int MSG_CHANGE_PHOTO = 1;
 	/** view自动切换时间 */
-	private static final int VIEW_CHANGE_TIME = 5000;
+	private static final int VIEW_CHANGE_TIME = 10000;
 	
 	private boolean showEffect = true;
 	
@@ -98,7 +100,8 @@ public class MainActivity extends BaseActivity {
         mViewList.add(view4);
         mViewList.add(view5);
         
-        
+        ((TextView)view1.findViewById(R.id.name)).setText(CommUtil.getStrValue(_context, R.string.info_name) 
+        		+ " :"+ getPreferenceData("info_realname",""));
         
         ((Button)view5.findViewById(R.id.go)).setOnClickListener(new OnClickListener() {
 			

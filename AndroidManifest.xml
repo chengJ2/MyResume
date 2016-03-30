@@ -35,6 +35,14 @@
             android:name="com.me.resume.ui.WorkExperienceActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="com.me.resume.ui.EvaluationActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.me.resume.ui.SettingActivity"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

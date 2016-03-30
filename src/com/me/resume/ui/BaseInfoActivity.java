@@ -3,6 +3,7 @@ package com.me.resume.ui;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
@@ -26,6 +27,8 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	
 	private TextView toptext;
 	
+	private EditText info_realname;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -39,6 +42,8 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		saveInfo = findView(R.id.save);
 		saveInfoAndGo = findView(R.id.saveandgo);
 		
+		info_realname = findView(R.id.info_realname);
+		
 		saveInfo.setOnClickListener(this);
 		saveInfoAndGo.setOnClickListener(this);
 	}
@@ -47,7 +52,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.save:
-			
+			setPreferenceData("info_realname",info_realname.getText().toString().trim());
 			break;
 		case R.id.saveandgo:
 			ActivityUtils.startActivity(BaseInfoActivity.this, MyApplication.PACKAGENAME+".ui.WorkExperienceActivity");

@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true" >
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
 
     <include
         android:id="@+id/top"
@@ -15,11 +15,11 @@
     <com.me.resume.views.CommScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/top"
         android:fadingEdge="none"
         android:fadingEdgeLength="0dp"
         android:overScrollMode="never"
-        android:scrollbars="none" 
-        android:layout_below="@id/top">
+        android:scrollbars="none" >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -31,46 +31,64 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dip"
-                android:paddingLeft="20dip"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:minHeight="55dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingLeft="20dip" >
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="姓名" />
+                    android:text="@string/info_name" />
 
                 <EditText
-                    android:id="@+id/info_nickname"
+                    android:id="@+id/info_realname"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入昵称" />
-                 <ImageView
+                    android:hint="@string/info_name_hint" />
+
+                <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
             </LinearLayout>
 
             <View style="@style/line3" />
-            
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:minHeight="55dip"
+                android:orientation="horizontal"
                 android:paddingLeft="20dip"
-                android:orientation="horizontal" >
+                android:visibility="visible" >
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="性别"/>
+                    android:text="@string/info_sex"/>
 
-                <EditText
-                    android:id="@+id/info_nickname"
-                    style="@style/user_info_item_ed"
-                    android:hint="请输入昵称" />
-                  <ImageView
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radionan"
+                        android:checked="true"
+                        android:text="@string/info_sex_1"
+                        style="@style/user_info_item_radio">
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/radionv"
+                        android:layout_marginLeft="20dip"
+                        style="@style/user_info_item_radio"
+                        android:text="@string/info_sex_2" >
+                    </RadioButton>
+                </RadioGroup>
+                <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
             </LinearLayout>
@@ -84,22 +102,24 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:minHeight="55dip"
-                 android:paddingLeft="20dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingLeft="20dip"
+                android:visibility="visible" >
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="性  别" />
+                    android:text="@string/info_brithday" />
 
                 <TextView
-                    android:id="@+id/pi_sex"
-                    android:hint="请选择"
-                    style="@style/user_info_item_ed" />
+                    android:id="@+id/pi_brithday"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/info_choose" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="visible" />
             </LinearLayout>
+
             <View style="@style/line3" />
 
             <LinearLayout
@@ -109,152 +129,356 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:minHeight="55dip"
-                 android:paddingLeft="20dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingLeft="20dip"
+                android:visibility="visible" >
 
                 <TextView
-                   style="@style/user_info_item_tv"
-                    android:text="出生日期" />
+                    style="@style/user_info_item_tv"
+                    android:text="@string/info_workyear" />
 
                 <TextView
-                    android:id="@+id/pi_age"
-                   style="@style/user_info_item_ed"
-                    android:hint="请选择" />
+                    android:id="@+id/pi_workyear"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/info_choose" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="visible" />
             </LinearLayout>
-			<View style="@style/line3" />
+
+            <View style="@style/line3" />
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:minHeight="55dip"
+                android:orientation="horizontal"
                 android:paddingLeft="20dip"
-                android:orientation="horizontal" >
+                android:visibility="visible" >
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="联系方式" />
+                    android:text="@string/info_contack" />
 
                 <EditText
                     android:id="@+id/info_phone"
-                     style="@style/user_info_item_ed"
-                    android:hint="请输入手机号"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/info_input_contack"
                     android:inputType="phone" />
-                 <ImageView
+
+                <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
             </LinearLayout>
 
             <View style="@style/line3" />
-            
+
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:minHeight="55dip"
-                 android:paddingLeft="20dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingLeft="20dip"
+                android:visibility="visible" >
 
                 <TextView
-                   style="@style/user_info_item_tv"
-                    android:text="户口所在地" />
+                    style="@style/user_info_item_tv"
+                    android:text="@string/info_hometown" />
 
                 <EditText
-                    android:id="@+id/info_area"
+                    android:id="@+id/info_area_hometown"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入所在地" />
-                 <ImageView
+                    android:hint="@string/info_input_hometown" />
+
+                <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
             </LinearLayout>
+
             <View style="@style/line3" />
-             <LinearLayout
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:minHeight="55dip"
-                 android:paddingLeft="20dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingLeft="20dip"
+                android:visibility="visible" >
 
                 <TextView
-                   style="@style/user_info_item_tv"
-                    android:text="现居住城市" />
+                    style="@style/user_info_item_tv"
+                    android:text="@string/info_city" />
 
                 <EditText
-                    android:id="@+id/info_area"
+                    android:id="@+id/info_areacity"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入居住城市" />
-                 <ImageView
+                    android:hint="@string/info_inout_city" />
+
+                <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
             </LinearLayout>
-            
-			 <View style="@style/line3" />
-			   <LinearLayout
+
+            <View style="@style/line3" />
+
+            <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:minHeight="55dip"
-                 android:paddingLeft="20dip"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingLeft="20dip"
+                android:visibility="visible" >
 
                 <TextView
-                   style="@style/user_info_item_tv"
-                    android:text="邮政编码" />
+                    style="@style/user_info_item_tv"
+                    android:text="@string/info_email" />
 
                 <EditText
                     android:id="@+id/info_areapost"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入邮政编码" />
-                 <ImageView
+                    android:hint="@string/info_input_email" />
+
+                <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
             </LinearLayout>
-            
+
+            <View style="@style/line3" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:minHeight="55dip"
+                android:orientation="horizontal"
+                android:paddingLeft="20dip"
+                android:visibility="visible" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/info_maritalstatus" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup_hy"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:layout_weight="6" >
+
+                    <RadioButton
+                        android:id="@+id/radio_wh"
+                        android:checked="true"
+                        android:text="@string/info_maritalstatus_1"
+                        style="@style/user_info_item_radio" />
+
+                    <RadioButton
+                        android:id="@+id/radio_yh"
+                        style="@style/user_info_item_radio"
+                        android:text="@string/info_maritalstatus_2" />
+
+                    <RadioButton
+                        android:id="@+id/radionv_ly"
+                        style="@style/user_info_item_radio"
+                        android:text="@string/info_maritalstatus_3" />
+                </RadioGroup>
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <View style="@style/line3" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:minHeight="55dip"
+                android:orientation="horizontal"
+                android:paddingLeft="20dip"
+                android:visibility="visible" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/info_nationality" />
+
+                <EditText
+                    android:id="@+id/info_areanationality"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/info_input_nationality" />
+
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <View style="@style/line3" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:minHeight="55dip"
+                android:orientation="horizontal"
+                android:paddingLeft="20dip"
+                android:visibility="visible" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/info_license" />
+
+                <EditText
+                    android:id="@+id/info_license"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/info_input_license" />
+
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <View style="@style/line3" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:minHeight="55dip"
+                android:orientation="horizontal"
+                android:paddingLeft="20dip" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/info_workingabroad" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup_hwjl"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:orientation="horizontal" >
+
+                    <RadioButton
+                        android:id="@+id/radio_yes"
+                        style="@style/user_info_item_radio"
+                        android:checked="true"
+                        android:text="@string/info_workingabroad_1" />
+
+                    <RadioButton
+                        android:id="@+id/radio_no"
+                        style="@style/user_info_item_radio"
+                        android:layout_marginLeft="20dip"
+                        android:text="@string/info_workingabroad_2" />
+                </RadioGroup>
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <View style="@style/line3" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="20dip" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/info_politicalstatus" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup_zzmm"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:layout_weight="6" >
+
+                    <RadioButton
+                        android:id="@+id/radio_zgdy"
+                        style="@style/user_info_item_radio"
+                        android:checked="true"
+                        android:text="@string/info_politicalstatus_1" />
+
+                    <RadioButton
+                        android:id="@+id/radio_ty"
+                        style="@style/user_info_item_radio"
+                        android:text="@string/info_politicalstatus_2" />
+
+                    <RadioButton
+                        android:id="@+id/radio_qz"
+                        android:gravity="left|center"
+                        style="@style/user_info_item_radio"
+                        android:text="@string/info_politicalstatus_3" />
+
+                    <RadioButton
+                        android:id="@+id/radio_mzdp"
+                        android:gravity="left|center"
+                        style="@style/user_info_item_radio"
+                        android:text="@string/info_politicalstatus_4" />
+
+                    <RadioButton
+                        android:id="@+id/radio_wdprs"
+                        android:gravity="left|center"
+                        style="@style/user_info_item_radio"
+                        android:text="@string/info_politicalstatus_5" />
+                </RadioGroup>
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
+            </LinearLayout>
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
 
-     <com.me.resume.views.CustomFAB
+    <com.me.resume.views.CustomFAB
         android:id="@+id/save"
-       android:layout_width="50dp"
-       android:layout_height="50dp"
-       android:layout_alignParentBottom="true"
-       android:layout_alignParentLeft="true"
-       android:layout_marginLeft="16dp"
-       android:layout_marginBottom="16dp"
-       android:tint="@android:color/white"/>
-     
-      <TextView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:tint="@android:color/white" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="保存" 
         android:layout_alignParentBottom="true"
-       android:layout_alignParentLeft="true"
-       android:layout_marginLeft="16dp"
-       android:layout_marginBottom="16dp"/>
-     
-     <com.me.resume.views.CustomFAB
-       android:id="@+id/saveandgo"
-       android:layout_width="50dp"
-       android:layout_height="50dp"
-       android:layout_alignParentRight="true"
-       android:layout_marginRight="16dp"
-       android:layout_marginBottom="16dp"
-       android:tint="@android:color/white"/>
-     
-     <TextView
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:text="保存" />
+
+    <com.me.resume.views.CustomFAB
+        android:id="@+id/saveandgo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:tint="@android:color/white" />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="保存并继续" 
         android:layout_alignParentBottom="true"
-       android:layout_alignParentLeft="true"
-       android:layout_marginLeft="16dp"
-       android:layout_marginBottom="16dp"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:text="保存并继续" />
+
 </RelativeLayout>

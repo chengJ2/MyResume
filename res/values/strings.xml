@@ -16,4 +16,41 @@
     <string name="resume_evaluation">自我评价</string>
     <string name="resume_education">教育背景/培训经历</string>
     <string name="resume_otherinfo">其他信息</string>
+    
+    <!-- 基本资料 -->
+    <string name="info_name">姓&#160;&#160;名</string>
+    <string name="info_name_hint">请输入姓名</string>
+    <string name="info_sex">称&#160;&#160;呼</string>
+    <string name="info_sex_1">先生</string>
+    <string name="info_sex_2">女士</string>
+    <string name="info_choose">请选择</string>
+    <string name="info_brithday">出生日期</string>
+    <string name="info_workyear">参加工作年份</string>
+    <string name="info_contack">联系方式</string>
+    <string name="info_input_contack">请输入手机号</string>
+    <string name="info_hometown">户口所在地</string>
+    <string name="info_input_hometown">请输入所在地</string>
+    <string name="info_city">现居住城市</string>
+    <string name="info_inout_city">请输入居住城市</string>
+    <string name="info_email">电子邮箱</string>
+    <string name="info_input_email">请输入邮箱</string>
+    <string name="info_maritalstatus">婚姻状况</string>
+    <string name="info_maritalstatus_1">未婚</string>
+    <string name="info_maritalstatus_2">已婚</string>
+    <string name="info_maritalstatus_3">离异</string>
+    <string name="info_nationality">国籍</string>
+    <string name="info_input_nationality">请输入国籍</string>
+    <string name="info_license">证件</string>
+    <string name="info_input_license">请输入身份证/护照</string>
+    <string name="info_workingabroad">海外工作/学习经历</string>
+    <string name="info_workingabroad_1">有</string>
+    <string name="info_workingabroad_2">无</string>
+    <string name="info_politicalstatus">政治面貌</string>
+    <string name="info_politicalstatus_1">中共党员</string>
+    <string name="info_politicalstatus_2">团员</string>
+    <string name="info_politicalstatus_3">群众</string>
+    <string name="info_politicalstatus_4">民主党派</string>
+    <string name="info_politicalstatus_5">无党派人士</string>
+    <!-- 基本资料 -->
+    
 </resources>
