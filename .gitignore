@@ -3,4 +3,4 @@
 /assets/
 /.settings/org.eclipse.jdt.core.prefs
 /project.properties
-/.gitignore
+.gitignore

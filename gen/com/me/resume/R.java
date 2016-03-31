@@ -83,13 +83,14 @@ containing a value of this type.
     }
     public static final class color {
         public static final int black=0x7f060001;
-        public static final int button_cancle_select=0x7f060003;
-        public static final int line=0x7f060004;
+        public static final int button_cancle_select=0x7f060004;
+        public static final int line=0x7f060005;
+        public static final int red=0x7f060003;
         public static final int top_bar=0x7f060000;
         /**  个人基本信息 
          */
-        public static final int user_edit_text=0x7f060005;
-        public static final int user_info_edit_hint=0x7f060006;
+        public static final int user_edit_text=0x7f060006;
+        public static final int user_info_edit_hint=0x7f060007;
         public static final int white=0x7f060002;
     }
     public static final class dimen {
@@ -127,69 +128,130 @@ containing a value of this type.
         public static final int button_select_nor=0x7f020002;
         public static final int button_select_on=0x7f020003;
         public static final int ic_launcher=0x7f020004;
+        public static final int index_1_base=0x7f020005;
     }
     public static final class id {
-        public static final int ItemImage=0x7f0a0021;
+        public static final int ItemImage=0x7f0a0038;
         public static final int accordion=0x7f0a0000;
-        public static final int addShopcart=0x7f0a001f;
+        public static final int addShopcart=0x7f0a002c;
         public static final int cubein=0x7f0a0001;
         public static final int cubeout=0x7f0a0002;
         public static final int fliphorizontal=0x7f0a0003;
         public static final int flipvertical=0x7f0a0004;
-        public static final int go=0x7f0a001a;
-        public static final int goback=0x7f0a0025;
-        public static final int grid=0x7f0a0019;
-        public static final int index_product_container=0x7f0a001b;
-        public static final int info_area=0x7f0a0014;
-        public static final int info_areapost=0x7f0a0015;
-        public static final int info_nickname=0x7f0a000e;
-        public static final int info_phone=0x7f0a0013;
-        public static final int itemlayout=0x7f0a0020;
+        public static final int go=0x7f0a002f;
+        public static final int goback=0x7f0a003d;
+        public static final int grid=0x7f0a002e;
+        public static final int index_product_container=0x7f0a0030;
+        public static final int info_area=0x7f0a002b;
+        public static final int info_area_hometown=0x7f0a0017;
+        public static final int info_areacity=0x7f0a0018;
+        public static final int info_areanationality=0x7f0a001e;
+        public static final int info_areapost=0x7f0a0019;
+        public static final int info_license=0x7f0a001f;
+        public static final int info_nickname=0x7f0a0033;
+        public static final int info_phone=0x7f0a0016;
+        public static final int info_realname=0x7f0a000e;
+        public static final int itemlayout=0x7f0a0037;
         public static final int llout01=0x7f0a000d;
-        public static final int llout02=0x7f0a000f;
-        public static final int llout03=0x7f0a0011;
-        public static final int pi_age=0x7f0a0012;
-        public static final int pi_sex=0x7f0a0010;
-        public static final int radioGroup=0x7f0a001c;
-        public static final int radiono=0x7f0a001e;
-        public static final int radioyes=0x7f0a001d;
-        public static final int right_icon=0x7f0a0026;
+        public static final int llout02=0x7f0a0012;
+        public static final int llout03=0x7f0a0014;
+        public static final int name=0x7f0a003b;
+        public static final int pi_age=0x7f0a0035;
+        public static final int pi_brithday=0x7f0a0013;
+        public static final int pi_sex=0x7f0a0034;
+        public static final int pi_workyear=0x7f0a0015;
+        public static final int radioGroup=0x7f0a000f;
+        public static final int radioGroup_hwjl=0x7f0a0020;
+        public static final int radioGroup_hy=0x7f0a001a;
+        public static final int radioGroup_zzmm=0x7f0a0023;
+        public static final int radio_mzdp=0x7f0a0027;
+        public static final int radio_no=0x7f0a0022;
+        public static final int radio_qz=0x7f0a0026;
+        public static final int radio_ty=0x7f0a0025;
+        public static final int radio_wdprs=0x7f0a0028;
+        public static final int radio_wh=0x7f0a001b;
+        public static final int radio_yes=0x7f0a0021;
+        public static final int radio_yh=0x7f0a001c;
+        public static final int radio_zgdy=0x7f0a0024;
+        public static final int radionan=0x7f0a0010;
+        public static final int radiono=0x7f0a0032;
+        public static final int radionv=0x7f0a0011;
+        public static final int radionv_ly=0x7f0a001d;
+        public static final int radioyes=0x7f0a0031;
+        public static final int right_icon=0x7f0a003e;
         public static final int rotatedown=0x7f0a0005;
         public static final int rotateup=0x7f0a0006;
-        public static final int save=0x7f0a0016;
-        public static final int saveandgo=0x7f0a0017;
+        public static final int save=0x7f0a0029;
+        public static final int saveandgo=0x7f0a002a;
+        public static final int saveandnew=0x7f0a0036;
         public static final int stack=0x7f0a0007;
         public static final int standard=0x7f0a0008;
         public static final int tablet=0x7f0a0009;
         public static final int top=0x7f0a000c;
-        public static final int topLayout=0x7f0a0018;
-        public static final int top_text=0x7f0a0024;
-        public static final int tvCity=0x7f0a0022;
-        public static final int tvCode=0x7f0a0023;
+        public static final int topLayout=0x7f0a002d;
+        public static final int top_text=0x7f0a003c;
+        public static final int tvCity=0x7f0a0039;
+        public static final int tvCode=0x7f0a003a;
         public static final int zoomin=0x7f0a000a;
         public static final int zoomout=0x7f0a000b;
     }
     public static final class layout {
         public static final int activity_baseinfo_layout=0x7f030000;
-        public static final int activity_home=0x7f030001;
-        public static final int activity_main=0x7f030002;
-        public static final int activity_setting=0x7f030003;
-        public static final int activity_workexperience_layout=0x7f030004;
-        public static final int fragment_main=0x7f030005;
-        public static final int home_grilview_item=0x7f030006;
-        public static final int index_resume_1=0x7f030007;
-        public static final int index_resume_2=0x7f030008;
-        public static final int index_resume_3=0x7f030009;
-        public static final int index_resume_4=0x7f03000a;
-        public static final int index_resume_5=0x7f03000b;
-        public static final int top_layout=0x7f03000c;
-        public static final int top_layout_righticon=0x7f03000d;
+        public static final int activity_evaluation_layout=0x7f030001;
+        public static final int activity_home=0x7f030002;
+        public static final int activity_main=0x7f030003;
+        public static final int activity_setting=0x7f030004;
+        public static final int activity_workexperience_layout=0x7f030005;
+        public static final int fragment_main=0x7f030006;
+        public static final int home_grilview_item=0x7f030007;
+        public static final int index_resume_1=0x7f030008;
+        public static final int index_resume_2=0x7f030009;
+        public static final int index_resume_3=0x7f03000a;
+        public static final int index_resume_4=0x7f03000b;
+        public static final int index_resume_5=0x7f03000c;
+        public static final int top_layout=0x7f03000d;
+        public static final int top_layout_righticon=0x7f03000e;
     }
     public static final class string {
         public static final int action_settings=0x7f080002;
         public static final int app_name=0x7f080000;
         public static final int crash=0x7f080003;
         public static final int hello_world=0x7f080001;
+        public static final int info_brithday=0x7f080012;
+        public static final int info_choose=0x7f080011;
+        public static final int info_city=0x7f080018;
+        public static final int info_contack=0x7f080014;
+        public static final int info_email=0x7f08001a;
+        public static final int info_hometown=0x7f080016;
+        public static final int info_inout_city=0x7f080019;
+        public static final int info_input_contack=0x7f080015;
+        public static final int info_input_email=0x7f08001b;
+        public static final int info_input_hometown=0x7f080017;
+        public static final int info_input_license=0x7f080023;
+        public static final int info_input_nationality=0x7f080021;
+        public static final int info_license=0x7f080022;
+        public static final int info_maritalstatus=0x7f08001c;
+        public static final int info_maritalstatus_1=0x7f08001d;
+        public static final int info_maritalstatus_2=0x7f08001e;
+        public static final int info_maritalstatus_3=0x7f08001f;
+        /**  基本资料 
+         */
+        public static final int info_name=0x7f08000c;
+        public static final int info_name_hint=0x7f08000d;
+        public static final int info_nationality=0x7f080020;
+        public static final int info_politicalstatus=0x7f080027;
+        public static final int info_politicalstatus_1=0x7f080028;
+        public static final int info_politicalstatus_2=0x7f080029;
+        public static final int info_politicalstatus_3=0x7f08002a;
+        public static final int info_politicalstatus_4=0x7f08002b;
+        public static final int info_politicalstatus_5=0x7f08002c;
+        public static final int info_sex=0x7f08000e;
+        public static final int info_sex_1=0x7f08000f;
+        public static final int info_sex_2=0x7f080010;
+        public static final int info_workingabroad=0x7f080024;
+        public static final int info_workingabroad_1=0x7f080025;
+        public static final int info_workingabroad_2=0x7f080026;
+        public static final int info_workyear=0x7f080013;
         public static final int make_resume=0x7f080005;
         public static final int resume_baseinfo=0x7f080006;
         public static final int resume_center=0x7f080004;
@@ -203,6 +265,7 @@ containing a value of this type.
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
     
 
         Base application theme for API 11+. This theme completely replaces
@@ -222,17 +285,18 @@ containing a value of this type.
          */
         public static final int AppTheme=0x7f090001;
         public static final int Default=0x7f090002;
-        /**   <item name="android:windowIsTranslucent">true</item> 
+        /**  <item name="android:windowIsTranslucent">true</item> 
          */
         public static final int Default_NoTitleBar=0x7f090003;
         /**  界面按钮 
          */
-        public static final int button_menu=0x7f09000a;
-        public static final int line=0x7f090007;
-        public static final int line2=0x7f090008;
-        public static final int line3=0x7f090009;
+        public static final int button_menu=0x7f09000b;
+        public static final int line=0x7f090008;
+        public static final int line2=0x7f090009;
+        public static final int line3=0x7f09000a;
         public static final int user_info_item_ed=0x7f090005;
-        public static final int user_info_item_iv=0x7f090006;
+        public static final int user_info_item_iv=0x7f090007;
+        public static final int user_info_item_radio=0x7f090006;
         public static final int user_info_item_tv=0x7f090004;
     }
     public static final class styleable {
