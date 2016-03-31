@@ -2,41 +2,96 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white" 
-    android:fitsSystemWindows="true">
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
 
-    <include 
+    <include
         android:id="@+id/topLayout"
-        layout="@layout/top_layout_righticon"/>
-    
-    <HorizontalScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="200dip"
-        android:layout_margin="5dp"
-        android:layout_below="@id/topLayout" >
+        layout="@layout/top_layout_righticon" />
+
+    <com.me.resume.views.CommScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/topLayout"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" >
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_margin="10dp" >
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/rmjlmb"
+                android:layout_width="fill_parent"
+                android:layout_height="45dip"
+                android:gravity="center|left"
+                android:padding="5dip"
+                android:text="· 热门简历模板"
+                android:textColor="@color/black"
+                android:textSize="@dimen/small_text_size" />
+
+            <View style="@style/line3" />
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalsv"
+                android:layout_width="fill_parent"
+                android:layout_height="170dip"
+                android:layout_margin="5dp" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="10dp" >
+
+                    <GridView
+                        android:id="@+id/grid"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:numColumns="auto_fit"
+                        android:stretchMode="spacingWidthUniform"
+                        android:listSelector="@android:color/transparent" 
+                        android:scrollbars="none">
+                    </GridView>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <View style="@style/line3" />
+
+            <TextView
+                android:id="@+id/xgln"
+                android:layout_width="fill_parent"
+                android:layout_height="45dip"
+                android:gravity="center|left"
+                android:padding="5dip"
+                android:text="· 相关栏目推荐"
+                android:textColor="@color/black"
+                android:textSize="@dimen/small_text_size" />
+
+            <View style="@style/line3" />
 
             <GridView
-                android:id="@+id/grid"
+                android:id="@+id/xgln_gridview"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="250dp"
                 android:gravity="center"
-                android:numColumns="auto_fit"
-                android:stretchMode="spacingWidthUniform" >
+                android:horizontalSpacing="10dp"
+                android:verticalSpacing="10dp"
+                android:numColumns="3">
             </GridView>
         </LinearLayout>
-    </HorizontalScrollView>
-    
-     <Button android:id="@+id/go"
+    </com.me.resume.views.CommScrollView>
+
+    <Button
+        android:id="@+id/go"
         style="@style/button_menu"
-        android:text="@string/make_resume"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dip"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dip"
+        android:text="@string/make_resume" />
 
 </RelativeLayout>

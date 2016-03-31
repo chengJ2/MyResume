@@ -3,32 +3,26 @@
     android:id="@+id/itemlayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@color/white" >
  
     <ImageView
-        android:id="@+id/ItemImage"
-        android:layout_width="80.0dip"
-        android:layout_height="80.0dip"
+        android:id="@+id/item_imageview"
+        android:layout_width="100.0dip"
+        android:layout_height="150.0dip"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_launcher" >
+        android:src="@drawable/a001"
+        android:scaleType="centerInside" >
     </ImageView>
  
     <TextView
-        android:id="@+id/tvCity"
+        android:id="@+id/item_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Title"
+        android:text="简历模板"
+        android:textSize="@dimen/micro_text_size"
         android:textColor="#000000" >
     </TextView>
- 
-    <TextView
-        android:id="@+id/tvCode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Info"
-        android:textColor="#000000" >
-    </TextView>
- 
+
 </LinearLayout>

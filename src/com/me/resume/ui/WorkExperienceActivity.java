@@ -22,7 +22,7 @@ import com.me.resume.views.CustomFAB;
  */
 public class WorkExperienceActivity extends BaseActivity implements OnClickListener{
 
-	private TextView toptext;
+	private TextView toptext,leftLable;
 	
 	private CustomFAB saveandgo;
 	@Override
@@ -32,12 +32,15 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		setContentView(R.layout.activity_workexperience_layout);
 		
 		toptext = findView(R.id.top_text);
+		leftLable = findView(R.id.left_lable);
+		leftLable.setText(CommUtil.getStrValue(WorkExperienceActivity.this, R.string.review_resume));
+		toptext.setText(CommUtil.getStrValue(WorkExperienceActivity.this, R.string.resume_workexperience));
 		
 		saveandgo = findView(R.id.saveandgo);
 		
 		saveandgo.setOnClickListener(this);
+		leftLable.setOnClickListener(this);
 		
-		toptext.setText(CommUtil.getStrValue(WorkExperienceActivity.this, R.string.resume_workexperience));
 	}
 	
 	@Override
@@ -45,6 +48,10 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		switch (v.getId()) {
 		case R.id.saveandgo:
 			ActivityUtils.startActivity(WorkExperienceActivity.this, MyApplication.PACKAGENAME+".ui.EvaluationActivity");
+			break;
+		case R.id.left_lable:
+			ActivityUtils.startActivity(WorkExperienceActivity.this, MyApplication.PACKAGENAME 
+					+ ".MainActivity",false);
 			break;
 		default:
 			break;

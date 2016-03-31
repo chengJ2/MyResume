@@ -76,6 +76,16 @@ public class CommUtil {
 	 * @param id
 	 * @return
 	 */
+	public static int getIntValue(Context context,int id){
+		return context.getResources().getColor(id);
+	}
+	
+	/**
+	 * 获取资源文件
+	 * @param context
+	 * @param id
+	 * @return
+	 */
 	public static Drawable getDrawable(Context context,int id){
 		return context.getResources().getDrawable(id);
 	}

@@ -25,7 +25,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 
 	private CustomFAB saveInfo,saveInfoAndGo;
 	
-	private TextView toptext;
+	private TextView toptext,leftLable;
 	
 	private EditText info_realname;
 	
@@ -36,8 +36,9 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		setContentView(R.layout.activity_baseinfo_layout);
 		
 		toptext = findView(R.id.top_text);
-		
+		leftLable = findView(R.id.left_lable);
 		toptext.setText(CommUtil.getStrValue(BaseInfoActivity.this, R.string.resume_baseinfo));
+		leftLable.setText(CommUtil.getStrValue(BaseInfoActivity.this, R.string.review_resume));
 		
 		saveInfo = findView(R.id.save);
 		saveInfoAndGo = findView(R.id.saveandgo);
@@ -46,6 +47,8 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		
 		saveInfo.setOnClickListener(this);
 		saveInfoAndGo.setOnClickListener(this);
+		
+		leftLable.setOnClickListener(this);
 	}
 
 	@Override
@@ -56,6 +59,10 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.saveandgo:
 			ActivityUtils.startActivity(BaseInfoActivity.this, MyApplication.PACKAGENAME+".ui.WorkExperienceActivity");
+			break;
+		case R.id.left_lable:
+			ActivityUtils.startActivity(BaseInfoActivity.this, MyApplication.PACKAGENAME 
+					+ ".MainActivity",false);
 			break;
 		default:
 			break;

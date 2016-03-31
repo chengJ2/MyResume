@@ -3,15 +3,13 @@ package com.me.resume.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.client.methods.HttpOptions;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -23,6 +21,9 @@ import android.widget.TextView;
 import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.CommonBaseAdapter;
+import com.me.resume.comm.ViewHolder;
+import com.me.resume.model.ResumeModel;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 
@@ -36,8 +37,9 @@ import com.me.resume.utils.CommUtil;
  */
 public class HomeActivity extends BaseActivity implements OnClickListener{
 
-	private List<CityItem> cityList;
+	private List<ResumeModel> resumeModelList;
 	private  RelativeLayout itmel;
+	 private CommonBaseAdapter<ResumeModel> commAdapter = null;
 	private GridView gridView;
     
 	private TextView topText;
@@ -45,12 +47,15 @@ public class HomeActivity extends BaseActivity implements OnClickListener{
     
     private Button makeResume;
     
+    private CommonBaseAdapter<String> commAdapter2 = null;
+    private List<String> xglnList = null;
+    private GridView xgln_gridview;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		gridView = (GridView) findViewById(R.id.grid);
+		
 		
 		if(getPreferenceData("firstInstall",1) == 1){
 			ActivityUtils.startActivity(HomeActivity.this, MyApplication.PACKAGENAME 
@@ -58,6 +63,10 @@ public class HomeActivity extends BaseActivity implements OnClickListener{
 		}else{
 			topText = findView(R.id.top_text);
 			rightIcon = findView(R.id.right_icon);	
+			
+			gridView = findView(R.id.grid);
+			
+			xgln_gridview = findView(R.id.xgln_gridview);
 			
 			makeResume = findView(R.id.go);
 			setData();
@@ -72,37 +81,43 @@ public class HomeActivity extends BaseActivity implements OnClickListener{
     	rightIcon.setOnClickListener(this);
     	makeResume.setOnClickListener(this);
     	
-        cityList = new ArrayList<CityItem>();
-        CityItem item = new CityItem();
-        item.setCityName("深圳");
-        item.setCityCode("0755");
-        cityList.add(item);
-        item = new CityItem();
-        item.setCityName("上海");
-        item.setCityCode("021");
-        cityList.add(item);
-        item = new CityItem();
-        item.setCityName("广州");
-        item.setCityCode("020");
-        cityList.add(item);
-        item = new CityItem();
-        item.setCityName("北京");
-        item.setCityCode("010");
-        cityList.add(item);
-        item = new CityItem();
-        item.setCityName("武汉");
-        item.setCityCode("027");
-        cityList.add(item);
-        item = new CityItem();
-        item.setCityName("孝感");
-        item.setCityCode("0712");
-        cityList.add(item);
-        cityList.addAll(cityList);
+    	resumeModelList = new ArrayList<ResumeModel>();
+    	
+    	for (int i = 0; i < 10; i++) {
+			
+    		ResumeModel item = new ResumeModel();
+    		List<String> url = new ArrayList<String>();
+    		url.add(R.drawable.a001+"");
+    		url.add(R.drawable.a002+"");
+    		url.add(R.drawable.a003+"");
+    		url.add(R.drawable.a004+"");
+    		
+    		item.setTitle("简历模板"+i);
+    		item.setDesc("普通求职个人基本简历模板 ");
+    		item.setPicUrl(url);
+    		item.setDatetime("2015-06-" + i);
+    		resumeModelList.add(item);
+		}
+        
+        
+        xglnList = new ArrayList<String>();
+        xglnList.add("求职简历");
+        xglnList.add("面试问题");
+        xglnList.add("自我鉴定");
+        xglnList.add("面试技巧");
+        xglnList.add("求职简历");
+        xglnList.add("面试问题");
+        xglnList.add("自我鉴定");
+        xglnList.add("面试技巧");
+        xglnList.add("简历注意事项");
+        xglnList.add("笔试经验");
+        xglnList.add("自我鉴定");
+        xglnList.add("面试技巧");
     }
     
     /**设置GirdView参数，绑定数据*/
     private void setGridView() {
-        int size = cityList.size();
+        int size = resumeModelList.size();
         int length = 100;
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -111,77 +126,40 @@ public class HomeActivity extends BaseActivity implements OnClickListener{
         int itemWidth = (int) (length * density);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                gridviewWidth, LinearLayout.LayoutParams.FILL_PARENT);
+                gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
         gridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
         gridView.setColumnWidth(itemWidth); // 设置列表项宽
         gridView.setHorizontalSpacing(5); // 设置列表项水平间距
         gridView.setStretchMode(GridView.NO_STRETCH);
         gridView.setNumColumns(size); // 设置列数量=列表集合数
 
-        GridViewAdapter adapter = new GridViewAdapter(getApplicationContext(),
-                cityList);
-        gridView.setAdapter(adapter);
+        commAdapter = new CommonBaseAdapter<ResumeModel>(HomeActivity.this,resumeModelList,R.layout.home_grilview_item) {
+			
+			@Override
+			public void convert(ViewHolder holder, ResumeModel item, int position) {
+				// TODO Auto-generated method stub
+				holder.setImageResource(R.id.item_imageview,Integer.parseInt(resumeModelList.get(position).getPicUrl().get(0)));
+				holder.setText(R.id.item_textview, resumeModelList.get(position).getTitle());
+			}
+		};  
+		gridView.setAdapter(commAdapter);
+		
+		
+		commAdapter2 = new CommonBaseAdapter<String>(HomeActivity.this,xglnList,R.layout.home_xgln_grilview) {
+
+			@Override
+			public void convert(ViewHolder holder, String item, int position) {
+				// TODO Auto-generated method stub
+				holder.setText(R.id.itemName, xglnList.get(position));
+				if (position == 1 || position == 5 || position == 6) {
+					holder.setTextColor(R.id.itemName, CommUtil.getIntValue(mContext, R.color.red));
+				}
+			}
+		};
+		
+		xgln_gridview.setAdapter(commAdapter2);
     }
-
-    /**GirdView 数据适配器*/
-    public class GridViewAdapter extends BaseAdapter {
-        Context context;
-        List<CityItem> list;
-        public GridViewAdapter(Context _context, List<CityItem> _list) {
-            this.list = _list;
-            this.context = _context;
-        }
-
-        @Override
-        public int getCount() {
-            return list.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return list.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            LayoutInflater layoutInflater = LayoutInflater.from(context);
-            convertView = layoutInflater.inflate(R.layout.home_grilview_item, null);
-            TextView tvCity = (TextView) convertView.findViewById(R.id.tvCity);
-            TextView tvCode = (TextView) convertView.findViewById(R.id.tvCode);
-            CityItem city = list.get(position);
-
-            tvCity.setText(city.getCityName());
-            tvCode.setText(city.getCityCode());
-            return convertView;
-        }
-    }
-
-    public class CityItem {
-        private String cityName;
-        private String cityCode;
-
-        public String getCityName() {
-            return cityName;
-        }
-
-        public void setCityName(String cityName) {
-            this.cityName = cityName;
-        }
-
-        public String getCityCode() {
-            return cityCode;
-        }
-
-        public void setCityCode(String cityCode) {
-            this.cityCode = cityCode;
-        }
-    }
-
+    
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {

@@ -9,11 +9,13 @@
     
     <string name="resume_center">简历中心</string>
     <string name="make_resume">定制简历</string>
+    <string name="review_resume">预览</string>
     
     <string name="resume_baseinfo">基本资料</string>
     <string name="resume_workexperience">工作经历</string>
     <string name="resume_jobintension">求职意向</string>
     <string name="resume_evaluation">自我评价</string>
+    <string name="resume_excellentskills">擅长技能</string>
     <string name="resume_education">教育背景/培训经历</string>
     <string name="resume_otherinfo">其他信息</string>
     

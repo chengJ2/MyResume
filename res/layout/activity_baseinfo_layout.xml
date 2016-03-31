@@ -10,7 +10,7 @@
         android:id="@+id/top"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/top_bar_height"
-        layout="@layout/top_layout" />
+        layout="@layout/top_layout_lable" />
 
     <com.me.resume.views.CommScrollView
         android:layout_width="match_parent"

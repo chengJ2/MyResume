@@ -3,13 +3,6 @@ package com.me.resume;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.me.resume.utils.ActivityUtils;
-import com.me.resume.utils.CommUtil;
-import com.me.resume.views.JazzyViewPager;
-import com.me.resume.views.JazzyViewPager.TransitionEffect;
-
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,10 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.ViewGroup.LayoutParams;
+import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.me.resume.utils.ActivityUtils;
+import com.me.resume.utils.CommUtil;
+import com.me.resume.views.JazzyViewPager;
+import com.me.resume.views.JazzyViewPager.TransitionEffect;
+import com.me.resume.views.TagFlowLayout;
 
 /**
  * 
@@ -82,9 +81,21 @@ public class MainActivity extends BaseActivity {
 
 	private void findViews(){
 		jazzyViewPager = findView(R.id.index_product_container);
-		
-		
 	}
+	
+	private TagFlowLayout tagFlowLayout;
+	private String mTags[] = {  
+	            "welcome","android","TextView",  
+	            "apple","jamy","kobe bryant",  
+	            "jordan","layout","viewgroup",  
+	            "margin","padding","text",  
+	            "name","type","search","logcat"  
+	    };
+	
+	
+	private TextView nameTextView;
+	private Button goHomeBtn;
+	
 	private void initViews(){
 		mInflater = LayoutInflater.from(this);
         view1 = mInflater.inflate(R.layout.index_resume_1, null);
@@ -100,17 +111,10 @@ public class MainActivity extends BaseActivity {
         mViewList.add(view4);
         mViewList.add(view5);
         
-        ((TextView)view1.findViewById(R.id.name)).setText(CommUtil.getStrValue(_context, R.string.info_name) 
-        		+ " :"+ getPreferenceData("info_realname",""));
+        nameTextView = ((TextView)view1.findViewById(R.id.name));
+        tagFlowLayout = (TagFlowLayout)view3.findViewById(R.id.flowlayout);
         
-        ((Button)view5.findViewById(R.id.go)).setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				setPreferenceData("firstInstall",0);
-				ActivityUtils.startActivity(_context,MyApplication.PACKAGENAME + ".ui.HomeActivity");
-			}
-		});
+        goHomeBtn = (Button)view5.findViewById(R.id.go);
 	}
 	
 	private void showViews() {
@@ -122,6 +126,34 @@ public class MainActivity extends BaseActivity {
 		mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO, VIEW_CHANGE_TIME);
 		
 		jazzyViewPager.setAdapter(new MyPagerAdapter(mViewList));
+		
+		nameTextView.setText(CommUtil.getStrValue(_context, R.string.info_name) 
+        		+ " :"+ getPreferenceData("info_realname",""));
+        
+        
+        MarginLayoutParams lp = new MarginLayoutParams(  
+                LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);  
+        lp.leftMargin = 5;  
+        lp.rightMargin = 5;  
+        lp.topMargin = 5;  
+        lp.bottomMargin = 5;  
+        for(int i = 0; i < mTags.length; i ++){  
+            TextView view = new TextView(this);  
+            view.setText(mTags[i]);  
+            view.setTextColor(CommUtil.getIntValue(_context, R.color.white));  
+            view.setBackgroundDrawable(getResources().getDrawable(R.drawable.textview_bg));
+            tagFlowLayout.addView(view,lp);  
+        }  
+        
+        goHomeBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				setPreferenceData("firstInstall",0);
+				ActivityUtils.startActivity(_context,MyApplication.PACKAGENAME + ".ui.HomeActivity");
+			}
+		});
+		
 	}
 	
 	//ViewPager适配器
