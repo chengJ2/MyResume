@@ -2,5 +2,5 @@
 /gen
 /assets/
 /.settings/org.eclipse.jdt.core.prefs
-project.properties
-.gitignore
+/project.properties
+/.gitignore
