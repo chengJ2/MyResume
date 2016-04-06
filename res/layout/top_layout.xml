@@ -15,12 +15,14 @@
         android:textColor="@color/white"
         android:textSize="20sp" />
 
-    <ImageView
-        android:id="@+id/goback"
+    <TextView
+        android:id="@+id/right_lable"
         android:layout_width="60dip"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:background="@drawable/ic_launcher"
-        android:scaleType="center" />
+        android:layout_height="45dip"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/medium_text_size" 
+        android:layout_alignParentRight="true"
+        android:text="取消"/>
 
 </RelativeLayout>

@@ -11,12 +11,13 @@
     <string name="make_resume">定制简历</string>
     <string name="review_resume">预览</string>
     
+    <string name="resume_personcenter">我</string>
     <string name="resume_baseinfo">基本资料</string>
     <string name="resume_workexperience">工作经历</string>
     <string name="resume_jobintension">求职意向</string>
     <string name="resume_evaluation">自我评价</string>
     <string name="resume_excellentskills">擅长技能</string>
-    <string name="resume_education">教育背景/培训经历</string>
+    <string name="resume_education">教育经历</string>
     <string name="resume_otherinfo">其他信息</string>
     
     <!-- 基本资料 -->
@@ -55,4 +56,18 @@
     <string name="info_politicalstatus_5">无党派人士</string>
     <!-- 基本资料 -->
     
+    <!-- 工作简历 -->
+    <string name="we_info_companyname">企业名称</string>
+    <string name="we_info_input_companyname">请输入企业名称</string>
+    <string name="we_info_industryclassification">行业类别</string>
+    <string name="we_info_choose_industryclassification">请选择行业类别</string>
+    <string name="we_info_jobtitle">职位名称</string>
+    <string name="we_info_choose_jobtitle">请输入职位名称</string>
+    <string name="we_info_worktime">工作时间</string>
+    <string name="we_info_choose_worktime">请选择工作时间</string>
+    <string name="we_info_expectedsalary">期望月薪(税前)</string>
+    <string name="we_info_choose_expectedsalary">请选择期望月薪(税前)</string>
+    <string name="we_info_workdesc">工作描述</string>
+    <string name="we_info_workdescdetail">请详细描述您的职责范围,工作任务以及取得的成绩等</string>
+    <!-- 工作简历 -->
 </resources>

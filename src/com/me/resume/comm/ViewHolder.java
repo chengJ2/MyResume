@@ -17,6 +17,7 @@ import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -253,6 +254,11 @@ public class ViewHolder {
 		CheckBox tv=getView(ViewID);
 		return tv;
 	}
+	
+	public RadioButton getRadioButton(int ViewID){
+		return getView(ViewID);
+	}
+	
 	
 	public ViewHolder setOnClickEvent(int ViewID,final ClickEvent c){
 		View v=getView(ViewID);

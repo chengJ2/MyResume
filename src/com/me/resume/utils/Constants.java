@@ -29,4 +29,6 @@ public class Constants {
 	 * 本地配置缓存文件
 	 */
 	public static final String CONFIG = "config";
+	
+	public static final boolean DEVELOPER_MODE = true;
 }

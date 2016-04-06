@@ -14,4 +14,38 @@
         <item>RotateDown</item>
         <item>Accordion</item>
     </string-array>
+    
+    <string-array name="we_qwyx_values">
+        <item>1000元/月以下</item>
+        <item>1000-2000元/月</item>
+        <item>2001-4000元/月</item>
+        <item>4001-6000元/月</item>
+        <item>6001-8000元/月</item>
+        <item>8001-10000元/月</item>
+        <item>10001-15000元/月</item>
+        <item>15000-25000元/月</item>
+        <item>25000元/月以上</item>
+        <item>保密</item>
+    </string-array>
+    
+    <string-array name="oi_wysp_values">
+        <item>无</item>
+        <item>英语</item>
+        <item>日语</item>
+        <item>法语</item>
+        <item>德语</item>
+        <item>俄语</item>
+        <item>韩语</item>
+        <item>西班牙语</item>
+        <item>葡萄牙语</item>
+        <item>阿拉伯语</item>
+        <item>意大利语</item>
+        <item>其他</item>
+    </string-array>
+    <string-array name="oi_tsdx_values">
+        <item>一般</item>
+        <item>良好</item>
+        <item>熟练</item>
+        <item>精通</item>
+    </string-array>
 </resources>

@@ -3,27 +3,22 @@ package com.me.resume.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.model.ResumeModel;
+import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 
@@ -35,7 +30,7 @@ import com.me.resume.utils.CommUtil;
 * @date 2016/3/29 下午4:56:41 
 *
  */
-public class HomeActivity extends BaseActivity implements OnClickListener{
+public class HomeActivity extends SwipeBackActivity implements OnClickListener{
 
 	private List<ResumeModel> resumeModelList;
 	private  RelativeLayout itmel;
@@ -43,42 +38,45 @@ public class HomeActivity extends BaseActivity implements OnClickListener{
 	private GridView gridView;
     
 	private TextView topText;
-    private ImageView rightIcon;
+    private TextView leftLable,rightLable;
     
     private Button makeResume;
     
     private CommonBaseAdapter<String> commAdapter2 = null;
     private List<String> xglnList = null;
     private GridView xgln_gridview;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		
-		
 		if(getPreferenceData("firstInstall",1) == 1){
 			ActivityUtils.startActivity(HomeActivity.this, MyApplication.PACKAGENAME 
 					+ ".MainActivity",true);
-		}else{
-			topText = findView(R.id.top_text);
-			rightIcon = findView(R.id.right_icon);	
-			
-			gridView = findView(R.id.grid);
-			
-			xgln_gridview = findView(R.id.xgln_gridview);
-			
-			makeResume = findView(R.id.go);
-			setData();
-	        setGridView();
 		}
+		topText = findView(R.id.top_text);
+		leftLable = findView(R.id.left_lable);
+		leftLable.setText(CommUtil.getStrValue(HomeActivity.this, R.string.resume_personcenter));
+		rightLable = findView(R.id.right_lable);	
+		
+		gridView = findView(R.id.grid);
+		
+		xgln_gridview = findView(R.id.xgln_gridview);
+		
+		makeResume = findView(R.id.go);
+		setData();
+        setGridView();
+	        
 	}
 	
 	/**设置数据*/
     private void setData() {
     	topText.setText(CommUtil.getStrValue(HomeActivity.this, R.string.resume_center));
     	
-    	rightIcon.setOnClickListener(this);
+    	leftLable.setOnClickListener(this);
+    	rightLable.setOnClickListener(this);
     	makeResume.setOnClickListener(this);
     	
     	resumeModelList = new ArrayList<ResumeModel>();
@@ -152,7 +150,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener{
 				// TODO Auto-generated method stub
 				holder.setText(R.id.itemName, xglnList.get(position));
 				if (position == 1 || position == 5 || position == 6) {
-					holder.setTextColor(R.id.itemName, CommUtil.getIntValue(mContext, R.color.red));
+					holder.setTextColor(R.id.itemName, CommUtil.getIntValue(HomeActivity.this, R.color.red));
 				}
 			}
 		};
@@ -166,7 +164,10 @@ public class HomeActivity extends BaseActivity implements OnClickListener{
 		case R.id.go:
 			ActivityUtils.startActivity(HomeActivity.this,MyApplication.PACKAGENAME + ".ui.BaseInfoActivity");
 			break;
-		case R.id.right_icon:
+		case R.id.left_lable:
+			
+			break;
+		case R.id.right_lable:
 			ActivityUtils.startActivity(HomeActivity.this,MyApplication.PACKAGENAME + ".ui.SettingActivity");
 			break;
 		default:

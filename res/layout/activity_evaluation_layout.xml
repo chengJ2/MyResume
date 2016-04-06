@@ -3,115 +3,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true" >
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
 
     <include
         android:id="@+id/top"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/top_bar_height"
-        layout="@layout/top_layout" />
+        layout="@layout/top_layout_lable" />
 
     <com.me.resume.views.CommScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/top"
         android:fadingEdge="none"
         android:fadingEdgeLength="0dp"
         android:overScrollMode="never"
-        android:scrollbars="none" 
-        android:layout_below="@id/top">
+        android:scrollbars="none" >
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:orientation="vertical" >
-            
-            <TextView
-		        android:layout_width="fill_parent"
-		        android:layout_height="45dip"
-		        android:gravity="center|left"
-		        android:textColor="@color/black"
-		        android:textSize="@dimen/small_text_size"
-		        android:padding="5dip"
-		        android:text="对自己做一个简短评价，简明扼要地描述您的职业优势，让用人单位快速地了解您！" />
 
-             <View style="@style/line3" />
-            <LinearLayout
+            <TextView
                 android:layout_width="fill_parent"
-                android:layout_height="150dip"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                 android:paddingLeft="20dip"
-                android:orientation="horizontal" >
+                android:layout_height="45dip"
+                android:gravity="center|left"
+                android:padding="5dip"
+                android:text="对自己做一个简短评价，简明扼要地描述您的职业优势，让用人单位快速地了解您！"
+                android:textColor="@color/black"
+                android:textSize="@dimen/small_text_size" />
+
+            <View style="@style/line3" />
+
+            <LinearLayout style="@style/noraml_item_mul" >
 
                 <TextView
-                   style="@style/user_info_item_tv"
+                    style="@style/user_info_item_tv"
                     android:text="自我评价" />
 
                 <EditText
                     android:id="@+id/info_area"
                     style="@style/user_info_item_ed"
                     android:hint="请输入自我评价" />
-                 <ImageView
+
+                <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
             </LinearLayout>
-            
-             <View style="@style/line3" />
-            
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="150dip"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                 android:paddingLeft="20dip"
-                android:orientation="horizontal" >
+
+            <View style="@style/line3" />
+
+            <LinearLayout style="@style/noraml_item_mul" >
 
                 <TextView
-                   style="@style/user_info_item_tv"
+                    style="@style/user_info_item_tv"
                     android:text="职业目标" />
 
                 <EditText
                     android:id="@+id/info_area"
                     style="@style/user_info_item_ed"
                     android:hint="请输入职业目标" />
-                 <ImageView
+
+                <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
             </LinearLayout>
+
             <View style="@style/line3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:padding="5dip"
+                android:text="填写文字在100个字以上评定等级，少于不计算，内容越详细，等级越高"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/micro_text_size" />
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
 
-     <com.me.resume.views.CustomFAB
-       android:id="@+id/addShopcart"
-       android:layout_width="50dp"
-       android:layout_height="50dp"
-       android:text="保存"
-       android:layout_alignParentBottom="true"
-       android:layout_alignParentLeft="true"
-       android:layout_marginLeft="16dp"
-       android:layout_marginBottom="16dp"
-       android:tint="@android:color/white"/>
-     
-     <com.me.resume.views.CustomFAB
-       android:id="@+id/addShopcart"
-       android:layout_width="50dp"
-       android:layout_height="50dp"
-       android:text="保存并新增经历"
-       android:layout_alignParentBottom="true"
-       android:layout_centerInParent="true"
-       android:layout_marginBottom="16dp"
-       android:tint="@android:color/white"/>
-     
-     <com.me.resume.views.CustomFAB
-       android:id="@+id/addShopcart"
-       android:layout_width="50dp"
-       android:layout_height="50dp"
-       android:text="保存并继续"
-       android:layout_alignParentBottom="true"
-       android:layout_alignParentRight="true"
-       android:layout_marginRight="16dp"
-       android:layout_marginBottom="16dp"
-       android:tint="@android:color/white"/>
+    <com.me.resume.views.CustomFAB
+        android:id="@+id/save"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="保存"
+        android:tint="@android:color/white" />
+
+    <com.me.resume.views.CustomFAB
+        android:id="@+id/saveAnd"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="16dp"
+        android:text="保存并新增经历"
+        android:tint="@android:color/white" />
+
+    <com.me.resume.views.CustomFAB
+        android:id="@+id/saveGo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:text="保存并继续"
+        android:tint="@android:color/white" />
+
 </RelativeLayout>

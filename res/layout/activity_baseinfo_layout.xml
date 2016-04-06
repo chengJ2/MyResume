@@ -11,7 +11,7 @@
         android:layout_width="fill_parent"
         android:layout_height="@dimen/top_bar_height"
         layout="@layout/top_layout_lable" />
-
+    
     <com.me.resume.views.CommScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,18 +24,12 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:background="@color/white" >
 
             <LinearLayout
                 android:id="@+id/llout01"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:orientation="horizontal"
-                android:paddingLeft="20dip" >
+               style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -54,14 +48,7 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:orientation="horizontal"
-                android:paddingLeft="20dip"
-                android:visibility="visible" >
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -96,15 +83,7 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                android:id="@+id/llout02"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:orientation="horizontal"
-                android:paddingLeft="20dip"
-                android:visibility="visible" >
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -123,15 +102,7 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                android:id="@+id/llout03"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:orientation="horizontal"
-                android:paddingLeft="20dip"
-                android:visibility="visible" >
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -150,14 +121,7 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:orientation="horizontal"
-                android:paddingLeft="20dip"
-                android:visibility="visible" >
+               style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -177,14 +141,7 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:orientation="horizontal"
-                android:paddingLeft="20dip"
-                android:visibility="visible" >
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -203,14 +160,7 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:orientation="horizontal"
-                android:paddingLeft="20dip"
-                android:visibility="visible" >
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -229,14 +179,7 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:orientation="horizontal"
-                android:paddingLeft="20dip"
-                android:visibility="visible" >
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -255,14 +198,7 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:orientation="horizontal"
-                android:paddingLeft="20dip"
-                android:visibility="visible" >
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -299,14 +235,7 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:orientation="horizontal"
-                android:paddingLeft="20dip"
-                android:visibility="visible" >
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -325,14 +254,7 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:orientation="horizontal"
-                android:paddingLeft="20dip"
-                android:visibility="visible" >
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -351,13 +273,7 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:orientation="horizontal"
-                android:paddingLeft="20dip" >
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -453,15 +369,6 @@
         android:layout_marginLeft="16dp"
         android:tint="@android:color/white" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="20dp"
-        android:text="保存" />
-
     <com.me.resume.views.CustomFAB
         android:id="@+id/saveandgo"
         android:layout_width="50dp"
@@ -471,14 +378,5 @@
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:tint="@android:color/white" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginRight="20dp"
-        android:text="保存并继续" />
 
 </RelativeLayout>

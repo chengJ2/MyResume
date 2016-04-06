@@ -6,9 +6,9 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.views.CustomFAB;
@@ -21,11 +21,11 @@ import com.me.resume.views.CustomFAB;
 * @date 2016/3/29 下午3:36:12 
 *
  */
-public class BaseInfoActivity extends BaseActivity implements OnClickListener{
+public class BaseInfoActivity extends SwipeBackActivity implements OnClickListener{
 
 	private CustomFAB saveInfo,saveInfoAndGo;
 	
-	private TextView toptext,leftLable;
+	private TextView toptext,leftLable,rightLable;
 	
 	private EditText info_realname;
 	
@@ -37,8 +37,11 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		
 		toptext = findView(R.id.top_text);
 		leftLable = findView(R.id.left_lable);
+		leftLable.setOnClickListener(this);
+		rightLable = findView(R.id.right_lable);
+		rightLable.setOnClickListener(this);
 		toptext.setText(CommUtil.getStrValue(BaseInfoActivity.this, R.string.resume_baseinfo));
-		leftLable.setText(CommUtil.getStrValue(BaseInfoActivity.this, R.string.review_resume));
+		rightLable.setText(CommUtil.getStrValue(BaseInfoActivity.this, R.string.review_resume));
 		
 		saveInfo = findView(R.id.save);
 		saveInfoAndGo = findView(R.id.saveandgo);
@@ -48,7 +51,6 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		saveInfo.setOnClickListener(this);
 		saveInfoAndGo.setOnClickListener(this);
 		
-		leftLable.setOnClickListener(this);
 	}
 
 	@Override
@@ -61,6 +63,9 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			ActivityUtils.startActivity(BaseInfoActivity.this, MyApplication.PACKAGENAME+".ui.WorkExperienceActivity");
 			break;
 		case R.id.left_lable:
+			scrollToFinishActivity();
+			break;
+		case R.id.right_lable:
 			ActivityUtils.startActivity(BaseInfoActivity.this, MyApplication.PACKAGENAME 
 					+ ".MainActivity",false);
 			break;

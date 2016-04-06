@@ -19,7 +19,7 @@ public class ActivityUtils {
 	 */
 	
 	public static void startActivity(Activity src) {
-		src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
+//		src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 		((Activity) src).finish();
 	}
 	
@@ -28,7 +28,7 @@ public class ActivityUtils {
 			Class className = Class.forName(obj);
 			Intent intent = new Intent(src, className);
 			src.startActivity(intent);
-			src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
+//			src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -39,7 +39,7 @@ public class ActivityUtils {
 			Class className = Class.forName(obj);
 			Intent intent = new Intent(src, className);
 			src.startActivity(intent);
-			src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
+//			src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 			if (finish) {
 				((Activity) src).finish();
 			}
@@ -53,9 +53,9 @@ public class ActivityUtils {
 			Class className = Class.forName(obj);
 			Intent intent = new Intent(src, className);
 			src.startActivity(intent);
-			if (isAnim) {
-				src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
-			}
+//			if (isAnim) {
+//				src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
+//			}
 			if (finish) {
 				((Activity) src).finish();
 			}
@@ -90,9 +90,9 @@ public class ActivityUtils {
 			Intent intent = new Intent(src, className);
 			intent.putExtra(key, data);
 			src.startActivity(intent);
-			if (isAnim) {
-				src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
-			}
+//			if (isAnim) {
+//				src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
+//			}
 			if (finish) {
 				((Activity) src).finish();
 			}
@@ -148,9 +148,9 @@ public class ActivityUtils {
 			Intent intent = new Intent(src, className);
 			intent.putExtras(bundle);
 			src.startActivity(intent);
-			if (isAnim) {
-				src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
-			}
+//			if (isAnim) {
+//				src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
+//			}
 			if (finish) {
 				((Activity) src).finish();
 			}
@@ -164,7 +164,7 @@ public class ActivityUtils {
 			Class className = Class.forName(obj);
 			Intent intent = new Intent(src, className);
 			src.startActivity(intent);
-			src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
+//			src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
 			((Activity) src).finish();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

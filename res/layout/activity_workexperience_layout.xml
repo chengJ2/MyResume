@@ -10,7 +10,7 @@
         android:id="@+id/top"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/top_bar_height"
-        layout="@layout/top_layout" />
+        layout="@layout/top_layout_lable" />
 
     <com.me.resume.views.CommScrollView
         android:layout_width="match_parent"
@@ -24,26 +24,19 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:background="@color/white" >
             <LinearLayout
-                android:id="@+id/llout01"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:paddingLeft="20dip"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:orientation="horizontal" >
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="企业名称" />
+                    android:text="@string/we_info_companyname" />
 
                 <EditText
                     android:id="@+id/info_nickname"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入企业名称" />
+                    android:hint="@string/we_info_input_companyname" />
                  <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
@@ -52,72 +45,54 @@
             <View style="@style/line3" />
             
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:paddingLeft="20dip"
-                android:orientation="horizontal" >
+                style="@style/noraml_item">
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="行业类别"/>
+                    android:text="@string/we_info_industryclassification"/>
 
                 <EditText
                     android:id="@+id/info_nickname"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入行业类别" />
+                    android:hint="@string/we_info_choose_industryclassification" />
                   <ImageView
                     style="@style/user_info_item_iv"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
             </LinearLayout>
 
             <View style="@style/line3" />
 
             <LinearLayout
                 android:id="@+id/llout02"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                 android:paddingLeft="20dip"
-                android:orientation="horizontal" >
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="职位名称" />
+                    android:text="@string/we_info_jobtitle" />
 
-                <TextView
+                <EditText
                     android:id="@+id/pi_sex"
-                    android:hint="请选择"
+                    android:hint="@string/we_info_choose_jobtitle"
                     style="@style/user_info_item_ed" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
-                    android:visibility="visible" />
+                    android:visibility="invisible" />
             </LinearLayout>
             <View style="@style/line3" />
 
             <LinearLayout
                 android:id="@+id/llout03"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                 android:paddingLeft="20dip"
-                android:orientation="horizontal" >
+                style="@style/noraml_item" >
 
                 <TextView
                    style="@style/user_info_item_tv"
-                    android:text="工作时间" />
+                    android:text="@string/we_info_worktime" />
 
                 <TextView
                     android:id="@+id/pi_age"
                    style="@style/user_info_item_ed"
-                    android:hint="请选择" />
+                    android:hint="@string/we_info_choose_worktime" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
@@ -125,46 +100,35 @@
             </LinearLayout>
 			<View style="@style/line3" />
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:paddingLeft="20dip"
-                android:orientation="horizontal" >
+               style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="职位月薪（税前）" />
+                    android:text="@string/we_info_expectedsalary" />
 
                 <TextView
-                    android:id="@+id/pi_age"
+                    android:id="@+id/we_zwyx"
                     style="@style/user_info_item_ed"
-                    android:hint="请选择" />
+                    android:hint="@string/we_info_choose_expectedsalary" />
                  <ImageView
                     style="@style/user_info_item_iv"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
             </LinearLayout>
 
             <View style="@style/line3" />
             
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="150dip"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                 android:paddingLeft="20dip"
-                android:orientation="horizontal" >
+                style="@style/noraml_item_mul" >
 
                 <TextView
                    style="@style/user_info_item_tv"
-                    android:text="工作描述" />
+                    android:text="@string/we_info_workdesc" />
 
                 <EditText
                     android:id="@+id/info_area"
                     style="@style/user_info_item_ed"
-                    
-                    android:hint="请输入工作描述" />
+                    android:singleLine="false"
+                    android:hint="@string/we_info_workdescdetail" />
                  <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />

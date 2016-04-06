@@ -1,5 +1,11 @@
 <resources>
 
+    <style name="SwipeBackLayout">
+        <item name="edge_size">50dip</item>
+        <item name="shadow_left">@drawable/shadow_left</item>
+        <item name="shadow_right">@drawable/shadow_right</item>
+        <item name="shadow_bottom">@drawable/shadow_bottom</item>
+    </style>
     <!--
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
@@ -32,6 +38,7 @@
         <item name="android:gravity">center|left</item>
         <item name="android:textColor">@color/user_edit_text</item>
         <item name="android:textSize">@dimen/small_middle_text_size</item>
+        <item name="android:singleLine">false</item>
     </style>
 
     <style name="user_info_item_ed">
@@ -42,6 +49,7 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@color/user_info_edit_hint</item>
         <item name="android:textSize">@dimen/small_middle_text_size</item>
+        <item name="android:layout_marginLeft">10dip</item>
         <item name="android:background">@null</item>
         <item name="android:singleLine">true</item>
     </style>
@@ -94,6 +102,19 @@
         <item name="android:layout_marginLeft">@dimen/btn_text_margin</item>
         <item name="android:layout_marginRight">@dimen/btn_text_margin</item>
         <item name="android:textSize">@dimen/button_text_size</item>
+    </style>
+    
+    <!-- 一般Item项Parent -->
+     <style name="noraml_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/normal_item_height</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">@dimen/normal_item_padding_left</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    
+     <style name="noraml_item_mul" parent="@style/noraml_item">
+        <item name="android:layout_height">@dimen/mul_item_height</item>
     </style>
 
 </resources>

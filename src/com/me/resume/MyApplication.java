@@ -19,6 +19,7 @@ public class MyApplication extends Application {
     
     public static final String PACKAGENAME = "com.me.resume";
     
+    public static int cposition = 0;
     /**
     * 
     */

@@ -16,6 +16,7 @@ import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.views.JazzyViewPager;
@@ -30,7 +31,7 @@ import com.me.resume.views.TagFlowLayout;
 * @date 2016/3/29 下午2:13:45 
 *
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends SwipeBackActivity {
 
 	private MainActivity _context;
 	private JazzyViewPager jazzyViewPager;

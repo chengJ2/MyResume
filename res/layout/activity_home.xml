@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/topLayout"
-        layout="@layout/top_layout_righticon" />
+        layout="@layout/top_layout_lable" />
 
     <com.me.resume.views.CommScrollView
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             <HorizontalScrollView
                 android:id="@+id/horizontalsv"
                 android:layout_width="fill_parent"
-                android:layout_height="170dip"
+                android:layout_height="190dip"
                 android:layout_margin="5dp" >
 
                 <LinearLayout
