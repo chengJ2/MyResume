@@ -198,7 +198,8 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                style="@style/noraml_item" >
+                style="@style/noraml_item"
+                 android:layout_height="wrap_content" >
 
                 <TextView
                     style="@style/user_info_item_tv"

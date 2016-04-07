@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <View 
+        android:id="@+id/line"
+        style="@style/line2" 
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dip"/>
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:layout_toLeftOf="@id/line"
+        android:paddingBottom="@dimen/activity_horizontal_margin"
+    	android:paddingTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/item1"
+            android:layout_width="match_parent"
+            android:layout_height="30dip"
+            android:gravity="center|right"
+            android:paddingRight="10dip"
+            android:text="@string/resume_workexperience"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small_middle_text_size" />
+
+        <TextView
+            android:id="@+id/item2"
+            android:layout_width="match_parent"
+            android:layout_height="20dip"
+            android:gravity="center|right"
+            android:paddingRight="10dip"
+            android:text="@string/resume_workexperience"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small_middle_text_size" />
+    </LinearLayout>
+
+    
+
+</RelativeLayout>

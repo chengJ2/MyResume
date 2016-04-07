@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/top"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/top_bar_height"
+        layout="@layout/top_layout_lable" />
+    
+    <com.me.resume.views.CommScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" >
+
+		 <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical" >
+        
+            <LinearLayout
+                style="@style/noraml_item"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/ji_info_expectedworkingproperty"/>
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:layout_gravity="left|center"
+                    >
+
+                    <RadioButton
+                        android:id="@+id/radionan"
+                        android:checked="true"
+                        android:text="@string/ji_info_expectedworkingproperty_1"
+                        style="@style/user_info_item_radio">
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/radionv"
+                        style="@style/user_info_item_radio"
+                        android:text="@string/ji_info_expectedworkingproperty_2" >
+                    </RadioButton>
+                    <RadioButton
+                        android:id="@+id/radionv"
+                        style="@style/user_info_item_radio"
+                        android:text="@string/ji_info_expectedworkingproperty_2" >
+                    </RadioButton>
+                </RadioGroup>
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <View style="@style/line3" />
+
+            <LinearLayout
+                style="@style/noraml_item" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/ji_info_expectedworkplace" />
+
+                <TextView
+                    android:id="@+id/pi_brithday"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/ji_info_choose_expectedworkplace" />
+
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <View style="@style/line3" />
+
+            <LinearLayout
+                style="@style/noraml_item" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/ji_info_expectedworkindustry" />
+
+                <TextView
+                    android:id="@+id/pi_workyear"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/ji_info_choose_expectedworkindustry" />
+
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <View style="@style/line3" />
+
+            <LinearLayout
+               style="@style/noraml_item" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/ji_info_expectedworkcareer" />
+
+                <EditText
+                    android:id="@+id/info_phone"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/ji_info_choose_expectedworkcareer"
+                    android:inputType="phone" />
+
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <View style="@style/line3" />
+
+            <LinearLayout
+                style="@style/noraml_item" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/ji_info_expectedmonthlysalary" />
+
+                <EditText
+                    android:id="@+id/info_area_hometown"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/ji_info_choose_expectedmonthlysalary" />
+
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <View style="@style/line3" />
+
+            <LinearLayout
+                style="@style/noraml_item" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/ji_info_workingstate" />
+
+                <TextView
+                    android:id="@+id/info_areacity"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/ji_info_workingstate" />
+
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <View style="@style/line3" />
+
+        </LinearLayout>
+    </com.me.resume.views.CommScrollView>
+
+    <com.me.resume.views.CustomFAB
+        android:id="@+id/save"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:tint="@android:color/white" />
+
+    <com.me.resume.views.CustomFAB
+        android:id="@+id/saveandgo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:tint="@android:color/white" />
+
+</RelativeLayout>

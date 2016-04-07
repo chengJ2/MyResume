@@ -1,7 +1,9 @@
 package com.me.resume;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,14 +16,20 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.me.resume.comm.CommForMapArrayBaseAdapter;
+import com.me.resume.comm.CommonBaseAdapter;
+import com.me.resume.comm.ViewHolder;
 import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.views.JazzyViewPager;
 import com.me.resume.views.JazzyViewPager.TransitionEffect;
 import com.me.resume.views.TagFlowLayout;
+import com.whjz.android.listview.CustomListView;
+import com.whjz.android.text.CommonText;
 
 /**
  * 
@@ -45,6 +53,8 @@ public class MainActivity extends SwipeBackActivity {
 	private static final int VIEW_CHANGE_TIME = 10000;
 	
 	private boolean showEffect = true;
+	
+	private ListView weListview;
 	
 	private Handler mHandler = new Handler() {
 
@@ -100,14 +110,44 @@ public class MainActivity extends SwipeBackActivity {
 	private void initViews(){
 		mInflater = LayoutInflater.from(this);
         view1 = mInflater.inflate(R.layout.index_resume_1, null);
+        
         view2 = mInflater.inflate(R.layout.index_resume_2, null);
+        weListview = (ListView)view2.findViewById(R.id.weListview);
+        
         view3 = mInflater.inflate(R.layout.index_resume_3, null);
         view4 = mInflater.inflate(R.layout.index_resume_4, null);
         view5 = mInflater.inflate(R.layout.index_resume_5, null);
         
         //添加页卡视图
         mViewList.add(view1);
-        mViewList.add(view2);
+        
+        String where = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1";
+        final Map<String, String[]> map = dbUtil.queryData(MainActivity.this, where);
+        if (map!= null && map.get("userId").length > 0) {
+        	mViewList.add(view2);
+        	int LayoutID = R.layout.index_2_list_item;
+        	int we_show_nav = getPreferenceData("we_show_nav",1);
+        	if(we_show_nav == 1){
+        		LayoutID = R.layout.index_2_list_item;
+			}else if(we_show_nav == 2){
+				LayoutID = R.layout.index_2_list2_item;
+			}else if(we_show_nav == 3){
+				
+			}
+        	CommForMapArrayBaseAdapter commMapAdapter = new CommForMapArrayBaseAdapter(MainActivity.this,
+        			map,LayoutID,"userId") {
+				
+				@Override
+				public void convert(ViewHolder holder, String[] item, int position) {
+					// TODO Auto-generated method stub
+					holder.setText(R.id.item1, map.get("companyname")[position]);
+					holder.setText(R.id.item2, map.get("worktimeStart")[position] + " 至 " + map.get("worktimeEnd")[position]);
+				}
+			};
+        	
+        	weListview.setAdapter(commMapAdapter);
+		}
+        
         mViewList.add(view3);
         mViewList.add(view4);
         mViewList.add(view5);

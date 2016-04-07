@@ -34,7 +34,7 @@
                     android:text="@string/we_info_companyname" />
 
                 <EditText
-                    android:id="@+id/info_nickname"
+                    android:id="@+id/info_companyname"
                     style="@style/user_info_item_ed"
                     android:hint="@string/we_info_input_companyname" />
                  <ImageView
@@ -51,8 +51,8 @@
                     style="@style/user_info_item_tv"
                     android:text="@string/we_info_industryclassification"/>
 
-                <EditText
-                    android:id="@+id/info_nickname"
+                <TextView
+                    android:id="@+id/info_industryclassification"
                     style="@style/user_info_item_ed"
                     android:hint="@string/we_info_choose_industryclassification" />
                   <ImageView
@@ -71,7 +71,7 @@
                     android:text="@string/we_info_jobtitle" />
 
                 <EditText
-                    android:id="@+id/pi_sex"
+                    android:id="@+id/info_jobtitle"
                     android:hint="@string/we_info_choose_jobtitle"
                     style="@style/user_info_item_ed" />
 
@@ -90,7 +90,7 @@
                     android:text="@string/we_info_worktime" />
 
                 <TextView
-                    android:id="@+id/pi_age"
+                    android:id="@+id/info_worktime"
                    style="@style/user_info_item_ed"
                     android:hint="@string/we_info_choose_worktime" />
 
@@ -107,7 +107,7 @@
                     android:text="@string/we_info_expectedsalary" />
 
                 <TextView
-                    android:id="@+id/we_zwyx"
+                    android:id="@+id/info_expectedsalary"
                     style="@style/user_info_item_ed"
                     android:hint="@string/we_info_choose_expectedsalary" />
                  <ImageView
@@ -125,7 +125,7 @@
                     android:text="@string/we_info_workdesc" />
 
                 <EditText
-                    android:id="@+id/info_area"
+                    android:id="@+id/info_workdescdetail"
                     style="@style/user_info_item_ed"
                     android:singleLine="false"
                     android:hint="@string/we_info_workdescdetail" />
@@ -140,28 +140,28 @@
        android:id="@+id/save"
        android:layout_width="50dp"
        android:layout_height="50dp"
-       android:text="保存"
        android:layout_alignParentBottom="true"
        android:layout_alignParentLeft="true"
        android:layout_marginLeft="16dp"
        android:layout_marginBottom="16dp"
+       android:src="@drawable/ic_btn_add"
        android:tint="@android:color/white"/>
      
      <com.me.resume.views.CustomFAB
        android:id="@+id/saveandnew"
        android:layout_width="50dp"
        android:layout_height="50dp"
-       android:text="保存并新增经历"
        android:layout_alignParentBottom="true"
        android:layout_centerInParent="true"
        android:layout_marginBottom="16dp"
+       android:src="@drawable/ic_btn_add"
        android:tint="@android:color/white"/>
      
      <com.me.resume.views.CustomFAB
        android:id="@+id/saveandgo"
        android:layout_width="50dp"
        android:layout_height="50dp"
-       android:text="保存并继续"
+       android:src="@drawable/ic_btn_add"
        android:layout_alignParentBottom="true"
        android:layout_alignParentRight="true"
        android:layout_marginRight="16dp"

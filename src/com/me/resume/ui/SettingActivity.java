@@ -26,6 +26,9 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 	private RadioGroup radioGroup;
 	private RadioButton mRadio1, mRadio2;
 	
+	private RadioGroup radioGroup_show;
+	private RadioButton radio_left, radio_right,radionv_middle;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -34,6 +37,12 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 		radioGroup = findView(R.id.radioGroup);
 		mRadio1 = findView(R.id.radioyes);
 		mRadio2 = findView(R.id.radiono);
+		
+		radioGroup_show = findView(R.id.radioGroup_show);
+		radio_left = findView(R.id.radio_left);
+		radio_right = findView(R.id.radio_right);
+		radionv_middle = findView(R.id.radionv_middle);
+		
 		
 		toptext = findView(R.id.top_text);
 		leftLable = findView(R.id.left_lable);
@@ -44,6 +53,11 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 		
 		mRadio1.setChecked(true);
 		mRadio2.setChecked(false);
+		
+		radio_left.setChecked(true);
+		radio_right.setChecked(false);
+		radionv_middle.setChecked(false);
+		
 		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
 			@Override
@@ -52,6 +66,20 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 					setPreferenceData("firstInstall",1);
 				}else{
 					setPreferenceData("firstInstall",0);
+				}
+			}
+		});
+		
+		radioGroup_show.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				if (checkedId == radio_left.getId()) {
+					setPreferenceData("we_show_nav",1);
+				}else if (checkedId == radio_right.getId()){
+					setPreferenceData("we_show_nav",2);
+				}else if (checkedId == radionv_middle.getId()){
+					setPreferenceData("we_show_nav",3);
 				}
 			}
 		});

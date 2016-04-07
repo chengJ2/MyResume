@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+
+    <com.me.resume.views.CommScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" 
+        android:layout_below="@id/top">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:minHeight="55dip"
+                 android:paddingLeft="20dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                   style="@style/user_info_item_tv"
+                    android:text="时间" />
+
+                <EditText
+                    android:id="@+id/info_area"
+                    style="@style/user_info_item_ed"
+                    android:hint="请输入时间" />
+                 <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
+            </LinearLayout>
+            
+             <View style="@style/line3" />
+            
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="55dip"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                 android:paddingLeft="20dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                   style="@style/user_info_item_tv"
+                    android:text="培训机构" />
+
+                <EditText
+                    android:id="@+id/info_area"
+                    style="@style/user_info_item_ed"
+                    android:hint="请输入培训机构" />
+                 <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
+            </LinearLayout>
+             <View style="@style/line3" />
+             
+             <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:minHeight="55dip"
+                android:orientation="horizontal"
+                android:paddingLeft="20dip"
+                android:visibility="visible" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="培训课程"/>
+
+                <EditText
+                    android:id="@+id/info_area"
+                    style="@style/user_info_item_ed"
+                    android:hint="请输入培训课程" />
+                 <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
+            </LinearLayout>
+            <View style="@style/line3" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="55dip"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                 android:paddingLeft="20dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                   style="@style/user_info_item_tv"
+                    android:text="获得证书" />
+
+                <EditText
+                    android:id="@+id/info_area"
+                    style="@style/user_info_item_ed"
+                    android:hint="请输入证书" />
+                 <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
+            </LinearLayout>
+             <View style="@style/line3" />
+            
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="150dip"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                 android:paddingLeft="20dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                   style="@style/user_info_item_tv"
+                    android:text="详细描述" />
+
+                <EditText
+                    android:id="@+id/info_area"
+                    style="@style/user_info_item_ed"
+                    android:hint="" />
+                 <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="visible" />
+            </LinearLayout>
+            <View style="@style/line3" />
+        </LinearLayout>
+    </com.me.resume.views.CommScrollView>
+</RelativeLayout>

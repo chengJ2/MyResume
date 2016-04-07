@@ -52,10 +52,10 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		
-		if(getPreferenceData("firstInstall",1) == 1){
-			ActivityUtils.startActivity(HomeActivity.this, MyApplication.PACKAGENAME 
-					+ ".MainActivity",true);
-		}
+//		if(getPreferenceData("firstInstall",1) == 1){
+//			ActivityUtils.startActivity(HomeActivity.this, MyApplication.PACKAGENAME 
+//					+ ".MainActivity",true);
+//		}
 		topText = findView(R.id.top_text);
 		leftLable = findView(R.id.left_lable);
 		leftLable.setText(CommUtil.getStrValue(HomeActivity.this, R.string.resume_personcenter));

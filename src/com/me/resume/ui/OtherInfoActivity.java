@@ -3,8 +3,6 @@ package com.me.resume.ui;
 import java.util.Arrays;
 import java.util.List;
 
-import org.w3c.dom.Text;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -51,11 +49,11 @@ public class OtherInfoActivity extends SwipeBackActivity implements OnClickListe
 				int position = (int) msg.obj;
 				if (whichTab == 1) {
 					info_waiyu.setText(mList.get(position));
-					info_dx.setEnabled(false);
-					info_ts.setEnabled(false);
+					info_dx.setEnabled(true);
+					info_ts.setEnabled(true);
 				}else if(whichTab == 2){
 					info_dx.setText(mList.get(position));
-				}else if(whichTab == 2){
+				}else if(whichTab == 3){
 					info_ts.setText(mList.get(position));
 				}
 				DialogUtils.dismissPopwindow();
@@ -88,8 +86,8 @@ public class OtherInfoActivity extends SwipeBackActivity implements OnClickListe
 		info_ts.setOnClickListener(this);
 		
 		if (CommUtil.textIsNull(info_waiyu)) {
-			info_dx.setEnabled(true);
-			info_ts.setEnabled(true);
+			info_dx.setEnabled(false);
+			info_ts.setEnabled(false);
 		}
 	}
 
@@ -108,33 +106,26 @@ public class OtherInfoActivity extends SwipeBackActivity implements OnClickListe
 			break;
 		case R.id.oi_info_waiyu:
 			whichTab = 1;
-			mList.clear();
-			item_text = CommUtil.getArrayValue(OtherInfoActivity.this,R.array.oi_wysp_values); 
-			mList = Arrays.asList(item_text);
-			DialogUtils.showPopWindow(OtherInfoActivity.this, info_waiyu, 
-					R.string.we_info_expectedsalary, mList, 
-					mHandler);
+			getValues(R.array.oi_wysp_values);
 			break;
 		case R.id.oi_info_dxnl:
 			whichTab = 2;
-			mList.clear();
-			item_text = CommUtil.getArrayValue(OtherInfoActivity.this,R.array.oi_tsdx_values); 
-			mList = Arrays.asList(item_text);
-			DialogUtils.showPopWindow(OtherInfoActivity.this, info_waiyu, 
-					R.string.we_info_expectedsalary, mList, 
-					mHandler);
+			getValues(R.array.oi_tsdx_values);
 			break;
 		case R.id.oi_info_tsnl:
 			whichTab = 3;
-			mList.clear();
-			item_text = CommUtil.getArrayValue(OtherInfoActivity.this,R.array.oi_tsdx_values); 
-			mList = Arrays.asList(item_text);
-			DialogUtils.showPopWindow(OtherInfoActivity.this, info_waiyu, 
-					R.string.we_info_expectedsalary, mList, 
-					mHandler);
+			getValues(R.array.oi_tsdx_values);
 			break;
 		default:
 			break;
 		}
+	}
+
+	private void getValues(int array) {
+		item_text = CommUtil.getArrayValue(OtherInfoActivity.this,array); 
+		mList = Arrays.asList(item_text);
+		DialogUtils.showPopWindow(OtherInfoActivity.this, info_waiyu, 
+				R.string.we_info_expectedsalary, mList, 
+				mHandler);
 	}
 }

@@ -32,7 +32,7 @@
                 android:layout_height="45dip"
                 android:gravity="center|left"
                 android:padding="5dip"
-                android:text="对自己做一个简短评价，简明扼要地描述您的职业优势，让用人单位快速地了解您！"
+                android:text="@string/ev_info_default_1"
                 android:textColor="@color/black"
                 android:textSize="@dimen/small_text_size" />
 
@@ -42,12 +42,12 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="自我评价" />
+                    android:text="@string/ev_info_self_evaluation" />
 
                 <EditText
-                    android:id="@+id/info_area"
+                    android:id="@+id/info_self_evaluation"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入自我评价" />
+                    android:hint="@string/ev_info_input_self_evaluation" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
@@ -60,12 +60,12 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="职业目标" />
+                    android:text="@string/ev_info_career_goal" />
 
                 <EditText
-                    android:id="@+id/info_area"
+                    android:id="@+id/info_career_goal"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入职业目标" />
+                    android:hint="@string/ev_info_input_career_goal" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center|left"
                 android:padding="5dip"
-                android:text="填写文字在100个字以上评定等级，少于不计算，内容越详细，等级越高"
+                android:text="@string/ev_info_default_2"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/micro_text_size" />
         </LinearLayout>
@@ -93,7 +93,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
-        android:text="保存"
+        android:src="@drawable/ic_btn_add"
         android:tint="@android:color/white" />
 
     <com.me.resume.views.CustomFAB
@@ -103,7 +103,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginBottom="16dp"
-        android:text="保存并新增经历"
+        android:src="@drawable/ic_btn_add"
         android:tint="@android:color/white" />
 
     <com.me.resume.views.CustomFAB
@@ -114,7 +114,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
-        android:text="保存并继续"
+        android:src="@drawable/ic_btn_add"
         android:tint="@android:color/white" />
 
 </RelativeLayout>

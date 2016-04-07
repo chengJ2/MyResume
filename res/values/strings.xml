@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">个人简历</string>
+	<string name="app_name">MyResume</string>
+<!--     <string name="app_name">个人简历</string> -->
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">设置</string>
 
@@ -19,6 +19,15 @@
     <string name="resume_excellentskills">擅长技能</string>
     <string name="resume_education">教育经历</string>
     <string name="resume_otherinfo">其他信息</string>
+    
+   <string name="refresh_down_text">下拉可刷新</string>
+	<string name="refresh_release_text">松开可刷新</string>
+	<string name="toast_text">ScrollView下拉刷新完毕</string>
+	
+	<string name="check_network">网络异常,请检查!</string>
+    <string name="en_nodata">暂无数据!</string>
+    <string name="timeout_network">网络请求数据超时</string>
+	<string name="request_error">请求异常,请检查!</string>
     
     <!-- 基本资料 -->
     <string name="info_name">姓&#160;&#160;名</string>
@@ -66,8 +75,34 @@
     <string name="we_info_worktime">工作时间</string>
     <string name="we_info_choose_worktime">请选择工作时间</string>
     <string name="we_info_expectedsalary">期望月薪(税前)</string>
-    <string name="we_info_choose_expectedsalary">请选择期望月薪(税前)</string>
+    <string name="we_info_choose_expectedsalary">请选择期望月薪</string>
     <string name="we_info_workdesc">工作描述</string>
     <string name="we_info_workdescdetail">请详细描述您的职责范围,工作任务以及取得的成绩等</string>
     <!-- 工作简历 -->
+    
+    <!-- 自我评价 -->
+    <string name="ev_info_default_1">对自己做一个简短评价，简明扼要地描述您的职业优势，让用人单位快速地了解您！</string>
+    <string name="ev_info_default_2">填写文字在100个字以上评定等级，少于不计算，内容越详细，等级越高!</string>
+    <string name="ev_info_self_evaluation">自我评价</string>
+    <string name="ev_info_input_self_evaluation">请输入自我评价</string>
+    <string name="ev_info_career_goal">职业目标</string>
+    <string name="ev_info_input_career_goal">请输入职业目标</string>
+    <!-- 自我评价 -->
+    
+    <!-- 求职意向  -->
+    <string name="ji_info_expectedworkingproperty">期望工作性质</string>
+    <string name="ji_info_expectedworkingproperty_1">全职</string>
+    <string name="ji_info_expectedworkingproperty_2">兼职</string>
+    <string name="ji_info_expectedworkingproperty_3">实习</string>
+    <string name="ji_info_expectedworkplace">期望工作地点</string>
+    <string name="ji_info_choose_expectedworkplace">请选择期望工作地点</string>
+    <string name="ji_info_expectedworkindustry">期望从事行业</string>
+    <string name="ji_info_choose_expectedworkindustry">请选择期望从事行业</string>
+    <string name="ji_info_expectedworkcareer">期望从事职业</string>
+    <string name="ji_info_choose_expectedworkcareer">请选择期望从事职业</string>
+    <string name="ji_info_expectedmonthlysalary">期望月薪（税前）</string>
+    <string name="ji_info_choose_expectedmonthlysalary">请选择期望月薪（税前）</string>
+    <string name="ji_info_workingstate">工作状态</string>
+    <string name="ji_info_choose_workingstate">请选择工作状态</string>
+    <!-- 求职意向  -->
 </resources>

@@ -28,24 +28,16 @@
 
             <LinearLayout
                 android:id="@+id/llout01"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dip"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:orientation="horizontal"
-                android:paddingLeft="20dip" >
+                style="@style/noraml_item"
+                android:layout_height="80dip" >
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:layout_weight="2"
                     android:text="是否每次启动简历预览界面" />
                 
                 <RadioGroup
                     android:id="@+id/radioGroup"
-                    android:layout_weight="2"
+                    android:layout_weight="6"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -66,7 +58,48 @@
                         android:text="否" >
                     </RadioButton>
                 </RadioGroup>
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
             </LinearLayout>
+            <View style="@style/line3" />
+             <LinearLayout
+                style="@style/noraml_item"
+                 android:layout_height="wrap_content" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="工作经验在预览界面显示" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup_show"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left|center"
+                    android:layout_weight="6" >
+
+                    <RadioButton
+                        android:id="@+id/radio_left"
+                        android:checked="true"
+                        android:text="向左"
+                        style="@style/user_info_item_radio" />
+
+                    <RadioButton
+                        android:id="@+id/radio_right"
+                        style="@style/user_info_item_radio"
+                        android:text="向右" />
+
+                    <RadioButton
+                        android:id="@+id/radionv_middle"
+                        style="@style/user_info_item_radio"
+                        android:text="中间" />
+                </RadioGroup>
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <View style="@style/line3" />
 
         </LinearLayout>
     </com.me.resume.views.CommScrollView>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:attr="http://schemas.android.com/apk/res/com.me.resume"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:layout_gravity="center"
+    android:fitsSystemWindows="true" >
+
+    <include
+        android:id="@+id/top"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/top_bar_height"
+        layout="@layout/top_layout_lable" />
+
+   <LinearLayout 
+        android:id="@+id/llayout"
+	    android:layout_width="240dip"
+	    android:layout_height="wrap_content"
+	    android:layout_centerHorizontal="true"
+	    android:layout_below="@id/top"
+	    android:orientation="horizontal"
+	    android:layout_marginTop="5dip">
+       
+         <com.me.resume.views.SegmentButton
+	        android:id="@+id/segment_button"
+	        android:layout_width="match_parent"
+	        android:layout_height="35dip"
+	        attr:buttonContent="教育背景;培训经历;"
+	        attr:textSize="13"/>
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:id="@+id/layout_content"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical"
+	    android:layout_below="@id/llayout"/>
+    
+    <com.me.resume.views.CustomFAB
+       android:id="@+id/save"
+       android:layout_width="50dp"
+       android:layout_height="50dp"
+       android:text="保存"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentLeft="true"
+       android:layout_marginLeft="16dp"
+       android:layout_marginBottom="16dp"
+       android:tint="@android:color/white"/>
+     
+     <com.me.resume.views.CustomFAB
+       android:id="@+id/saveAnd"
+       android:layout_width="50dp"
+       android:layout_height="50dp"
+       android:text="保存并新增经历"
+       android:layout_alignParentBottom="true"
+       android:layout_centerInParent="true"
+       android:layout_marginBottom="16dp"
+       android:tint="@android:color/white"/>
+     
+     <com.me.resume.views.CustomFAB
+       android:id="@+id/saveGo"
+       android:layout_width="50dp"
+       android:layout_height="50dp"
+       android:text="保存并继续"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentRight="true"
+       android:layout_marginRight="16dp"
+       android:layout_marginBottom="16dp"
+       android:tint="@android:color/white"/>
+</RelativeLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 import android.util.Log;
 import android.widget.EditText;
@@ -105,6 +106,23 @@ public class CommUtil {
 			return false;
 		}
 	}
+	
+	/**
+	 * 
+	 * @Title:CommUtil
+	 * @Description: 获取文本值
+	 * @author Comsys-WH1510032
+	 * @return 返回类型
+	 * @param textView
+	 * @return
+	 */
+	public static String getTextValue(TextView textView) {
+		String value = textView.getText().toString().trim();
+		if (!value.equals("") && value != null) {
+			return value;
+		}
+		return "";
+	}
 
 	/**
 	 * 
@@ -122,6 +140,23 @@ public class CommUtil {
 		} else {
 			return false;
 		}
+	}
+	
+	/**
+	 * 
+	 * @Title:CommUtil
+	 * @Description: 获取文本值
+	 * @author Comsys-WH1510032
+	 * @return 返回类型
+	 * @param textView
+	 * @return
+	 */
+	public static String getEditTextValue(EditText editText) {
+		String value = editText.getText().toString().trim();
+		if (!value.equals("") && value != null) {
+			return value;
+		}
+		return "";
 	}
 
 	/**
@@ -209,6 +244,26 @@ public class CommUtil {
 			Log.e("NetworkInfo", "Exception", e);
 		}
 		return code;
+	}
+	
+	public static boolean isNetworkAvailable(Context mContext) {
+		// TODO Auto-generated method stub
+		ConnectivityManager connectivity = (ConnectivityManager) mContext
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		if (connectivity == null) {
+
+		} else {
+			NetworkInfo[] info = connectivity.getAllNetworkInfo();
+			if (info != null) {
+//				System.out.println("NetworkInfo  info.length =" + info.length);
+				for (int i = 0; i < info.length; i++) {
+					if (info[i].getState() == NetworkInfo.State.CONNECTED) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	/**

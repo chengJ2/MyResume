@@ -17,7 +17,7 @@ public class TimeUtils {
     /**
      * DEFAULT_FORMAT_STRING
      */
-    public static final String DEFAULT_FORMAT_STRING = "yyyy-MM-dd HH:mm";
+    public static final String DEFAULT_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss";
     /**
      * ThreadLocal<SimpleDateFormat> dateFormater
      */
