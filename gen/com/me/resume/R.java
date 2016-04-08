@@ -254,11 +254,14 @@ containing a value of this type.
         public static final int shadow_bottom=0x7f02002d;
         public static final int shadow_left=0x7f02002e;
         public static final int shadow_right=0x7f02002f;
-        public static final int textview_bg=0x7f020030;
-        public static final int top_left_icon=0x7f020031;
-        public static final int ump_background_info=0x7f020032;
-        public static final int ump_background_popup=0x7f020033;
-        public static final int update_bg=0x7f020034;
+        public static final int switch_btn=0x7f020030;
+        public static final int switch_off=0x7f020031;
+        public static final int switch_on=0x7f020032;
+        public static final int textview_bg=0x7f020033;
+        public static final int top_left_icon=0x7f020034;
+        public static final int ump_background_info=0x7f020035;
+        public static final int ump_background_popup=0x7f020036;
+        public static final int update_bg=0x7f020037;
     }
     public static final class id {
         public static final int accordion=0x7f050001;
@@ -282,10 +285,10 @@ containing a value of this type.
         public static final int info_areanationality=0x7f050021;
         public static final int info_areapost=0x7f05001c;
         public static final int info_career_goal=0x7f050034;
-        public static final int info_companyname=0x7f050047;
+        public static final int info_companyname=0x7f050048;
         public static final int info_expectedsalary=0x7f05004d;
-        public static final int info_industryclassification=0x7f050048;
-        public static final int info_jobtitle=0x7f05004a;
+        public static final int info_industryclassification=0x7f050049;
+        public static final int info_jobtitle=0x7f05004b;
         public static final int info_license=0x7f050022;
         public static final int info_phone=0x7f050019;
         public static final int info_realname=0x7f050013;
@@ -307,8 +310,8 @@ containing a value of this type.
         public static final int list_item_textview=0x7f050063;
         public static final int llayout=0x7f05002e;
         public static final int llout01=0x7f050012;
-        public static final int llout02=0x7f050049;
-        public static final int llout03=0x7f05004b;
+        public static final int llout02=0x7f05004a;
+        public static final int llout03=0x7f050046;
         public static final int name=0x7f050060;
         public static final int oi_info_dxnl=0x7f05003e;
         public static final int oi_info_tsnl=0x7f05003f;
@@ -319,13 +322,13 @@ containing a value of this type.
         public static final int radioGroup=0x7f050014;
         public static final int radioGroup_hwjl=0x7f050023;
         public static final int radioGroup_hy=0x7f05001d;
-        public static final int radioGroup_show=0x7f050043;
+        public static final int radioGroup_show=0x7f050042;
         public static final int radioGroup_zzmm=0x7f050026;
-        public static final int radio_left=0x7f050044;
+        public static final int radio_left=0x7f050043;
         public static final int radio_mzdp=0x7f05002a;
         public static final int radio_no=0x7f050025;
         public static final int radio_qz=0x7f050029;
-        public static final int radio_right=0x7f050045;
+        public static final int radio_right=0x7f050044;
         public static final int radio_ty=0x7f050028;
         public static final int radio_wdprs=0x7f05002b;
         public static final int radio_wh=0x7f05001e;
@@ -333,11 +336,9 @@ containing a value of this type.
         public static final int radio_yh=0x7f05001f;
         public static final int radio_zgdy=0x7f050027;
         public static final int radionan=0x7f050015;
-        public static final int radiono=0x7f050042;
         public static final int radionv=0x7f050016;
         public static final int radionv_ly=0x7f050020;
-        public static final int radionv_middle=0x7f050046;
-        public static final int radioyes=0x7f050041;
+        public static final int radionv_middle=0x7f050045;
         public static final int refresh_hint=0x7f05006b;
         public static final int refresh_time=0x7f050069;
         public static final int right=0x7f050010;
@@ -353,6 +354,8 @@ containing a value of this type.
         public static final int saveandnew=0x7f05004f;
         public static final int segment_button=0x7f05002f;
         public static final int selected_view=0x7f050000;
+        public static final int setting_auto_cb=0x7f050047;
+        public static final int setting_start_cb=0x7f050041;
         public static final int stack=0x7f050008;
         public static final int standard=0x7f050009;
         public static final int swipe=0x7f05006c;

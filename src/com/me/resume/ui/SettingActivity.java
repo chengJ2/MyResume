@@ -10,6 +10,9 @@ import android.widget.TextView;
 import com.me.resume.R;
 import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.L;
+import com.me.resume.views.SwitchButton;
+import com.me.resume.views.SwitchButton.OnChangedListener;
 
 /**
  * 
@@ -23,26 +26,25 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 
 	private TextView toptext,leftLable,rightLable;
 	
-	private RadioGroup radioGroup;
-	private RadioButton mRadio1, mRadio2;
-	
 	private RadioGroup radioGroup_show;
 	private RadioButton radio_left, radio_right,radionv_middle;
+	
+	private SwitchButton setting_start_cb,setting_auto_cb;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting);
-		radioGroup = findView(R.id.radioGroup);
-		mRadio1 = findView(R.id.radioyes);
-		mRadio2 = findView(R.id.radiono);
 		
 		radioGroup_show = findView(R.id.radioGroup_show);
 		radio_left = findView(R.id.radio_left);
 		radio_right = findView(R.id.radio_right);
 		radionv_middle = findView(R.id.radionv_middle);
 		
+		setting_start_cb = findView(R.id.setting_start_cb);
+		
+		setting_auto_cb = findView(R.id.setting_auto_cb);
 		
 		toptext = findView(R.id.top_text);
 		leftLable = findView(R.id.left_lable);
@@ -51,24 +53,9 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 		toptext.setText(CommUtil.getStrValue(SettingActivity.this, R.string.action_settings));
 		rightLable.setVisibility(View.INVISIBLE);
 		
-		mRadio1.setChecked(true);
-		mRadio2.setChecked(false);
-		
 		radio_left.setChecked(true);
 		radio_right.setChecked(false);
 		radionv_middle.setChecked(false);
-		
-		radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				if (checkedId == mRadio1.getId()) {
-					setPreferenceData("firstInstall",1);
-				}else{
-					setPreferenceData("firstInstall",0);
-				}
-			}
-		});
 		
 		radioGroup_show.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
@@ -83,8 +70,67 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 				}
 			}
 		});
+		
+		
+		
+		setting_start_cb.setOnChangedListener(new OnChangedListener() {
+			
+			@Override
+			public void OnChanged(SwitchButton switchButton, boolean checkState) {
+				// TODO Auto-generated method stub
+				int onoff = 0;
+				if(startVerytime == 0){
+					onoff = 1;
+				}else{
+					onoff = 0;
+				}
+				L.d("===onoff===="+onoff);
+				setPreferenceData("startVerytime", onoff); 
+			}
+		});
+		
+		setting_auto_cb.setOnChangedListener(new OnChangedListener() {
+			
+			@Override
+			public void OnChanged(SwitchButton switchButton, boolean checkState) {
+				// TODO Auto-generated method stub
+				int onoff = 0;
+				if(autoShow == 0){
+					onoff = 1;
+				}else{
+					onoff = 0;
+				}
+				L.d("===onoff===="+onoff);
+				setPreferenceData("autoShow", onoff); 
+			}
+		});
 	}
 
+	private int autoShow = 0,startVerytime = 0;
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
+		autoShow = getPreferenceData("autoShow", 0);
+		startVerytime = getPreferenceData("startVerytime", 0);
+		
+		L.d("===autoShow===="+autoShow + "  startVerytime:"+startVerytime);
+		
+		if (startVerytime == 0) {
+			setting_start_cb.setChecked(false);
+		}else{
+			setting_start_cb.setChecked(true);
+		}
+		
+		if (autoShow == 0) {
+			setting_auto_cb.setChecked(false);
+		}else{
+			setting_auto_cb.setChecked(true);
+		}
+	}
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {

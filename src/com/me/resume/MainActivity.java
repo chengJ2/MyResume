@@ -111,6 +111,8 @@ public class MainActivity extends SwipeBackActivity {
 		mInflater = LayoutInflater.from(this);
         view1 = mInflater.inflate(R.layout.index_resume_1, null);
         
+        
+        
         view2 = mInflater.inflate(R.layout.index_resume_2, null);
         weListview = (ListView)view2.findViewById(R.id.weListview);
         
@@ -164,13 +166,15 @@ public class MainActivity extends SwipeBackActivity {
 		}
 		
 		jazzyViewPager.setCurrentItem(0);
-		mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO, VIEW_CHANGE_TIME);
+		
+		if(getPreferenceData("autoShow", 0) == 1){
+			mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO, VIEW_CHANGE_TIME);
+		}
 		
 		jazzyViewPager.setAdapter(new MyPagerAdapter(mViewList));
 		
 		nameTextView.setText(CommUtil.getStrValue(_context, R.string.info_name) 
         		+ " :"+ getPreferenceData("info_realname",""));
-        
         
         MarginLayoutParams lp = new MarginLayoutParams(  
                 LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);  

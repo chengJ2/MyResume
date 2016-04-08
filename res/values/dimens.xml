@@ -26,5 +26,5 @@
     
     <dimen name="normal_item_height">55.0dp</dimen>
     <dimen name="mul_item_height">150.0dp</dimen>
-    <dimen name="normal_item_padding_left">18.0dp</dimen>
+    <dimen name="normal_item_padding_left">12.0dp</dimen>
 </resources>

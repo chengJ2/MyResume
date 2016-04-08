@@ -33,42 +33,39 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
+                    android:layout_weight="5"
                     android:text="是否每次启动简历预览界面" />
-                
-                <RadioGroup
-                    android:id="@+id/radioGroup"
-                    android:layout_weight="6"
+
+                <LinearLayout
                     android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="4"
+                    android:paddingTop="22dip"
+                    android:paddingLeft="40dip"
+                    android:gravity="center|right">
 
-                    <RadioButton
-                        android:id="@+id/radioyes"
+                    <com.me.resume.views.SwitchButton
+                        android:id="@+id/setting_start_cb"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="是" >
-                    </RadioButton>
+                        android:layout_height="match_parent"
+                        android:visibility="visible" />
+                </LinearLayout>
 
-                    <RadioButton
-                        android:id="@+id/radiono"
-                        android:layout_marginLeft="20dip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="否" >
-                    </RadioButton>
-                </RadioGroup>
                 <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
             </LinearLayout>
+
             <View style="@style/line3" />
-             <LinearLayout
+
+            <LinearLayout
                 style="@style/noraml_item"
-                 android:layout_height="wrap_content" >
+                android:layout_height="wrap_content" >
 
                 <TextView
                     style="@style/user_info_item_tv"
+                    android:layout_weight="5"
                     android:text="工作经验在预览界面显示" />
 
                 <RadioGroup
@@ -76,13 +73,13 @@
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center"
-                    android:layout_weight="6" >
+                    android:layout_weight="4" >
 
                     <RadioButton
                         android:id="@+id/radio_left"
+                        style="@style/user_info_item_radio"
                         android:checked="true"
-                        android:text="向左"
-                        style="@style/user_info_item_radio" />
+                        android:text="向左" />
 
                     <RadioButton
                         android:id="@+id/radio_right"
@@ -94,13 +91,47 @@
                         style="@style/user_info_item_radio"
                         android:text="中间" />
                 </RadioGroup>
+
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+
+            <View style="@style/line3" />
+
+            <LinearLayout
+                android:id="@+id/llout03"
+                style="@style/noraml_item"
+                android:layout_height="80dip">
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:layout_weight="5"
+                    android:text="是否开启自动切换简历预览" />
+
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="4"
+                    android:paddingTop="22dip"
+                    android:paddingLeft="40dip"
+                    android:gravity="center|right">
+
+                    <com.me.resume.views.SwitchButton
+                        android:id="@+id/setting_auto_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:visibility="visible" />
+                </LinearLayout>
+
                 <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
             </LinearLayout>
 
             <View style="@style/line3" />
-
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
 

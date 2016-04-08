@@ -8,6 +8,7 @@ import android.app.Application;
 import android.util.DisplayMetrics;
 
 import com.me.resume.utils.CrashHandler;
+import com.tencent.bugly.crashreport.CrashReport;
 
 public class MyApplication extends Application {
 
@@ -45,7 +46,7 @@ public class MyApplication extends Application {
 	private void init() {
 		// TODO Auto-generated method stub
 //		LanguageSettings.getInstance().initLang(this);
-		
+		CrashReport.initCrashReport(getApplicationContext(), "900025676", false);
 		CrashHandler catchExcep = new CrashHandler(this);
     	Thread.setDefaultUncaughtExceptionHandler(catchExcep);
 	}
