@@ -264,14 +264,14 @@ containing a value of this type.
         public static final int update_bg=0x7f020037;
     }
     public static final class id {
-        public static final int accordion=0x7f050001;
-        public static final int all=0x7f05000d;
-        public static final int bottom=0x7f05000e;
+        public static final int accordion=0x7f05000c;
+        public static final int all=0x7f050010;
+        public static final int bottom=0x7f05000f;
         public static final int checkLayout=0x7f050064;
-        public static final int cubein=0x7f050002;
-        public static final int cubeout=0x7f050003;
+        public static final int cubein=0x7f050003;
+        public static final int cubeout=0x7f050004;
         public static final int data_list=0x7f050068;
-        public static final int fliphorizontal=0x7f050004;
+        public static final int fliphorizontal=0x7f050006;
         public static final int flipvertical=0x7f050005;
         public static final int flowlayout=0x7f050062;
         public static final int go=0x7f05003b;
@@ -304,7 +304,7 @@ containing a value of this type.
         public static final int item_textview=0x7f05005b;
         public static final int itemlayout=0x7f050059;
         public static final int layout_content=0x7f050030;
-        public static final int left=0x7f05000f;
+        public static final int left=0x7f05000d;
         public static final int left_lable=0x7f050070;
         public static final int line=0x7f05005d;
         public static final int list_item_textview=0x7f050063;
@@ -341,12 +341,12 @@ containing a value of this type.
         public static final int radionv_middle=0x7f050045;
         public static final int refresh_hint=0x7f05006b;
         public static final int refresh_time=0x7f050069;
-        public static final int right=0x7f050010;
+        public static final int right=0x7f05000e;
         public static final int right_icon=0x7f050072;
         public static final int right_lable=0x7f05006f;
         public static final int rmjlmb=0x7f050036;
-        public static final int rotatedown=0x7f050006;
-        public static final int rotateup=0x7f050007;
+        public static final int rotatedown=0x7f05000b;
+        public static final int rotateup=0x7f05000a;
         public static final int save=0x7f05002c;
         public static final int saveAnd=0x7f050031;
         public static final int saveGo=0x7f050032;
@@ -356,10 +356,10 @@ containing a value of this type.
         public static final int selected_view=0x7f050000;
         public static final int setting_auto_cb=0x7f050047;
         public static final int setting_start_cb=0x7f050041;
-        public static final int stack=0x7f050008;
-        public static final int standard=0x7f050009;
+        public static final int stack=0x7f050007;
+        public static final int standard=0x7f050001;
         public static final int swipe=0x7f05006c;
-        public static final int tablet=0x7f05000a;
+        public static final int tablet=0x7f050002;
         public static final int title=0x7f050067;
         public static final int top=0x7f050011;
         public static final int topLayout=0x7f050035;
@@ -377,8 +377,8 @@ containing a value of this type.
         public static final int xlistview_header_progressbar=0x7f050058;
         public static final int xlistview_header_text=0x7f050054;
         public static final int xlistview_header_time=0x7f050056;
-        public static final int zoomin=0x7f05000b;
-        public static final int zoomout=0x7f05000c;
+        public static final int zoomin=0x7f050008;
+        public static final int zoomout=0x7f050009;
     }
     public static final class layout {
         public static final int activity_baseinfo_layout=0x7f030000;

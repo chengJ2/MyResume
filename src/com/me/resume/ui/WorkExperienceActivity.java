@@ -1,7 +1,9 @@
 package com.me.resume.ui;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import android.content.ContentValues;
 import android.os.Bundle;
@@ -118,28 +120,32 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			String info_worktimeStr = CommUtil.getTextValue(info_worktime);
 			String info_expectedsalaryStr = CommUtil.getTextValue(info_expectedsalary);
 			
-			/*List<String> params = new ArrayList<String>();
+			List<String> params = new ArrayList<String>();
 			List<String> values = new ArrayList<String>();
-			params.add("companyname");
-			params.add("industryclassification");
-			params.add("jobtitle");
-			params.add("worktime");
-			params.add("expectedsalary");
-			params.add("workdesc");
-			params.add("createtime");
+			params.add("p_userId");
+			params.add("p_companyname");
+			params.add("p_industryclassification");
+			params.add("p_jobtitle");
+			params.add("p_worktimeStart");
+			params.add("p_worktimeEnd");
+			params.add("p_expectedsalary");
+			params.add("p_workdesc");
+			//params.add("createtime");
 			
+			values.add("2");
 			values.add(info_companynameStr);
 			values.add(info_jobtitleStr);
 			values.add(info_workdescdetailStr);
 			values.add(info_industryclassificationStr);
-			values.add(info_worktimeStr);
+			values.add("2015-01-22");
+			values.add("2016-04-12");
 			values.add(info_expectedsalaryStr);
-			values.add(TimeUtils.getCurrentTimeInString());*/
+			//values.add(TimeUtils.getCurrentTimeInString());
 		
-//			String where = "delete from " + CommonText.WORKEXPERIENCE;
+			String where = "delete from " + CommonText.WORKEXPERIENCE + " where  userId = 2";
 //			dbUtil.delectData(WorkExperienceActivity.this, where);
 			
-			ContentValues cValues = new ContentValues();
+			/*ContentValues cValues = new ContentValues();
 			cValues.put("userId", "1");
 			cValues.put("companyname", info_companynameStr);
 			cValues.put("industryclassification", info_industryclassificationStr);
@@ -151,9 +157,9 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 			boolean addWorkExperience = dbUtil.insertData(WorkExperienceActivity.this, 
 					CommonText.WORKEXPERIENCE, cValues);
-			L.d("==addWorkExperience=="+addWorkExperience);
+			L.d("==addWorkExperience=="+addWorkExperience);*/
 			
-			/*requestData("procInserUser", 1, params, values,CommonText.WORKEXPERIENCE,where, new HandlerData() {
+			requestData("pro_workexpericnce", 2, params, values,CommonText.WORKEXPERIENCE,where, new HandlerData() {
 				@Override
 				public void error() {
 					CommUtil.ToastMsg(getApplicationContext(), "失败");
@@ -161,10 +167,13 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 				
 				public void success(Map<String, List<String>> map) {
 					try {
+						if (map.get("msg").get(0).equals("200")) {
+							CommUtil.ToastMsg(getApplicationContext(), "新增工作经验成功");
+						}
 					} catch (Exception e) {
 					}
 				}
-			});*/
+			});
 			
 			break;
 		case R.id.saveandgo:
