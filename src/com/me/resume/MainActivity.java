@@ -104,14 +104,17 @@ public class MainActivity extends SwipeBackActivity {
 	    };
 	
 	
-	private TextView nameTextView;
+	private TextView realnameTv,hometownTv;
 	private Button goHomeBtn;
+	
+	private Map<String, String[]> map;
 	
 	private void initViews(){
 		mInflater = LayoutInflater.from(this);
         view1 = mInflater.inflate(R.layout.index_resume_1, null);
         
-        
+        realnameTv = ((TextView)view1.findViewById(R.id.realname));
+        hometownTv = ((TextView)view1.findViewById(R.id.hometown));
         
         view2 = mInflater.inflate(R.layout.index_resume_2, null);
         weListview = (ListView)view2.findViewById(R.id.weListview);
@@ -121,10 +124,19 @@ public class MainActivity extends SwipeBackActivity {
         view5 = mInflater.inflate(R.layout.index_resume_5, null);
         
         //添加页卡视图
-        mViewList.add(view1);
+        String baseinfo = "select * from " + CommonText.BASEINFO + " where userId = 1";
+        map = dbUtil.queryData(MainActivity.this, baseinfo);
+        if (map!= null && map.get("userId").length > 0) {
+        	mViewList.add(view1);
+        	
+        	realnameTv.setText(CommUtil.getStrValue(_context, R.string.info_name_key) 
+            		+ " :"+ map.get("realname")[0]);
+        	hometownTv.setText(CommUtil.getStrValue(_context, R.string.info_hometown_key) 
+            		+ " :"+ map.get("hometown")[0]);
+        }
         
-        String where = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1";
-        final Map<String, String[]> map = dbUtil.queryData(MainActivity.this, where);
+        String workexperience = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1";
+        map = dbUtil.queryData(MainActivity.this, workexperience);
         if (map!= null && map.get("userId").length > 0) {
         	mViewList.add(view2);
         	int LayoutID = R.layout.index_2_list_item;
@@ -154,7 +166,7 @@ public class MainActivity extends SwipeBackActivity {
         mViewList.add(view4);
         mViewList.add(view5);
         
-        nameTextView = ((TextView)view1.findViewById(R.id.name));
+       
         tagFlowLayout = (TagFlowLayout)view3.findViewById(R.id.flowlayout);
         
         goHomeBtn = (Button)view5.findViewById(R.id.go);
@@ -173,8 +185,7 @@ public class MainActivity extends SwipeBackActivity {
 		
 		jazzyViewPager.setAdapter(new MyPagerAdapter(mViewList));
 		
-		nameTextView.setText(CommUtil.getStrValue(_context, R.string.info_name) 
-        		+ " :"+ getPreferenceData("info_realname",""));
+
         
         MarginLayoutParams lp = new MarginLayoutParams(  
                 LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);  

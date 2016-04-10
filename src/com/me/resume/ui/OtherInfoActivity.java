@@ -15,7 +15,6 @@ import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
-import com.me.resume.views.CustomFAB;
 
 /**
  * 
@@ -28,8 +27,6 @@ import com.me.resume.views.CustomFAB;
 public class OtherInfoActivity extends SwipeBackActivity implements OnClickListener{
 
 	private TextView toptext,leftLable,rightLable;
-	
-	private CustomFAB saveGo;
 	
 	private TextView info_waiyu,info_dx,info_ts;
 	
@@ -95,8 +92,6 @@ public class OtherInfoActivity extends SwipeBackActivity implements OnClickListe
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.saveGo:
-			break;
 		case R.id.left_lable:
 			scrollToFinishActivity();
 			break;

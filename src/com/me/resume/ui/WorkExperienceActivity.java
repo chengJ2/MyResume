@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.me.resume.MainActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.swipeback.SwipeBackActivity;
@@ -36,7 +37,7 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 
 	private TextView toptext,leftLable,rightLable;
 	
-	private CustomFAB save,saveandgo;
+	private CustomFAB save,edit,next;
 	
 	private String[] item_text = null;
 	
@@ -92,12 +93,21 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 		info_workdescdetail = findView(R.id.info_workdescdetail);
 		
 		save = findView(R.id.save);
-		saveandgo = findView(R.id.saveandgo);
+		edit = findView(R.id.edit);
+		next = findView(R.id.next);
+		
+		 String workexperience = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1";
+		 Map<String, String[]>  map = dbUtil.queryData(WorkExperienceActivity.this, workexperience);
+         if (map!= null && map.get("userId").length > 0) {
+        	 edit.setVisibility(View.VISIBLE);
+         }else{
+        	 edit.setVisibility(View.GONE);
+         }
 		
 		leftLable.setOnClickListener(this);
 		rightLable.setOnClickListener(this);
 		save.setOnClickListener(this);
-		saveandgo.setOnClickListener(this);
+		next.setOnClickListener(this);
 		leftLable.setOnClickListener(this);
 		info_industryclassification.setOnClickListener(this);
 		info_expectedsalary.setOnClickListener(this);
@@ -145,7 +155,7 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			String where = "delete from " + CommonText.WORKEXPERIENCE + " where  userId = 2";
 //			dbUtil.delectData(WorkExperienceActivity.this, where);
 			
-			/*ContentValues cValues = new ContentValues();
+			ContentValues cValues = new ContentValues();
 			cValues.put("userId", "1");
 			cValues.put("companyname", info_companynameStr);
 			cValues.put("industryclassification", info_industryclassificationStr);
@@ -157,9 +167,12 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 			boolean addWorkExperience = dbUtil.insertData(WorkExperienceActivity.this, 
 					CommonText.WORKEXPERIENCE, cValues);
-			L.d("==addWorkExperience=="+addWorkExperience);*/
+			L.d("==addWorkExperience=="+addWorkExperience);
+			if(addWorkExperience){
+				edit.setVisibility(View.VISIBLE);
+			}
 			
-			requestData("pro_workexpericnce", 2, params, values,CommonText.WORKEXPERIENCE,where, new HandlerData() {
+			/*requestData("pro_workexpericnce", 2, params, values,CommonText.WORKEXPERIENCE,where, new HandlerData() {
 				@Override
 				public void error() {
 					CommUtil.ToastMsg(getApplicationContext(), "失败");
@@ -173,10 +186,10 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 					} catch (Exception e) {
 					}
 				}
-			});
+			});*/
 			
 			break;
-		case R.id.saveandgo:
+		case R.id.next:
 			ActivityUtils.startActivity(WorkExperienceActivity.this, MyApplication.PACKAGENAME 
 					+ ".ui.EvaluationActivity");
 			break;

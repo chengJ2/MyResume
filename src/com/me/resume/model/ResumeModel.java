@@ -1,6 +1,7 @@
 package com.me.resume.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResumeModel implements Serializable{
@@ -12,7 +13,7 @@ public class ResumeModel implements Serializable{
 
 	private Long id;
 	
-	private List<String> picUrl;
+	private ArrayList<String> picUrl;
 	
 	private String title;
 	
@@ -28,11 +29,11 @@ public class ResumeModel implements Serializable{
 		this.id = id;
 	}
 
-	public List<String> getPicUrl() {
+	public ArrayList<String> getPicUrl() {
 		return picUrl;
 	}
 
-	public void setPicUrl(List<String> picUrl) {
+	public void setPicUrl(ArrayList<String> picUrl) {
 		this.picUrl = picUrl;
 	}
 

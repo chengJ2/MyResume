@@ -41,7 +41,6 @@
        android:id="@+id/save"
        android:layout_width="50dp"
        android:layout_height="50dp"
-       android:text="保存"
        android:layout_alignParentBottom="true"
        android:layout_alignParentLeft="true"
        android:layout_marginLeft="16dp"
@@ -49,20 +48,18 @@
        android:tint="@android:color/white"/>
      
      <com.me.resume.views.CustomFAB
-       android:id="@+id/saveAnd"
+       android:id="@+id/edit"
        android:layout_width="50dp"
        android:layout_height="50dp"
-       android:text="保存并新增经历"
        android:layout_alignParentBottom="true"
        android:layout_centerInParent="true"
        android:layout_marginBottom="16dp"
        android:tint="@android:color/white"/>
      
      <com.me.resume.views.CustomFAB
-       android:id="@+id/saveGo"
+       android:id="@+id/next"
        android:layout_width="50dp"
        android:layout_height="50dp"
-       android:text="保存并继续"
        android:layout_alignParentBottom="true"
        android:layout_alignParentRight="true"
        android:layout_marginRight="16dp"

@@ -2,17 +2,22 @@ package com.me.resume.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.me.resume.MainActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.CommonBaseAdapter;
@@ -21,6 +26,7 @@ import com.me.resume.model.ResumeModel;
 import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
+import com.whjz.android.text.CommonText;
 
 /**
  * 
@@ -68,6 +74,9 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener{
 		makeResume = findView(R.id.go);
 		setData();
         setGridView();
+        
+//        TelephonyManager TelephonyMgr = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+//		keyID = TelephonyMgr.getDeviceId();
 	        
 	}
 	
@@ -84,7 +93,7 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener{
     	for (int i = 0; i < 10; i++) {
 			
     		ResumeModel item = new ResumeModel();
-    		List<String> url = new ArrayList<String>();
+    		ArrayList<String> url = new ArrayList<String>();
     		url.add(R.drawable.a001+"");
     		url.add(R.drawable.a002+"");
     		url.add(R.drawable.a003+"");
@@ -142,6 +151,20 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener{
 		};  
 		gridView.setAdapter(commAdapter);
 		
+		gridView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(HomeActivity.this, ImagePagerActivity.class);
+			    // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+			    intent.putStringArrayListExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, resumeModelList.get(position).getPicUrl());
+			    intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+			    startActivity(intent);
+			}
+		});
+		
 		
 		commAdapter2 = new CommonBaseAdapter<String>(HomeActivity.this,xglnList,R.layout.home_xgln_grilview) {
 
@@ -162,7 +185,15 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.go:
-			ActivityUtils.startActivity(HomeActivity.this,MyApplication.PACKAGENAME + ".ui.BaseInfoActivity");
+			String baseinfo = "select * from " + CommonText.BASEINFO + " where userId = 1";
+			Map<String, String[]> map = dbUtil.queryData(HomeActivity.this, baseinfo);
+			String gotoStr = ".ui.BaseInfoActivity";
+			if (map!= null && map.get("userId").length > 0) {
+				gotoStr = ".ui.WorkExperienceActivity";
+			}else{
+				gotoStr = ".ui.BaseInfoActivity";
+			}
+			ActivityUtils.startActivity(HomeActivity.this,MyApplication.PACKAGENAME + gotoStr);
 			break;
 		case R.id.left_lable:
 			

@@ -176,9 +176,20 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:tint="@android:color/white" />
+    
+    <com.me.resume.views.CustomFAB
+        android:id="@+id/edit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:tint="@android:color/white"
+        android:visibility="gone" />
 
     <com.me.resume.views.CustomFAB
-        android:id="@+id/saveandgo"
+        android:id="@+id/next"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"

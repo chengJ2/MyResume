@@ -29,8 +29,11 @@
     <string name="timeout_network">网络请求数据超时</string>
 	<string name="request_error">请求异常,请检查!</string>
     
+	<string name="viewpager_indicator">%1$d/%2$d</string>
     <!-- 基本资料 -->
-    <string name="info_name">姓&#160;&#160;名</string>
+    <string name="info_name_key">姓&#160;&#160;名</string>
+    <string name="info_hometown_key">家乡所在地</string>
+    
     <string name="info_name_hint">请输入姓名</string>
     <string name="info_sex">称&#160;&#160;呼</string>
     <string name="info_sex_1">先生</string>

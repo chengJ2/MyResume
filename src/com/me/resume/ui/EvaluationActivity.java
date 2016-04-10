@@ -24,7 +24,7 @@ public class EvaluationActivity extends SwipeBackActivity implements OnClickList
 
 	private TextView toptext,leftLable,rightLable;
 	
-	private CustomFAB saveGo;
+	private CustomFAB save_edit,next;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +41,19 @@ public class EvaluationActivity extends SwipeBackActivity implements OnClickList
 		toptext.setText(CommUtil.getStrValue(EvaluationActivity.this, R.string.resume_evaluation));
 		rightLable.setText(CommUtil.getStrValue(EvaluationActivity.this, R.string.review_resume));
 		
-		saveGo = findView(R.id.saveGo);
-		saveGo.setOnClickListener(this);
+		save_edit = findView(R.id.save_edit);
+		save_edit.setOnClickListener(this);
+		
+		next = findView(R.id.next);
+		next.setOnClickListener(this);
 	}
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.saveGo:
+		case R.id.save_edit:
+			
+			break;
+		case R.id.next:
 			ActivityUtils.startActivity(EvaluationActivity.this, MyApplication.PACKAGENAME
 					+ ".ui.EducationActivity");
 			break;

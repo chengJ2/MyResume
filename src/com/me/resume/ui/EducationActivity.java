@@ -33,7 +33,7 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 	
 	private SegmentButton segment_button;
 	
-	private CustomFAB saveGo;
+	private CustomFAB save,edit,next;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +51,14 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 		
 		segment_button = findView(R.id.segment_button);
 		
-		saveGo = findView(R.id.saveGo);
-		saveGo.setOnClickListener(this);
+		save = findView(R.id.save);
+		save.setOnClickListener(this);
+		
+		edit = findView(R.id.edit);
+		save.setOnClickListener(this);
+		
+		next = findView(R.id.next);
+		next.setOnClickListener(this);
 		
 		initData();
 	}
@@ -97,9 +103,13 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.saveGo:
+		case R.id.save:
 			ActivityUtils.startActivity(EducationActivity.this, MyApplication.PACKAGENAME
 					+ ".ui.JobIntensionActivity");
+			break;
+		case R.id.edit:
+			break;
+		case R.id.next:
 			break;
 		case R.id.left_lable:
 			scrollToFinishActivity();

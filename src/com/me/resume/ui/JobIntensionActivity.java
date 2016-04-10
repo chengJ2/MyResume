@@ -24,7 +24,7 @@ public class JobIntensionActivity extends SwipeBackActivity implements OnClickLi
 
 	private TextView toptext,leftLable,rightLable;
 	
-	private CustomFAB saveGo;
+	private CustomFAB save,edit,next;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +41,25 @@ public class JobIntensionActivity extends SwipeBackActivity implements OnClickLi
 		toptext.setText(CommUtil.getStrValue(JobIntensionActivity.this, R.string.resume_jobintension));
 		rightLable.setText(CommUtil.getStrValue(JobIntensionActivity.this, R.string.review_resume));
 		
-		saveGo = findView(R.id.saveGo);
-		saveGo.setOnClickListener(this);
+		save = findView(R.id.save);
+		save.setOnClickListener(this);
+		
+		edit = findView(R.id.edit);
+		edit.setOnClickListener(this);
+		
+		next = findView(R.id.next);
+		next.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.saveGo:
+		case R.id.save:
+			break;
+		case R.id.edit:
+			break;
+		case R.id.next:
 			ActivityUtils.startActivity(JobIntensionActivity.this, MyApplication.PACKAGENAME
 					+ ".ui.OtherInfoActivity");
 			break;

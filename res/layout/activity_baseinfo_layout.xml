@@ -33,7 +33,7 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="@string/info_name" />
+                    android:text="@string/info_name_key" />
 
                 <EditText
                     android:id="@+id/info_realname"
@@ -55,21 +55,21 @@
                     android:text="@string/info_sex"/>
 
                 <RadioGroup
-                    android:id="@+id/radioGroup"
+                    android:id="@+id/rg_gender"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
                     android:orientation="horizontal" >
 
                     <RadioButton
-                        android:id="@+id/radionan"
+                        android:id="@+id/radioman"
                         android:checked="true"
                         android:text="@string/info_sex_1"
                         style="@style/user_info_item_radio">
                     </RadioButton>
 
                     <RadioButton
-                        android:id="@+id/radionv"
+                        android:id="@+id/radiowoman"
                         android:layout_marginLeft="20dip"
                         style="@style/user_info_item_radio"
                         android:text="@string/info_sex_2" >
@@ -90,7 +90,7 @@
                     android:text="@string/info_brithday" />
 
                 <TextView
-                    android:id="@+id/pi_brithday"
+                    android:id="@+id/info_brithday"
                     style="@style/user_info_item_ed"
                     android:hint="@string/info_choose" />
 
@@ -109,7 +109,7 @@
                     android:text="@string/info_workyear" />
 
                 <TextView
-                    android:id="@+id/pi_workyear"
+                    android:id="@+id/info_workyear"
                     style="@style/user_info_item_ed"
                     android:hint="@string/info_choose" />
 
@@ -147,14 +147,14 @@
                     style="@style/user_info_item_tv"
                     android:text="@string/info_hometown" />
 
-                <EditText
-                    android:id="@+id/info_area_hometown"
+                <TextView
+                    android:id="@+id/info_hometown"
                     style="@style/user_info_item_ed"
                     android:hint="@string/info_input_hometown" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
             </LinearLayout>
 
             <View style="@style/line3" />
@@ -166,14 +166,14 @@
                     style="@style/user_info_item_tv"
                     android:text="@string/info_city" />
 
-                <EditText
-                    android:id="@+id/info_areacity"
+                <TextView
+                    android:id="@+id/info_city"
                     style="@style/user_info_item_ed"
                     android:hint="@string/info_inout_city" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
             </LinearLayout>
 
             <View style="@style/line3" />
@@ -186,7 +186,7 @@
                     android:text="@string/info_email" />
 
                 <EditText
-                    android:id="@+id/info_areapost"
+                    android:id="@+id/info_email"
                     style="@style/user_info_item_ed"
                     android:hint="@string/info_input_email" />
 
@@ -206,7 +206,7 @@
                     android:text="@string/info_maritalstatus" />
 
                 <RadioGroup
-                    android:id="@+id/radioGroup_hy"
+                    android:id="@+id/rg_maritalstatus"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center"
@@ -224,7 +224,7 @@
                         android:text="@string/info_maritalstatus_2" />
 
                     <RadioButton
-                        android:id="@+id/radionv_ly"
+                        android:id="@+id/radio_ly"
                         style="@style/user_info_item_radio"
                         android:text="@string/info_maritalstatus_3" />
                 </RadioGroup>
@@ -243,7 +243,7 @@
                     android:text="@string/info_nationality" />
 
                 <EditText
-                    android:id="@+id/info_areanationality"
+                    android:id="@+id/info_nationality"
                     style="@style/user_info_item_ed"
                     android:hint="@string/info_input_nationality" />
 
@@ -281,7 +281,7 @@
                     android:text="@string/info_workingabroad" />
 
                 <RadioGroup
-                    android:id="@+id/radioGroup_hwjl"
+                    android:id="@+id/rg_workingabroad"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
@@ -318,7 +318,7 @@
                     android:text="@string/info_politicalstatus" />
 
                 <RadioGroup
-                    android:id="@+id/radioGroup_zzmm"
+                    android:id="@+id/rg_politicalstatus"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left|center"
@@ -368,16 +368,18 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
-        android:tint="@android:color/white" />
+        android:tint="@android:color/white" 
+        android:src="@drawable/ic_btn_add"/>
 
     <com.me.resume.views.CustomFAB
-        android:id="@+id/saveandgo"
+        android:id="@+id/next"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
-        android:tint="@android:color/white" />
+        android:tint="@android:color/white"
+        android:src="@drawable/ic_btn_add" />
 
 </RelativeLayout>

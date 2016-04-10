@@ -19,13 +19,22 @@
         android:background="@drawable/index_1_base"/>
     
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/realname"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world"
+        android:layout_height="40dip"
+        android:layout_marginTop="15dip"
+        android:text="程健"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="@dimen/small_middle_text_size" />
+        android:textSize="@dimen/medium_text_size" />
    
+    <TextView
+        android:id="@+id/hometown"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:text="湖北黄石"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/medium_text_size" />
 
 </LinearLayout>
