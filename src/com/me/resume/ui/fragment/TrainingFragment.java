@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.me.resume.R;
 
@@ -20,6 +22,12 @@ import com.me.resume.R;
 public class TrainingFragment extends Fragment {
 
 	private View view;
+	
+	private TextView info_time;
+	
+	private EditText info_trainingorganization,info_trainingclass,info_certificate,info_description;
+	
+	
 	@Override
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
@@ -47,6 +55,11 @@ public class TrainingFragment extends Fragment {
 
 	private void initview() {
 		// TODO Auto-generated method stub
+		info_time = (TextView)view.findViewById(R.id.info_time);
+		info_trainingorganization = (EditText)view.findViewById(R.id.info_trainingorganization);
+		info_trainingclass = (EditText)view.findViewById(R.id.info_trainingclass);
+		info_certificate = (EditText)view.findViewById(R.id.info_certificate);
+		info_description = (EditText)view.findViewById(R.id.info_description);
 		
 	}
 }

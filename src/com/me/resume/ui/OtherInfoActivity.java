@@ -28,7 +28,7 @@ public class OtherInfoActivity extends SwipeBackActivity implements OnClickListe
 
 	private TextView toptext,leftLable,rightLable;
 	
-	private TextView info_waiyu,info_dx,info_ts;
+	private TextView info_language,info_literacyskills,info_listeningspeaking;
 	
 	private String[] item_text = null;
 	
@@ -45,13 +45,13 @@ public class OtherInfoActivity extends SwipeBackActivity implements OnClickListe
 			case 2:
 				int position = (int) msg.obj;
 				if (whichTab == 1) {
-					info_waiyu.setText(mList.get(position));
-					info_dx.setEnabled(true);
-					info_ts.setEnabled(true);
+					info_language.setText(mList.get(position));
+					info_literacyskills.setEnabled(true);
+					info_listeningspeaking.setEnabled(true);
 				}else if(whichTab == 2){
-					info_dx.setText(mList.get(position));
+					info_literacyskills.setText(mList.get(position));
 				}else if(whichTab == 3){
-					info_ts.setText(mList.get(position));
+					info_listeningspeaking.setText(mList.get(position));
 				}
 				DialogUtils.dismissPopwindow();
 				break;
@@ -67,26 +67,38 @@ public class OtherInfoActivity extends SwipeBackActivity implements OnClickListe
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_otherinfo_layout);
 		
+		findViews();
+		
+		initViews();
+		
+	}
+	
+	private void findViews(){
 		toptext = findView(R.id.top_text);
 		leftLable = findView(R.id.left_lable);
 		rightLable = findView(R.id.right_lable);
 		leftLable.setOnClickListener(this);
 		rightLable.setOnClickListener(this);
+		
+		info_language = findView(R.id.info_language);
+		info_literacyskills = findView(R.id.info_literacyskills);
+		info_listeningspeaking = findView(R.id.info_listeningspeaking);
+		
+		info_language.setOnClickListener(this);
+		info_literacyskills.setOnClickListener(this);
+		info_listeningspeaking.setOnClickListener(this);
+	}
+	
+	private void initViews(){
 		toptext.setText(CommUtil.getStrValue(OtherInfoActivity.this, R.string.resume_otherinfo));
 		rightLable.setText(CommUtil.getStrValue(OtherInfoActivity.this, R.string.review_resume));
 		
-		info_waiyu = findView(R.id.oi_info_waiyu);
-		info_dx = findView(R.id.oi_info_dxnl);
-		info_ts = findView(R.id.oi_info_tsnl);
-		info_waiyu.setOnClickListener(this);
-		info_dx.setOnClickListener(this);
-		info_ts.setOnClickListener(this);
-		
-		if (CommUtil.textIsNull(info_waiyu)) {
-			info_dx.setEnabled(false);
-			info_ts.setEnabled(false);
+		if (CommUtil.textIsNull(info_language)) {
+			info_literacyskills.setEnabled(false);
+			info_listeningspeaking.setEnabled(false);
 		}
 	}
+	
 
 	@Override
 	public void onClick(View v) {
@@ -99,28 +111,26 @@ public class OtherInfoActivity extends SwipeBackActivity implements OnClickListe
 			ActivityUtils.startActivity(OtherInfoActivity.this, MyApplication.PACKAGENAME 
 					+ ".MainActivity",false);
 			break;
-		case R.id.oi_info_waiyu:
+		case R.id.info_language:
 			whichTab = 1;
-			getValues(R.array.oi_wysp_values);
+			getValues(R.array.oi_wysp_values,info_language,R.string.ot_info_language);
 			break;
-		case R.id.oi_info_dxnl:
+		case R.id.info_literacyskills:
 			whichTab = 2;
-			getValues(R.array.oi_tsdx_values);
+			getValues(R.array.oi_tsdx_values,info_literacyskills,R.string.ot_info_literacyskills);
 			break;
-		case R.id.oi_info_tsnl:
+		case R.id.info_listeningspeaking:
 			whichTab = 3;
-			getValues(R.array.oi_tsdx_values);
+			getValues(R.array.oi_tsdx_values,info_listeningspeaking,R.string.ot_info_listeningspeaking);
 			break;
 		default:
 			break;
 		}
 	}
 
-	private void getValues(int array) {
+	private void getValues(int array,View parent,int resId) {
 		item_text = CommUtil.getArrayValue(OtherInfoActivity.this,array); 
 		mList = Arrays.asList(item_text);
-		DialogUtils.showPopWindow(OtherInfoActivity.this, info_waiyu, 
-				R.string.we_info_expectedsalary, mList, 
-				mHandler);
+		DialogUtils.showPopWindow(OtherInfoActivity.this, parent, resId, mList, mHandler);
 	}
 }

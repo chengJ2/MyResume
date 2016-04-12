@@ -23,12 +23,12 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="时间" />
+                    android:text="@string/ed_info_time" />
 
-                <EditText
-                    android:id="@+id/info_area"
+                <TextView
+                    android:id="@+id/info_time"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入时间" />
+                    android:hint="@string/ed_info_input_time" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
@@ -41,12 +41,12 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="学校名称" />
+                    android:text="@string/ed_info_school" />
 
                 <EditText
-                    android:id="@+id/info_area"
+                    android:id="@+id/info_school"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入学校名称" />
+                    android:hint="@string/ed_info_input_school" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
@@ -59,27 +59,27 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="是否统招" />
+                    android:text="@string/ed_info_isexamination" />
 
                 <RadioGroup
-                    android:id="@+id/radioGroup"
+                    android:id="@+id/rg_examination"
                     android:layout_width="0dip"
                     android:layout_height="wrap_content"
                     android:layout_weight="6"
                     android:orientation="horizontal" >
 
                     <RadioButton
-                        android:id="@+id/radionan"
+                        android:id="@+id/rb_examination1"
                         style="@style/user_info_item_radio"
                         android:checked="true"
-                        android:text="是" >
+                        android:text="@string/ed_info_isexamination_1" >
                     </RadioButton>
 
                     <RadioButton
-                        android:id="@+id/radionv"
+                        android:id="@+id/rb_examination2"
                         style="@style/user_info_item_radio"
                         android:layout_marginLeft="20dip"
-                        android:text="否" >
+                        android:text="@string/ed_info_isexamination_2" >
                     </RadioButton>
                 </RadioGroup>
 
@@ -91,22 +91,16 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:minHeight="55dip"
-                android:orientation="horizontal"
-                android:paddingLeft="20dip" >
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="专业名称" />
+                    android:text="@string/ed_info_majorname" />
 
-                <EditText
-                    android:id="@+id/info_area"
+                <TextView
+                    android:id="@+id/info_majorname"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入专业名称" />
+                    android:hint="@string/ed_info_choose_majorname" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
@@ -119,12 +113,12 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="学历/学位" />
+                    android:text="@string/ed_info_degree" />
 
-                <EditText
-                    android:id="@+id/info_area"
+                <TextView
+                    android:id="@+id/info_degreee"
                     style="@style/user_info_item_ed"
-                    android:hint="请选择学历/学位" />
+                    android:hint="@string/ed_info_choose_degree" />
 
                 <ImageView
                     style="@style/user_info_item_iv"

@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical" >
+    android:fitsSystemWindows="true">
 
     <include
         android:id="@+id/top"
@@ -38,7 +37,7 @@
                     android:layout_weight="1"
                     android:gravity="center|left"
                     android:padding="5dip"
-                    android:text="语言能力"
+                    android:text="@string/ot_languages"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_middle_text_size" />
 
@@ -48,7 +47,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:padding="5dip"
-                    android:text="新增"
+                    android:text="@string/ot_add"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_text_size" />
 
@@ -58,7 +57,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:padding="5dip"
-                    android:text="保存"
+                    android:text="@string/ot_save"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_text_size" />
             </LinearLayout>
@@ -70,12 +69,12 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="外语语种" />
+                    android:text="@string/ot_info_language" />
 
                 <TextView
-                    android:id="@+id/oi_info_waiyu"
+                    android:id="@+id/info_language"
                     style="@style/user_info_item_ed"
-                    android:hint="请选择外语语种" />
+                    android:hint="@string/ot_info_choose_language" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
@@ -88,12 +87,12 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="读写能力" />
+                    android:text="@string/ot_info_literacyskills" />
 
                 <TextView
-                    android:id="@+id/oi_info_dxnl"
+                    android:id="@+id/info_literacyskills"
                     style="@style/user_info_item_ed"
-                    android:hint="请选择读写能力" />
+                    android:hint="@string/ot_info_choose_literacyskills" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
@@ -106,12 +105,12 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="听说能力" />
+                    android:text="@string/ot_info_listeningspeaking" />
 
                 <TextView
-                    android:id="@+id/oi_info_tsnl"
+                    android:id="@+id/info_listeningspeaking"
                     style="@style/user_info_item_ed"
-                    android:hint="请选择听说能力" />
+                    android:hint="@string/ot_info_choose_listeningspeaking" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
@@ -132,7 +131,7 @@
                     android:layout_weight="1"
                     android:gravity="center|left"
                     android:padding="5dip"
-                    android:text="证书"
+                    android:text="@string/ot_certificate"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_middle_text_size" />
 
@@ -142,7 +141,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:padding="5dip"
-                    android:text="新增"
+                    android:text="@string/ot_add"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_text_size" />
 
@@ -152,7 +151,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:padding="5dip"
-                    android:text="保存"
+                    android:text="@string/ot_save"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_text_size" />
             </LinearLayout>
@@ -163,12 +162,12 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="证书名称" />
+                    android:text="@string/ot_info_certificate" />
 
                 <EditText
-                    android:id="@+id/info_area"
+                    android:id="@+id/info_certificate"
                     style="@style/user_info_item_ed"
-                    android:hint="请选择证书名称" />
+                    android:hint="@string/ot_info_input_certificate" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
@@ -181,12 +180,12 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="获得时间" />
+                    android:text="@string/ot_info_getcertificatetime" />
 
                 <EditText
-                    android:id="@+id/info_area"
+                    android:id="@+id/info_certificatetime"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入获得时间" />
+                    android:hint="@string/ot_info_choose_getcertificatetime" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
@@ -207,7 +206,7 @@
                     android:layout_weight="1"
                     android:gravity="center|left"
                     android:padding="5dip"
-                    android:text="其他信息"
+                    android:text="@string/ot_info"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_middle_text_size" />
 
@@ -217,7 +216,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:padding="5dip"
-                    android:text="新增"
+                    android:text="@string/ot_add"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_text_size" />
 
@@ -227,7 +226,7 @@
                     android:layout_weight="2"
                     android:gravity="center"
                     android:padding="5dip"
-                    android:text="保存"
+                    android:text="@string/ot_save"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_text_size" />
             </LinearLayout>
@@ -238,12 +237,12 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="标题" />
+                    android:text="@string/ot_info_title" />
 
-                <EditText
-                    android:id="@+id/info_area"
+                <TextView
+                    android:id="@+id/info_title"
                     style="@style/user_info_item_ed"
-                    android:hint="请选择标题" />
+                    android:hint="@string/ot_info_choose_title" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
@@ -256,12 +255,12 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="描述" />
+                    android:text="@string/ot_info_description" />
 
                 <EditText
-                    android:id="@+id/info_area"
+                    android:id="@+id/info_description"
                     style="@style/user_info_item_ed"
-                    android:hint="请选择读写能力" />
+                    android:hint="@string/ot_info_input_description" />
 
                 <ImageView
                     style="@style/user_info_item_iv"

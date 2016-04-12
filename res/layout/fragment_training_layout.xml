@@ -29,15 +29,15 @@
 
                 <TextView
                    style="@style/user_info_item_tv"
-                    android:text="时间" />
+                    android:text="@string/ed_info_time" />
 
-                <EditText
-                    android:id="@+id/info_area"
+                <TextView
+                    android:id="@+id/info_time"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入时间" />
+                    android:hint="@string/ed_info_input_time" />
                  <ImageView
                     style="@style/user_info_item_iv"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
             </LinearLayout>
             
              <View style="@style/line3" />
@@ -53,12 +53,12 @@
 
                 <TextView
                    style="@style/user_info_item_tv"
-                    android:text="培训机构" />
+                    android:text="@string/ed_info_trainingorganization" />
 
                 <EditText
-                    android:id="@+id/info_area"
+                    android:id="@+id/info_trainingorganization"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入培训机构" />
+                    android:hint="@string/ed_info_input_trainingorganization" />
                  <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
@@ -77,12 +77,12 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="培训课程"/>
+                    android:text="@string/ed_info_input_trainingclass"/>
 
                 <EditText
-                    android:id="@+id/info_area"
+                    android:id="@+id/info_trainingclass"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入培训课程" />
+                    android:hint="@string/ed_info_trainingclass" />
                  <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
@@ -99,12 +99,12 @@
 
                 <TextView
                    style="@style/user_info_item_tv"
-                    android:text="获得证书" />
+                    android:text="@string/ed_info_certificate" />
 
                 <EditText
-                    android:id="@+id/info_area"
+                    android:id="@+id/info_certificate"
                     style="@style/user_info_item_ed"
-                    android:hint="请输入证书" />
+                    android:hint="@string/ed_info_input_certificate" />
                  <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
@@ -121,15 +121,15 @@
 
                 <TextView
                    style="@style/user_info_item_tv"
-                    android:text="详细描述" />
+                    android:text="@string/ed_info_description" />
 
                 <EditText
-                    android:id="@+id/info_area"
+                    android:id="@+id/info_description"
                     style="@style/user_info_item_ed"
-                    android:hint="" />
+                    android:hint="@string/ed_info_input_description" />
                  <ImageView
                     style="@style/user_info_item_iv"
-                    android:visibility="visible" />
+                    android:visibility="invisible" />
             </LinearLayout>
             <View style="@style/line3" />
         </LinearLayout>

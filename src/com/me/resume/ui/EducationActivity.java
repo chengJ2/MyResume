@@ -55,7 +55,7 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 		save.setOnClickListener(this);
 		
 		edit = findView(R.id.edit);
-		save.setOnClickListener(this);
+		edit.setOnClickListener(this);
 		
 		next = findView(R.id.next);
 		next.setOnClickListener(this);
@@ -104,12 +104,15 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.save:
-			ActivityUtils.startActivity(EducationActivity.this, MyApplication.PACKAGENAME
-					+ ".ui.JobIntensionActivity");
+			
+			
+			
 			break;
 		case R.id.edit:
 			break;
 		case R.id.next:
+			ActivityUtils.startActivity(EducationActivity.this, MyApplication.PACKAGENAME
+					+ ".ui.JobIntensionActivity");
 			break;
 		case R.id.left_lable:
 			scrollToFinishActivity();
