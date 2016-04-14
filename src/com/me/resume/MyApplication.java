@@ -35,6 +35,11 @@ public class MyApplication extends Application {
     */
    private float displayDensity;
    
+   /**
+    * 用户ID
+    */
+   public static int userId = 0;
+   
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub

@@ -14,11 +14,9 @@ import com.me.resume.R;
 import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
-import com.me.resume.utils.L;
 import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.CustomFAB;
 import com.whjz.android.text.CommonText;
-import com.whjz.android.util.common.CommonUtil;
 
 /**
  * 
@@ -32,12 +30,14 @@ public class EvaluationActivity extends SwipeBackActivity implements OnClickList
 
 	private TextView toptext,leftLable,rightLable;
 	
+	private EvaluationActivity self;
+	
 	// 自我评价;职业目标
 	private EditText info_self_evaluation,info_career_goal;
 	
 	private CustomFAB save_edit,next;
 	
-	private Map<String, String[]> map ;
+	private Map<String, String[]> mapArray ;
 	private String evaluation = "";
 	
 	@Override
@@ -45,15 +45,15 @@ public class EvaluationActivity extends SwipeBackActivity implements OnClickList
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_evaluation_layout);
-		
+		self = EvaluationActivity.this;
 		toptext = findView(R.id.top_text);
 		leftLable = findView(R.id.left_lable);
 		rightLable = findView(R.id.right_lable);
 		leftLable.setOnClickListener(this);
 		rightLable.setOnClickListener(this);
 		
-		toptext.setText(CommUtil.getStrValue(EvaluationActivity.this, R.string.resume_evaluation));
-		rightLable.setText(CommUtil.getStrValue(EvaluationActivity.this, R.string.review_resume));
+		toptext.setText(CommUtil.getStrValue(self, R.string.resume_evaluation));
+		rightLable.setText(CommUtil.getStrValue(self, R.string.review_resume));
 		
 		info_self_evaluation = findView(R.id.info_self_evaluation);
 		info_career_goal = findView(R.id.info_career_goal);
@@ -64,46 +64,56 @@ public class EvaluationActivity extends SwipeBackActivity implements OnClickList
 		next = findView(R.id.next);
 		next.setOnClickListener(this);
 		
-		evaluation = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1";
-		map = dbUtil.queryData(EvaluationActivity.this, evaluation);
-		if (map!= null && map.get("userId").length > 0) {
+		evaluation = "select * from " + CommonText.EVALUATION + " where userId = 1";
+		mapArray = dbUtil.queryData(self, evaluation);
+		if (mapArray!= null && mapArray.get("userId").length > 0) {
+			info_self_evaluation.setText(mapArray.get("selfevaluation")[0]);
+			info_career_goal.setText(mapArray.get("careergoal")[0]);
 			save_edit.setImageResource(R.drawable.ic_btn_edit);
 		}else{
 			save_edit.setImageResource(R.drawable.ic_btn_add);
 		}
-		
 	}
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.save_edit:
-			if (map!= null && map.get("userId").length > 0) {
-				info_self_evaluation.setText(map.get("selfevaluation")[0]);
-				info_career_goal.setText(map.get("careergoal")[0]);
+			evaluation = "select * from " + CommonText.EVALUATION + " where userId = 1";
+			mapArray = dbUtil.queryData(self, evaluation);
+			String info_self_evaluationStr = CommUtil.getEditTextValue(info_self_evaluation);
+			String info_career_goalStr = CommUtil.getEditTextValue(info_career_goal);
+			if (mapArray!= null && mapArray.get("userId").length > 0) {
+				String edId = mapArray.get("_id")[0];
+				int upd = dbUtil.updateData(self, CommonText.EVALUATION, 
+						new String[]{edId,"selfevaluation","careergoal"}, 
+						new String[]{"1",info_self_evaluationStr,info_career_goalStr});
+				if (upd == 1) {
+					CommUtil.ToastMsg(self, R.string.action_update_success);
+				}
 			}else{
-				String info_self_evaluationStr = CommUtil.getEditTextValue(info_self_evaluation);
-				String info_career_goalStr = CommUtil.getEditTextValue(info_career_goal);
 				ContentValues cValues = new ContentValues();
 				cValues.put("userId", "1");
 				cValues.put("selfevaluation", info_self_evaluationStr);
 				cValues.put("careergoal", info_career_goalStr);
 				cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-				
-				boolean addEvalutaion = dbUtil.insertData(EvaluationActivity.this, 
+				boolean addEvalutaion = dbUtil.insertData(self, 
 						CommonText.EVALUATION, cValues);
-				L.d("==addEvalutaionActivity=="+addEvalutaion);
+				if(addEvalutaion){
+					save_edit.setImageResource(R.drawable.ic_btn_edit);
+				}
 			}
 			break;
 		case R.id.next:
-			ActivityUtils.startActivity(EvaluationActivity.this, MyApplication.PACKAGENAME
+			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME
 					+ ".ui.EducationActivity");
 			break;
 		case R.id.left_lable:
 			scrollToFinishActivity();
 			break;
 		case R.id.right_lable:
-			ActivityUtils.startActivity(EvaluationActivity.this, MyApplication.PACKAGENAME 
-					+ ".MainActivity",false);
+			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME 
+					+ ".MainActivity",true);
 			break;
 		default:
 			break;

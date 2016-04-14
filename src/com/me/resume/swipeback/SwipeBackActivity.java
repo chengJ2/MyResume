@@ -43,7 +43,20 @@ import com.whjz.android.util.interfa.DbLocalUtil;
  */
 public class SwipeBackActivity extends FragmentActivity implements
 		SwipeBackActivityBase {
+	
+	protected SwipeBackActivity self;
+	
 	private SwipeBackActivityHelper mHelper;
+	
+	protected Map<String, String[]> commMapArray = null;
+	
+	protected Map<String, List<String>> commMapList = null;
+	
+	protected String queryWhere = "";
+	
+	protected int whichTab = 1;
+	
+	protected List<String> mList = null;
 	
 	// activity访问栈
     private static Stack<FragmentActivity> mLocalStack = new Stack<FragmentActivity>();
@@ -83,7 +96,7 @@ public class SwipeBackActivity extends FragmentActivity implements
 					.penaltyLog().penaltyDeath().build());
 		}
 		super.onCreate(savedInstanceState);
-
+		self = SwipeBackActivity.this;
 		MyApplication.getApplication().addActivity(this);
 
 		mHelper = new SwipeBackActivityHelper(this);
@@ -386,7 +399,7 @@ public class SwipeBackActivity extends FragmentActivity implements
 					return EXECUTE_TIMEOUT;
 				} else {
 					if (isLocalCache) {
-						dbUtil.delectData(SwipeBackActivity.this, where);
+						dbUtil.deleteData(SwipeBackActivity.this, where);
 						dbUtil.insertDataSetList(SwipeBackActivity.this, tablename, dataSetlist);
 					}
 					map = dataSetlist.getMap();

@@ -38,8 +38,8 @@ public class JobIntensionActivity extends SwipeBackActivity implements OnClickLi
 		leftLable.setOnClickListener(this);
 		rightLable.setOnClickListener(this);
 		
-		toptext.setText(CommUtil.getStrValue(JobIntensionActivity.this, R.string.resume_jobintension));
-		rightLable.setText(CommUtil.getStrValue(JobIntensionActivity.this, R.string.review_resume));
+		toptext.setText(CommUtil.getStrValue(self, R.string.resume_jobintension));
+		rightLable.setText(CommUtil.getStrValue(self, R.string.review_resume));
 		
 		save = findView(R.id.save);
 		save.setOnClickListener(this);
@@ -60,14 +60,14 @@ public class JobIntensionActivity extends SwipeBackActivity implements OnClickLi
 		case R.id.edit:
 			break;
 		case R.id.next:
-			ActivityUtils.startActivity(JobIntensionActivity.this, MyApplication.PACKAGENAME
+			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME
 					+ ".ui.OtherInfoActivity");
 			break;
 		case R.id.left_lable:
 			scrollToFinishActivity();
 			break;
 		case R.id.right_lable:
-			ActivityUtils.startActivity(JobIntensionActivity.this, MyApplication.PACKAGENAME 
+			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME 
 					+ ".MainActivity",false);
 			break;
 		default:

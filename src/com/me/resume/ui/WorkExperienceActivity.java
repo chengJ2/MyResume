@@ -45,10 +45,6 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 	
 	private EditText info_companyname,info_jobtitle,info_workdescdetail;
 	
-	private List<String> mList = null;
-	
-	private int tab = 1;
-	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -57,12 +53,11 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 				break;
 			case 2:
 				int position = (int) msg.obj;
-				if(tab == 1){
+				if(whichTab == 1){
 					info_industryclassification.setText(mList.get(position));
-				}else if(tab == 2){
+				}else if(whichTab == 2){
 					info_expectedsalary.setText(mList.get(position));
 				}
-				
 				DialogUtils.dismissPopwindow();
 				break;
 			default:
@@ -96,9 +91,9 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 		edit = findView(R.id.edit);
 		next = findView(R.id.next);
 		
-		 String workexperience = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1";
-		 Map<String, String[]>  map = dbUtil.queryData(WorkExperienceActivity.this, workexperience);
-         if (map!= null && map.get("userId").length > 0) {
+		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1";
+		 commMapArray = dbUtil.queryData(self, queryWhere);
+         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
         	 edit.setVisibility(View.VISIBLE);
          }else{
         	 edit.setVisibility(View.GONE);
@@ -114,8 +109,8 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 	}
 	
 	private void initViews(){
-		rightLable.setText(CommUtil.getStrValue(WorkExperienceActivity.this, R.string.review_resume));
-		toptext.setText(CommUtil.getStrValue(WorkExperienceActivity.this, R.string.resume_workexperience));
+		rightLable.setText(CommUtil.getStrValue(self, R.string.review_resume));
+		toptext.setText(CommUtil.getStrValue(self, R.string.resume_workexperience));
 	}
 	
 	@Override
@@ -153,7 +148,7 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			//values.add(TimeUtils.getCurrentTimeInString());
 		
 			String where = "delete from " + CommonText.WORKEXPERIENCE + " where  userId = 2";
-//			dbUtil.delectData(WorkExperienceActivity.this, where);
+//			dbUtil.delectData(self, where);
 			
 			ContentValues cValues = new ContentValues();
 			cValues.put("userId", "1");
@@ -165,7 +160,7 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			cValues.put("expectedsalary", info_expectedsalaryStr);
 			cValues.put("workdesc", info_workdescdetailStr);
 			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-			boolean addWorkExperience = dbUtil.insertData(WorkExperienceActivity.this, 
+			boolean addWorkExperience = dbUtil.insertData(self, 
 					CommonText.WORKEXPERIENCE, cValues);
 			L.d("==addWorkExperience=="+addWorkExperience);
 			if(addWorkExperience){
@@ -190,29 +185,29 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			
 			break;
 		case R.id.next:
-			ActivityUtils.startActivity(WorkExperienceActivity.this, MyApplication.PACKAGENAME 
+			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME 
 					+ ".ui.EvaluationActivity");
 			break;
 		case R.id.left_lable:
 			scrollToFinishActivity();
 			break;
 		case R.id.right_lable:
-			ActivityUtils.startActivity(WorkExperienceActivity.this, MyApplication.PACKAGENAME 
+			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME 
 					+ ".MainActivity",false);
 			break;
 		case R.id.info_industryclassification:
-			tab = 1;
-			item_text = CommUtil.getArrayValue(WorkExperienceActivity.this,R.array.oi_hylb_values); 
+			whichTab = 1;
+			item_text = CommUtil.getArrayValue(self,R.array.oi_hylb_values); 
 			mList = Arrays.asList(item_text);
-			DialogUtils.showPopWindow(WorkExperienceActivity.this, info_industryclassification, 
+			DialogUtils.showPopWindow(self, info_industryclassification, 
 					R.string.we_info_expectedsalary, mList, 
 					mHandler);
 			break;
 		case R.id.info_expectedsalary:
-			tab = 2;
-			item_text = CommUtil.getArrayValue(WorkExperienceActivity.this,R.array.we_qwyx_values); 
+			whichTab = 2;
+			item_text = CommUtil.getArrayValue(self,R.array.we_qwyx_values); 
 			mList = Arrays.asList(item_text);
-			DialogUtils.showPopWindow(WorkExperienceActivity.this, info_expectedsalary, 
+			DialogUtils.showPopWindow(self, info_expectedsalary, 
 					R.string.we_info_expectedsalary, mList, 
 					mHandler);
 			

@@ -30,7 +30,6 @@ public class OtherInfoActivity extends SwipeBackActivity implements OnClickListe
 	
 	private TextView info_language,info_literacyskills,info_listeningspeaking;
 	
-	private String[] item_text = null;
 	
 	private List<String> mList = null;
 	
@@ -90,8 +89,8 @@ public class OtherInfoActivity extends SwipeBackActivity implements OnClickListe
 	}
 	
 	private void initViews(){
-		toptext.setText(CommUtil.getStrValue(OtherInfoActivity.this, R.string.resume_otherinfo));
-		rightLable.setText(CommUtil.getStrValue(OtherInfoActivity.this, R.string.review_resume));
+		toptext.setText(CommUtil.getStrValue(self, R.string.resume_otherinfo));
+		rightLable.setText(CommUtil.getStrValue(self, R.string.review_resume));
 		
 		if (CommUtil.textIsNull(info_language)) {
 			info_literacyskills.setEnabled(false);
@@ -108,7 +107,7 @@ public class OtherInfoActivity extends SwipeBackActivity implements OnClickListe
 			scrollToFinishActivity();
 			break;
 		case R.id.right_lable:
-			ActivityUtils.startActivity(OtherInfoActivity.this, MyApplication.PACKAGENAME 
+			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME 
 					+ ".MainActivity",false);
 			break;
 		case R.id.info_language:
@@ -129,8 +128,8 @@ public class OtherInfoActivity extends SwipeBackActivity implements OnClickListe
 	}
 
 	private void getValues(int array,View parent,int resId) {
-		item_text = CommUtil.getArrayValue(OtherInfoActivity.this,array); 
+		String[] item_text = CommUtil.getArrayValue(self,array); 
 		mList = Arrays.asList(item_text);
-		DialogUtils.showPopWindow(OtherInfoActivity.this, parent, resId, mList, mHandler);
+		DialogUtils.showPopWindow(self, parent, resId, mList, mHandler);
 	}
 }

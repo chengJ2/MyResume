@@ -6,6 +6,7 @@
     <color name="red">#CC0000</color>
      <color name="grey">#BEBEBE</color>
      <color name="grey_50">#50BEBEBE</color>
+     <color name="grey_10">#454545</color>
     
     <color name="button_cancle_select">#70BFBFBF</color>
     <color name="line">#DFDFDF</color>

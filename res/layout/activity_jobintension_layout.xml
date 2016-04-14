@@ -175,7 +175,8 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
-        android:tint="@android:color/white" />
+        android:tint="@android:color/white" 
+         android:src="@drawable/ic_btn_add"/>
     
     <com.me.resume.views.CustomFAB
         android:id="@+id/edit"
@@ -186,6 +187,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:tint="@android:color/white"
+        android:src="@drawable/ic_btn_edit"
         android:visibility="gone" />
 
     <com.me.resume.views.CustomFAB
@@ -196,6 +198,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
-        android:tint="@android:color/white" />
+        android:tint="@android:color/white"
+         android:src="@drawable/ic_btn_next" />
 
 </RelativeLayout>

@@ -154,18 +154,17 @@
        android:layout_alignParentBottom="true"
        android:layout_centerInParent="true"
        android:layout_marginBottom="16dp"
-       android:src="@drawable/ic_btn_add"
-       android:tint="@android:color/white"
-       />
+       android:src="@drawable/ic_btn_edit"
+       android:tint="@android:color/white"/>
      
      <com.me.resume.views.CustomFAB
        android:id="@+id/next"
        android:layout_width="50dp"
        android:layout_height="50dp"
-       android:src="@drawable/ic_btn_add"
        android:layout_alignParentBottom="true"
        android:layout_alignParentRight="true"
        android:layout_marginRight="16dp"
        android:layout_marginBottom="16dp"
+       android:src="@drawable/ic_btn_next"
        android:tint="@android:color/white"/>
 </RelativeLayout>

@@ -9,12 +9,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnKeyListener;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -230,6 +234,78 @@ public class DialogUtils {
 		};
 		dataListView.setAdapter(commAdapter);
 	}
+	
+	/**
+	 * 
+	 * @param context 上下文
+	 */
+	public static void showNoticeDialog(Context context,String msgstr){
+		try {
+			dialog = new Dialog(context);
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialog.setContentView(R.layout.base_notice_dialog);
+			WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
+			dialog.getWindow().setAttributes(layoutParams);
+			dialog.getWindow().setBackgroundDrawable(new BitmapDrawable());
+			dialog.setCanceledOnTouchOutside(true);
+			TextView msg = (TextView)dialog.findViewById(R.id.msg);
+			msg.setText(msgstr);
+			Button btn = (Button)dialog.findViewById(R.id.btn);
+			btn.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					if (dialog!=null || dialog.isShowing()) {
+						dialog.dismiss();
+						dialog = null;
+					}
+				}
+			});
+			dialog.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param context 上下文
+	 */
+	public static void showAlertDialog(Context context,String msgstr,Handler handler){
+		try {
+			mHandler = handler;
+			dialog = new Dialog(context);
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialog.setContentView(R.layout.base_alert_dialog);
+			WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
+			dialog.getWindow().setAttributes(layoutParams);
+			dialog.getWindow().setBackgroundDrawable(new BitmapDrawable());
+			dialog.setCanceledOnTouchOutside(true);
+			TextView msg = (TextView)dialog.findViewById(R.id.msg);
+			msg.setText(msgstr);
+			Button btnCancle = (Button)dialog.findViewById(R.id.btn_cancle);
+			btnCancle.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					dismissDialog();
+				}
+			});
+			Button btnSure = (Button)dialog.findViewById(R.id.btn_sure);
+			btnSure.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					dismissDialog();
+					sendMsg(1);
+				}
+			});
+			dialog.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	/**
 	 * 隐藏对话框

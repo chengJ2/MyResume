@@ -46,8 +46,8 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 		rightLable = findView(R.id.right_lable);
 		leftLable.setOnClickListener(this);
 		rightLable.setOnClickListener(this);
-		toptext.setText(CommUtil.getStrValue(EducationActivity.this, R.string.resume_education));
-		rightLable.setText(CommUtil.getStrValue(EducationActivity.this, R.string.review_resume));
+		toptext.setText(CommUtil.getStrValue(self, R.string.resume_education));
+		rightLable.setText(CommUtil.getStrValue(self, R.string.review_resume));
 		
 		segment_button = findView(R.id.segment_button);
 		
@@ -111,14 +111,14 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 		case R.id.edit:
 			break;
 		case R.id.next:
-			ActivityUtils.startActivity(EducationActivity.this, MyApplication.PACKAGENAME
+			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME
 					+ ".ui.JobIntensionActivity");
 			break;
 		case R.id.left_lable:
 			scrollToFinishActivity();
 			break;
 		case R.id.right_lable:
-			ActivityUtils.startActivity(EducationActivity.this, MyApplication.PACKAGENAME 
+			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME 
 					+ ".MainActivity",false);
 			break;
 		default:

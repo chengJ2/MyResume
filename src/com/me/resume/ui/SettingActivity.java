@@ -50,7 +50,7 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 		leftLable = findView(R.id.left_lable);
 		rightLable = findView(R.id.right_lable);
 		leftLable.setOnClickListener(this);
-		toptext.setText(CommUtil.getStrValue(SettingActivity.this, R.string.action_settings));
+		toptext.setText(CommUtil.getStrValue(self, R.string.action_settings));
 		rightLable.setVisibility(View.INVISIBLE);
 		
 		radio_left.setChecked(true);
@@ -70,8 +70,6 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 				}
 			}
 		});
-		
-		
 		
 		setting_start_cb.setOnChangedListener(new OnChangedListener() {
 			
@@ -135,7 +133,7 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.left_lable:
-			SettingActivity.this.finish();
+			self.scrollToFinishActivity();
 			break;
 		default:
 			break;

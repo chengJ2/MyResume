@@ -198,39 +198,20 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                style="@style/noraml_item"
-                 android:layout_height="wrap_content" >
+                style="@style/noraml_item">
 
                 <TextView
                     style="@style/user_info_item_tv"
                     android:text="@string/info_maritalstatus" />
+                
+                <TextView
+                    android:id="@+id/info_maritalstatus"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/info_choose" />
 
-                <RadioGroup
-                    android:id="@+id/rg_maritalstatus"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    android:layout_weight="6" >
-
-                    <RadioButton
-                        android:id="@+id/radio_wh"
-                        android:checked="true"
-                        android:text="@string/info_maritalstatus_1"
-                        style="@style/user_info_item_radio" />
-
-                    <RadioButton
-                        android:id="@+id/radio_yh"
-                        style="@style/user_info_item_radio"
-                        android:text="@string/info_maritalstatus_2" />
-
-                    <RadioButton
-                        android:id="@+id/radio_ly"
-                        style="@style/user_info_item_radio"
-                        android:text="@string/info_maritalstatus_3" />
-                </RadioGroup>
                 <ImageView
                     style="@style/user_info_item_iv"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
             </LinearLayout>
 
             <View style="@style/line3" />
@@ -307,61 +288,27 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingLeft="20dip" >
+                style="@style/noraml_item">
 
                 <TextView
                     style="@style/user_info_item_tv"
                     android:text="@string/info_politicalstatus" />
 
-                <RadioGroup
-                    android:id="@+id/rg_politicalstatus"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    android:layout_weight="6" >
-
-                    <RadioButton
-                        android:id="@+id/radio_zgdy"
-                        style="@style/user_info_item_radio"
-                        android:checked="true"
-                        android:text="@string/info_politicalstatus_1" />
-
-                    <RadioButton
-                        android:id="@+id/radio_ty"
-                        style="@style/user_info_item_radio"
-                        android:text="@string/info_politicalstatus_2" />
-
-                    <RadioButton
-                        android:id="@+id/radio_qz"
-                        android:gravity="left|center"
-                        style="@style/user_info_item_radio"
-                        android:text="@string/info_politicalstatus_3" />
-
-                    <RadioButton
-                        android:id="@+id/radio_mzdp"
-                        android:gravity="left|center"
-                        style="@style/user_info_item_radio"
-                        android:text="@string/info_politicalstatus_4" />
-
-                    <RadioButton
-                        android:id="@+id/radio_wdprs"
-                        android:gravity="left|center"
-                        style="@style/user_info_item_radio"
-                        android:text="@string/info_politicalstatus_5" />
-                </RadioGroup>
+                 <TextView
+                    android:id="@+id/info_politicalstatus"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/info_choose" />
+                
                 <ImageView
                     style="@style/user_info_item_iv"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
             </LinearLayout>
+            <View style="@style/line3" />
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
 
     <com.me.resume.views.CustomFAB
-        android:id="@+id/save"
+        android:id="@+id/save_edit"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
@@ -380,6 +327,6 @@
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:tint="@android:color/white"
-        android:src="@drawable/ic_btn_add" />
+        android:src="@drawable/ic_btn_next" />
 
 </RelativeLayout>

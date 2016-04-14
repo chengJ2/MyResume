@@ -15,6 +15,21 @@
         <item>Accordion</item>
     </string-array>
     
+     <string-array name="ba_maritalstatus_values">
+       <item>@string/info_maritalstatus_1</item>
+       <item>@string/info_maritalstatus_2</item>
+       <item>@string/info_maritalstatus_3</item>
+    </string-array>
+    
+     <string-array name="ba_politicalstatus_values">
+       <item>@string/info_politicalstatus_1</item>
+       <item>@string/info_politicalstatus_2</item>
+       <item>@string/info_politicalstatus_3</item>
+       <item>@string/info_politicalstatus_4</item>
+       <item>@string/info_politicalstatus_5</item>
+    </string-array>
+    
+    
     <string-array name="we_qwyx_values">
         <item>1000元/月以下</item>
         <item>1000-2000元/月</item>
@@ -57,6 +72,21 @@
         <item>银行</item>
         <item>物流/仓储</item>
     </string-array>
+    
+    <string-array name="ed_degress_values">
+        <item>初中</item>
+        <item>中技</item>
+        <item>高中</item>
+        <item>中专</item>
+        <item>大专</item>
+        <item>本科</item>
+        <item>硕士</item>
+        <item>MBA</item>
+        <item>EMBA</item>
+        <item>博士</item>
+        <item>其他</item>
+    </string-array>
+    
     <string-array name="oi_tsdx_values">
         <item>一般</item>
         <item>良好</item>

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,6 +27,7 @@ import com.me.resume.model.ResumeModel;
 import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.DialogUtils;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -52,6 +54,26 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener{
     private List<String> xglnList = null;
     private GridView xgln_gridview;
     
+    private Handler mHandler = new Handler(){
+    	public void handleMessage(android.os.Message msg) {
+    		switch (msg.what) {
+			case 1:
+//				queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
+//				commMapArray = dbUtil.queryData(self, queryWhere);
+				String gotoStr = ".ui.BaseInfoActivity";
+//				if (map!= null && map.get("userId").length > 0) {
+//					gotoStr = ".ui.WorkExperienceActivity";
+//				}else{
+					gotoStr = ".ui.BaseInfoActivity";
+//				}
+				ActivityUtils.startActivity(self,MyApplication.PACKAGENAME + gotoStr);
+				break;
+			default:
+				break;
+			}
+    	};
+    };
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -59,12 +81,12 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener{
 		setContentView(R.layout.activity_home);
 		
 		if(getPreferenceData("startVerytime", 0) == 1){
-			ActivityUtils.startActivity(HomeActivity.this, MyApplication.PACKAGENAME 
+			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME 
 					+ ".MainActivity",true);
 		}
 		topText = findView(R.id.top_text);
 		leftLable = findView(R.id.left_lable);
-		leftLable.setText(CommUtil.getStrValue(HomeActivity.this, R.string.resume_personcenter));
+		leftLable.setText(CommUtil.getStrValue(self, R.string.resume_personcenter));
 		rightLable = findView(R.id.right_lable);	
 		
 		gridView = findView(R.id.grid);
@@ -82,7 +104,7 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener{
 	
 	/**设置数据*/
     private void setData() {
-    	topText.setText(CommUtil.getStrValue(HomeActivity.this, R.string.resume_center));
+    	topText.setText(CommUtil.getStrValue(self, R.string.resume_center));
     	
     	leftLable.setOnClickListener(this);
     	rightLable.setOnClickListener(this);
@@ -140,7 +162,7 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener{
         gridView.setStretchMode(GridView.NO_STRETCH);
         gridView.setNumColumns(size); // 设置列数量=列表集合数
 
-        commAdapter = new CommonBaseAdapter<ResumeModel>(HomeActivity.this,resumeModelList,R.layout.home_grilview_item) {
+        commAdapter = new CommonBaseAdapter<ResumeModel>(self,resumeModelList,R.layout.home_grilview_item) {
 			
 			@Override
 			public void convert(ViewHolder holder, ResumeModel item, int position) {
@@ -157,7 +179,7 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(HomeActivity.this, ImagePagerActivity.class);
+				Intent intent = new Intent(self, ImagePagerActivity.class);
 			    // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
 			    intent.putStringArrayListExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, resumeModelList.get(position).getPicUrl());
 			    intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
@@ -166,14 +188,14 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener{
 		});
 		
 		
-		commAdapter2 = new CommonBaseAdapter<String>(HomeActivity.this,xglnList,R.layout.home_xgln_grilview) {
+		commAdapter2 = new CommonBaseAdapter<String>(self,xglnList,R.layout.home_xgln_grilview) {
 
 			@Override
 			public void convert(ViewHolder holder, String item, int position) {
 				// TODO Auto-generated method stub
 				holder.setText(R.id.itemName, xglnList.get(position));
 				if (position == 1 || position == 5 || position == 6) {
-					holder.setTextColor(R.id.itemName, CommUtil.getIntValue(HomeActivity.this, R.color.red));
+					holder.setTextColor(R.id.itemName, CommUtil.getIntValue(self, R.color.red));
 				}
 			}
 		};
@@ -185,21 +207,18 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.go:
-			String baseinfo = "select * from " + CommonText.BASEINFO + " where userId = 1";
-			Map<String, String[]> map = dbUtil.queryData(HomeActivity.this, baseinfo);
-			String gotoStr = ".ui.BaseInfoActivity";
-			if (map!= null && map.get("userId").length > 0) {
-				gotoStr = ".ui.WorkExperienceActivity";
+			if(MyApplication.userId == 0){
+				DialogUtils.showAlertDialog(self, 
+						CommUtil.getStrValue(self, R.string.dialog_action_alert), mHandler);
 			}else{
-				gotoStr = ".ui.BaseInfoActivity";
+				mHandler.sendEmptyMessage(1);
 			}
-			ActivityUtils.startActivity(HomeActivity.this,MyApplication.PACKAGENAME + gotoStr);
 			break;
 		case R.id.left_lable:
-			
+			// TODO
 			break;
 		case R.id.right_lable:
-			ActivityUtils.startActivity(HomeActivity.this,MyApplication.PACKAGENAME + ".ui.SettingActivity");
+			ActivityUtils.startActivity(self,MyApplication.PACKAGENAME + ".ui.SettingActivity");
 			break;
 		default:
 			break;
