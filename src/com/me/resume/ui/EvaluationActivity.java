@@ -37,9 +37,6 @@ public class EvaluationActivity extends SwipeBackActivity implements OnClickList
 	
 	private CustomFAB save_edit,next;
 	
-	private Map<String, String[]> mapArray ;
-	private String evaluation = "";
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -64,11 +61,11 @@ public class EvaluationActivity extends SwipeBackActivity implements OnClickList
 		next = findView(R.id.next);
 		next.setOnClickListener(this);
 		
-		evaluation = "select * from " + CommonText.EVALUATION + " where userId = 1";
-		mapArray = dbUtil.queryData(self, evaluation);
-		if (mapArray!= null && mapArray.get("userId").length > 0) {
-			info_self_evaluation.setText(mapArray.get("selfevaluation")[0]);
-			info_career_goal.setText(mapArray.get("careergoal")[0]);
+		queryWhere = "select * from " + CommonText.EVALUATION + " where userId = 1";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+			info_self_evaluation.setText(commMapArray.get("selfevaluation")[0]);
+			info_career_goal.setText(commMapArray.get("careergoal")[0]);
 			save_edit.setImageResource(R.drawable.ic_btn_edit);
 		}else{
 			save_edit.setImageResource(R.drawable.ic_btn_add);
@@ -79,17 +76,17 @@ public class EvaluationActivity extends SwipeBackActivity implements OnClickList
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.save_edit:
-			evaluation = "select * from " + CommonText.EVALUATION + " where userId = 1";
-			mapArray = dbUtil.queryData(self, evaluation);
+			queryWhere = "select * from " + CommonText.EVALUATION + " where userId = 1";
+			commMapArray = dbUtil.queryData(self, queryWhere);
 			String info_self_evaluationStr = CommUtil.getEditTextValue(info_self_evaluation);
 			String info_career_goalStr = CommUtil.getEditTextValue(info_career_goal);
-			if (mapArray!= null && mapArray.get("userId").length > 0) {
-				String edId = mapArray.get("_id")[0];
-				int upd = dbUtil.updateData(self, CommonText.EVALUATION, 
+			if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+				String edId = commMapArray.get("_id")[0];
+				updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
 						new String[]{edId,"selfevaluation","careergoal"}, 
 						new String[]{"1",info_self_evaluationStr,info_career_goalStr});
-				if (upd == 1) {
-					CommUtil.ToastMsg(self, R.string.action_update_success);
+				if (updResult == 1) {
+					toastMsg(R.string.action_update_success);
 				}
 			}else{
 				ContentValues cValues = new ContentValues();
@@ -97,9 +94,9 @@ public class EvaluationActivity extends SwipeBackActivity implements OnClickList
 				cValues.put("selfevaluation", info_self_evaluationStr);
 				cValues.put("careergoal", info_career_goalStr);
 				cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-				boolean addEvalutaion = dbUtil.insertData(self, 
+				queryResult = dbUtil.insertData(self, 
 						CommonText.EVALUATION, cValues);
-				if(addEvalutaion){
+				if(queryResult){
 					save_edit.setImageResource(R.drawable.ic_btn_edit);
 				}
 			}

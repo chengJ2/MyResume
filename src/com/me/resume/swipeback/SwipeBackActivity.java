@@ -24,6 +24,7 @@ import android.view.WindowManager;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.tools.SystemBarTintManager;
+import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.Constants;
 import com.whjz.android.text.Info;
@@ -54,7 +55,13 @@ public class SwipeBackActivity extends FragmentActivity implements
 	
 	protected String queryWhere = "";
 	
+	protected int updResult = -1;
+	
+	protected boolean queryResult = false;
+	
 	protected int whichTab = 1;
+	
+	protected String[] item_values = null;
 	
 	protected List<String> mList = null;
 	
@@ -130,6 +137,14 @@ public class SwipeBackActivity extends FragmentActivity implements
     	return (T)findViewById(viewID);
     }
 	
+    protected void toastMsg(int resId){
+    	CommUtil.ToastMsg(self, resId);
+    }
+    
+    protected void startActivity(String src,boolean finish){
+    	   ActivityUtils.startActivity(self, MyApplication.PACKAGENAME + src,finish);
+    }
+    
     public void setPreferenceData(String key, String value){
     	sp.edit().putString(key, value).commit();
     }

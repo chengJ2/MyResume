@@ -167,7 +167,7 @@ public class DialogUtils {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				sendMsg(1);
+				dismissPopwindow();
 			}
 		});
 		
@@ -209,6 +209,9 @@ public class DialogUtils {
 						notifyDataSetChanged();
 						
 						sendMsg(2,position);
+						
+						dismissPopwindow();
+						
 					}
 				});
 				
@@ -226,6 +229,8 @@ public class DialogUtils {
 						notifyDataSetChanged();
 						
 						sendMsg(2,position);
+						
+						dismissPopwindow();
 					}
 				});
 				

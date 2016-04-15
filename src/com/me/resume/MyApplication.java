@@ -42,18 +42,15 @@ public class MyApplication extends Application {
    
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
 		super.onCreate();
 		setApplication(this);
         init();
 	}
 	
 	private void init() {
-		// TODO Auto-generated method stub
 //		LanguageSettings.getInstance().initLang(this);
 		CrashReport.initCrashReport(getApplicationContext(), "900025676", false);
-		CrashHandler catchExcep = new CrashHandler(this);
-    	Thread.setDefaultUncaughtExceptionHandler(catchExcep);
+    	Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(this));
 	}
 
 	/**

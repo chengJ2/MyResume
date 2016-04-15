@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">MyResume</string>
-    <!-- <string name="app_name">个人简历</string> -->
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">个人简历</string>
     <string name="action_settings">设置</string>
     <string name="crash">App发生异常,请重启</string>
     <string name="resume_center">简历中心</string>
@@ -26,6 +23,8 @@
     <string name="request_error">请求异常,请检查!</string>
     <string name="viewpager_indicator">%1$d/%2$d</string>
     
+    <!-- UI button click msg -->
+    <string name="action_notice">提&#160;示</string>
     <string name="action_add_success">添加成功</string>
     <string name="action_add_fail">添加失败</string>
     <string name="action_edit_success">编辑成功</string>
@@ -33,7 +32,12 @@
     <string name="action_update_success">更新成功</string>
     <string name="action_update_fail">更新失败</string>
     
+    <!-- UI dialog msg -->
     <string name="dialog_action_alert">您还没登录,创建的简历会保存到本地，若卸载APP或清除APP数据，将不会显示出您的简历，请先登录或继续操作...</string>
+    
+    <!-- UI button text -->
+    <string name="show_button_cancle">取&#160;&#160;消</string>
+    <string name="show_button_sure">确&#160;&#160;定</string>
     
     <!-- 基本资料 -->
     <string name="info_name_key">姓&#160;&#160;名</string>
@@ -121,6 +125,7 @@
 
     <!-- 求职意向 -->
     <string name="ji_info_expectedworkingproperty">期望工作性质</string>
+    <string name="ji_info_choose_expectedworkingproperty">请选择期望工作性质</string>
     <string name="ji_info_expectedworkingproperty_1">全职</string>
     <string name="ji_info_expectedworkingproperty_2">兼职</string>
     <string name="ji_info_expectedworkingproperty_3">实习</string>

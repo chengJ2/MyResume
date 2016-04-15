@@ -2,78 +2,78 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-     android:gravity="center"
-    android:background="@android:color/transparent" >
-    
-    <LinearLayout 
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:paddingBottom="10dip"
-	    android:orientation="vertical"
-	    android:layout_marginRight="15dip"
-	    android:layout_marginLeft="15dip"
-	    android:background="@drawable/dialog_corner" >
-    
-	<TextView
-	    android:id="@+id/title"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:textColor="@android:color/black"
-	    android:text="提示"
-	    android:gravity="center|left"
-	    android:textSize="15sp"
-	    android:padding="6dip"
-	    android:layout_marginTop="3dip"/>
-	<View 
-	    android:id="@+id/line"
-	    android:layout_width="match_parent"
-	    android:layout_height="1dip"
-	    android:background="#77BEBEBE"/>
-	
-	<TextView 
-	    android:id="@+id/msg"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:textColor="#626262"
-	    android:padding="10dip"
-	    android:text="" 
-	    android:textSize="15sp"
-	    android:lineSpacingExtra="3dip"
-	    android:paddingBottom="5dip"/>
-	
-	<LinearLayout 
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal"
-	    android:paddingBottom="5dip"
-	    android:layout_marginTop="20dip"
-	    android:layout_marginLeft="30dip"
-	    android:layout_marginRight="30dip"
-	    android:background="@drawable/dialog_corner" >
-	    <Button 
-		    android:id="@+id/btn_cancle"
-		    android:layout_width="50dip"
-		    android:layout_height="35dip"
-		    android:layout_weight="1"
-		    android:textColor="@android:color/white"
-		    android:gravity="center"
-		    android:background="@drawable/dialog_btn_corner"
-		    android:text="取消"
-		    android:textSize="15sp"/>
-	    
-	    <Button 
-		    android:id="@+id/btn_sure"
-		    android:layout_width="50dip"
-		    android:layout_height="35dip"
-		    android:layout_weight="1"
-		    android:textColor="@android:color/white"
-		    android:gravity="center"
-		    android:layout_marginLeft="20dip"
-		    android:background="@drawable/dialog_btn_corner"
-		    android:text="确定"
-		    android:textSize="15sp"/>
-	</LinearLayout>
-	
-	
-	</LinearLayout>
+    android:background="@android:color/transparent"
+    android:gravity="center" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dip"
+        android:layout_marginRight="15dip"
+        android:background="@drawable/dialog_corner"
+        android:orientation="vertical"
+        android:paddingBottom="10dip" >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dip"
+            android:gravity="center|left"
+            android:padding="6dip"
+            android:text="@string/action_notice"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
+
+        <View
+            style="@style/line3"
+            android:layout_marginTop="4dip" />
+
+        <TextView
+            android:id="@+id/msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="3dip"
+            android:padding="10dip"
+            android:paddingBottom="5dip"
+            android:text=""
+            android:textColor="#626262"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dip"
+            android:layout_marginRight="30dip"
+            android:layout_marginTop="20dip"
+            android:background="@drawable/dialog_corner"
+            android:orientation="horizontal"
+            android:paddingBottom="5dip" >
+
+            <Button
+                android:id="@+id/btn_cancle"
+                android:layout_width="50dip"
+                android:layout_height="35dip"
+                android:layout_marginRight="20dip"
+                android:layout_weight="1"
+                android:background="@drawable/dialog_btn2_corner"
+                android:gravity="center"
+                android:text="@string/show_button_cancle"
+                android:textColor="@color/white"
+                android:textSize="@dimen/small_middle_text_size"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btn_sure"
+                android:layout_width="50dip"
+                android:layout_height="35dip"
+                android:layout_weight="1"
+                android:background="@drawable/dialog_btn_corner"
+                android:gravity="center"
+                android:text="@string/show_button_sure"
+                android:textColor="@color/white"
+                android:textSize="@dimen/small_middle_text_size" />
+        </LinearLayout>
+    </LinearLayout>
+
 </RelativeLayout>

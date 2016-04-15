@@ -2,7 +2,6 @@ package com.me.resume.ui;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import android.content.ContentValues;
 import android.os.Bundle;
@@ -15,13 +14,10 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
-import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.swipeback.SwipeBackActivity;
-import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
-import com.me.resume.utils.L;
 import com.me.resume.views.CustomFAB;
 import com.whjz.android.text.CommonText;
 
@@ -162,6 +158,53 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			save_edit.setImageResource(R.drawable.ic_btn_edit);
+			info_realname.setText(commMapArray.get("realname")[0]);
+			info_phone.setText(commMapArray.get("phone")[0]);
+			info_email.setText(commMapArray.get("email")[0]);
+			info_nationality.setText(commMapArray.get("nationality")[0]);
+			info_license.setText(commMapArray.get("license")[0]);
+			
+			String gender = commMapArray.get("gender")[0];
+			if(gender.equals("0")){
+				radioman.setChecked(true);
+			}else{
+				radiowoman.setChecked(true);
+			}
+			
+			// 海外工作经验
+			String workingabroad = commMapArray.get("workingabroad")[0];
+			if(workingabroad.equals("0")){
+				radio_yes.setChecked(true);
+			}else{
+				radio_no.setChecked(true);
+			}
+			
+			info_brithday.setText(commMapArray.get("brithday")[0]);
+			info_workyear.setText(commMapArray.get("joinworktime")[0]);
+			info_hometown.setText(commMapArray.get("hometown")[0]);
+			info_city.setText(commMapArray.get("city")[0]);
+			String ismarry = commMapArray.get("ismarry")[0];
+			if(ismarry.equals("1")){
+				info_maritalstatus.setText(CommUtil.getStrValue(self, R.string.info_maritalstatus_2));
+			}else if(ismarry.equals("2")){
+				info_maritalstatus.setText(CommUtil.getStrValue(self, R.string.info_maritalstatus_3));
+			}else{
+				info_maritalstatus.setText(CommUtil.getStrValue(self, R.string.info_maritalstatus_1));
+			}
+			
+			String politicalstatus = commMapArray.get("politicalstatus")[0];
+			if(politicalstatus.equals("1")){
+				info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_2));
+			}else if(politicalstatus.equals("2")){
+				info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_3));
+			}else if(politicalstatus.equals("3")){
+				info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_4));
+			}else if(politicalstatus.equals("4")){
+				info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_5));
+			}else{
+				info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_1));
+			}
+			
 		}else{
 			save_edit.setImageResource(R.drawable.ic_btn_add);
 		}
@@ -268,9 +311,9 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 				cValues.put("politicalstatus", rg_politicalstatusStr);
 				cValues.put("avator", "/image/aa.jpg");
 				
-				boolean addBaseInfo = dbUtil.insertData(self, 
+				queryResult = dbUtil.insertData(self, 
 						CommonText.BASEINFO, cValues);
-				if (addBaseInfo) {
+				if (queryResult) {
 					save_edit.setImageResource(R.drawable.ic_btn_edit);
 				}
 			}
@@ -285,14 +328,13 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 			break;
 		case R.id.next:
 			// TODO
-			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME+".ui.WorkExperienceActivity");
+			startActivity(".ui.WorkExperienceActivity",false);
 			break;
 		case R.id.left_lable:
 			self.scrollToFinishActivity();
 			break;
 		case R.id.right_lable:
-			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME 
-					+ ".MainActivity",false);
+			startActivity(".MainActivity",false);
 			break;
 		default:
 			break;

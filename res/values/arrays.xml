@@ -29,7 +29,12 @@
        <item>@string/info_politicalstatus_5</item>
     </string-array>
     
-    
+     <string-array name="ba_expectedworkingproperty_values">
+       <item>@string/ji_info_expectedworkingproperty_1</item>
+       <item>@string/ji_info_expectedworkingproperty_2</item>
+       <item>@string/ji_info_expectedworkingproperty_2</item>
+    </string-array>
+     
     <string-array name="we_qwyx_values">
         <item>1000元/月以下</item>
         <item>1000-2000元/月</item>

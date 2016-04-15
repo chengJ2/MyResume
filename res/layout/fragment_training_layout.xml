@@ -126,7 +126,8 @@
                 <EditText
                     android:id="@+id/info_description"
                     style="@style/user_info_item_ed"
-                    android:hint="@string/ed_info_input_description" />
+                    android:hint="@string/ed_info_input_description"
+                    android:singleLine="false" />
                  <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />

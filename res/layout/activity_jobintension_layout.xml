@@ -17,6 +17,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/top"
         android:fadingEdge="none"
+        android:background="@color/white"
         android:fadingEdgeLength="0dp"
         android:overScrollMode="never"
         android:scrollbars="none" >
@@ -34,36 +35,15 @@
                 <TextView
                     style="@style/user_info_item_tv"
                     android:text="@string/ji_info_expectedworkingproperty"/>
+                
+                 <TextView
+                    android:id="@+id/info_exp_workingproperty"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/ji_info_choose_expectedworkingproperty" />
 
-                <RadioGroup
-                    android:id="@+id/radioGroup"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6"
-                    android:layout_gravity="left|center"
-                    >
-
-                    <RadioButton
-                        android:id="@+id/radionan"
-                        android:checked="true"
-                        android:text="@string/ji_info_expectedworkingproperty_1"
-                        style="@style/user_info_item_radio">
-                    </RadioButton>
-
-                    <RadioButton
-                        android:id="@+id/radionv"
-                        style="@style/user_info_item_radio"
-                        android:text="@string/ji_info_expectedworkingproperty_2" >
-                    </RadioButton>
-                    <RadioButton
-                        android:id="@+id/radionv"
-                        style="@style/user_info_item_radio"
-                        android:text="@string/ji_info_expectedworkingproperty_2" >
-                    </RadioButton>
-                </RadioGroup>
                 <ImageView
                     style="@style/user_info_item_iv"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
             </LinearLayout>
 
             <View style="@style/line3" />
@@ -76,7 +56,7 @@
                     android:text="@string/ji_info_expectedworkplace" />
 
                 <TextView
-                    android:id="@+id/pi_brithday"
+                    android:id="@+id/info_expworkplace"
                     style="@style/user_info_item_ed"
                     android:hint="@string/ji_info_choose_expectedworkplace" />
 
@@ -95,7 +75,7 @@
                     android:text="@string/ji_info_expectedworkindustry" />
 
                 <TextView
-                    android:id="@+id/pi_workyear"
+                    android:id="@+id/info_expworkindustry"
                     style="@style/user_info_item_ed"
                     android:hint="@string/ji_info_choose_expectedworkindustry" />
 
@@ -114,7 +94,7 @@
                     android:text="@string/ji_info_expectedworkcareer" />
 
                 <EditText
-                    android:id="@+id/info_phone"
+                    android:id="@+id/info_expworkcareer"
                     style="@style/user_info_item_ed"
                     android:hint="@string/ji_info_choose_expectedworkcareer"
                     android:inputType="phone" />
@@ -133,8 +113,8 @@
                     style="@style/user_info_item_tv"
                     android:text="@string/ji_info_expectedmonthlysalary" />
 
-                <EditText
-                    android:id="@+id/info_area_hometown"
+                <TextView
+                    android:id="@+id/info_expmonthlysalary"
                     style="@style/user_info_item_ed"
                     android:hint="@string/ji_info_choose_expectedmonthlysalary" />
 
@@ -153,7 +133,7 @@
                     android:text="@string/ji_info_workingstate" />
 
                 <TextView
-                    android:id="@+id/info_areacity"
+                    android:id="@+id/info_workingstate"
                     style="@style/user_info_item_ed"
                     android:hint="@string/ji_info_workingstate" />
 

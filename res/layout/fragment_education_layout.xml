@@ -116,7 +116,7 @@
                     android:text="@string/ed_info_degree" />
 
                 <TextView
-                    android:id="@+id/info_degreee"
+                    android:id="@+id/info_degree"
                     style="@style/user_info_item_ed"
                     android:hint="@string/ed_info_choose_degree" />
 

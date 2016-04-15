@@ -42,22 +42,25 @@
                     android:textSize="@dimen/small_middle_text_size" />
 
                 <TextView
+                    android:id="@+id/ot_languages_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:padding="5dip"
+                    android:text="@string/ot_edit"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/small_text_size"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/ot_languages_add"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center"
                     android:padding="5dip"
                     android:text="@string/ot_add"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small_text_size" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:padding="5dip"
-                    android:text="@string/ot_save"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_text_size" />
             </LinearLayout>
@@ -136,22 +139,25 @@
                     android:textSize="@dimen/small_middle_text_size" />
 
                 <TextView
+                    android:id="@+id/ot_certificate_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:padding="5dip"
+                    android:text="@string/ot_edit"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/small_text_size"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/ot_certificate_add"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center"
                     android:padding="5dip"
                     android:text="@string/ot_add"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small_text_size" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:padding="5dip"
-                    android:text="@string/ot_save"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_text_size" />
             </LinearLayout>
@@ -164,7 +170,7 @@
                     style="@style/user_info_item_tv"
                     android:text="@string/ot_info_certificate" />
 
-                <EditText
+                <TextView
                     android:id="@+id/info_certificate"
                     style="@style/user_info_item_ed"
                     android:hint="@string/ot_info_input_certificate" />
@@ -182,14 +188,14 @@
                     style="@style/user_info_item_tv"
                     android:text="@string/ot_info_getcertificatetime" />
 
-                <EditText
+                <TextView
                     android:id="@+id/info_certificatetime"
                     style="@style/user_info_item_ed"
                     android:hint="@string/ot_info_choose_getcertificatetime" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
             </LinearLayout>
 
             <View style="@style/line3" />
@@ -211,22 +217,25 @@
                     android:textSize="@dimen/small_middle_text_size" />
 
                 <TextView
+                    android:id="@+id/ot_otherinfo_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:padding="5dip"
+                    android:text="@string/ot_edit"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/small_text_size" 
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/ot_otherinfo_add"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
                     android:gravity="center"
                     android:padding="5dip"
                     android:text="@string/ot_add"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small_text_size" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:padding="5dip"
-                    android:text="@string/ot_save"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_text_size" />
             </LinearLayout>
@@ -260,7 +269,8 @@
                 <EditText
                     android:id="@+id/info_description"
                     style="@style/user_info_item_ed"
-                    android:hint="@string/ot_info_input_description" />
+                    android:hint="@string/ot_info_input_description"
+                    android:singleLine="false" />
 
                 <ImageView
                     style="@style/user_info_item_iv"

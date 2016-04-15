@@ -39,8 +39,6 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 	
 	private CustomFAB save,edit,next;
 	
-	private String[] item_text = null;
-	
 	private TextView info_industryclassification,info_worktime,info_expectedsalary;
 	
 	private EditText info_companyname,info_jobtitle,info_workdescdetail;
@@ -95,6 +93,15 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 		 commMapArray = dbUtil.queryData(self, queryWhere);
          if (commMapArray!= null && commMapArray.get("userId").length > 0) {
         	 edit.setVisibility(View.VISIBLE);
+        	 
+        	 info_industryclassification.setText(commMapArray.get("industryclassification")[0]);
+        	 info_worktime.setText(commMapArray.get("worktimeStart")[0]);
+        	 info_expectedsalary.setText(commMapArray.get("expectedsalary")[0]);;
+        		
+        	 info_companyname.setText(commMapArray.get("companyname")[0]);
+        	 info_jobtitle.setText(commMapArray.get("jobtitle")[0]);
+             info_workdescdetail.setText(commMapArray.get("workdesc")[0]);
+        	 
          }else{
         	 edit.setVisibility(View.GONE);
          }
@@ -160,10 +167,8 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			cValues.put("expectedsalary", info_expectedsalaryStr);
 			cValues.put("workdesc", info_workdescdetailStr);
 			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-			boolean addWorkExperience = dbUtil.insertData(self, 
-					CommonText.WORKEXPERIENCE, cValues);
-			L.d("==addWorkExperience=="+addWorkExperience);
-			if(addWorkExperience){
+			queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);
+			if(queryResult){
 				edit.setVisibility(View.VISIBLE);
 			}
 			
@@ -185,28 +190,26 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			
 			break;
 		case R.id.next:
-			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME 
-					+ ".ui.EvaluationActivity");
+			startActivity(".ui.EvaluationActivity", false);
 			break;
 		case R.id.left_lable:
 			scrollToFinishActivity();
 			break;
 		case R.id.right_lable:
-			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME 
-					+ ".MainActivity",false);
+			startActivity(".MainActivity", false);
 			break;
 		case R.id.info_industryclassification:
 			whichTab = 1;
-			item_text = CommUtil.getArrayValue(self,R.array.oi_hylb_values); 
-			mList = Arrays.asList(item_text);
+			item_values = CommUtil.getArrayValue(self,R.array.oi_hylb_values); 
+			mList = Arrays.asList(item_values);
 			DialogUtils.showPopWindow(self, info_industryclassification, 
 					R.string.we_info_expectedsalary, mList, 
 					mHandler);
 			break;
 		case R.id.info_expectedsalary:
 			whichTab = 2;
-			item_text = CommUtil.getArrayValue(self,R.array.we_qwyx_values); 
-			mList = Arrays.asList(item_text);
+			item_values = CommUtil.getArrayValue(self,R.array.we_qwyx_values); 
+			mList = Arrays.asList(item_values);
 			DialogUtils.showPopWindow(self, info_expectedsalary, 
 					R.string.we_info_expectedsalary, mList, 
 					mHandler);
