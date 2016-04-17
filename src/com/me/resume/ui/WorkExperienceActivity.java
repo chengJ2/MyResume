@@ -39,7 +39,7 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 	
 	private CustomFAB save,edit,next;
 	
-	private TextView info_industryclassification,info_worktime,info_expectedsalary;
+	private TextView info_industryclassification,info_startworktime,info_endworktime,info_expectedsalary;
 	
 	private EditText info_companyname,info_jobtitle,info_workdescdetail;
 	
@@ -57,6 +57,16 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 					info_expectedsalary.setText(mList.get(position));
 				}
 				DialogUtils.dismissPopwindow();
+				break;
+			case 11:
+				if (msg.obj != null) {
+					info_startworktime.setText((String)msg.obj);
+				}
+				break;
+			case 12:
+				if (msg.obj != null) {
+					info_endworktime.setText((String)msg.obj);
+				}
 				break;
 			default:
 				break;
@@ -81,7 +91,8 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 		info_companyname = findView(R.id.info_companyname);
 		info_industryclassification = findView(R.id.info_industryclassification);
 		info_jobtitle = findView(R.id.info_jobtitle);
-		info_worktime = findView(R.id.info_worktime);
+		info_startworktime = findView(R.id.info_startworktime);
+		info_endworktime = findView(R.id.info_endworktime);
 		info_expectedsalary = findView(R.id.info_expectedsalary);
 		info_workdescdetail = findView(R.id.info_workdescdetail);
 		
@@ -95,7 +106,8 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
         	 edit.setVisibility(View.VISIBLE);
         	 
         	 info_industryclassification.setText(commMapArray.get("industryclassification")[0]);
-        	 info_worktime.setText(commMapArray.get("worktimeStart")[0]);
+        	 info_startworktime.setText(commMapArray.get("worktimeStart")[0]);
+        	 info_endworktime.setText(commMapArray.get("worktimeEnd")[0]);
         	 info_expectedsalary.setText(commMapArray.get("expectedsalary")[0]);;
         		
         	 info_companyname.setText(commMapArray.get("companyname")[0]);
@@ -113,6 +125,9 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 		leftLable.setOnClickListener(this);
 		info_industryclassification.setOnClickListener(this);
 		info_expectedsalary.setOnClickListener(this);
+		info_startworktime.setOnClickListener(this);
+		info_endworktime.setOnClickListener(this);
+		
 	}
 	
 	private void initViews(){
@@ -129,10 +144,11 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			String info_workdescdetailStr = CommUtil.getEditTextValue(info_workdescdetail);
 			
 			String info_industryclassificationStr = CommUtil.getTextValue(info_industryclassification);
-			String info_worktimeStr = CommUtil.getTextValue(info_worktime);
+			String info_startworktimeStr = CommUtil.getTextValue(info_startworktime);
+			String info_endworktimeStr = CommUtil.getTextValue(info_endworktime);
 			String info_expectedsalaryStr = CommUtil.getTextValue(info_expectedsalary);
 			
-			List<String> params = new ArrayList<String>();
+			/*List<String> params = new ArrayList<String>();
 			List<String> values = new ArrayList<String>();
 			params.add("p_userId");
 			params.add("p_companyname");
@@ -142,17 +158,17 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			params.add("p_worktimeEnd");
 			params.add("p_expectedsalary");
 			params.add("p_workdesc");
-			//params.add("createtime");
+			params.add("createtime");
 			
 			values.add("2");
 			values.add(info_companynameStr);
 			values.add(info_jobtitleStr);
 			values.add(info_workdescdetailStr);
 			values.add(info_industryclassificationStr);
-			values.add("2015-01-22");
-			values.add("2016-04-12");
+			values.add(info_startworktimeStr);
+			values.add(info_endworktimeStr);
 			values.add(info_expectedsalaryStr);
-			//values.add(TimeUtils.getCurrentTimeInString());
+			values.add(TimeUtils.getCurrentTimeInString());*/
 		
 			String where = "delete from " + CommonText.WORKEXPERIENCE + " where  userId = 2";
 //			dbUtil.delectData(self, where);
@@ -162,8 +178,8 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			cValues.put("companyname", info_companynameStr);
 			cValues.put("industryclassification", info_industryclassificationStr);
 			cValues.put("jobtitle", info_jobtitleStr);
-			cValues.put("worktimeStart", "2014-01-12");
-			cValues.put("worktimeEnd", "2015-11-12");
+			cValues.put("worktimeStart", info_startworktimeStr);
+			cValues.put("worktimeEnd", info_endworktimeStr);
 			cValues.put("expectedsalary", info_expectedsalaryStr);
 			cValues.put("workdesc", info_workdescdetailStr);
 			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
@@ -214,6 +230,12 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 					R.string.we_info_expectedsalary, mList, 
 					mHandler);
 			
+			break;
+		case R.id.info_startworktime:
+			DialogUtils.showTimeChooseDialog(self, info_startworktime,R.string.we_info_choose_start_worktime, 11,mHandler);
+			break;
+		case R.id.info_endworktime:
+			DialogUtils.showTimeChooseDialog(self, info_endworktime,R.string.we_info_choose_end_worktime, 12,mHandler);
 			break;
 		default:
 			break;

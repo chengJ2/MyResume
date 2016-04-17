@@ -1,5 +1,6 @@
 package com.me.resume.utils;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +20,8 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -110,6 +113,31 @@ public class DialogUtils {
 			}
 		});
 		pDialog.show();
+	}
+	
+	/**
+	 * 初始化ProgressDialog
+	 */
+	public static ProgressDialog getProgressDialog(Context context,int message) {
+		ProgressDialog 	mpDialog = new ProgressDialog(context);
+		mpDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);// 设置风格为圆形进度条
+		mpDialog.setMessage(CommUtil.getStrValue(context, message));
+		mpDialog.setIndeterminate(false);// 设置进度条是否为不明确
+		mpDialog.setCancelable(true);// 设置进度条是否可以按退回键取消
+		mpDialog.setCanceledOnTouchOutside(false);
+//		mpDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+//			public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+//				if (keyCode == KeyEvent.KEYCODE_BACK) {
+//					if(thread != null){
+//						thread.interrupt();
+//						thread = null;
+//						loadDataFlag = false;
+//					}
+//				}
+//				return false;
+//			}
+//		});
+		return mpDialog;
 	}
 	
 	/**
@@ -238,6 +266,75 @@ public class DialogUtils {
 			}
 		};
 		dataListView.setAdapter(commAdapter);
+	}
+	
+	public static int years,months,days;
+	
+	public static void showTimeChooseDialog(Context context,View parent,int resId,final int msgWhat,Handler handler){
+		mHandler = handler;
+		View layout = View.inflate(context,R.layout.date_layout, null);
+		mPopupWindow = new PopupWindow(layout, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		mPopupWindow.setTouchable(true);
+		mPopupWindow.setFocusable(true);
+		
+		final DatePicker datePicker = (DatePicker)layout.findViewById(R.id.datePicker);
+		//获取当前的年、月、日、小时、分钟  
+        Calendar c = Calendar.getInstance();  
+        years = c.get(Calendar.YEAR);  
+        months = c.get(Calendar.MONTH);  
+        days = c.get(Calendar.DAY_OF_MONTH);  
+        
+        datePicker.init(years, months + 1, days, new OnDateChangedListener() {
+			
+			@Override
+			public void onDateChanged(DatePicker view, int year, int month,
+					int day) {
+				years = year;  
+				months = month + 1;  
+				days = day;  
+			}
+		});
+		
+        TextView msg = (TextView)layout.findViewById(R.id.title);
+		msg.setText(CommUtil.getStrValue(context, resId));
+        
+		Button btn1 = (Button)layout.findViewById(R.id.btn_sure);
+		btn1.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				 /*Calendar mycalendar=Calendar.getInstance();//获取现在时间
+				 int iyear = mycalendar.get(Calendar.YEAR);//获取年份
+				 int imonth = mycalendar.get(Calendar.MONTH);
+				 int myYear = UserInfoEditActivity.this.year;
+				 if (myYear > iyear) {
+					 Utils.ToastMsg(UserInfoEditActivity.this, "出生年月不能大于等于今年");
+					 return;
+				 }
+				 int myMonth = UserInfoEditActivity.this.month;
+				 int age = iyear - myYear;
+				 if (imonth > myMonth) {
+					 age = age + 1;
+				 }*/
+				 String date = years +"-"+ (months+1) + "-"+days;
+				 L.d("==date==" + date);
+				 sendMsg(msgWhat,date);
+				 
+				 dismissPopwindow();
+				 
+			}
+		});
+		
+		Button btn2 = (Button)layout.findViewById(R.id.btn_cancle);
+		btn2.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				dismissPopwindow();
+			}
+		});
+		mPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 	}
 	
 	/**

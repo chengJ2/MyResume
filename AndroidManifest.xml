@@ -86,6 +86,12 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask" >
         </activity>
+        <activity
+            android:name="com.me.resume.ui.UserLoginActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask" >
+        </activity>
         
     </application>
 

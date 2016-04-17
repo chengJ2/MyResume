@@ -25,14 +25,31 @@
                     style="@style/user_info_item_tv"
                     android:text="@string/ed_info_time" />
 
-                <TextView
-                    android:id="@+id/info_time"
-                    style="@style/user_info_item_ed"
-                    android:hint="@string/ed_info_input_time" />
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="7"
+                    android:orientation="horizontal" >
 
-                <ImageView
-                    style="@style/user_info_item_iv"
-                    android:visibility="visible" />
+                    <TextView
+                        android:id="@+id/info_startworktime"
+                        style="@style/user_info_item_ed"
+                        android:layout_weight="3.5"
+                        android:hint="@string/we_info_choose_worktime2" />
+
+                    <TextView
+                        style="@style/user_info_item_ed"
+                        android:layout_marginLeft="2dip"
+                        android:layout_weight="1"
+                        android:text="~" />
+
+                    <TextView
+                        android:id="@+id/info_endworktime"
+                        style="@style/user_info_item_ed"
+                        android:layout_marginLeft="0dip"
+                        android:layout_weight="3.5"
+                        android:hint="@string/we_info_choose_worktime2" />
+                </LinearLayout>
             </LinearLayout>
 
             <View style="@style/line3" />

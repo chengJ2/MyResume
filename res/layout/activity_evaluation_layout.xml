@@ -12,10 +12,16 @@
         android:layout_height="@dimen/top_bar_height"
         layout="@layout/top_layout_lable" />
 
+    <TextView
+        android:id="@+id/msg"
+        style="@style/comm_errormsg_style"
+        android:layout_below="@id/top"
+        android:visibility="gone"/>
+    
     <com.me.resume.views.CommScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/top"
+        android:layout_below="@id/msg"
         android:fadingEdge="none"
         android:fadingEdgeLength="0dp"
         android:overScrollMode="never"

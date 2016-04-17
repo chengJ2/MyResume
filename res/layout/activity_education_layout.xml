@@ -12,13 +12,19 @@
         android:layout_width="fill_parent"
         android:layout_height="@dimen/top_bar_height"
         layout="@layout/top_layout_lable" />
+    
+     <TextView
+        android:id="@+id/msg"
+        style="@style/comm_errormsg_style"
+        android:layout_below="@id/top"
+        android:visibility="gone"/>
 
    <LinearLayout 
         android:id="@+id/llayout"
 	    android:layout_width="240dip"
 	    android:layout_height="wrap_content"
 	    android:layout_centerHorizontal="true"
-	    android:layout_below="@id/top"
+	    android:layout_below="@id/msg"
 	    android:orientation="horizontal"
 	    android:layout_marginTop="5dip">
        

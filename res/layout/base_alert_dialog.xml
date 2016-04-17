@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    android:gravity="center" >
+    android:gravity="center" 
+    android:background="@android:color/transparent">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -22,8 +22,8 @@
             android:gravity="center|left"
             android:padding="6dip"
             android:text="@string/action_notice"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textColor="@color/grey_10"
+            android:textSize="@dimen/small_middle_text_size" />
 
         <View
             style="@style/line3"
@@ -37,8 +37,8 @@
             android:padding="10dip"
             android:paddingBottom="5dip"
             android:text=""
-            android:textColor="#626262"
-            android:textSize="15sp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_middle_text_size" />
 
         <LinearLayout
             android:layout_width="match_parent"

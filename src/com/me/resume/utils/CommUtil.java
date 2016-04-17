@@ -1,5 +1,12 @@
 package com.me.resume.utils;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
@@ -7,6 +14,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
 import android.util.Log;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -255,7 +264,6 @@ public class CommUtil {
 		} else {
 			NetworkInfo[] info = connectivity.getAllNetworkInfo();
 			if (info != null) {
-//				System.out.println("NetworkInfo  info.length =" + info.length);
 				for (int i = 0; i < info.length; i++) {
 					if (info[i].getState() == NetworkInfo.State.CONNECTED) {
 						return true;
@@ -311,4 +319,88 @@ public class CommUtil {
 		}
 		return verName;
 	}
+	
+	/**
+     * MD5加密
+     * @param str 要加密的密码
+     * @return MD5加密的密码
+     */
+    public static String getMD5(String str) {
+		StringBuffer hexString = new StringBuffer();
+		if (str != null && str.trim().length() != 0) {
+			try {
+				MessageDigest md = MessageDigest.getInstance("MD5");
+				md.update(str.getBytes());
+				byte[] hash = md.digest();
+				for (int i = 0; i < hash.length; i++) {
+					if ((0xff & hash[i]) < 0x10) {
+						hexString.append("0"
+								+ Integer.toHexString((0xFF & hash[i])));
+					} else {
+						hexString.append(Integer.toHexString(0xFF & hash[i]));
+					}
+				}
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			}
+		}
+		return hexString.toString();
+	}
+    
+	/**
+	 * 隐藏软键盘
+	 */
+	public static void hideKeyboard(Activity activity) {
+		InputMethodManager manager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (activity.getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
+			if (activity.getCurrentFocus() != null)
+				manager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+		}
+	}
+	
+	/**
+	 * 隐藏软键盘
+	 */
+	public static void hideSoftInput(Activity activity,EditText editText){
+		InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+		boolean isOpen = imm.isActive();
+	    if (isOpen) {
+	    	imm.hideSoftInputFromWindow(editText.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+	    }
+	    
+	}
+	
+	 /**
+     * 生成随机密码
+     * @param passLenth 生成的密码长度
+     * @return 随机密码
+     */
+     public static String getPass(int passLenth) {
+
+        StringBuffer buffer = new StringBuffer(
+          "0123456789abcdefghijklmnopqrstuvwxyz");
+        StringBuffer sb = new StringBuffer();
+        Random r = new Random();
+        int range = buffer.length();
+        for (int i = 0; i < passLenth; i++) {
+             //生成指定范围类的随机数0—字符串长度(包括0、不包括字符串长度)
+             sb.append(buffer.charAt(r.nextInt(range)));
+        }
+        return sb.toString();
+     }
+     
+     
+     public static String getRandomNo(int passLenth) {
+
+         StringBuffer buffer = new StringBuffer(
+           "123456789");
+         StringBuffer sb = new StringBuffer();
+         Random r = new Random();
+         int range = buffer.length();
+         for (int i = 0; i < passLenth; i++) {
+              //生成指定范围类的随机数0—字符串长度(包括0、不包括字符串长度)
+              sb.append(buffer.charAt(r.nextInt(range)));
+         }
+         return sb.toString();
+      }
 }

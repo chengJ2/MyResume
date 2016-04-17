@@ -160,6 +160,14 @@ public class SwipeBackActivity extends FragmentActivity implements
     public int getPreferenceData(String str,int def){
     	return sp.getInt(str, def);
     }
+    
+    public void setPreferenceData(String key, boolean value){
+    	sp.edit().putBoolean(key, value).commit();
+    }
+    
+    public boolean getPreferenceData(String str){
+    	return sp.getBoolean(str, false);
+    }
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {

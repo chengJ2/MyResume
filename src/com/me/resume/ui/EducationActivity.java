@@ -137,7 +137,8 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 			Fragment f = AllFragmentFactory.getFragment(tab);
 			if(MyApplication.cposition == 0){ // 教育背景
 				if(f != null){
-					String info_timeStr = ((EducationFragment)f).getInfoTime();
+					String info_starttimeStr = ((EducationFragment)f).getInfoStartTime();
+					String info_endtimeStr = ((EducationFragment)f).getInfoEndTime();
 					String info_schoolStr = ((EducationFragment)f).getInfoSchool();
 					String info_majornameStr = ((EducationFragment)f).getInfomajorname();
 					String info_degressStr = ((EducationFragment)f).getInfodegree();
@@ -145,7 +146,8 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 	
 					ContentValues cValues = new ContentValues();
 					cValues.put("userId", "1");
-					cValues.put("time", info_timeStr);
+					cValues.put("worktimestart", info_starttimeStr);
+					cValues.put("worktimeend", info_endtimeStr);
 					cValues.put("school", info_schoolStr);
 					cValues.put("majorname", info_majornameStr);
 					cValues.put("degree", info_degressStr);
@@ -160,7 +162,8 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 				}
 			}else{ // 培训经历
 				if(f != null){
-					String info_timeStr = ((TrainingFragment)f).getInfoTime();
+					String info_starttimeStr = ((TrainingFragment)f).getInfoStartTime();
+					String info_endtimeStr = ((TrainingFragment)f).getInfoEndTime();
 					String info_trainingorganizationStr = ((TrainingFragment)f).getInfotrainingorganization();
 					String info_trainingclassStr = ((TrainingFragment)f).getInfotrainingclass();
 					String info_certificateStr = ((TrainingFragment)f).getInfocertificate();
@@ -168,7 +171,8 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 					
 					ContentValues cValues = new ContentValues();
 					cValues.put("userId", "1");
-					cValues.put("time", info_timeStr);
+					cValues.put("worktimestart", info_starttimeStr);
+					cValues.put("worktimeend", info_endtimeStr);
 					cValues.put("trainingorganization", info_trainingorganizationStr);
 					cValues.put("trainingclass", info_trainingclassStr);
 					cValues.put("certificate", info_certificateStr);

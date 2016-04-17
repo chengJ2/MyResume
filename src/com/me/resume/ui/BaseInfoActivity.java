@@ -18,6 +18,8 @@ import com.me.resume.R;
 import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
+import com.me.resume.utils.L;
+import com.me.resume.utils.RegexUtil;
 import com.me.resume.views.CustomFAB;
 import com.whjz.android.text.CommonText;
 
@@ -31,8 +33,6 @@ import com.whjz.android.text.CommonText;
  */
 public class BaseInfoActivity extends SwipeBackActivity implements OnClickListener{
 
-	private BaseInfoActivity self;
-	
 	private TextView toptext,leftLable,rightLable;
 	
 	// 姓名; 手机号; 电子邮箱; 护照
@@ -57,13 +57,12 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 	
 	private CustomFAB save_edit,next;
 	
-	private List<String> mList = null;
+	private TextView msg;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 1:
-				DialogUtils.dismissPopwindow();
 				break;
 			case 2:
 				int position = (int) msg.obj;
@@ -90,7 +89,19 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 						rg_politicalstatusStr = "5";
 					}
 				}
-				DialogUtils.dismissPopwindow();
+				break;
+			case 12:
+				if (msg.obj != null) {
+					info_brithday.setText((String)msg.obj);
+				}
+				break;
+			case 13:
+				if (msg.obj != null) {
+					info_workyear.setText(((String)msg.obj)/*.substring(0, 7)*/);
+				}
+				break;
+			case 100:
+				initData();
 				break;
 			default:
 				break;
@@ -103,12 +114,22 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_baseinfo_layout);
-		self = BaseInfoActivity.this;
+		
 		findViews();
 		
 		getChooseValue();
 		
 		initViews();
+		
+		new Handler().postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				mHandler.sendEmptyMessage(100);
+			}
+		},100);
+		
 	}
 
 	private void findViews(){
@@ -117,6 +138,9 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 		leftLable.setOnClickListener(this);
 		rightLable = findView(R.id.right_lable);
 		rightLable.setOnClickListener(this);
+		
+		msg = findView(R.id.msg);
+		msg.setVisibility(View.GONE);
 		
 		info_realname = findView(R.id.info_realname);
 		info_phone = findView(R.id.info_phone);
@@ -140,6 +164,9 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 		info_hometown = findView(R.id.info_hometown);
 		info_city = findView(R.id.info_city);
 		
+		info_brithday.setOnClickListener(this);
+		info_workyear.setOnClickListener(this);
+		
 		save_edit = findView(R.id.save_edit);
 		next = findView(R.id.next);
 		
@@ -150,10 +177,12 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 		info_politicalstatus.setOnClickListener(this);
 	}
 	
-	private void initViews() {
+	private void initViews(){
 		toptext.setText(CommUtil.getStrValue(self, R.string.resume_baseinfo));
 		rightLable.setText(CommUtil.getStrValue(self, R.string.review_resume));
-		
+	}
+	
+	private void initData() {
 		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
@@ -243,34 +272,6 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.save_edit:
-//			if (CommUtil.textIsNull(info_brithday)) {
-//				return;
-//			}
-			
-//			if (CommUtil.textIsNull(info_workyear)) {
-//				return;
-//			}
-			
-//			if (CommUtil.textIsNull(info_hometown)) {
-//				return;
-//			}
-			
-//			if (CommUtil.textIsNull(info_city)) {
-//				return;
-//			}
-			
-			if (CommUtil.EditTextIsNull(info_realname)) {
-				return;
-			}
-			
-			if (CommUtil.EditTextIsNull(info_phone)) {
-				return;
-			}
-			
-			if (CommUtil.EditTextIsNull(info_email)) {
-				return;
-			}
-			
 			String info_realnameStr = CommUtil.getEditTextValue(info_realname);
 			String info_phoneStr = CommUtil.getEditTextValue(info_phone);
 			String info_emailStr = CommUtil.getEditTextValue(info_email);
@@ -282,15 +283,74 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 			String info_hometownStr = CommUtil.getTextValue(info_hometown);
 			String info_cityStr = CommUtil.getTextValue(info_city);
 			
+			String isnull = CommUtil.getStrValue(self, R.string.action_input_isnull);
+			if (!RegexUtil.checkNotNull(info_realnameStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.info_name) + isnull);
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}
+			
+			if (!RegexUtil.checkNotNull(info_brithdayStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.info_brithday) + isnull);
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}
+			
+			if (!RegexUtil.checkNotNull(info_workyearStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.info_workyear) + isnull);
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}
+			
+			if (!RegexUtil.checkNotNull(info_phoneStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.info_contack) + isnull);
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}
+			
+			if (!RegexUtil.isPhone(info_phoneStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.reg_info_phone));
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}
+			
+			if (!RegexUtil.checkNotNull(info_emailStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.info_email) + isnull);
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}
+			
+			/*if (!RegexUtil.checkEmail(info_emailStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.reg_info_email));
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}*/
+			
+			/*if (RegexUtil.checkNotNull(info_hometownStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.info_hometown) + isnull);
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}
+		
+			if (RegexUtil.checkNotNull(info_cityStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.info_city) + isnull);
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}*/
+			
 			queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
 			commMapArray = dbUtil.queryData(self, queryWhere);
 			if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 				
 				String edId = commMapArray.get("_id")[0];
-				int upd = dbUtil.updateData(self, CommonText.EVALUATION, 
-						new String[]{edId,"realname","gender"}, 
-						new String[]{"1",info_realnameStr,rg_genderStr});
-				if (upd == 1) {
+				updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
+						new String[]{edId,"realname","gender","brithday","","joinworktime",
+										  "phone","hometown","city","email","ismarry","nationality",
+										  "license","workingabroad","politicalstatus"}, 
+						new String[]{"1",info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
+										info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
+										info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr});
+				if (updResult == 1) {
 					CommUtil.ToastMsg(self, R.string.action_update_success);
 				}
 			}else{
@@ -298,8 +358,8 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 				cValues.put("userId", "1");
 				cValues.put("realname", info_realnameStr);
 				cValues.put("gender", rg_genderStr);
-				cValues.put("brithday", "1990-10-12");
-				cValues.put("joinworktime", "2014-01-12");
+				cValues.put("brithday", info_brithdayStr);
+				cValues.put("joinworktime", info_workyearStr);
 				cValues.put("phone", info_phoneStr);
 				cValues.put("hometown", "湖北黄石");
 				cValues.put("city", "武汉");
@@ -317,6 +377,14 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 					save_edit.setImageResource(R.drawable.ic_btn_edit);
 				}
 			}
+			break;
+		case R.id.info_brithday:
+			msg.setVisibility(View.GONE);
+			DialogUtils.showTimeChooseDialog(self, info_brithday,R.string.info_brithday, 12,mHandler);
+			break;
+		case R.id.info_workyear:
+			msg.setVisibility(View.GONE);
+			DialogUtils.showTimeChooseDialog(self, info_workyear,R.string.info_workyear,13,mHandler);
 			break;
 		case R.id.info_maritalstatus:
 			whichTab = 1;

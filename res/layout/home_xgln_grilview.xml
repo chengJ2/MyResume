@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:layout_gravity="center" >
     <TextView
         android:id="@+id/itemName"
         android:layout_width="wrap_content"
-        android:layout_height="30dip"
+        android:layout_height="36dip"
         android:layout_centerHorizontal="true"
-        android:text="简历注意事项"
+        android:gravity="center"
         android:textSize="@dimen/small_text_size"
-        android:background="#90BEBEBE"
-        android:singleLine="true"
-        android:padding="5dip" >
+        android:background="@drawable/home_tag_text_select"
+        android:singleLine="true">
     </TextView>
 </RelativeLayout>

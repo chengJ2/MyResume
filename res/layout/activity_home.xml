@@ -32,7 +32,7 @@
                 android:padding="5dip"
                 android:text="· 热门简历模板"
                 android:textColor="@color/black"
-                android:textSize="@dimen/small_text_size" />
+                android:textSize="@dimen/small_middle_text_size" />
 
             <View style="@style/line3" />
 
@@ -55,7 +55,11 @@
                         android:numColumns="auto_fit"
                         android:stretchMode="spacingWidthUniform"
                         android:listSelector="@android:color/transparent" 
-                        android:scrollbars="none">
+                        android:scrollbars="none"
+				        android:scrollingCache="false"
+				        android:smoothScrollbar="true" 
+				        android:fadingEdge="none"
+				        android:fadingEdgeLength="0dip">
                     </GridView>
                 </LinearLayout>
             </HorizontalScrollView>
@@ -70,7 +74,7 @@
                 android:padding="5dip"
                 android:text="· 相关栏目推荐"
                 android:textColor="@color/black"
-                android:textSize="@dimen/small_text_size" />
+                android:textSize="@dimen/small_middle_text_size" />
 
             <View style="@style/line3" />
 
@@ -81,17 +85,24 @@
                 android:gravity="center"
                 android:horizontalSpacing="10dp"
                 android:verticalSpacing="10dp"
-                android:numColumns="3">
+                android:layout_marginTop="5dip"
+                android:stretchMode="columnWidth"
+                android:columnWidth="100dp" 
+                android:numColumns="3"
+                android:scrollbars="none"
+		        android:scrollingCache="false"
+		        android:smoothScrollbar="true" 
+		        android:fadingEdge="none"
+		        android:fadingEdgeLength="0dip">
             </GridView>
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
 
     <Button
-        android:id="@+id/go"
+        android:id="@+id/make_btn"
         style="@style/button_menu"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dip"
         android:text="@string/make_resume" />
-
 </RelativeLayout>

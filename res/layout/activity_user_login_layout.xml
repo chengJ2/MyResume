@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/topLayout"
+        layout="@layout/top_layout_lable" />
+
+    <com.me.resume.views.CommScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/userpwdLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dip"
+                android:background="@drawable/editbox"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/edtTxt_username"
+                    style="@style/userinfo_item_style"
+                    android:drawableLeft="@drawable/usericon"
+                    android:hint="@string/login_input_hint" />
+
+                <View style="@style/line" />
+
+                <EditText
+                    android:id="@+id/edtTxt_password"
+                    style="@style/userinfo_item_style"
+                    android:drawableLeft="@drawable/pwdicon"
+                    android:hint="@string/login_input2_hint"
+                    android:inputType="textPassword" />
+            </LinearLayout>
+            
+            <RelativeLayout
+                    android:id="@+id/savelayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dip"
+                    android:layout_marginTop="10dip" >
+
+                    <ImageView
+                        android:id="@+id/save_checkbox"
+                        android:layout_width="25dip"
+                        android:layout_height="25dip"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dip"
+                        android:background="@drawable/checkbox_sel" />
+
+                    <TextView
+                        android:id="@+id/savePassWord"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="6dp"
+                        android:layout_toRightOf="@id/save_checkbox"
+                        android:gravity="center"
+                        android:text="保存密码"
+                        android:textColor="@color/grey"
+                        android:textSize="@dimen/micro_text_size" />
+
+                    <TextView
+                        android:id="@+id/forgotPassWord"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dip"
+                        android:gravity="center"
+                        android:text="忘记密码?"
+                        android:textColor="@color/top_bar"
+                        android:textSize="@dimen/micro_text_size" />
+                </RelativeLayout>
+            
+             <Button
+			        android:id="@+id/btn_login"
+			        style="@style/button_menu"
+			        android:layout_marginTop="10dip"
+			        android:text="@string/action_login"/>
+            
+            <RelativeLayout
+                android:id="@+id/login_pingtai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dip" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="10dip"
+                    android:text="第三方登录"
+                    android:textColor="#000000"
+                    android:textSize="14dip" />
+            </RelativeLayout>
+
+            <View
+                style="@style/line3"
+                android:layout_marginTop="20dip" />
+
+            <LinearLayout
+                android:id="@+id/login_pt_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <RelativeLayout
+                    android:id="@+id/ll_qqLogin"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/dsf_click_selector" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_centerInParent="true"
+                        android:drawableLeft="@drawable/tencent_qq"
+                        android:gravity="center_vertical"
+                        android:text="腾讯QQ"
+                        android:textSize="14dip" />
+                </RelativeLayout>
+
+                <View
+                    style="@style/line"
+                    android:layout_marginBottom="5dip"
+                    android:layout_marginTop="5dip"
+                    android:visibility="gone" />
+
+                <RelativeLayout
+                    android:id="@+id/ll_sinaLogin"
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/dsf_click_selector" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_centerInParent="true"
+                        android:drawableLeft="@drawable/sina_wb"
+                        android:gravity="center_vertical"
+                        android:text="新浪微博"
+                        android:textSize="14dip" />
+                </RelativeLayout>
+            </LinearLayout>
+            <View style="@style/line3" />
+        </LinearLayout>
+    </com.me.resume.views.CommScrollView>
+</LinearLayout>

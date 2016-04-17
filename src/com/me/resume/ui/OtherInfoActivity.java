@@ -61,6 +61,11 @@ public class OtherInfoActivity extends SwipeBackActivity implements
 					info_listeningspeaking.setText(mList.get(position));
 				}
 				break;
+			case 13:
+				if (msg.obj != null) {
+					info_certificatetime.setText(((String)msg.obj)/*.substring(0, 4)*/);
+				}
+				break;
 			default:
 				break;
 			}
@@ -115,6 +120,8 @@ public class OtherInfoActivity extends SwipeBackActivity implements
 
 		ot_certificate_edit.setOnClickListener(this);
 		ot_certificate_add.setOnClickListener(this);
+		
+		info_certificatetime.setOnClickListener(this);
 
 		ot_otherinfo_edit.setOnClickListener(this);
 		ot_otherinfo_add.setOnClickListener(this);
@@ -214,6 +221,9 @@ public class OtherInfoActivity extends SwipeBackActivity implements
 			break;
 		case R.id.ot_otherinfo_edit:
 
+			break;
+		case R.id.info_certificatetime:
+			DialogUtils.showTimeChooseDialog(self, info_certificatetime,R.string.ot_info_getcertificatetime,13,mHandler);
 			break;
 		default:
 			break;
