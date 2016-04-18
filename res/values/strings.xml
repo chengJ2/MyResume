@@ -10,6 +10,7 @@
     <string name="resume_personcenter">我</string>
     <string name="resume_baseinfo">基本资料</string>
     <string name="resume_workexperience">工作经历</string>
+     <string name="resume_industrytype">行业类别</string>
     <string name="resume_jobintension">求职意向</string>
     <string name="resume_evaluation">自我评价</string>
     <string name="resume_excellentskills">擅长技能</string>
@@ -37,7 +38,7 @@
     <string name="reg_info_email">电子邮箱不合法！</string>
     <string name="reg_info_phone">手机号不合法！</string>
     
-    
+    <string name="action_baseinfo_null">请先填写基本信息</string>
    
      <!-- user -->
     <string name="login_input_hint">请输入手机号/用户名</string>
@@ -101,6 +102,10 @@
     <string name="we_info_companyname">企业名称</string>
     <string name="we_info_input_companyname">请输入企业名称</string>
     <string name="we_info_industryclassification">行业类别</string>
+    <string name="we_info_companynature">企业性质</string>
+    <string name="we_info_choose_companynature">请选择企业性质</string>
+    <string name="we_info_companyscale">企业规模</string>
+    <string name="we_info_choose_companyscale">请选择企业规模</string>
     <string name="we_info_choose_industryclassification">请选择行业类别</string>
     <string name="we_info_jobtitle">职位名称</string>
     <string name="we_info_choose_jobtitle">请输入职位名称</string>

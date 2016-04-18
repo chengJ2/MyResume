@@ -268,6 +268,8 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 
 	}
 	
+	
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -343,7 +345,7 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 			if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 				
 				String edId = commMapArray.get("_id")[0];
-				updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
+				updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
 						new String[]{edId,"realname","gender","brithday","","joinworktime",
 										  "phone","hometown","city","email","ismarry","nationality",
 										  "license","workingabroad","politicalstatus"}, 
@@ -363,7 +365,8 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 				cValues.put("phone", info_phoneStr);
 				cValues.put("hometown", "湖北黄石");
 				cValues.put("city", "武汉");
-				cValues.put("email", info_emailStr);
+//				cValues.put("email", info_emailStr);
+				cValues.put("email", "sandy_cj910@163.com");
 				cValues.put("ismarry", rg_maritalstatusStr);
 				cValues.put("nationality", info_nationalityStr);
 				cValues.put("license", info_licenseStr);
@@ -395,14 +398,27 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 			getValues(R.array.ba_politicalstatus_values,info_politicalstatus,R.string.info_politicalstatus);
 			break;
 		case R.id.next:
-			// TODO
-			startActivity(".ui.WorkExperienceActivity",false);
+			queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
+			commMapArray = dbUtil.queryData(self, queryWhere);
+			if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+				startActivity(".ui.WorkExperienceActivity",false);
+			}else{
+				msg.setText(CommUtil.getStrValue(self, R.string.action_baseinfo_null));
+				msg.setVisibility(View.VISIBLE);
+			}
 			break;
 		case R.id.left_lable:
 			self.scrollToFinishActivity();
 			break;
 		case R.id.right_lable:
-			startActivity(".MainActivity",false);
+			queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
+			commMapArray = dbUtil.queryData(self, queryWhere);
+			if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+				startActivity(".MainActivity",false);
+			}else{
+				msg.setText(CommUtil.getStrValue(self, R.string.action_baseinfo_null));
+				msg.setVisibility(View.VISIBLE);
+			}
 			break;
 		default:
 			break;

@@ -131,6 +131,34 @@ public class ActivityUtils {
 	}
 	
 	/**
+	 * @描述：内部之间的跳转，有返回值 <br>
+	 * @param src
+	 *            当前activity
+	 * @param obj
+	 *            目标activity字符串
+	 * @param finish
+	 *            是否关闭
+	 * @param bundle
+	 *            传递时附带的参数
+	 * @param requestCode
+	 *            如果值大于0，则会在退出调用界面后返回该值到调用该方法的界面中 If >= 0, this code will be
+	 *            returned in onActivityResult() when the activity exits.
+	 */
+	public static void startActivityForResult(Activity src, String obj,
+			boolean finish,  int requestCode) {
+		try {
+			Class className = Class.forName(obj);
+			Intent intent = new Intent(src, className);
+			src.startActivityForResult(intent, requestCode);
+			if (finish) {
+				((Activity) src).finish();
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * @描述：内部之间的跳转，没有返回值 <br>
 	 * @param src
 	 *            当前activity

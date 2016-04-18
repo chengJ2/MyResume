@@ -50,6 +50,42 @@
 
             <View style="@style/line3" />
             
+             <LinearLayout
+                style="@style/noraml_item" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/we_info_companynature" />
+
+                <TextView
+                    android:id="@+id/info_companynature"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/we_info_choose_companynature" />
+                 <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <View style="@style/line3" />
+            
+             <LinearLayout
+                style="@style/noraml_item" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/we_info_companyscale" />
+
+                <TextView
+                    android:id="@+id/info_companyscale"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/we_info_choose_companyscale" />
+                 <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <View style="@style/line3" />
+            
             <LinearLayout
                 style="@style/noraml_item">
 
@@ -111,7 +147,7 @@
                         style="@style/user_info_item_ed"
                         android:layout_marginLeft="2dip"
                         android:layout_weight="1"
-                        android:text="~" />
+                        android:text="至" />
 
                     <TextView
                         android:id="@+id/info_endworktime"

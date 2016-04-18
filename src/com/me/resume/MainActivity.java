@@ -22,6 +22,7 @@ import com.me.resume.comm.ViewHolder;
 import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.RegexUtil;
 import com.me.resume.views.JazzyViewPager;
 import com.me.resume.views.JazzyViewPager.TransitionEffect;
 import com.me.resume.views.TagFlowLayout;
@@ -41,6 +42,10 @@ public class MainActivity extends SwipeBackActivity {
 
 	private LayoutInflater mInflater;
 	private View view1, view2, view3, view4, view5;// 页卡视图
+	
+	// View1
+	private TextView index_1_realname, index_1_info,index_1_where,index_1_lisence,index_1_phone,index_1_email;
+	
 	private List<View> mViewList = new ArrayList<>();// 页卡视图集合
 
 	private static final int MSG_CHANGE_PHOTO = 1;
@@ -92,38 +97,108 @@ public class MainActivity extends SwipeBackActivity {
 			"jamy", "kobe bryant", "jordan", "layout", "viewgroup", "margin",
 			"padding", "text", "name", "type", "search", "logcat" };
 
-	private TextView realnameTv, hometownTv;
+	
+	
 	private Button goHomeBtn;
 
 	private void initViews() {
 		mInflater = LayoutInflater.from(this);
+		
 		view1 = mInflater.inflate(R.layout.index_resume_1, null);
-
-		realnameTv = ((TextView) view1.findViewById(R.id.realname));
-		hometownTv = ((TextView) view1.findViewById(R.id.hometown));
-
 		view2 = mInflater.inflate(R.layout.index_resume_2, null);
-		weListview = (ListView) view2.findViewById(R.id.weListview);
-
 		view3 = mInflater.inflate(R.layout.index_resume_3, null);
 		view4 = mInflater.inflate(R.layout.index_resume_4, null);
 		view5 = mInflater.inflate(R.layout.index_resume_5, null);
 
-		// 添加页卡视图
+		initView1(view1);
+		
+		initView2(view2);
+		
+//		initView3(view3);
+//		
+//		initView4(view4);
+//		
+//		initView4(view5);
+
+		mViewList.add(view3);
+		mViewList.add(view4);
+		mViewList.add(view5);
+
+		tagFlowLayout = (TagFlowLayout) view3.findViewById(R.id.flowlayout);
+
+		goHomeBtn = (Button) view5.findViewById(R.id.go);
+	}
+	
+	/**
+	 * 
+	 * @Title:MainActivity
+	 * @Description: 基本信息
+	 * @author Comsys-WH1510032
+	 * @return 返回类型  
+	 * @param view
+	 */
+	private void initView1(View view){
+		index_1_realname = ((TextView) view1.findViewById(R.id.index_1_realname));
+		index_1_info = ((TextView) view1.findViewById(R.id.index_1_info));
+		index_1_where = ((TextView) view1.findViewById(R.id.index_1_where));
+		index_1_lisence = ((TextView) view1.findViewById(R.id.index_1_lisence));
+		index_1_phone = ((TextView) view1.findViewById(R.id.index_1_phone));
+		index_1_email = ((TextView) view1.findViewById(R.id.index_1_email));
+		
 		queryWhere = "select * from " + CommonText.BASEINFO
 				+ " where userId = 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			mViewList.add(view1);
-
-			realnameTv.setText(CommUtil.getStrValue(self,
-					R.string.info_name_key) + " :" + commMapArray.get("realname")[0]);
-			hometownTv
-					.setText(CommUtil.getStrValue(self,
-							R.string.info_hometown_key)
-							+ " :"
-							+ commMapArray.get("hometown")[0]);
+			
+			index_1_realname.setText(commMapArray.get("realname")[0]);
+			
+			StringBuffer sbStr = new StringBuffer();
+			String info = commMapArray.get("gender")[0];
+			if(info.equals("0")){
+				sbStr.append(CommUtil.getStrValue(self, R.string.info_sex_1));
+			}else{
+				sbStr.append(CommUtil.getStrValue(self, R.string.info_sex_2));
+			}
+			sbStr.append("|");
+			
+			info = commMapArray.get("ismarry")[0];
+			if(info.equals("1")){
+				sbStr.append(CommUtil.getStrValue(self, R.string.info_maritalstatus_2));
+			}else if(info.equals("2")){
+				sbStr.append(CommUtil.getStrValue(self, R.string.info_maritalstatus_3));
+			}else{
+				sbStr.append(CommUtil.getStrValue(self, R.string.info_maritalstatus_1));
+			}
+			sbStr.append(" | ");
+			info = commMapArray.get("brithday")[0];
+			if(RegexUtil.checkNotNull(info)){
+				sbStr.append(info);
+			}
+			index_1_info.setText(sbStr);
+			
+			sbStr = new StringBuffer();
+			info = commMapArray.get("hometown")[0];
+			if(RegexUtil.checkNotNull(info)){
+				sbStr.append("户口："+info);
+				sbStr.append(" | ");
+			}
+			
+			info = commMapArray.get("city")[0];
+			if(RegexUtil.checkNotNull(info)){
+				sbStr.append("现居地："+info);
+			}
+			
+			index_1_where.setText(sbStr);
+			
+			index_1_lisence.setText("身份证："+commMapArray.get("license")[0]);
+			index_1_phone.setText("手机号："+commMapArray.get("phone")[0]);
+			index_1_email.setText("E-mail："+commMapArray.get("email")[0]);
 		}
+	}
+	
+	private void initView2(View view){
+		weListview = (ListView) view2.findViewById(R.id.weListview);
 
 		queryWhere = "select * from " + CommonText.WORKEXPERIENCE
 				+ " where userId = 1";
@@ -149,21 +224,13 @@ public class MainActivity extends SwipeBackActivity {
 					holder.setText(R.id.item1, commMapArray.get("companyname")[position]);
 					holder.setText(
 							R.id.item2,
-							commMapArray.get("worktimeStart")[position] + " 至 "
-									+ commMapArray.get("worktimeEnd")[position]);
+							commMapArray.get("worktimestart")[position] + " 至 "
+									+ commMapArray.get("worktimeend")[position]);
 				}
 			};
 
 			weListview.setAdapter(commMapAdapter);
 		}
-
-		mViewList.add(view3);
-		mViewList.add(view4);
-		mViewList.add(view5);
-
-		tagFlowLayout = (TagFlowLayout) view3.findViewById(R.id.flowlayout);
-
-		goHomeBtn = (Button) view5.findViewById(R.id.go);
 	}
 
 	private void showViews() {

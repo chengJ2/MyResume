@@ -7,9 +7,18 @@ import android.app.Activity;
 import android.app.Application;
 import android.util.DisplayMetrics;
 
+import com.me.resume.tools.FontsOverride;
 import com.me.resume.utils.CrashHandler;
 import com.tencent.bugly.crashreport.CrashReport;
 
+/**
+ * 
+* @ClassName: MyApplication 
+* @Description: 全局Application
+* @author Comsys-WH1510032 
+* @date 2016/4/18 下午4:17:22 
+*
+ */
 public class MyApplication extends Application {
 
 	 /** */
@@ -51,6 +60,8 @@ public class MyApplication extends Application {
 //		LanguageSettings.getInstance().initLang(this);
 		CrashReport.initCrashReport(getApplicationContext(), "900025676", false);
     	Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(this));
+    	
+    	FontsOverride.setDefaultFont(this, "SERIF", "fonts/FZY1JW.ttf");
 	}
 
 	/**

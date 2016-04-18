@@ -7,7 +7,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="100dip"
+        android:layout_height="60dip"
         android:text="@string/resume_baseinfo"
         android:textColor="@color/white"
         android:gravity="center"
@@ -19,22 +19,28 @@
         android:background="@drawable/index_1_base"/>
     
     <TextView
-        android:id="@+id/realname"
-        android:layout_width="match_parent"
-        android:layout_height="40dip"
-        android:layout_marginTop="15dip"
-        android:text="程健"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/medium_text_size" />
+        android:id="@+id/index_1_realname"
+        style="@style/index1_text"
+        android:textSize="@dimen/large_text_size" />
    
     <TextView
-        android:id="@+id/hometown"
-        android:layout_width="match_parent"
-        android:layout_height="40dip"
-        android:text="湖北黄石"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/medium_text_size" />
+        android:id="@+id/index_1_info"
+        style="@style/index1_text"/>
+    
+     <TextView
+        android:id="@+id/index_1_where"
+        style="@style/index1_text"/>
+    
+    <TextView
+        android:id="@+id/index_1_lisence"
+        style="@style/index1_text"/>
+    
+     <TextView
+        android:id="@+id/index_1_phone"
+        style="@style/index1_text"/>
+     
+      <TextView
+        android:id="@+id/index_1_email"
+        style="@style/index1_text"/>
 
 </LinearLayout>

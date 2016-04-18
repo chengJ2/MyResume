@@ -39,6 +39,7 @@
         <item name="android:textColor">@color/user_edit_text</item>
         <item name="android:textSize">@dimen/small_middle_text_size</item>
         <item name="android:singleLine">false</item>
+        <item name="android:typeface">serif</item>
     </style>
 
     <style name="user_info_item_ed">
@@ -52,6 +53,7 @@
         <item name="android:layout_marginLeft">10dip</item>
         <item name="android:background">@null</item>
         <item name="android:singleLine">true</item>
+        <item name="android:typeface">serif</item>
     </style>
     
     <style name="user_info_item_radio">
@@ -102,6 +104,7 @@
         <item name="android:layout_marginLeft">@dimen/btn_text_margin</item>
         <item name="android:layout_marginRight">@dimen/btn_text_margin</item>
         <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:typeface">serif</item>
     </style>
     
     <!-- 一般Item项Parent -->
@@ -128,6 +131,7 @@
 	      <item name="android:background">@null</item>
 	      <item name="android:singleLine">true</item>
 	      <item name="android:drawablePadding">8dip</item>
+	      <item name="android:typeface">serif</item>
 	 </style>
     
       <style name="my_pb"   parent="@android:style/Widget.ProgressBar.Horizontal">
@@ -148,6 +152,19 @@
 	      <item name="android:gravity">center|left</item>
 	      <item name="android:background">@color/grey_50</item>
 	      <item name="android:singleLine">true</item>
+	      <item name="android:typeface">serif</item>
+	 </style>
+	 
+	   <style name="index1_text">
+	      <item name="android:layout_width">match_parent</item>
+	      <item name="android:layout_height">wrap_content</item>
+	      <item name="android:textColor">@color/white</item>
+	      <item name="android:textSize">@dimen/small_middle_text_size</item>
+	      <item name="android:paddingLeft">20dip</item>
+	      <item name="android:gravity">center|left</item>
+	      <item name="android:layout_marginTop">8dip</item>
+	      <item name="android:background">@android:color/transparent</item>
+	      <item name="android:typeface">serif</item>
 	 </style>
 
 </resources>

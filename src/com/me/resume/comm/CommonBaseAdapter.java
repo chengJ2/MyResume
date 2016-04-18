@@ -11,13 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
+import android.widget.Filterable;
 
 /**
  * 适配器的抽象基类   数据形式为List
  * @author Administrator
  * @param <T>
  */
-public  abstract class CommonBaseAdapter<T> extends BaseAdapter {
+public  abstract class CommonBaseAdapter<T> extends BaseAdapter implements Filterable{
 	protected LayoutInflater inflater;
 	protected List<T> mList;
 	protected Context context;
@@ -51,6 +52,7 @@ public  abstract class CommonBaseAdapter<T> extends BaseAdapter {
 		return position;
 	}
 	
+	@Override
 	public Filter getFilter() {
 		if (mNameFilter == null) {
 			mNameFilter = new CommFilter();
@@ -64,9 +66,17 @@ public  abstract class CommonBaseAdapter<T> extends BaseAdapter {
 		convert(holder, getItem(position),position);
 		return holder.getConvertView();
 	}
+	
 	public abstract void convert(ViewHolder holder,T item,int position);
 	
-	
+	/**
+	 * 
+	* @ClassName: CommFilter 
+	* @Description: 过滤数据 
+	* @author Comsys-WH1510032 
+	* @date 2016/4/18 下午1:23:16 
+	*
+	 */
 	private class CommFilter extends Filter{
 
 		@Override

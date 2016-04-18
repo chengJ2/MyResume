@@ -1,11 +1,9 @@
 package com.me.resume.ui;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -13,12 +11,12 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.me.resume.MainActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.Constants;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.L;
 import com.me.resume.utils.TimeUtils;
@@ -39,7 +37,7 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 	
 	private CustomFAB save,edit,next;
 	
-	private TextView info_industryclassification,info_startworktime,info_endworktime,info_expectedsalary;
+	private TextView info_companynature,info_companyscale,info_industryclassification,info_startworktime,info_endworktime,info_expectedsalary;
 	
 	private EditText info_companyname,info_jobtitle,info_workdescdetail;
 	
@@ -47,7 +45,6 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 1:
-				DialogUtils.dismissPopwindow();
 				break;
 			case 2:
 				int position = (int) msg.obj;
@@ -55,8 +52,11 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 					info_industryclassification.setText(mList.get(position));
 				}else if(whichTab == 2){
 					info_expectedsalary.setText(mList.get(position));
+				}else if(whichTab == 3){
+					info_companyscale.setText(mList.get(position));
+				}else if(whichTab == 4){
+					info_companynature.setText(mList.get(position));
 				}
-				DialogUtils.dismissPopwindow();
 				break;
 			case 11:
 				if (msg.obj != null) {
@@ -89,6 +89,8 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 		rightLable = findView(R.id.right_lable);
 		
 		info_companyname = findView(R.id.info_companyname);
+		info_companynature = findView(R.id.info_companynature);
+		info_companyscale = findView(R.id.info_companyscale);
 		info_industryclassification = findView(R.id.info_industryclassification);
 		info_jobtitle = findView(R.id.info_jobtitle);
 		info_startworktime = findView(R.id.info_startworktime);
@@ -123,6 +125,8 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 		save.setOnClickListener(this);
 		next.setOnClickListener(this);
 		leftLable.setOnClickListener(this);
+		info_companynature.setOnClickListener(this);
+		info_companyscale.setOnClickListener(this);
 		info_industryclassification.setOnClickListener(this);
 		info_expectedsalary.setOnClickListener(this);
 		info_startworktime.setOnClickListener(this);
@@ -143,6 +147,8 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			String info_jobtitleStr = CommUtil.getEditTextValue(info_jobtitle);
 			String info_workdescdetailStr = CommUtil.getEditTextValue(info_workdescdetail);
 			
+			String info_companynatureStr = CommUtil.getTextValue(info_companynature);
+			String info_companyscaleStr = CommUtil.getTextValue(info_companyscale);
 			String info_industryclassificationStr = CommUtil.getTextValue(info_industryclassification);
 			String info_startworktimeStr = CommUtil.getTextValue(info_startworktime);
 			String info_endworktimeStr = CommUtil.getTextValue(info_endworktime);
@@ -176,6 +182,8 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			ContentValues cValues = new ContentValues();
 			cValues.put("userId", "1");
 			cValues.put("companyname", info_companynameStr);
+			cValues.put("companynature", info_companynatureStr);
+			cValues.put("companyscale", info_companyscaleStr);
 			cValues.put("industryclassification", info_industryclassificationStr);
 			cValues.put("jobtitle", info_jobtitleStr);
 			cValues.put("worktimeStart", info_startworktimeStr);
@@ -214,13 +222,26 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 		case R.id.right_lable:
 			startActivity(".MainActivity", false);
 			break;
-		case R.id.info_industryclassification:
-			whichTab = 1;
-			item_values = CommUtil.getArrayValue(self,R.array.oi_hylb_values); 
+		case R.id.info_companynature:
+			whichTab = 4;
+			item_values = CommUtil.getArrayValue(self,R.array.oi_companynature_values); 
 			mList = Arrays.asList(item_values);
 			DialogUtils.showPopWindow(self, info_industryclassification, 
-					R.string.we_info_expectedsalary, mList, 
+					R.string.we_info_companynature, mList, 
 					mHandler);
+			break;
+		case R.id.info_companyscale:
+			
+			whichTab = 3;
+			item_values = CommUtil.getArrayValue(self,R.array.we_companyscale_values); 
+			mList = Arrays.asList(item_values);
+			DialogUtils.showPopWindow(self, info_industryclassification, 
+					R.string.we_info_companyscale, mList, 
+					mHandler);
+			break;
+		case R.id.info_industryclassification:
+			ActivityUtils.startActivityForResult(self, 
+					MyApplication.PACKAGENAME + ".ui.IndustryTypeActivity", false, Constants.REQUEST_CODE);
 			break;
 		case R.id.info_expectedsalary:
 			whichTab = 2;
@@ -240,6 +261,18 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 		default:
 			break;
 		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		L.d("onActivityResult"+"requestCode="+requestCode+" resultCode="+resultCode + " data:"+data);
+        if(requestCode == Constants.REQUEST_CODE) {
+            if(resultCode == Constants.RESULT_CODE) {
+                String result = data.getStringExtra("name");
+                info_industryclassification.setText(result);
+            }
+        }
+		super.onActivityResult(requestCode, resultCode, data);
 		
 	}
 }

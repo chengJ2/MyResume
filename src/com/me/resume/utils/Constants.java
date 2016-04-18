@@ -31,4 +31,7 @@ public class Constants {
 	public static final String CONFIG = "config";
 	
 	public static final boolean DEVELOPER_MODE = true;
+	
+	public static final int REQUEST_CODE = 1000;
+	public static final int RESULT_CODE = 1001;
 }
