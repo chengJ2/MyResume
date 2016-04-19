@@ -32,6 +32,8 @@ public class Constants {
 	
 	public static final boolean DEVELOPER_MODE = true;
 	
-	public static final int REQUEST_CODE = 1000;
 	public static final int RESULT_CODE = 1001;
+	
+	public static final int WE_REQUEST_CODE = 1000;
+	public static final int JI_REQUEST_CODE = 2000;
 }

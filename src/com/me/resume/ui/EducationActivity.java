@@ -1,7 +1,5 @@
 package com.me.resume.ui;
 
-import java.util.Map;
-
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,9 +15,8 @@ import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.ui.fragment.AllFragmentFactory;
 import com.me.resume.ui.fragment.EducationFragment;
 import com.me.resume.ui.fragment.TrainingFragment;
-import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
-import com.me.resume.utils.L;
+import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.CustomFAB;
 import com.me.resume.views.SegmentButton;
@@ -41,6 +38,8 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 	
 	private CustomFAB save,edit,next;
 	
+	private TextView msg;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -54,6 +53,9 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 		rightLable.setOnClickListener(this);
 		toptext.setText(CommUtil.getStrValue(self, R.string.resume_education));
 		rightLable.setText(CommUtil.getStrValue(self, R.string.review_resume));
+		
+		msg = findView(R.id.msg);
+		msg.setVisibility(View.GONE);
 		
 		segment_button = findView(R.id.segment_button);
 		
@@ -128,22 +130,35 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 		}
 	}
 	
+	String info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,info_degressStr,info_examinationStr;
+	
+	String info_trainingorganizationStr,info_trainingclassStr,info_certificateStr,info_descriptionStr;
+	
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+		String tab = segment_button.getSegmentButton(MyApplication.cposition).getText().toString();
+		Fragment f = AllFragmentFactory.getFragment(tab);
+		if(f != null){
+			if(MyApplication.cposition == 0){ // 教育背景
+				info_starttimeStr = ((EducationFragment)f).getInfoStartTime();
+				info_endtimeStr = ((EducationFragment)f).getInfoEndTime();
+				info_schoolStr = ((EducationFragment)f).getInfoSchool();
+				info_majornameStr = ((EducationFragment)f).getInfomajorname();
+				info_degressStr = ((EducationFragment)f).getInfodegree();
+				info_examinationStr = ((EducationFragment)f).getInfoexamination();
+			}else{
+				info_starttimeStr = ((TrainingFragment)f).getInfoStartTime();
+				info_endtimeStr = ((TrainingFragment)f).getInfoEndTime();
+				info_trainingorganizationStr = ((TrainingFragment)f).getInfotrainingorganization();
+				info_trainingclassStr = ((TrainingFragment)f).getInfotrainingclass();
+				info_certificateStr = ((TrainingFragment)f).getInfocertificate();
+				info_descriptionStr = ((TrainingFragment)f).getInfodescription();
+			}
+		}
 		switch (v.getId()) {
 		case R.id.save:
-			String tab = segment_button.getSegmentButton(MyApplication.cposition).getText().toString();
-			Fragment f = AllFragmentFactory.getFragment(tab);
 			if(MyApplication.cposition == 0){ // 教育背景
-				if(f != null){
-					String info_starttimeStr = ((EducationFragment)f).getInfoStartTime();
-					String info_endtimeStr = ((EducationFragment)f).getInfoEndTime();
-					String info_schoolStr = ((EducationFragment)f).getInfoSchool();
-					String info_majornameStr = ((EducationFragment)f).getInfomajorname();
-					String info_degressStr = ((EducationFragment)f).getInfodegree();
-					String info_examinationStr = ((EducationFragment)f).getInfoexamination();
-	
+				if( judgeEduField() == 0){
 					ContentValues cValues = new ContentValues();
 					cValues.put("userId", "1");
 					cValues.put("worktimestart", info_starttimeStr);
@@ -160,15 +175,9 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 						toastMsg(R.string.action_add_success);
 					}
 				}
+				
 			}else{ // 培训经历
-				if(f != null){
-					String info_starttimeStr = ((TrainingFragment)f).getInfoStartTime();
-					String info_endtimeStr = ((TrainingFragment)f).getInfoEndTime();
-					String info_trainingorganizationStr = ((TrainingFragment)f).getInfotrainingorganization();
-					String info_trainingclassStr = ((TrainingFragment)f).getInfotrainingclass();
-					String info_certificateStr = ((TrainingFragment)f).getInfocertificate();
-					String info_descriptionStr = ((TrainingFragment)f).getInfodescription();
-					
+				if(judegTraField() == 0){
 					ContentValues cValues = new ContentValues();
 					cValues.put("userId", "1");
 					cValues.put("worktimestart", info_starttimeStr);
@@ -186,24 +195,131 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 					}
 				}
 			}
-			
 			break;
 		case R.id.edit:
-			
+			if(MyApplication.cposition == 0){ // 教育背景
+				if( judgeEduField() == 0){
+					queryWhere = "select * from " + CommonText.EDUCATION + " where userId = 1 order by _id limit 1";
+					commMapArray = dbUtil.queryData(self, queryWhere);
+					if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+						String edId = commMapArray.get("_id")[0];
+						updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
+								new String[]{edId,"worktimestart","worktimeend","school","majorname",
+												  "degree","examination"}, 
+								new String[]{"1",info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,
+								info_degressStr,info_examinationStr});
+						if (updResult == 1) {
+							toastMsg(R.string.action_update_success);
+						}else{
+							toastMsg(R.string.action_update_fail);
+						}
+					}
+				}
+			}else{
+				if(judegTraField() == 0){
+					queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = 1 order by _id limit 1";
+					commMapArray = dbUtil.queryData(self, queryWhere);
+					if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+						String edId = commMapArray.get("_id")[0];
+						updResult = dbUtil.updateData(self, CommonText.EDUCATION_TRAIN, 
+								new String[]{edId,"worktimestart","worktimeend","trainingorganization","trainingclass",
+								"certificate","description"}, 
+								new String[]{"1",info_starttimeStr,info_endtimeStr,info_trainingorganizationStr,info_trainingclassStr,
+								info_certificateStr,info_descriptionStr});
+						if (updResult == 1) {
+							toastMsg(R.string.action_update_success);
+						}else{
+							toastMsg(R.string.action_update_fail);
+						}
+					}
+				}
+			}
 			break;
 		case R.id.next:
-			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME
-					+ ".ui.JobIntensionActivity");
+			startActivity(".ui.OtherInfoActivity",false);
 			break;
 		case R.id.left_lable:
 			scrollToFinishActivity();
 			break;
 		case R.id.right_lable:
-			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME 
-					+ ".MainActivity",false);
+			startActivity(".MainActivity",false);
 			break;
 		default:
 			break;
 		}
 	}
+	
+	// 教育背景
+	private int judgeEduField(){
+		if (!RegexUtil.checkNotNull(info_starttimeStr)) {
+			msg.setText(CommUtil.getStrValue(self, R.string.we_info_start_worktime) + fieldNull);
+			msg.setVisibility(View.VISIBLE);
+			return -1;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_endtimeStr)) {
+			msg.setText(CommUtil.getStrValue(self, R.string.we_info_end_worktime) + fieldNull);
+			msg.setVisibility(View.VISIBLE);
+			return -1;
+		}
+		
+		if (TimeUtils.compareDate(info_starttimeStr, info_endtimeStr) <= 0) {
+			msg.setText(CommUtil.getStrValue(self, R.string.we_info_compare_worktime));
+			msg.setVisibility(View.VISIBLE);
+			return -1;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_schoolStr)) {
+			msg.setText(CommUtil.getStrValue(self, R.string.ed_info_school) + fieldNull);
+			msg.setVisibility(View.VISIBLE);
+			return -1;
+		}
+		
+//		if (!RegexUtil.checkNotNull(info_majornameStr)) {
+//			msg.setText(CommUtil.getStrValue(self, R.string.ed_info_majorname) + fieldNull);
+//			msg.setVisibility(View.VISIBLE);
+//			return -1;
+//		}
+		
+		if (!RegexUtil.checkNotNull(info_degressStr)) {
+			msg.setText(CommUtil.getStrValue(self, R.string.ed_info_degree) + fieldNull);
+			msg.setVisibility(View.VISIBLE);
+			return -1;
+		}
+		return 0;
+	}
+	
+	private int judegTraField(){
+		if (!RegexUtil.checkNotNull(info_starttimeStr)) {
+			msg.setText(CommUtil.getStrValue(self, R.string.we_info_start_worktime) + fieldNull);
+			msg.setVisibility(View.VISIBLE);
+			return -1;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_endtimeStr)) {
+			msg.setText(CommUtil.getStrValue(self, R.string.we_info_end_worktime) + fieldNull);
+			msg.setVisibility(View.VISIBLE);
+			return -1;
+		}
+		
+		if (TimeUtils.compareDate(info_starttimeStr, info_endtimeStr) <= 0) {
+			msg.setText(CommUtil.getStrValue(self, R.string.we_info_compare_worktime));
+			msg.setVisibility(View.VISIBLE);
+			return -1;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_trainingorganizationStr)) {
+			msg.setText(CommUtil.getStrValue(self, R.string.ed_info_trainingorganization) + fieldNull);
+			msg.setVisibility(View.VISIBLE);
+			return -1;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_trainingclassStr)) {
+			msg.setText(CommUtil.getStrValue(self, R.string.ed_info_trainingclass) + fieldNull);
+			msg.setVisibility(View.VISIBLE);
+			return -1;
+		}
+		return 0;
+	}
+	
 }

@@ -17,7 +17,7 @@
         android:id="@+id/msg"
         style="@style/comm_errormsg_style"
         android:layout_below="@id/top"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 
    <LinearLayout 
         android:id="@+id/llayout"

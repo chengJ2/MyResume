@@ -66,6 +66,8 @@ public class SwipeBackActivity extends FragmentActivity implements
 	
 	protected List<String> mList = null;
 	
+	protected String fieldNull = null;
+	
 	// activity访问栈
     private static Stack<FragmentActivity> mLocalStack = new Stack<FragmentActivity>();
 
@@ -105,6 +107,7 @@ public class SwipeBackActivity extends FragmentActivity implements
 		}
 		super.onCreate(savedInstanceState);
 		self = SwipeBackActivity.this;
+		fieldNull = CommUtil.getStrValue(self, R.string.action_input_isnull);
 		MyApplication.getApplication().addActivity(this);
 
 		mHelper = new SwipeBackActivityHelper(this);

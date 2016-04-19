@@ -69,24 +69,24 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 				if (whichTab == 1) {
 					info_maritalstatus.setText(mList.get(position));
 					if (position == 0) {
-						rg_maritalstatusStr = "1";
+						rg_maritalstatusStr = "0";
 					}else if (position == 1) {
-						rg_maritalstatusStr = "2";
+						rg_maritalstatusStr = "1";
 					}else if (position == 2) {
-						rg_maritalstatusStr = "3";
+						rg_maritalstatusStr = "2";
 					}
 				}else if(whichTab == 2){
 					info_politicalstatus.setText(mList.get(position));
 					if (position == 0) {
-						rg_politicalstatusStr = "1";
+						rg_politicalstatusStr = "0";
 					}else if (position == 1) {
-						rg_politicalstatusStr = "2";
+						rg_politicalstatusStr = "1";
 					}else if (position == 2) {
-						rg_politicalstatusStr = "3";
+						rg_politicalstatusStr = "2";
 					}else if (position == 3) {
-						rg_politicalstatusStr = "4";
+						rg_politicalstatusStr = "3";
 					}else if (position == 4) {
-						rg_politicalstatusStr = "5";
+						rg_politicalstatusStr = "4";
 					}
 				}
 				break;
@@ -157,7 +157,9 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 		
 		rg_workingabroad = findView(R.id.rg_workingabroad);
 		radio_yes  = findView(R.id.radio_yes);
+		radio_yes.setChecked(false);
 		radio_no = findView(R.id.radio_no);
+		radio_no.setChecked(true);
 		
 		info_brithday = findView(R.id.info_brithday);
 		info_workyear = findView(R.id.info_workyear);
@@ -285,27 +287,26 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 			String info_hometownStr = CommUtil.getTextValue(info_hometown);
 			String info_cityStr = CommUtil.getTextValue(info_city);
 			
-			String isnull = CommUtil.getStrValue(self, R.string.action_input_isnull);
 			if (!RegexUtil.checkNotNull(info_realnameStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.info_name) + isnull);
+				msg.setText(CommUtil.getStrValue(self, R.string.info_name) + fieldNull);
 				msg.setVisibility(View.VISIBLE);
 				return;
 			}
 			
 			if (!RegexUtil.checkNotNull(info_brithdayStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.info_brithday) + isnull);
+				msg.setText(CommUtil.getStrValue(self, R.string.info_brithday) + fieldNull);
 				msg.setVisibility(View.VISIBLE);
 				return;
 			}
 			
 			if (!RegexUtil.checkNotNull(info_workyearStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.info_workyear) + isnull);
+				msg.setText(CommUtil.getStrValue(self, R.string.info_workyear) + fieldNull);
 				msg.setVisibility(View.VISIBLE);
 				return;
 			}
 			
 			if (!RegexUtil.checkNotNull(info_phoneStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.info_contack) + isnull);
+				msg.setText(CommUtil.getStrValue(self, R.string.info_contack) + fieldNull);
 				msg.setVisibility(View.VISIBLE);
 				return;
 			}
@@ -317,25 +318,25 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 			}
 			
 			if (!RegexUtil.checkNotNull(info_emailStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.info_email) + isnull);
+				msg.setText(CommUtil.getStrValue(self, R.string.info_email) + fieldNull);
 				msg.setVisibility(View.VISIBLE);
 				return;
 			}
 			
-			/*if (!RegexUtil.checkEmail(info_emailStr)) {
+			if (!RegexUtil.checkEmail(info_emailStr)) {
 				msg.setText(CommUtil.getStrValue(self, R.string.reg_info_email));
 				msg.setVisibility(View.VISIBLE);
 				return;
-			}*/
+			}
 			
 			/*if (RegexUtil.checkNotNull(info_hometownStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.info_hometown) + isnull);
+				msg.setText(CommUtil.getStrValue(self, R.string.info_hometown) + fieldNull);
 				msg.setVisibility(View.VISIBLE);
 				return;
 			}
 		
 			if (RegexUtil.checkNotNull(info_cityStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.info_city) + isnull);
+				msg.setText(CommUtil.getStrValue(self, R.string.info_city) + fieldNull);
 				msg.setVisibility(View.VISIBLE);
 				return;
 			}*/
@@ -346,14 +347,16 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 				
 				String edId = commMapArray.get("_id")[0];
 				updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
-						new String[]{edId,"realname","gender","brithday","","joinworktime",
-										  "phone","hometown","city","email","ismarry","nationality",
-										  "license","workingabroad","politicalstatus"}, 
+						new String[]{edId,"realname","gender","brithday","joinworktime",
+										  "phone","hometown","city","email","ismarry",
+										  "nationality","license","workingabroad","politicalstatus"}, 
 						new String[]{"1",info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
 										info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
 										info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr});
 				if (updResult == 1) {
-					CommUtil.ToastMsg(self, R.string.action_update_success);
+					toastMsg(R.string.action_update_success);
+				}else{
+					toastMsg(R.string.action_update_fail);
 				}
 			}else{
 				ContentValues cValues = new ContentValues();
@@ -365,8 +368,7 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 				cValues.put("phone", info_phoneStr);
 				cValues.put("hometown", "湖北黄石");
 				cValues.put("city", "武汉");
-//				cValues.put("email", info_emailStr);
-				cValues.put("email", "sandy_cj910@163.com");
+				cValues.put("email", info_emailStr);
 				cValues.put("ismarry", rg_maritalstatusStr);
 				cValues.put("nationality", info_nationalityStr);
 				cValues.put("license", info_licenseStr);

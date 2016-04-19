@@ -1,7 +1,5 @@
 package com.me.resume.ui;
 
-import java.util.Map;
-
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.view.View;
@@ -103,7 +101,7 @@ public class EvaluationActivity extends SwipeBackActivity implements OnClickList
 			break;
 		case R.id.next:
 			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME
-					+ ".ui.EducationActivity");
+					+ ".ui.JobIntensionActivity");
 			break;
 		case R.id.left_lable:
 			scrollToFinishActivity();

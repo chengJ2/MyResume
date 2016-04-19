@@ -41,9 +41,7 @@ public class RegexUtil {
 
 	// 邮箱
 	public static boolean checkEmail(String s) {
-		Pattern pattern = Pattern.compile(
-				"[\\w\\.\\-]+@([\\w\\-]+\\.)+[\\w\\-]+",
-				Pattern.CASE_INSENSITIVE);
+		Pattern pattern = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
 		Matcher matcher = pattern.matcher(s);
 		return matcher.matches();
 	}

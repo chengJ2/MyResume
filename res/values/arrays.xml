@@ -48,6 +48,20 @@
         <item>保密</item>
     </string-array>
     
+    <string-array name="ji_jobstatue_values">
+        <item>我目前在职,正考虑换个工作环境</item>
+        <item>目前已离职,可立即上岗</item>
+        <item>我对目前的工作比较满意,若有更好的工作机会,也可以考虑</item>
+        <item>目前暂无跳槽的打算</item>
+        <item>应届毕业生</item>
+    </string-array>
+    
+    <string-array name="ji_workingproperty_values">
+        <item>全职</item>
+        <item>兼职</item>
+        <item>实习</item>
+    </string-array>
+    
     <string-array name="oi_wysp_values">
         <item>无</item>
         <item>英语</item>
@@ -85,6 +99,15 @@
     </string-array>
     
      <string-array name="we_companyscale_values">
+         <item>20人以下</item>
+        <item>20~99人</item>
+        <item>100~499人</item>
+        <item>500~999人</item>
+        <item>1000~9999人</item>
+        <item>10000人以上</item>
+	</string-array>
+    
+      <string-array name="oi_companynature_values">
         <item>国家机关</item>
         <item>事业单位</item>
         <item>国企</item>
@@ -95,15 +118,6 @@
         <item>股份制企业</item>
         <item>上市公司</item>
         <item>其他</item>
-	</string-array>
-    
-      <string-array name="oi_companynature_values">
-        <item>20人以下</item>
-        <item>20~99人</item>
-        <item>100~499人</item>
-        <item>500~999人</item>
-        <item>1000~9999人</item>
-        <item>10000人以上</item>
     </string-array>
     
     <string-array name="info_nationality_values">

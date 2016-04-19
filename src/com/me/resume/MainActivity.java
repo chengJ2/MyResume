@@ -2,7 +2,9 @@ package com.me.resume;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -43,19 +45,26 @@ public class MainActivity extends SwipeBackActivity {
 	private LayoutInflater mInflater;
 	private View view1, view2, view3, view4, view5;// 页卡视图
 	
-	// View1
-	private TextView index_1_realname, index_1_info,index_1_where,index_1_lisence,index_1_phone,index_1_email;
-	
 	private List<View> mViewList = new ArrayList<>();// 页卡视图集合
-
+	
 	private static final int MSG_CHANGE_PHOTO = 1;
 	/** view自动切换时间 */
 	private static final int VIEW_CHANGE_TIME = 10000;
-
+	
 	private boolean showEffect = true;
-
+	
+	// View1
+	private TextView index_1_realname, index_1_info,index_1_where,index_1_lisence,index_1_phone,index_1_email;
+	
+	// View2
 	private ListView weListview;
-
+	
+	// View3
+	private TextView self_evaluation;
+	private TagFlowLayout tagFlowLayout;
+	private String mTags[] = { "活泼好动", "易随波逐流", "多愁善感", "不善言谈",
+			"务实", "适应能力差", "易怒而难以自制"};
+	
 	private Handler mHandler = new Handler() {
 
 		@Override
@@ -91,13 +100,6 @@ public class MainActivity extends SwipeBackActivity {
 	private void findViews() {
 		jazzyViewPager = findView(R.id.index_product_container);
 	}
-
-	private TagFlowLayout tagFlowLayout;
-	private String mTags[] = { "welcome", "android", "TextView", "apple",
-			"jamy", "kobe bryant", "jordan", "layout", "viewgroup", "margin",
-			"padding", "text", "name", "type", "search", "logcat" };
-
-	
 	
 	private Button goHomeBtn;
 
@@ -114,17 +116,14 @@ public class MainActivity extends SwipeBackActivity {
 		
 		initView2(view2);
 		
-//		initView3(view3);
-//		
-//		initView4(view4);
-//		
-//		initView4(view5);
+		initView3(view3);
+		
+		initView4(view4);
+		
+		initView5(view5);
 
-		mViewList.add(view3);
 		mViewList.add(view4);
 		mViewList.add(view5);
-
-		tagFlowLayout = (TagFlowLayout) view3.findViewById(R.id.flowlayout);
 
 		goHomeBtn = (Button) view5.findViewById(R.id.go);
 	}
@@ -197,23 +196,30 @@ public class MainActivity extends SwipeBackActivity {
 		}
 	}
 	
+	/**
+	 * 
+	 * @Title:MainActivity
+	 * @Description: 工作经历
+	 * @author Comsys-WH1510032
+	 * @return 返回类型  
+	 * @param view
+	 */
 	private void initView2(View view){
 		weListview = (ListView) view2.findViewById(R.id.weListview);
 
-		queryWhere = "select * from " + CommonText.WORKEXPERIENCE
-				+ " where userId = 1";
-		commMapArray = dbUtil.queryData(self, queryWhere);
+		queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1 order by _id desc";
+		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			mViewList.add(view2);
+//			int we_show_nav = getPreferenceData("we_show_nav", 1);
 			int LayoutID = R.layout.index_2_list_item;
-			int we_show_nav = getPreferenceData("we_show_nav", 1);
-			if (we_show_nav == 1) {
-				LayoutID = R.layout.index_2_list_item;
-			} else if (we_show_nav == 2) {
-				LayoutID = R.layout.index_2_list2_item;
-			} else if (we_show_nav == 3) {
-
-			}
+//			if (we_show_nav == 1) {
+//				LayoutID = R.layout.index_2_list_item;
+//			} else if (we_show_nav == 2) {
+//				LayoutID = R.layout.index_2_list2_item;
+//			} else if (we_show_nav == 3) {
+//
+//			}
 			CommForMapArrayBaseAdapter commMapAdapter = new CommForMapArrayBaseAdapter(
 					self, commMapArray, LayoutID, "userId") {
 
@@ -222,8 +228,7 @@ public class MainActivity extends SwipeBackActivity {
 						int position) {
 					// TODO Auto-generated method stub
 					holder.setText(R.id.item1, commMapArray.get("companyname")[position]);
-					holder.setText(
-							R.id.item2,
+					holder.setText(R.id.item2,
 							commMapArray.get("worktimestart")[position] + " 至 "
 									+ commMapArray.get("worktimeend")[position]);
 				}
@@ -231,6 +236,58 @@ public class MainActivity extends SwipeBackActivity {
 
 			weListview.setAdapter(commMapAdapter);
 		}
+	}
+	
+	/**
+	 * 
+	 * @Title:MainActivity
+	 * @Description: 自我评价&职业目标
+	 */
+	private void initView3(View view){
+		tagFlowLayout = (TagFlowLayout) view.findViewById(R.id.flowlayout);
+		self_evaluation = (TextView)view.findViewById(R.id.self_evaluation);
+		
+		queryWhere = "select * from " + CommonText.EVALUATION + " where userId = 1 order by _id desc";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			mViewList.add(view3);
+			self_evaluation.setText(commMapArray.get("selfevaluation")[0]);
+		}
+		
+		MarginLayoutParams lp = new MarginLayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		lp.leftMargin = 5;
+		lp.rightMargin = 5;
+		lp.topMargin = 5;
+		lp.bottomMargin = 5;
+		for (int i = 0; i < mTags.length; i++) {
+			TextView tview = new TextView(this);
+			tview.setText(mTags[i].toString().trim());
+			tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.microd_text_size));
+			tview.setTextColor(CommUtil.getIntValue(self, R.color.red));
+			tview.setTypeface(Typeface.SERIF);
+			tview.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_tag_text_select));
+			tagFlowLayout.addView(tview, lp);
+		}
+		
+	}
+	
+	/**
+	 * 
+	 * @Title:MainActivity
+	 * @Description: 求职意向
+	 */
+	private void initView4(View view){
+		
+	}
+	
+	/**
+	 * 
+	 * @Title:MainActivity
+	 * @Description: 求职意向
+	 */
+	private void initView5(View view){
+		
 	}
 
 	private void showViews() {
@@ -246,20 +303,7 @@ public class MainActivity extends SwipeBackActivity {
 
 		jazzyViewPager.setAdapter(new MyPagerAdapter(mViewList));
 
-		MarginLayoutParams lp = new MarginLayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		lp.leftMargin = 5;
-		lp.rightMargin = 5;
-		lp.topMargin = 5;
-		lp.bottomMargin = 5;
-		for (int i = 0; i < mTags.length; i++) {
-			TextView view = new TextView(this);
-			view.setText(mTags[i]);
-			view.setTextColor(CommUtil.getIntValue(self, R.color.white));
-			view.setBackgroundDrawable(getResources().getDrawable(
-					R.drawable.textview_bg));
-			tagFlowLayout.addView(view, lp);
-		}
+		
 
 		goHomeBtn.setOnClickListener(new OnClickListener() {
 

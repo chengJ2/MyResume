@@ -3,37 +3,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true" >
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
 
     <include
         android:id="@+id/top"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/top_bar_height"
         layout="@layout/top_layout_lable" />
-    
+
     <TextView
         android:id="@+id/msg"
         style="@style/comm_errormsg_style"
         android:layout_below="@id/top"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <com.me.resume.views.CommScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/msg"
         android:fadingEdge="none"
         android:fadingEdgeLength="0dp"
         android:overScrollMode="never"
-        android:scrollbars="none" 
-        android:layout_below="@id/msg">
+        android:scrollbars="none" >
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/white" >
-            <LinearLayout
-                style="@style/noraml_item" >
+            android:background="@color/white"
+            android:orientation="vertical" >
+
+            <LinearLayout style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -43,61 +43,26 @@
                     android:id="@+id/info_companyname"
                     style="@style/user_info_item_ed"
                     android:hint="@string/we_info_input_companyname" />
-                 <ImageView
+
+                <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
             </LinearLayout>
 
             <View style="@style/line3" />
-            
-             <LinearLayout
-                style="@style/noraml_item" >
+
+            <LinearLayout style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="@string/we_info_companynature" />
-
-                <TextView
-                    android:id="@+id/info_companynature"
-                    style="@style/user_info_item_ed"
-                    android:hint="@string/we_info_choose_companynature" />
-                 <ImageView
-                    style="@style/user_info_item_iv"
-                    android:visibility="visible" />
-            </LinearLayout>
-
-            <View style="@style/line3" />
-            
-             <LinearLayout
-                style="@style/noraml_item" >
-
-                <TextView
-                    style="@style/user_info_item_tv"
-                    android:text="@string/we_info_companyscale" />
-
-                <TextView
-                    android:id="@+id/info_companyscale"
-                    style="@style/user_info_item_ed"
-                    android:hint="@string/we_info_choose_companyscale" />
-                 <ImageView
-                    style="@style/user_info_item_iv"
-                    android:visibility="visible" />
-            </LinearLayout>
-
-            <View style="@style/line3" />
-            
-            <LinearLayout
-                style="@style/noraml_item">
-
-                <TextView
-                    style="@style/user_info_item_tv"
-                    android:text="@string/we_info_industryclassification"/>
+                    android:text="@string/we_info_industryclassification" />
 
                 <TextView
                     android:id="@+id/info_industryclassification"
                     style="@style/user_info_item_ed"
                     android:hint="@string/we_info_choose_industryclassification" />
-                  <ImageView
+
+                <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="visible" />
             </LinearLayout>
@@ -114,13 +79,14 @@
 
                 <EditText
                     android:id="@+id/info_jobtitle"
-                    android:hint="@string/we_info_choose_jobtitle"
-                    style="@style/user_info_item_ed" />
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/we_info_choose_jobtitle" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
             </LinearLayout>
+
             <View style="@style/line3" />
 
             <LinearLayout
@@ -128,7 +94,7 @@
                 style="@style/noraml_item" >
 
                 <TextView
-                   style="@style/user_info_item_tv"
+                    style="@style/user_info_item_tv"
                     android:text="@string/we_info_worktime" />
 
                 <LinearLayout
@@ -147,7 +113,7 @@
                         style="@style/user_info_item_ed"
                         android:layout_marginLeft="2dip"
                         android:layout_weight="1"
-                        android:text="至" />
+                        android:text="@string/tag_time_between" />
 
                     <TextView
                         android:id="@+id/info_endworktime"
@@ -156,75 +122,113 @@
                         android:layout_weight="3.5"
                         android:hint="@string/we_info_choose_worktime2" />
                 </LinearLayout>
-
             </LinearLayout>
-			<View style="@style/line3" />
-            <LinearLayout
-               style="@style/noraml_item" >
+
+            <View style="@style/line3" />
+
+            <LinearLayout style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="@string/we_info_expectedsalary" />
+                    android:text="@string/we_info_jobsalary" />
 
                 <TextView
                     android:id="@+id/info_expectedsalary"
                     style="@style/user_info_item_ed"
-                    android:hint="@string/we_info_choose_expectedsalary" />
-                 <ImageView
+                    android:hint="@string/we_info_choose_jobsalary" />
+
+                <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="visible" />
             </LinearLayout>
 
             <View style="@style/line3" />
-            
-            <LinearLayout
-                style="@style/noraml_item_mul" >
+
+            <LinearLayout style="@style/noraml_item_mul" >
 
                 <TextView
-                   style="@style/user_info_item_tv"
+                    style="@style/user_info_item_tv"
                     android:text="@string/we_info_workdesc" />
 
                 <EditText
                     android:id="@+id/info_workdescdetail"
                     style="@style/user_info_item_ed"
-                    android:singleLine="false"
-                    android:hint="@string/we_info_workdescdetail" />
-                 <ImageView
+                    android:hint="@string/we_info_workdescdetail"
+                    android:singleLine="false" />
+
+                <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
             </LinearLayout>
+
+            <View style="@style/line3" />
+
+            <LinearLayout style="@style/noraml_item" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/we_info_companynature" />
+
+                <TextView
+                    android:id="@+id/info_companynature"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/we_info_choose_companynature" />
+
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <LinearLayout style="@style/noraml_item" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/we_info_companyscale" />
+
+                <TextView
+                    android:id="@+id/info_companyscale"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/we_info_choose_companyscale" />
+
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <View style="@style/line3" />
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
 
-     <com.me.resume.views.CustomFAB
-       android:id="@+id/save"
-       android:layout_width="50dp"
-       android:layout_height="50dp"
-       android:layout_alignParentBottom="true"
-       android:layout_alignParentLeft="true"
-       android:layout_marginLeft="16dp"
-       android:layout_marginBottom="16dp"
-       android:src="@drawable/ic_btn_add"
-       android:tint="@android:color/white"/>
-     
-     <com.me.resume.views.CustomFAB
-       android:id="@+id/edit"
-       android:layout_width="50dp"
-       android:layout_height="50dp"
-       android:layout_alignParentBottom="true"
-       android:layout_centerInParent="true"
-       android:layout_marginBottom="16dp"
-       android:src="@drawable/ic_btn_edit"
-       android:tint="@android:color/white"/>
-     
-     <com.me.resume.views.CustomFAB
-       android:id="@+id/next"
-       android:layout_width="50dp"
-       android:layout_height="50dp"
-       android:layout_alignParentBottom="true"
-       android:layout_alignParentRight="true"
-       android:layout_marginRight="16dp"
-       android:layout_marginBottom="16dp"
-       android:src="@drawable/ic_btn_next"
-       android:tint="@android:color/white"/>
+    <com.me.resume.views.CustomFAB
+        android:id="@+id/save"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
+        android:src="@drawable/ic_btn_add"
+        android:tint="@android:color/white" />
+
+    <com.me.resume.views.CustomFAB
+        android:id="@+id/edit"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_btn_edit"
+        android:tint="@android:color/white" />
+
+    <com.me.resume.views.CustomFAB
+        android:id="@+id/next"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:src="@drawable/ic_btn_next"
+        android:tint="@android:color/white" />
+
 </RelativeLayout>

@@ -383,6 +383,17 @@ public class DialogUtils {
 			dialog.getWindow().setAttributes(layoutParams);
 			dialog.getWindow().setBackgroundDrawable(new BitmapDrawable());
 			dialog.setCanceledOnTouchOutside(true);
+			
+			TextView noshow = (TextView)dialog.findViewById(R.id.noshow);
+			noshow.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					sendMsg(110);
+				}
+			});
+			
 			TextView msg = (TextView)dialog.findViewById(R.id.msg);
 			msg.setText(msgstr);
 			Button btnCancle = (Button)dialog.findViewById(R.id.btn_cancle);

@@ -19,6 +19,7 @@ import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.Constants;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.L;
+import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.CustomFAB;
 import com.whjz.android.text.CommonText;
@@ -40,6 +41,8 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 	private TextView info_companynature,info_companyscale,info_industryclassification,info_startworktime,info_endworktime,info_expectedsalary;
 	
 	private EditText info_companyname,info_jobtitle,info_workdescdetail;
+	
+	private TextView msg;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -88,6 +91,9 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 		leftLable = findView(R.id.left_lable);
 		rightLable = findView(R.id.right_lable);
 		
+		msg = findView(R.id.msg);
+		msg.setVisibility(View.GONE);
+		
 		info_companyname = findView(R.id.info_companyname);
 		info_companynature = findView(R.id.info_companynature);
 		info_companyscale = findView(R.id.info_companyscale);
@@ -102,14 +108,14 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 		edit = findView(R.id.edit);
 		next = findView(R.id.next);
 		
-		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1";
+		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1 order by _id desc limit 1";
 		 commMapArray = dbUtil.queryData(self, queryWhere);
          if (commMapArray!= null && commMapArray.get("userId").length > 0) {
         	 edit.setVisibility(View.VISIBLE);
         	 
         	 info_industryclassification.setText(commMapArray.get("industryclassification")[0]);
-        	 info_startworktime.setText(commMapArray.get("worktimeStart")[0]);
-        	 info_endworktime.setText(commMapArray.get("worktimeEnd")[0]);
+        	 info_startworktime.setText(commMapArray.get("worktimestart")[0]);
+        	 info_endworktime.setText(commMapArray.get("worktimeend")[0]);
         	 info_expectedsalary.setText(commMapArray.get("expectedsalary")[0]);;
         		
         	 info_companyname.setText(commMapArray.get("companyname")[0]);
@@ -141,18 +147,68 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 	
 	@Override
 	public void onClick(View v) {
+		String info_companynameStr = CommUtil.getEditTextValue(info_companyname);
+		String info_jobtitleStr = CommUtil.getEditTextValue(info_jobtitle);
+		String info_workdescdetailStr = CommUtil.getEditTextValue(info_workdescdetail);
+		
+		String info_companynatureStr = CommUtil.getTextValue(info_companynature);
+		String info_companyscaleStr = CommUtil.getTextValue(info_companyscale);
+		
+		String info_industryclassificationStr = CommUtil.getTextValue(info_industryclassification);
+		String info_startworktimeStr = CommUtil.getTextValue(info_startworktime);
+		String info_endworktimeStr = CommUtil.getTextValue(info_endworktime);
+		String info_expectedsalaryStr = CommUtil.getTextValue(info_expectedsalary);
+		
 		switch (v.getId()) {
 		case R.id.save:
-			String info_companynameStr = CommUtil.getEditTextValue(info_companyname);
-			String info_jobtitleStr = CommUtil.getEditTextValue(info_jobtitle);
-			String info_workdescdetailStr = CommUtil.getEditTextValue(info_workdescdetail);
+			if (!RegexUtil.checkNotNull(info_companynameStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.we_info_companyname) + fieldNull);
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}
 			
-			String info_companynatureStr = CommUtil.getTextValue(info_companynature);
-			String info_companyscaleStr = CommUtil.getTextValue(info_companyscale);
-			String info_industryclassificationStr = CommUtil.getTextValue(info_industryclassification);
-			String info_startworktimeStr = CommUtil.getTextValue(info_startworktime);
-			String info_endworktimeStr = CommUtil.getTextValue(info_endworktime);
-			String info_expectedsalaryStr = CommUtil.getTextValue(info_expectedsalary);
+			if (!RegexUtil.checkNotNull(info_industryclassificationStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.we_info_industryclassification) + fieldNull);
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}
+			
+			if (!RegexUtil.checkNotNull(info_jobtitleStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.we_info_jobtitle) + fieldNull);
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}
+			
+			if (!RegexUtil.checkNotNull(info_startworktimeStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.we_info_start_worktime) + fieldNull);
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}
+			
+			if (!RegexUtil.checkNotNull(info_endworktimeStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.we_info_end_worktime) + fieldNull);
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}
+			
+			if (TimeUtils.compareDate(info_startworktimeStr, info_endworktimeStr) <= 0) {
+				msg.setText(CommUtil.getStrValue(self, R.string.we_info_compare_worktime));
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}
+			
+			if (!RegexUtil.checkNotNull(info_expectedsalaryStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.we_info_jobsalary) + fieldNull);
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}
+			
+			if (!RegexUtil.checkNotNull(info_workdescdetailStr)) {
+				msg.setText(CommUtil.getStrValue(self, R.string.we_info_workdesc) + fieldNull);
+				msg.setVisibility(View.VISIBLE);
+				return;
+			}
+			
 			
 			/*List<String> params = new ArrayList<String>();
 			List<String> values = new ArrayList<String>();
@@ -193,6 +249,7 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 			queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);
 			if(queryResult){
+				toastMsg(R.string.action_add_success);
 				edit.setVisibility(View.VISIBLE);
 			}
 			
@@ -212,6 +269,19 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 				}
 			});*/
 			
+			break;
+		case R.id.edit:
+			String edId = commMapArray.get("_id")[0];
+			updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
+					new String[]{edId,"companyname","companynature","companyscale","industryclassification",
+									  "jobtitle","worktimeStart","worktimeEnd","expectedsalary","workdesc"}, 
+					new String[]{"1",info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
+					info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr});
+			if (updResult == 1) {
+				toastMsg(R.string.action_update_success);
+			}else{
+				toastMsg(R.string.action_update_fail);
+			}
 			break;
 		case R.id.next:
 			startActivity(".ui.EvaluationActivity", false);
@@ -241,22 +311,22 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			break;
 		case R.id.info_industryclassification:
 			ActivityUtils.startActivityForResult(self, 
-					MyApplication.PACKAGENAME + ".ui.IndustryTypeActivity", false, Constants.REQUEST_CODE);
+					MyApplication.PACKAGENAME + ".ui.IndustryTypeActivity", false, Constants.WE_REQUEST_CODE);
 			break;
 		case R.id.info_expectedsalary:
 			whichTab = 2;
 			item_values = CommUtil.getArrayValue(self,R.array.we_qwyx_values); 
 			mList = Arrays.asList(item_values);
 			DialogUtils.showPopWindow(self, info_expectedsalary, 
-					R.string.we_info_expectedsalary, mList, 
+					R.string.we_info_jobsalary, mList, 
 					mHandler);
 			
 			break;
 		case R.id.info_startworktime:
-			DialogUtils.showTimeChooseDialog(self, info_startworktime,R.string.we_info_choose_start_worktime, 11,mHandler);
+			DialogUtils.showTimeChooseDialog(self, info_startworktime,R.string.we_info_start_worktime, 11,mHandler);
 			break;
 		case R.id.info_endworktime:
-			DialogUtils.showTimeChooseDialog(self, info_endworktime,R.string.we_info_choose_end_worktime, 12,mHandler);
+			DialogUtils.showTimeChooseDialog(self, info_endworktime,R.string.we_info_end_worktime, 12,mHandler);
 			break;
 		default:
 			break;
@@ -266,7 +336,7 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		L.d("onActivityResult"+"requestCode="+requestCode+" resultCode="+resultCode + " data:"+data);
-        if(requestCode == Constants.REQUEST_CODE) {
+        if(requestCode == Constants.WE_REQUEST_CODE) {
             if(resultCode == Constants.RESULT_CODE) {
                 String result = data.getStringExtra("name");
                 info_industryclassification.setText(result);

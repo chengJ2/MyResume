@@ -189,6 +189,17 @@ public class CommUtil {
 	public static int getIntValue(Context context, int id) {
 		return context.getResources().getColor(id);
 	}
+	
+	/**
+	 * 获取资源文件
+	 * 
+	 * @param context
+	 * @param id
+	 * @return
+	 */
+	public static float getFloatValue(Context context, int id) {
+		return context.getResources().getDimension(id);
+	}
 
 	/**
 	 * 获取资源文件

@@ -41,7 +41,7 @@
                         style="@style/user_info_item_ed"
                         android:layout_marginLeft="2dip"
                         android:layout_weight="1"
-                        android:text="~" />
+                        android:text="@string/tag_time_between" />
 
                     <TextView
                         android:id="@+id/info_endworktime"

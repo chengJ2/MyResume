@@ -101,7 +101,7 @@ public class TrainingFragment extends Fragment {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				DialogUtils.showTimeChooseDialog(getActivity(), info_startworktime,
-						R.string.we_info_choose_start_worktime, 11,mHandler);
+						R.string.we_info_start_worktime, 11,mHandler);
 			}
 		});
 		info_endworktime.setOnClickListener(new OnClickListener() {
@@ -110,13 +110,13 @@ public class TrainingFragment extends Fragment {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				DialogUtils.showTimeChooseDialog(getActivity(), info_endworktime,
-						R.string.we_info_choose_end_worktime, 12,mHandler);
+						R.string.we_info_end_worktime, 12,mHandler);
 			}
 		});
 	}
 	
 	private void initData() {
-		String queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = 1";
+		String queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = 1 order by _id limit 1";
 		Map<String, String[]> map = dbUtil.queryData(getActivity(), queryWhere);
 		if (map!= null && map.get("userId").length > 0) {
 			setInfoStartTime(map.get("worktimestart")[0]);

@@ -155,6 +155,15 @@
 	      <item name="android:typeface">serif</item>
 	 </style>
 	 
+	   <style name="index_top_text">
+	      <item name="android:layout_width">match_parent</item>
+	      <item name="android:layout_height">60dip</item>
+	      <item name="android:textColor">@color/white</item>
+	      <item name="android:textSize">@dimen/large_text_size</item>
+	      <item name="android:gravity">center</item>
+	      <item name="android:typeface">serif</item>
+	 </style>
+	   
 	   <style name="index1_text">
 	      <item name="android:layout_width">match_parent</item>
 	      <item name="android:layout_height">wrap_content</item>

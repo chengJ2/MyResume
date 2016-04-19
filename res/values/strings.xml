@@ -39,6 +39,8 @@
     <string name="reg_info_phone">手机号不合法！</string>
     
     <string name="action_baseinfo_null">请先填写基本信息</string>
+    
+    <string name="tag_time_between">至</string>
    
      <!-- user -->
     <string name="login_input_hint">请输入手机号/用户名</string>
@@ -111,11 +113,12 @@
     <string name="we_info_choose_jobtitle">请输入职位名称</string>
     <string name="we_info_worktime">工作时间</string>
     <string name="we_info_choose_worktime">请选择工作时间</string>
-     <string name="we_info_choose_start_worktime">起始时间</string>
-     <string name="we_info_choose_end_worktime">结束时间</string>
+     <string name="we_info_start_worktime">起始时间</string>
+     <string name="we_info_end_worktime">结束时间</string>
+     <string name="we_info_compare_worktime">结束时间要大于起始时间</string>
     <string name="we_info_choose_worktime2">请选择</string>
-    <string name="we_info_expectedsalary">期望月薪(税前)</string>
-    <string name="we_info_choose_expectedsalary">请选择期望月薪</string>
+    <string name="we_info_jobsalary">职位月薪(税前)</string>
+    <string name="we_info_choose_jobsalary">请选择职位月薪</string>
     <string name="we_info_workdesc">工作描述</string>
     <string name="we_info_workdescdetail">请详细描述您的职责范围,工作任务以及取得的成绩等</string>
     <!-- 工作简历 -->

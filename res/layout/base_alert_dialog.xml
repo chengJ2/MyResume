@@ -13,17 +13,33 @@
         android:background="@drawable/dialog_corner"
         android:orientation="vertical"
         android:paddingBottom="10dip" >
+        
+         <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_corner"
+         android:layout_marginTop="3dip" >
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dip"
-            android:gravity="center|left"
+            android:layout_alignParentLeft="true"
             android:padding="6dip"
             android:text="@string/action_notice"
             android:textColor="@color/grey_10"
             android:textSize="@dimen/small_middle_text_size" />
+        
+        <TextView
+            android:id="@+id/noshow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="6dip"
+            android:text="不再显示"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/small_middle_text_size" />
+        </RelativeLayout>
 
         <View
             style="@style/line3"

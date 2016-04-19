@@ -58,8 +58,10 @@ public class MyApplication extends Application {
 	
 	private void init() {
 //		LanguageSettings.getInstance().initLang(this);
-		CrashReport.initCrashReport(getApplicationContext(), "900025676", false);
-    	Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(this));
+		
+		Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(this));
+		
+//		CrashReport.initCrashReport(getApplicationContext(), "900025676", true);
     	
     	FontsOverride.setDefaultFont(this, "SERIF", "fonts/FZY1JW.ttf");
 	}

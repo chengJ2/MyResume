@@ -1,5 +1,6 @@
 package com.me.resume.utils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -46,6 +47,34 @@ public class TimeUtils {
         }
     };
 
+    /**
+     * 
+     * @Title:TimeUtils
+     * @Description: 比较两个时间大小
+     * @author Comsys-WH1510032
+     * @return 返回类型  
+     * @param DATE1
+     * @param DATE2
+     * @return
+     */
+    public static long compareDate(String DATE1, String DATE2) {
+        DateFormat df = new SimpleDateFormat(SHORT_FORMAT_STRING);
+        try {
+            Date dt1 = df.parse(DATE1);
+            Date dt2 = df.parse(DATE2);
+            
+            long between=(dt2.getTime()-dt1.getTime())/1000;//除以1000是为了转换成秒
+            long day=between/(24*3600);
+//            long hour1=between%(24*3600)/3600;
+//            long minute1=between/600/60;
+//            long second1=between/60;
+            return day;
+        }catch(Exception e){
+        	L.d(e.getMessage());
+        	return 0;
+        }
+    }
+    
     /**
      * SHORT_FORMAT_STRING
      */

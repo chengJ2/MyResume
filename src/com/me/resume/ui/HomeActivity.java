@@ -70,6 +70,9 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener {
 				setData();
 				setGridView();
 				break;
+			case 110:
+				setPreferenceData("noticeshow",0);
+				break;
 			default:
 				break;
 			}
@@ -235,8 +238,12 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.make_btn:
 			if (MyApplication.userId == 0) {
-				DialogUtils.showAlertDialog(self, CommUtil.getStrValue(self,
-						R.string.dialog_action_alert), mHandler);
+				if(getPreferenceData("noticeshow",1) == 1){
+					DialogUtils.showAlertDialog(self, CommUtil.getStrValue(self,
+							R.string.dialog_action_alert), mHandler);
+				}else{
+					mHandler.sendEmptyMessage(1);
+				}
 			} else {
 				mHandler.sendEmptyMessage(1);
 			}

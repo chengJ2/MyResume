@@ -1,5 +1,7 @@
 package com.me.resume.ui.fragment;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
@@ -35,7 +37,7 @@ import com.whjz.android.util.interfa.DbLocalUtil;
 * @date 2016/4/6 下午1:55:32 
 *
  */
-public class EducationFragment extends Fragment {
+public class EducationFragment extends BaseFragment implements OnClickListener{
 
 	private View view;
 	
@@ -51,14 +53,14 @@ public class EducationFragment extends Fragment {
 	
 	private String rg_examinationStr = "0";
 	
-	protected DbLocalUtil dbUtil = new DbUtilImplement();;// 本地数据库对象
-	protected BaseCommonUtil baseCommon = new CommonUtil();;// 通用工具对象实例
-	protected Info info = new Info();
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-			case 1:
+			case 2:
+				int position = (int) msg.obj;
+				info_degree.setText(mList.get(position));
+				break;
 			case 11:
 				if (msg.obj != null) {
 					info_startworktime.setText((String)msg.obj);
@@ -95,7 +97,7 @@ public class EducationFragment extends Fragment {
     }
 	 
 	private void initData() {
-		String queryWhere = "select * from " + CommonText.EDUCATION + " where userId = 1";
+		String queryWhere = "select * from " + CommonText.EDUCATION + " where userId = 1 order by _id limit 1";
 		Map<String, String[]> map = dbUtil.queryData(getActivity(), queryWhere);
 		if (map!= null && map.get("userId").length > 0) {
 			setInfoStartTime(map.get("worktimestart")[0]);
@@ -123,6 +125,8 @@ public class EducationFragment extends Fragment {
 		rb_examination1 = (RadioButton)view.findViewById(R.id.rb_examination1);
 		rb_examination2 = (RadioButton)view.findViewById(R.id.rb_examination2);
 		
+		info_degree.setOnClickListener(this);
+		
 		rg_examination.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -142,7 +146,7 @@ public class EducationFragment extends Fragment {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				DialogUtils.showTimeChooseDialog(getActivity(), info_startworktime,
-						R.string.we_info_choose_start_worktime, 11,mHandler);
+						R.string.we_info_start_worktime, 11,mHandler);
 			}
 		});
 		info_endworktime.setOnClickListener(new OnClickListener() {
@@ -151,7 +155,7 @@ public class EducationFragment extends Fragment {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				DialogUtils.showTimeChooseDialog(getActivity(), info_endworktime,
-						R.string.we_info_choose_end_worktime, 12,mHandler);
+						R.string.we_info_end_worktime, 12,mHandler);
 			}
 		});
 	}
@@ -209,6 +213,24 @@ public class EducationFragment extends Fragment {
 	
 	public String getInfoexamination(){
 		return rg_examinationStr;
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.info_degree:
+			getValues(R.array.ed_degress_values,info_degree,R.string.ed_info_degree);
+			break;
+		default:
+			break;
+		}
+	}
+	
+	private void getValues(int array,View parent,int resId) {
+		String[] item_text = CommUtil.getArrayValue(getActivity(),array); 
+		mList = Arrays.asList(item_text);
+		DialogUtils.showPopWindow(getActivity(), parent, resId, mList, mHandler);
 	}
 	
 }
