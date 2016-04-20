@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.me.resume.R;
 import com.me.resume.swipeback.SwipeBackActivity;
+import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
-import com.me.resume.utils.L;
 import com.me.resume.views.SwitchButton;
 import com.me.resume.views.SwitchButton.OnChangedListener;
 

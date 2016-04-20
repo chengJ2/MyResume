@@ -32,6 +32,7 @@ import com.me.resume.R;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
+import com.me.resume.tools.L;
 
 /**
  * 

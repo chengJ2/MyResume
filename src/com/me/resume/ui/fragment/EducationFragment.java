@@ -1,13 +1,11 @@
 package com.me.resume.ui.fragment;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,13 +19,7 @@ import android.widget.TextView;
 import com.me.resume.R;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
-import com.me.resume.utils.L;
 import com.whjz.android.text.CommonText;
-import com.whjz.android.text.Info;
-import com.whjz.android.util.common.CommonUtil;
-import com.whjz.android.util.common.DbUtilImplement;
-import com.whjz.android.util.interfa.BaseCommonUtil;
-import com.whjz.android.util.interfa.DbLocalUtil;
 
 /**
  * 

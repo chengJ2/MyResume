@@ -17,13 +17,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.me.resume.comm.CommForMapArrayBaseAdapter;
+import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -442,6 +442,25 @@ public class MainActivity extends Activity {
 	 */
 	private void initView7(View view){
 //		mViewList.add(view7);
+		
+		/*Cursor cursor = null;
+		llistChild = new ArrayList<String>();
+		try {
+			String sql = "select a.id,a.showName,b.cnName from drug a,company b "+ 
+						" where a.cateId1="+ keyword +" and a.companyId=b.id";
+			cursor = EbaoApplication.sqLiteDatabase.rawQuery(sql, null);
+			if (cursor.getCount() > 0) {
+				while (cursor.moveToNext()) {
+					llistChild.add(cursor.getString(cursor.getColumnIndex("id"))
+							+"|"+cursor.getString(cursor.getColumnIndex("showName"))
+									+"|"+cursor.getString(cursor.getColumnIndex("cnName")));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			cursor.close();
+		}*/
 	}
 
 	/**
@@ -460,7 +479,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 //				setPreferenceData("firstInstall", 0);
-				ActivityUtils.startActivity(self, MyApplication.PACKAGENAME
+				ActivityUtils.startActivity(self, Constants.PACKAGENAME
 						+ ".ui.HomeActivity");
 			}
 		});

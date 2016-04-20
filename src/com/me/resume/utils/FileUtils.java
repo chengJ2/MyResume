@@ -5,6 +5,8 @@ import java.io.File;
 import android.content.Context;
 import android.os.Environment;
 
+import com.me.resume.comm.Constants;
+
 public class FileUtils {
 	
 	public static final String SD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();// SDCard路径

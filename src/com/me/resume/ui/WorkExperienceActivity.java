@@ -12,14 +12,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
 import com.me.resume.swipeback.SwipeBackActivity;
+import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
-import com.me.resume.utils.Constants;
 import com.me.resume.utils.DialogUtils;
-import com.me.resume.utils.L;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.CustomFAB;
@@ -313,7 +312,7 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 			break;
 		case R.id.info_industryclassification:
 			ActivityUtils.startActivityForResult(self, 
-					MyApplication.PACKAGENAME + ".ui.IndustryTypeActivity", false, Constants.WE_REQUEST_CODE);
+					Constants.PACKAGENAME + ".ui.IndustryTypeActivity", false, Constants.WE_REQUEST_CODE);
 			break;
 		case R.id.info_expectedsalary:
 			whichTab = 2;

@@ -7,11 +7,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import com.me.resume.tools.L;
+
 /**
- * 时间通用类
+ * 
  * @ClassName: TimeUtils
- * @Description: TODO
- * @author Comsys-WH1111017
+ * @Description: 时间通用类
  * @date 2015/11/5 下午2:17:23
  */
 public class TimeUtils {

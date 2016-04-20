@@ -102,15 +102,13 @@ public class EvaluationActivity extends SwipeBackActivity implements OnClickList
 			}
 			break;
 		case R.id.next:
-			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME
-					+ ".ui.JobIntensionActivity");
+			startActivity(".ui.JobIntensionActivity",false);
 			break;
 		case R.id.left_lable:
 			scrollToFinishActivity();
 			break;
 		case R.id.right_icon:
-			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME 
-					+ ".MainActivity",true);
+			startActivity(".MainActivity",false);
 			break;
 		default:
 			break;

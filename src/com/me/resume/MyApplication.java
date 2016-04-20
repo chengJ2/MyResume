@@ -5,11 +5,12 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.DisplayMetrics;
 
+import com.me.resume.tools.CrashHandler;
+import com.me.resume.tools.DbManager;
 import com.me.resume.tools.FontsOverride;
-import com.me.resume.utils.CrashHandler;
-import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * 
@@ -27,7 +28,8 @@ public class MyApplication extends Application {
     /** WiApplication对象 */
     private static MyApplication application;
     
-    public static final String PACKAGENAME = "com.me.resume";
+    
+    public static SQLiteDatabase database = null;
     
     public static int cposition = 0;
     /**
@@ -58,6 +60,8 @@ public class MyApplication extends Application {
 	
 	private void init() {
 //		LanguageSettings.getInstance().initLang(this);
+		
+		database = DbManager.openDatabase(this);
 		
 		Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(this));
 		

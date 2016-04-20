@@ -15,12 +15,12 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.CommonBaseAdapter;
+import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.model.ResumeModel;
@@ -29,7 +29,6 @@ import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.whjz.android.text.CommonText;
-import com.whjz.android.util.common.CommonUtil;
 
 /**
  * 
@@ -239,7 +238,7 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener {
 
 					@Override
 					public void onClick(View view) {
-						ActivityUtils.startActivityPro(self, MyApplication.PACKAGENAME + ".ui.TopicActivity", "position",
+						ActivityUtils.startActivityPro(self, Constants.PACKAGENAME + ".ui.TopicActivity", "position",
 								String.valueOf(position));
 
 					}

@@ -9,7 +9,6 @@ import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -24,10 +23,10 @@ import android.view.WindowManager;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
 import com.me.resume.tools.SystemBarTintManager;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
-import com.me.resume.utils.Constants;
 import com.whjz.android.text.Info;
 import com.whjz.android.util.common.CommonUtil;
 import com.whjz.android.util.common.DataSetList;
@@ -146,7 +145,7 @@ public class SwipeBackActivity extends FragmentActivity implements
     }
     
     protected void startActivity(String src,boolean finish){
-    	   ActivityUtils.startActivity(self, MyApplication.PACKAGENAME + src,finish);
+    	   ActivityUtils.startActivity(self, Constants.PACKAGENAME + src,finish);
     }
     
     public void setPreferenceData(String key, String value){

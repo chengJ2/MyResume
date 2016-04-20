@@ -18,12 +18,12 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.me.resume.R;
 import com.me.resume.comm.CommonBaseAdapter;
+import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.swipeback.SwipeBackActivity;
+import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
-import com.me.resume.utils.Constants;
-import com.me.resume.utils.L;
 
 /**
  * 
