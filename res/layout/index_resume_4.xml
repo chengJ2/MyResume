@@ -1,23 +1,41 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.me.resume.MainActivity$PlaceholderFragment"
-    android:background="#CC0000" >
+    android:background="#80CC0000"
+    android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name" />
+     <TextView
+        style="@style/index_top_text"
+        android:text="@string/resume_jobintension" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:background="@drawable/index_1_base" />
     
-    <ImageView 
-         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_launcher"
-        android:layout_marginTop="30dip"/>
+    <TextView
+        android:id="@+id/index_4_info1"
+        style="@style/index1_text" />
+   
+    <TextView
+        android:id="@+id/index_4_info2"
+        style="@style/index1_text"/>
+    
+     <TextView
+        android:id="@+id/index_4_info3"
+        style="@style/index1_text"/>
+    
+    <TextView
+        android:id="@+id/index_4_info4"
+        style="@style/index1_text"/>
+    
+     <TextView
+        android:id="@+id/index_4_info5"
+        style="@style/index1_text"/>
+     
+      <TextView
+        android:id="@+id/index_4_info6"
+        style="@style/index1_text"/>
 
-</RelativeLayout>
+</LinearLayout>

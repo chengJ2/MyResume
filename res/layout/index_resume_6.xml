@@ -1,0 +1,114 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#550000EE"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/index_top_text"
+        android:text="@string/resume_education" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:background="@drawable/index_1_base" />
+
+    <com.me.resume.views.CommScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dip" >
+
+                <View
+                    android:layout_width="6dip"
+                    android:layout_height="18dip"
+                    android:background="@color/red" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:background="@android:color/transparent"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dip"
+                        android:gravity="center|left"
+                        android:text="@string/resume_education"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small_middle_text_size" />
+
+                    <com.me.resume.views.CustomListView
+				        android:id="@+id/edListview"
+				        android:layout_width="match_parent"
+				        android:layout_height="wrap_content"
+				        android:layout_marginTop="8dp"
+				        android:cacheColorHint="@android:color/transparent"
+				        android:divider="@android:color/transparent"
+				        android:dividerHeight="8dp"
+				        android:listSelector="@android:color/transparent"
+				        android:scrollbars="none"
+				        android:visibility="visible" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/index6_trLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dip"
+                android:visibility="gone" >
+
+                <View
+                    android:layout_width="6dip"
+                    android:layout_height="18dip"
+                    android:background="@color/top_bar" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:background="@android:color/transparent"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dip"
+                        android:gravity="center|left"
+                        android:text="@string/resume_training"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/small_middle_text_size" />
+
+                     <com.me.resume.views.CustomListView
+				        android:id="@+id/trListview"
+				        android:layout_width="match_parent"
+				        android:layout_height="wrap_content"
+				        android:layout_marginTop="8dp"
+				        android:cacheColorHint="@android:color/transparent"
+				        android:divider="@android:color/transparent"
+				        android:dividerHeight="8dp"
+				        android:listSelector="@android:color/transparent"
+				        android:scrollbars="none"
+				        android:visibility="visible" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.me.resume.views.CommScrollView>
+
+</LinearLayout>

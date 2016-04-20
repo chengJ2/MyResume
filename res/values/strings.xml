@@ -5,8 +5,9 @@
     <string name="crash">App发生异常,请重启</string>
     
     <string name="resume_center">简历中心</string>
-    <string name="make_resume">定制简历</string>
-    <string name="review_resume">预览</string>
+    <string name="make_resume">定&#160;&#160;制</string>
+    <string name="review_resume">预&#160;&#160;览</string>
+    <string name="edit_resume">编&#160;&#160;辑</string>
     <string name="resume_personcenter">我</string>
     <string name="resume_baseinfo">基本资料</string>
     <string name="resume_workexperience">工作经历</string>
@@ -15,7 +16,9 @@
     <string name="resume_evaluation">自我评价</string>
     <string name="resume_excellentskills">擅长技能</string>
     <string name="resume_education">教育经历</string>
+    <string name="resume_training">培训经历</string>
     <string name="resume_otherinfo">其他信息</string>
+    <string name="resume_message">我的留言</string>
     
     <string name="refresh_down_text">下拉可刷新</string>
     <string name="refresh_release_text">松开可刷新</string>
@@ -54,6 +57,8 @@
     <string name="action_edit_fail">编辑失败</string>
     <string name="action_update_success">更新成功</string>
     <string name="action_update_fail">更新失败</string>
+    
+    <string name="action_favorites">收藏</string>
     
     <!-- UI dialog msg -->
     <string name="dialog_action_alert">您还没登录,创建的简历会保存到本地，若卸载APP或清除APP数据，将不会显示出您的简历，请先登录或继续操作...</string>

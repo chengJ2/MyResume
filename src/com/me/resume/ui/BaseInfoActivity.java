@@ -1,7 +1,6 @@
 package com.me.resume.ui;
 
 import java.util.Arrays;
-import java.util.List;
 
 import android.content.ContentValues;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -18,7 +18,6 @@ import com.me.resume.R;
 import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
-import com.me.resume.utils.L;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.views.CustomFAB;
 import com.whjz.android.text.CommonText;
@@ -33,7 +32,9 @@ import com.whjz.android.text.CommonText;
  */
 public class BaseInfoActivity extends SwipeBackActivity implements OnClickListener{
 
-	private TextView toptext,leftLable,rightLable;
+	private TextView toptext;
+	
+	private ImageView left_icon,right_icon;
 	
 	// 姓名; 手机号; 电子邮箱; 护照
 	private EditText info_realname,info_phone,info_email,info_nationality,info_license;
@@ -134,10 +135,10 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 
 	private void findViews(){
 		toptext = findView(R.id.top_text);
-		leftLable = findView(R.id.left_lable);
-		leftLable.setOnClickListener(this);
-		rightLable = findView(R.id.right_lable);
-		rightLable.setOnClickListener(this);
+		left_icon = findView(R.id.left_lable);
+		left_icon.setOnClickListener(this);
+		right_icon = findView(R.id.right_icon);
+		right_icon.setOnClickListener(this);
 		
 		msg = findView(R.id.msg);
 		msg.setVisibility(View.GONE);
@@ -181,7 +182,6 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 	
 	private void initViews(){
 		toptext.setText(CommUtil.getStrValue(self, R.string.resume_baseinfo));
-		rightLable.setText(CommUtil.getStrValue(self, R.string.review_resume));
 	}
 	
 	private void initData() {
@@ -400,27 +400,13 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 			getValues(R.array.ba_politicalstatus_values,info_politicalstatus,R.string.info_politicalstatus);
 			break;
 		case R.id.next:
-			queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
-			commMapArray = dbUtil.queryData(self, queryWhere);
-			if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-				startActivity(".ui.WorkExperienceActivity",false);
-			}else{
-				msg.setText(CommUtil.getStrValue(self, R.string.action_baseinfo_null));
-				msg.setVisibility(View.VISIBLE);
-			}
+			goActivity(".ui.WorkExperienceActivity");
 			break;
 		case R.id.left_lable:
 			self.scrollToFinishActivity();
 			break;
-		case R.id.right_lable:
-			queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
-			commMapArray = dbUtil.queryData(self, queryWhere);
-			if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-				startActivity(".MainActivity",false);
-			}else{
-				msg.setText(CommUtil.getStrValue(self, R.string.action_baseinfo_null));
-				msg.setVisibility(View.VISIBLE);
-			}
+		case R.id.right_icon:
+			goActivity(".MainActivity");
 			break;
 		default:
 			break;
@@ -431,5 +417,16 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 		String[] item_text = CommUtil.getArrayValue(self,array); 
 		mList = Arrays.asList(item_text);
 		DialogUtils.showPopWindow(self, parent, resId, mList, mHandler);
+	}
+	
+	private void goActivity(String src){
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+			startActivity(src,false);
+		}else{
+			msg.setText(CommUtil.getStrValue(self, R.string.action_baseinfo_null));
+			msg.setVisibility(View.VISIBLE);
+		}
 	}
 }

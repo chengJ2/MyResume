@@ -35,7 +35,9 @@ import com.me.resume.utils.L;
  */
 public class IndustryTypeActivity extends SwipeBackActivity {
 
-	private TextView toptext,leftLable,rightLable;
+	private TextView toptext;
+	
+	private ImageView left_icon,right_icon;
 	
 	private EditText index_search_edit;
 	private ImageView clearView;
@@ -52,10 +54,10 @@ public class IndustryTypeActivity extends SwipeBackActivity {
 		
 		toptext = findView(R.id.top_text);
 		toptext.setText(CommUtil.getStrValue(self, R.string.resume_industrytype));
-		leftLable = findView(R.id.left_lable);
-		rightLable = findView(R.id.right_lable);
-		rightLable.setVisibility(View.GONE);
-		leftLable.setOnClickListener(new OnClickListener() {
+		left_icon = findView(R.id.left_lable);
+		right_icon = findView(R.id.right_icon);
+		right_icon.setVisibility(View.GONE);
+		left_icon.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

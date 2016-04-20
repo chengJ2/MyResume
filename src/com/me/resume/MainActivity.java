@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,19 +18,23 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.ViewHolder;
-import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
+import com.me.resume.views.CustomListView;
 import com.me.resume.views.JazzyViewPager;
 import com.me.resume.views.JazzyViewPager.TransitionEffect;
 import com.me.resume.views.TagFlowLayout;
 import com.whjz.android.text.CommonText;
+import com.whjz.android.util.common.DbUtilImplement;
+import com.whjz.android.util.interfa.DbLocalUtil;
 
 /**
  * 
@@ -38,12 +44,14 @@ import com.whjz.android.text.CommonText;
  * @date 2016/3/29 下午2:13:45
  * 
  */
-public class MainActivity extends SwipeBackActivity {
+public class MainActivity extends Activity {
 
+	private MainActivity self;
+	
 	private JazzyViewPager jazzyViewPager;
 
 	private LayoutInflater mInflater;
-	private View view1, view2, view3, view4, view5;// 页卡视图
+	private View view1, view2, view3, view4, view5,view6,view7,view8;// 页卡视图
 	
 	private List<View> mViewList = new ArrayList<>();// 页卡视图集合
 	
@@ -52,6 +60,12 @@ public class MainActivity extends SwipeBackActivity {
 	private static final int VIEW_CHANGE_TIME = 10000;
 	
 	private boolean showEffect = true;
+	
+	private Map<String, String[]> commMapArray = null;
+	
+	protected DbLocalUtil dbUtil = new DbUtilImplement();;// 本地数据库对象
+	
+	private String queryWhere = "";
 	
 	// View1
 	private TextView index_1_realname, index_1_info,index_1_where,index_1_lisence,index_1_phone,index_1_email;
@@ -64,6 +78,21 @@ public class MainActivity extends SwipeBackActivity {
 	private TagFlowLayout tagFlowLayout;
 	private String mTags[] = { "活泼好动", "易随波逐流", "多愁善感", "不善言谈",
 			"务实", "适应能力差", "易怒而难以自制"};
+	
+	// View4
+	private TextView index_4_info1,index_4_info2,index_4_info3,index_4_info4,index_4_info5,index_4_info6;
+	
+	// View5
+	
+	// View6
+	private CustomListView edListview,trListview;
+	
+	private LinearLayout index6_trLayout;
+	
+	// View7
+	
+	// View8
+	private ImageView goHome;
 	
 	private Handler mHandler = new Handler() {
 
@@ -98,12 +127,13 @@ public class MainActivity extends SwipeBackActivity {
 	}
 
 	private void findViews() {
-		jazzyViewPager = findView(R.id.index_product_container);
+		jazzyViewPager = (JazzyViewPager)findViewById(R.id.index_product_container);
 	}
 	
-	private Button goHomeBtn;
 
 	private void initViews() {
+		self = MainActivity.this;
+		
 		mInflater = LayoutInflater.from(this);
 		
 		view1 = mInflater.inflate(R.layout.index_resume_1, null);
@@ -111,7 +141,10 @@ public class MainActivity extends SwipeBackActivity {
 		view3 = mInflater.inflate(R.layout.index_resume_3, null);
 		view4 = mInflater.inflate(R.layout.index_resume_4, null);
 		view5 = mInflater.inflate(R.layout.index_resume_5, null);
-
+		view6 = mInflater.inflate(R.layout.index_resume_6, null);
+		view7 = mInflater.inflate(R.layout.index_resume_7, null);
+		view8 = mInflater.inflate(R.layout.index_resume_8, null);
+		
 		initView1(view1);
 		
 		initView2(view2);
@@ -121,19 +154,33 @@ public class MainActivity extends SwipeBackActivity {
 		initView4(view4);
 		
 		initView5(view5);
+		
+		initView6(view6);
+		
+		initView7(view7);
+		
+		initView8(view8);
+		
+	}
+	
+	private void showViews() {
+		if (showEffect) {
+			jazzyViewPager.setTransitionEffect(TransitionEffect.Tablet);
+		}
 
-		mViewList.add(view4);
-		mViewList.add(view5);
+		jazzyViewPager.setCurrentItem(0);
 
-		goHomeBtn = (Button) view5.findViewById(R.id.go);
+//		if (getPreferenceData("autoShow", 0) == 1) {
+//			mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO, VIEW_CHANGE_TIME);
+//		}
+
+		jazzyViewPager.setAdapter(new MyPagerAdapter(mViewList));
 	}
 	
 	/**
 	 * 
 	 * @Title:MainActivity
 	 * @Description: 基本信息
-	 * @author Comsys-WH1510032
-	 * @return 返回类型  
 	 * @param view
 	 */
 	private void initView1(View view){
@@ -144,8 +191,7 @@ public class MainActivity extends SwipeBackActivity {
 		index_1_phone = ((TextView) view1.findViewById(R.id.index_1_phone));
 		index_1_email = ((TextView) view1.findViewById(R.id.index_1_email));
 		
-		queryWhere = "select * from " + CommonText.BASEINFO
-				+ " where userId = 1";
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1 limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			mViewList.add(view1);
@@ -200,8 +246,6 @@ public class MainActivity extends SwipeBackActivity {
 	 * 
 	 * @Title:MainActivity
 	 * @Description: 工作经历
-	 * @author Comsys-WH1510032
-	 * @return 返回类型  
 	 * @param view
 	 */
 	private void initView2(View view){
@@ -263,10 +307,11 @@ public class MainActivity extends SwipeBackActivity {
 		for (int i = 0; i < mTags.length; i++) {
 			TextView tview = new TextView(this);
 			tview.setText(mTags[i].toString().trim());
-			tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.microd_text_size));
+			tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.tiny_text_size));
 			tview.setTextColor(CommUtil.getIntValue(self, R.color.red));
 			tview.setTypeface(Typeface.SERIF);
 			tview.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_tag_text_select));
+			tview.setPadding(6, 8, 6, 8);
 			tagFlowLayout.addView(tview, lp);
 		}
 		
@@ -278,44 +323,149 @@ public class MainActivity extends SwipeBackActivity {
 	 * @Description: 求职意向
 	 */
 	private void initView4(View view){
+		index_4_info1 = (TextView)view.findViewById(R.id.index_4_info1);
+		index_4_info2 = (TextView)view.findViewById(R.id.index_4_info2);
+		index_4_info3 = (TextView)view.findViewById(R.id.index_4_info3);
+		index_4_info4 = (TextView)view.findViewById(R.id.index_4_info4);
+		index_4_info5 = (TextView)view.findViewById(R.id.index_4_info5);
+		index_4_info6 = (TextView)view.findViewById(R.id.index_4_info6);
+		
+		queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = 1 order by _id desc";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			mViewList.add(view4);
+			index_4_info1.setText(Html.fromHtml("<strong>工作性质：</strong>"+commMapArray.get("expworkingproperty")[0]));
+			index_4_info2.setText(Html.fromHtml("<strong>期望职业：</strong>"+commMapArray.get("expworkcareer")[0]));
+			index_4_info3.setText(Html.fromHtml("<strong>期望行业：</strong>"+commMapArray.get("expworkindustry")[0]));
+			index_4_info4.setText(Html.fromHtml("<strong>工作地区：</strong>"+commMapArray.get("expdworkplace")[0]));
+			index_4_info5.setText(Html.fromHtml("<strong>期望月薪：</strong>"+commMapArray.get("expmonthlysalary")[0]));
+			index_4_info6.setText(Html.fromHtml("<strong>目前状况：</strong>"+commMapArray.get("workingstate")[0]));
+		}
+	}
+	
+	/**
+	 * 
+	 * @Title:MainActivity
+	 * @Description: 项目经验
+	 */
+	private void initView5(View view){
 		
 	}
 	
 	/**
 	 * 
 	 * @Title:MainActivity
-	 * @Description: 求职意向
+	 * @Description: 教育&培训
 	 */
-	private void initView5(View view){
+	private void initView6(View view){
+		edListview = (CustomListView)view.findViewById(R.id.edListview);
+		trListview = (CustomListView)view.findViewById(R.id.trListview);
+		index6_trLayout = (LinearLayout)view.findViewById(R.id.index6_trLayout);
+		
+		queryWhere = "select * from " + CommonText.EDUCATION + " where userId = 1 order by _id desc";
+		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			mViewList.add(view6);
+			
+			CommForMapArrayBaseAdapter commMapAdapter = new CommForMapArrayBaseAdapter(
+					self, commMapArray, R.layout.index_6_list_item, "userId") {
+
+				@Override
+				public void convert(ViewHolder holder, String[] item,
+						int position) {
+					holder.setText(R.id.item1,
+							commMapArray.get("worktimestart")[position] + " — "
+									+ commMapArray.get("worktimeend")[position]);
+					StringBuffer sbStr = new StringBuffer();
+					String info = commMapArray.get("school")[position];
+					sbStr.append(info);
+					sbStr.append(" | ");
+					
+					info = commMapArray.get("majorname")[position];
+					sbStr.append(info);
+					sbStr.append(" | ");
+					
+					info = commMapArray.get("degree")[position];
+					sbStr.append(info);
+					
+					holder.setText(R.id.item2, sbStr.toString());
+				}
+			};
+
+			edListview.setAdapter(commMapAdapter);
+			
+			queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = 1 order by _id desc";
+			final Map<String, String[]> comm2MapArray = dbUtil.queryData(self, queryWhere);
+			if (comm2MapArray != null && comm2MapArray.get("userId").length > 0) {
+				index6_trLayout.setVisibility(View.VISIBLE);
+				commMapAdapter = new CommForMapArrayBaseAdapter(
+						self, comm2MapArray, R.layout.index_62_list_item, "userId") {
+					
+					@Override
+					public void convert(ViewHolder holder, String[] item,
+							int position) {
+						holder.setText(R.id.item1,
+								comm2MapArray.get("worktimestart")[position] + " — "
+										+ comm2MapArray.get("worktimeend")[position]);
+						
+						String info = comm2MapArray.get("trainingorganization")[position];
+						holder.setText(R.id.item2, info.toString());
+						
+						StringBuffer sbStr = new StringBuffer();
+						info = comm2MapArray.get("trainingclass")[position];
+						sbStr.append("<strong>培训课程：</strong>"+ info + "<br/>");
+						info = comm2MapArray.get("certificate")[position];
+						if(RegexUtil.checkNotNull(info)){
+							sbStr.append("<strong>所获证书：</strong>"+ info + "<br/>");
+						}
+						info = comm2MapArray.get("description")[position];
+						if(RegexUtil.checkNotNull(info)){
+							sbStr.append("<strong>培训描述：</strong>"+ info );
+						}
+						
+						holder.setTextForHtml(R.id.item3, sbStr.toString());
+						
+					}
+				};
+				trListview.setAdapter(commMapAdapter);
+			}else{
+				index6_trLayout.setVisibility(View.GONE);
+			}
+		}
 		
 	}
+	
+	/**
+	 * 
+	 * @Title:MainActivity
+	 * @Description: 其他信息
+	 */
+	private void initView7(View view){
+//		mViewList.add(view7);
+	}
 
-	private void showViews() {
-		if (showEffect) {
-			jazzyViewPager.setTransitionEffect(TransitionEffect.Tablet);
-		}
-
-		jazzyViewPager.setCurrentItem(0);
-
-		if (getPreferenceData("autoShow", 0) == 1) {
-			mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO, VIEW_CHANGE_TIME);
-		}
-
-		jazzyViewPager.setAdapter(new MyPagerAdapter(mViewList));
-
+	/**
+	 * 
+	 * @Title:MainActivity
+	 * @Description: 备注信息
+	 * @param view
+	 */
+	private void initView8(View view){
+		mViewList.add(view8);
 		
-
-		goHomeBtn.setOnClickListener(new OnClickListener() {
+		goHome = (ImageView) view8.findViewById(R.id.gohome);
+		
+		goHome.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				setPreferenceData("firstInstall", 0);
+//				setPreferenceData("firstInstall", 0);
 				ActivityUtils.startActivity(self, MyApplication.PACKAGENAME
 						+ ".ui.HomeActivity");
 			}
 		});
-
 	}
+	
 
 	// ViewPager适配器
 	class MyPagerAdapter extends PagerAdapter {
@@ -351,7 +501,5 @@ public class MainActivity extends SwipeBackActivity {
 			// return mTitleList.get(position);//页卡标题
 			return String.valueOf(position);
 		}
-
 	}
-
 }

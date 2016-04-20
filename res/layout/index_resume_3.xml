@@ -37,7 +37,6 @@
             	android:orientation="vertical"
             	android:padding="5dip" >
                 
-                
                 <TextView
                     android:id="@+id/self_evaluation"
                     android:layout_width="match_parent"

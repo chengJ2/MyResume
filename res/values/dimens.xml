@@ -7,6 +7,7 @@
     <dimen name="top_bar_height">46.0dp</dimen>
     
      <!-- 四类字体大小 -->
+     <dimen name="tiny_text_size">8sp</dimen>
      <dimen name="microd_text_size">10sp</dimen>
     <dimen name="micro_text_size">12sp</dimen>
     <dimen name="small_text_size">14sp</dimen>
@@ -14,6 +15,7 @@
     <dimen name="medium_text_size">18sp</dimen>
     <dimen name="large_text_size">22sp</dimen>
     <!-- 四类字体大小 -->
+      <dimen name="blarge_text_size">60dip</dimen>
     
     <dimen name="line_height">1px</dimen>
     <dimen name="line_margin">3dip</dimen>

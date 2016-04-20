@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.me.resume.MyApplication;
@@ -32,7 +33,9 @@ import com.whjz.android.text.CommonText;
  */
 public class EducationActivity extends SwipeBackActivity implements OnClickListener{
 
-	private TextView toptext,leftLable,rightLable;
+	private TextView toptext;
+	
+	private ImageView left_icon,right_icon;
 	
 	private SegmentButton segment_button;
 	
@@ -47,12 +50,11 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 		setContentView(R.layout.activity_education_layout);
 		
 		toptext = findView(R.id.top_text);
-		leftLable = findView(R.id.left_lable);
-		rightLable = findView(R.id.right_lable);
-		leftLable.setOnClickListener(this);
-		rightLable.setOnClickListener(this);
+		left_icon = findView(R.id.left_lable);
+		right_icon = findView(R.id.right_icon);
+		left_icon.setOnClickListener(this);
+		right_icon.setOnClickListener(this);
 		toptext.setText(CommUtil.getStrValue(self, R.string.resume_education));
-		rightLable.setText(CommUtil.getStrValue(self, R.string.review_resume));
 		
 		msg = findView(R.id.msg);
 		msg.setVisibility(View.GONE);
@@ -241,7 +243,7 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 		case R.id.left_lable:
 			scrollToFinishActivity();
 			break;
-		case R.id.right_lable:
+		case R.id.right_icon:
 			startActivity(".MainActivity",false);
 			break;
 		default:

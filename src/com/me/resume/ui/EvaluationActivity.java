@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.me.resume.MyApplication;
@@ -26,7 +27,9 @@ import com.whjz.android.text.CommonText;
  */
 public class EvaluationActivity extends SwipeBackActivity implements OnClickListener{
 
-	private TextView toptext,leftLable,rightLable;
+	private TextView toptext;
+	
+	private ImageView left_icon,right_icon;
 	
 	private EvaluationActivity self;
 	
@@ -42,13 +45,12 @@ public class EvaluationActivity extends SwipeBackActivity implements OnClickList
 		setContentView(R.layout.activity_evaluation_layout);
 		self = EvaluationActivity.this;
 		toptext = findView(R.id.top_text);
-		leftLable = findView(R.id.left_lable);
-		rightLable = findView(R.id.right_lable);
-		leftLable.setOnClickListener(this);
-		rightLable.setOnClickListener(this);
+		left_icon = findView(R.id.left_lable);
+		right_icon = findView(R.id.right_icon);
+		left_icon.setOnClickListener(this);
+		right_icon.setOnClickListener(this);
 		
 		toptext.setText(CommUtil.getStrValue(self, R.string.resume_evaluation));
-		rightLable.setText(CommUtil.getStrValue(self, R.string.review_resume));
 		
 		info_self_evaluation = findView(R.id.info_self_evaluation);
 		info_career_goal = findView(R.id.info_career_goal);
@@ -106,7 +108,7 @@ public class EvaluationActivity extends SwipeBackActivity implements OnClickList
 		case R.id.left_lable:
 			scrollToFinishActivity();
 			break;
-		case R.id.right_lable:
+		case R.id.right_icon:
 			ActivityUtils.startActivity(self, MyApplication.PACKAGENAME 
 					+ ".MainActivity",true);
 			break;

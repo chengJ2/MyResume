@@ -30,7 +30,9 @@ import com.whjz.android.text.CommonText;
 public class UserLoginActivity extends SwipeBackActivity implements
 		OnClickListener {
 
-	private TextView toptext,leftLable,rightLable;
+	private TextView toptext;
+	
+	private ImageView left_icon,right_icon;
 	
 	private EditText edtTxt_username;
 	private EditText edtTxt_password;
@@ -56,10 +58,10 @@ public class UserLoginActivity extends SwipeBackActivity implements
 	
 	private void findViews(){
 		toptext = findView(R.id.top_text);
-		leftLable = findView(R.id.left_lable);
-		leftLable.setOnClickListener(this);
-		rightLable = findView(R.id.right_lable);
-		rightLable.setOnClickListener(this);
+		left_icon = findView(R.id.left_lable);
+		left_icon.setOnClickListener(this);
+		right_icon = findView(R.id.right_icon);
+		right_icon.setOnClickListener(this);
 		
 		edtTxt_username = findView(R.id.edtTxt_username);
 		edtTxt_password = findView(R.id.edtTxt_password);
@@ -96,7 +98,7 @@ public class UserLoginActivity extends SwipeBackActivity implements
 		case R.id.left_lable:
 			self.scrollToFinishActivity();
 			break;
-		case R.id.right_lable:
+		case R.id.right_icon:
 			startActivity(".ui.SettingActivity",false);
 			break;
 		case R.id.save_checkbox:

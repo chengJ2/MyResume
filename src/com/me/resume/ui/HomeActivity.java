@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,6 +28,8 @@ import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
+import com.whjz.android.text.CommonText;
+import com.whjz.android.util.common.CommonUtil;
 
 /**
  * 
@@ -38,14 +41,16 @@ import com.me.resume.utils.DialogUtils;
  */
 public class HomeActivity extends SwipeBackActivity implements OnClickListener {
 
-	private TextView leftLable,topText,rightLable;
+	private TextView topText;
+	
+	private ImageView left_icon,right_icon;
 	
 	private List<ResumeModel> resumeModelList;
 
 	private CommonBaseAdapter<ResumeModel> commAdapter = null;
 	private GridView resumeModelgridView;
 
-	private Button makeResume;
+	private Button makeResume,reviewResume;
 
 	private CommonBaseAdapter<String> commAdapter2 = null;
 	private List<String> xglnList = null;
@@ -105,21 +110,23 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener {
 	
 	private void findViews(){
 		topText = findView(R.id.top_text);
-		leftLable = findView(R.id.left_lable);
-		leftLable.setText(CommUtil.getStrValue(self,R.string.resume_personcenter));
-		rightLable = findView(R.id.right_lable);
+		left_icon = findView(R.id.left_lable);
+		left_icon.setImageResource(R.drawable.icon_person_avtar);
+		right_icon = findView(R.id.right_icon);
 		topText.setText(CommUtil.getStrValue(self, R.string.resume_center));
 
 		makeResume = findView(R.id.make_btn);
-		
+		reviewResume = findView(R.id.review_btn);
 		resumeModelgridView = findView(R.id.grid);
 
 		resumeQuegridview = findView(R.id.xgln_gridview);
 		
-		leftLable.setOnClickListener(this);
-		rightLable.setOnClickListener(this);
-		makeResume.setOnClickListener(this);
+		left_icon.setOnClickListener(this);
+		right_icon.setOnClickListener(this);
+		right_icon.setImageResource(R.drawable.icon_setting);
 		
+		makeResume.setOnClickListener(this);
+		reviewResume.setOnClickListener(this);
 	}
 
 	/** 设置数据 */
@@ -153,6 +160,16 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener {
 		xglnList.add("笔试经验");
 		xglnList.add("自我鉴定");
 		xglnList.add("面试技巧");
+		
+		 queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
+		 commMapArray = dbUtil.queryData(self, queryWhere);
+		 if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+			 makeResume.setText(CommUtil.getStrValue(self, R.string.edit_resume));
+			 reviewResume.setVisibility(View.VISIBLE);
+		 }else{
+			 makeResume.setText(CommUtil.getStrValue(self, R.string.make_resume));
+			 reviewResume.setVisibility(View.GONE);
+		 }
 	}
 
 	/** 设置GirdView参数，绑定数据 */
@@ -222,7 +239,7 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener {
 
 					@Override
 					public void onClick(View view) {
-						ActivityUtils.startActivityPro(self, "", "position",
+						ActivityUtils.startActivityPro(self, MyApplication.PACKAGENAME + ".ui.TopicActivity", "position",
 								String.valueOf(position));
 
 					}
@@ -248,12 +265,15 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener {
 				mHandler.sendEmptyMessage(1);
 			}
 			break;
+		case R.id.review_btn:
+			startActivity(".MainActivity", false);
+			break;
 		case R.id.left_lable:
 			if (MyApplication.userId == 0) {
 				startActivity(".ui.UserLoginActivity", false);
 			}
 			break;
-		case R.id.right_lable:
+		case R.id.right_icon:
 			startActivity(".ui.SettingActivity", false);
 			break;
 		default:

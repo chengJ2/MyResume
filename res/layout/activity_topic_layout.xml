@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/top"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/top_bar_height"
+        layout="@layout/top_layout_lable" />
+    
+     <com.me.resume.views.CommScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" >
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dip"
+            android:textColor="@color/black"
+            android:text=""
+            android:textSize="@dimen/small_middle_text_size"
+            android:lineSpacingExtra="3dip"/>
+            
+        </com.me.resume.views.CommScrollView>
+</RelativeLayout>

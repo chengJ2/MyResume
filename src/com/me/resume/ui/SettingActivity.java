@@ -3,6 +3,7 @@ package com.me.resume.ui;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -24,7 +25,9 @@ import com.me.resume.views.SwitchButton.OnChangedListener;
  */
 public class SettingActivity extends SwipeBackActivity implements OnClickListener{
 
-	private TextView toptext,leftLable,rightLable;
+	private TextView toptext;
+	
+	private ImageView left_icon,right_icon;
 	
 	private RadioGroup radioGroup_show;
 	private RadioButton radio_left, radio_right,radionv_middle;
@@ -47,11 +50,11 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 		setting_auto_cb = findView(R.id.setting_auto_cb);
 		
 		toptext = findView(R.id.top_text);
-		leftLable = findView(R.id.left_lable);
-		rightLable = findView(R.id.right_lable);
-		leftLable.setOnClickListener(this);
+		left_icon = findView(R.id.left_lable);
+		right_icon = findView(R.id.right_icon);
+		left_icon.setOnClickListener(this);
 		toptext.setText(CommUtil.getStrValue(self, R.string.action_settings));
-		rightLable.setVisibility(View.INVISIBLE);
+		right_icon.setVisibility(View.INVISIBLE);
 		
 		radio_left.setChecked(true);
 		radio_right.setChecked(false);
