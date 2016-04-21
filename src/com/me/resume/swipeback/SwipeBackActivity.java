@@ -38,7 +38,6 @@ import com.whjz.android.util.interfa.DbLocalUtil;
  * 
 * @ClassName: SwipeBackActivity 
 * @Description: CommActivity 
-* @author Comsys-WH1510032 
 * @date 2016/4/7 下午1:42:36 
 *
  */
@@ -75,8 +74,8 @@ public class SwipeBackActivity extends FragmentActivity implements
 	protected Info info = new Info();
 
 	protected SharedPreferences sp;
-	private AsyncTask task;
-	private ProgressDialog progressDialog = null;
+	protected AsyncTask<String, Integer, Integer> task;
+	protected ProgressDialog progressDialog = null;
 	
 	// 请求超时
 	public static final int EXECUTE_TIMEOUT = -0X2000;
@@ -117,16 +116,16 @@ public class SwipeBackActivity extends FragmentActivity implements
 	    mLocalStack.add(this);
 	}
 	
-    protected void switchLang(String newLang){
+    /*protected void switchLang(String newLang){
     	setPreferenceData("LANGUAGE",newLang);
         // finish app内存中的所有activity
     	while (0 != mLocalStack.size()) {
             mLocalStack.pop().finish();
         }
         // 跳转到app首页
-//    	WiApplication.getApplication().exitAll();
-//      ActivityUtils.startActivity(BaseActivity.this, WiApplication.PACKAGENAME+".ui.WiVehicleMainActivity");
-    }
+//    	MyApplication.getApplication().exitAll();
+//    	startActivity("ui.HomeActivity",false);
+    }*/
 
 	/**
      * 

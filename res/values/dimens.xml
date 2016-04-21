@@ -4,7 +4,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="top_bar_height">46.0dp</dimen>
+    <dimen name="top_bar_height">50.0dp</dimen>
     
      <!-- 四类字体大小 -->
      <dimen name="tiny_text_size">8sp</dimen>
@@ -29,4 +29,6 @@
     <dimen name="normal_item_height">55.0dp</dimen>
     <dimen name="mul_item_height">150.0dp</dimen>
     <dimen name="normal_item_padding_left">12.0dp</dimen>
+    
+    <dimen name="normal_item_height_set">50.0dp</dimen>
 </resources>

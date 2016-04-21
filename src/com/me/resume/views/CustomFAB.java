@@ -70,10 +70,10 @@ public class CustomFAB extends ImageButton {
 	        public Shader resize(int width, int height) {
 	            LinearGradient lg = new LinearGradient(0,0,0, height,
 	            new int[] {
-	                Color.WHITE,
-	                Color.GRAY,
-	                Color.DKGRAY,
-	                Color.BLACK
+	                Color.TRANSPARENT,
+	                Color.TRANSPARENT,
+	                Color.TRANSPARENT,
+	                Color.TRANSPARENT
 	            }, null, Shader.TileMode.REPEAT);
 	            return lg;
 	        }

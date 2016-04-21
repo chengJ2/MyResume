@@ -223,7 +223,8 @@ public class JobIntensionActivity extends SwipeBackActivity implements OnClickLi
 					mHandler);
 			break;
 		case R.id.info_expworkplace:
-			
+			ActivityUtils.startActivityForResult(self, 
+					Constants.PACKAGENAME + ".ui.AddressActivity", false, Constants.JI_REQUEST_CODE2);
 			break;
 		case R.id.info_expworkindustry:
 			ActivityUtils.startActivityForResult(self, 
@@ -257,6 +258,11 @@ public class JobIntensionActivity extends SwipeBackActivity implements OnClickLi
             if(resultCode == Constants.RESULT_CODE) {
                 String result = data.getStringExtra("name");
                 info_expworkindustry.setText(result);
+            }
+        }else if(requestCode == Constants.JI_REQUEST_CODE2){
+        	if(resultCode == Constants.RESULT_CODE) {
+                String city = data.getStringExtra("city");
+                info_expworkplace.setText(city);
             }
         }
 		super.onActivityResult(requestCode, resultCode, data);

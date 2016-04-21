@@ -1,25 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">个人简历</string>
-    <string name="action_settings">设置</string>
     <string name="crash">App发生异常,请重启</string>
-    
-    <string name="resume_center">简历中心</string>
-    <string name="make_resume">定&#160;&#160;制</string>
-    <string name="review_resume">预&#160;&#160;览</string>
-    <string name="edit_resume">编&#160;&#160;辑</string>
-    <string name="resume_personcenter">我</string>
-    <string name="resume_baseinfo">基本资料</string>
-    <string name="resume_workexperience">工作经历</string>
-     <string name="resume_industrytype">行业类别</string>
-    <string name="resume_jobintension">求职意向</string>
-    <string name="resume_evaluation">自我评价</string>
-    <string name="resume_excellentskills">擅长技能</string>
-    <string name="resume_education">教育经历</string>
-    <string name="resume_training">培训经历</string>
-    <string name="resume_otherinfo">其他信息</string>
-    <string name="resume_message">我的留言</string>
-    
     <string name="refresh_down_text">下拉可刷新</string>
     <string name="refresh_release_text">松开可刷新</string>
     <string name="toast_text">ScrollView下拉刷新完毕</string>
@@ -28,27 +11,43 @@
     <string name="timeout_network">网络请求数据超时</string>
     <string name="request_error">请求异常,请检查!</string>
     <string name="viewpager_indicator">%1$d/%2$d</string>
-    
-    <!-- user login register-->
+    <string name="app_exit">再按一次退出</string>
+
+    <!-- 设置界面 -->
+    <string name="action_settings">设置</string>
+    <string name="settings_item1">是否每次启动简历预览界面</string>
+    <string name="settings_item2">是否开启自动切换简历预览</string>
+    <string name="settings_item3">当前版本</string>
+    <string name="settings_item4">反馈意见</string>
+
+    <!-- Home -->
+    <string name="resume_center">简历中心</string>
+    <string name="make_resume">定&#160;&#160;制</string>
+    <string name="review_resume">预&#160;&#160;览</string>
+    <string name="edit_resume">编&#160;&#160;辑</string>
+
+    <!-- Main -->
+    <string name="resume_baseinfo">基本资料</string>
+    <string name="resume_workexperience">工作经历</string>
+    <string name="resume_industrytype">行业类别</string>
+    <string name="resume_jobintension">求职意向</string>
+    <string name="resume_evaluation">自我评价</string>
+    <string name="resume_excellentskills">擅长技能</string>
+    <string name="resume_education">教育经历</string>
+    <string name="resume_training">培训经历</string>
+    <string name="resume_otherinfo">其他信息</string>
+    <string name="resume_message">我的留言</string>
+
+    <!-- user login register -->
     <string name="action_login">登&#160;&#160;录</string>
     <string name="action_loging">登录中...</string>
     <string name="action_input_isnull">不能为空</string>
     <string name="action_input_up_isnull">用户名和密码不能为空!</string>
     <string name="action_wait_loging">正在登录,请稍后...</string>
     <string name="action_login_error"> 用户名或密码不正确,请重试!</string>
-    
-    
-    <string name="reg_info_email">电子邮箱不合法！</string>
-    <string name="reg_info_phone">手机号不合法！</string>
-    
-    <string name="action_baseinfo_null">请先填写基本信息</string>
-    
-    <string name="tag_time_between">至</string>
-   
-     <!-- user -->
     <string name="login_input_hint">请输入手机号/用户名</string>
     <string name="login_input2_hint">请输入密码</string>
-    
+
     <!-- UI button click msg -->
     <string name="action_notice">提&#160;示</string>
     <string name="action_add_success">添加成功</string>
@@ -57,17 +56,21 @@
     <string name="action_edit_fail">编辑失败</string>
     <string name="action_update_success">更新成功</string>
     <string name="action_update_fail">更新失败</string>
-    
     <string name="action_favorites">收藏</string>
-    
+
     <!-- UI dialog msg -->
     <string name="dialog_action_alert">您还没登录,创建的简历会保存到本地，若卸载APP或清除APP数据，将不会显示出您的简历，请先登录或继续操作...</string>
-    
+
     <!-- UI button text -->
     <string name="show_button_cancle">取&#160;&#160;消</string>
     <string name="show_button_sure">确&#160;&#160;定</string>
-    
+
     <!-- 基本资料 -->
+    <string name="reg_info_email">电子邮箱不合法！</string>
+    <string name="reg_info_phone">手机号不合法！</string>
+    <string name="resume_address">城市列表</string>
+    <string name="action_baseinfo_null">请先填写基本信息</string>
+    <string name="tag_time_between">至</string>
     <string name="info_name">姓名</string>
     <string name="info_name_key">姓&#160;&#160;名</string>
     <string name="info_hometown_key">家乡所在地</string>
@@ -105,6 +108,7 @@
     <string name="info_politicalstatus_5">无党派人士</string>
     <!-- 基本资料 -->
 
+
     <!-- 工作简历 -->
     <string name="we_info_companyname">企业名称</string>
     <string name="we_info_input_companyname">请输入企业名称</string>
@@ -118,15 +122,16 @@
     <string name="we_info_choose_jobtitle">请输入职位名称</string>
     <string name="we_info_worktime">工作时间</string>
     <string name="we_info_choose_worktime">请选择工作时间</string>
-     <string name="we_info_start_worktime">起始时间</string>
-     <string name="we_info_end_worktime">结束时间</string>
-     <string name="we_info_compare_worktime">结束时间要大于起始时间</string>
+    <string name="we_info_start_worktime">起始时间</string>
+    <string name="we_info_end_worktime">结束时间</string>
+    <string name="we_info_compare_worktime">结束时间要大于起始时间</string>
     <string name="we_info_choose_worktime2">请选择</string>
     <string name="we_info_jobsalary">职位月薪(税前)</string>
     <string name="we_info_choose_jobsalary">请选择职位月薪</string>
     <string name="we_info_workdesc">工作描述</string>
     <string name="we_info_workdescdetail">请详细描述您的职责范围,工作任务以及取得的成绩等</string>
     <!-- 工作简历 -->
+
 
     <!-- 自我评价 -->
     <string name="ev_info_default_1">对自己做一个简短评价，简明扼要地描述您的职业优势，让用人单位快速地了解您！</string>
@@ -136,6 +141,7 @@
     <string name="ev_info_career_goal">职业目标</string>
     <string name="ev_info_input_career_goal">请输入职业目标</string>
     <!-- 自我评价 -->
+
 
     <!-- 教育培训经历 -->
     <string name="ed_info_time">时&#160;&#160;间</string>
@@ -178,16 +184,13 @@
     <string name="ji_info_choose_workingstate">请选择工作状态</string>
     <!-- 求职意向 -->
 
-
     <!-- 其他信息 -->
     <string name="ot_add">新增</string>
     <string name="ot_edit">编辑</string>
     <string name="ot_save">保存</string>
-    
     <string name="ot_languages">语言能力</string>
     <string name="ot_certificate">证书</string>
     <string name="ot_info">其他信息</string>
-    
     <string name="ot_info_language">外语语种</string>
     <string name="ot_info_choose_language">请选择外语语种</string>
     <string name="ot_info_literacyskills">读写能力</string>

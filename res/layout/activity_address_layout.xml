@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <include
+        android:id="@+id/top"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/top_bar_height"
+        layout="@layout/top_layout_lable" />
+
+    <RelativeLayout
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:background="@color/grey_80"
+        android:gravity="center_vertical" >
+
+        <EditText
+            android:id="@+id/index_search_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="@drawable/search_box"
+            android:descendantFocusability="blocksDescendants"
+            android:drawableLeft="@drawable/search_icon"
+            android:focusable="true"
+            android:hint="城市/行政区/拼音"
+            android:imeOptions="actionSearch"
+            android:inputType="none"
+            android:paddingBottom="4dip"
+            android:paddingLeft="3dp"
+            android:paddingRight="4dip"
+            android:paddingTop="4dip"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textSize="@dimen/micro_text_size" />
+
+        <ImageView
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/clear"
+            android:gravity="center"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <com.me.resume.views.CommScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dip"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="5dip" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="left"
+                    android:text="当前定位城市"
+                    android:textColor="@color/grey_10"
+                    android:textSize="@dimen/small_middle_text_size" />
+
+                <Button
+                    android:id="@+id/review_btn"
+                    style="@style/button_menu"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dip"
+                    android:gravity="center"
+                    android:paddingBottom="2dip"
+                    android:paddingLeft="15dip"
+                    android:paddingRight="15dip"
+                    android:paddingTop="2dip"
+                    android:text="武汉"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/small_middle_text_size"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <View style="@style/line3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="5dip"
+                android:text="热门城市"
+                android:textColor="@color/grey_10"
+                android:textSize="@dimen/small_middle_text_size" />
+
+            <GridView
+                android:id="@+id/hotaddress_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="144dip"
+                android:layout_margin="5dip"
+                android:columnWidth="80dp"
+                android:fadingEdge="none"
+                android:fadingEdgeLength="0dip"
+                android:gravity="center"
+                android:horizontalSpacing="10dp"
+                android:numColumns="4"
+                android:scrollbars="none"
+                android:scrollingCache="false"
+                android:smoothScrollbar="true"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="10dp" >
+            </GridView>
+
+            <View style="@style/line3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="5dip"
+                android:text="全国城市"
+                android:textColor="@color/grey_10"
+                android:textSize="@dimen/small_middle_text_size" />
+
+            <com.me.resume.views.CustomListView
+                android:id="@+id/alladdrListview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@color/grey"
+                android:dividerHeight="1px"
+                android:listSelector="@android:color/transparent"
+                android:scrollbars="none"
+                android:visibility="visible" />
+        </LinearLayout>
+    </com.me.resume.views.CommScrollView>
+
+</LinearLayout>

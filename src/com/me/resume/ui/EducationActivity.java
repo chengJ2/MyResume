@@ -1,6 +1,7 @@
 package com.me.resume.ui;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -12,10 +13,13 @@ import android.widget.TextView;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
 import com.me.resume.swipeback.SwipeBackActivity;
+import com.me.resume.tools.L;
 import com.me.resume.ui.fragment.AllFragmentFactory;
 import com.me.resume.ui.fragment.EducationFragment;
 import com.me.resume.ui.fragment.TrainingFragment;
+import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
@@ -277,11 +281,11 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 			return -1;
 		}
 		
-//		if (!RegexUtil.checkNotNull(info_majornameStr)) {
-//			msg.setText(CommUtil.getStrValue(self, R.string.ed_info_majorname) + fieldNull);
-//			msg.setVisibility(View.VISIBLE);
-//			return -1;
-//		}
+		if (!RegexUtil.checkNotNull(info_majornameStr)) {
+			msg.setText(CommUtil.getStrValue(self, R.string.ed_info_majorname) + fieldNull);
+			msg.setVisibility(View.VISIBLE);
+			return -1;
+		}
 		
 		if (!RegexUtil.checkNotNull(info_degressStr)) {
 			msg.setText(CommUtil.getStrValue(self, R.string.ed_info_degree) + fieldNull);
@@ -323,5 +327,4 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 		}
 		return 0;
 	}
-	
 }

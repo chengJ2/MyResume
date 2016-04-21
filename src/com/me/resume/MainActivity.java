@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -67,6 +69,8 @@ public class MainActivity extends Activity {
 	
 	private String queryWhere = "";
 	
+	private SharedPreferences sp;
+	
 	// View1
 	private TextView index_1_realname, index_1_info,index_1_where,index_1_lisence,index_1_phone,index_1_email;
 	
@@ -127,6 +131,7 @@ public class MainActivity extends Activity {
 	}
 
 	private void findViews() {
+		sp = getSharedPreferences(Constants.CONFIG, Context.MODE_PRIVATE);
 		jazzyViewPager = (JazzyViewPager)findViewById(R.id.index_product_container);
 	}
 	
@@ -170,9 +175,9 @@ public class MainActivity extends Activity {
 
 		jazzyViewPager.setCurrentItem(0);
 
-//		if (getPreferenceData("autoShow", 0) == 1) {
-//			mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO, VIEW_CHANGE_TIME);
-//		}
+		if (sp.getInt("autoShow", 0) == 1) {
+			mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO, VIEW_CHANGE_TIME);
+		}
 
 		jazzyViewPager.setAdapter(new MyPagerAdapter(mViewList));
 	}
@@ -478,7 +483,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-//				setPreferenceData("firstInstall", 0);
+//				sp.edit().putInt("startVerytime", 0).commit();
 				ActivityUtils.startActivity(self, Constants.PACKAGENAME
 						+ ".ui.HomeActivity");
 			}

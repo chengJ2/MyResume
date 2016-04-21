@@ -120,6 +120,10 @@
         <item name="android:layout_height">@dimen/mul_item_height</item>
     </style>
     
+     <style name="noraml_item_setting" parent="@style/noraml_item">
+        <item name="android:layout_height">@dimen/normal_item_height_set</item>
+    </style>
+     
      <!-- 用户信息列表 -->
 	   <style name="userinfo_item_style">
 	      <item name="android:layout_width">match_parent</item>

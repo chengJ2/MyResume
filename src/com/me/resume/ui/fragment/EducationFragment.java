@@ -4,6 +4,10 @@ import java.util.Arrays;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -17,6 +21,8 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
+import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.whjz.android.text.CommonText;
@@ -88,6 +94,16 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
         return view;
     }
 	 
+	 private BroadcastReceiver majornameReceiver = new BroadcastReceiver(){
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			String date = intent.getStringExtra("category");
+			setInfomajorname(date);
+		}};
+	 
+	 
 	private void initData() {
 		String queryWhere = "select * from " + CommonText.EDUCATION + " where userId = 1 order by _id limit 1";
 		Map<String, String[]> map = dbUtil.queryData(getActivity(), queryWhere);
@@ -99,6 +115,10 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 			setInfodegree(map.get("degree")[0]);
 			setInfoexamination(map.get("examination")[0]);
 		}
+		
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(Constants.EDCATION);
+		getActivity().registerReceiver(majornameReceiver, filter);
 	}
 
 	@Override
@@ -118,7 +138,7 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 		rb_examination2 = (RadioButton)view.findViewById(R.id.rb_examination2);
 		
 		info_degree.setOnClickListener(this);
-		
+		info_majorname.setOnClickListener(this);
 		rg_examination.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -150,6 +170,7 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 						R.string.we_info_end_worktime, 12,mHandler);
 			}
 		});
+		
 	}
 	
 	public void setInfoStartTime(String value){
@@ -214,6 +235,10 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 		case R.id.info_degree:
 			getValues(R.array.ed_degress_values,info_degree,R.string.ed_info_degree);
 			break;
+		case R.id.info_majorname:
+			ActivityUtils.startActivityForResult(getActivity(), 
+					Constants.PACKAGENAME + ".ui.ProfessionalActivity", false, Constants.ED_REQUEST_CODE);
+			break;
 		default:
 			break;
 		}
@@ -223,6 +248,15 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 		String[] item_text = CommUtil.getArrayValue(getActivity(),array); 
 		mList = Arrays.asList(item_text);
 		DialogUtils.showPopWindow(getActivity(), parent, resId, mList, mHandler);
+	}
+	
+	@Override
+	public void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		if (majornameReceiver != null) {
+			getActivity().unregisterReceiver(majornameReceiver);
+		}
 	}
 	
 }

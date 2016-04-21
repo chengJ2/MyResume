@@ -3,6 +3,7 @@ package com.me.resume.ui;
 import java.util.Arrays;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -15,7 +16,9 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
 import com.me.resume.swipeback.SwipeBackActivity;
+import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
@@ -173,6 +176,8 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 		save_edit = findView(R.id.save_edit);
 		next = findView(R.id.next);
 		
+		info_city.setOnClickListener(this);
+		
 		save_edit.setOnClickListener(this);
 		next.setOnClickListener(this);
 		
@@ -271,7 +276,6 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 	}
 	
 	
-	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -333,13 +337,13 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 				msg.setText(CommUtil.getStrValue(self, R.string.info_hometown) + fieldNull);
 				msg.setVisibility(View.VISIBLE);
 				return;
-			}
+			}*/
 		
 			if (RegexUtil.checkNotNull(info_cityStr)) {
 				msg.setText(CommUtil.getStrValue(self, R.string.info_city) + fieldNull);
 				msg.setVisibility(View.VISIBLE);
 				return;
-			}*/
+			}
 			
 			queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
 			commMapArray = dbUtil.queryData(self, queryWhere);
@@ -391,6 +395,10 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 			msg.setVisibility(View.GONE);
 			DialogUtils.showTimeChooseDialog(self, info_workyear,R.string.info_workyear,13,mHandler);
 			break;
+		case R.id.info_city:
+			ActivityUtils.startActivityForResult(self, 
+					Constants.PACKAGENAME + ".ui.AddressActivity", false, Constants.BI_REQUEST_CODE);
+			break;
 		case R.id.info_maritalstatus:
 			whichTab = 1;
 			getValues(R.array.ba_maritalstatus_values,info_maritalstatus,R.string.info_maritalstatus);
@@ -428,5 +436,16 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 			msg.setText(CommUtil.getStrValue(self, R.string.action_baseinfo_null));
 			msg.setVisibility(View.VISIBLE);
 		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode == Constants.BI_REQUEST_CODE){
+        	if(resultCode == Constants.RESULT_CODE) {
+                String city = data.getStringExtra("city");
+                info_city.setText(city);
+            }
+        }
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 }

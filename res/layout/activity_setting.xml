@@ -28,40 +28,36 @@
 
             <LinearLayout
                 android:id="@+id/llout01"
-                style="@style/noraml_item"
-                android:layout_height="80dip" >
+                style="@style/noraml_item_setting">
 
                 <TextView
                     style="@style/user_info_item_tv"
                     android:layout_weight="5"
-                    android:text="是否每次启动简历预览界面" />
+                    android:text="@string/settings_item1" />
 
                 <LinearLayout
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:layout_weight="4"
-                    android:paddingTop="22dip"
-                    android:paddingLeft="40dip"
+                    android:paddingTop="10dip"
+                    android:paddingLeft="50dip"
                     android:gravity="center|right">
 
                     <com.me.resume.views.SwitchButton
                         android:id="@+id/setting_start_cb"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:visibility="visible" />
                 </LinearLayout>
-
-                <ImageView
-                    style="@style/user_info_item_iv"
-                    android:visibility="invisible" />
             </LinearLayout>
 
             <View style="@style/line3" />
 
             <LinearLayout
                 style="@style/noraml_item"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:visibility="gone" >
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -102,21 +98,20 @@
 
             <LinearLayout
                 android:id="@+id/llout03"
-                style="@style/noraml_item"
-                android:layout_height="80dip">
+                style="@style/noraml_item_setting">
 
                 <TextView
                     style="@style/user_info_item_tv"
                     android:layout_weight="5"
-                    android:text="是否开启自动切换简历预览" />
+                    android:text="@string/settings_item2" />
 
                 <LinearLayout
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:layout_weight="4"
-                    android:paddingTop="22dip"
-                    android:paddingLeft="40dip"
+                    android:paddingTop="10dip"
+                    android:paddingLeft="50dip"
                     android:gravity="center|right">
 
                     <com.me.resume.views.SwitchButton
@@ -126,12 +121,48 @@
                         android:visibility="visible" />
                 </LinearLayout>
 
+            </LinearLayout>
+
+            <View style="@style/line3"
+                android:layout_height="20dip" />
+            
+            <LinearLayout
+                android:id="@+id/llout03"
+                style="@style/noraml_item_setting">
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:layout_weight="5"
+                    android:text="@string/settings_item3" />
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:layout_weight="4"
+                    android:gravity="right|center"
+                    android:text="V1.0" />
+                
                 <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
-            </LinearLayout>
 
+            </LinearLayout>
             <View style="@style/line3" />
+            <LinearLayout
+                android:id="@+id/llout03"
+                style="@style/noraml_item_setting">
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:layout_weight="5"
+                    android:text="@string/settings_item4" />
+
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+            <View style="@style/line3" />
+            
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
 

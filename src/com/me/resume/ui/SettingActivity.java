@@ -36,7 +36,6 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_setting);
 		
@@ -46,7 +45,6 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 		radionv_middle = findView(R.id.radionv_middle);
 		
 		setting_start_cb = findView(R.id.setting_start_cb);
-		
 		setting_auto_cb = findView(R.id.setting_auto_cb);
 		
 		toptext = findView(R.id.top_text);
@@ -60,7 +58,7 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 		radio_right.setChecked(false);
 		radionv_middle.setChecked(false);
 		
-		radioGroup_show.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+		/*radioGroup_show.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -72,7 +70,7 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 					setPreferenceData("we_show_nav",3);
 				}
 			}
-		});
+		});*/
 		
 		setting_start_cb.setOnChangedListener(new OnChangedListener() {
 			
@@ -80,12 +78,11 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 			public void OnChanged(SwitchButton switchButton, boolean checkState) {
 				// TODO Auto-generated method stub
 				int onoff = 0;
-				if(startVerytime == 0){
+				if(getPreferenceData("startVerytime", 0) == 0){
 					onoff = 1;
 				}else{
 					onoff = 0;
 				}
-				L.d("===onoff===="+onoff);
 				setPreferenceData("startVerytime", onoff); 
 			}
 		});
@@ -96,35 +93,27 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 			public void OnChanged(SwitchButton switchButton, boolean checkState) {
 				// TODO Auto-generated method stub
 				int onoff = 0;
-				if(autoShow == 0){
+				if(getPreferenceData("autoShow", 0) == 0){
 					onoff = 1;
 				}else{
 					onoff = 0;
 				}
-				L.d("===onoff===="+onoff);
 				setPreferenceData("autoShow", onoff); 
 			}
 		});
 	}
-
-	private int autoShow = 0,startVerytime = 0;
 	
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		
-		autoShow = getPreferenceData("autoShow", 0);
-		startVerytime = getPreferenceData("startVerytime", 0);
-		
-		L.d("===autoShow===="+autoShow + "  startVerytime:"+startVerytime);
-		
+		int autoShow = getPreferenceData("autoShow", 0);
+		int startVerytime = getPreferenceData("startVerytime", 0);
 		if (startVerytime == 0) {
 			setting_start_cb.setChecked(false);
 		}else{
 			setting_start_cb.setChecked(true);
 		}
-		
 		if (autoShow == 0) {
 			setting_auto_cb.setChecked(false);
 		}else{

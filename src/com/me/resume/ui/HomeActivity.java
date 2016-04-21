@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -54,6 +55,8 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener {
 	private CommonBaseAdapter<String> commAdapter2 = null;
 	private List<String> xglnList = null;
 	private GridView resumeQuegridview;
+	
+	private boolean isExit = false;
 
 	private Handler mHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
@@ -76,6 +79,9 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener {
 				break;
 			case 110:
 				setPreferenceData("noticeshow",0);
+				break;
+			case 0:
+				isExit = false;
 				break;
 			default:
 				break;
@@ -280,4 +286,26 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener {
 		}
 
 	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			exit();
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	
+	public void exit(){  
+        if (!isExit) {  
+            isExit = true;  
+            toastMsg(R.string.app_exit);
+            mHandler.sendEmptyMessageDelayed(0, 2000);  
+        } else {  
+            Intent intent = new Intent(Intent.ACTION_MAIN);  
+            intent.addCategory(Intent.CATEGORY_HOME);  
+            startActivity(intent);  
+            MyApplication.getApplication().exitAll();
+        }  
+    }
 }
