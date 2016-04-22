@@ -60,6 +60,8 @@ public class AddressActivity extends BaseActivity {
 		
 		setMsgHide();
 		
+		setBgrilVisible(View.GONE);
+		
 		left_icon.setOnClickListener(new OnClickListener() {
 			
 			@Override

@@ -22,7 +22,8 @@
 
             <LinearLayout
                 android:id="@+id/llout01"
-               style="@style/noraml_item" >
+               style="@style/noraml_item"
+                >
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -50,8 +51,9 @@
                 <RadioGroup
                     android:id="@+id/rg_gender"
                     android:layout_width="0dip"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="6"
+                    android:layout_marginLeft="10dip"
                     android:orientation="horizontal" >
 
                     <RadioButton

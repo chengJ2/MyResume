@@ -86,7 +86,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	private void findViews(){
 		setTopTitle(R.string.resume_workexperience);
 		setMsgHide();
-		
+		setBgrilVisible(View.VISIBLE);
 		info_companyname = findView(R.id.info_companyname);
 		info_companynature = findView(R.id.info_companynature);
 		info_companyscale = findView(R.id.info_companyscale);

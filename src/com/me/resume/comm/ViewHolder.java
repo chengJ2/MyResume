@@ -194,6 +194,18 @@ public class ViewHolder {
 		tv.setTextColor(color);
 		return this;
 	}
+	
+	public ViewHolder setViewBgColor(int ViewID,int color){
+		View view=getView(ViewID);
+		view.setBackgroundColor(color);
+		return this;
+	}
+	
+	public ViewHolder setViewVisible(int ViewID,int visibility){
+		View view=getView(ViewID);
+		view.setVisibility(visibility);
+		return this;
+	}
 
 	public ViewHolder setImageResource(int ViewID,int resID){
 		ImageView iv=getView(ViewID);

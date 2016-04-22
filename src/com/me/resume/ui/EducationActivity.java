@@ -47,6 +47,8 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	
 	private TextView msg;
 	
+	private int cposition = 0;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -83,13 +85,13 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	
 	private void initData() {
 		String tab = segment_button.getSegmentButton(0).getText().toString();
-		switchContent(MyApplication.cposition,tab);
+		switchContent(cposition,tab);
 		segment_button.setOnCheckedChangeListener(new SegmentButton.OnCheckedChangeListener() {
 
 			@Override
 			public void onCheckedChanged(int position, Button button) {
-				MyApplication.cposition = position;
-				switchContent(MyApplication.cposition,button.getText().toString());
+				cposition = position;
+				switchContent(cposition,button.getText().toString());
 			}
 		});
 		
@@ -146,10 +148,10 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public void onClick(View v) {
-		String tab = segment_button.getSegmentButton(MyApplication.cposition).getText().toString();
+		String tab = segment_button.getSegmentButton(cposition).getText().toString();
 		Fragment f = AllFragmentFactory.getFragment(tab);
 		if(f != null){
-			if(MyApplication.cposition == 0){ // 教育背景
+			if(cposition == 0){ // 教育背景
 				info_starttimeStr = ((EducationFragment)f).getInfoStartTime();
 				info_endtimeStr = ((EducationFragment)f).getInfoEndTime();
 				info_schoolStr = ((EducationFragment)f).getInfoSchool();
@@ -167,12 +169,12 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		}
 		switch (v.getId()) {
 		case R.id.save:
-			if(MyApplication.cposition == 0){ // 教育背景
+			if(cposition == 0){ // 教育背景
 				if( judgeEduField() == 0){
 					ContentValues cValues = new ContentValues();
 					cValues.put("userId", "1");
-//					cValues.put("educationtimestart", info_starttimeStr);
-//					cValues.put("educationtimeend", info_endtimeStr);
+					cValues.put("educationtimestart", info_starttimeStr);
+					cValues.put("educationtimeend", info_endtimeStr);
 					cValues.put("school", info_schoolStr);
 					cValues.put("majorname", info_majornameStr);
 					cValues.put("degree", info_degressStr);
@@ -190,8 +192,8 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				if(judegTraField() == 0){
 					ContentValues cValues = new ContentValues();
 					cValues.put("userId", "1");
-//					cValues.put("trainingtimestart", info_starttimeStr);
-//					cValues.put("trainingtimeend", info_endtimeStr);
+					cValues.put("trainingtimestart", info_starttimeStr);
+					cValues.put("trainingtimeend", info_endtimeStr);
 					cValues.put("trainingorganization", info_trainingorganizationStr);
 					cValues.put("trainingclass", info_trainingclassStr);
 					cValues.put("certificate", info_certificateStr);
@@ -207,14 +209,14 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.edit:
-			if(MyApplication.cposition == 0){ // 教育背景
+			if(cposition == 0){ // 教育背景
 				if( judgeEduField() == 0){
 					queryWhere = "select * from " + CommonText.EDUCATION + " where userId = 1 order by _id limit 1";
 					commMapArray = dbUtil.queryData(self, queryWhere);
 					if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 						String edId = commMapArray.get("_id")[0];
 						updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
-								new String[]{edId,"worktimestart","worktimeend","school","majorname",
+								new String[]{edId,"educationtimestart","educationtimeend","school","majorname",
 												  "degree","examination"}, 
 								new String[]{"1",info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,
 								info_degressStr,info_examinationStr});
@@ -232,7 +234,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 						String edId = commMapArray.get("_id")[0];
 						updResult = dbUtil.updateData(self, CommonText.EDUCATION_TRAIN, 
-								new String[]{edId,"worktimestart","worktimeend","trainingorganization","trainingclass",
+								new String[]{edId,"trainingtimestart","trainingtimeend","trainingorganization","trainingclass",
 								"certificate","description"}, 
 								new String[]{"1",info_starttimeStr,info_endtimeStr,info_trainingorganizationStr,info_trainingclassStr,
 								info_certificateStr,info_descriptionStr});

@@ -108,8 +108,8 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 		String queryWhere = "select * from " + CommonText.EDUCATION + " where userId = 1 order by _id limit 1";
 		Map<String, String[]> map = dbUtil.queryData(getActivity(), queryWhere);
 		if (map!= null && map.get("userId").length > 0) {
-//			setInfoStartTime(map.get("educationtimestart")[0]);
-//			setInfoEndTime(map.get("educationtimeend")[0]);
+			setInfoStartTime(map.get("educationtimestart")[0]);
+			setInfoEndTime(map.get("educationtimeend")[0]);
 			setInfoSchool(map.get("school")[0]);
 			setInfomajorname(map.get("majorname")[0]);
 			setInfodegree(map.get("degree")[0]);

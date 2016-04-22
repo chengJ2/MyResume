@@ -75,6 +75,7 @@ public class UserLoginActivity extends BaseActivity implements
 	private void initViews(){
 		setTopTitle(R.string.action_user_login);
 		setMsgHide();
+		setBgrilVisible(View.GONE);
 		setRightIconVisible(View.GONE);
 		edtTxt_username.setText("");
 		if (getPreferenceData("fflag")) {

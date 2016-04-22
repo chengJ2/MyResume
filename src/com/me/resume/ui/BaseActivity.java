@@ -1,22 +1,30 @@
 package com.me.resume.ui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.me.resume.R;
+import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.ViewHolder;
+import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.tools.SystemBarTintManager;
 import com.me.resume.utils.ActivityUtils;
@@ -31,17 +39,19 @@ import com.me.resume.utils.CommUtil;
  */
 public class BaseActivity extends SwipeBackActivity {
 
-	protected BaseActivity self;
-
 	protected TextView toptext;
-
 	protected ImageView left_icon, right_icon;
-
 	protected TextView msg;
 	
+	protected LinearLayout horizontalsv;
+	protected GridView bgrid;
+	
 	protected LinearLayout boayLayout;
-
+	
+	protected BaseActivity self;
 	protected SharedPreferences sp;
+	
+	protected CommonBaseAdapter<String> commStrAdapter = null;
 
 	protected Map<String, String[]> commMapArray = null;
 
@@ -58,8 +68,18 @@ public class BaseActivity extends SwipeBackActivity {
 	protected String[] item_values = null;
 
 	protected List<String> mList = null;
+	
+	protected CommonBaseAdapter<Integer> commIntAdapter = null;
+	protected List<Integer> nList = null;
 
 	protected String fieldNull = null;
+	
+	private Integer checkColor = 0;
+	
+	protected boolean loadbgColor = false;
+	
+	private static HashMap<String,Boolean> states=new HashMap<String,Boolean>();
+	private static int selecPosition = 0; // default red
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +96,11 @@ public class BaseActivity extends SwipeBackActivity {
 		left_icon = findView(R.id.left_lable);
 		right_icon = findView(R.id.right_icon);
 		msg = findView(R.id.msg);
+		horizontalsv = findView(R.id.horizontalsv);
+		bgrid = findView(R.id.bgrid);
 		boayLayout = findView(R.id.bodyLayout);
+		
+		fillBgColor();
 	}
 
 	@Override
@@ -105,6 +129,72 @@ public class BaseActivity extends SwipeBackActivity {
 		win.setAttributes(winParams);
 	}
 	
+	private void fillBgColor(){
+		final TypedArray typedArray = getResources().obtainTypedArray(R.array.review_bgcolor);
+		nList = new ArrayList<Integer>();
+		for (int i = 0; i < typedArray.length(); i++) {
+			nList.add(typedArray.getResourceId(i, 0));
+		}
+		
+		int size = nList.size();
+        int length = 50;
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float density = dm.density;
+        int gridviewWidth = (int) (size * (length + 4) * density);
+        int itemWidth = (int) (length * density);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+        bgrid.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
+        bgrid.setColumnWidth(itemWidth); // 设置列表项宽
+        bgrid.setHorizontalSpacing(5); // 设置列表项水平间距
+        bgrid.setStretchMode(GridView.NO_STRETCH);
+        bgrid.setNumColumns(size); // 设置列数量=列表集合数
+		commIntAdapter = new CommonBaseAdapter<Integer>(self, nList,
+				R.layout.base_grilview_item) {
+
+			@Override
+			public void convert(final ViewHolder holder, final Integer item,
+					final int position) {
+				holder.setViewBgColor(R.id.itemName, self.getResources().getColor(item));
+				holder.setViewVisible(R.id.check, View.GONE);
+				
+				if (!states.isEmpty()) {
+					states.clear();
+				}
+
+				if (selecPosition == position) {
+					states.put(String.valueOf(position), true);
+					holder.setViewVisible(R.id.check, View.VISIBLE);
+				} else {
+					states.put(String.valueOf(position), false);
+					holder.setViewVisible(R.id.check, View.GONE);
+				}
+				
+				holder.setOnClickEvent(R.id.itemName, new ClickEvent() {
+
+					@Override
+					public void onClick(View view) {
+						checkColor = item;
+						selecPosition = position;
+						holder.setViewVisible(R.id.check, View.VISIBLE);
+						for (String key : states.keySet()) {
+							states.put(key, false);
+						}
+
+						states.put(String.valueOf(position), false);
+						
+						notifyDataSetChanged();
+					}
+				});
+			}
+		};
+		
+		bgrid.setAdapter(commIntAdapter);
+	}
+	
+	
 	/**
 	 * 
 	 * @Title:BaseActivity
@@ -132,7 +222,18 @@ public class BaseActivity extends SwipeBackActivity {
 	protected void setRightIconVisible(int visibility) {
 		right_icon.setVisibility(visibility);
 	}
-
+	
+	protected void setBgrilVisible(int visibility) {
+		horizontalsv.setVisibility(visibility);
+	}
+	
+	protected Integer getCheckColor(){
+		if (checkColor == 0) {
+			return R.color.red;
+		}
+		return checkColor;
+	}
+	
 	/**
 	 * 
 	 * @Title:BaseActivity

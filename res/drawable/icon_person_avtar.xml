@@ -4,5 +4,5 @@
     <item android:state_enabled="true" android:state_pressed="true" android:drawable="@drawable/icon_person_avtar_sel" /> 
   
     <!-- 默认时的背景图片 -->  
-    <item android:drawable="@drawable/icon_person_avtar_del" /> 
+    <item android:drawable="@drawable/icon_person_avtar_def" /> 
 </selector>

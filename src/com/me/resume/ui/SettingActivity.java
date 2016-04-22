@@ -25,7 +25,6 @@ import com.me.resume.views.SwitchButton.OnChangedListener;
  */
 public class SettingActivity extends BaseActivity implements OnClickListener{
 
-	
 	private RadioGroup radioGroup_show;
 	private RadioButton radio_left, radio_right,radionv_middle;
 	
@@ -52,6 +51,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		setMsgHide();
 		
 		setRightIconVisible(View.INVISIBLE);
+		
+		setBgrilVisible(View.GONE);
+		
+		left_icon.setOnClickListener(this);
 		
 		radio_left.setChecked(true);
 		radio_right.setChecked(false);

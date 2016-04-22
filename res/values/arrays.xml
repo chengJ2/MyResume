@@ -15,6 +15,19 @@
         <item>Accordion</item>
     </string-array>
     
+    <string-array name="review_bgcolor">
+        <item>@color/color_1</item>
+        <item>@color/color_2</item>
+        <item>@color/color_3</item>
+        <item>@color/color_4</item>
+        <item>@color/color_5</item>
+        <item>@color/color_6</item>
+        <item>@color/color_7</item>
+        <item>@color/color_8</item>
+        <item>@color/color_9</item>
+        <item>@color/color_10</item>
+    </string-array>
+    
      <string-array name="ba_maritalstatus_values">
        <item>@string/info_maritalstatus_1</item>
        <item>@string/info_maritalstatus_2</item>

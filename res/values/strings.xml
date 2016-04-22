@@ -17,18 +17,25 @@
     <string name="action_settings">设置</string>
     <string name="settings_item1">是否每次启动简历预览界面</string>
     <string name="settings_item2">是否开启自动切换简历预览</string>
-    <string name="settings_item3">当前版本</string>
+    <string name="settings_item3">检测新版本</string>
     <string name="settings_item4">反馈意见</string>
 
+    <!-- base -->
+    <string name="item_text1">选择界面在预览时的背景色</string>
+   
+    
     <!-- Home -->
     <string name="resume_center">简历中心</string>
     <string name="make_resume">定&#160;&#160;制</string>
     <string name="review_resume">预&#160;&#160;览</string>
     <string name="edit_resume">编&#160;&#160;辑</string>
-
+	<string name="item_text2">· 热门简历模板</string>
+    <string name="item_text3">· 相关栏目推荐</string>
+    
     <!-- Main -->
     <string name="resume_baseinfo">基本资料</string>
     <string name="resume_workexperience">工作经历</string>
+    <string name="resume_project_experience">项目经验</string>
     <string name="resume_industrytype">行业类别</string>
     <string name="resume_jobintension">求职意向</string>
     <string name="resume_evaluation">自我评价</string>

@@ -23,6 +23,7 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.model.ResumeModel;
+import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -45,8 +46,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 	private Button makeResume,reviewResume;
 
-	private CommonBaseAdapter<String> commAdapter2 = null;
-	private List<String> xglnList = null;
 	private GridView resumeQuegridview;
 	
 	private boolean isExit = false;
@@ -111,8 +110,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	
 	private void findViews(){
 		setTopTitle(R.string.resume_center);
-		
 		setMsgHide();
+		setBgrilVisible(View.GONE);
 		setLeftIcon(R.drawable.icon_person_avtar);
 		
 		setRightIcon(R.drawable.icon_setting);
@@ -149,19 +148,19 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			resumeModelList.add(item);
 		}
 
-		xglnList = new ArrayList<String>();
-		xglnList.add("求职简历");
-		xglnList.add("面试问题");
-		xglnList.add("自我鉴定");
-		xglnList.add("面试技巧");
-		xglnList.add("求职简历");
-		xglnList.add("面试问题");
-		xglnList.add("自我鉴定");
-		xglnList.add("面试技巧");
-		xglnList.add("注意事项");
-		xglnList.add("笔试经验");
-		xglnList.add("自我鉴定");
-		xglnList.add("面试技巧");
+		mList = new ArrayList<String>();
+		mList.add("求职简历");
+		mList.add("面试问题");
+		mList.add("自我鉴定");
+		mList.add("面试技巧");
+		mList.add("求职简历");
+		mList.add("面试问题");
+		mList.add("自我鉴定");
+		mList.add("面试技巧");
+		mList.add("注意事项");
+		mList.add("笔试经验");
+		mList.add("自我鉴定");
+		mList.add("面试技巧");
 		
 		 queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
 		 commMapArray = dbUtil.queryData(self, queryWhere);
@@ -191,14 +190,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		resumeModelgridView.setHorizontalSpacing(5); // 设置列表项水平间距
 		resumeModelgridView.setStretchMode(GridView.NO_STRETCH);
 		resumeModelgridView.setNumColumns(size); // 设置列数量=列表集合数
-
 		commAdapter = new CommonBaseAdapter<ResumeModel>(self, resumeModelList,
 				R.layout.home_grilview_item) {
 
 			@Override
 			public void convert(ViewHolder holder, ResumeModel item,
 					int position) {
-				// TODO Auto-generated method stub
 				holder.setImageResource(
 						R.id.item_imageview,
 						Integer.parseInt(resumeModelList.get(position)
@@ -225,13 +222,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			}
 		});
 
-		commAdapter2 = new CommonBaseAdapter<String>(self, xglnList,
+		commStrAdapter = new CommonBaseAdapter<String>(self, mList,
 				R.layout.home_xgln_grilview) {
 
 			@Override
 			public void convert(ViewHolder holder, String item,
 					final int position) {
-				holder.setText(R.id.itemName, xglnList.get(position));
+				holder.setText(R.id.itemName, mList.get(position));
 				if (position == 1 || position == 5 || position == 6) {
 					holder.setTextColor(R.id.itemName,
 							CommUtil.getIntValue(self, R.color.red));
@@ -249,7 +246,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			}
 		};
 
-		resumeQuegridview.setAdapter(commAdapter2);
+		resumeQuegridview.setAdapter(commStrAdapter);
 	}
 
 	@Override

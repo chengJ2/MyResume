@@ -119,8 +119,8 @@ public class TrainingFragment extends Fragment {
 		String queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = 1 order by _id limit 1";
 		Map<String, String[]> map = dbUtil.queryData(getActivity(), queryWhere);
 		if (map!= null && map.get("userId").length > 0) {
-//			setInfoStartTime(map.get("trainingtimestart")[0]);
-//			setInfoEndTime(map.get("trainingtimeend")[0]);
+			setInfoStartTime(map.get("trainingtimestart")[0]);
+			setInfoEndTime(map.get("trainingtimeend")[0]);
 			setInfotrainingorganization(map.get("trainingorganization")[0]);
 			setInfotrainingclass(map.get("trainingclass")[0]);
 			setInfocertificate(map.get("certificate")[0]);

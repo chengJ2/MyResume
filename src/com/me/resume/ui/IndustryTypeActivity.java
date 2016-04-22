@@ -56,6 +56,8 @@ public class IndustryTypeActivity extends BaseActivity {
 		
 		setRightIconVisible(View.GONE);
 		
+		setBgrilVisible(View.GONE);
+		
 		left_icon.setOnClickListener(new OnClickListener() {
 			
 			@Override

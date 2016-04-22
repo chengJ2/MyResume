@@ -21,17 +21,13 @@ import com.me.resume.tools.FontsOverride;
 *
  */
 public class MyApplication extends Application {
-
 	 /** */
     private List<Activity> mActivityList = new LinkedList<Activity>();
     
     /** WiApplication对象 */
     private static MyApplication application;
     
-    
     public static SQLiteDatabase database = null;
-    
-    public static int cposition = 0;
     /**
     * 
     */
@@ -67,7 +63,7 @@ public class MyApplication extends Application {
 		
 //		CrashReport.initCrashReport(getApplicationContext(), "900025676", true);
     	
-    	FontsOverride.setDefaultFont(this, "SERIF", "fonts/FZY1JW.ttf");
+//    	FontsOverride.setDefaultFont(this, "SERIF", "fonts/FZY1JW.ttf");
 	}
 
 	/**

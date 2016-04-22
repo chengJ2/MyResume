@@ -132,6 +132,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	private void findViews(){
 		setTitle(R.string.resume_baseinfo);
 		setMsgHide();
+		setBgrilVisible(View.VISIBLE);
 		left_icon.setOnClickListener(this);
 		right_icon.setOnClickListener(this);
 		
@@ -165,6 +166,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		save_edit = findView(R.id.save_edit);
 		next = findView(R.id.next);
 		
+		info_hometown.setOnClickListener(this);
 		info_city.setOnClickListener(this);
 		
 		save_edit.setOnClickListener(this);
@@ -311,12 +313,12 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				return;
 			}
 			
-			if (RegexUtil.checkNotNull(info_hometownStr)) {
+			if (!RegexUtil.checkNotNull(info_hometownStr)) {
 				setMsg(R.string.info_hometown);
 				return;
 			}
 		
-			if (RegexUtil.checkNotNull(info_cityStr)) {
+			if (!RegexUtil.checkNotNull(info_cityStr)) {
 				setMsg(R.string.info_city);
 				return;
 			}
@@ -329,10 +331,10 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
 						new String[]{edId,"realname","gender","brithday","joinworktime",
 										  "phone","hometown","city","email","ismarry",
-										  "nationality","license","workingabroad","politicalstatus"}, 
+										  "nationality","license","workingabroad","politicalstatus","background"}, 
 						new String[]{"1",info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
 										info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
-										info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr});
+										info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr,String.valueOf(getCheckColor())});
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
 				}else{
@@ -355,6 +357,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				cValues.put("workingabroad", rg_workingabroadStr);
 				cValues.put("politicalstatus", rg_politicalstatusStr);
 				cValues.put("avator", "/image/aa.jpg");
+				cValues.put("background", getCheckColor());
 				
 				queryResult = dbUtil.insertData(self, 
 						CommonText.BASEINFO, cValues);

@@ -72,6 +72,7 @@ public class MainActivity extends Activity {
 	private SharedPreferences sp;
 	
 	// View1
+	private LinearLayout index1layout;
 	private TextView index_1_realname, index_1_info,index_1_where,index_1_lisence,index_1_phone,index_1_email;
 	
 	// View2
@@ -189,6 +190,7 @@ public class MainActivity extends Activity {
 	 * @param view
 	 */
 	private void initView1(View view){
+		index1layout = (LinearLayout) view1.findViewById(R.id.index1layout);
 		index_1_realname = ((TextView) view1.findViewById(R.id.index_1_realname));
 		index_1_info = ((TextView) view1.findViewById(R.id.index_1_info));
 		index_1_where = ((TextView) view1.findViewById(R.id.index_1_where));
@@ -200,6 +202,9 @@ public class MainActivity extends Activity {
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			mViewList.add(view1);
+			
+			index1layout.setBackgroundColor(CommUtil.getColorValue(self,
+					CommUtil.parseInt(commMapArray.get("background")[0])));
 			
 			index_1_realname.setText(commMapArray.get("realname")[0]);
 			
@@ -241,7 +246,10 @@ public class MainActivity extends Activity {
 			
 			index_1_where.setText(sbStr);
 			
-			index_1_lisence.setText("身份证："+commMapArray.get("license")[0]);
+			info = commMapArray.get("license")[0];
+			if(RegexUtil.checkNotNull(info)){
+				index_1_lisence.setText("身份证："+commMapArray.get("license")[0]);
+			}
 			index_1_phone.setText("手机号："+commMapArray.get("phone")[0]);
 			index_1_email.setText("E-mail："+commMapArray.get("email")[0]);
 		}

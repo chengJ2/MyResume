@@ -9,17 +9,66 @@
     <include
         android:id="@+id/topLayout"
         layout="@layout/top_layout_lable" />
-    
-     <TextView
+
+    <TextView
         android:id="@+id/msg"
         style="@style/comm_errormsg_style"
-        android:visibility="visible"/>
-    
+        android:text="@string/request_error"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/horizontalsv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:gravity="center|left"
+            android:padding="5dip"
+            android:text="@string/item_text1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_middle_text_size" />
+
+        <View style="@style/line3" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+			android:scrollbars="none"
+			android:fadingEdge="none"
+			android:fadingEdgeLength="0dip">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <GridView
+                    android:id="@+id/bgrid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fadingEdge="none"
+                    android:fadingEdgeLength="0dip"
+                    android:gravity="center"
+                    android:numColumns="auto_fit"
+                    android:scrollbars="none"
+                    android:scrollingCache="false"
+                    android:smoothScrollbar="true"
+                    android:stretchMode="spacingWidthUniform" >
+                </GridView>
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <View style="@style/line3" />
+
     <LinearLayout
         android:id="@+id/bodyLayout"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:orientation="vertical" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
     </LinearLayout>
-    
+
 </LinearLayout>

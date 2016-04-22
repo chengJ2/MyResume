@@ -14,4 +14,17 @@
     <color name="user_edit_text">#787777</color>
     <color name="user_info_edit_hint">#CCCCCC</color>
     <!-- 个人基本信息 -->
+    
+    
+    <!-- review bgcolor -->
+    <color name="color_1">#CC0000</color>
+    <color name="color_2">#9F79EE</color>
+    <color name="color_3">#8470FF</color>
+    <color name="color_4">#CAFF70</color>
+    <color name="color_5">#EE7AE9</color>
+    <color name="color_6">#5CACEE</color>
+    <color name="color_7">#8470FF</color>
+    <color name="color_8">#98FB98</color>
+    <color name="color_9">#B23AEE</color>
+    <color name="color_10">#FFBBFF</color>
 </resources>
