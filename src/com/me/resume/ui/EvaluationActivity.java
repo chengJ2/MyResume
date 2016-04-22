@@ -25,14 +25,7 @@ import com.whjz.android.text.CommonText;
 * @date 2016/3/30 下午5:23:13 
 *
  */
-public class EvaluationActivity extends SwipeBackActivity implements OnClickListener{
-
-	private TextView toptext;
-	
-	private ImageView left_icon,right_icon;
-	
-	private EvaluationActivity self;
-	
+public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	// 自我评价;职业目标
 	private EditText info_self_evaluation,info_career_goal;
 	
@@ -42,15 +35,18 @@ public class EvaluationActivity extends SwipeBackActivity implements OnClickList
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_evaluation_layout);
-		self = EvaluationActivity.this;
-		toptext = findView(R.id.top_text);
-		left_icon = findView(R.id.left_lable);
-		right_icon = findView(R.id.right_icon);
+		boayLayout.removeAllViews();
+		
+		View v = View.inflate(self,R.layout.activity_evaluation_layout, null);
+		boayLayout.addView(v);
+		
+		setTopTitle(R.string.resume_evaluation);
+		
+		setMsgHide();
+		
 		left_icon.setOnClickListener(this);
 		right_icon.setOnClickListener(this);
 		
-		toptext.setText(CommUtil.getStrValue(self, R.string.resume_evaluation));
 		
 		info_self_evaluation = findView(R.id.info_self_evaluation);
 		info_career_goal = findView(R.id.info_career_goal);

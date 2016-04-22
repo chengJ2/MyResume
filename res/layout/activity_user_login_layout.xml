@@ -6,10 +6,6 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical" >
 
-    <include
-        android:id="@+id/topLayout"
-        layout="@layout/top_layout_lable" />
-
     <com.me.resume.views.CommScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

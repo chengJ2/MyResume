@@ -10,22 +10,14 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
-import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
-import com.me.resume.swipeback.SwipeBackActivity;
-import com.me.resume.tools.L;
-import com.me.resume.utils.ActivityUtils;
-import com.me.resume.utils.CommUtil;
-import com.me.resume.views.CustomListView;
 
 /**
  * 
@@ -34,12 +26,8 @@ import com.me.resume.views.CustomListView;
 * @date 2016/4/21 上午10:01:29 
 *
  */
-public class AddressActivity extends SwipeBackActivity {
+public class AddressActivity extends BaseActivity {
 
-	private TextView toptext;
-	
-	private ImageView left_icon,right_icon;
-	
 	private GridView hotaddress_gridview;
 	
 	private ListView alladdrListview;
@@ -63,15 +51,14 @@ public class AddressActivity extends SwipeBackActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_address_layout);
+		boayLayout.removeAllViews();
 		
-		toptext = findView(R.id.top_text);
-		left_icon = findView(R.id.left_lable);
+		View v = View.inflate(self,R.layout.activity_address_layout, null);
+		boayLayout.addView(v);
 		
-		right_icon = findView(R.id.right_icon);
-		right_icon.setVisibility(View.GONE);
-//		left_icon.setImageResource(R.drawable.icon_person_avtar);
-		toptext.setText(CommUtil.getStrValue(self, R.string.resume_address));
+		setTitle(R.string.resume_address);
+		
+		setMsgHide();
 		
 		left_icon.setOnClickListener(new OnClickListener() {
 			

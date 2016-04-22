@@ -31,11 +31,7 @@ import com.whjz.android.text.CommonText;
 * @date 2016/4/7 下午4:42:34 
 *
  */
-public class JobIntensionActivity extends SwipeBackActivity implements OnClickListener{
-
-	private TextView toptext;
-	
-	private ImageView left_icon,right_icon;
+public class JobIntensionActivity extends BaseActivity implements OnClickListener{
 	
 	private CustomFAB save_edit,next;
 	
@@ -71,7 +67,10 @@ public class JobIntensionActivity extends SwipeBackActivity implements OnClickLi
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_jobintension_layout);
+		boayLayout.removeAllViews();
+		
+		View v = View.inflate(self,R.layout.activity_jobintension_layout, null);
+		boayLayout.addView(v);
 		
 		findViews();
 		
@@ -79,14 +78,8 @@ public class JobIntensionActivity extends SwipeBackActivity implements OnClickLi
 	}
 
 	private void findViews(){
-		toptext = findView(R.id.top_text);
-		left_icon = findView(R.id.left_lable);
-		right_icon = findView(R.id.right_icon);
 		left_icon.setOnClickListener(this);
 		right_icon.setOnClickListener(this);
-		
-		msg = findView(R.id.msg);
-		msg.setVisibility(View.GONE);
 		
 		info_exp_workingproperty = findView(R.id.info_exp_workingproperty);
 		info_expworkplace = findView(R.id.info_expworkplace);
@@ -110,7 +103,9 @@ public class JobIntensionActivity extends SwipeBackActivity implements OnClickLi
 	}
 	
 	private void initViews() {
-		toptext.setText(CommUtil.getStrValue(self, R.string.resume_jobintension));
+		setTopTitle(R.string.resume_jobintension);
+		
+		setMsgHide();
 		
 		 queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = 1 limit 1";
 		 commMapArray = dbUtil.queryData(self, queryWhere);
@@ -139,8 +134,7 @@ public class JobIntensionActivity extends SwipeBackActivity implements OnClickLi
 			String info_workingstateStr = CommUtil.getTextValue(info_workingstate);
 			
 			if (!RegexUtil.checkNotNull(info_exp_workingpropertyStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedworkingproperty) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.ji_info_expectedworkingproperty);
 				return;
 			}
 			
@@ -157,20 +151,17 @@ public class JobIntensionActivity extends SwipeBackActivity implements OnClickLi
 //			}
 			
 			if (!RegexUtil.checkNotNull(info_expworkindustryStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedworkindustry) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.ji_info_expectedworkindustry);
 				return;
 			}
 			
 			if (!RegexUtil.checkNotNull(info_expmonthlysalaryStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedmonthlysalary) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.ji_info_expectedmonthlysalary);
 				return;
 			}
 			
 			if (!RegexUtil.checkNotNull(info_workingstateStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.ji_info_choose_workingstate) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.ji_info_choose_workingstate);
 				return;
 			}
 			

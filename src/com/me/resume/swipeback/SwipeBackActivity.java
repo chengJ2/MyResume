@@ -5,27 +5,19 @@ import java.util.Map;
 import java.util.Stack;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
-import com.me.resume.tools.SystemBarTintManager;
-import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.whjz.android.text.Info;
 import com.whjz.android.util.common.CommonUtil;
@@ -44,27 +36,7 @@ import com.whjz.android.util.interfa.DbLocalUtil;
 public class SwipeBackActivity extends FragmentActivity implements
 		SwipeBackActivityBase {
 	
-	protected SwipeBackActivity self;
-	
 	private SwipeBackActivityHelper mHelper;
-	
-	protected Map<String, String[]> commMapArray = null;
-	
-	protected Map<String, List<String>> commMapList = null;
-	
-	protected String queryWhere = "";
-	
-	protected int updResult = -1;
-	
-	protected boolean queryResult = false;
-	
-	protected int whichTab = 1;
-	
-	protected String[] item_values = null;
-	
-	protected List<String> mList = null;
-	
-	protected String fieldNull = null;
 	
 	// activity访问栈
     private static Stack<FragmentActivity> mLocalStack = new Stack<FragmentActivity>();
@@ -73,25 +45,9 @@ public class SwipeBackActivity extends FragmentActivity implements
 	protected BaseCommonUtil baseCommon = new CommonUtil();;// 通用工具对象实例
 	protected Info info = new Info();
 
-	protected SharedPreferences sp;
 	protected AsyncTask<String, Integer, Integer> task;
 	protected ProgressDialog progressDialog = null;
 	
-	// 请求超时
-	public static final int EXECUTE_TIMEOUT = -0X2000;
-	
-	// 请求网络异常
-	public static final int EXECUTE_NETERROR = -0X1000;
-	
-	// 加载数据成功
-	public static final int LOAD_DATA_SUCCESS = 0X1000;
-	
-	// 加载数据失败
-	public static final int LOAD_DATA_ERROR = 0X8000;
-	
-	// 加载暂无数据
-	public static final int LOAD_NO_DATA = -0X8000;
-
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,72 +60,14 @@ public class SwipeBackActivity extends FragmentActivity implements
 					.penaltyLog().penaltyDeath().build());
 		}
 		super.onCreate(savedInstanceState);
-		self = SwipeBackActivity.this;
-		fieldNull = CommUtil.getStrValue(self, R.string.action_input_isnull);
+		
 		MyApplication.getApplication().addActivity(this);
 
 		mHelper = new SwipeBackActivityHelper(this);
 		mHelper.onActivtyCreate();
 		
-		sp = getSharedPreferences(Constants.CONFIG, Context.MODE_PRIVATE);
-	        
 	    mLocalStack.add(this);
 	}
-	
-    /*protected void switchLang(String newLang){
-    	setPreferenceData("LANGUAGE",newLang);
-        // finish app内存中的所有activity
-    	while (0 != mLocalStack.size()) {
-            mLocalStack.pop().finish();
-        }
-        // 跳转到app首页
-//    	MyApplication.getApplication().exitAll();
-//    	startActivity("ui.HomeActivity",false);
-    }*/
-
-	/**
-     * 
-     * @Title:BaseActivity
-     * @Description: Find View By Id
-     * @author Comsys-WH1510032
-     * @return View  
-     * @param viewID
-     */
-    public <T extends View> T findView(int viewID){
-    	return (T)findViewById(viewID);
-    }
-	
-    protected void toastMsg(int resId){
-    	CommUtil.ToastMsg(self, resId);
-    }
-    
-    protected void startActivity(String src,boolean finish){
-    	   ActivityUtils.startActivity(self, Constants.PACKAGENAME + src,finish);
-    }
-    
-    public void setPreferenceData(String key, String value){
-    	sp.edit().putString(key, value).commit();
-    }
-    
-    public String getPreferenceData(String str,String def){
-    	return sp.getString(str, def);
-    }
-    
-    public void setPreferenceData(String key, int value){
-    	sp.edit().putInt(key, value).commit();
-    }
-    
-    public int getPreferenceData(String str,int def){
-    	return sp.getInt(str, def);
-    }
-    
-    public void setPreferenceData(String key, boolean value){
-    	sp.edit().putBoolean(key, value).commit();
-    }
-    
-    public boolean getPreferenceData(String str){
-    	return sp.getBoolean(str, false);
-    }
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
@@ -185,17 +83,8 @@ public class SwipeBackActivity extends FragmentActivity implements
 		return v;
 	}
 
-	@TargetApi(19)
-	private void setTranslucentStatus(boolean on) {
-		Window win = getWindow();
-		WindowManager.LayoutParams winParams = win.getAttributes();
-		final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-		if (on) {
-			winParams.flags |= bits;
-		} else {
-			winParams.flags &= ~bits;
-		}
-		win.setAttributes(winParams);
+	protected void toastMsg(int resId) {
+		CommUtil.ToastMsg(SwipeBackActivity.this, resId);
 	}
 
 	@Override
@@ -218,31 +107,12 @@ public class SwipeBackActivity extends FragmentActivity implements
 		overridePendingTransition(0, R.anim.slide_right_out);
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-    	// 初始化语言环境
-//    	LanguageSettings.getInstance().initLang(this);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			setTranslucentStatus(true);
-		}
-		SystemBarTintManager tintManager = new SystemBarTintManager(this);
-		tintManager.setStatusBarTintEnabled(true);
-		tintManager.setStatusBarTintResource(R.color.top_bar);
-	}
-
 	/**
 	 * 处理点击返回按钮的情况
 	 */
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			// if(progressDialog != null && task != null && task.getStatus() ==
-			// AsyncTask.Status.RUNNING ){
-			//
-			// }else{
 			getSwipeBackLayout().scrollToFinishActivity();
-
-			// }
 		}
 		return false;
 	}
@@ -413,25 +283,25 @@ public class SwipeBackActivity extends FragmentActivity implements
 			dataSetlist = baseCommon.selects(info.getUse(), info.getPass(),
 					procname, style, params, values);
 			if (isCancelled()) {
-				return LOAD_DATA_ERROR;
+				return Constants.LOAD_DATA_ERROR;
 			}
 			if (!CommUtil.isNetworkAvailable(SwipeBackActivity.this)) {
-				return EXECUTE_NETERROR;
+				return Constants.EXECUTE_NETERROR;
 			}
 
 			if (dataSetlist != null && dataSetlist.valueList.size() > 0) {
 				if (dataSetlist.valueList.get(0).equals("timeout")) {
-					return EXECUTE_TIMEOUT;
+					return Constants.EXECUTE_TIMEOUT;
 				} else {
 					if (isLocalCache) {
 						dbUtil.deleteData(SwipeBackActivity.this, where);
 						dbUtil.insertDataSetList(SwipeBackActivity.this, tablename, dataSetlist);
 					}
 					map = dataSetlist.getMap();
-					return LOAD_DATA_SUCCESS;
+					return Constants.LOAD_DATA_SUCCESS;
 				}
 			} else {
-				return LOAD_NO_DATA;
+				return Constants.LOAD_NO_DATA;
 			}
 		}
 
@@ -441,14 +311,14 @@ public class SwipeBackActivity extends FragmentActivity implements
 			if (progressDialog != null) {
 				progressDialog.dismiss();
 			}
-			if (result == LOAD_NO_DATA || result == LOAD_DATA_ERROR) {
+			if (result == Constants.LOAD_NO_DATA || result == Constants.LOAD_DATA_ERROR) {
 				handlerData.error();
-			} else if (result == LOAD_DATA_SUCCESS) {
+			} else if (result == Constants.LOAD_DATA_SUCCESS) {
 				handlerData.success(map);
-			} else if (result == EXECUTE_TIMEOUT) {
-				CommUtil.ToastMsg(SwipeBackActivity.this, R.string.timeout_network);
-			} else if (result == EXECUTE_NETERROR) {
-				CommUtil.ToastMsg(SwipeBackActivity.this, R.string.check_network);
+			} else if (result == Constants.EXECUTE_TIMEOUT) {
+				toastMsg(R.string.timeout_network);
+			} else if (result == Constants.EXECUTE_NETERROR) {
+				toastMsg(R.string.check_network);
 			}
 		}
 

@@ -43,7 +43,7 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 	private EditText info_school;
 	
 	// 专业名称;学历
-	private TextView info_startworktime,info_endworktime,info_majorname,info_degree;
+	private TextView info_startime,info_endtime,info_majorname,info_degree;
 	
 	// 是否统招
 	private RadioGroup rg_examination;
@@ -61,12 +61,12 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 				break;
 			case 11:
 				if (msg.obj != null) {
-					info_startworktime.setText((String)msg.obj);
+					info_startime.setText((String)msg.obj);
 				}
 				break;
 			case 12:
 				if (msg.obj != null) {
-					info_endworktime.setText((String)msg.obj);
+					info_endtime.setText((String)msg.obj);
 				}
 				break;
 			default:
@@ -108,8 +108,8 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 		String queryWhere = "select * from " + CommonText.EDUCATION + " where userId = 1 order by _id limit 1";
 		Map<String, String[]> map = dbUtil.queryData(getActivity(), queryWhere);
 		if (map!= null && map.get("userId").length > 0) {
-			setInfoStartTime(map.get("worktimestart")[0]);
-			setInfoEndTime(map.get("worktimeend")[0]);
+//			setInfoStartTime(map.get("educationtimestart")[0]);
+//			setInfoEndTime(map.get("educationtimeend")[0]);
 			setInfoSchool(map.get("school")[0]);
 			setInfomajorname(map.get("majorname")[0]);
 			setInfodegree(map.get("degree")[0]);
@@ -128,8 +128,8 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 
 	private void initview(View view) {
 		// TODO Auto-generated method stub
-		info_startworktime = (TextView)view.findViewById(R.id.info_startworktime);
-		info_endworktime = (TextView)view.findViewById(R.id.info_endworktime);
+		info_startime = (TextView)view.findViewById(R.id.info_startworktime);
+		info_endtime = (TextView)view.findViewById(R.id.info_endworktime);
 		info_school = (EditText)view.findViewById(R.id.info_school);
 		info_majorname = (TextView)view.findViewById(R.id.info_majorname);
 		info_degree = (TextView)view.findViewById(R.id.info_degree);
@@ -139,6 +139,8 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 		
 		info_degree.setOnClickListener(this);
 		info_majorname.setOnClickListener(this);
+		info_startime.setOnClickListener(this);
+		info_endtime.setOnClickListener(this);
 		rg_examination.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -151,34 +153,14 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 				}
 			}
 		});
-		
-		info_startworktime.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				DialogUtils.showTimeChooseDialog(getActivity(), info_startworktime,
-						R.string.we_info_start_worktime, 11,mHandler);
-			}
-		});
-		info_endworktime.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				DialogUtils.showTimeChooseDialog(getActivity(), info_endworktime,
-						R.string.we_info_end_worktime, 12,mHandler);
-			}
-		});
-		
 	}
 	
 	public void setInfoStartTime(String value){
-		info_startworktime.setText(value);
+		info_startime.setText(value);
 	}
 	
 	public void setInfoEndTime(String value){
-		info_endworktime.setText(value);
+		info_endtime.setText(value);
 	}
 	
 	public void setInfoSchool(String value){
@@ -205,11 +187,11 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 	
 	
 	public String getInfoStartTime(){
-		return CommUtil.getTextValue(info_startworktime);
+		return CommUtil.getTextValue(info_startime);
 	}
 	
 	public String getInfoEndTime(){
-		return CommUtil.getTextValue(info_endworktime);
+		return CommUtil.getTextValue(info_endtime);
 	}
 	
 	public String getInfoSchool(){
@@ -238,6 +220,14 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 		case R.id.info_majorname:
 			ActivityUtils.startActivityForResult(getActivity(), 
 					Constants.PACKAGENAME + ".ui.ProfessionalActivity", false, Constants.ED_REQUEST_CODE);
+			break;
+		case R.id.info_startworktime:
+			DialogUtils.showTimeChooseDialog(getActivity(), info_startime,
+					R.string.we_info_start_worktime, 11,mHandler);
+			break;
+		case R.id.info_endworktime:
+			DialogUtils.showTimeChooseDialog(getActivity(), info_endtime,
+					R.string.we_info_end_worktime, 12,mHandler);
 			break;
 		default:
 			break;

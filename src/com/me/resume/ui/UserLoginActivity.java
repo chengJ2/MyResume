@@ -27,12 +27,8 @@ import com.whjz.android.text.CommonText;
  * @author Administrator
  *
  */
-public class UserLoginActivity extends SwipeBackActivity implements
+public class UserLoginActivity extends BaseActivity implements
 		OnClickListener {
-
-	private TextView toptext;
-	
-	private ImageView left_icon,right_icon;
 	
 	private EditText edtTxt_username;
 	private EditText edtTxt_password;
@@ -51,18 +47,15 @@ public class UserLoginActivity extends SwipeBackActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_user_login_layout);
+		boayLayout.removeAllViews();
+		View v = View.inflate(self,R.layout.activity_user_login_layout, null);
+		boayLayout.addView(v);
 		findViews();
+		
 		initViews();
 	}
 	
 	private void findViews(){
-		toptext = findView(R.id.top_text);
-		left_icon = findView(R.id.left_lable);
-		left_icon.setOnClickListener(this);
-		right_icon = findView(R.id.right_icon);
-		right_icon.setOnClickListener(this);
-		
 		edtTxt_username = findView(R.id.edtTxt_username);
 		edtTxt_password = findView(R.id.edtTxt_password);
 		
@@ -72,12 +65,17 @@ public class UserLoginActivity extends SwipeBackActivity implements
 		
 		btnLogin = findView(R.id.btn_login);
 		
+		left_icon.setOnClickListener(this);
+		right_icon.setOnClickListener(this);
 		save_checkbox.setOnClickListener(this);
 		savePassWord.setOnClickListener(this);
 		forgotPassWord.setOnClickListener(this);
 	}
 	
 	private void initViews(){
+		setTopTitle(R.string.action_user_login);
+		setMsgHide();
+		setRightIconVisible(View.GONE);
 		edtTxt_username.setText("");
 		if (getPreferenceData("fflag")) {
 			edtTxt_password.setText("");

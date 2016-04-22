@@ -32,19 +32,13 @@ import com.whjz.android.text.CommonText;
 * @date 2016/3/29 下午3:39:01 
 *
  */
-public class WorkExperienceActivity extends SwipeBackActivity implements OnClickListener{
+public class WorkExperienceActivity extends BaseActivity implements OnClickListener{
 
-	private TextView toptext;
-	
-	private ImageView left_icon,right_icon;
-	
 	private CustomFAB save,edit,next;
 	
 	private TextView info_companynature,info_companyscale,info_industryclassification,info_startworktime,info_endworktime,info_expectedsalary;
 	
 	private EditText info_companyname,info_jobtitle,info_workdescdetail;
-	
-	private TextView msg;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -81,20 +75,17 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_workexperience_layout);
+		boayLayout.removeAllViews();
+		View v = View.inflate(self,R.layout.activity_workexperience_layout, null);
+		boayLayout.addView(v);
+		
 		findViews();
-		initViews();
 	}
 	
 	private void findViews(){
-		toptext = findView(R.id.top_text);
-		left_icon = findView(R.id.left_lable);
-		right_icon = findView(R.id.right_icon);
-		
-		msg = findView(R.id.msg);
-		msg.setVisibility(View.GONE);
+		setTopTitle(R.string.resume_workexperience);
+		setMsgHide();
 		
 		info_companyname = findView(R.id.info_companyname);
 		info_companynature = findView(R.id.info_companynature);
@@ -142,10 +133,6 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 		
 	}
 	
-	private void initViews(){
-		toptext.setText(CommUtil.getStrValue(self, R.string.resume_workexperience));
-	}
-	
 	@Override
 	public void onClick(View v) {
 		String info_companynameStr = CommUtil.getEditTextValue(info_companyname);
@@ -163,50 +150,42 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 		switch (v.getId()) {
 		case R.id.save:
 			if (!RegexUtil.checkNotNull(info_companynameStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.we_info_companyname) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.we_info_companyname);
 				return;
 			}
 			
 			if (!RegexUtil.checkNotNull(info_industryclassificationStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.we_info_industryclassification) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.we_info_industryclassification);
 				return;
 			}
 			
 			if (!RegexUtil.checkNotNull(info_jobtitleStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.we_info_jobtitle) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.we_info_jobtitle);
 				return;
 			}
 			
 			if (!RegexUtil.checkNotNull(info_startworktimeStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.we_info_start_worktime) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.we_info_start_worktime);
 				return;
 			}
 			
 			if (!RegexUtil.checkNotNull(info_endworktimeStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.we_info_end_worktime) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.we_info_end_worktime);
 				return;
 			}
 			
 			if (TimeUtils.compareDate(info_startworktimeStr, info_endworktimeStr) <= 0) {
-				msg.setText(CommUtil.getStrValue(self, R.string.we_info_compare_worktime));
-				msg.setVisibility(View.VISIBLE);
+				set2Msg(R.string.we_info_compare_worktime);
 				return;
 			}
 			
 			if (!RegexUtil.checkNotNull(info_expectedsalaryStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.we_info_jobsalary) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.we_info_jobsalary);
 				return;
 			}
 			
 			if (!RegexUtil.checkNotNull(info_workdescdetailStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.we_info_workdesc) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.we_info_workdesc);
 				return;
 			}
 			
@@ -302,7 +281,6 @@ public class WorkExperienceActivity extends SwipeBackActivity implements OnClick
 					mHandler);
 			break;
 		case R.id.info_companyscale:
-			
 			whichTab = 3;
 			item_values = CommUtil.getArrayValue(self,R.array.we_companyscale_values); 
 			mList = Arrays.asList(item_values);

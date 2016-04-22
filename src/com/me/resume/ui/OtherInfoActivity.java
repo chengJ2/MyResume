@@ -26,12 +26,9 @@ import com.whjz.android.text.CommonText;
  * @date 2016/4/6 下午1:32:58
  * 
  */
-public class OtherInfoActivity extends SwipeBackActivity implements
+public class OtherInfoActivity extends BaseActivity implements
 		OnClickListener {
 
-	private TextView toptext;
-	
-	private ImageView left_icon,right_icon;
 
 	private TextView info_language, info_literacyskills,
 			info_listeningspeaking;
@@ -79,8 +76,12 @@ public class OtherInfoActivity extends SwipeBackActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_otherinfo_layout);
 
+		boayLayout.removeAllViews();
+		
+		View v = View.inflate(self,R.layout.activity_otherinfo_layout, null);
+		boayLayout.addView(v);
+		
 		findViews();
 
 		initViews();
@@ -88,12 +89,6 @@ public class OtherInfoActivity extends SwipeBackActivity implements
 	}
 
 	private void findViews() {
-		toptext = findView(R.id.top_text);
-		left_icon = findView(R.id.left_lable);
-		right_icon = findView(R.id.right_icon);
-		left_icon.setOnClickListener(this);
-		right_icon.setOnClickListener(this);
-
 		info_language = findView(R.id.info_language);
 		info_literacyskills = findView(R.id.info_literacyskills);
 		info_listeningspeaking = findView(R.id.info_listeningspeaking);
@@ -131,7 +126,12 @@ public class OtherInfoActivity extends SwipeBackActivity implements
 	}
 
 	private void initViews() {
-		toptext.setText(CommUtil.getStrValue(self, R.string.resume_otherinfo));
+		setTopTitle(R.string.resume_otherinfo);
+		
+		setMsgHide();
+		
+		left_icon.setOnClickListener(this);
+		right_icon.setOnClickListener(this);
 
 		if (CommUtil.textIsNull(info_language)) {
 			info_literacyskills.setEnabled(false);

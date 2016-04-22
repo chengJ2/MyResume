@@ -21,7 +21,6 @@ import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
-import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
 
@@ -33,12 +32,8 @@ import com.me.resume.utils.CommUtil;
 * @date 2016/4/18 上午10:58:05 
 *
  */
-public class IndustryTypeActivity extends SwipeBackActivity {
+public class IndustryTypeActivity extends BaseActivity {
 
-	private TextView toptext;
-	
-	private ImageView left_icon,right_icon;
-	
 	private EditText index_search_edit;
 	private ImageView clearView;
 	
@@ -50,13 +45,17 @@ public class IndustryTypeActivity extends SwipeBackActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_industry_type_layout);
+		boayLayout.removeAllViews();
 		
-		toptext = findView(R.id.top_text);
-		toptext.setText(CommUtil.getStrValue(self, R.string.resume_industrytype));
-		left_icon = findView(R.id.left_lable);
-		right_icon = findView(R.id.right_icon);
-		right_icon.setVisibility(View.GONE);
+		View v = View.inflate(self,R.layout.activity_industry_type_layout, null);
+		boayLayout.addView(v);
+		
+		setTopTitle(R.string.resume_industrytype);
+		
+		setMsgHide();
+		
+		setRightIconVisible(View.GONE);
+		
 		left_icon.setOnClickListener(new OnClickListener() {
 			
 			@Override

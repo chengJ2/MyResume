@@ -2,20 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fitsSystemWindows="true">
-
-    <include
-        android:id="@+id/top"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/top_bar_height"
-        layout="@layout/top_layout_lable" />
-    
-     <TextView
-        android:id="@+id/msg"
-        style="@style/comm_errormsg_style"
-        android:text="@string/check_network"
-        android:layout_below="@id/top"/>
+    android:background="@color/white">
     
     <com.me.resume.views.CommScrollView
         android:layout_width="match_parent"

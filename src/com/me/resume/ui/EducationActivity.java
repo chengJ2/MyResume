@@ -35,7 +35,7 @@ import com.whjz.android.text.CommonText;
 * @date 2016/4/6 下午1:32:23 
 *
  */
-public class EducationActivity extends SwipeBackActivity implements OnClickListener{
+public class EducationActivity extends BaseActivity implements OnClickListener{
 
 	private TextView toptext;
 	
@@ -51,7 +51,11 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_education_layout);
+		boayLayout.removeAllViews();
+		
+		View v = View.inflate(self,R.layout.activity_education_layout, null);
+		boayLayout.addView(v);
+		
 		
 		toptext = findView(R.id.top_text);
 		left_icon = findView(R.id.left_lable);
@@ -167,8 +171,8 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 				if( judgeEduField() == 0){
 					ContentValues cValues = new ContentValues();
 					cValues.put("userId", "1");
-					cValues.put("worktimestart", info_starttimeStr);
-					cValues.put("worktimeend", info_endtimeStr);
+//					cValues.put("educationtimestart", info_starttimeStr);
+//					cValues.put("educationtimeend", info_endtimeStr);
 					cValues.put("school", info_schoolStr);
 					cValues.put("majorname", info_majornameStr);
 					cValues.put("degree", info_degressStr);
@@ -186,8 +190,8 @@ public class EducationActivity extends SwipeBackActivity implements OnClickListe
 				if(judegTraField() == 0){
 					ContentValues cValues = new ContentValues();
 					cValues.put("userId", "1");
-					cValues.put("worktimestart", info_starttimeStr);
-					cValues.put("worktimeend", info_endtimeStr);
+//					cValues.put("trainingtimestart", info_starttimeStr);
+//					cValues.put("trainingtimeend", info_endtimeStr);
 					cValues.put("trainingorganization", info_trainingorganizationStr);
 					cValues.put("trainingclass", info_trainingclassStr);
 					cValues.put("certificate", info_certificateStr);

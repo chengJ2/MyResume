@@ -23,11 +23,8 @@ import com.me.resume.views.SwitchButton.OnChangedListener;
 * @date 2016/3/29 下午5:04:43 
 *
  */
-public class SettingActivity extends SwipeBackActivity implements OnClickListener{
+public class SettingActivity extends BaseActivity implements OnClickListener{
 
-	private TextView toptext;
-	
-	private ImageView left_icon,right_icon;
 	
 	private RadioGroup radioGroup_show;
 	private RadioButton radio_left, radio_right,radionv_middle;
@@ -37,7 +34,10 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_setting);
+		boayLayout.removeAllViews();
+		
+		View v = View.inflate(self,R.layout.activity_setting, null);
+		boayLayout.addView(v);
 		
 		radioGroup_show = findView(R.id.radioGroup_show);
 		radio_left = findView(R.id.radio_left);
@@ -47,12 +47,11 @@ public class SettingActivity extends SwipeBackActivity implements OnClickListene
 		setting_start_cb = findView(R.id.setting_start_cb);
 		setting_auto_cb = findView(R.id.setting_auto_cb);
 		
-		toptext = findView(R.id.top_text);
-		left_icon = findView(R.id.left_lable);
-		right_icon = findView(R.id.right_icon);
-		left_icon.setOnClickListener(this);
-		toptext.setText(CommUtil.getStrValue(self, R.string.action_settings));
-		right_icon.setVisibility(View.INVISIBLE);
+		setTopTitle(R.string.action_settings);
+		
+		setMsgHide();
+		
+		setRightIconVisible(View.INVISIBLE);
 		
 		radio_left.setChecked(true);
 		radio_right.setChecked(false);

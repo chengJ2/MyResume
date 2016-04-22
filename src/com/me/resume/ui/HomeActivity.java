@@ -14,9 +14,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
@@ -25,7 +23,6 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.model.ResumeModel;
-import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -39,11 +36,7 @@ import com.whjz.android.text.CommonText;
  * @date 2016/3/29 下午4:56:41
  * 
  */
-public class HomeActivity extends SwipeBackActivity implements OnClickListener {
-
-	private TextView topText;
-	
-	private ImageView left_icon,right_icon;
+public class HomeActivity extends BaseActivity implements OnClickListener {
 	
 	private List<ResumeModel> resumeModelList;
 
@@ -69,7 +62,7 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener {
 				// if (map!= null && map.get("userId").length > 0) {
 				// gotoStr = ".ui.WorkExperienceActivity";
 				// }else{
-				gotoStr = ".ui.BaseInfoActivity";
+				// gotoStr = ".ui.BaseInfoActivity";
 				// }
 				startActivity(gotoStr,false);
 				break;
@@ -92,7 +85,10 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_home);
+		boayLayout.removeAllViews();
+		View v = View.inflate(self,R.layout.activity_home, null);
+		boayLayout.addView(v);
+		
 		if (getPreferenceData("startVerytime", 0) == 1) {
 			startActivity(".MainActivity", true);
 		}
@@ -114,12 +110,13 @@ public class HomeActivity extends SwipeBackActivity implements OnClickListener {
 	}
 	
 	private void findViews(){
-		topText = findView(R.id.top_text);
-		left_icon = findView(R.id.left_lable);
-		left_icon.setImageResource(R.drawable.icon_person_avtar);
-		right_icon = findView(R.id.right_icon);
-		topText.setText(CommUtil.getStrValue(self, R.string.resume_center));
-
+		setTopTitle(R.string.resume_center);
+		
+		setMsgHide();
+		setLeftIcon(R.drawable.icon_person_avtar);
+		
+		setRightIcon(R.drawable.icon_setting);
+		
 		makeResume = findView(R.id.make_btn);
 		reviewResume = findView(R.id.review_btn);
 		resumeModelgridView = findView(R.id.grid);

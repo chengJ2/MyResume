@@ -32,11 +32,7 @@ import com.me.resume.utils.CommUtil;
 * @date 2016/4/21 下午2:04:45 
 *
  */
-public class ProfessionalActivity extends SwipeBackActivity {
-
-	private TextView toptext;
-	
-	private ImageView left_icon,right_icon;
+public class ProfessionalActivity extends BaseActivity {
 	
 	private RelativeLayout catelayout;
 	private TextView category;
@@ -74,14 +70,15 @@ public class ProfessionalActivity extends SwipeBackActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_category_layout);
-		toptext = findView(R.id.top_text);
-		left_icon = findView(R.id.left_lable);
+		boayLayout.removeAllViews();
+		View v = View.inflate(self,R.layout.activity_category_layout, null);
+		boayLayout.addView(v);
 		
-		right_icon = findView(R.id.right_icon);
-		right_icon.setVisibility(View.GONE);
-//		left_icon.setImageResource(R.drawable.icon_person_avtar);
-		toptext.setText(CommUtil.getStrValue(self, R.string.resume_address));
+		setTopTitle(R.string.resume_address);
+		
+		setMsgHide();
+		
+		setRightIconVisible(View.GONE);
 		
 		left_icon.setOnClickListener(new OnClickListener() {
 			

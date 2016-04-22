@@ -19,11 +19,8 @@ import com.me.resume.utils.CommUtil;
 * @date 2016/4/20 上午10:49:59 
 *
  */
-public class TopicActivity extends SwipeBackActivity implements OnClickListener{
+public class TopicActivity extends BaseActivity implements OnClickListener{
 
-	private TextView toptext;
-	
-	private ImageView left_icon,right_icon;
 	
 	private TextView content;
 	
@@ -37,15 +34,16 @@ public class TopicActivity extends SwipeBackActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_topic_layout);
-		toptext = findView(R.id.top_text);
-		left_icon = findView(R.id.left_lable);
-		left_icon.setOnClickListener(this);
-		right_icon = findView(R.id.right_icon);
-		right_icon.setOnClickListener(this);
+		
+		boayLayout.removeAllViews();
+		View v = View.inflate(self,R.layout.activity_topic_layout, null);
+		boayLayout.addView(v);
+		
+		setTopTitle(R.string.app_name);
+		
+		setMsgHide();
 		
 		content = findView(R.id.content);
-		toptext.setText("面试技巧");
 		content.setText(Html.fromHtml(source));
 	}
 

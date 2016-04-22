@@ -39,6 +39,7 @@
     <string name="resume_message">我的留言</string>
 
     <!-- user login register -->
+    <string name="action_user_login">用户登录</string>
     <string name="action_login">登&#160;&#160;录</string>
     <string name="action_loging">登录中...</string>
     <string name="action_input_isnull">不能为空</string>

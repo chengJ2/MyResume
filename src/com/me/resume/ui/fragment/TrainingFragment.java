@@ -35,7 +35,7 @@ public class TrainingFragment extends Fragment {
 
 	private View view;
 	
-	private TextView info_startworktime,info_endworktime;
+	private TextView info_startime,info_endtime;
 	
 	private EditText info_trainingorganization,info_trainingclass,info_certificate,info_description;
 	
@@ -49,12 +49,12 @@ public class TrainingFragment extends Fragment {
 			case 1:
 			case 11:
 				if (msg.obj != null) {
-					info_startworktime.setText((String)msg.obj);
+					info_startime.setText((String)msg.obj);
 				}
 				break;
 			case 12:
 				if (msg.obj != null) {
-					info_endworktime.setText((String)msg.obj);
+					info_endtime.setText((String)msg.obj);
 				}
 				break;
 			default:
@@ -88,28 +88,28 @@ public class TrainingFragment extends Fragment {
 	}
 
 	private void initview() {
-		info_startworktime = (TextView)view.findViewById(R.id.info_startworktime);
-		info_endworktime = (TextView)view.findViewById(R.id.info_endworktime);
+		info_startime = (TextView)view.findViewById(R.id.info_startworktime);
+		info_endtime = (TextView)view.findViewById(R.id.info_endworktime);
 		info_trainingorganization = (EditText)view.findViewById(R.id.info_trainingorganization);
 		info_trainingclass = (EditText)view.findViewById(R.id.info_trainingclass);
 		info_certificate = (EditText)view.findViewById(R.id.info_certificate);
 		info_description = (EditText)view.findViewById(R.id.info_description);
 		
-		info_startworktime.setOnClickListener(new OnClickListener() {
+		info_startime.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				DialogUtils.showTimeChooseDialog(getActivity(), info_startworktime,
+				DialogUtils.showTimeChooseDialog(getActivity(), info_startime,
 						R.string.we_info_start_worktime, 11,mHandler);
 			}
 		});
-		info_endworktime.setOnClickListener(new OnClickListener() {
+		info_endtime.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				DialogUtils.showTimeChooseDialog(getActivity(), info_endworktime,
+				DialogUtils.showTimeChooseDialog(getActivity(), info_endtime,
 						R.string.we_info_end_worktime, 12,mHandler);
 			}
 		});
@@ -119,8 +119,8 @@ public class TrainingFragment extends Fragment {
 		String queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = 1 order by _id limit 1";
 		Map<String, String[]> map = dbUtil.queryData(getActivity(), queryWhere);
 		if (map!= null && map.get("userId").length > 0) {
-			setInfoStartTime(map.get("worktimestart")[0]);
-			setInfoEndTime(map.get("worktimeend")[0]);
+//			setInfoStartTime(map.get("trainingtimestart")[0]);
+//			setInfoEndTime(map.get("trainingtimeend")[0]);
 			setInfotrainingorganization(map.get("trainingorganization")[0]);
 			setInfotrainingclass(map.get("trainingclass")[0]);
 			setInfocertificate(map.get("certificate")[0]);
@@ -129,11 +129,11 @@ public class TrainingFragment extends Fragment {
 	}
 	
 	public void setInfoStartTime(String value){
-		info_startworktime.setText(value);
+		info_startime.setText(value);
 	}
 	
 	public void setInfoEndTime(String value){
-		info_endworktime.setText(value);
+		info_endtime.setText(value);
 	}
 	
 	public void setInfotrainingorganization(String value){
@@ -153,11 +153,11 @@ public class TrainingFragment extends Fragment {
 	}
 	
 	public String getInfoStartTime(){
-		return CommUtil.getTextValue(info_startworktime);
+		return CommUtil.getTextValue(info_startime);
 	}
 	
 	public String getInfoEndTime(){
-		return CommUtil.getTextValue(info_endworktime);
+		return CommUtil.getTextValue(info_endtime);
 	}
 	
 	public String getInfotrainingorganization(){

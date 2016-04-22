@@ -53,6 +53,7 @@ public class Constants {
 	public static final int JI_REQUEST_CODE = 2000;
 	public static final int JI_REQUEST_CODE2 = 2002;
 	public static final int BI_REQUEST_CODE = 3000;
+	public static final int BI_REQUEST_CODE2 = 3002;
 	
 	public static final int ED_REQUEST_CODE = 4000;
 	
@@ -65,4 +66,19 @@ public class Constants {
     public static final String DATABASE_PATH = "/data"  
             + Environment.getDataDirectory().getAbsolutePath() + "/"  
             + PACKAGENAME; // 获取存储位置地址  
+    
+    // 请求超时
+ 	public static final int EXECUTE_TIMEOUT = -0X2000;
+ 	
+ 	// 请求网络异常
+ 	public static final int EXECUTE_NETERROR = -0X1000;
+ 	
+ 	// 加载数据成功
+ 	public static final int LOAD_DATA_SUCCESS = 0X1000;
+ 	
+ 	// 加载数据失败
+ 	public static final int LOAD_DATA_ERROR = 0X8000;
+ 	
+ 	// 加载暂无数据
+ 	public static final int LOAD_NO_DATA = -0X8000;
 }

@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -17,7 +16,6 @@ import android.widget.TextView;
 
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
-import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -33,11 +31,7 @@ import com.whjz.android.text.CommonText;
 * @date 2016/3/29 下午3:36:12 
 *
  */
-public class BaseInfoActivity extends SwipeBackActivity implements OnClickListener{
-
-	private TextView toptext;
-	
-	private ImageView left_icon,right_icon;
+public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	
 	// 姓名; 手机号; 电子邮箱; 护照
 	private EditText info_realname,info_phone,info_email,info_nationality,info_license;
@@ -60,8 +54,6 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 	String rg_politicalstatusStr = "0";
 	
 	private CustomFAB save_edit,next;
-	
-	private TextView msg;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -117,13 +109,15 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_baseinfo_layout);
+		
+		boayLayout.removeAllViews();
+		
+		View v = View.inflate(self,R.layout.activity_baseinfo_layout, null);
+		boayLayout.addView(v);
 		
 		findViews();
 		
 		getChooseValue();
-		
-		initViews();
 		
 		new Handler().postDelayed(new Runnable() {
 			
@@ -133,18 +127,13 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 				mHandler.sendEmptyMessage(100);
 			}
 		},100);
-		
 	}
 
 	private void findViews(){
-		toptext = findView(R.id.top_text);
-		left_icon = findView(R.id.left_lable);
+		setTitle(R.string.resume_baseinfo);
+		setMsgHide();
 		left_icon.setOnClickListener(this);
-		right_icon = findView(R.id.right_icon);
 		right_icon.setOnClickListener(this);
-		
-		msg = findView(R.id.msg);
-		msg.setVisibility(View.GONE);
 		
 		info_realname = findView(R.id.info_realname);
 		info_phone = findView(R.id.info_phone);
@@ -183,10 +172,6 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 		
 		info_maritalstatus.setOnClickListener(this);
 		info_politicalstatus.setOnClickListener(this);
-	}
-	
-	private void initViews(){
-		toptext.setText(CommUtil.getStrValue(self, R.string.resume_baseinfo));
 	}
 	
 	private void initData() {
@@ -292,56 +277,47 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 			String info_cityStr = CommUtil.getTextValue(info_city);
 			
 			if (!RegexUtil.checkNotNull(info_realnameStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.info_name) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.info_name);
 				return;
 			}
 			
 			if (!RegexUtil.checkNotNull(info_brithdayStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.info_brithday) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.info_brithday);
 				return;
 			}
 			
 			if (!RegexUtil.checkNotNull(info_workyearStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.info_workyear) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.info_workyear);
 				return;
 			}
 			
 			if (!RegexUtil.checkNotNull(info_phoneStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.info_contack) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.info_contack);
 				return;
 			}
 			
 			if (!RegexUtil.isPhone(info_phoneStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.reg_info_phone));
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.reg_info_phone);
 				return;
 			}
 			
 			if (!RegexUtil.checkNotNull(info_emailStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.info_email) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.info_email);
 				return;
 			}
 			
 			if (!RegexUtil.checkEmail(info_emailStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.reg_info_email));
-				msg.setVisibility(View.VISIBLE);
+				set2Msg(R.string.reg_info_email);
 				return;
 			}
 			
-			/*if (RegexUtil.checkNotNull(info_hometownStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.info_hometown) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+			if (RegexUtil.checkNotNull(info_hometownStr)) {
+				setMsg(R.string.info_hometown);
 				return;
-			}*/
+			}
 		
 			if (RegexUtil.checkNotNull(info_cityStr)) {
-				msg.setText(CommUtil.getStrValue(self, R.string.info_city) + fieldNull);
-				msg.setVisibility(View.VISIBLE);
+				setMsg(R.string.info_city);
 				return;
 			}
 			
@@ -395,6 +371,10 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 			msg.setVisibility(View.GONE);
 			DialogUtils.showTimeChooseDialog(self, info_workyear,R.string.info_workyear,13,mHandler);
 			break;
+		case R.id.info_hometown:
+			ActivityUtils.startActivityForResult(self, 
+					Constants.PACKAGENAME + ".ui.AddressActivity", false, Constants.BI_REQUEST_CODE2);
+			break;
 		case R.id.info_city:
 			ActivityUtils.startActivityForResult(self, 
 					Constants.PACKAGENAME + ".ui.AddressActivity", false, Constants.BI_REQUEST_CODE);
@@ -433,8 +413,7 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			startActivity(src,false);
 		}else{
-			msg.setText(CommUtil.getStrValue(self, R.string.action_baseinfo_null));
-			msg.setVisibility(View.VISIBLE);
+			set2Msg(R.string.action_baseinfo_null);
 		}
 	}
 	
@@ -444,6 +423,11 @@ public class BaseInfoActivity extends SwipeBackActivity implements OnClickListen
         	if(resultCode == Constants.RESULT_CODE) {
                 String city = data.getStringExtra("city");
                 info_city.setText(city);
+            }
+        }else if(requestCode == Constants.BI_REQUEST_CODE2){
+        	if(resultCode == Constants.RESULT_CODE) {
+                String city = data.getStringExtra("city");
+                info_hometown.setText(city);
             }
         }
 		super.onActivityResult(requestCode, resultCode, data);
