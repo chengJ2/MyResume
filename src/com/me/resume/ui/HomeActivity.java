@@ -23,7 +23,6 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.model.ResumeModel;
-import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -68,6 +67,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			case 100:
 				setData();
 				setGridView();
+				setTopicData();
 				break;
 			case 110:
 				setPreferenceData("noticeshow",0);
@@ -111,17 +111,21 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	private void findViews(){
 		setTopTitle(R.string.resume_center);
 		setMsgHide();
-		setBgrilVisible(View.GONE);
+		setRightIconVisible(View.VISIBLE);
+		setRight2IconVisible(View.GONE);
 		setLeftIcon(R.drawable.icon_person_avtar);
-		
 		setRightIcon(R.drawable.icon_setting);
 		
+		initViews();
+		
+		initData();
+	}
+	
+	private void initViews(){
 		makeResume = findView(R.id.make_btn);
 		reviewResume = findView(R.id.review_btn);
 		resumeModelgridView = findView(R.id.grid);
-
 		resumeQuegridview = findView(R.id.xgln_gridview);
-		
 		left_icon.setOnClickListener(this);
 		right_icon.setOnClickListener(this);
 		right_icon.setImageResource(R.drawable.icon_setting);
@@ -130,7 +134,21 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		reviewResume.setOnClickListener(this);
 	}
 
-	/** 设置数据 */
+	private void initData(){
+		 queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
+		 commMapArray = dbUtil.queryData(self, queryWhere);
+		 if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+			 makeResume.setText(CommUtil.getStrValue(self, R.string.edit_resume));
+			 reviewResume.setVisibility(View.VISIBLE);
+		 }else{
+			 makeResume.setText(CommUtil.getStrValue(self, R.string.make_resume));
+			 reviewResume.setVisibility(View.GONE);
+		 }
+	}
+	
+	/**
+	 * 设置简历模板数据
+	 */
 	private void setData() {
 		resumeModelList = new ArrayList<ResumeModel>();
 		for (int i = 0; i < 10; i++) {
@@ -147,30 +165,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			item.setDatetime("2015-06-" + i);
 			resumeModelList.add(item);
 		}
-
-		mList = new ArrayList<String>();
-		mList.add("求职简历");
-		mList.add("面试问题");
-		mList.add("自我鉴定");
-		mList.add("面试技巧");
-		mList.add("求职简历");
-		mList.add("面试问题");
-		mList.add("自我鉴定");
-		mList.add("面试技巧");
-		mList.add("注意事项");
-		mList.add("笔试经验");
-		mList.add("自我鉴定");
-		mList.add("面试技巧");
 		
-		 queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
-		 commMapArray = dbUtil.queryData(self, queryWhere);
-		 if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-			 makeResume.setText(CommUtil.getStrValue(self, R.string.edit_resume));
-			 reviewResume.setVisibility(View.VISIBLE);
-		 }else{
-			 makeResume.setText(CommUtil.getStrValue(self, R.string.make_resume));
-			 reviewResume.setVisibility(View.GONE);
-		 }
 	}
 
 	/** 设置GirdView参数，绑定数据 */
@@ -221,7 +216,26 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				startActivity(intent);
 			}
 		});
-
+	}
+	
+	/**
+	 * 设置简历面试相关话题数据
+	 */
+	private void setTopicData(){
+		mList = new ArrayList<String>();
+		mList.add("求职简历");
+		mList.add("面试问题");
+		mList.add("自我鉴定");
+		mList.add("面试技巧");
+		mList.add("求职简历");
+		mList.add("面试问题");
+		mList.add("自我鉴定");
+		mList.add("面试技巧");
+		mList.add("注意事项");
+		mList.add("笔试经验");
+		mList.add("自我鉴定");
+		mList.add("面试技巧");
+		
 		commStrAdapter = new CommonBaseAdapter<String>(self, mList,
 				R.layout.home_xgln_grilview) {
 
@@ -278,7 +292,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		default:
 			break;
 		}
-
 	}
 	
 	@Override

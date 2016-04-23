@@ -104,8 +104,8 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	
 	private void initViews() {
 		setTopTitle(R.string.resume_jobintension);
-		
 		setMsgHide();
+		setRight2IconVisible(View.VISIBLE);
 		
 		 queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = 1 limit 1";
 		 commMapArray = dbUtil.queryData(self, queryWhere);
@@ -138,11 +138,10 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 				return;
 			}
 			
-//			if (!RegexUtil.checkNotNull(info_expworkplaceStr)) {
-//				msg.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedworkplace) + fieldNull);
-//				msg.setVisibility(View.VISIBLE);
-//				return;
-//			}
+			if (!RegexUtil.checkNotNull(info_expworkplaceStr)) {
+				setMsg(R.string.ji_info_expectedworkplace);
+				return;
+			}
 			
 //			if (!RegexUtil.checkNotNull(info_expworkcareerStr)) {
 //				msg.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedworkcareer) + fieldNull);
@@ -165,15 +164,15 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 				return;
 			}
 			
-			queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = 1";
+			 queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = 1 limit 1";
 			 commMapArray = dbUtil.queryData(self, queryWhere);
 	         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-	        	String edId = commMapArray.get("_id")[0];
+	        	String edId = commMapArray.get("id")[0];
 				updResult = dbUtil.updateData(self, CommonText.JOBINTENSION, 
 						new String[]{edId,"expworkingproperty","expdworkplace","expworkindustry","expworkcareer",
-										  "expmonthlysalary","workingstate"}, 
+										  "expmonthlysalary","workingstate","background"}, 
 						new String[]{"1",info_exp_workingpropertyStr,info_expworkplaceStr,info_expworkindustryStr,
-										info_expworkcareerStr,info_expmonthlysalaryStr,info_workingstateStr});
+										info_expworkcareerStr,info_expmonthlysalaryStr,info_workingstateStr,String.valueOf(getCheckColor())});
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
 				}else{
@@ -188,6 +187,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	 			cValues.put("expworkcareer", info_expworkcareerStr);
 	 			cValues.put("expmonthlysalary", info_expmonthlysalaryStr);
 	 			cValues.put("workingstate", info_workingstateStr);
+	 			cValues.put("background", getCheckColor());
 	 			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 	 			
 	 			queryResult = dbUtil.insertData(self, CommonText.JOBINTENSION, cValues);

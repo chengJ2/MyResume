@@ -183,5 +183,15 @@
 	      <item name="android:background">@android:color/transparent</item>
 	      <item name="android:typeface">serif</item>
 	 </style>
+	 
+	   <style name="home_item_text">
+	      <item name="android:layout_width">match_parent</item>
+	      <item name="android:layout_height">40dip</item>
+	      <item name="android:textColor">@color/grey_10</item>
+	      <item name="android:textSize">@dimen/small_middle_text_size</item>
+	      <item name="android:padding">5dip</item>
+	      <item name="android:gravity">center|left</item>
+	      <item name="android:typeface">serif</item>
+	 </style>
 
 </resources>

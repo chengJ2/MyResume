@@ -133,6 +133,23 @@
         <item>其他</item>
     </string-array>
     
+      <string-array name="oi_certificatetype_values">
+        <item>外语证书</item>
+        <item>计算机证书</item>
+        <item>会计证书</item>
+        <item>职称证书</item>
+        <item>其他证书</item>
+    </string-array>
+    
+      <string-array name="oi_topic_values">
+        <item>兴趣爱好</item>
+        <item>获得荣誉</item>
+        <item>特殊技能</item>
+        <item>社会活动</item>
+        <item>推荐信</item>
+        <item>其他</item>
+    </string-array>
+    
     <string-array name="info_nationality_values">
         <item>阿根廷</item>
         <item>澳大利亚</item>

@@ -86,7 +86,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	private void findViews(){
 		setTopTitle(R.string.resume_workexperience);
 		setMsgHide();
-		setBgrilVisible(View.VISIBLE);
+		setRight2IconVisible(View.VISIBLE);
 		info_companyname = findView(R.id.info_companyname);
 		info_companynature = findView(R.id.info_companynature);
 		info_companyscale = findView(R.id.info_companyscale);
@@ -101,7 +101,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		edit = findView(R.id.edit);
 		next = findView(R.id.next);
 		
-		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1 order by _id desc limit 1";
+		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1 order by id desc limit 1";
 		 commMapArray = dbUtil.queryData(self, queryWhere);
          if (commMapArray!= null && commMapArray.get("userId").length > 0) {
         	 edit.setVisibility(View.VISIBLE);
@@ -226,6 +226,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			cValues.put("worktimeEnd", info_endworktimeStr);
 			cValues.put("expectedsalary", info_expectedsalaryStr);
 			cValues.put("workdesc", info_workdescdetailStr);
+			cValues.put("background", getCheckColor());
 			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 			queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);
 			if(queryResult){
@@ -251,12 +252,14 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			
 			break;
 		case R.id.edit:
-			String edId = commMapArray.get("_id")[0];
+			String edId = commMapArray.get("id")[0];
 			updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 					new String[]{edId,"companyname","companynature","companyscale","industryclassification",
-									  "jobtitle","worktimeStart","worktimeEnd","expectedsalary","workdesc"}, 
+									  "jobtitle","worktimeStart","worktimeEnd","expectedsalary","workdesc"
+									  ,"background"}, 
 					new String[]{"1",info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
-					info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr});
+					info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr,
+					String.valueOf(getCheckColor())});
 			if (updResult == 1) {
 				toastMsg(R.string.action_update_success);
 			}else{
@@ -274,19 +277,11 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			break;
 		case R.id.info_companynature:
 			whichTab = 4;
-			item_values = CommUtil.getArrayValue(self,R.array.oi_companynature_values); 
-			mList = Arrays.asList(item_values);
-			DialogUtils.showPopWindow(self, info_industryclassification, 
-					R.string.we_info_companynature, mList, 
-					mHandler);
+			getValues(R.array.oi_companynature_values,info_companynature,R.string.we_info_companynature);
 			break;
 		case R.id.info_companyscale:
 			whichTab = 3;
-			item_values = CommUtil.getArrayValue(self,R.array.we_companyscale_values); 
-			mList = Arrays.asList(item_values);
-			DialogUtils.showPopWindow(self, info_industryclassification, 
-					R.string.we_info_companyscale, mList, 
-					mHandler);
+			getValues(R.array.we_companyscale_values,info_industryclassification,R.string.we_info_companyscale);
 			break;
 		case R.id.info_industryclassification:
 			ActivityUtils.startActivityForResult(self, 
@@ -294,12 +289,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			break;
 		case R.id.info_expectedsalary:
 			whichTab = 2;
-			item_values = CommUtil.getArrayValue(self,R.array.we_qwyx_values); 
-			mList = Arrays.asList(item_values);
-			DialogUtils.showPopWindow(self, info_expectedsalary, 
-					R.string.we_info_jobsalary, mList, 
-					mHandler);
-			
+			getValues(R.array.we_qwyx_values,info_expectedsalary,R.string.we_info_jobsalary);
 			break;
 		case R.id.info_startworktime:
 			DialogUtils.showTimeChooseDialog(self, info_startworktime,R.string.we_info_start_worktime, 11,mHandler);
@@ -311,6 +301,13 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			break;
 		}
 	}
+	
+	private void getValues(int array,View parent,int resId) {
+		String[] item_text = CommUtil.getArrayValue(self,array); 
+		mList = Arrays.asList(item_text);
+		DialogUtils.showPopWindow(self, parent, resId, mList, mHandler);
+	}
+	
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

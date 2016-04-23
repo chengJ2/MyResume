@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+	
     <string name="app_name">个人简历</string>
     <string name="crash">App发生异常,请重启</string>
     <string name="refresh_down_text">下拉可刷新</string>
@@ -21,12 +21,12 @@
     <string name="settings_item4">反馈意见</string>
 
     <!-- base -->
-    <string name="item_text1">选择界面在预览时的背景色</string>
+    <string name="item_text1">请选择本栏目在简历预览时的背景色</string>
    
     
     <!-- Home -->
     <string name="resume_center">简历中心</string>
-    <string name="make_resume">定&#160;&#160;制</string>
+    <string name="make_resume">定制我的简历</string>
     <string name="review_resume">预&#160;&#160;览</string>
     <string name="edit_resume">编&#160;&#160;辑</string>
 	<string name="item_text2">· 热门简历模板</string>
@@ -42,7 +42,7 @@
     <string name="resume_excellentskills">擅长技能</string>
     <string name="resume_education">教育经历</string>
     <string name="resume_training">培训经历</string>
-    <string name="resume_otherinfo">其他信息</string>
+    <string name="resume_otherinfo">附加信息</string>
     <string name="resume_message">我的留言</string>
 
     <!-- user login register -->
@@ -58,8 +58,8 @@
 
     <!-- UI button click msg -->
     <string name="action_notice">提&#160;示</string>
-    <string name="action_add_success">添加成功</string>
-    <string name="action_add_fail">添加失败</string>
+    <string name="action_add_success">新增成功</string>
+    <string name="action_add_fail">新增失败</string>
     <string name="action_edit_success">编辑成功</string>
     <string name="action_edit_fail">编辑失败</string>
     <string name="action_update_success">更新成功</string>
@@ -92,9 +92,9 @@
     <string name="info_contack">联系方式</string>
     <string name="info_input_contack">请输入手机号</string>
     <string name="info_hometown">户口所在地</string>
-    <string name="info_input_hometown">请输入所在地</string>
+    <string name="info_input_hometown">请选择所在地</string>
     <string name="info_city">现居住城市</string>
-    <string name="info_inout_city">请输入居住城市</string>
+    <string name="info_inout_city">请选择居住城市</string>
     <string name="info_email">电子邮箱</string>
     <string name="info_input_email">请输入邮箱</string>
     <string name="info_maritalstatus">婚姻状况</string>
@@ -198,6 +198,7 @@
     <string name="ot_save">保存</string>
     <string name="ot_languages">语言能力</string>
     <string name="ot_certificate">证书</string>
+    <string name="ot_get_certificate">获得证书</string>
     <string name="ot_info">其他信息</string>
     <string name="ot_info_language">外语语种</string>
     <string name="ot_info_choose_language">请选择外语语种</string>
@@ -206,7 +207,7 @@
     <string name="ot_info_listeningspeaking">听说能力</string>
     <string name="ot_info_choose_listeningspeaking">请选择听说能力</string>
     <string name="ot_info_certificate">证书名称</string>
-    <string name="ot_info_input_certificate">请输入证书</string>
+    <string name="ot_info_input_certificate">请选择证书</string>
     <string name="ot_info_getcertificatetime">获得时间</string>
     <string name="ot_info_choose_getcertificatetime">请选择获得时间</string>
     <string name="ot_info_title">标题</string>

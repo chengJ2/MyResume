@@ -29,4 +29,5 @@
     <dimen name="normal_item_padding_left">12.0dp</dimen>
     <dimen name="normal_item_height_set">50.0dp</dimen>
 
+    <dimen name="base_comm_padding">2dip</dimen>
 </resources>

@@ -95,6 +95,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			}
 		});
 		
+		
+		
+		
 	}
 	
 	private void switchContent(int position,String tab){
@@ -133,7 +136,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	 * @param tablename
 	 */
 	private void setEditVisible(String tablename){
-		queryWhere = "select * from " + tablename + " where userId = 1";
+		queryWhere = "select * from " + tablename + " where userId = 1 limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			edit.setVisibility(View.VISIBLE);
@@ -179,12 +182,14 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					cValues.put("majorname", info_majornameStr);
 					cValues.put("degree", info_degressStr);
 					cValues.put("examination", info_examinationStr);
+					cValues.put("background", getCheckColor());
 					cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 					
 					queryResult= dbUtil.insertData(self, 
 							CommonText.EDUCATION, cValues);
 					if (queryResult) {
 						toastMsg(R.string.action_add_success);
+						
 					}
 				}
 				
@@ -198,6 +203,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					cValues.put("trainingclass", info_trainingclassStr);
 					cValues.put("certificate", info_certificateStr);
 					cValues.put("description", info_descriptionStr);
+					cValues.put("background", getCheckColor());
 					cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 					
 					queryResult = dbUtil.insertData(self, 
@@ -211,15 +217,15 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		case R.id.edit:
 			if(cposition == 0){ // 教育背景
 				if( judgeEduField() == 0){
-					queryWhere = "select * from " + CommonText.EDUCATION + " where userId = 1 order by _id limit 1";
+					queryWhere = "select * from " + CommonText.EDUCATION + " where userId = 1 order by id limit 1";
 					commMapArray = dbUtil.queryData(self, queryWhere);
 					if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 						String edId = commMapArray.get("_id")[0];
 						updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
 								new String[]{edId,"educationtimestart","educationtimeend","school","majorname",
-												  "degree","examination"}, 
+												  "degree","examination","background"}, 
 								new String[]{"1",info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,
-								info_degressStr,info_examinationStr});
+								info_degressStr,info_examinationStr,String.valueOf(getCheckColor())});
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
 						}else{
@@ -229,15 +235,15 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				}
 			}else{
 				if(judegTraField() == 0){
-					queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = 1 order by _id limit 1";
+					queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = 1 order by id limit 1";
 					commMapArray = dbUtil.queryData(self, queryWhere);
 					if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 						String edId = commMapArray.get("_id")[0];
 						updResult = dbUtil.updateData(self, CommonText.EDUCATION_TRAIN, 
 								new String[]{edId,"trainingtimestart","trainingtimeend","trainingorganization","trainingclass",
-								"certificate","description"}, 
+								"certificate","description","background"}, 
 								new String[]{"1",info_starttimeStr,info_endtimeStr,info_trainingorganizationStr,info_trainingclassStr,
-								info_certificateStr,info_descriptionStr});
+								info_certificateStr,info_descriptionStr,String.valueOf(getCheckColor())});
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
 						}else{

@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/top"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/top_bar_height"
     android:layout_alignParentTop="true"
-    android:background="@color/top_bar" >
+    android:background="@drawable/dialog_corner_topbar" >
 
     <TextView
         android:id="@+id/top_text"
-        android:layout_width="fill_parent"
-        android:layout_height="45dip"
-        android:layout_centerInParent="true"
-        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:gravity="center|left"
+        android:paddingLeft="5dip"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:text="@string/app_name" />
 
-    <TextView
-        android:id="@+id/right_lable"
-        android:layout_width="60dip"
-        android:layout_height="45dip"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/medium_text_size" 
+    <ImageView
+        android:id="@+id/icon_cancle"
+        android:layout_width="50dip"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:text="取消"/>
+        android:src="@drawable/icon_cancle"
+        android:scaleType="centerInside"
+        android:visibility="visible"/>
 
 </RelativeLayout>

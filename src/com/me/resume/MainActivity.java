@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
 	
 	private boolean showEffect = true;
 	
-	private Map<String, String[]> commMapArray = null;
+	private CommForMapArrayBaseAdapter commMapAdapter = null;
 	
 	protected DbLocalUtil dbUtil = new DbUtilImplement();;// 本地数据库对象
 	
@@ -76,25 +76,34 @@ public class MainActivity extends Activity {
 	private TextView index_1_realname, index_1_info,index_1_where,index_1_lisence,index_1_phone,index_1_email;
 	
 	// View2
+	private LinearLayout index2layout;
 	private ListView weListview;
 	
 	// View3
+	private LinearLayout index3layout;
 	private TextView self_evaluation;
 	private TagFlowLayout tagFlowLayout;
 	private String mTags[] = { "活泼好动", "易随波逐流", "多愁善感", "不善言谈",
 			"务实", "适应能力差", "易怒而难以自制"};
 	
 	// View4
+	private LinearLayout index4layout;
 	private TextView index_4_info1,index_4_info2,index_4_info3,index_4_info4,index_4_info5,index_4_info6;
 	
 	// View5
+	private LinearLayout index5layout;
+	
 	
 	// View6
+	private LinearLayout index6layout;
 	private CustomListView edListview,trListview;
 	
 	private LinearLayout index6_trLayout;
 	
 	// View7
+	private LinearLayout index7layout;
+	private LinearLayout index7_layout1,index7_layout2,index7_layout3;
+	private CustomListView listview1,listview2,listview3;
 	
 	// View8
 	private ImageView goHome;
@@ -199,9 +208,11 @@ public class MainActivity extends Activity {
 		index_1_email = ((TextView) view1.findViewById(R.id.index_1_email));
 		
 		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1 limit 1";
-		commMapArray = dbUtil.queryData(self, queryWhere);
+		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			mViewList.add(view1);
+			if (!mViewList.contains(view1)) {
+				mViewList.add(view1);
+			}
 			
 			index1layout.setBackgroundColor(CommUtil.getColorValue(self,
 					CommUtil.parseInt(commMapArray.get("background")[0])));
@@ -262,12 +273,18 @@ public class MainActivity extends Activity {
 	 * @param view
 	 */
 	private void initView2(View view){
+		index2layout = (LinearLayout) view2.findViewById(R.id.index2layout);
 		weListview = (ListView) view2.findViewById(R.id.weListview);
 
-		queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1 order by _id desc";
+		queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1 order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			mViewList.add(view2);
+			if (!mViewList.contains(view2)) {
+				mViewList.add(view2);
+			}
+			index2layout.setBackgroundColor(CommUtil.getColorValue(self,
+					CommUtil.parseInt(commMapArray.get("background")[0])));
+			
 //			int we_show_nav = getPreferenceData("we_show_nav", 1);
 			int LayoutID = R.layout.index_2_list_item;
 //			if (we_show_nav == 1) {
@@ -277,7 +294,8 @@ public class MainActivity extends Activity {
 //			} else if (we_show_nav == 3) {
 //
 //			}
-			CommForMapArrayBaseAdapter commMapAdapter = new CommForMapArrayBaseAdapter(
+			
+			commMapAdapter = new CommForMapArrayBaseAdapter(
 					self, commMapArray, LayoutID, "userId") {
 
 				@Override
@@ -301,13 +319,18 @@ public class MainActivity extends Activity {
 	 * @Description: 自我评价&职业目标
 	 */
 	private void initView3(View view){
+		index3layout = (LinearLayout) view1.findViewById(R.id.index3layout);
 		tagFlowLayout = (TagFlowLayout) view.findViewById(R.id.flowlayout);
 		self_evaluation = (TextView)view.findViewById(R.id.self_evaluation);
 		
-		queryWhere = "select * from " + CommonText.EVALUATION + " where userId = 1 order by _id desc";
-		commMapArray = dbUtil.queryData(self, queryWhere);
+		queryWhere = "select * from " + CommonText.EVALUATION + " where userId = 1 order by id desc";
+		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			mViewList.add(view3);
+			if (!mViewList.contains(view3)) {
+				mViewList.add(view3);
+			}
+			index3layout.setBackgroundColor(CommUtil.getColorValue(self,
+					CommUtil.parseInt(commMapArray.get("background")[0])));
 			self_evaluation.setText(commMapArray.get("selfevaluation")[0]);
 		}
 		
@@ -336,6 +359,7 @@ public class MainActivity extends Activity {
 	 * @Description: 求职意向
 	 */
 	private void initView4(View view){
+		index4layout = (LinearLayout) view1.findViewById(R.id.index4layout);
 		index_4_info1 = (TextView)view.findViewById(R.id.index_4_info1);
 		index_4_info2 = (TextView)view.findViewById(R.id.index_4_info2);
 		index_4_info3 = (TextView)view.findViewById(R.id.index_4_info3);
@@ -343,10 +367,14 @@ public class MainActivity extends Activity {
 		index_4_info5 = (TextView)view.findViewById(R.id.index_4_info5);
 		index_4_info6 = (TextView)view.findViewById(R.id.index_4_info6);
 		
-		queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = 1 order by _id desc";
-		commMapArray = dbUtil.queryData(self, queryWhere);
+		queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = 1 order by id desc";
+		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			mViewList.add(view4);
+			index4layout.setBackgroundColor(CommUtil.getColorValue(self,
+					CommUtil.parseInt(commMapArray.get("background")[0])));
+			if (!mViewList.contains(view4)) {
+				mViewList.add(view4);
+			}
 			index_4_info1.setText(Html.fromHtml("<strong>工作性质：</strong>"+commMapArray.get("expworkingproperty")[0]));
 			index_4_info2.setText(Html.fromHtml("<strong>期望职业：</strong>"+commMapArray.get("expworkcareer")[0]));
 			index_4_info3.setText(Html.fromHtml("<strong>期望行业：</strong>"+commMapArray.get("expworkindustry")[0]));
@@ -362,6 +390,7 @@ public class MainActivity extends Activity {
 	 * @Description: 项目经验
 	 */
 	private void initView5(View view){
+		index5layout = (LinearLayout) view1.findViewById(R.id.index5layout);
 		
 	}
 	
@@ -371,24 +400,30 @@ public class MainActivity extends Activity {
 	 * @Description: 教育&培训
 	 */
 	private void initView6(View view){
+		index6layout = (LinearLayout) view.findViewById(R.id.index6layout);
 		edListview = (CustomListView)view.findViewById(R.id.edListview);
 		trListview = (CustomListView)view.findViewById(R.id.trListview);
 		index6_trLayout = (LinearLayout)view.findViewById(R.id.index6_trLayout);
 		
-		queryWhere = "select * from " + CommonText.EDUCATION + " where userId = 1 order by _id desc";
+		queryWhere = "select * from " + CommonText.EDUCATION + " where userId = 1 order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			mViewList.add(view6);
+			index6layout.setBackgroundColor(CommUtil.getColorValue(self,
+					CommUtil.parseInt(commMapArray.get("background")[0])));
 			
-			CommForMapArrayBaseAdapter commMapAdapter = new CommForMapArrayBaseAdapter(
+			if (!mViewList.contains(view6)) {
+				mViewList.add(view6);
+			}
+			
+			commMapAdapter = new CommForMapArrayBaseAdapter(
 					self, commMapArray, R.layout.index_6_list_item, "userId") {
 
 				@Override
 				public void convert(ViewHolder holder, String[] item,
 						int position) {
 					holder.setText(R.id.item1,
-							commMapArray.get("worktimestart")[position] + " — "
-									+ commMapArray.get("worktimeend")[position]);
+							commMapArray.get("educationtimestart")[position] + " — "
+									+ commMapArray.get("educationtimeend")[position]);
 					StringBuffer sbStr = new StringBuffer();
 					String info = commMapArray.get("school")[position];
 					sbStr.append(info);
@@ -407,10 +442,15 @@ public class MainActivity extends Activity {
 
 			edListview.setAdapter(commMapAdapter);
 			
-			queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = 1 order by _id desc";
+			queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = 1 order by id desc";
 			final Map<String, String[]> comm2MapArray = dbUtil.queryData(self, queryWhere);
 			if (comm2MapArray != null && comm2MapArray.get("userId").length > 0) {
 				index6_trLayout.setVisibility(View.VISIBLE);
+				
+				if (!mViewList.contains(view6)) {
+					mViewList.add(view6);
+				}
+				
 				commMapAdapter = new CommForMapArrayBaseAdapter(
 						self, comm2MapArray, R.layout.index_62_list_item, "userId") {
 					
@@ -418,8 +458,8 @@ public class MainActivity extends Activity {
 					public void convert(ViewHolder holder, String[] item,
 							int position) {
 						holder.setText(R.id.item1,
-								comm2MapArray.get("worktimestart")[position] + " — "
-										+ comm2MapArray.get("worktimeend")[position]);
+								comm2MapArray.get("trainingtimestart")[position] + " — "
+										+ comm2MapArray.get("trainingtimeend")[position]);
 						
 						String info = comm2MapArray.get("trainingorganization")[position];
 						holder.setText(R.id.item2, info.toString());
@@ -454,26 +494,110 @@ public class MainActivity extends Activity {
 	 * @Description: 其他信息
 	 */
 	private void initView7(View view){
-//		mViewList.add(view7);
+		index7layout = (LinearLayout) view.findViewById(R.id.index7layout);
 		
-		/*Cursor cursor = null;
-		llistChild = new ArrayList<String>();
-		try {
-			String sql = "select a.id,a.showName,b.cnName from drug a,company b "+ 
-						" where a.cateId1="+ keyword +" and a.companyId=b.id";
-			cursor = EbaoApplication.sqLiteDatabase.rawQuery(sql, null);
-			if (cursor.getCount() > 0) {
-				while (cursor.moveToNext()) {
-					llistChild.add(cursor.getString(cursor.getColumnIndex("id"))
-							+"|"+cursor.getString(cursor.getColumnIndex("showName"))
-									+"|"+cursor.getString(cursor.getColumnIndex("cnName")));
-				}
+		index7_layout1= (LinearLayout) view.findViewById(R.id.index7_layout1);
+		index7_layout2= (LinearLayout) view.findViewById(R.id.index7_layout2);
+		index7_layout3= (LinearLayout) view.findViewById(R.id.index7_layout3);
+		listview1 = (CustomListView) view.findViewById(R.id.listview1);
+		listview2= (CustomListView) view.findViewById(R.id.listview2);
+		listview3= (CustomListView) view.findViewById(R.id.listview3);
+		
+		queryWhere = "select * from " + CommonText.OTHERINFO + " where userId = 1 order by id desc";
+		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
+        if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+        	index7layout.setBackgroundColor(CommUtil.getColorValue(self,
+					CommUtil.parseInt(commMapArray.get("background")[0])));
+        	index7_layout1.setVisibility(View.VISIBLE);
+        	if (!mViewList.contains(view7)) {
+        		mViewList.add(view7);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			cursor.close();
-		}*/
+        	
+        	commMapAdapter = new CommForMapArrayBaseAdapter(
+					self, commMapArray, R.layout.index7_listview_item1_text, "userId") {
+
+				@Override
+				public void convert(ViewHolder holder, String[] item,
+						int position) {
+					StringBuffer sbStr = new StringBuffer();
+					String info = commMapArray.get("language")[position];
+					sbStr.append(info);
+					sbStr.append(" :");
+					
+					info = commMapArray.get("literacyskills")[position];
+					sbStr.append(CommUtil.getStrValue(self, R.string.ot_info_literacyskills)+info);
+					sbStr.append(" | ");
+					
+					info = commMapArray.get("listeningspeaking")[position];
+					sbStr.append(CommUtil.getStrValue(self, R.string.ot_info_listeningspeaking)+info);
+					
+					holder.setText(R.id.item1, sbStr.toString());
+				}
+			};
+
+			listview1.setAdapter(commMapAdapter);
+        	
+        }else{
+        	index7_layout1.setVisibility(View.GONE);
+        }
+        
+        queryWhere = "select * from " + CommonText.OTHERINFO1 + " where userId = 1 order by id desc";
+        final Map<String, String[]> commMapArray2 = dbUtil.queryData(self, queryWhere);
+        if (commMapArray2!= null && commMapArray2.get("userId").length > 0) {
+        	index7_layout2.setVisibility(View.VISIBLE);
+        	if (!mViewList.contains(view7)) {
+        		mViewList.add(view7);
+			}
+        	commMapAdapter = new CommForMapArrayBaseAdapter(
+					self, commMapArray2, R.layout.index7_listview_item1_text, "userId") {
+
+				@Override
+				public void convert(ViewHolder holder, String[] item,
+						int position) {
+					StringBuffer sbStr = new StringBuffer();
+					String info = commMapArray2.get("certificate")[position];
+					sbStr.append(info);
+					sbStr.append(" | ");
+					info = commMapArray2.get("certificatetime")[position];
+					sbStr.append(info);
+					holder.setText(R.id.item1, sbStr.toString());
+				}
+			};
+
+			listview2.setAdapter(commMapAdapter);
+        	
+        }else{
+        	index7_layout2.setVisibility(View.GONE);
+        }
+        
+        queryWhere = "select * from " + CommonText.OTHERINFO2 + " where userId = 1 order by id desc";
+        final Map<String, String[]> commMapArray3 = dbUtil.queryData(self, queryWhere);
+        if (commMapArray3!= null && commMapArray3.get("userId").length > 0) {
+        	index7_layout3.setVisibility(View.VISIBLE);
+        	if (!mViewList.contains(view7)) {
+        		mViewList.add(view7);
+			}
+        	
+        	commMapAdapter = new CommForMapArrayBaseAdapter(
+					self, commMapArray3, R.layout.index7_listview_item3_text, "userId") {
+
+				@Override
+				public void convert(ViewHolder holder, String[] item,
+						int position) {
+					String info = commMapArray3.get("title")[position];
+					holder.setText(R.id.item1, info);
+					
+					info = commMapArray3.get("description")[position];
+					holder.setText(R.id.item2, info);
+				}
+			};
+
+			listview3.setAdapter(commMapAdapter);
+        	
+        }else{
+        	index7_layout3.setVisibility(View.GONE);
+        }
+		
 	}
 
 	/**

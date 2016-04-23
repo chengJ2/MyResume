@@ -36,17 +36,15 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		boayLayout.removeAllViews();
-		
 		View v = View.inflate(self,R.layout.activity_evaluation_layout, null);
 		boayLayout.addView(v);
 		
 		setTopTitle(R.string.resume_evaluation);
-		
 		setMsgHide();
+		setRight2IconVisible(View.VISIBLE);
 		
 		left_icon.setOnClickListener(this);
 		right_icon.setOnClickListener(this);
-		
 		
 		info_self_evaluation = findView(R.id.info_self_evaluation);
 		info_career_goal = findView(R.id.info_career_goal);
@@ -77,10 +75,10 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			String info_self_evaluationStr = CommUtil.getEditTextValue(info_self_evaluation);
 			String info_career_goalStr = CommUtil.getEditTextValue(info_career_goal);
 			if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-				String edId = commMapArray.get("_id")[0];
+				String edId = commMapArray.get("id")[0];
 				updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
-						new String[]{edId,"selfevaluation","careergoal"}, 
-						new String[]{"1",info_self_evaluationStr,info_career_goalStr});
+						new String[]{edId,"selfevaluation","careergoal","background"}, 
+						new String[]{"1",info_self_evaluationStr,info_career_goalStr,String.valueOf(getCheckColor())});
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
 				}
@@ -89,6 +87,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				cValues.put("userId", "1");
 				cValues.put("selfevaluation", info_self_evaluationStr);
 				cValues.put("careergoal", info_career_goalStr);
+				cValues.put("background", getCheckColor());
 				cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 				queryResult = dbUtil.insertData(self, 
 						CommonText.EVALUATION, cValues);

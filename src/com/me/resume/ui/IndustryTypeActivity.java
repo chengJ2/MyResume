@@ -46,17 +46,13 @@ public class IndustryTypeActivity extends BaseActivity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		boayLayout.removeAllViews();
-		
 		View v = View.inflate(self,R.layout.activity_industry_type_layout, null);
 		boayLayout.addView(v);
 		
 		setTopTitle(R.string.resume_industrytype);
-		
 		setMsgHide();
-		
 		setRightIconVisible(View.GONE);
-		
-		setBgrilVisible(View.GONE);
+		setRight2IconVisible(View.GONE);
 		
 		left_icon.setOnClickListener(new OnClickListener() {
 			

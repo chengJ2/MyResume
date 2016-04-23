@@ -6,28 +6,26 @@
     android:gravity="center" >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dip"
         android:layout_marginRight="20dip"
         android:background="@drawable/dialog_corner"
         android:orientation="vertical"
-        android:paddingBottom="10dip" >
+        android:paddingBottom="5dip" >
 
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center|left"
-            android:padding="6dip"
+            android:padding="5dip"
             android:textColor="@color/grey_10"
             android:textSize="@dimen/small_middle_text_size" />
 
         <View
             style="@style/line3"
             android:layout_marginTop="4dip" />
-
-        <!-- 定义一个DatePicker组件 -->
 
         <DatePicker
             android:id="@+id/datePicker"
@@ -38,38 +36,28 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:layout_marginRight="30dip"
+            android:layout_height="40dip"
+            android:layout_marginLeft="0dip"
+            android:layout_marginRight="0dip"
             android:layout_marginTop="20dip"
             android:orientation="horizontal"
-            android:paddingBottom="5dip" 
+            android:paddingBottom="0dip" 
+            android:gravity="center_vertical"
             android:background="@drawable/dialog_corner">
 
             <Button
                 android:id="@+id/btn_cancle"
-                android:layout_width="50dip"
-                android:layout_height="35dip"
                 android:layout_marginRight="20dip"
-                android:layout_weight="1"
+                style="@style/button_menu"
+            	android:layout_weight="1"
                 android:background="@drawable/dialog_btn2_corner"
-                android:gravity="center"
-                android:text="@string/show_button_cancle"
-                android:textColor="@color/white"
-                android:textSize="@dimen/small_middle_text_size"
-                android:visibility="visible" />
+                android:text="@string/show_button_cancle" />
 
             <Button
                 android:id="@+id/btn_sure"
-                android:layout_width="50dip"
-                android:layout_height="35dip"
-                android:layout_weight="1"
-                android:background="@drawable/dialog_btn_corner"
-                android:gravity="center"
-                android:text="@string/show_button_sure"
-                android:textColor="@color/white"
-                android:textSize="@dimen/small_middle_text_size" />
+                style="@style/button_menu"
+            	android:layout_weight="1"
+                android:text="@string/show_button_sure" />
         </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>

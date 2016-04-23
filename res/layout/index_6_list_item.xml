@@ -7,7 +7,7 @@
      <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/red"
+        android:textColor="@color/top_bar"
         android:text="●" />
 
     <LinearLayout
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:gravity="center|left"
             android:text="@string/resume_workexperience"
-            android:textColor="@color/grey_10"
+            android:textColor="@color/white"
             android:textSize="@dimen/small_text_size" />
 
         <TextView
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center|left"
-            android:layout_marginTop="8dip"
+            android:layout_marginTop="5dip"
             android:text="@string/resume_workexperience"
             android:textColor="@color/white"
             android:textSize="@dimen/small_text_size" />

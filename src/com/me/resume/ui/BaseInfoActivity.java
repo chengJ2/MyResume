@@ -132,7 +132,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	private void findViews(){
 		setTitle(R.string.resume_baseinfo);
 		setMsgHide();
-		setBgrilVisible(View.VISIBLE);
+		setRight2IconVisible(View.VISIBLE);
 		left_icon.setOnClickListener(this);
 		right_icon.setOnClickListener(this);
 		
@@ -327,7 +327,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			commMapArray = dbUtil.queryData(self, queryWhere);
 			if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 				
-				String edId = commMapArray.get("_id")[0];
+				String edId = commMapArray.get("id")[0];
 				updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
 						new String[]{edId,"realname","gender","brithday","joinworktime",
 										  "phone","hometown","city","email","ismarry",

@@ -3,18 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/red"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:id="@+id/index6layout" >
 
     <TextView
         style="@style/index_top_text"
         android:text="@string/resume_education" />
-
+    
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dip"
         android:background="@drawable/index_1_base" />
-
-    <com.me.resume.views.CommScrollView
+    
+     <com.me.resume.views.CommScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fadingEdge="none"

@@ -4,50 +4,41 @@
     android:layout_height="@dimen/top_bar_height"
     android:background="@color/top_bar" >
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/top_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/top_text"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/resume_baseinfo"
-            android:textColor="@color/white"
-            android:textSize="@dimen/medium_text_size" />
-
-        <TextView
-            android:id="@+id/top_text2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:text="完整度：90%"
-            android:textColor="@color/grey_10"
-            android:textSize="@dimen/micro_text_size"
-            android:visibility="gone" />
-    </LinearLayout>
+        android:gravity="center"
+        android:text="@string/resume_baseinfo"
+        android:textColor="@color/white"
+        android:textSize="@dimen/medium_text_size" />
 
     <ImageView
         android:id="@+id/left_lable"
-        android:layout_width="60dip"
+        android:layout_width="50dip"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:layout_alignParentLeft="true"
-        android:src="@drawable/icon_back"
-        android:scaleType="centerInside"/>
-    
-     <ImageView
-        android:id="@+id/right_icon"
-        android:layout_width="60dip"
-        android:layout_height="match_parent"
         android:gravity="center"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_back" />
+
+    <ImageView
+        android:id="@+id/right_icon"
+        android:layout_width="50dip"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
-        android:src="@drawable/icon_review"
-        android:scaleType="centerInside"/>
+        android:layout_gravity="right|center"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_review" />
+
+    <ImageView
+        android:id="@+id/right_icon_more"
+        android:layout_width="40dip"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@id/right_icon"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_menu_more"
+        android:visibility="visible" />
 
 </RelativeLayout>

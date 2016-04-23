@@ -1,18 +1,22 @@
 package com.me.resume.utils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnKeyListener;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -22,7 +26,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -180,8 +187,8 @@ public class DialogUtils {
 	public static void showPopWindow(Context context,View parent,int resourId,List<String> mList,Handler handler){
 		mHandler = handler;
 		View popView = View.inflate(context,R.layout.pop_simple_list_layout, null);
-		mPopupWindow = new PopupWindow(popView, CommUtil.dip2px(context, 279),
-												LayoutParams.WRAP_CONTENT,true);
+		mPopupWindow = new PopupWindow(popView, LayoutParams.MATCH_PARENT,
+												LayoutParams.MATCH_PARENT,true);
 		mPopupWindow.setTouchable(true);
 		mPopupWindow.setOutsideTouchable(false);
 		mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -190,8 +197,8 @@ public class DialogUtils {
 		TextView popTitle = (TextView)popView.findViewById(R.id.top_text);
 		popTitle.setText(CommUtil.getStrValue(context, resourId));
 		
-		TextView rightLable = (TextView)popView.findViewById(R.id.right_lable);
-		rightLable.setOnClickListener(new OnClickListener() {
+		ImageView rightIcon = (ImageView)popView.findViewById(R.id.icon_cancle);
+		rightIcon.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -337,6 +344,94 @@ public class DialogUtils {
 		});
 		mPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 	}
+	
+	/**
+	 * 
+	 * @param context
+	 * @param parent
+	 * @param resId
+	 * @param handler
+	 */
+	public static void showTopMenuDialog(Activity context,View parent,Handler handler){
+		mHandler = handler;
+		View layout = View.inflate(context,R.layout.topbar_menu_layout, null);
+		mPopupWindow = new PopupWindow(layout, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		mPopupWindow.setTouchable(true);
+		mPopupWindow.setFocusable(true);
+		
+		GridView bgrid = (GridView)layout.findViewById(R.id.bgrid);
+		
+		final TypedArray typedArray = context.getResources().obtainTypedArray(R.array.review_bgcolor);
+		List<Integer> nList = new ArrayList<Integer>();
+		for (int i = 0; i < typedArray.length(); i++) {
+			nList.add(typedArray.getResourceId(i, 0));
+		}
+		
+		int size = nList.size();
+        int length = 50;
+        DisplayMetrics dm = new DisplayMetrics();
+        context.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        float density = dm.density;
+        int gridviewWidth = (int) (size * (length + 4) * density);
+        int itemWidth = (int) (length * density);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
+        bgrid.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
+        bgrid.setColumnWidth(itemWidth); // 设置列表项宽
+        bgrid.setHorizontalSpacing(5); // 设置列表项水平间距
+        bgrid.setStretchMode(GridView.NO_STRETCH);
+        bgrid.setNumColumns(size); // 设置列数量=列表集合数
+        CommonBaseAdapter<Integer> commIntAdapter = new CommonBaseAdapter<Integer>(context, nList,
+				R.layout.base_grilview_item) {
+
+			@Override
+			public void convert(final ViewHolder holder, final Integer item,
+					final int position) {
+				holder.setViewBgColor(R.id.itemName, context.getResources().getColor(item));
+				holder.setViewVisible(R.id.check, View.GONE);
+				
+				if (!states.isEmpty()) {
+					states.clear();
+				}
+
+				if (selecPosition == position) {
+					states.put(String.valueOf(position), true);
+					holder.setViewVisible(R.id.check, View.VISIBLE);
+				} else {
+					states.put(String.valueOf(position), false);
+					holder.setViewVisible(R.id.check, View.GONE);
+				}
+				
+				holder.setOnClickEvent(R.id.itemName, new ClickEvent() {
+
+					@Override
+					public void onClick(View view) {
+						
+						sendMsg(11, item);
+						
+						selecPosition = position;
+						holder.setViewVisible(R.id.check, View.VISIBLE);
+						for (String key : states.keySet()) {
+							states.put(key, false);
+						}
+
+						states.put(String.valueOf(position), false);
+						
+//						notifyDataSetChanged();
+						
+						dismissPopwindow();
+					}
+				});
+			}
+		};
+		
+		bgrid.setAdapter(commIntAdapter);
+		
+		mPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+	}
+	
 	
 	/**
 	 * 

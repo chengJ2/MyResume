@@ -16,7 +16,10 @@
             android:id="@+id/index_search_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
+            android:layout_marginBottom="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="70dip"
+            android:layout_marginTop="5dp"
             android:background="@drawable/search_box"
             android:descendantFocusability="blocksDescendants"
             android:drawableLeft="@drawable/search_icon"
@@ -38,10 +41,28 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="73dip"
             android:background="@drawable/clear"
             android:gravity="center"
             android:visibility="gone" />
+
+        <Button
+            android:id="@+id/search_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="5dip"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dip"
+            android:background="@drawable/button_select_red"
+            android:paddingBottom="2dip"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip"
+            android:paddingTop="2dip"
+            android:text="查询"
+            android:textColor="@color/white"
+            android:textSize="@dimen/small_middle_text_size" />
     </RelativeLayout>
 
     <com.me.resume.views.CommScrollView
@@ -57,80 +78,88 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dip"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:padding="5dip" >
+            <LinearLayout
+                android:id="@+id/addrtopLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dip"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:padding="5dip" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="left"
+                        android:text="当前定位城市"
+                        android:textColor="@color/grey_10"
+                        android:textSize="@dimen/small_middle_text_size" />
+
+                    <Button
+                        android:id="@+id/review_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="43dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dip"
+                        android:background="@drawable/button_select"
+                        android:gravity="center"
+                        android:paddingBottom="2dip"
+                        android:paddingLeft="15dip"
+                        android:paddingRight="15dip"
+                        android:paddingTop="2dip"
+                        android:text="武汉"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/small_middle_text_size"
+                        android:visibility="visible" />
+                </RelativeLayout>
+
+                <View style="@style/line3" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
                     android:gravity="left"
-                    android:text="当前定位城市"
+                    android:padding="5dip"
+                    android:text="热门城市"
                     android:textColor="@color/grey_10"
                     android:textSize="@dimen/small_middle_text_size" />
 
-                <Button
-                    android:id="@+id/review_btn"
-                    style="@style/button_menu"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dip"
+                <GridView
+                    android:id="@+id/hotaddress_gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="144dip"
+                    android:layout_margin="5dip"
+                    android:columnWidth="80dp"
+                    android:fadingEdge="none"
+                    android:fadingEdgeLength="0dip"
                     android:gravity="center"
-                    android:paddingBottom="2dip"
-                    android:paddingLeft="15dip"
-                    android:paddingRight="15dip"
-                    android:paddingTop="2dip"
-                    android:text="武汉"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/small_middle_text_size"
-                    android:visibility="visible" />
-            </RelativeLayout>
+                    android:horizontalSpacing="10dp"
+                    android:numColumns="4"
+                    android:scrollbars="none"
+                    android:scrollingCache="false"
+                    android:smoothScrollbar="true"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="10dp" >
+                </GridView>
 
-            <View style="@style/line3" />
+                <View style="@style/line3" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:padding="5dip"
-                android:text="热门城市"
-                android:textColor="@color/grey_10"
-                android:textSize="@dimen/small_middle_text_size" />
-
-            <GridView
-                android:id="@+id/hotaddress_gridview"
-                android:layout_width="match_parent"
-                android:layout_height="144dip"
-                android:layout_margin="5dip"
-                android:columnWidth="80dp"
-                android:fadingEdge="none"
-                android:fadingEdgeLength="0dip"
-                android:gravity="center"
-                android:horizontalSpacing="10dp"
-                android:numColumns="4"
-                android:scrollbars="none"
-                android:scrollingCache="false"
-                android:smoothScrollbar="true"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="10dp" >
-            </GridView>
-
-            <View style="@style/line3" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:padding="5dip"
-                android:text="全国城市"
-                android:textColor="@color/grey_10"
-                android:textSize="@dimen/small_middle_text_size" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:padding="5dip"
+                    android:text="全国城市"
+                    android:textColor="@color/grey_10"
+                    android:textSize="@dimen/small_middle_text_size" />
+            </LinearLayout>
 
             <com.me.resume.views.CustomListView
                 android:id="@+id/alladdrListview"

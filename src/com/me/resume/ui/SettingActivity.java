@@ -52,7 +52,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		
 		setRightIconVisible(View.INVISIBLE);
 		
-		setBgrilVisible(View.GONE);
+		setRight2IconVisible(View.GONE);
 		
 		left_icon.setOnClickListener(this);
 		

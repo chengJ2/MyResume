@@ -68,17 +68,20 @@ public class ProfessionalActivity extends BaseActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		boayLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_category_layout, null);
 		boayLayout.addView(v);
 		
 		setTopTitle(R.string.resume_address);
-		
 		setMsgHide();
-		
 		setRightIconVisible(View.GONE);
+		setRight2IconVisible(View.GONE);
+		
+		catelayout = findView(R.id.catelayout);
+		category =  findView(R.id.category);
+		backCate = findView(R.id.backCate_btn);
+		category_Listview = findView(R.id.category_Listview);
 		
 		left_icon.setOnClickListener(new OnClickListener() {
 			
@@ -88,10 +91,6 @@ public class ProfessionalActivity extends BaseActivity {
 			}
 		});
 		
-		catelayout = findView(R.id.catelayout);
-		category =  findView(R.id.category);
-		backCate = findView(R.id.backCate_btn);
-		
 		backCate.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -100,8 +99,6 @@ public class ProfessionalActivity extends BaseActivity {
 				getCategory();
 			}
 		});
-		
-		category_Listview = findView(R.id.category_Listview);
 		
 		getCategory();
 	}

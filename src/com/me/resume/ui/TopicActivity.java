@@ -43,7 +43,7 @@ public class TopicActivity extends BaseActivity implements OnClickListener{
 		
 		setMsgHide();
 		
-		setBgrilVisible(View.GONE);
+		setRight2IconVisible(View.GONE);
 		
 		content = findView(R.id.content);
 		content.setText(Html.fromHtml(source));
