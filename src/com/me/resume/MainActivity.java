@@ -71,6 +71,9 @@ public class MainActivity extends Activity {
 	
 	private SharedPreferences sp;
 	
+	private TextView main_top_title;
+	private ImageView main_top_edit;
+	
 	// View1
 	private LinearLayout index1layout;
 	private TextView index_1_realname, index_1_info,index_1_where,index_1_lisence,index_1_phone,index_1_email;
@@ -199,19 +202,21 @@ public class MainActivity extends Activity {
 	 * @param view
 	 */
 	private void initView1(View view){
-		index1layout = (LinearLayout) view1.findViewById(R.id.index1layout);
-		index_1_realname = ((TextView) view1.findViewById(R.id.index_1_realname));
-		index_1_info = ((TextView) view1.findViewById(R.id.index_1_info));
-		index_1_where = ((TextView) view1.findViewById(R.id.index_1_where));
-		index_1_lisence = ((TextView) view1.findViewById(R.id.index_1_lisence));
-		index_1_phone = ((TextView) view1.findViewById(R.id.index_1_phone));
-		index_1_email = ((TextView) view1.findViewById(R.id.index_1_email));
+		index1layout = (LinearLayout) view.findViewById(R.id.index1layout);
+		index_1_realname = ((TextView) view.findViewById(R.id.index_1_realname));
+		index_1_info = ((TextView) view.findViewById(R.id.index_1_info));
+		index_1_where = ((TextView) view.findViewById(R.id.index_1_where));
+		index_1_lisence = ((TextView) view.findViewById(R.id.index_1_lisence));
+		index_1_phone = ((TextView) view.findViewById(R.id.index_1_phone));
+		index_1_email = ((TextView) view.findViewById(R.id.index_1_email));
+		
+		initTopView(view,R.string.resume_baseinfo,"BaseInfoActivity");
 		
 		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1 limit 1";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			if (!mViewList.contains(view1)) {
-				mViewList.add(view1);
+			if (!mViewList.contains(view)) {
+				mViewList.add(view);
 			}
 			
 			index1layout.setBackgroundColor(CommUtil.getColorValue(self,
@@ -273,14 +278,14 @@ public class MainActivity extends Activity {
 	 * @param view
 	 */
 	private void initView2(View view){
-		index2layout = (LinearLayout) view2.findViewById(R.id.index2layout);
-		weListview = (ListView) view2.findViewById(R.id.weListview);
-
+		index2layout = (LinearLayout) view.findViewById(R.id.index2layout);
+		weListview = (ListView) view.findViewById(R.id.weListview);
+		initTopView(view,R.string.resume_workexperience,"WorkExperienceActivity");
 		queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1 order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			if (!mViewList.contains(view2)) {
-				mViewList.add(view2);
+			if (!mViewList.contains(view)) {
+				mViewList.add(view);
 			}
 			index2layout.setBackgroundColor(CommUtil.getColorValue(self,
 					CommUtil.parseInt(commMapArray.get("background")[0])));
@@ -319,15 +324,15 @@ public class MainActivity extends Activity {
 	 * @Description: 自我评价&职业目标
 	 */
 	private void initView3(View view){
-		index3layout = (LinearLayout) view1.findViewById(R.id.index3layout);
+		index3layout = (LinearLayout) view.findViewById(R.id.index3layout);
 		tagFlowLayout = (TagFlowLayout) view.findViewById(R.id.flowlayout);
 		self_evaluation = (TextView)view.findViewById(R.id.self_evaluation);
-		
+		initTopView(view,R.string.resume_evaluation,"EvaluationActivity");
 		queryWhere = "select * from " + CommonText.EVALUATION + " where userId = 1 order by id desc";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			if (!mViewList.contains(view3)) {
-				mViewList.add(view3);
+			if (!mViewList.contains(view)) {
+				mViewList.add(view);
 			}
 			index3layout.setBackgroundColor(CommUtil.getColorValue(self,
 					CommUtil.parseInt(commMapArray.get("background")[0])));
@@ -359,21 +364,21 @@ public class MainActivity extends Activity {
 	 * @Description: 求职意向
 	 */
 	private void initView4(View view){
-		index4layout = (LinearLayout) view1.findViewById(R.id.index4layout);
+		index4layout = (LinearLayout) view.findViewById(R.id.index4layout);
 		index_4_info1 = (TextView)view.findViewById(R.id.index_4_info1);
 		index_4_info2 = (TextView)view.findViewById(R.id.index_4_info2);
 		index_4_info3 = (TextView)view.findViewById(R.id.index_4_info3);
 		index_4_info4 = (TextView)view.findViewById(R.id.index_4_info4);
 		index_4_info5 = (TextView)view.findViewById(R.id.index_4_info5);
 		index_4_info6 = (TextView)view.findViewById(R.id.index_4_info6);
-		
+		initTopView(view,R.string.resume_jobintension,"JobIntensionActivity");
 		queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = 1 order by id desc";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			index4layout.setBackgroundColor(CommUtil.getColorValue(self,
 					CommUtil.parseInt(commMapArray.get("background")[0])));
-			if (!mViewList.contains(view4)) {
-				mViewList.add(view4);
+			if (!mViewList.contains(view)) {
+				mViewList.add(view);
 			}
 			index_4_info1.setText(Html.fromHtml("<strong>工作性质：</strong>"+commMapArray.get("expworkingproperty")[0]));
 			index_4_info2.setText(Html.fromHtml("<strong>期望职业：</strong>"+commMapArray.get("expworkcareer")[0]));
@@ -404,15 +409,15 @@ public class MainActivity extends Activity {
 		edListview = (CustomListView)view.findViewById(R.id.edListview);
 		trListview = (CustomListView)view.findViewById(R.id.trListview);
 		index6_trLayout = (LinearLayout)view.findViewById(R.id.index6_trLayout);
-		
+		initTopView(view,R.string.resume_education,"EducationActivity");
 		queryWhere = "select * from " + CommonText.EDUCATION + " where userId = 1 order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			index6layout.setBackgroundColor(CommUtil.getColorValue(self,
 					CommUtil.parseInt(commMapArray.get("background")[0])));
 			
-			if (!mViewList.contains(view6)) {
-				mViewList.add(view6);
+			if (!mViewList.contains(view)) {
+				mViewList.add(view);
 			}
 			
 			commMapAdapter = new CommForMapArrayBaseAdapter(
@@ -503,14 +508,16 @@ public class MainActivity extends Activity {
 		listview2= (CustomListView) view.findViewById(R.id.listview2);
 		listview3= (CustomListView) view.findViewById(R.id.listview3);
 		
+		initTopView(view,R.string.resume_otherinfo,"OtherInfoActivity");
+		
 		queryWhere = "select * from " + CommonText.OTHERINFO + " where userId = 1 order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
         	index7layout.setBackgroundColor(CommUtil.getColorValue(self,
 					CommUtil.parseInt(commMapArray.get("background")[0])));
         	index7_layout1.setVisibility(View.VISIBLE);
-        	if (!mViewList.contains(view7)) {
-        		mViewList.add(view7);
+        	if (!mViewList.contains(view)) {
+        		mViewList.add(view);
 			}
         	
         	commMapAdapter = new CommForMapArrayBaseAdapter(
@@ -545,8 +552,8 @@ public class MainActivity extends Activity {
         final Map<String, String[]> commMapArray2 = dbUtil.queryData(self, queryWhere);
         if (commMapArray2!= null && commMapArray2.get("userId").length > 0) {
         	index7_layout2.setVisibility(View.VISIBLE);
-        	if (!mViewList.contains(view7)) {
-        		mViewList.add(view7);
+        	if (!mViewList.contains(view)) {
+        		mViewList.add(view);
 			}
         	commMapAdapter = new CommForMapArrayBaseAdapter(
 					self, commMapArray2, R.layout.index7_listview_item1_text, "userId") {
@@ -574,8 +581,8 @@ public class MainActivity extends Activity {
         final Map<String, String[]> commMapArray3 = dbUtil.queryData(self, queryWhere);
         if (commMapArray3!= null && commMapArray3.get("userId").length > 0) {
         	index7_layout3.setVisibility(View.VISIBLE);
-        	if (!mViewList.contains(view7)) {
-        		mViewList.add(view7);
+        	if (!mViewList.contains(view)) {
+        		mViewList.add(view);
 			}
         	
         	commMapAdapter = new CommForMapArrayBaseAdapter(
@@ -618,6 +625,27 @@ public class MainActivity extends Activity {
 //				sp.edit().putInt("startVerytime", 0).commit();
 				ActivityUtils.startActivity(self, Constants.PACKAGENAME
 						+ ".ui.HomeActivity");
+			}
+		});
+	}
+	
+	private void initTopView(View view,int redId,final String src){
+		main_top_title =  (TextView) view.findViewById(R.id.main_top_title);
+		main_top_title.setText(CommUtil.getStrValue(self, redId));
+		main_top_edit = (ImageView) view.findViewById(R.id.main_top_edit);
+		
+		if (sp.getBoolean("edit_mode", false) == true) {
+			main_top_edit.setVisibility(View.VISIBLE);
+		}else{
+			main_top_edit.setVisibility(View.GONE);
+		}
+		
+		main_top_edit.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				ActivityUtils.startActivity(self, Constants.PACKAGENAME + ".ui." + src);
 			}
 		});
 	}

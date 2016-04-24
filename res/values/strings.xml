@@ -15,8 +15,9 @@
 
     <!-- 设置界面 -->
     <string name="action_settings">设置</string>
-    <string name="settings_item1">是否每次启动简历预览界面</string>
-    <string name="settings_item2">是否开启自动切换简历预览</string>
+    <string name="settings_item1">每次启动显示简历预览界面</string>
+    <string name="settings_item2">自动切换简历预览</string>
+    <string name="settings_item21">简历预览界面编辑模式</string>
     <string name="settings_item3">检测新版本</string>
     <string name="settings_item4">反馈意见</string>
 

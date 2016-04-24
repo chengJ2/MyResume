@@ -15,6 +15,7 @@
     <dimen name="blarge_text_size">60dip</dimen>
     
     <dimen name="line_height">1px</dimen>
+    <dimen name="line_height_20">20dip</dimen>
     <dimen name="line_margin">3dip</dimen>
     
     <dimen name="btn_height">43.0dp</dimen>

@@ -6,9 +6,7 @@
     android:orientation="vertical"
     android:id="@+id/index4layout" >
 
-     <TextView
-        style="@style/index_top_text"
-        android:text="@string/resume_jobintension" />
+     <include layout="@layout/top_title_layout"/>
 
     <ImageView
         android:layout_width="match_parent"

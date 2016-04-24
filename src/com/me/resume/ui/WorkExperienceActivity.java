@@ -87,6 +87,12 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		setTopTitle(R.string.resume_workexperience);
 		setMsgHide();
 		setRight2IconVisible(View.VISIBLE);
+		
+		setPreferenceData("index2_mode",getEditModeCheck());
+		
+		L.d("checked---"+getPreferenceData("index2_mode"));
+		
+		
 		info_companyname = findView(R.id.info_companyname);
 		info_companynature = findView(R.id.info_companynature);
 		info_companyscale = findView(R.id.info_companyscale);

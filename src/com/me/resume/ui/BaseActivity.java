@@ -22,10 +22,12 @@ import com.me.resume.R;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.swipeback.SwipeBackActivity;
+import com.me.resume.tools.L;
 import com.me.resume.tools.SystemBarTintManager;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
+import com.whjz.android.util.common.DbHelper;
 
 /**
  * 
@@ -34,7 +36,7 @@ import com.me.resume.utils.DialogUtils;
  * @date 2016/4/22 上午10:51:57
  * 
  */
-public class BaseActivity extends SwipeBackActivity {
+public class BaseActivity extends SwipeBackActivity{
 
 	private RelativeLayout topLayout;
 	
@@ -71,12 +73,30 @@ public class BaseActivity extends SwipeBackActivity {
 	
 	private Integer checkColor = 0;
 	
+	private Boolean isChecked = false;
+	
+//	private static BaseActivity mInstance;
+//	
+//	public static BaseActivity getInstance(){
+//		if (mInstance == null) {
+//			mInstance = new BaseActivity();
+//		}
+//		return mInstance;
+//	}
+	
+	
+	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 11:
 				if (msg.obj != null) {
 					checkColor = (Integer) msg.obj;
+				}
+				break;
+			case 12:
+				if (msg.obj != null) {
+					isChecked = (boolean) msg.obj;
 				}
 				break;
 			default:
@@ -169,11 +189,23 @@ public class BaseActivity extends SwipeBackActivity {
 		right_icon_more.setVisibility(visibility);
 	}
 	
+	/**
+	 * 预览界面的背景色
+	 * @return checkColor
+	 */
 	protected Integer getCheckColor(){
 		if (checkColor == 0) {
 			return R.color.red;
 		}
 		return checkColor;
+	}
+	
+	/**
+	 * 是否显示编辑模式
+	 * @return isChecked
+	 */
+	protected boolean getEditModeCheck(){
+		return isChecked;
 	}
 	
 	/**

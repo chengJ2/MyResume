@@ -98,6 +98,12 @@
         <item name="android:layout_height">@dimen/line_height</item>
         <item name="android:background">@color/line</item>
     </style>
+    
+    <style name="line_20">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/line_height_20</item>
+        <item name="android:background">@color/line</item>
+    </style>
 
     <!-- 界面按钮 -->
     <style name="button_menu">

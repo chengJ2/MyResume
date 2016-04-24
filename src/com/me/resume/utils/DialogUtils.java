@@ -26,10 +26,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
-import android.widget.ImageView;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -40,12 +40,13 @@ import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.tools.L;
+import com.me.resume.views.SwitchButton;
+import com.me.resume.views.SwitchButton.OnChangedListener;
 
 /**
  * 
 * @ClassName: DialogUtils 
 * @Description: 弹出框类
-* @author Comsys-WH1510032 
 * @date 2015/11/27 下午1:39:10 
 *
  */
@@ -84,11 +85,6 @@ public class DialogUtils {
 				@Override
 				public void onClick(View v) {
 					dismissDialog();
-					if (msgwhich == VideoFragment.MSG_RESET) {
-						sendMsg(VideoFragment.MSG_RESET);
-					}else if(msgwhich == VideoFragment.MSG_WIFI_SETTING){
-						sendMsg(VideoFragment.MSG_WIFI_SETTING);
-					}
 				}
 			});
 			dialog.show();*/
@@ -326,7 +322,6 @@ public class DialogUtils {
 					 age = age + 1;
 				 }*/
 				 String date = years +"-"+ (months+1) + "-"+days;
-				 L.d("==date==" + date);
 				 sendMsg(msgWhat,date);
 				 
 				 dismissPopwindow();
@@ -361,6 +356,7 @@ public class DialogUtils {
 		mPopupWindow.setFocusable(true);
 		
 		GridView bgrid = (GridView)layout.findViewById(R.id.bgrid);
+		SwitchButton setting_editmode_cb = (SwitchButton)layout.findViewById(R.id.setting_editmode_cb);
 		
 		final TypedArray typedArray = context.getResources().obtainTypedArray(R.array.review_bgcolor);
 		List<Integer> nList = new ArrayList<Integer>();
@@ -429,9 +425,16 @@ public class DialogUtils {
 		
 		bgrid.setAdapter(commIntAdapter);
 		
+		setting_editmode_cb.setOnChangedListener(new OnChangedListener() {
+			
+			@Override
+			public void OnChanged(SwitchButton switchButton, final boolean checkState) {
+				sendMsg(12, checkState);
+			}
+		});
+		
 		mPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 	}
-	
 	
 	/**
 	 * 

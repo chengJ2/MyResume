@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
+import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -119,6 +120,9 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		
 		getChooseValue();
 		
+		setPreferenceData("index1_mode",getEditModeCheck());
+		L.d("checked---"+getPreferenceData("index1_mode"));
+		
 		new Handler().postDelayed(new Runnable() {
 			
 			@Override
@@ -133,6 +137,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		setTitle(R.string.resume_baseinfo);
 		setMsgHide();
 		setRight2IconVisible(View.VISIBLE);
+		
 		left_icon.setOnClickListener(this);
 		right_icon.setOnClickListener(this);
 		
@@ -348,8 +353,8 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				cValues.put("brithday", info_brithdayStr);
 				cValues.put("joinworktime", info_workyearStr);
 				cValues.put("phone", info_phoneStr);
-				cValues.put("hometown", "湖北黄石");
-				cValues.put("city", "武汉");
+				cValues.put("hometown", info_hometownStr);
+				cValues.put("city", info_cityStr);
 				cValues.put("email", info_emailStr);
 				cValues.put("ismarry", rg_maritalstatusStr);
 				cValues.put("nationality", info_nationalityStr);
@@ -435,4 +440,5 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
         }
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+
 }
