@@ -94,17 +94,11 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 		
 		findViews();
 		
-//		mHandler.postDelayed(new Runnable() {
-//			
-//			@Override
-//			public void run() {
-				// TODO Auto-generated method stub
-				mHandler.sendEmptyMessage(10);
-//			}
-//		}, 100);
+		mHandler.sendEmptyMessage(10);
 		
 		initHotCity();
 		
+		index_search_edit.setHint(CommUtil.getStrValue(self, R.string.hint_address_text));
 		index_search_edit.requestFocus();
 		
 		index_search_edit.addTextChangedListener(new TextWatcher() {

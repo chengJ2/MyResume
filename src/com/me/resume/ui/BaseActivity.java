@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -22,12 +24,10 @@ import com.me.resume.R;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.swipeback.SwipeBackActivity;
-import com.me.resume.tools.L;
 import com.me.resume.tools.SystemBarTintManager;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
-import com.whjz.android.util.common.DbHelper;
 
 /**
  * 
@@ -36,7 +36,7 @@ import com.whjz.android.util.common.DbHelper;
  * @date 2016/4/22 上午10:51:57
  * 
  */
-public class BaseActivity extends SwipeBackActivity{
+public class BaseActivity extends SwipeBackActivity implements TextWatcher{
 
 	private RelativeLayout topLayout;
 	
@@ -83,8 +83,6 @@ public class BaseActivity extends SwipeBackActivity{
 //		}
 //		return mInstance;
 //	}
-	
-	
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -295,6 +293,26 @@ public class BaseActivity extends SwipeBackActivity{
 	 */
 	protected <T extends View> T findView(int viewID) {
 		return (T) findViewById(viewID);
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count,
+			int after) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void afterTextChanged(Editable s) {
+		if (s.toString() != null && !"".equals(s.toString())) {
+			setMsgHide();
+		}
 	}
 
 }

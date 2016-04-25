@@ -179,6 +179,12 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		
 		info_maritalstatus.setOnClickListener(this);
 		info_politicalstatus.setOnClickListener(this);
+		
+		info_realname.addTextChangedListener(this);
+		info_phone.addTextChangedListener(this);
+		info_email.addTextChangedListener(this);
+		info_nationality.addTextChangedListener(this);
+		info_license.addTextChangedListener(this);
 	}
 	
 	private void initData() {
@@ -440,5 +446,4 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
         }
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
 }

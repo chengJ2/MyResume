@@ -1,6 +1,9 @@
 package com.me.resume.ui;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -9,12 +12,10 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
-import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -88,10 +89,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		setMsgHide();
 		setRight2IconVisible(View.VISIBLE);
 		
-		setPreferenceData("index2_mode",getEditModeCheck());
-		
-		L.d("checked---"+getPreferenceData("index2_mode"));
-		
+//		setPreferenceData("index2_mode",getEditModeCheck());
 		
 		info_companyname = findView(R.id.info_companyname);
 		info_companynature = findView(R.id.info_companynature);
@@ -120,7 +118,9 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
         	 info_companyname.setText(commMapArray.get("companyname")[0]);
         	 info_jobtitle.setText(commMapArray.get("jobtitle")[0]);
              info_workdescdetail.setText(commMapArray.get("workdesc")[0]);
-        	 
+             
+             info_companynature.setText(commMapArray.get("companynature")[0]);
+     		 info_companyscale.setText(commMapArray.get("companyscale")[0]);
          }else{
         	 edit.setVisibility(View.GONE);
          }
@@ -137,21 +137,31 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		info_startworktime.setOnClickListener(this);
 		info_endworktime.setOnClickListener(this);
 		
+		info_companyname.addTextChangedListener(this);
+		info_jobtitle.addTextChangedListener(this);
+		info_workdescdetail.addTextChangedListener(this);
 	}
+	
+	String info_companynameStr,info_jobtitleStr,info_workdescdetailStr;
+	
+	String info_companynatureStr,info_companyscaleStr;
+	
+	String info_industryclassificationStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr;
 	
 	@Override
 	public void onClick(View v) {
-		String info_companynameStr = CommUtil.getEditTextValue(info_companyname);
-		String info_jobtitleStr = CommUtil.getEditTextValue(info_jobtitle);
-		String info_workdescdetailStr = CommUtil.getEditTextValue(info_workdescdetail);
-		
-		String info_companynatureStr = CommUtil.getTextValue(info_companynature);
-		String info_companyscaleStr = CommUtil.getTextValue(info_companyscale);
-		
-		String info_industryclassificationStr = CommUtil.getTextValue(info_industryclassification);
-		String info_startworktimeStr = CommUtil.getTextValue(info_startworktime);
-		String info_endworktimeStr = CommUtil.getTextValue(info_endworktime);
-		String info_expectedsalaryStr = CommUtil.getTextValue(info_expectedsalary);
+		info_companynameStr = CommUtil.getEditTextValue(info_companyname);
+		info_jobtitleStr = CommUtil.getEditTextValue(info_jobtitle);
+		info_workdescdetailStr = CommUtil.getEditTextValue(info_workdescdetail);
+
+		info_companynatureStr = CommUtil.getTextValue(info_companynature);
+		info_companyscaleStr = CommUtil.getTextValue(info_companyscale);
+
+		info_industryclassificationStr = CommUtil
+				.getTextValue(info_industryclassification);
+		info_startworktimeStr = CommUtil.getTextValue(info_startworktime);
+		info_endworktimeStr = CommUtil.getTextValue(info_endworktime);
+		info_expectedsalaryStr = CommUtil.getTextValue(info_expectedsalary);
 		
 		switch (v.getId()) {
 		case R.id.save:
@@ -195,32 +205,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				return;
 			}
 			
-			
-			/*List<String> params = new ArrayList<String>();
-			List<String> values = new ArrayList<String>();
-			params.add("p_userId");
-			params.add("p_companyname");
-			params.add("p_industryclassification");
-			params.add("p_jobtitle");
-			params.add("p_worktimeStart");
-			params.add("p_worktimeEnd");
-			params.add("p_expectedsalary");
-			params.add("p_workdesc");
-			params.add("createtime");
-			
-			values.add("2");
-			values.add(info_companynameStr);
-			values.add(info_jobtitleStr);
-			values.add(info_workdescdetailStr);
-			values.add(info_industryclassificationStr);
-			values.add(info_startworktimeStr);
-			values.add(info_endworktimeStr);
-			values.add(info_expectedsalaryStr);
-			values.add(TimeUtils.getCurrentTimeInString());*/
-		
-			String where = "delete from " + CommonText.WORKEXPERIENCE + " where  userId = 2";
-//			dbUtil.delectData(self, where);
-			
 			ContentValues cValues = new ContentValues();
 			cValues.put("userId", "1");
 			cValues.put("companyname", info_companynameStr);
@@ -240,22 +224,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				edit.setVisibility(View.VISIBLE);
 			}
 			
-			/*requestData("pro_workexpericnce", 2, params, values,CommonText.WORKEXPERIENCE,where, new HandlerData() {
-				@Override
-				public void error() {
-					CommUtil.ToastMsg(getApplicationContext(), "失败");
-				}
-				
-				public void success(Map<String, List<String>> map) {
-					try {
-						if (map.get("msg").get(0).equals("200")) {
-							CommUtil.ToastMsg(getApplicationContext(), "新增工作经验成功");
-						}
-					} catch (Exception e) {
-					}
-				}
-			});*/
-			
+			uploadWeData();
 			break;
 		case R.id.edit:
 			String edId = commMapArray.get("id")[0];
@@ -312,6 +281,55 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		String[] item_text = CommUtil.getArrayValue(self,array); 
 		mList = Arrays.asList(item_text);
 		DialogUtils.showPopWindow(self, parent, resId, mList, mHandler);
+	}
+	
+	private void uploadWeData(){
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		params.add("p_weId");
+		params.add("p_userId");
+		params.add("p_companyname");
+		params.add("p_industryclassification");
+		params.add("p_jobtitle");
+		params.add("p_worktimestart");
+		params.add("p_worktimeend");
+		params.add("p_expectedsalary");
+		params.add("p_workdesc");
+		params.add("p_companynature");
+		params.add("p_companyscale");
+		params.add("p_background");
+		
+		values.add("0");
+		values.add("1");
+		values.add(info_companynameStr);
+		values.add(info_industryclassificationStr);
+		values.add(info_jobtitleStr);
+		values.add(info_startworktimeStr);
+		values.add(info_endworktimeStr);
+		values.add(info_expectedsalaryStr);
+		values.add(info_workdescdetailStr);
+		values.add(info_companynatureStr);
+		values.add(info_companyscaleStr);
+		values.add(String.valueOf(getCheckColor()));
+	
+//		String where = "delete from " + CommonText.WORKEXPERIENCE + " where  userId = 1";
+//		dbUtil.delectData(self, where);
+		
+		requestData("pro_workexpericnce", 2, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				CommUtil.ToastMsg(getApplicationContext(), "失败");
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+					if (map.get("msg").get(0).equals("200")) {
+						CommUtil.ToastMsg(getApplicationContext(), "新增工作经验成功");
+					}
+				} catch (Exception e) {
+				}
+			}
+		});
 	}
 	
 	

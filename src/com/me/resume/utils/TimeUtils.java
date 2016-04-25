@@ -456,4 +456,20 @@ public class TimeUtils {
         }
         return b;
     }
+    
+    public static String getWeekOfDate(String pTime) {
+    	SimpleDateFormat format = new SimpleDateFormat(SHORT_FORMAT_STRING);
+    	String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+    	Calendar cal = Calendar.getInstance();
+    	try {
+			cal.setTime(format.parse(pTime));
+			int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
+	    	if (w < 0)
+	    		w = 0;
+	    	 return weekDays[w];
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return "星期日";
+    }
  }

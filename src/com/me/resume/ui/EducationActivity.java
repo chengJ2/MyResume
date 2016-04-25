@@ -94,10 +94,6 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				switchContent(cposition,button.getText().toString());
 			}
 		});
-		
-		
-		
-		
 	}
 	
 	private void switchContent(int position,String tab){

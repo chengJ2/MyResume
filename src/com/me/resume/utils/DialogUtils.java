@@ -301,7 +301,10 @@ public class DialogUtils {
 		});
 		
         TextView msg = (TextView)layout.findViewById(R.id.title);
-		msg.setText(CommUtil.getStrValue(context, resId));
+        
+        String today = years + "-" + months + "-" + days;
+        
+		msg.setText(CommUtil.getStrValue(context, resId) + " (" + TimeUtils.getWeekOfDate(today) +")");
         
 		Button btn1 = (Button)layout.findViewById(R.id.btn_sure);
 		btn1.setOnClickListener(new OnClickListener() {

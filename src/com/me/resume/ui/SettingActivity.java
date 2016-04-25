@@ -28,7 +28,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	private RadioGroup radioGroup_show;
 	private RadioButton radio_left, radio_right,radionv_middle;
 	
-	private SwitchButton setting_start_cb,setting_auto_cb;
+	private SwitchButton setting_start_cb,setting_auto_cb,setting_edit_cb;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		
 		setting_start_cb = findView(R.id.setting_start_cb);
 		setting_auto_cb = findView(R.id.setting_auto_cb);
+		setting_edit_cb = findView(R.id.setting_edit_cb);
 		
 		setTopTitle(R.string.action_settings);
 		
@@ -103,6 +104,21 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 				setPreferenceData("autoShow", onoff); 
 			}
 		});
+		
+		setting_edit_cb.setOnChangedListener(new OnChangedListener() {
+			
+			@Override
+			public void OnChanged(SwitchButton switchButton, boolean checkState) {
+				// TODO Auto-generated method stub
+				int onoff = 0;
+				if(getPreferenceData("editmode", 0) == 0){
+					onoff = 1;
+				}else{
+					onoff = 0;
+				}
+				setPreferenceData("editmode", onoff); 
+			}
+		});
 	}
 	
 	@Override
@@ -111,6 +127,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		super.onResume();
 		int autoShow = getPreferenceData("autoShow", 0);
 		int startVerytime = getPreferenceData("startVerytime", 0);
+		int editmode = getPreferenceData("editmode", 0);
 		if (startVerytime == 0) {
 			setting_start_cb.setChecked(false);
 		}else{
@@ -120,6 +137,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			setting_auto_cb.setChecked(false);
 		}else{
 			setting_auto_cb.setChecked(true);
+		}
+		if (editmode == 0) {
+			setting_edit_cb.setChecked(false);
+		}else{
+			setting_edit_cb.setChecked(true);
 		}
 	}
 	

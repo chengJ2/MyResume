@@ -634,7 +634,7 @@ public class MainActivity extends Activity {
 		main_top_title.setText(CommUtil.getStrValue(self, redId));
 		main_top_edit = (ImageView) view.findViewById(R.id.main_top_edit);
 		
-		if (sp.getBoolean("edit_mode", false) == true) {
+		if (sp.getInt("edit_mode", 0) == 1) {
 			main_top_edit.setVisibility(View.VISIBLE);
 		}else{
 			main_top_edit.setVisibility(View.GONE);

@@ -5,13 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.me.resume.MyApplication;
 import com.me.resume.R;
-import com.me.resume.swipeback.SwipeBackActivity;
-import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.CustomFAB;
@@ -43,18 +38,27 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		setMsgHide();
 		setRight2IconVisible(View.VISIBLE);
 		
-		left_icon.setOnClickListener(this);
-		right_icon.setOnClickListener(this);
+		findViews();
+		initData();
 		
+	}
+	
+	private void findViews(){
 		info_self_evaluation = findView(R.id.info_self_evaluation);
 		info_career_goal = findView(R.id.info_career_goal);
-		
 		save_edit = findView(R.id.save_edit);
-		save_edit.setOnClickListener(this);
-		
 		next = findView(R.id.next);
+		
+		left_icon.setOnClickListener(this);
+		right_icon.setOnClickListener(this);
+		save_edit.setOnClickListener(this);
 		next.setOnClickListener(this);
 		
+		info_self_evaluation.addTextChangedListener(this);
+		info_career_goal.addTextChangedListener(this);
+	}
+	
+	private void initData(){
 		queryWhere = "select * from " + CommonText.EVALUATION + " where userId = 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {

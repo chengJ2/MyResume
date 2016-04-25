@@ -6,7 +6,6 @@ import java.util.Map;
 
 import android.content.ContentValues;
 import android.os.Bundle;
-import android.provider.Settings.Global;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -16,10 +15,9 @@ import android.widget.TextView;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
-import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
-import com.tencent.bugly.proguard.v;
+import com.me.resume.utils.RegexUtil;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -75,7 +73,8 @@ public class UserLoginActivity extends BaseActivity implements
 	private void initViews(){
 		setTopTitle(R.string.action_user_login);
 		setMsgHide();
-		setRightIconVisible(View.GONE);
+		setRightIconVisible(View.VISIBLE);
+		right_icon.setImageResource(R.drawable.icon_user_register);
 		setRight2IconVisible(View.GONE);
 		edtTxt_username.setText("");
 		if (getPreferenceData("fflag")) {
@@ -98,7 +97,7 @@ public class UserLoginActivity extends BaseActivity implements
 			self.scrollToFinishActivity();
 			break;
 		case R.id.right_icon:
-			startActivity(".ui.SettingActivity",false);
+			startActivity(".ui.UserRegisterActivity",false);
 			break;
 		case R.id.save_checkbox:
 		case R.id.savePassWord:
@@ -186,9 +185,9 @@ public class UserLoginActivity extends BaseActivity implements
 	 * @return
 	 */
 	private boolean checkInfo(){
-		str_username=edtTxt_username.getText().toString();
-		str_password=edtTxt_password.getText().toString();
-		if(CommUtil.EditTextIsNull(edtTxt_username) || CommUtil.EditTextIsNull(edtTxt_password)){
+		str_username = edtTxt_username.getText().toString();
+		str_password = edtTxt_password.getText().toString();
+		if(!RegexUtil.checkNotNull(str_username) || !RegexUtil.checkNotNull(str_password)){
 			toastMsg(R.string.action_input_up_isnull);
 			return false;
 		}

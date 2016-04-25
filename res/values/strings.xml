@@ -48,14 +48,26 @@
 
     <!-- user login register -->
     <string name="action_user_login">用户登录</string>
+    <string name="action_user_regist">快速注册</string>
     <string name="action_login">登&#160;&#160;录</string>
+     <string name="action_register">注&#160;&#160;册</string>
     <string name="action_loging">登录中...</string>
+     <string name="action_login_savepwd">保存密码</string>
+      <string name="action_login_forgotpwd">忘记密码?</string>
+    <string name="action_login_3pl">第三方登录</string>
     <string name="action_input_isnull">不能为空</string>
-    <string name="action_input_up_isnull">用户名和密码不能为空!</string>
+    <string name="action_input_up_isnull">用户名/手机号或密码不能为空!</string>
+    <string name="action_input_username_isnull">用户名不能为空!</string>
+    <string name="action_input_password_isnull">密码不能为空!</string>
+    <string name="action_input_password_equal">两次密码不一致!</string>
+    <string name="register_repeatedusername">用户名已存在</string>
     <string name="action_wait_loging">正在登录,请稍后...</string>
     <string name="action_login_error"> 用户名或密码不正确,请重试!</string>
     <string name="login_input_hint">请输入手机号/用户名</string>
+    <string name="login_input1_hint">请输入用户名</string>
     <string name="login_input2_hint">请输入密码</string>
+    <string name="login_input3_hint">请确认密码</string>
+     <string name="action_regist_fail">注册失败</string>
 
     <!-- UI button click msg -->
     <string name="action_notice">提&#160;示</string>
@@ -73,6 +85,11 @@
     <!-- UI button text -->
     <string name="show_button_cancle">取&#160;&#160;消</string>
     <string name="show_button_sure">确&#160;&#160;定</string>
+    
+    <!-- Search UI -->
+    <string name="hint_industry_text">请输入行业名称/拼音</string>
+    <string name="hint_address_text">请输入城市/行政区/拼音</string>
+    <string name="search_button">查询</string>
 
     <!-- 基本资料 -->
     <string name="reg_info_email">电子邮箱不合法！</string>
