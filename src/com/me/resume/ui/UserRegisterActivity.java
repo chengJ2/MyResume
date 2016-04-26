@@ -43,6 +43,7 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
 		setMsgHide();
 		setRightIconVisible(View.GONE);
 		setRight2IconVisible(View.GONE);
+		setfabLayoutVisible(View.GONE);
 	}
 
 	private void findViews() {
@@ -51,9 +52,6 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
 		password2Et = findView(R.id.edtTxt2_password);
 		
 		registBtn = findView(R.id.btn_register);
-		
-		left_icon.setOnClickListener(this);
-		registBtn.setOnClickListener(this);
 	}
 	
 	@Override

@@ -55,7 +55,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		
 		setRight2IconVisible(View.GONE);
 		
-		left_icon.setOnClickListener(this);
+		setfabLayoutVisible(View.GONE);
 		
 		radio_left.setChecked(true);
 		radio_right.setChecked(false);

@@ -4,12 +4,9 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.me.resume.R;
-import com.me.resume.swipeback.SwipeBackActivity;
-import com.me.resume.utils.CommUtil;
 
 /**
  * 
@@ -21,7 +18,6 @@ import com.me.resume.utils.CommUtil;
  */
 public class TopicActivity extends BaseActivity implements OnClickListener{
 
-	
 	private TextView content;
 	
 	private String source = "<p>(1)一旦和用人单位约好面试时间后，一定要提前5-10分钟到达面试地点，以表示求职者的诚意，给对方以信任感，同时也可调整自己的心态，作一些简单的仪表准备，以免仓促上阵，手忙脚乱。为了做到这一点，一定要牢记面试的时间地点，有条件的同学最好能提前去一趟，以免因一时找不到地方或途中延误而迟到。"
@@ -34,7 +30,6 @@ public class TopicActivity extends BaseActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
 		boayLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_topic_layout, null);
 		boayLayout.addView(v);
@@ -44,6 +39,8 @@ public class TopicActivity extends BaseActivity implements OnClickListener{
 		setMsgHide();
 		
 		setRight2IconVisible(View.GONE);
+		
+		setfabLayoutVisible(View.GONE);
 		
 		content = findView(R.id.content);
 		content.setText(Html.fromHtml(source));
@@ -56,7 +53,7 @@ public class TopicActivity extends BaseActivity implements OnClickListener{
 			scrollToFinishActivity();
 			break;
 		case R.id.right_icon:
-			
+			// TODO
 			break;
 		default:
 			break;

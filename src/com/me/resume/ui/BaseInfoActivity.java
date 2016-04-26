@@ -1,6 +1,8 @@
 package com.me.resume.ui;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -21,14 +23,12 @@ import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
-import com.me.resume.views.CustomFAB;
 import com.whjz.android.text.CommonText;
 
 /**
  * 
 * @ClassName: BaseInfoActivity 
 * @Description: 个人基本资料
-* @author Comsys-WH1510032 
 * @date 2016/3/29 下午3:36:12 
 *
  */
@@ -53,8 +53,6 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	String rg_maritalstatusStr = "0";
 	String rg_workingabroadStr = "0";
 	String rg_politicalstatusStr = "0";
-	
-	private CustomFAB save_edit,next;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -110,14 +108,11 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
 		boayLayout.removeAllViews();
-		
 		View v = View.inflate(self,R.layout.activity_baseinfo_layout, null);
 		boayLayout.addView(v);
 		
 		findViews();
-		
 		getChooseValue();
 		
 		setPreferenceData("index1_mode",getEditModeCheck());
@@ -138,8 +133,8 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		setMsgHide();
 		setRight2IconVisible(View.VISIBLE);
 		
-		left_icon.setOnClickListener(this);
-		right_icon.setOnClickListener(this);
+		setfabLayoutVisible(View.VISIBLE);
+		setEditBtnVisible(View.GONE);
 		
 		info_realname = findView(R.id.info_realname);
 		info_phone = findView(R.id.info_phone);
@@ -168,14 +163,8 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		info_brithday.setOnClickListener(this);
 		info_workyear.setOnClickListener(this);
 		
-		save_edit = findView(R.id.save_edit);
-		next = findView(R.id.next);
-		
 		info_hometown.setOnClickListener(this);
 		info_city.setOnClickListener(this);
-		
-		save_edit.setOnClickListener(this);
-		next.setOnClickListener(this);
 		
 		info_maritalstatus.setOnClickListener(this);
 		info_politicalstatus.setOnClickListener(this);
@@ -191,7 +180,8 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-			save_edit.setImageResource(R.drawable.ic_btn_edit);
+			setAddBtnSrc(R.drawable.ic_btn_edit);
+			
 			info_realname.setText(commMapArray.get("realname")[0]);
 			info_phone.setText(commMapArray.get("phone")[0]);
 			info_email.setText(commMapArray.get("email")[0]);
@@ -238,9 +228,8 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			}else{
 				info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_1));
 			}
-			
 		}else{
-			save_edit.setImageResource(R.drawable.ic_btn_add);
+			setAddBtnSrc(R.drawable.ic_btn_add);
 		}
 		
 	}
@@ -273,21 +262,24 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 
 	}
 	
+	String info_realnameStr,info_phoneStr,info_emailStr,info_nationalityStr,info_licenseStr;
+	
+	String info_brithdayStr,info_workyearStr,info_hometownStr,info_cityStr;
 	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.save_edit:
-			String info_realnameStr = CommUtil.getEditTextValue(info_realname);
-			String info_phoneStr = CommUtil.getEditTextValue(info_phone);
-			String info_emailStr = CommUtil.getEditTextValue(info_email);
-			String info_nationalityStr = CommUtil.getEditTextValue(info_nationality);
-			String info_licenseStr = CommUtil.getEditTextValue(info_license);
-			
-			String info_brithdayStr = CommUtil.getTextValue(info_brithday);
-			String info_workyearStr = CommUtil.getTextValue(info_workyear);
-			String info_hometownStr = CommUtil.getTextValue(info_hometown);
-			String info_cityStr = CommUtil.getTextValue(info_city);
+		case R.id.save:
+			info_realnameStr = CommUtil.getEditTextValue(info_realname);
+			info_phoneStr = CommUtil.getEditTextValue(info_phone);
+			info_emailStr = CommUtil.getEditTextValue(info_email);
+			info_nationalityStr = CommUtil.getEditTextValue(info_nationality);
+			info_licenseStr = CommUtil.getEditTextValue(info_license);
+
+			info_brithdayStr = CommUtil.getTextValue(info_brithday);
+			info_workyearStr = CommUtil.getTextValue(info_workyear);
+			info_hometownStr = CommUtil.getTextValue(info_hometown);
+			info_cityStr = CommUtil.getTextValue(info_city);
 			
 			if (!RegexUtil.checkNotNull(info_realnameStr)) {
 				setMsg(R.string.info_name);
@@ -345,7 +337,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 										  "nationality","license","workingabroad","politicalstatus","background"}, 
 						new String[]{"1",info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
 										info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
-										info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr,String.valueOf(getCheckColor())});
+										info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr,getCheckColor()});
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
 				}else{
@@ -373,7 +365,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				queryResult = dbUtil.insertData(self, 
 						CommonText.BASEINFO, cValues);
 				if (queryResult) {
-					save_edit.setImageResource(R.drawable.ic_btn_edit);
+					setAddBtnSrc(R.drawable.ic_btn_edit);
 				}
 			}
 			break;
@@ -410,6 +402,9 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		case R.id.right_icon:
 			goActivity(".MainActivity");
 			break;
+		case R.id.right_icon_more:
+			DialogUtils.showTopMenuDialog(self, topLayout, mHandler);
+			break;
 		default:
 			break;
 		}
@@ -430,6 +425,46 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			set2Msg(R.string.action_baseinfo_null);
 		}
 	}
+	
+	private void uploadData(){
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		
+		params.add("userId");
+		params.add("realname");
+		params.add("gender");
+		params.add("brithday");
+		params.add("joinworktime");
+		params.add("phone");
+		params.add("hometown");
+		params.add("city");
+		params.add("email");
+		params.add("ismarry");
+		params.add("nationality");
+		params.add("license");
+		params.add("workingabroad");
+		params.add("politicalstatus");
+		params.add("avator");
+		params.add("background");
+		
+		values.add("1");
+		values.add(info_realnameStr);
+		values.add(rg_genderStr);
+		values.add(info_brithdayStr);
+		values.add(info_workyearStr);
+		values.add(info_phoneStr);
+		values.add(info_hometownStr);
+		values.add(info_cityStr);
+		values.add(info_emailStr);
+		values.add(rg_maritalstatusStr);
+		values.add(info_nationalityStr);
+		values.add(info_licenseStr);
+		values.add(rg_workingabroadStr);
+		values.add(rg_politicalstatusStr);
+		values.add("/image/aa.jpg");
+		values.add(getCheckColor());
+	}
+	
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

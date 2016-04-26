@@ -115,6 +115,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		setRight2IconVisible(View.GONE);
 		setLeftIcon(R.drawable.icon_person_avtar);
 		setRightIcon(R.drawable.icon_setting);
+		setfabLayoutVisible(View.GONE);
 		
 		initViews();
 		
@@ -126,8 +127,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		reviewResume = findView(R.id.review_btn);
 		resumeModelgridView = findView(R.id.grid);
 		resumeQuegridview = findView(R.id.xgln_gridview);
-		left_icon.setOnClickListener(this);
-		right_icon.setOnClickListener(this);
+
 		right_icon.setImageResource(R.drawable.icon_setting);
 		
 		makeResume.setOnClickListener(this);

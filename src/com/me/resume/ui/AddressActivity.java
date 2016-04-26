@@ -92,6 +92,8 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 		
 		setRight2IconVisible(View.GONE);
 		
+		setfabLayoutVisible(View.GONE);
+		
 		findViews();
 		
 		mHandler.sendEmptyMessage(10);
@@ -151,8 +153,6 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 		hotaddress_gridview = findView(R.id.hotaddress_gridview);
 		alladdrListview = findView(R.id.alladdrListview);
 		
-		left_icon.setOnClickListener(this);
-		search_btn.setOnClickListener(this);
 		clearView.setOnClickListener(this);
 	}
 	

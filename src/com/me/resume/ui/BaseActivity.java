@@ -28,6 +28,7 @@ import com.me.resume.tools.SystemBarTintManager;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
+import com.me.resume.views.CustomFAB;
 
 /**
  * 
@@ -36,15 +37,19 @@ import com.me.resume.utils.DialogUtils;
  * @date 2016/4/22 上午10:51:57
  * 
  */
-public class BaseActivity extends SwipeBackActivity implements TextWatcher{
+public class BaseActivity extends SwipeBackActivity implements OnClickListener,TextWatcher{
 
-	private RelativeLayout topLayout;
+	protected RelativeLayout topLayout;
 	
 	protected TextView toptext;
 	protected ImageView left_icon, right_icon,right_icon_more;
 	protected TextView msg;
 	
 	protected LinearLayout boayLayout;
+	
+	private RelativeLayout fabLayout;
+	
+	private CustomFAB saveButton,editButton,nextButton;
 	
 	protected BaseActivity self;
 	protected SharedPreferences sp;
@@ -107,9 +112,11 @@ public class BaseActivity extends SwipeBackActivity implements TextWatcher{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_base_layout);
-		self = BaseActivity.this;
-		sp = getSharedPreferences(Constants.CONFIG, Context.MODE_PRIVATE);
-		fieldNull = CommUtil.getStrValue(self, R.string.action_input_isnull);
+		findViews();
+		initData();
+	}
+	
+	private void findViews(){
 		topLayout = findView(R.id.topLayout);
 		toptext = findView(R.id.top_text);
 		left_icon = findView(R.id.left_lable);
@@ -119,14 +126,25 @@ public class BaseActivity extends SwipeBackActivity implements TextWatcher{
 		
 		boayLayout = findView(R.id.bodyLayout);
 		
-		right_icon_more.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				DialogUtils.showTopMenuDialog(self, topLayout, mHandler);
-			}
-		});
+		fabLayout = findView(R.id.fabLayout);
+		saveButton = findView(R.id.save);
+		editButton = findView(R.id.edit);
+		nextButton = findView(R.id.next);
+		
+		left_icon.setOnClickListener(this);
+		right_icon.setOnClickListener(this);
+		
+		right_icon_more.setOnClickListener(this);
+		
+		saveButton.setOnClickListener(this);
+		editButton.setOnClickListener(this);
+		nextButton.setOnClickListener(this);
+	}
+	
+	private void initData(){
+		self = BaseActivity.this;
+		sp = getSharedPreferences(Constants.CONFIG, Context.MODE_PRIVATE);
+		fieldNull = CommUtil.getStrValue(self, R.string.action_input_isnull);
 	}
 
 	@Override
@@ -167,35 +185,95 @@ public class BaseActivity extends SwipeBackActivity implements TextWatcher{
 		toptext.setText(CommUtil.getStrValue(self, id));
 	}
 
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 设置顶部左边按钮图标
+	 * @param resId
+	 */
 	protected void setLeftIcon(int resId) {
 		left_icon.setImageResource(resId);
 	}
 
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 设置顶部右边按钮图标
+	 * @param resId
+	 */
 	protected void setRightIcon(int resId) {
 		right_icon.setImageResource(resId);
 	}
 	
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 设置顶部左边按钮可视性
+	 * @param visibility
+	 */
 	protected void setLeftIconVisible(int visibility) {
 		left_icon.setVisibility(visibility);
 	}
 	
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 设置顶部右边按钮可视性
+	 * @param visibility
+	 */
 	protected void setRightIconVisible(int visibility) {
 		right_icon.setVisibility(visibility);
 	}
 	
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 设置顶部更多按钮可视性
+	 * @param visibility
+	 */
 	protected void setRight2IconVisible(int visibility) {
 		right_icon_more.setVisibility(visibility);
+	}
+	
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 设置底部按钮区域可视性
+	 * @param visibility
+	 */
+	protected void setfabLayoutVisible(int visibility){
+		fabLayout.setVisibility(visibility);
+	}
+	
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 设置中间按钮可视性
+	 * @param visibility
+	 */
+	protected void setEditBtnVisible(int visibility){
+		editButton.setVisibility(visibility);
+	}
+	
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 设置左边按钮图标
+	 * @param resId
+	 */
+	protected void setAddBtnSrc(int resId){
+		saveButton.setImageResource(resId);
 	}
 	
 	/**
 	 * 预览界面的背景色
 	 * @return checkColor
 	 */
-	protected Integer getCheckColor(){
+	protected String getCheckColor(){
 		if (checkColor == 0) {
-			return R.color.red;
+			return String.valueOf(R.color.red);
 		}
-		return checkColor;
+		return String.valueOf(checkColor);
 	}
 	
 	/**
@@ -312,6 +390,17 @@ public class BaseActivity extends SwipeBackActivity implements TextWatcher{
 	public void afterTextChanged(Editable s) {
 		if (s.toString() != null && !"".equals(s.toString())) {
 			setMsgHide();
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.right_icon_more:
+			DialogUtils.showTopMenuDialog(self, topLayout, mHandler);
+			break;
+		default:
+			break;
 		}
 	}
 

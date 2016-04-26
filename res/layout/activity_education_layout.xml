@@ -3,9 +3,7 @@
     xmlns:attr="http://schemas.android.com/apk/res/com.me.resume"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:layout_gravity="center"
-    android:fitsSystemWindows="true" >
+    android:background="@color/white" >
 
    <LinearLayout 
         android:id="@+id/llayout"
@@ -30,36 +28,4 @@
 	    android:layout_height="match_parent"
 	    android:orientation="vertical"
 	    android:layout_below="@id/llayout"/>
-    
-    <com.me.resume.views.CustomFAB
-       android:id="@+id/save"
-       android:layout_width="50dp"
-       android:layout_height="50dp"
-       android:layout_alignParentBottom="true"
-       android:layout_alignParentLeft="true"
-       android:layout_marginLeft="16dp"
-       android:layout_marginBottom="16dp"
-       android:tint="@android:color/white"
-       android:src="@drawable/ic_btn_add"/>
-     
-     <com.me.resume.views.CustomFAB
-       android:id="@+id/edit"
-       android:layout_width="50dp"
-       android:layout_height="50dp"
-       android:layout_alignParentBottom="true"
-       android:layout_centerHorizontal="true"
-       android:layout_marginBottom="16dp"
-       android:tint="@android:color/white"
-       android:src="@drawable/ic_btn_edit"/>
-     
-     <com.me.resume.views.CustomFAB
-       android:id="@+id/next"
-       android:layout_width="50dp"
-       android:layout_height="50dp"
-       android:layout_alignParentBottom="true"
-       android:layout_alignParentRight="true"
-       android:layout_marginRight="16dp"
-       android:layout_marginBottom="16dp"
-       android:tint="@android:color/white"
-       android:src="@drawable/ic_btn_next"/>
 </RelativeLayout>

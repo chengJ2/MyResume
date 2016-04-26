@@ -5,21 +5,17 @@
     android:background="@color/white" >
 
     <com.me.resume.views.CommScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fadingEdge="none"
-        android:fadingEdgeLength="0dp"
-        android:overScrollMode="never"
-        android:scrollbars="none" >
+         style="@style/comm_scrollview_style" >
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" 
+            android:background="@color/white">
 
             <LinearLayout
                 android:id="@+id/llout01"
-                style="@style/noraml_item_setting">
+                style="@style/noraml_item">
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -90,7 +86,7 @@
 
              <LinearLayout
                 android:id="@+id/llout02"
-                style="@style/noraml_item_setting">
+                style="@style/noraml_item">
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -119,8 +115,7 @@
             
             <LinearLayout
                 android:id="@+id/llout03"
-                android:textColor="@color/black"
-                style="@style/noraml_item_setting">
+                style="@style/noraml_item">
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -149,8 +144,7 @@
             <View style="@style/line_20" />
             
             <LinearLayout
-                android:id="@+id/llout03"
-                style="@style/noraml_item_setting">
+                style="@style/noraml_item">
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -172,8 +166,7 @@
             </LinearLayout>
             <View style="@style/line3" />
             <LinearLayout
-                android:id="@+id/llout03"
-                style="@style/noraml_item_setting">
+                style="@style/noraml_item">
 
                 <TextView
                     style="@style/user_info_item_tv"

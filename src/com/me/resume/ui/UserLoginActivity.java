@@ -63,8 +63,6 @@ public class UserLoginActivity extends BaseActivity implements
 		
 		btnLogin = findView(R.id.btn_login);
 		
-		left_icon.setOnClickListener(this);
-		right_icon.setOnClickListener(this);
 		save_checkbox.setOnClickListener(this);
 		savePassWord.setOnClickListener(this);
 		forgotPassWord.setOnClickListener(this);
@@ -76,6 +74,7 @@ public class UserLoginActivity extends BaseActivity implements
 		setRightIconVisible(View.VISIBLE);
 		right_icon.setImageResource(R.drawable.icon_user_register);
 		setRight2IconVisible(View.GONE);
+		setfabLayoutVisible(View.GONE);
 		edtTxt_username.setText("");
 		if (getPreferenceData("fflag")) {
 			edtTxt_password.setText("");

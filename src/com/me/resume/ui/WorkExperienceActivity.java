@@ -22,7 +22,6 @@ import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
-import com.me.resume.views.CustomFAB;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -34,8 +33,6 @@ import com.whjz.android.text.CommonText;
 *
  */
 public class WorkExperienceActivity extends BaseActivity implements OnClickListener{
-
-	private CustomFAB save,edit,next;
 	
 	private TextView info_companynature,info_companyscale,info_industryclassification,info_startworktime,info_endworktime,info_expectedsalary;
 	
@@ -88,6 +85,8 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		setTopTitle(R.string.resume_workexperience);
 		setMsgHide();
 		setRight2IconVisible(View.VISIBLE);
+		setfabLayoutVisible(View.VISIBLE);
+		setEditBtnVisible(View.GONE);
 		
 //		setPreferenceData("index2_mode",getEditModeCheck());
 		
@@ -101,15 +100,10 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		info_expectedsalary = findView(R.id.info_expectedsalary);
 		info_workdescdetail = findView(R.id.info_workdescdetail);
 		
-		save = findView(R.id.save);
-		edit = findView(R.id.edit);
-		next = findView(R.id.next);
-		
 		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1 order by id desc limit 1";
 		 commMapArray = dbUtil.queryData(self, queryWhere);
          if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-        	 edit.setVisibility(View.VISIBLE);
-        	 
+        	 setEditBtnVisible(View.VISIBLE);
         	 info_industryclassification.setText(commMapArray.get("industryclassification")[0]);
         	 info_startworktime.setText(commMapArray.get("worktimestart")[0]);
         	 info_endworktime.setText(commMapArray.get("worktimeend")[0]);
@@ -122,14 +116,9 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
              info_companynature.setText(commMapArray.get("companynature")[0]);
      		 info_companyscale.setText(commMapArray.get("companyscale")[0]);
          }else{
-        	 edit.setVisibility(View.GONE);
+        	 setEditBtnVisible(View.GONE);
          }
 		
-		left_icon.setOnClickListener(this);
-		right_icon.setOnClickListener(this);
-		save.setOnClickListener(this);
-		next.setOnClickListener(this);
-		left_icon.setOnClickListener(this);
 		info_companynature.setOnClickListener(this);
 		info_companyscale.setOnClickListener(this);
 		info_industryclassification.setOnClickListener(this);
@@ -221,20 +210,19 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);
 			if(queryResult){
 				toastMsg(R.string.action_add_success);
-				edit.setVisibility(View.VISIBLE);
+				setEditBtnVisible(View.VISIBLE);
 			}
-			
 			uploadWeData();
 			break;
 		case R.id.edit:
 			String edId = commMapArray.get("id")[0];
 			updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 					new String[]{edId,"companyname","companynature","companyscale","industryclassification",
-									  "jobtitle","worktimeStart","worktimeEnd","expectedsalary","workdesc"
-									  ,"background"}, 
+									  "jobtitle","worktimeStart","worktimeEnd","expectedsalary","workdesc",
+									  "background"}, 
 					new String[]{"1",info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
-					info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr,
-					String.valueOf(getCheckColor())});
+								info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr,
+								getCheckColor()});
 			if (updResult == 1) {
 				toastMsg(R.string.action_update_success);
 			}else{
@@ -310,7 +298,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		values.add(info_workdescdetailStr);
 		values.add(info_companynatureStr);
 		values.add(info_companyscaleStr);
-		values.add(String.valueOf(getCheckColor()));
+		values.add(getCheckColor());
 	
 //		String where = "delete from " + CommonText.WORKEXPERIENCE + " where  userId = 1";
 //		dbUtil.delectData(self, where);

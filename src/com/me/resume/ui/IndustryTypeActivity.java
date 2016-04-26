@@ -78,6 +78,7 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 		setMsgHide();
 		setRightIconVisible(View.GONE);
 		setRight2IconVisible(View.GONE);
+		setfabLayoutVisible(View.GONE);
 		
 		findViews();
 		

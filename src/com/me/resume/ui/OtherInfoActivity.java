@@ -79,7 +79,6 @@ public class OtherInfoActivity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
 		boayLayout.removeAllViews();
 		
 		View v = View.inflate(self,R.layout.activity_otherinfo_layout, null);
@@ -100,7 +99,6 @@ public class OtherInfoActivity extends BaseActivity implements
 
 		ot_languages_edit = findView(R.id.ot_languages_edit);
 		ot_languages_add = findView(R.id.ot_languages_add);
-		
 
 		info_certificate = findView(R.id.info_certificate);;
 		info_certificatetime = findView(R.id.info_certificatetime);;
@@ -140,9 +138,8 @@ public class OtherInfoActivity extends BaseActivity implements
 		
 		setRight2IconVisible(View.VISIBLE);
 		
-		left_icon.setOnClickListener(this);
-		right_icon.setOnClickListener(this);
-
+		setfabLayoutVisible(View.GONE);
+		
 		if (CommUtil.textIsNull(info_language)) {
 			info_literacyskills.setEnabled(false);
 			info_listeningspeaking.setEnabled(false);

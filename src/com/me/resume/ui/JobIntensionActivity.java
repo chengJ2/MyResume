@@ -32,13 +32,8 @@ import com.whjz.android.text.CommonText;
 *
  */
 public class JobIntensionActivity extends BaseActivity implements OnClickListener{
-	
-	private CustomFAB save_edit,next;
-	
 	// 工作性质，工作点，职业,从事行业，薪资，状态
 	private TextView info_exp_workingproperty,info_expworkplace,info_expworkcareer,info_expworkindustry,info_expmonthlysalary,info_workingstate;
-	
-	private TextView msg;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -89,12 +84,6 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		
 		info_expworkcareer = findView(R.id.info_expworkcareer);
 		
-		save_edit = findView(R.id.save_edit);
-		save_edit.setOnClickListener(this);
-		
-		next = findView(R.id.next);
-		next.setOnClickListener(this);
-		
 		info_exp_workingproperty.setOnClickListener(this);
 		info_expworkplace.setOnClickListener(this);
 		info_expworkindustry.setOnClickListener(this);
@@ -107,10 +96,13 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		setMsgHide();
 		setRight2IconVisible(View.VISIBLE);
 		
+		setfabLayoutVisible(View.VISIBLE);
+		setEditBtnVisible(View.GONE);
+		
 		 queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = 1 limit 1";
 		 commMapArray = dbUtil.queryData(self, queryWhere);
          if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-        	 save_edit.setImageResource(R.drawable.ic_btn_edit);
+        	 setAddBtnSrc(R.drawable.ic_btn_edit);
         	 info_exp_workingproperty.setText(commMapArray.get("expworkingproperty")[0]);
         	 info_expworkplace.setText(commMapArray.get("expdworkplace")[0]);
         	 info_expworkindustry.setText(commMapArray.get("expworkindustry")[0]);
@@ -118,14 +110,14 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
         	 info_workingstate.setText(commMapArray.get("workingstate")[0]);
         	 info_expworkcareer.setText(commMapArray.get("expworkcareer")[0]);
          }else{
-        	 save_edit.setImageResource(R.drawable.ic_btn_add);
+        	 setAddBtnSrc(R.drawable.ic_btn_add);
          }
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.save_edit:
+		case R.id.save:
 			String info_exp_workingpropertyStr = CommUtil.getTextValue(info_exp_workingproperty);
 			String info_expworkplaceStr = CommUtil.getTextValue(info_expworkplace);
 			String info_expworkcareerStr = CommUtil.getTextValue(info_expworkcareer);
@@ -192,7 +184,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	 			
 	 			queryResult = dbUtil.insertData(self, CommonText.JOBINTENSION, cValues);
 	 			if(queryResult){
-	 				save_edit.setImageResource(R.drawable.ic_btn_edit);
+	 				setAddBtnSrc(R.drawable.ic_btn_edit);
 	 			}
 	         }
 			break;

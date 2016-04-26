@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_80"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
 
     <include
         android:id="@+id/topLayout"
@@ -14,15 +13,39 @@
         android:id="@+id/msg"
         style="@style/comm_errormsg_style"
         android:text="@string/check_network"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_below="@id/topLayout" />
 
     <LinearLayout
         android:id="@+id/bodyLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" 
+        android:layout_below="@id/msg"
+        android:orientation="vertical"
         android:paddingLeft="@dimen/base_comm_padding"
-    	android:paddingRight="@dimen/base_comm_padding">
+        android:paddingRight="@dimen/base_comm_padding"
+        android:background="@color/white">
     </LinearLayout>
 
-</LinearLayout>
+    <RelativeLayout
+    	android:id="@+id/fabLayout"
+	    android:layout_width="match_parent"
+	    android:layout_height="50dip"
+	    android:layout_alignParentBottom="true"
+	    android:visibility="gone"
+	    android:background="@android:color/transparent">
+    
+    <com.me.resume.views.CustomFAB
+        android:id="@+id/save"
+        style="@style/fab_button_left_style"/>
+
+    <com.me.resume.views.CustomFAB
+        android:id="@+id/edit"
+        style="@style/fab_button_style"/>
+
+    <com.me.resume.views.CustomFAB
+        android:id="@+id/next"
+        style="@style/fab_button_right_style"/>
+    
+    </RelativeLayout>
+</RelativeLayout>

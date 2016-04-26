@@ -24,8 +24,6 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	// 自我评价;职业目标
 	private EditText info_self_evaluation,info_career_goal;
 	
-	private CustomFAB save_edit,next;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -38,6 +36,9 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		setMsgHide();
 		setRight2IconVisible(View.VISIBLE);
 		
+		setfabLayoutVisible(View.VISIBLE);
+		setEditBtnVisible(View.GONE);
+		
 		findViews();
 		initData();
 		
@@ -46,13 +47,6 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	private void findViews(){
 		info_self_evaluation = findView(R.id.info_self_evaluation);
 		info_career_goal = findView(R.id.info_career_goal);
-		save_edit = findView(R.id.save_edit);
-		next = findView(R.id.next);
-		
-		left_icon.setOnClickListener(this);
-		right_icon.setOnClickListener(this);
-		save_edit.setOnClickListener(this);
-		next.setOnClickListener(this);
 		
 		info_self_evaluation.addTextChangedListener(this);
 		info_career_goal.addTextChangedListener(this);
@@ -64,16 +58,16 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			info_self_evaluation.setText(commMapArray.get("selfevaluation")[0]);
 			info_career_goal.setText(commMapArray.get("careergoal")[0]);
-			save_edit.setImageResource(R.drawable.ic_btn_edit);
+			setAddBtnSrc(R.drawable.ic_btn_edit);
 		}else{
-			save_edit.setImageResource(R.drawable.ic_btn_add);
+			setAddBtnSrc(R.drawable.ic_btn_add);
 		}
 	}
 	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.save_edit:
+		case R.id.save:
 			queryWhere = "select * from " + CommonText.EVALUATION + " where userId = 1";
 			commMapArray = dbUtil.queryData(self, queryWhere);
 			String info_self_evaluationStr = CommUtil.getEditTextValue(info_self_evaluation);
@@ -96,7 +90,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				queryResult = dbUtil.insertData(self, 
 						CommonText.EVALUATION, cValues);
 				if(queryResult){
-					save_edit.setImageResource(R.drawable.ic_btn_edit);
+					setAddBtnSrc(R.drawable.ic_btn_edit);
 				}
 			}
 			break;

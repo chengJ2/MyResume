@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,8 +20,6 @@ import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
-import com.me.resume.swipeback.SwipeBackActivity;
-import com.me.resume.utils.CommUtil;
 
 /**
  * 
@@ -32,7 +29,7 @@ import com.me.resume.utils.CommUtil;
 * @date 2016/4/21 下午2:04:45 
 *
  */
-public class ProfessionalActivity extends BaseActivity {
+public class ProfessionalActivity extends BaseActivity implements OnClickListener{
 	
 	private RelativeLayout catelayout;
 	private TextView category;
@@ -83,22 +80,7 @@ public class ProfessionalActivity extends BaseActivity {
 		backCate = findView(R.id.backCate_btn);
 		category_Listview = findView(R.id.category_Listview);
 		
-		left_icon.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				scrollToFinishActivity();
-			}
-		});
-		
-		backCate.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				catelayout.setVisibility(View.GONE);
-				getCategory();
-			}
-		});
+		backCate.setOnClickListener(this);
 		
 		getCategory();
 	}
@@ -205,5 +187,20 @@ public class ProfessionalActivity extends BaseActivity {
 				}
 			}
 		},500);
+	}
+	
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.left_lable:
+			scrollToFinishActivity();
+			break;
+		case R.id.backCate_btn:
+			catelayout.setVisibility(View.GONE);
+			getCategory();
+			break;
+		default:
+			break;
+		}
 	}
 }

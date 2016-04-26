@@ -37,15 +37,7 @@ import com.whjz.android.text.CommonText;
  */
 public class EducationActivity extends BaseActivity implements OnClickListener{
 
-	private TextView toptext;
-	
-	private ImageView left_icon,right_icon;
-	
 	private SegmentButton segment_button;
-	
-	private CustomFAB save,edit,next;
-	
-	private TextView msg;
 	
 	private int cposition = 0;
 	
@@ -58,27 +50,14 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		View v = View.inflate(self,R.layout.activity_education_layout, null);
 		boayLayout.addView(v);
 		
+		setTitle(R.string.resume_education);
+		setMsgHide();
+		setRight2IconVisible(View.VISIBLE);
 		
-		toptext = findView(R.id.top_text);
-		left_icon = findView(R.id.left_lable);
-		right_icon = findView(R.id.right_icon);
-		left_icon.setOnClickListener(this);
-		right_icon.setOnClickListener(this);
-		toptext.setText(CommUtil.getStrValue(self, R.string.resume_education));
-		
-		msg = findView(R.id.msg);
-		msg.setVisibility(View.GONE);
+		setfabLayoutVisible(View.VISIBLE);
+		setEditBtnVisible(View.GONE);
 		
 		segment_button = findView(R.id.segment_button);
-		
-		save = findView(R.id.save);
-		save.setOnClickListener(this);
-		
-		edit = findView(R.id.edit);
-		edit.setOnClickListener(this);
-		
-		next = findView(R.id.next);
-		next.setOnClickListener(this);
 		
 		initData();
 	}
@@ -135,9 +114,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		queryWhere = "select * from " + tablename + " where userId = 1 limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-			edit.setVisibility(View.VISIBLE);
+			setEditBtnVisible(View.VISIBLE);
 		}else{
-			edit.setVisibility(View.GONE);
+			setEditBtnVisible(View.GONE);
 		}
 	}
 	

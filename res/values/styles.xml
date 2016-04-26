@@ -130,10 +130,6 @@
         <item name="android:layout_height">@dimen/mul_item_height</item>
     </style>
     
-     <style name="noraml_item_setting" parent="@style/noraml_item">
-        <item name="android:layout_height">@dimen/normal_item_height_set</item>
-    </style>
-     
      <!-- 用户信息列表 -->
 	   <style name="userinfo_item_style">
 	      <item name="android:layout_width">match_parent</item>
@@ -199,5 +195,38 @@
 	      <item name="android:gravity">center|left</item>
 	      <item name="android:typeface">serif</item>
 	 </style>
+	 
+	   <style name="fab_button_style">
+	      <item name="android:layout_width">50dip</item>
+	      <item name="android:layout_height">match_parent</item>
+	      <item name="android:layout_alignParentBottom">true</item>
+	      <item name="android:layout_centerHorizontal">true</item>
+	      <item name="android:src">@drawable/ic_btn_edit</item>
+	 </style>
+	 
+	   <style name="fab_button_left_style" parent="@style/fab_button_style">
+	      <item name="android:layout_alignParentLeft">true</item>
+	      <item name="android:layout_marginLeft">10dip</item>
+	       <item name="android:src">@drawable/ic_btn_add</item>
+	 </style>
+	 
+	   <style name="fab_button_right_style" parent="@style/fab_button_style">
+	      <item name="android:layout_alignParentBottom">true</item>
+	      <item name="android:layout_alignParentRight">true</item>
+	      <item name="android:layout_marginRight">10dip</item>
+	       <item name="android:src">@drawable/ic_btn_next</item>
+	 </style>
+	 
+	   <style name="comm_scrollview_style">
+	       <item name="android:layout_width">match_parent</item>
+	       <item name="android:layout_height">match_parent</item>
+	       <item name="android:fadingEdge">none</item>
+	       <item name="android:fadingEdgeLength">0dip</item>
+	       <item name="android:overScrollMode">never</item>
+	       <item name="android:scrollbars">none</item>
+	       <item name="android:fillViewport">true</item>
+	       <item name="android:background">@color/white</item>
+	       <item name="android:layout_marginBottom">52dip</item>
+	   </style>
 
 </resources>

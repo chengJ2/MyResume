@@ -7,12 +7,7 @@
     android:orientation="vertical" >
     
      <com.me.resume.views.CommScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fadingEdge="none"
-        android:fadingEdgeLength="0dp"
-        android:overScrollMode="never"
-        android:scrollbars="none" >
+        style="@style/comm_scrollview_style" >
 
         <TextView
             android:id="@+id/content"

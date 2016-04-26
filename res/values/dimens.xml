@@ -25,7 +25,7 @@
     <dimen name="btn_text_margin">10.0dp</dimen>
     <dimen name="button_text_size">16.0sp</dimen>
     
-    <dimen name="normal_item_height">55.0dp</dimen>
+    <dimen name="normal_item_height">50.0dp</dimen>
     <dimen name="mul_item_height">150.0dp</dimen>
     <dimen name="normal_item_padding_left">12.0dp</dimen>
     <dimen name="normal_item_height_set">50.0dp</dimen>
