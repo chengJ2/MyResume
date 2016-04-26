@@ -23,11 +23,13 @@ DROP TABLE IF EXISTS `education`;
 CREATE TABLE `education` (
   `id` int(11) NOT NULL auto_increment,
   `userId` int(11) NOT NULL,
-  `time` varchar(100) default NULL,
+  `worktimestart` varchar(30) default NULL,
+  `worktimeend` varchar(30) default NULL,
   `school` varchar(218) default NULL,
   `examination` varchar(200) default NULL,
   `majorname` varchar(100) default NULL,
   `degree` varchar(2) default NULL,
+  `background` varchar(30) default NULL,
   `createtime` datetime default NULL,
   `updatime` datetime default NULL,
   PRIMARY KEY  (`id`)
@@ -44,6 +46,7 @@ CREATE TABLE `evaluation` (
   `userId` int(11) NOT NULL,
   `selfevaluation` varchar(500) default NULL,
   `careergoal` varchar(500) default NULL,
+  `background` varchar(30) default NULL,
   `createtime` datetime default NULL,
   `updatime` datetime default NULL,
   PRIMARY KEY  (`id`)
@@ -127,7 +130,8 @@ DROP TABLE IF EXISTS `training`;
 CREATE TABLE `training` (
   `id` int(11) NOT NULL auto_increment,
   `userId` int(11) NOT NULL,
-  `time` varchar(100) default NULL,
+  `worktimestart` varchar(30) default NULL,
+  `worktimeend` varchar(30) default NULL,
   `trainingorganization` varchar(200) default NULL,
   `trainingclass` varchar(200) default NULL,
   `certificate` varchar(200) default NULL,
@@ -193,16 +197,52 @@ CREATE TABLE `work_experience` (
   `companyname` varchar(100) character set utf8 collate utf8_hungarian_ci NOT NULL,
   `industryclassification` varchar(128) character set utf8 collate utf8_hungarian_ci NOT NULL,
   `jobtitle` varchar(100) character set utf8 collate utf8_hungarian_ci NOT NULL,
-  `worktimeStart` varchar(30) character set utf8 collate utf8_hungarian_ci NOT NULL,
-  `worktimeEnd` varchar(30) character set utf8 collate utf8_hungarian_ci NOT NULL,
+  `worktimestart` varchar(30) character set utf8 collate utf8_hungarian_ci NOT NULL,
+  `worktimeend` varchar(30) character set utf8 collate utf8_hungarian_ci NOT NULL,
   `expectedsalary` varchar(100) character set utf8 collate utf8_hungarian_ci NOT NULL,
   `workdesc` varchar(500) character set utf8 collate utf8_hungarian_ci default NULL,
+  `companynature` varchar(50) default NULL,
+  `companyscale` varchar(100) default NULL,
+  `background` varchar(30) default NULL,
   `createtime` datetime default NULL,
   `updatime` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `work_experience` */
+
+insert  into `work_experience`(`id`,`userId`,`companyname`,`industryclassification`,`jobtitle`,`worktimestart`,`worktimeend`,`expectedsalary`,`workdesc`,`companynature`,`companyscale`,`background`,`createtime`,`updatime`) values (13,1,'武汉大学城','互联网/电子商务','高级官员','2013-6-25','2014-6-25','15000-25000元/月','反反复复恢复就恢复正常运行机制的话在此前了一下吧我国是个了不起到在这一年的我也要了我要找了一些事情是一种植入了不起到你是谁能你说','国家机关','500~999人','2131230723','2016-04-26 16:31:49','2016-04-26 16:31:49');
+
+/* Procedure structure for procedure `pro_education` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `pro_education` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `pro_education`(IN `install` VARCHAR(2),IN p_edId INT,IN p_userId INT,IN p_worktimestart VARCHAR(30),in p_worktimeend varchar(30),
+					in p_school varchar(218),in p_examination varchar(200),in p_majorname varchar(100),in p_degree varchar(2))
+BEGIN
+	 IF `install` = 1
+	    THEN  
+		SELECT * FROM `education` WHERE `userId` = p_edId;
+	 ELSEIF `install` = 2 
+	    Then
+		insert into `education`(`userId`,`worktimestart`,`worktimeend`,`school`,`examination`,`majorname`,`degree`,`createtime`,`updatime`)
+		values(p_userId,p_worktimestart,p_worktimeend,p_school,p_examination,p_majorname,p_degree,now(),now()); 
+	 elseif `install` = 3
+	   then
+		update `education` 
+		set `worktimestart` = p_worktimestart,`worktimeend` = p_worktimeend,
+		   `school` = p_school,`examination` = p_examination,`majorname` = p_majorname,`degree` = p_degree,`updatime` = now()
+		  WHERE `userId` = p_edId AND `id` = p_edId;
+		SELECT '200' AS msg;
+	  ELSEIF `install` = 4
+	  then
+		delete from `education` where `userId` = p_edId AND `id` = p_edId;
+		SELECT '200' AS msg;
+	  END IF;
+    END */$$
+DELIMITER ;
 
 /* Procedure structure for procedure `pro_workexpericnce` */
 
@@ -211,21 +251,22 @@ CREATE TABLE `work_experience` (
 DELIMITER $$
 
 /*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `pro_workexpericnce`(IN `install` VARCHAR(2),IN p_weId INT,IN p_userId INT,IN p_companyname VARCHAR(100),
-							   IN p_industryclassification VARCHAR(128),IN p_jobtitle VARCHAR(100),IN p_worktimeStart VARCHAR(30),
-							   IN p_worktimeEnd VARCHAR(30),IN p_expectedsalary VARCHAR(100),IN p_workdesc VARCHAR(500))
+							   IN p_industryclassification VARCHAR(128),IN p_jobtitle VARCHAR(100),IN p_worktimestart VARCHAR(30),
+							   IN p_worktimeend VARCHAR(30),IN p_expectedsalary VARCHAR(100),IN p_workdesc VARCHAR(500),IN p_companynature VARCHAR(50),
+							   IN p_companyscale VARCHAR(100),iN p_background VARCHAR(30))
 BEGIN
     IF `install` = 1
     THEN  
 	SELECT * from `work_experience` where `userId` = p_userId;
     ELSEIF `install` = 2  
     THEN  
-	INSERT INTO `work_experience` (`userId`,`companyname`,`industryclassification`,`jobtitle`,`worktimeStart`,`worktimeEnd`,`expectedsalary`,`workdesc`,`createtime`,`updatime`) 
-	VALUES(p_userId,p_companyname,p_industryclassification,p_jobtitle,p_worktimeStart,p_worktimeEnd,p_expectedsalary,p_workdesc,NOW(),NOW());
+	INSERT INTO `work_experience` (`userId`,`companyname`,`industryclassification`,`jobtitle`,`worktimestart`,`worktimeend`,`expectedsalary`,`workdesc`,`companynature`,`companyscale`,`background`,`createtime`,`updatime`) 
+	VALUES(p_userId,p_companyname,p_industryclassification,p_jobtitle,p_worktimestart,p_worktimeend,p_expectedsalary,p_workdesc,p_companynature,p_companyscale,p_background,NOW(),NOW());
 	SELECT '200' AS msg;
      ELSEIF `install` = 3
      THEN  
 	update `work_experience` set `companyname` = p_companyname,`industryclassification` = p_industryclassification,
-		`jobtitle` = p_jobtitle,`worktimeStart` = p_worktimeStart,`worktimeEnd` = p_worktimeEnd,
+		`jobtitle` = p_jobtitle,`worktimestart` = p_worktimestart,`worktimeend` = p_worktimeend,
 		`expectedsalary` = p_expectedsalary,`workdesc` = p_workdesc,`updatime` = now()
 	where `userId` = p_userId and `id` = p_weId;
 	SELECT '200' AS msg;
