@@ -11,6 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnKeyListener;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -35,8 +36,11 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.CommonBaseAdapter;
+import com.me.resume.comm.Constants;
+import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.tools.L;
@@ -360,6 +364,7 @@ public class DialogUtils {
 		
 		GridView bgrid = (GridView)layout.findViewById(R.id.bgrid);
 		SwitchButton setting_editmode_cb = (SwitchButton)layout.findViewById(R.id.setting_editmode_cb);
+		LinearLayout setting_syn = (LinearLayout)layout.findViewById(R.id.llout_sync);
 		
 		final TypedArray typedArray = context.getResources().obtainTypedArray(R.array.review_bgcolor);
 		List<Integer> nList = new ArrayList<Integer>();
@@ -408,7 +413,7 @@ public class DialogUtils {
 					@Override
 					public void onClick(View view) {
 						
-						sendMsg(11, item);
+						sendMsg(OnTopMenu.MSG_MENU1, item);
 						
 						selecPosition = position;
 						holder.setViewVisible(R.id.check, View.VISIBLE);
@@ -428,11 +433,32 @@ public class DialogUtils {
 		
 		bgrid.setAdapter(commIntAdapter);
 		
+		SharedPreferences sp = context.getSharedPreferences(Constants.CONFIG, Context.MODE_PRIVATE);
+		
+		if (sp.getBoolean("edit_mode", false)) {
+			setting_editmode_cb.setChecked(true);
+		}else{
+			setting_editmode_cb.setChecked(false);
+		}
+		
 		setting_editmode_cb.setOnChangedListener(new OnChangedListener() {
 			
 			@Override
 			public void OnChanged(SwitchButton switchButton, final boolean checkState) {
-				sendMsg(12, checkState);
+				sendMsg(OnTopMenu.MSG_MENU2, checkState);
+			}
+		});
+		
+		setting_syn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (MyApplication.userId > 0) {
+					sendMsg(OnTopMenu.MSG_MENU3);
+				}else{
+					sendMsg(OnTopMenu.MSG_MENU31);
+				}
+				dismissPopwindow();
 			}
 		});
 		

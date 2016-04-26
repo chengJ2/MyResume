@@ -629,12 +629,20 @@ public class MainActivity extends Activity {
 		});
 	}
 	
+	/**
+	 * 
+	 * @Title:MainActivity
+	 * @Description: 初始化topUI
+	 * @param view
+	 * @param redId
+	 * @param src
+	 */
 	private void initTopView(View view,int redId,final String src){
 		main_top_title =  (TextView) view.findViewById(R.id.main_top_title);
 		main_top_title.setText(CommUtil.getStrValue(self, redId));
 		main_top_edit = (ImageView) view.findViewById(R.id.main_top_edit);
 		
-		if (sp.getInt("edit_mode", 0) == 1) {
+		if (sp.getBoolean("edit_mode", false) == true) {
 			main_top_edit.setVisibility(View.VISIBLE);
 		}else{
 			main_top_edit.setVisibility(View.GONE);

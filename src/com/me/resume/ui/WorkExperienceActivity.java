@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.OnTopMenu;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -34,9 +35,17 @@ import com.whjz.android.text.CommonText;
  */
 public class WorkExperienceActivity extends BaseActivity implements OnClickListener{
 	
-	private TextView info_companynature,info_companyscale,info_industryclassification,info_startworktime,info_endworktime,info_expectedsalary;
+	private TextView info_companynature,info_companyscale,info_industryclassification,
+		info_startworktime,info_endworktime,info_expectedsalary;
 	
 	private EditText info_companyname,info_jobtitle,info_workdescdetail;
+	
+	private String info_companynameStr,info_jobtitleStr,info_workdescdetailStr;
+	
+	private String info_companynatureStr,info_companyscaleStr;
+	
+	private String info_industryclassificationStr,info_startworktimeStr,info_endworktimeStr,
+		info_expectedsalaryStr;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -65,6 +74,33 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 					info_endworktime.setText((String)msg.obj);
 				}
 				break;
+			case OnTopMenu.MSG_MENU1:
+				if (msg.obj != null) {
+					checkColor = (Integer) msg.obj;
+					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
+							new String[]{kId,"background"}, 
+							new String[]{"1",String.valueOf(checkColor)});
+					if (updResult == 1) {
+						toastMsg(R.string.action_update_success);
+					}else{
+						toastMsg(R.string.action_update_fail);
+					}
+				}
+				break;
+			case OnTopMenu.MSG_MENU2:
+				if (msg.obj != null) {
+					setPreferenceData("edit_mode",(boolean) msg.obj);
+				}
+				break;
+			case OnTopMenu.MSG_MENU3:
+				if (msg.obj != null) {
+					set2Msg(R.string.action_syncing);
+					syncData();
+				}
+				break;
+			case OnTopMenu.MSG_MENU31:
+				toastMsg(R.string.action_login_head);
+				break;
 			default:
 				break;
 			}
@@ -88,8 +124,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		setfabLayoutVisible(View.VISIBLE);
 		setEditBtnVisible(View.GONE);
 		
-//		setPreferenceData("index2_mode",getEditModeCheck());
-		
 		info_companyname = findView(R.id.info_companyname);
 		info_companynature = findView(R.id.info_companynature);
 		info_companyscale = findView(R.id.info_companyscale);
@@ -104,6 +138,9 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		 commMapArray = dbUtil.queryData(self, queryWhere);
          if (commMapArray!= null && commMapArray.get("userId").length > 0) {
         	 setEditBtnVisible(View.VISIBLE);
+        	 
+        	 kId = commMapArray.get("id")[0];
+        	 
         	 info_industryclassification.setText(commMapArray.get("industryclassification")[0]);
         	 info_startworktime.setText(commMapArray.get("worktimestart")[0]);
         	 info_endworktime.setText(commMapArray.get("worktimeend")[0]);
@@ -131,11 +168,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		info_workdescdetail.addTextChangedListener(this);
 	}
 	
-	String info_companynameStr,info_jobtitleStr,info_workdescdetailStr;
-	
-	String info_companynatureStr,info_companyscaleStr;
-	
-	String info_industryclassificationStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr;
 	
 	@Override
 	public void onClick(View v) {
@@ -212,17 +244,13 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				toastMsg(R.string.action_add_success);
 				setEditBtnVisible(View.VISIBLE);
 			}
-			uploadWeData();
 			break;
 		case R.id.edit:
-			String edId = commMapArray.get("id")[0];
 			updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
-					new String[]{edId,"companyname","companynature","companyscale","industryclassification",
-									  "jobtitle","worktimeStart","worktimeEnd","expectedsalary","workdesc",
-									  "background"}, 
+					new String[]{kId,"companyname","companynature","companyscale","industryclassification",
+									  "jobtitle","worktimeStart","worktimeEnd","expectedsalary","workdesc"}, 
 					new String[]{"1",info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
-								info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr,
-								getCheckColor()});
+								info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr});
 			if (updResult == 1) {
 				toastMsg(R.string.action_update_success);
 			}else{
@@ -260,6 +288,9 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		case R.id.info_endworktime:
 			DialogUtils.showTimeChooseDialog(self, info_endworktime,R.string.we_info_end_worktime, 12,mHandler);
 			break;
+		case R.id.right_icon_more:
+			DialogUtils.showTopMenuDialog(self, topLayout, mHandler);
+			break;
 		default:
 			break;
 		}
@@ -271,7 +302,13 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		DialogUtils.showPopWindow(self, parent, resId, mList, mHandler);
 	}
 	
-	private void uploadWeData(){
+	/**
+	 * 
+	 * @Title:WorkExperienceActivity
+	 * @Description: 同步数据
+	 * @author Comsys-WH1510032
+	 */
+	private void syncData(){
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		params.add("p_weId");
@@ -299,22 +336,21 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		values.add(info_companynatureStr);
 		values.add(info_companyscaleStr);
 		values.add(getCheckColor());
-	
-//		String where = "delete from " + CommonText.WORKEXPERIENCE + " where  userId = 1";
-//		dbUtil.delectData(self, where);
 		
 		requestData("pro_workexpericnce", 2, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				CommUtil.ToastMsg(getApplicationContext(), "失败");
+				runOnUiThread(R.string.action_sync_fail);
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
 					if (map.get("msg").get(0).equals("200")) {
-						CommUtil.ToastMsg(getApplicationContext(), "新增工作经验成功");
+						runOnUiThread(R.string.action_sync_success);
+						
 					}
 				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		});

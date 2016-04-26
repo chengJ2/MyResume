@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.me.resume.R;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.OnTopMenu;
 import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.tools.SystemBarTintManager;
 import com.me.resume.utils.ActivityUtils;
@@ -62,6 +63,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 
 	protected String queryWhere = "";
 
+	protected String kId = "";
+	
 	protected int updResult = -1;
 
 	protected boolean queryResult = false;
@@ -76,37 +79,18 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 
 	protected String fieldNull = null;
 	
-	private Integer checkColor = 0;
+	protected Integer checkColor = 0;
 	
-	private Boolean isChecked = false;
+	protected Boolean isChecked = false;
 	
-//	private static BaseActivity mInstance;
-//	
-//	public static BaseActivity getInstance(){
-//		if (mInstance == null) {
-//			mInstance = new BaseActivity();
-//		}
-//		return mInstance;
-//	}
+	private static BaseActivity mInstance;
 	
-	private Handler mHandler = new Handler(){
-		public void handleMessage(android.os.Message msg) {
-			switch (msg.what) {
-			case 11:
-				if (msg.obj != null) {
-					checkColor = (Integer) msg.obj;
-				}
-				break;
-			case 12:
-				if (msg.obj != null) {
-					isChecked = (boolean) msg.obj;
-				}
-				break;
-			default:
-				break;
-			}
-		};
-	};
+	public static BaseActivity getInstance(){
+		if (mInstance == null) {
+			mInstance = new BaseActivity();
+		}
+		return mInstance;
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -329,27 +313,27 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		ActivityUtils.startActivity(self, Constants.PACKAGENAME + src, finish);
 	}
 
-	protected void setPreferenceData(String key, String value) {
+	public void setPreferenceData(String key, String value) {
 		sp.edit().putString(key, value).commit();
 	}
 
-	protected String getPreferenceData(String str, String def) {
+	public String getPreferenceData(String str, String def) {
 		return sp.getString(str, def);
 	}
 
-	protected void setPreferenceData(String key, int value) {
+	public void setPreferenceData(String key, int value) {
 		sp.edit().putInt(key, value).commit();
 	}
 
-	protected int getPreferenceData(String str, int def) {
+	public int getPreferenceData(String str, int def) {
 		return sp.getInt(str, def);
 	}
 
-	protected void setPreferenceData(String key, boolean value) {
+	public void setPreferenceData(String key, boolean value) {
 		sp.edit().putBoolean(key, value).commit();
 	}
 
-	protected boolean getPreferenceData(String str) {
+	public boolean getPreferenceData(String str) {
 		return sp.getBoolean(str, false);
 	}
 
@@ -373,6 +357,23 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		return (T) findViewById(viewID);
 	}
 
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 更新UI
+	 * @param id
+	 */
+	protected void runOnUiThread(int id) {
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				set2Msg(R.string.action_sync_success);
+			}
+		});
+	}
+	
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
 			int after) {
@@ -396,12 +397,28 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.right_icon_more:
-			DialogUtils.showTopMenuDialog(self, topLayout, mHandler);
-			break;
 		default:
 			break;
 		}
 	}
+
+	/*@Override
+	public boolean isCheck() {
+		return isChecked;
+	}
+
+	@Override
+	public String checkColor() {
+		if (checkColor == 0) {
+			return String.valueOf(R.color.red);
+		}
+		return String.valueOf(checkColor);
+	}
+
+	@Override
+	public boolean syncDataCheck() {
+		// TODO Auto-generated method stub
+		return false;
+	}*/
 
 }

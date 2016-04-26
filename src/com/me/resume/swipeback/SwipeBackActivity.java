@@ -288,7 +288,6 @@ public class SwipeBackActivity extends FragmentActivity implements
 			if (!CommUtil.isNetworkAvailable(SwipeBackActivity.this)) {
 				return Constants.EXECUTE_NETERROR;
 			}
-
 			if (dataSetlist != null && dataSetlist.valueList.size() > 0) {
 				if (dataSetlist.valueList.get(0).equals("timeout")) {
 					return Constants.EXECUTE_TIMEOUT;

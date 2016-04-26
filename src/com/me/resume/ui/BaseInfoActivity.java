@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.OnTopMenu;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -98,6 +99,24 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			case 100:
 				initData();
 				break;
+			case OnTopMenu.MSG_MENU1:
+				if (msg.obj != null) {
+					// TODO
+					L.d("==select bgcolor==" +(Integer) msg.obj);
+				}
+				break;
+			case OnTopMenu.MSG_MENU2:
+				if (msg.obj != null) {
+					// TODO
+					L.d("==edit mode==" + (boolean) msg.obj);
+				}
+				break;
+			case OnTopMenu.MSG_MENU3:
+				if (msg.obj != null) {
+					// TODO
+					L.d("==sync data==" + (boolean) msg.obj);
+				}
+				break;
 			default:
 				break;
 			}
@@ -114,9 +133,6 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		
 		findViews();
 		getChooseValue();
-		
-		setPreferenceData("index1_mode",getEditModeCheck());
-		L.d("checked---"+getPreferenceData("index1_mode"));
 		
 		new Handler().postDelayed(new Runnable() {
 			

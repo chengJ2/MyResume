@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.model.ResumeModel;
+import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -91,20 +93,19 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		if (getPreferenceData("startVerytime", 0) == 1) {
 			startActivity(".MainActivity", true);
 		}
+		
 		findViews();
 		
 		new Handler().postDelayed(new Runnable() {
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				mHandler.sendEmptyMessage(100);
 			}
-		},100);
+		},50);
 		
-		// TelephonyManager TelephonyMgr = (TelephonyManager)
-		// getSystemService(TELEPHONY_SERVICE);
-		// keyID = TelephonyMgr.getDeviceId();
+//		TelephonyManager TelephonyMgr = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+//		String keyID = TelephonyMgr.getDeviceId();
 
 	}
 	
@@ -117,12 +118,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		setRightIcon(R.drawable.icon_setting);
 		setfabLayoutVisible(View.GONE);
 		
-		initViews();
-		
-		initData();
-	}
-	
-	private void initViews(){
 		makeResume = findView(R.id.make_btn);
 		reviewResume = findView(R.id.review_btn);
 		resumeModelgridView = findView(R.id.grid);
@@ -132,6 +127,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		
 		makeResume.setOnClickListener(this);
 		reviewResume.setOnClickListener(this);
+		
+		initData();
 	}
 
 	private void initData(){
@@ -165,7 +162,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			item.setDatetime("2015-06-" + i);
 			resumeModelList.add(item);
 		}
-		
 	}
 
 	/** 设置GirdView参数，绑定数据 */

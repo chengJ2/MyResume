@@ -184,6 +184,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	 			
 	 			queryResult = dbUtil.insertData(self, CommonText.JOBINTENSION, cValues);
 	 			if(queryResult){
+	 				toastMsg(R.string.action_add_success);
 	 				setAddBtnSrc(R.drawable.ic_btn_edit);
 	 			}
 	         }

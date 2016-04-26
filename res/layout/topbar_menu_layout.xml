@@ -82,6 +82,20 @@
                     android:visibility="visible" />
             </LinearLayout>
         </LinearLayout>
+        <View style="@style/line3" />
+        <LinearLayout
+            android:id="@+id/llout_sync"
+            android:layout_width="match_parent"
+        	android:layout_height="45dip"
+        	android:orientation="horizontal" >
+
+            <TextView
+                style="@style/user_info_item_tv"
+                android:layout_weight="5"
+                android:padding="5dip"
+                android:text="@string/settings_item5"
+                android:textColor="@color/black" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

@@ -18,8 +18,14 @@
     <string name="settings_item1">每次启动显示简历预览界面</string>
     <string name="settings_item2">自动切换简历预览</string>
     <string name="settings_item21">简历预览界面编辑模式</string>
+    
     <string name="settings_item3">检测新版本</string>
     <string name="settings_item4">反馈意见</string>
+    <string name="settings_item5">同步数据</string>
+    <string name="action_login_head">请先登录</string>
+    <string name="action_syncing">正在同步,请稍后...</string>
+    <string name="action_sync_success">同步成功</string>
+    <string name="action_sync_fail">同步失败,请重试</string>
 
     <!-- base -->
     <string name="item_text1">请选择本栏目在简历预览时的背景色</string>
