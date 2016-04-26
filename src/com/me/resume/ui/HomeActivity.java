@@ -104,8 +104,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			}
 		},50);
 		
-//		TelephonyManager TelephonyMgr = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
-//		String keyID = TelephonyMgr.getDeviceId();
+		TelephonyManager TelephonyMgr = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+		Constants.DEVICEID = TelephonyMgr.getDeviceId();
 
 	}
 	

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 
@@ -52,6 +53,7 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
 		password2Et = findView(R.id.edtTxt2_password);
 		
 		registBtn = findView(R.id.btn_register);
+		registBtn.setOnClickListener(this);
 	}
 	
 	@Override
@@ -62,7 +64,7 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
 			break;
 		case R.id.btn_register:
 			if (CommUtil.isNetworkAvailable(self)) {
-//				getUserData();
+				getUserData();
 			}else{
 				toastMsg(R.string.check_network);
 			}
@@ -93,15 +95,29 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
 			return;
 		}
 		
+		if (str_username.length() > 50) {
+			toastMsg(R.string.action_input_up_isnull);
+			return;
+		}
+		
+		if (str_password.length() > 30) {
+			toastMsg(R.string.action_input_up_isnull);
+			return ;
+		}
+		
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
-		params.add("puser_name");
-		params.add("puser_pwd");
+		params.add("p_username");
+		params.add("p_userpwd");
+		params.add("p_deviceId");
+		params.add("p_patform");
 		
 		values.add(str_username);
 		values.add(CommUtil.getMD5(str_password));
+		values.add(Constants.DEVICEID);
+		values.add("app");
 	
-		requestData("procSetUser", 1, params, values, new HandlerData() {
+		requestData("pro_user_register", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
 				toastMsg(R.string.action_regist_fail);
@@ -114,7 +130,7 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
 						startActivity("MainActivity",true);
 					}
 				} catch (Exception e) {
-					if(map.get("error").get(0).equals("405")){
+					if(map.get("msg").get(0).equals("405")){
 						toastMsg(R.string.register_repeatedusername);
 					}
 				}

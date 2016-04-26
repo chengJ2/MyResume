@@ -130,7 +130,7 @@ public class UserLoginActivity extends BaseActivity implements
     	paramValue.add(str_username);
     	paramValue.add(CommUtil.getMD5(str_password));
     	
-		requestData("getUserLogin", 1, paramKey, paramValue,DialogUtils.getProgressDialog(self, R.string.action_loging),new HandlerData() {
+		requestData("pro_user_login", 1, paramKey, paramValue,DialogUtils.getProgressDialog(self, R.string.action_loging),new HandlerData() {
 			
 			@Override
 			public void success(Map<String, List<String>> map) {
@@ -156,7 +156,7 @@ public class UserLoginActivity extends BaseActivity implements
 	 * @param map
 	 */
 	private void successLogin(Map<String, List<String>> map){
-		int useId = CommUtil.parseInt(map.get("user_id").get(0));
+		int useId = CommUtil.parseInt(map.get("userId").get(0));
 		if (useId>0) {
 			MyApplication.userId = useId;
 			ContentValues cValues = new ContentValues();
@@ -164,18 +164,18 @@ public class UserLoginActivity extends BaseActivity implements
 			cValues.put("userpassword", map.get("password").get(0));
 			cValues.put("deviceId", map.get("deviceId").get(0));
 			cValues.put("patform", map.get("patform").get(0));
-			queryResult = dbUtil.insertData(self, 
-					CommonText.USERINFO, cValues);
+			cValues.put("createtime", map.get("createtime").get(0));
+			cValues.put("lastlogintime", map.get("lastlogintime").get(0));
+			
+			queryResult = dbUtil.insertData(self, CommonText.USERINFO, cValues);
 			if (queryResult) {
 				// TODO
 			}
-			
 		}
 	}
 	
 	private void errorLogin(){
-		btnLogin.setText("登 录");
-//		btnLogin.setTextColor(getResources().getColor(R.color.huise));
+		btnLogin.setText(CommUtil.getStrValue(self, R.string.action_login));
 		btnLogin.setEnabled(true);
 	}
 	
@@ -190,6 +190,7 @@ public class UserLoginActivity extends BaseActivity implements
 			toastMsg(R.string.action_input_up_isnull);
 			return false;
 		}
+		
 		return true;
 	}
 	

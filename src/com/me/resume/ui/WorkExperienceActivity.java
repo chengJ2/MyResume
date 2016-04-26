@@ -115,6 +115,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		boayLayout.addView(v);
 		
 		findViews();
+		initViews();
 	}
 	
 	private void findViews(){
@@ -134,28 +135,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		info_expectedsalary = findView(R.id.info_expectedsalary);
 		info_workdescdetail = findView(R.id.info_workdescdetail);
 		
-		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1 order by id desc limit 1";
-		 commMapArray = dbUtil.queryData(self, queryWhere);
-         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-        	 setEditBtnVisible(View.VISIBLE);
-        	 
-        	 kId = commMapArray.get("id")[0];
-        	 
-        	 info_industryclassification.setText(commMapArray.get("industryclassification")[0]);
-        	 info_startworktime.setText(commMapArray.get("worktimestart")[0]);
-        	 info_endworktime.setText(commMapArray.get("worktimeend")[0]);
-        	 info_expectedsalary.setText(commMapArray.get("expectedsalary")[0]);;
-        		
-        	 info_companyname.setText(commMapArray.get("companyname")[0]);
-        	 info_jobtitle.setText(commMapArray.get("jobtitle")[0]);
-             info_workdescdetail.setText(commMapArray.get("workdesc")[0]);
-             
-             info_companynature.setText(commMapArray.get("companynature")[0]);
-     		 info_companyscale.setText(commMapArray.get("companyscale")[0]);
-         }else{
-        	 setEditBtnVisible(View.GONE);
-         }
-		
 		info_companynature.setOnClickListener(this);
 		info_companyscale.setOnClickListener(this);
 		info_industryclassification.setOnClickListener(this);
@@ -166,6 +145,30 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		info_companyname.addTextChangedListener(this);
 		info_jobtitle.addTextChangedListener(this);
 		info_workdescdetail.addTextChangedListener(this);
+	}
+	
+	private void initViews(){
+		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1 order by id desc limit 1";
+		 commMapArray = dbUtil.queryData(self, queryWhere);
+         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+        	 setEditBtnVisible(View.VISIBLE);
+        	 
+        	 kId = commMapArray.get("id")[0];
+        	 
+        	 info_industryclassification.setText(commMapArray.get("industryclassification")[0]);
+        	 info_startworktime.setText(commMapArray.get("worktimestart")[0]);
+        	 info_endworktime.setText(commMapArray.get("worktimeend")[0]);
+        	 info_expectedsalary.setText(commMapArray.get("expectedsalary")[0]);
+        		
+        	 info_companyname.setText(commMapArray.get("companyname")[0]);
+        	 info_jobtitle.setText(commMapArray.get("jobtitle")[0]);
+             info_workdescdetail.setText(commMapArray.get("workdesc")[0]);
+             
+             info_companynature.setText(commMapArray.get("companynature")[0]);
+     		 info_companyscale.setText(commMapArray.get("companyscale")[0]);
+         }else{
+        	 setEditBtnVisible(View.GONE);
+         }
 	}
 	
 	
@@ -248,7 +251,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		case R.id.edit:
 			updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 					new String[]{kId,"companyname","companynature","companyscale","industryclassification",
-									  "jobtitle","worktimeStart","worktimeEnd","expectedsalary","workdesc"}, 
+									  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc"}, 
 					new String[]{"1",info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
 								info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr});
 			if (updResult == 1) {
@@ -308,7 +311,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 * @Description: 同步数据
 	 * @author Comsys-WH1510032
 	 */
-	private void syncData(){
+	private void syncData(){ 
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		params.add("p_weId");

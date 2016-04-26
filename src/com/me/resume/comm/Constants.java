@@ -67,6 +67,10 @@ public class Constants {
             + Environment.getDataDirectory().getAbsolutePath() + "/"  
             + PACKAGENAME; // 获取存储位置地址  
     
+    
+    public static String DEVICEID = ""; // 设备标识码
+    
+    
     // 请求超时
  	public static final int EXECUTE_TIMEOUT = -0X2000;
  	

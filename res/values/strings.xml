@@ -240,4 +240,16 @@
     <string name="ot_info_input_description">请输入描述信息</string>
     <!-- 其他信息 -->
 
+	<!-- 人才附加内容 -->
+	<!-- 项目经验 -->
+	<string name="pe_info_projectname">项目名称</string>
+	<string name="pe_input_projectname">请输入项目名称</string>
+	<string name="pe_info_time">时&#160;&#160;间</string>
+	<string name="pe_info_workduties">项目职责</string>
+	<string name="pe_input_workduties">请输入项目职责(限500字)</string>
+	<string name="pe_info_workdesc">项目描述</string>
+	<string name="pe_input_workdesc">请输入项目描述(限2000字)</string>
+	<!--  -->
+	
+
 </resources>
