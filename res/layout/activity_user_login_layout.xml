@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white" >
+    android:background="@color/white"
+    android:visibility="visible"
+    android:id="@+id/user_login_layout" >
 
     <LinearLayout
         android:id="@+id/userpwdLayout"
@@ -113,5 +115,5 @@
                 android:scaleType="centerInside"/>
         </LinearLayout>
     </LinearLayout>
-
+    
 </RelativeLayout>

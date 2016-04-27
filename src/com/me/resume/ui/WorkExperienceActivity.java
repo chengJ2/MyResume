@@ -240,7 +240,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			cValues.put("worktimeEnd", info_endworktimeStr);
 			cValues.put("expectedsalary", info_expectedsalaryStr);
 			cValues.put("workdesc", info_workdescdetailStr);
-			cValues.put("background", getCheckColor());
 			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 			queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);
 			if(queryResult){
@@ -338,7 +337,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		values.add(info_workdescdetailStr);
 		values.add(info_companynatureStr);
 		values.add(info_companyscaleStr);
-		values.add(getCheckColor());
+		values.add(String.valueOf(checkColor));
 		
 		requestData("pro_workexpericnce", 2, params, values, new HandlerData() {
 			@Override

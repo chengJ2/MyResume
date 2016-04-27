@@ -3,6 +3,7 @@ package com.me.resume.ui;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -101,21 +103,30 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				break;
 			case OnTopMenu.MSG_MENU1:
 				if (msg.obj != null) {
-					// TODO
-					L.d("==select bgcolor==" +(Integer) msg.obj);
+					checkColor = (Integer) msg.obj;
+					updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
+							new String[]{kId,"background"}, 
+							new String[]{"1",String.valueOf(checkColor)});
+					if (updResult == 1) {
+						toastMsg(R.string.action_update_success);
+					}else{
+						toastMsg(R.string.action_update_fail);
+					}
 				}
 				break;
 			case OnTopMenu.MSG_MENU2:
 				if (msg.obj != null) {
-					// TODO
-					L.d("==edit mode==" + (boolean) msg.obj);
+					setPreferenceData("edit_mode",(boolean) msg.obj);
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
 				if (msg.obj != null) {
-					// TODO
-					L.d("==sync data==" + (boolean) msg.obj);
+					set2Msg(R.string.action_syncing);
+					syncData();
 				}
+				break;
+			case OnTopMenu.MSG_MENU31:
+				toastMsg(R.string.action_login_head);
 				break;
 			default:
 				break;
@@ -134,7 +145,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		findViews();
 		getChooseValue();
 		
-		new Handler().postDelayed(new Runnable() {
+		mHandler.postDelayed(new Runnable() {
 			
 			@Override
 			public void run() {
@@ -350,10 +361,10 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
 						new String[]{edId,"realname","gender","brithday","joinworktime",
 										  "phone","hometown","city","email","ismarry",
-										  "nationality","license","workingabroad","politicalstatus","background"}, 
+										  "nationality","license","workingabroad","politicalstatus"}, 
 						new String[]{"1",info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
 										info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
-										info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr,getCheckColor()});
+										info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr});
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
 				}else{
@@ -375,8 +386,6 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				cValues.put("license", info_licenseStr);
 				cValues.put("workingabroad", rg_workingabroadStr);
 				cValues.put("politicalstatus", rg_politicalstatusStr);
-				cValues.put("avator", "/image/aa.jpg");
-				cValues.put("background", getCheckColor());
 				
 				queryResult = dbUtil.insertData(self, 
 						CommonText.BASEINFO, cValues);
@@ -442,26 +451,32 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 	
-	private void uploadData(){
+	
+	/**
+	 * 
+	 * @Description: 同步数据
+	 * @author Comsys-WH1510032
+	 */
+	private void syncData(){ 
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
-		params.add("userId");
-		params.add("realname");
-		params.add("gender");
-		params.add("brithday");
-		params.add("joinworktime");
-		params.add("phone");
-		params.add("hometown");
-		params.add("city");
-		params.add("email");
-		params.add("ismarry");
-		params.add("nationality");
-		params.add("license");
-		params.add("workingabroad");
-		params.add("politicalstatus");
-		params.add("avator");
-		params.add("background");
+		params.add("p_baId");
+		params.add("p_userId");
+		params.add("p_realname");
+		params.add("p_gender");
+		params.add("p_brithday");
+		params.add("p_joinworktime");
+		params.add("p_phone");
+		params.add("p_hometown");
+		params.add("p_city");
+		params.add("p_email");
+		params.add("p_ismarry");
+		params.add("p_nationality");
+		params.add("p_license");
+		params.add("p_workingabroad");
+		params.add("p_politicalstatus");
+		params.add("p_background");
 		
 		values.add("1");
 		values.add(info_realnameStr);
@@ -477,10 +492,28 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		values.add(info_licenseStr);
 		values.add(rg_workingabroadStr);
 		values.add(rg_politicalstatusStr);
-		values.add("/image/aa.jpg");
-		values.add(getCheckColor());
+		values.add(String.valueOf(checkColor));
+		
+		requestData("pro_baseinfo", 2, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				runOnUiThread(R.string.action_sync_fail);
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+					if (map.get("msg").get(0).equals("200")) {
+						runOnUiThread(R.string.action_sync_success);
+						
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		
 	}
-	
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -1,6 +1,8 @@
 package com.me.resume.ui;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import android.content.ContentValues;
@@ -12,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.me.resume.R;
+import com.me.resume.comm.OnTopMenu;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.TimeUtils;
@@ -68,6 +72,33 @@ public class OtherInfoActivity extends BaseActivity implements
 				if (msg.obj != null) {
 					info_certificatetime.setText(((String)msg.obj)/*.substring(0, 4)*/);
 				}
+				break;
+			case OnTopMenu.MSG_MENU1:
+				if (msg.obj != null) {
+					checkColor = (Integer) msg.obj;
+					updResult = dbUtil.updateData(self, CommonText.OTHERINFO, 
+							new String[]{kId,"background"}, 
+							new String[]{"1",String.valueOf(checkColor)});
+					if (updResult == 1) {
+						toastMsg(R.string.action_update_success);
+					}else{
+						toastMsg(R.string.action_update_fail);
+					}
+				}
+				break;
+			case OnTopMenu.MSG_MENU2:
+				if (msg.obj != null) {
+					setPreferenceData("edit_mode",(boolean) msg.obj);
+				}
+				break;
+			case OnTopMenu.MSG_MENU3:
+				if (msg.obj != null) {
+					set2Msg(R.string.action_syncing);
+					syncData();
+				}
+				break;
+			case OnTopMenu.MSG_MENU31:
+				toastMsg(R.string.action_login_head);
 				break;
 			default:
 				break;
@@ -183,6 +214,12 @@ public class OtherInfoActivity extends BaseActivity implements
         }
 	}
 	
+	private String info_languageStr,info_literacyskillsStr,info_listeningspeakingStr;
+	
+	private String info_certificateStr,info_certificatetimesStr;
+	
+	private String info_titleStr,info_descriptionStr;
+	
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -209,18 +246,15 @@ public class OtherInfoActivity extends BaseActivity implements
 					R.string.ot_info_listeningspeaking);
 			break;
 		case R.id.ot_languages_add:
-			String info_languageStr = CommUtil.getTextValue(info_language);
-			String info_literacyskillsStr = CommUtil
-					.getTextValue(info_literacyskills);
-			String info_listeningspeakingStr = CommUtil
-					.getTextValue(info_listeningspeaking);
+			info_languageStr = CommUtil.getTextValue(info_language);
+			info_literacyskillsStr = CommUtil.getTextValue(info_literacyskills);
+			info_listeningspeakingStr = CommUtil.getTextValue(info_listeningspeaking);
 
 			ContentValues cValues = new ContentValues();
 			cValues.put("userId", "1");
 			cValues.put("language", info_languageStr);
 			cValues.put("literacyskills", info_literacyskillsStr);
 			cValues.put("listeningspeaking", info_listeningspeakingStr);
-			cValues.put("background", getCheckColor());
 			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 
 			queryResult = dbUtil
@@ -241,8 +275,8 @@ public class OtherInfoActivity extends BaseActivity implements
 	         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 	        	String edId = commMapArray.get("id")[0];
 				updResult = dbUtil.updateData(self, CommonText.OTHERINFO, 
-						new String[]{edId,"language","literacyskills","listeningspeaking","background"}, 
-						new String[]{"1",info_languageStr,info_literacyskillsStr,info_listeningspeakingStr,String.valueOf(getCheckColor())});
+						new String[]{edId,"language","literacyskills","listeningspeaking"}, 
+						new String[]{"1",info_languageStr,info_literacyskillsStr,info_listeningspeakingStr});
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
 				}else{
@@ -251,8 +285,8 @@ public class OtherInfoActivity extends BaseActivity implements
 	         }
 			break;
 		case R.id.ot_certificate_add:
-			String info_certificateStr = CommUtil.getTextValue(info_certificate);
-			String info_certificatetimesStr = CommUtil.getTextValue(info_certificatetime);
+			info_certificateStr = CommUtil.getTextValue(info_certificate);
+			info_certificatetimesStr = CommUtil.getTextValue(info_certificatetime);
 
 			cValues = new ContentValues();
 			cValues.put("userId", "1");
@@ -285,8 +319,8 @@ public class OtherInfoActivity extends BaseActivity implements
 	         }
 			break;
 		case R.id.ot_otherinfo_add:
-			String info_titleStr = CommUtil.getTextValue(info_title);
-			String info_descriptionStr = CommUtil
+			info_titleStr = CommUtil.getTextValue(info_title);
+			info_descriptionStr = CommUtil
 					.getTextValue(info_description);
 			cValues = new ContentValues();
 			cValues.put("userId", "1");
@@ -333,6 +367,61 @@ public class OtherInfoActivity extends BaseActivity implements
 			break;
 		}
 	}
+	
+	/**
+	 * 
+	 * @Description: 同步数据
+	 * @author Comsys-WH1510032
+	 */
+	private void syncData(){ 
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		params.add("p_otId");
+		params.add("p_userId");
+		params.add("p_language");
+		params.add("p_literacyskills");
+		params.add("p_listeningspeaking");
+		params.add("p_background");
+		
+		params.add("p_certificate");
+		params.add("p_certificatetime");
+		
+		params.add("p_title");
+		params.add("p_description");
+		
+		values.add("0");
+		values.add("1");
+		values.add(info_languageStr);
+		values.add(info_literacyskillsStr);
+		values.add(info_listeningspeakingStr);
+		values.add(String.valueOf(checkColor));
+		
+		values.add(info_certificateStr);
+		values.add(info_certificatetimesStr);
+		
+		values.add(info_titleStr);
+		values.add(info_descriptionStr);
+		
+		requestData("pro_evaluation", 2, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				runOnUiThread(R.string.action_sync_fail);
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+					if (map.get("msg").get(0).equals("200")) {
+						runOnUiThread(R.string.action_sync_success);
+						
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	
 
 	private void getValues(int array, View parent, int resId) {
 		String[] item_text = CommUtil.getArrayValue(self, array);

@@ -10,8 +10,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 
 import com.me.resume.MyApplication;
-import com.me.resume.R;
-import com.me.resume.ui.Base64Util;
+import com.me.resume.utils.Base64Util;
 import com.me.resume.utils.CommUtil;
 import com.whjz.android.text.Info;
 import com.whjz.android.util.common.CommonUtil;

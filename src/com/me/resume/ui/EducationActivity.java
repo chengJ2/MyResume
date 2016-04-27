@@ -1,8 +1,13 @@
 package com.me.resume.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -14,7 +19,9 @@ import android.widget.TextView;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.OnTopMenu;
 import com.me.resume.swipeback.SwipeBackActivity;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.L;
 import com.me.resume.ui.fragment.AllFragmentFactory;
 import com.me.resume.ui.fragment.EducationFragment;
@@ -40,6 +47,45 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	private SegmentButton segment_button;
 	
 	private int cposition = 0;
+	
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case OnTopMenu.MSG_MENU1:
+				if (msg.obj != null) {
+					checkColor = (Integer) msg.obj;
+					updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
+							new String[]{kId,"background"}, 
+							new String[]{"1",String.valueOf(checkColor)});
+					if (updResult == 1) {
+						toastMsg(R.string.action_update_success);
+					}else{
+						toastMsg(R.string.action_update_fail);
+					}
+				}
+				break;
+			case OnTopMenu.MSG_MENU2:
+				if (msg.obj != null) {
+					setPreferenceData("edit_mode",(boolean) msg.obj);
+				}
+				break;
+			case OnTopMenu.MSG_MENU3:
+				if (msg.obj != null) {
+					set2Msg(R.string.action_syncing);
+					syncData();
+				}
+				break;
+			case OnTopMenu.MSG_MENU31:
+				toastMsg(R.string.action_login_head);
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
+	
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -157,7 +203,6 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					cValues.put("majorname", info_majornameStr);
 					cValues.put("degree", info_degressStr);
 					cValues.put("examination", info_examinationStr);
-					cValues.put("background", getCheckColor());
 					cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 					
 					queryResult= dbUtil.insertData(self, 
@@ -178,7 +223,6 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					cValues.put("trainingclass", info_trainingclassStr);
 					cValues.put("certificate", info_certificateStr);
 					cValues.put("description", info_descriptionStr);
-					cValues.put("background", getCheckColor());
 					cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 					
 					queryResult = dbUtil.insertData(self, 
@@ -198,9 +242,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 						String edId = commMapArray.get("_id")[0];
 						updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
 								new String[]{edId,"educationtimestart","educationtimeend","school","majorname",
-												  "degree","examination","background"}, 
+												  "degree","examination"}, 
 								new String[]{"1",info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,
-								info_degressStr,info_examinationStr,String.valueOf(getCheckColor())});
+								info_degressStr,info_examinationStr});
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
 						}else{
@@ -216,9 +260,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 						String edId = commMapArray.get("_id")[0];
 						updResult = dbUtil.updateData(self, CommonText.EDUCATION_TRAIN, 
 								new String[]{edId,"trainingtimestart","trainingtimeend","trainingorganization","trainingclass",
-								"certificate","description","background"}, 
+								"certificate","description"}, 
 								new String[]{"1",info_starttimeStr,info_endtimeStr,info_trainingorganizationStr,info_trainingclassStr,
-								info_certificateStr,info_descriptionStr,String.valueOf(getCheckColor())});
+								info_certificateStr,info_descriptionStr});
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
 						}else{
@@ -240,6 +284,53 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		default:
 			break;
 		}
+	}
+	
+	/**
+	 * 
+	 * @Description: 同步数据
+	 * @author Comsys-WH1510032
+	 */
+	private void syncData(){ 
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		params.add("p_edId");
+		params.add("p_userId");
+		params.add("p_educationtimestart");
+		params.add("p_educationtimeend");
+		params.add("p_school");
+		params.add("p_majorname");
+		params.add("p_degree");
+		params.add("p_examination");
+		params.add("p_background");
+		
+		values.add("0");
+		values.add("1");
+		values.add(info_starttimeStr);
+		values.add(info_endtimeStr);
+		values.add(info_schoolStr);
+		values.add(info_majornameStr);
+		values.add(info_degressStr);
+		values.add(info_examinationStr);
+		values.add(String.valueOf(checkColor));
+		
+		requestData("pro_education", 2, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				runOnUiThread(R.string.action_sync_fail);
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+					if (map.get("msg").get(0).equals("200")) {
+						runOnUiThread(R.string.action_sync_success);
+						
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	// 教育背景

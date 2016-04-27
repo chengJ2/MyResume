@@ -27,11 +27,7 @@ import com.whjz.android.text.CommonText;
  */
 public class UserRegisterActivity extends BaseActivity implements OnClickListener{
 
-	private EditText usernameEt;
-	
-	private EditText passwordEt;
-	
-	private EditText password2Et;
+	private EditText usernameEt,passwordEt,password2Et;
 	
 	private Button registBtn;
 	

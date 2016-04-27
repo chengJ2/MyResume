@@ -1,6 +1,9 @@
 package com.me.resume.ui;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -8,19 +11,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
-import com.me.resume.swipeback.SwipeBackActivity;
+import com.me.resume.comm.OnTopMenu;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
-import com.me.resume.views.CustomFAB;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -51,6 +52,33 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 					info_expmonthlysalary.setText(mList.get(position));
 				}
 				DialogUtils.dismissPopwindow();
+				break;
+			case OnTopMenu.MSG_MENU1:
+				if (msg.obj != null) {
+					checkColor = (Integer) msg.obj;
+					updResult = dbUtil.updateData(self, CommonText.JOBINTENSION, 
+							new String[]{kId,"background"}, 
+							new String[]{"1",String.valueOf(checkColor)});
+					if (updResult == 1) {
+						toastMsg(R.string.action_update_success);
+					}else{
+						toastMsg(R.string.action_update_fail);
+					}
+				}
+				break;
+			case OnTopMenu.MSG_MENU2:
+				if (msg.obj != null) {
+					setPreferenceData("edit_mode",(boolean) msg.obj);
+				}
+				break;
+			case OnTopMenu.MSG_MENU3:
+				if (msg.obj != null) {
+					set2Msg(R.string.action_syncing);
+					syncData();
+				}
+				break;
+			case OnTopMenu.MSG_MENU31:
+				toastMsg(R.string.action_login_head);
 				break;
 			default:
 				break;
@@ -114,16 +142,19 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
          }
 	}
 
+	private String info_exp_workingpropertyStr,info_expworkplaceStr,info_expworkcareerStr; 
+	private String info_expworkindustryStr,info_expmonthlysalaryStr,info_workingstateStr;
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.save:
-			String info_exp_workingpropertyStr = CommUtil.getTextValue(info_exp_workingproperty);
-			String info_expworkplaceStr = CommUtil.getTextValue(info_expworkplace);
-			String info_expworkcareerStr = CommUtil.getTextValue(info_expworkcareer);
-			String info_expworkindustryStr = CommUtil.getTextValue(info_expworkindustry);
-			String info_expmonthlysalaryStr = CommUtil.getTextValue(info_expmonthlysalary);
-			String info_workingstateStr = CommUtil.getTextValue(info_workingstate);
+			 info_exp_workingpropertyStr = CommUtil.getTextValue(info_exp_workingproperty);
+			 info_expworkplaceStr = CommUtil.getTextValue(info_expworkplace);
+			 info_expworkcareerStr = CommUtil.getTextValue(info_expworkcareer);
+			 info_expworkindustryStr = CommUtil.getTextValue(info_expworkindustry);
+			 info_expmonthlysalaryStr = CommUtil.getTextValue(info_expmonthlysalary);
+			 info_workingstateStr = CommUtil.getTextValue(info_workingstate);
 			
 			if (!RegexUtil.checkNotNull(info_exp_workingpropertyStr)) {
 				setMsg(R.string.ji_info_expectedworkingproperty);
@@ -162,9 +193,9 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	        	String edId = commMapArray.get("id")[0];
 				updResult = dbUtil.updateData(self, CommonText.JOBINTENSION, 
 						new String[]{edId,"expworkingproperty","expdworkplace","expworkindustry","expworkcareer",
-										  "expmonthlysalary","workingstate","background"}, 
+										  "expmonthlysalary","workingstate"}, 
 						new String[]{"1",info_exp_workingpropertyStr,info_expworkplaceStr,info_expworkindustryStr,
-										info_expworkcareerStr,info_expmonthlysalaryStr,info_workingstateStr,String.valueOf(getCheckColor())});
+										info_expworkcareerStr,info_expmonthlysalaryStr,info_workingstateStr});
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
 				}else{
@@ -179,7 +210,6 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	 			cValues.put("expworkcareer", info_expworkcareerStr);
 	 			cValues.put("expmonthlysalary", info_expmonthlysalaryStr);
 	 			cValues.put("workingstate", info_workingstateStr);
-	 			cValues.put("background", getCheckColor());
 	 			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 	 			
 	 			queryResult = dbUtil.insertData(self, CommonText.JOBINTENSION, cValues);
@@ -230,10 +260,61 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 					R.string.ji_info_workingstate, mList, 
 					mHandler);
 			break;
+		case R.id.right_icon_more:
+			DialogUtils.showTopMenuDialog(self, topLayout, mHandler);
+			break;
 		default:
 			break;
 		}
 	}
+	
+	/**
+	 * 
+	 * @Description: 同步数据
+	 * @author Comsys-WH1510032
+	 */
+	private void syncData(){ 
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		params.add("p_jiId");
+		params.add("p_userId");
+		params.add("p_expworkingproperty");
+		params.add("p_expdworkplace");
+		params.add("p_expworkindustry");
+		params.add("p_expworkcareer");
+		params.add("p_expmonthlysalary");
+		params.add("p_workingstate");
+		params.add("p_background");
+		
+		values.add("0");
+		values.add("1");
+		values.add(info_exp_workingpropertyStr);
+		values.add(info_expworkplaceStr);
+		values.add(info_expworkindustryStr);
+		values.add(info_expworkcareerStr);
+		values.add(info_expmonthlysalaryStr);
+		values.add(info_workingstateStr);
+		values.add(String.valueOf(checkColor));
+		
+		requestData("pro_evaluation", 2, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				runOnUiThread(R.string.action_sync_fail);
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+					if (map.get("msg").get(0).equals("200")) {
+						runOnUiThread(R.string.action_sync_success);
+						
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -252,4 +333,6 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		super.onActivityResult(requestCode, resultCode, data);
 		
 	}
+	
+	
 }

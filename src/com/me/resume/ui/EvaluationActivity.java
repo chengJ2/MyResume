@@ -1,13 +1,21 @@
 package com.me.resume.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import android.content.ContentValues;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
 import com.me.resume.R;
+import com.me.resume.comm.OnTopMenu;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.CustomFAB;
 import com.whjz.android.text.CommonText;
@@ -23,6 +31,43 @@ import com.whjz.android.text.CommonText;
 public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	// 自我评价;职业目标
 	private EditText info_self_evaluation,info_career_goal;
+	
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case OnTopMenu.MSG_MENU1:
+				if (msg.obj != null) {
+					checkColor = (Integer) msg.obj;
+					updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
+							new String[]{kId,"background"}, 
+							new String[]{"1",String.valueOf(checkColor)});
+					if (updResult == 1) {
+						toastMsg(R.string.action_update_success);
+					}else{
+						toastMsg(R.string.action_update_fail);
+					}
+				}
+				break;
+			case OnTopMenu.MSG_MENU2:
+				if (msg.obj != null) {
+					setPreferenceData("edit_mode",(boolean) msg.obj);
+				}
+				break;
+			case OnTopMenu.MSG_MENU3:
+				if (msg.obj != null) {
+					set2Msg(R.string.action_syncing);
+					syncData();
+				}
+				break;
+			case OnTopMenu.MSG_MENU31:
+				toastMsg(R.string.action_login_head);
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,19 +109,21 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 	
+	private String info_self_evaluationStr,info_career_goalStr;
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.save:
+			info_self_evaluationStr = CommUtil.getEditTextValue(info_self_evaluation);
+			info_career_goalStr = CommUtil.getEditTextValue(info_career_goal);
 			queryWhere = "select * from " + CommonText.EVALUATION + " where userId = 1";
 			commMapArray = dbUtil.queryData(self, queryWhere);
-			String info_self_evaluationStr = CommUtil.getEditTextValue(info_self_evaluation);
-			String info_career_goalStr = CommUtil.getEditTextValue(info_career_goal);
 			if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 				String edId = commMapArray.get("id")[0];
 				updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
-						new String[]{edId,"selfevaluation","careergoal","background"}, 
-						new String[]{"1",info_self_evaluationStr,info_career_goalStr,String.valueOf(getCheckColor())});
+						new String[]{edId,"selfevaluation","careergoal"}, 
+						new String[]{"1",info_self_evaluationStr,info_career_goalStr});
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
 				}
@@ -85,7 +132,6 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				cValues.put("userId", "1");
 				cValues.put("selfevaluation", info_self_evaluationStr);
 				cValues.put("careergoal", info_career_goalStr);
-				cValues.put("background", getCheckColor());
 				cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 				queryResult = dbUtil.insertData(self, 
 						CommonText.EVALUATION, cValues);
@@ -103,8 +149,51 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		case R.id.right_icon:
 			startActivity(".MainActivity",false);
 			break;
+		case R.id.right_icon_more:
+			DialogUtils.showTopMenuDialog(self, topLayout, mHandler);
+			break;
 		default:
 			break;
 		}
+	}
+	
+	/**
+	 * 
+	 * @Description: 同步数据
+	 * @author Comsys-WH1510032
+	 */
+	private void syncData(){ 
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		params.add("p_evId");
+		params.add("p_userId");
+		params.add("p_selfevaluation");
+		params.add("p_careergoal");
+		params.add("p_background");
+		
+		values.add("0");
+		values.add("1");
+		values.add(info_self_evaluationStr);
+		values.add(info_career_goalStr);
+		values.add(String.valueOf(checkColor));
+		
+		
+		requestData("pro_evaluation", 2, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				runOnUiThread(R.string.action_sync_fail);
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+					if (map.get("msg").get(0).equals("200")) {
+						runOnUiThread(R.string.action_sync_success);
+						
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 }

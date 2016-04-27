@@ -1,4 +1,4 @@
-package com.me.resume.ui;
+package com.me.resume.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;

@@ -259,12 +259,12 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * 预览界面的背景色
 	 * @return checkColor
 	 */
-	protected String getCheckColor(){
+	/*protected String getCheckColor(){
 		if (checkColor == 0) {
 			return String.valueOf(R.color.red);
 		}
 		return String.valueOf(checkColor);
-	}
+	}*/
 	
 	/**
 	 * 是否显示编辑模式

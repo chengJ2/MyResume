@@ -1,5 +1,7 @@
 package com.me.resume.comm;
 
+import java.io.File;
+
 import android.os.Environment;
 
 /**
@@ -31,9 +33,8 @@ public class Constants {
    
     /** 缩略图缓存存放目录*/
     public static final String IMAGECACHE_PATH = IMAGE_PATH + "cache/";
-    /** 视频存放目录*/
-    public static final String VIDEO_PATH = "videos/";
 	
+    
 	/**
 	 * 本地配置缓存文件
 	 */
@@ -66,6 +67,9 @@ public class Constants {
     public static final String DATABASE_PATH = "/data"  
             + Environment.getDataDirectory().getAbsolutePath() + "/"  
             + PACKAGENAME; // 获取存储位置地址  
+    
+    public static File userhead = new File(Environment.getExternalStorageDirectory() 
+    		+ File.separator + DIR_PATH + File.separator + "Avatar.jpg"); 
     
     // 请求超时
  	public static final int EXECUTE_TIMEOUT = -0X2000;
