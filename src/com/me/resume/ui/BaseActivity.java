@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -83,6 +84,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	
 	protected Boolean isChecked = false;
 	
+	protected String deviceID = "";// 设备标识码
+	
 	private static BaseActivity mInstance;
 	
 	public static BaseActivity getInstance(){
@@ -129,6 +132,9 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		self = BaseActivity.this;
 		sp = getSharedPreferences(Constants.CONFIG, Context.MODE_PRIVATE);
 		fieldNull = CommUtil.getStrValue(self, R.string.action_input_isnull);
+		
+		TelephonyManager TelephonyMgr = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+		deviceID = TelephonyMgr.getDeviceId();
 	}
 
 	@Override

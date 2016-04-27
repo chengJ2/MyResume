@@ -74,6 +74,8 @@
     <string name="login_input2_hint">请输入密码</string>
     <string name="login_input3_hint">请确认密码</string>
      <string name="action_regist_fail">注册失败</string>
+     
+     <string name="max_photo_size">抱歉!上传的图片不能超过1M!</string>
 
     <!-- UI button click msg -->
     <string name="action_notice">提&#160;示</string>

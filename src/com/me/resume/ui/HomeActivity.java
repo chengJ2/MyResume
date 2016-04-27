@@ -103,9 +103,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				mHandler.sendEmptyMessage(100);
 			}
 		},50);
-		
-		TelephonyManager TelephonyMgr = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
-		Constants.DEVICEID = TelephonyMgr.getDeviceId();
 
 	}
 	
@@ -280,6 +277,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		case R.id.left_lable:
 			if (MyApplication.userId == 0) {
 				startActivity(".ui.UserLoginActivity", false);
+			}else{
+				startActivity(".ui.UserCenterActivity", false);
 			}
 			break;
 		case R.id.right_icon:
