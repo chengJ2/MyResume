@@ -453,11 +453,11 @@ public class DialogUtils {
 			
 			@Override
 			public void onClick(View v) {
-				if (MyApplication.userId > 0) {
+//				if (MyApplication.userId > 0) {
 					sendMsg(OnTopMenu.MSG_MENU3);
-				}else{
-					sendMsg(OnTopMenu.MSG_MENU31);
-				}
+//				}else{
+//					sendMsg(OnTopMenu.MSG_MENU31);
+//				}
 				dismissPopwindow();
 			}
 		});

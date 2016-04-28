@@ -120,10 +120,8 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if (msg.obj != null) {
-					set2Msg(R.string.action_syncing);
-					syncData();
-				}
+				set2Msg(R.string.action_syncing);
+				syncData();
 				break;
 			case OnTopMenu.MSG_MENU31:
 				toastMsg(R.string.action_login_head);
@@ -208,6 +206,8 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			setAddBtnSrc(R.drawable.ic_btn_edit);
+			
+			kId = commMapArray.get("userId")[0];
 			
 			info_realname.setText(commMapArray.get("realname")[0]);
 			info_phone.setText(commMapArray.get("phone")[0]);
@@ -297,16 +297,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.save:
-			info_realnameStr = CommUtil.getEditTextValue(info_realname);
-			info_phoneStr = CommUtil.getEditTextValue(info_phone);
-			info_emailStr = CommUtil.getEditTextValue(info_email);
-			info_nationalityStr = CommUtil.getEditTextValue(info_nationality);
-			info_licenseStr = CommUtil.getEditTextValue(info_license);
-
-			info_brithdayStr = CommUtil.getTextValue(info_brithday);
-			info_workyearStr = CommUtil.getTextValue(info_workyear);
-			info_hometownStr = CommUtil.getTextValue(info_hometown);
-			info_cityStr = CommUtil.getTextValue(info_city);
+			getFeildValue();
 			
 			if (!RegexUtil.checkNotNull(info_realnameStr)) {
 				setMsg(R.string.info_name);
@@ -451,6 +442,23 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 	
+	/**
+	 * 
+	 * @Description: 获取界面字段值
+	 * @author Comsys-WH1510032
+	 */
+	private void getFeildValue(){
+		info_realnameStr = CommUtil.getEditTextValue(info_realname);
+		info_phoneStr = CommUtil.getEditTextValue(info_phone);
+		info_emailStr = CommUtil.getEditTextValue(info_email);
+		info_nationalityStr = CommUtil.getEditTextValue(info_nationality);
+		info_licenseStr = CommUtil.getEditTextValue(info_license);
+
+		info_brithdayStr = CommUtil.getTextValue(info_brithday);
+		info_workyearStr = CommUtil.getTextValue(info_workyear);
+		info_hometownStr = CommUtil.getTextValue(info_hometown);
+		info_cityStr = CommUtil.getTextValue(info_city);
+	}
 	
 	/**
 	 * 
@@ -458,6 +466,8 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	 * @author Comsys-WH1510032
 	 */
 	private void syncData(){ 
+		getFeildValue();
+		
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
@@ -479,6 +489,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		params.add("p_background");
 		
 		values.add("1");
+		values.add("3");
 		values.add(info_realnameStr);
 		values.add(rg_genderStr);
 		values.add(info_brithdayStr);
@@ -492,9 +503,9 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		values.add(info_licenseStr);
 		values.add(rg_workingabroadStr);
 		values.add(rg_politicalstatusStr);
-		values.add(String.valueOf(checkColor));
+		values.add(getCheckColor(checkColor));
 		
-		requestData("pro_baseinfo", 2, params, values, new HandlerData() {
+		requestData("pro_baseinfo", 3, params, values, new HandlerData() {
 			@Override
 			public void error() {
 				runOnUiThread(R.string.action_sync_fail);

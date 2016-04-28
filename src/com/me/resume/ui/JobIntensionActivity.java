@@ -72,10 +72,8 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if (msg.obj != null) {
-					set2Msg(R.string.action_syncing);
-					syncData();
-				}
+				set2Msg(R.string.action_syncing);
+				syncData();
 				break;
 			case OnTopMenu.MSG_MENU31:
 				toastMsg(R.string.action_login_head);
@@ -149,12 +147,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.save:
-			 info_exp_workingpropertyStr = CommUtil.getTextValue(info_exp_workingproperty);
-			 info_expworkplaceStr = CommUtil.getTextValue(info_expworkplace);
-			 info_expworkcareerStr = CommUtil.getTextValue(info_expworkcareer);
-			 info_expworkindustryStr = CommUtil.getTextValue(info_expworkindustry);
-			 info_expmonthlysalaryStr = CommUtil.getTextValue(info_expmonthlysalary);
-			 info_workingstateStr = CommUtil.getTextValue(info_workingstate);
+			getFeildValue();
 			
 			if (!RegexUtil.checkNotNull(info_exp_workingpropertyStr)) {
 				setMsg(R.string.ji_info_expectedworkingproperty);
@@ -270,13 +263,28 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	
 	/**
 	 * 
+	 * @Description: 获取界面字段值
+	 * @author Comsys-WH1510032
+	 */
+	private void getFeildValue(){
+		 info_exp_workingpropertyStr = CommUtil.getTextValue(info_exp_workingproperty);
+		 info_expworkplaceStr = CommUtil.getTextValue(info_expworkplace);
+		 info_expworkcareerStr = CommUtil.getTextValue(info_expworkcareer);
+		 info_expworkindustryStr = CommUtil.getTextValue(info_expworkindustry);
+		 info_expmonthlysalaryStr = CommUtil.getTextValue(info_expmonthlysalary);
+		 info_workingstateStr = CommUtil.getTextValue(info_workingstate);
+	}
+	
+	/**
+	 * 
 	 * @Description: 同步数据
 	 * @author Comsys-WH1510032
 	 */
 	private void syncData(){ 
+		getFeildValue();
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
-		params.add("p_jiId");
+		params.add("p_joId");
 		params.add("p_userId");
 		params.add("p_expworkingproperty");
 		params.add("p_expdworkplace");
@@ -294,9 +302,9 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		values.add(info_expworkcareerStr);
 		values.add(info_expmonthlysalaryStr);
 		values.add(info_workingstateStr);
-		values.add(String.valueOf(checkColor));
+		values.add(getCheckColor(checkColor));
 		
-		requestData("pro_evaluation", 2, params, values, new HandlerData() {
+		requestData("pro_jobintension", 2, params, values, new HandlerData() {
 			@Override
 			public void error() {
 				runOnUiThread(R.string.action_sync_fail);
@@ -306,10 +314,9 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 				try {
 					if (map.get("msg").get(0).equals("200")) {
 						runOnUiThread(R.string.action_sync_success);
-						
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					runOnUiThread(R.string.action_sync_fail);
 				}
 			}
 		});

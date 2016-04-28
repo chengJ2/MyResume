@@ -93,10 +93,8 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if (msg.obj != null) {
-					set2Msg(R.string.action_syncing);
-					syncData();
-				}
+				set2Msg(R.string.action_syncing);
+				syncData();
 				break;
 			case OnTopMenu.MSG_MENU31:
 				toastMsg(R.string.action_login_head);
@@ -174,19 +172,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	
 	@Override
 	public void onClick(View v) {
-		info_companynameStr = CommUtil.getEditTextValue(info_companyname);
-		info_jobtitleStr = CommUtil.getEditTextValue(info_jobtitle);
-		info_workdescdetailStr = CommUtil.getEditTextValue(info_workdescdetail);
-
-		info_companynatureStr = CommUtil.getTextValue(info_companynature);
-		info_companyscaleStr = CommUtil.getTextValue(info_companyscale);
-
-		info_industryclassificationStr = CommUtil
-				.getTextValue(info_industryclassification);
-		info_startworktimeStr = CommUtil.getTextValue(info_startworktime);
-		info_endworktimeStr = CommUtil.getTextValue(info_endworktime);
-		info_expectedsalaryStr = CommUtil.getTextValue(info_expectedsalary);
-		
+		getFeildValue();
 		switch (v.getId()) {
 		case R.id.save:
 			if (!RegexUtil.checkNotNull(info_companynameStr)) {
@@ -306,11 +292,34 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	
 	/**
 	 * 
+	 * @Description: 获取界面字段值
+	 * @author Comsys-WH1510032
+	 */
+	private void getFeildValue(){
+		info_companynameStr = CommUtil.getEditTextValue(info_companyname);
+		info_jobtitleStr = CommUtil.getEditTextValue(info_jobtitle);
+		info_workdescdetailStr = CommUtil.getEditTextValue(info_workdescdetail);
+
+		info_companynatureStr = CommUtil.getTextValue(info_companynature);
+		info_companyscaleStr = CommUtil.getTextValue(info_companyscale);
+
+		info_industryclassificationStr = CommUtil
+				.getTextValue(info_industryclassification);
+		info_startworktimeStr = CommUtil.getTextValue(info_startworktime);
+		info_endworktimeStr = CommUtil.getTextValue(info_endworktime);
+		info_expectedsalaryStr = CommUtil.getTextValue(info_expectedsalary);
+	}
+	
+	
+	/**
+	 * 
 	 * @Title:WorkExperienceActivity
 	 * @Description: 同步数据
 	 * @author Comsys-WH1510032
 	 */
 	private void syncData(){ 
+		getFeildValue();
+		
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		params.add("p_weId");
@@ -337,7 +346,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		values.add(info_workdescdetailStr);
 		values.add(info_companynatureStr);
 		values.add(info_companyscaleStr);
-		values.add(String.valueOf(checkColor));
+		values.add(getCheckColor(checkColor));
 		
 		requestData("pro_workexpericnce", 2, params, values, new HandlerData() {
 			@Override

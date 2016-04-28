@@ -54,10 +54,8 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if (msg.obj != null) {
-					set2Msg(R.string.action_syncing);
-					syncData();
-				}
+				set2Msg(R.string.action_syncing);
+				syncData();
 				break;
 			case OnTopMenu.MSG_MENU31:
 				toastMsg(R.string.action_login_head);
@@ -115,8 +113,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.save:
-			info_self_evaluationStr = CommUtil.getEditTextValue(info_self_evaluation);
-			info_career_goalStr = CommUtil.getEditTextValue(info_career_goal);
+			getFeildValue();
 			queryWhere = "select * from " + CommonText.EVALUATION + " where userId = 1";
 			commMapArray = dbUtil.queryData(self, queryWhere);
 			if (commMapArray!= null && commMapArray.get("userId").length > 0) {
@@ -157,12 +154,18 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 	
+	private void getFeildValue(){
+		info_self_evaluationStr = CommUtil.getEditTextValue(info_self_evaluation);
+		info_career_goalStr = CommUtil.getEditTextValue(info_career_goal);
+	}
+	
 	/**
 	 * 
 	 * @Description: 同步数据
 	 * @author Comsys-WH1510032
 	 */
 	private void syncData(){ 
+		getFeildValue();
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		params.add("p_evId");
@@ -175,7 +178,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		values.add("1");
 		values.add(info_self_evaluationStr);
 		values.add(info_career_goalStr);
-		values.add(String.valueOf(checkColor));
+		values.add(getCheckColor(checkColor));
 		
 		
 		requestData("pro_evaluation", 2, params, values, new HandlerData() {
@@ -192,6 +195,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
+					runOnUiThread(R.string.action_sync_fail);
 				}
 			}
 		});

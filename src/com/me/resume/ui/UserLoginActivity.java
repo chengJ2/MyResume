@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -61,7 +62,7 @@ public class UserLoginActivity extends BaseActivity implements
 	
 	private void findViews(){
 		user_login_layout = findView(R.id.user_login_layout);
-		user_register_layout = findView(R.id.user_login_layout);
+		user_register_layout = findView(R.id.user_register_layout);
 		
 		user_login_layout.setVisibility(View.VISIBLE);
 		user_register_layout.setVisibility(View.GONE);
@@ -114,13 +115,39 @@ public class UserLoginActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		switch (view.getId()) {
 		case R.id.left_lable:
-			self.scrollToFinishActivity();
+			if (user_login_layout.getVisibility() == View.GONE) {
+				setTopTitle(R.string.action_user_login);
+				setRightIconVisible(View.VISIBLE);
+				AlphaAnimation dismiss = new AlphaAnimation(1, 0);
+				dismiss.setDuration(1000);
+				dismiss.setFillAfter(true);
+				user_register_layout.startAnimation(dismiss);
+				
+				dismiss = new AlphaAnimation(0, 1);
+				dismiss.setDuration(1000);
+				dismiss.setFillAfter(true);
+				user_login_layout.startAnimation(dismiss);
+			}else if (user_login_layout.getVisibility() == View.VISIBLE) {
+				self.scrollToFinishActivity();
+			}
 			break;
 		case R.id.right_icon:
 			setTopTitle(R.string.action_user_regist);
 			setRightIconVisible(View.GONE);
 			user_login_layout.setVisibility(View.GONE);
 			user_register_layout.setVisibility(View.VISIBLE);
+			
+			AlphaAnimation dismiss = new AlphaAnimation(1, 0);
+			dismiss.setDuration(1000);
+			dismiss.setFillAfter(true);
+			user_login_layout.startAnimation(dismiss);
+			
+			
+			dismiss = new AlphaAnimation(0, 1);
+			dismiss.setDuration(1000);
+			dismiss.setFillAfter(true);
+			user_register_layout.startAnimation(dismiss);
+			
 			break;
 		case R.id.save_checkbox:
 		case R.id.savePassWord:

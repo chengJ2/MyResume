@@ -5,9 +5,15 @@
     android:background="@color/white">
     
     <include 
+        android:id="@+id/user_login_layout"
+        android:layout_height="match_parent"
+        android:visibility="visible"
         layout="@layout/activity_user_login_layout"/>
     
     <include 
+        android:id="@+id/user_register_layout" 
+        android:layout_height="match_parent"
+        android:visibility="gone"
         layout="@layout/activity_user_register_layout"/>
     
 </RelativeLayout>

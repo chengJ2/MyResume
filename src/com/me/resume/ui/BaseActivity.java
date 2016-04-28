@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,12 +23,10 @@ import android.widget.TextView;
 import com.me.resume.R;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
-import com.me.resume.comm.OnTopMenu;
 import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.tools.SystemBarTintManager;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
-import com.me.resume.utils.DialogUtils;
 import com.me.resume.views.CustomFAB;
 
 /**
@@ -81,8 +78,6 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	protected String fieldNull = null;
 	
 	protected Integer checkColor = 0;
-	
-	protected Boolean isChecked = false;
 	
 	protected String deviceID = "";// 设备标识码
 	
@@ -259,29 +254,18 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * 预览界面的背景色
 	 * @return checkColor
 	 */
-	/*protected String getCheckColor(){
+	protected String getCheckColor(int checkColor){
 		if (checkColor == 0) {
 			return String.valueOf(R.color.red);
 		}
 		return String.valueOf(checkColor);
-	}*/
-	
-	/**
-	 * 是否显示编辑模式
-	 * @return isChecked
-	 */
-	protected boolean getEditModeCheck(){
-		return isChecked;
 	}
 	
 	/**
 	 * 
 	 * @Title:BaseActivity
 	 * @Description: 设置界面消息
-	 * @author Comsys-WH1510032
-	 * @return 返回类型  
 	 * @param id
-	 * @param visibility
 	 */
 	protected void setMsg(int id) {
 		msg.setText(CommUtil.getStrValue(self, id) + fieldNull);
@@ -292,14 +276,29 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * 
 	 * @Title:BaseActivity
 	 * @Description: 设置界面消息
-	 * @author Comsys-WH1510032
-	 * @return 返回类型  
 	 * @param id
-	 * @param visibility
 	 */
 	protected void set2Msg(int id) {
 		msg.setText(CommUtil.getStrValue(self, id));
 		msg.setVisibility(View.VISIBLE);
+	}
+	
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 设置界面消息1.5S隐藏
+	 * @param id
+	 */
+	protected void set3Msg(int id) {
+		msg.setText(CommUtil.getStrValue(self, id));
+		msg.setVisibility(View.VISIBLE);
+		msg.postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				setMsgHide();
+			}
+		}, 1500);
 	}
 	
 	/**
@@ -355,10 +354,10 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * 
 	 * @Title:BaseActivity
 	 * @Description: Find View By Id
-	 * @author Comsys-WH1510032
 	 * @return View
 	 * @param viewID
 	 */
+	@SuppressWarnings("unchecked")
 	protected <T extends View> T findView(int viewID) {
 		return (T) findViewById(viewID);
 	}
@@ -369,13 +368,13 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * @Description: 更新UI
 	 * @param id
 	 */
-	protected void runOnUiThread(int id) {
+	protected void runOnUiThread(final int id) {
 		runOnUiThread(new Runnable() {
 			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				set2Msg(R.string.action_sync_success);
+				set3Msg(id);
 			}
 		});
 	}
@@ -407,24 +406,5 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 			break;
 		}
 	}
-
-	/*@Override
-	public boolean isCheck() {
-		return isChecked;
-	}
-
-	@Override
-	public String checkColor() {
-		if (checkColor == 0) {
-			return String.valueOf(R.color.red);
-		}
-		return String.valueOf(checkColor);
-	}
-
-	@Override
-	public boolean syncDataCheck() {
-		// TODO Auto-generated method stub
-		return false;
-	}*/
 
 }

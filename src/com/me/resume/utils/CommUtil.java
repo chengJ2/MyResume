@@ -168,6 +168,7 @@ public class CommUtil {
 		return "";
 	}
 
+	
 	/**
 	 * 获取资源文件
 	 * 
