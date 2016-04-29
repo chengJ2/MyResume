@@ -81,9 +81,9 @@ public class UserLoginActivity extends BaseActivity implements
 		forgotPassWord.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
 		
-		usernameEt = findView(R.id.edtTxt_username);
-		passwordEt = findView(R.id.edtTxt_password);
-		password2Et = findView(R.id.edtTxt2_password);
+		usernameEt = findView(R.id.regTxt_username);
+		passwordEt = findView(R.id.regTxt_password);
+		password2Et = findView(R.id.regTxt2_password);
 		
 		registBtn = findView(R.id.btn_register);
 		registBtn.setOnClickListener(this);
@@ -97,7 +97,7 @@ public class UserLoginActivity extends BaseActivity implements
 		right_icon.setImageResource(R.drawable.icon_user_register);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
-		edtTxt_username.setText("");
+		edtTxt_username.setText(getPreferenceData("username", ""));
 		if (getPreferenceData("fflag")) {
 			edtTxt_password.setText("");
 			save_checkbox.setBackgroundResource(R.drawable.checkbox_sel);
@@ -180,7 +180,7 @@ public class UserLoginActivity extends BaseActivity implements
     	paramValue.add(str_username);
     	paramValue.add(CommUtil.getMD5(str_password));
     	
-		requestData("pro_user_login", 1, paramKey, paramValue,DialogUtils.getProgressDialog(self, R.string.action_loging),new HandlerData() {
+		requestData("pro_user_login", 1, paramKey, paramValue,new HandlerData() {
 			
 			@Override
 			public void success(Map<String, List<String>> map) {
@@ -226,15 +226,15 @@ public class UserLoginActivity extends BaseActivity implements
 			return;
 		}
 		
-		if (str_username.length() > 50) {
-			toastMsg(R.string.action_input_up_isnull);
-			return;
-		}
-		
-		if (str_password.length() > 30) {
-			toastMsg(R.string.action_input_up_isnull);
-			return ;
-		}
+//		if (str_username.length() > 50) {
+//			toastMsg(R.string.action_input_up_isnull);
+//			return;
+//		}
+//		
+//		if (str_password.length() > 30) {
+//			toastMsg(R.string.action_input_up_isnull);
+//			return ;
+//		}
 		
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
@@ -258,6 +258,7 @@ public class UserLoginActivity extends BaseActivity implements
 				try {
 					sendSuccess(map);
 				} catch (Exception e) {
+					e.printStackTrace();
 					if(map.get("msg").get(0).equals("405")){
 						toastMsg(R.string.register_repeatedusername);
 					}
@@ -271,9 +272,11 @@ public class UserLoginActivity extends BaseActivity implements
 	 * @param map
 	 */
 	private void sendSuccess(Map<String, List<String>> map){
-		int useId = CommUtil.parseInt(map.get("userId").get(0));
-		if (useId>0) {
-			MyApplication.userId = useId;
+//		int useId = CommUtil.parseInt(map.get("userId").get(0));
+//		if (useId > 0) {
+			
+			setPreferenceData("useId",map.get("userId").get(0));
+			
 			ContentValues cValues = new ContentValues();
 			cValues.put("username", map.get("username").get(0));
 			cValues.put("userpassword", map.get("password").get(0));
@@ -284,9 +287,13 @@ public class UserLoginActivity extends BaseActivity implements
 			
 			queryResult = dbUtil.insertData(self, CommonText.USERINFO, cValues);
 			if (queryResult) {
-				cValues = new ContentValues();
-				cValues.put("userId", map.get("userId").get(0));
-				cValues.put("realname", map.get("realname").get(0));
+				
+				setPreferenceData("username",map.get("username").get(0));
+//				setPreferenceData("userpwd",map.get("password").get(0));
+				
+//				cValues = new ContentValues();
+//				cValues.put("userId", map.get("userId").get(0));
+				/*cValues.put("realname", map.get("realname").get(0));
 				cValues.put("gender", map.get("gender").get(0));
 				cValues.put("brithday", map.get("joinworktime").get(0));
 				cValues.put("phone", map.get("phone").get(0));
@@ -299,13 +306,13 @@ public class UserLoginActivity extends BaseActivity implements
 				cValues.put("workingabroad", map.get("workingabroad").get(0));
 				cValues.put("politicalstatus", map.get("politicalstatus").get(0));
 				cValues.put("avator", map.get("avator").get(0));
-				cValues.put("updatime", map.get("updatime").get(0));
+				cValues.put("updatime", map.get("updatime").get(0))*/;
 				
-				queryResult = dbUtil.insertData(self, CommonText.BASEINFO, cValues);
-				if (queryResult) {
+//				queryResult = dbUtil.insertData(self, CommonText.BASEINFO, cValues);
+//				if (queryResult) {
 					startActivity(".ui.HomeActivity",true);
-				}
-			}
+//				}
+//			}
 		}
 	}
 	

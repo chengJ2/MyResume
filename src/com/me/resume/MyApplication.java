@@ -45,7 +45,7 @@ public class MyApplication extends Application {
    /**
     * 用户ID
     */
-   public static int userId = 0;
+   public static String userId = "";
    
 	@Override
 	public void onCreate() {

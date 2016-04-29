@@ -292,7 +292,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		params.add("p_expworkcareer");
 		params.add("p_expmonthlysalary");
 		params.add("p_workingstate");
-		params.add("p_background");
+		params.add("p_bgcolor");
 		
 		values.add("0");
 		values.add("1");

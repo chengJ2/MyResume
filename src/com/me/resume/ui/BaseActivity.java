@@ -270,6 +270,13 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	protected void setMsg(int id) {
 		msg.setText(CommUtil.getStrValue(self, id) + fieldNull);
 		msg.setVisibility(View.VISIBLE);
+		msg.postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				setMsgHide();
+			}
+		}, 1500);
 	}
 	
 	/**

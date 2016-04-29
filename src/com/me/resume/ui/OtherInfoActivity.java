@@ -381,7 +381,7 @@ public class OtherInfoActivity extends BaseActivity implements
 		params.add("p_language");
 		params.add("p_literacyskills");
 		params.add("p_listeningspeaking");
-		params.add("p_background");
+		params.add("p_bgcolor");
 		
 		params.add("p_certificate");
 		params.add("p_certificatetime");

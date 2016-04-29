@@ -17,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
+import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
@@ -105,12 +106,16 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				if (msg.obj != null) {
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
-							new String[]{kId,"background"}, 
+							new String[]{kId,"bgcolor"}, 
 							new String[]{"1",String.valueOf(checkColor)});
 					if (updResult == 1) {
-						toastMsg(R.string.action_update_success);
+						set3Msg(R.string.action_update_success);
+						if(MyApplication.userId != ""){
+							set2Msg(R.string.action_syncing);
+							syncData();
+						}
 					}else{
-						toastMsg(R.string.action_update_fail);
+						set3Msg(R.string.action_update_fail);
 					}
 				}
 				break;
@@ -124,7 +129,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				syncData();
 				break;
 			case OnTopMenu.MSG_MENU31:
-				toastMsg(R.string.action_login_head);
+				set3Msg(R.string.action_login_head);
 				break;
 			default:
 				break;
@@ -202,7 +207,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void initData() {
-		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = " + MyApplication.userId;
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			setAddBtnSrc(R.drawable.ic_btn_edit);
@@ -256,6 +261,10 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_1));
 			}
 		}else{
+			radioman.setChecked(true);
+			radio_no.setChecked(true);
+			info_maritalstatus.setText(CommUtil.getStrValue(self, R.string.info_maritalstatus_1));
+			info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_1));
 			setAddBtnSrc(R.drawable.ic_btn_add);
 		}
 		
@@ -298,90 +307,55 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		switch (v.getId()) {
 		case R.id.save:
 			getFeildValue();
-			
-			if (!RegexUtil.checkNotNull(info_realnameStr)) {
-				setMsg(R.string.info_name);
-				return;
-			}
-			
-			if (!RegexUtil.checkNotNull(info_brithdayStr)) {
-				setMsg(R.string.info_brithday);
-				return;
-			}
-			
-			if (!RegexUtil.checkNotNull(info_workyearStr)) {
-				setMsg(R.string.info_workyear);
-				return;
-			}
-			
-			if (!RegexUtil.checkNotNull(info_phoneStr)) {
-				setMsg(R.string.info_contack);
-				return;
-			}
-			
-			if (!RegexUtil.isPhone(info_phoneStr)) {
-				setMsg(R.string.reg_info_phone);
-				return;
-			}
-			
-			if (!RegexUtil.checkNotNull(info_emailStr)) {
-				setMsg(R.string.info_email);
-				return;
-			}
-			
-			if (!RegexUtil.checkEmail(info_emailStr)) {
-				set2Msg(R.string.reg_info_email);
-				return;
-			}
-			
-			if (!RegexUtil.checkNotNull(info_hometownStr)) {
-				setMsg(R.string.info_hometown);
-				return;
-			}
-		
-			if (!RegexUtil.checkNotNull(info_cityStr)) {
-				setMsg(R.string.info_city);
-				return;
-			}
-			
-			queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
-			commMapArray = dbUtil.queryData(self, queryWhere);
-			if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-				
-				String edId = commMapArray.get("id")[0];
-				updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
-						new String[]{edId,"realname","gender","brithday","joinworktime",
-										  "phone","hometown","city","email","ismarry",
-										  "nationality","license","workingabroad","politicalstatus"}, 
-						new String[]{"1",info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
-										info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
-										info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr});
-				if (updResult == 1) {
-					toastMsg(R.string.action_update_success);
+			if(judgeField()){
+				queryWhere = "select * from " + CommonText.BASEINFO + " where userId = " + MyApplication.userId + " limit 1";
+				commMapArray = dbUtil.queryData(self, queryWhere);
+				if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+					
+					kId = commMapArray.get("id")[0];
+					updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
+							new String[]{kId,"realname","gender","brithday","joinworktime",
+							"phone","hometown","city","email","ismarry",
+							"nationality","license","workingabroad","politicalstatus"}, 
+							new String[]{"1",info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
+							info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
+							info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr});
+					if (updResult == 1) {
+						set3Msg(R.string.action_update_success);
+						if(MyApplication.userId != ""){
+							set2Msg(R.string.action_syncing);
+							syncData();
+						}
+					}else{
+						set3Msg(R.string.action_update_fail);
+					}
 				}else{
-					toastMsg(R.string.action_update_fail);
-				}
-			}else{
-				ContentValues cValues = new ContentValues();
-				cValues.put("userId", "1");
-				cValues.put("realname", info_realnameStr);
-				cValues.put("gender", rg_genderStr);
-				cValues.put("brithday", info_brithdayStr);
-				cValues.put("joinworktime", info_workyearStr);
-				cValues.put("phone", info_phoneStr);
-				cValues.put("hometown", info_hometownStr);
-				cValues.put("city", info_cityStr);
-				cValues.put("email", info_emailStr);
-				cValues.put("ismarry", rg_maritalstatusStr);
-				cValues.put("nationality", info_nationalityStr);
-				cValues.put("license", info_licenseStr);
-				cValues.put("workingabroad", rg_workingabroadStr);
-				cValues.put("politicalstatus", rg_politicalstatusStr);
-				
-				queryResult = dbUtil.insertData(self, 
-						CommonText.BASEINFO, cValues);
-				if (queryResult) {
-					setAddBtnSrc(R.drawable.ic_btn_edit);
+					ContentValues cValues = new ContentValues();
+					cValues.put("userId", MyApplication.userId);
+					cValues.put("realname", info_realnameStr);
+					cValues.put("gender", rg_genderStr);
+					cValues.put("brithday", info_brithdayStr);
+					cValues.put("joinworktime", info_workyearStr);
+					cValues.put("phone", info_phoneStr);
+					cValues.put("hometown", info_hometownStr);
+					cValues.put("city", info_cityStr);
+					cValues.put("email", info_emailStr);
+					cValues.put("ismarry", rg_maritalstatusStr);
+					cValues.put("nationality", info_nationalityStr);
+					cValues.put("license", info_licenseStr);
+					cValues.put("workingabroad", rg_workingabroadStr);
+					cValues.put("politicalstatus", rg_politicalstatusStr);
+					
+					queryResult = dbUtil.insertData(self, 
+							CommonText.BASEINFO, cValues);
+					if (queryResult) {
+						setAddBtnSrc(R.drawable.ic_btn_edit);
+						set3Msg(R.string.action_add_success);
+						if(MyApplication.userId != ""){
+							set2Msg(R.string.action_syncing);
+							syncData();
+						}
+					}
 				}
 			}
 			break;
@@ -425,6 +399,57 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			break;
 		}
 	}
+
+	/**
+	 * 界面字段判断
+	 */
+	private boolean judgeField() {
+		if (!RegexUtil.checkNotNull(info_realnameStr)) {
+			setMsg(R.string.info_name);
+			return false;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_brithdayStr)) {
+			setMsg(R.string.info_brithday);
+			return false;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_workyearStr)) {
+			setMsg(R.string.info_workyear);
+			return false;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_phoneStr)) {
+			setMsg(R.string.info_contack);
+			return false;
+		}
+		
+		if (!RegexUtil.isPhone(info_phoneStr)) {
+			setMsg(R.string.reg_info_phone);
+			return false;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_emailStr)) {
+			setMsg(R.string.info_email);
+			return false;
+		}
+		
+		if (!RegexUtil.checkEmail(info_emailStr)) {
+			set2Msg(R.string.reg_info_email);
+			return false;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_hometownStr)) {
+			setMsg(R.string.info_hometown);
+			return false;
+		}
+
+		if (!RegexUtil.checkNotNull(info_cityStr)) {
+			setMsg(R.string.info_city);
+			return false;
+		}
+		return true;
+	}
 	
 	private void getValues(int array,View parent,int resId) {
 		String[] item_text = CommUtil.getArrayValue(self,array); 
@@ -433,7 +458,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void goActivity(String src){
-		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = " + MyApplication.userId;
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			startActivity(src,false);
@@ -466,46 +491,13 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	 * @author Comsys-WH1510032
 	 */
 	private void syncData(){ 
-		getFeildValue();
-		
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
-		params.add("p_baId");
 		params.add("p_userId");
-		params.add("p_realname");
-		params.add("p_gender");
-		params.add("p_brithday");
-		params.add("p_joinworktime");
-		params.add("p_phone");
-		params.add("p_hometown");
-		params.add("p_city");
-		params.add("p_email");
-		params.add("p_ismarry");
-		params.add("p_nationality");
-		params.add("p_license");
-		params.add("p_workingabroad");
-		params.add("p_politicalstatus");
-		params.add("p_background");
+		values.add(MyApplication.userId);
 		
-		values.add("1");
-		values.add("3");
-		values.add(info_realnameStr);
-		values.add(rg_genderStr);
-		values.add(info_brithdayStr);
-		values.add(info_workyearStr);
-		values.add(info_phoneStr);
-		values.add(info_hometownStr);
-		values.add(info_cityStr);
-		values.add(info_emailStr);
-		values.add(rg_maritalstatusStr);
-		values.add(info_nationalityStr);
-		values.add(info_licenseStr);
-		values.add(rg_workingabroadStr);
-		values.add(rg_politicalstatusStr);
-		values.add(getCheckColor(checkColor));
-		
-		requestData("pro_baseinfo", 3, params, values, new HandlerData() {
+		requestData("pro_get_baseinfo", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
 				runOnUiThread(R.string.action_sync_fail);
@@ -513,17 +505,81 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					if (map.get("msg").get(0).equals("200")) {
-						runOnUiThread(R.string.action_sync_success);
-						
+					String p_baId = map.get("id").get(0);
+					if (map.get("userId").get(0).equals(MyApplication.userId)) {
+						syncRun(p_baId,3);
+					}else{
+						syncRun("1",2);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-		
-		
+	}
+	
+	/**
+	 * 执行同步数据请求
+	 * @param bdId
+	 * @param style
+	 */
+	private void syncRun(String bdId,int style){
+		getFeildValue();
+		if(judgeField()){
+			List<String> params = new ArrayList<String>();
+			List<String> values = new ArrayList<String>();
+			
+			params.add("p_baId");
+			params.add("p_userId");
+			params.add("p_realname");
+			params.add("p_gender");
+			params.add("p_brithday");
+			params.add("p_joinworktime");
+			params.add("p_phone");
+			params.add("p_hometown");
+			params.add("p_city");
+			params.add("p_email");
+			params.add("p_ismarry");
+			params.add("p_nationality");
+			params.add("p_license");
+			params.add("p_workingabroad");
+			params.add("p_politicalstatus");
+			params.add("p_bgcolor");
+			
+			values.add(bdId);
+			values.add(MyApplication.userId);
+			values.add(info_realnameStr);
+			values.add(rg_genderStr);
+			values.add(info_brithdayStr);
+			values.add(info_workyearStr);
+			values.add(info_phoneStr);
+			values.add(info_hometownStr);
+			values.add(info_cityStr);
+			values.add(info_emailStr);
+			values.add(rg_maritalstatusStr);
+			values.add(info_nationalityStr);
+			values.add(info_licenseStr);
+			values.add(rg_workingabroadStr);
+			values.add(rg_politicalstatusStr);
+			values.add(getCheckColor(checkColor));
+			
+			requestData("pro_baseinfo", 3, params, values, new HandlerData() {
+				@Override
+				public void error() {
+					runOnUiThread(R.string.action_sync_fail);
+				}
+				
+				public void success(Map<String, List<String>> map) {
+					try {
+						if (map.get("msg").get(0).equals("200")) {
+							runOnUiThread(R.string.action_sync_success);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
 	}
 	
 	@Override

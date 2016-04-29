@@ -172,7 +172,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		params.add("p_userId");
 		params.add("p_selfevaluation");
 		params.add("p_careergoal");
-		params.add("p_background");
+		params.add("p_bgcolor");
 		
 		values.add("0");
 		values.add("1");

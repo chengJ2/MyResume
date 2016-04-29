@@ -302,7 +302,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		params.add("p_majorname");
 		params.add("p_degree");
 		params.add("p_examination");
-		params.add("p_background");
+		params.add("p_bgcolor");
 		
 		values.add("0");
 		values.add("1");

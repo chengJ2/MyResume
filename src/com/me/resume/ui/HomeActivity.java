@@ -6,7 +6,6 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
@@ -24,7 +23,6 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.model.ResumeModel;
-import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -58,13 +56,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				// queryWhere = "select * from " + CommonText.BASEINFO +
 				// " where userId = 1";
 				// commMapArray = dbUtil.queryData(self, queryWhere);
-				String gotoStr = ".ui.BaseInfoActivity";
+				//String gotoStr = ".ui.BaseInfoActivity";
 				// if (map!= null && map.get("userId").length > 0) {
 				// gotoStr = ".ui.WorkExperienceActivity";
 				// }else{
 				// gotoStr = ".ui.BaseInfoActivity";
 				// }
-				startActivity(gotoStr,false);
+				startActivity(".ui.BaseInfoActivity",false);
 				break;
 			case 100:
 				setData();
@@ -257,10 +255,18 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	}
 
 	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
+		MyApplication.userId = getPreferenceData("useId", "");
+	}
+	
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.make_btn:
-			if (MyApplication.userId == 0) {
+			if (MyApplication.userId == "") {
 				if(getPreferenceData("noticeshow",1) == 1){
 					DialogUtils.showAlertDialog(self, CommUtil.getStrValue(self,
 							R.string.dialog_action_alert), mHandler);
@@ -275,7 +281,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			startActivity(".MainActivity", false);
 			break;
 		case R.id.left_lable:
-			if (MyApplication.userId == 0) {
+			if (MyApplication.userId == "") {
 				startActivity(".ui.UserLoginActivity", false);
 			}else{
 				startActivity(".ui.UserCenterActivity", false);

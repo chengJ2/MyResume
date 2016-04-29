@@ -21,7 +21,7 @@
                 android:orientation="vertical" >
 
                 <EditText
-                    android:id="@+id/edtTxt_username"
+                    android:id="@+id/regTxt_username"
                     style="@style/userinfo_item_style"
                     android:drawableLeft="@drawable/usericon"
                     android:hint="@string/login_input1_hint" />
@@ -29,7 +29,7 @@
                 <View style="@style/line" />
 
                 <EditText
-                    android:id="@+id/edtTxt_password"
+                    android:id="@+id/regTxt_password"
                     style="@style/userinfo_item_style"
                     android:hint="@string/login_input2_hint"
                     android:drawableLeft="@drawable/pwdicon"
@@ -38,7 +38,7 @@
                 <View style="@style/line" />
 
                 <EditText
-                    android:id="@+id/edtTxt2_password"
+                    android:id="@+id/regTxt2_password"
                     style="@style/userinfo_item_style"
                     android:hint="@string/login_input3_hint"
                     android:drawableLeft="@drawable/pwdicon"

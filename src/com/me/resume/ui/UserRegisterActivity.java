@@ -49,7 +49,7 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
 	private void findViews() {
 		usernameEt = findView(R.id.edtTxt_username);
 		passwordEt = findView(R.id.edtTxt_password);
-		password2Et = findView(R.id.edtTxt2_password);
+		password2Et = findView(R.id.regTxt2_password);
 		
 		registBtn = findView(R.id.btn_register);
 		registBtn.setOnClickListener(this);
@@ -140,7 +140,7 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
 	private void registerSuccess(Map<String, List<String>> map){
 		int useId = CommUtil.parseInt(map.get("userId").get(0));
 		if (useId>0) {
-			MyApplication.userId = useId;
+//			MyApplication.userId = useId;
 			ContentValues cValues = new ContentValues();
 			cValues.put("username", map.get("username").get(0));
 			cValues.put("userpassword", map.get("password").get(0));

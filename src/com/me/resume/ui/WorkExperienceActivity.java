@@ -333,7 +333,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		params.add("p_workdesc");
 		params.add("p_companynature");
 		params.add("p_companyscale");
-		params.add("p_background");
+		params.add("p_bgcolor");
 		
 		values.add("0");
 		values.add("1");
