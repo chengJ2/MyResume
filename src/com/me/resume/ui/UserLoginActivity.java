@@ -79,7 +79,7 @@ public class UserLoginActivity extends BaseActivity implements
 		save_checkbox.setOnClickListener(this);
 		savePassWord.setOnClickListener(this);
 		forgotPassWord.setOnClickListener(this);
-		
+		btnLogin.setOnClickListener(this);
 		
 		usernameEt = findView(R.id.edtTxt_username);
 		passwordEt = findView(R.id.edtTxt_password);
@@ -112,21 +112,21 @@ public class UserLoginActivity extends BaseActivity implements
 	
 	@Override
 	public void onClick(View view) {
-		// TODO Auto-generated method stub
 		switch (view.getId()) {
 		case R.id.left_lable:
 			if (user_login_layout.getVisibility() == View.GONE) {
 				setTopTitle(R.string.action_user_login);
 				setRightIconVisible(View.VISIBLE);
-				AlphaAnimation dismiss = new AlphaAnimation(1, 0);
-				dismiss.setDuration(1000);
-				dismiss.setFillAfter(true);
-				user_register_layout.startAnimation(dismiss);
 				
-				dismiss = new AlphaAnimation(0, 1);
-				dismiss.setDuration(1000);
-				dismiss.setFillAfter(true);
-				user_login_layout.startAnimation(dismiss);
+				setAnimView(user_register_layout,0);
+				
+				setAnimView(user_login_layout,1);
+				
+				user_register_layout.setVisibility(View.GONE);
+				user_login_layout.setVisibility(View.VISIBLE);
+				
+				edtTxt_username.requestFocus();
+				
 			}else if (user_login_layout.getVisibility() == View.VISIBLE) {
 				self.scrollToFinishActivity();
 			}
@@ -134,20 +134,12 @@ public class UserLoginActivity extends BaseActivity implements
 		case R.id.right_icon:
 			setTopTitle(R.string.action_user_regist);
 			setRightIconVisible(View.GONE);
+			setAnimView(user_login_layout,0);
+			
+			setAnimView(user_register_layout,1);
+			
 			user_login_layout.setVisibility(View.GONE);
 			user_register_layout.setVisibility(View.VISIBLE);
-			
-			AlphaAnimation dismiss = new AlphaAnimation(1, 0);
-			dismiss.setDuration(1000);
-			dismiss.setFillAfter(true);
-			user_login_layout.startAnimation(dismiss);
-			
-			
-			dismiss = new AlphaAnimation(0, 1);
-			dismiss.setDuration(1000);
-			dismiss.setFillAfter(true);
-			user_register_layout.startAnimation(dismiss);
-			
 			break;
 		case R.id.save_checkbox:
 		case R.id.savePassWord:
@@ -182,8 +174,8 @@ public class UserLoginActivity extends BaseActivity implements
 		List<String> paramKey = new ArrayList<String>();
     	List<String> paramValue = new ArrayList<String>();
     	
-    	paramKey.add("puser_name");
-    	paramKey.add("puser_pwd");
+    	paramKey.add("p_username");
+    	paramKey.add("p_userpwd");
     	
     	paramValue.add(str_username);
     	paramValue.add(CommUtil.getMD5(str_password));
@@ -193,9 +185,9 @@ public class UserLoginActivity extends BaseActivity implements
 			@Override
 			public void success(Map<String, List<String>> map) {
 				try {
-					successLogin(map);
+					sendSuccess(map);
 				} catch (Exception e) {
-					if(map.get("error").get(0).equals("404")){
+					if(map.get("msg").get(0).equals("404")){
 						errorLogin();
 						toastMsg(R.string.action_login_error);
 					}
@@ -209,28 +201,6 @@ public class UserLoginActivity extends BaseActivity implements
 		});
 	}
 	
-	/**
-	 * 登录成功
-	 * @param map
-	 */
-	private void successLogin(Map<String, List<String>> map){
-		int useId = CommUtil.parseInt(map.get("userId").get(0));
-		if (useId>0) {
-			MyApplication.userId = useId;
-			ContentValues cValues = new ContentValues();
-			cValues.put("username", map.get("username").get(0));
-			cValues.put("userpassword", map.get("password").get(0));
-			cValues.put("deviceId", map.get("deviceId").get(0));
-			cValues.put("patform", map.get("patform").get(0));
-			cValues.put("createtime", map.get("createtime").get(0));
-			cValues.put("lastlogintime", map.get("lastlogintime").get(0));
-			
-			queryResult = dbUtil.insertData(self, CommonText.USERINFO, cValues);
-			if (queryResult) {
-				// TODO
-			}
-		}
-	}
 	
 	private void errorLogin(){
 		btnLogin.setText(CommUtil.getStrValue(self, R.string.action_login));
@@ -286,7 +256,7 @@ public class UserLoginActivity extends BaseActivity implements
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					registerSuccess(map);
+					sendSuccess(map);
 				} catch (Exception e) {
 					if(map.get("msg").get(0).equals("405")){
 						toastMsg(R.string.register_repeatedusername);
@@ -300,7 +270,7 @@ public class UserLoginActivity extends BaseActivity implements
 	 * 登录成功
 	 * @param map
 	 */
-	private void registerSuccess(Map<String, List<String>> map){
+	private void sendSuccess(Map<String, List<String>> map){
 		int useId = CommUtil.parseInt(map.get("userId").get(0));
 		if (useId>0) {
 			MyApplication.userId = useId;
@@ -368,4 +338,14 @@ public class UserLoginActivity extends BaseActivity implements
 		setPreferenceData("fflag", fflag);
 	}
 
+	private void setAnimView(View v,int visible){
+		AlphaAnimation dismiss = new AlphaAnimation(0, 1);
+		if (visible == 0) {
+			dismiss = new AlphaAnimation(1, 0);
+		}
+		dismiss.setDuration(1000);
+		dismiss.setFillAfter(true);
+		v.startAnimation(dismiss);
+	}
+	
 }
