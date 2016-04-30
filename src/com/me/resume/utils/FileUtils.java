@@ -7,14 +7,31 @@ import android.os.Environment;
 
 import com.me.resume.comm.Constants;
 
+/**
+ * 本地文件管理
+ * @author Administrator
+ *
+ */
 public class FileUtils {
 	
 	public static final String SD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();// SDCard路径
-	public static final String BASE_PATH = SD_PATH + Constants.DIR_PATH; // 根目录
-	public static final String TEMPDIR = BASE_PATH + "tmp/";
-	public static final String DOWNLOAD_APKPATH = BASE_PATH + "download/";
-	public static final String BASE_IMAGE_CACHE = TEMPDIR + "cache/";
+	public static final String BASE_PATH = SD_PATH + File.separator + Constants.DIR_PATH; // 根目录
 	
+	public static final String TEMPDIR = BASE_PATH + File.separator + "temp";
+	
+	public static final String IMAGE_PATH =  "images";
+	 /** 缩略图缓存存放目录*/
+	public static final String BASE_IMAGE_CACHE = TEMPDIR + File.separator + IMAGE_PATH + File.separator + "cache/";
+	
+	 /** 错误日志存*/
+    public static final String LOG_PATH = "log/";
+    public static final String LOG_NAME = "crash.txt";
+    
+    /**
+     * APk下载目录
+     */
+    public static final String DOWNLOAD_APKPATH = TEMPDIR + File.separator + "download/";
+    
 	/**
      * 判断SDcard是否挂起
      * @return

@@ -1,18 +1,28 @@
 package com.me.resume.ui;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 
+import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
+import com.me.resume.comm.UploadPhotoTask;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.L;
+import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.FileUtils;
 import com.me.resume.utils.ImageUtils;
 
@@ -32,6 +42,35 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	
 	protected ImageView user_info_avatar;
 	
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			L.d("==what=="+msg.what + " --->>>"+msg.obj);
+			switch (msg.what) {
+			case 1:
+				if(msg.obj != null){
+					ImageUtils.getURLImage(mHandler,CommUtil.getHttpLink((String)msg.obj),2);
+				}
+                break;
+            case 2:
+            	if(msg.obj!= null){
+        			try {
+        				ImageUtils.saveImage(self,(Bitmap)msg.obj,Constants.fileName);
+        				Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.userhead.toString());
+        				if (bitmap != null) {
+        					user_info_avatar.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
+        				}
+        			} catch (Exception e) {
+        				e.printStackTrace();
+        			}
+        		}
+            	break;
+			default:
+				break;
+			}
+		};
+	};
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -44,13 +83,14 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		
 		setTopTitle(R.string.action_user_regist);
 		setMsgHide();
-		setRightIconVisible(View.GONE);
+		setRightIconVisible(View.VISIBLE);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 	}
 	
 	private void findViews() {
 		user_info_avatar = findView(R.id.user_info_avatar);
+		user_info_avatar.setOnClickListener(this);
 	}
 	
 	@Override
@@ -59,12 +99,47 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		case R.id.left_lable:
 			self.scrollToFinishActivity();
 			break;
+		case R.id.right_icon:
+			logoutSend();
+			break;
 		case R.id.user_info_avatar:
 			chooseUserHead();
 			break;
 		default:
 			break;
 		}
+	}
+	
+
+	/**
+	 * 
+	 * @Description: 同步数据
+	 * @author Comsys-WH1510032
+	 */
+	private void logoutSend(){ 
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		
+		params.add("p_userId");
+		values.add(MyApplication.userId);
+		
+		requestData("pro_login_out", 1, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				runOnUiThread(R.string.action_logout_fail);
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+					if (map.get("msg").get(0).equals("200")) {
+						setPreferenceData("useId","");
+						startActivity(".ui.HomeActivity",true);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	protected void chooseUserHead(){
@@ -107,7 +182,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			case ImageUtils.CROP_WITH_DATA:
 				pictureFile = ImageUtils.getPhotoFile(data);
 				if (pictureFile.length() <= 1048576){
-//					new UploadPhotoTask(UserInfoCommonActivity.this,handler,style).execute(pictureFile.toString());
+					new UploadPhotoTask(self,mHandler).execute(pictureFile.toString());
 				}else {
 					pictureFile = null;
 					toastMsg(R.string.max_photo_size);

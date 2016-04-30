@@ -50,7 +50,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 							new String[]{kId,"background"}, 
-							new String[]{"1",String.valueOf(checkColor)});
+							new String[]{"1",String.valueOf(checkColor)},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 					}else{
@@ -174,7 +174,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 		case R.id.edit:
 			updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 					new String[]{kId,"projectname","worktimestart","worktimeend","duties","prokectdesc"}, 
-					new String[]{"1",info_projectnameStr,info_startworktimeStr,info_endworktimeStr,info_workdutiesStr,input_workdescStr});
+					new String[]{"1",info_projectnameStr,info_startworktimeStr,info_endworktimeStr,info_workdutiesStr,input_workdescStr},2);
 			if (updResult == 1) {
 				toastMsg(R.string.action_update_success);
 			}else{

@@ -3,6 +3,7 @@ package com.me.resume.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,9 +24,11 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.model.ResumeModel;
+import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
+import com.me.resume.utils.TimeUtils;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -123,20 +126,48 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		makeResume.setOnClickListener(this);
 		reviewResume.setOnClickListener(this);
 		
-		initData();
+		
 	}
 
 	private void initData(){
-		 queryWhere = "select * from " + CommonText.BASEINFO + " where userId = 1";
-		 commMapArray = dbUtil.queryData(self, queryWhere);
-		 if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-			 makeResume.setText(CommUtil.getStrValue(self, R.string.edit_resume));
-			 reviewResume.setVisibility(View.VISIBLE);
+		queryWhere = "select * from " + CommonText.USERINFO +" order by id desc limit 1";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		 if (commMapArray!= null && commMapArray.get("id").length > 0) {
+			 kId = commMapArray.get("id")[0];
+			 initBottomButton();
 		 }else{
-			 makeResume.setText(CommUtil.getStrValue(self, R.string.make_resume));
-			 reviewResume.setVisibility(View.GONE);
+			 ContentValues cValues = new ContentValues();
+			 cValues.put("deviceid", deviceID);
+			 cValues.put("createtime", TimeUtils.getCurrentTimeInString());
+			 cValues.put("lastlogintime", TimeUtils.getCurrentTimeInString());
+			 
+			 queryResult = dbUtil.insertData(self, 
+						CommonText.USERINFO, cValues);
+			 if (queryResult) {
+				 initData();
+			}
 		 }
 	}
+	
+	/**
+	 * 显示底部button
+	 */
+	private void initBottomButton(){
+		queryWhere = "select * from " + CommonText.BASEINFO
+				+ " where userId = " + kId;
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			makeResume
+					.setText(CommUtil.getStrValue(self, R.string.edit_resume));
+			reviewResume.setVisibility(View.VISIBLE);
+		} else {
+			makeResume
+					.setText(CommUtil.getStrValue(self, R.string.make_resume));
+			reviewResume.setVisibility(View.GONE);
+		}
+	}
+	
+	
 	
 	/**
 	 * 设置简历模板数据
@@ -258,8 +289,10 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		
 		MyApplication.userId = getPreferenceData("useId", "");
+		L.d("===userId==="+MyApplication.userId);
+		
+		initData();
 	}
 	
 	@Override

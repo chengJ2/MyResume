@@ -99,7 +99,7 @@ public class UserLoginActivity extends BaseActivity implements
 		setfabLayoutVisible(View.GONE);
 		edtTxt_username.setText(getPreferenceData("username", ""));
 		if (getPreferenceData("fflag")) {
-			edtTxt_password.setText("");
+			edtTxt_password.setText(getPreferenceData("password", ""));
 			save_checkbox.setBackgroundResource(R.drawable.checkbox_sel);
 		}else{
 			edtTxt_password.setText("");
@@ -187,6 +187,7 @@ public class UserLoginActivity extends BaseActivity implements
 				try {
 					sendSuccess(map);
 				} catch (Exception e) {
+					e.printStackTrace();
 					if(map.get("msg").get(0).equals("404")){
 						errorLogin();
 						toastMsg(R.string.action_login_error);
@@ -226,15 +227,15 @@ public class UserLoginActivity extends BaseActivity implements
 			return;
 		}
 		
-//		if (str_username.length() > 50) {
-//			toastMsg(R.string.action_input_up_isnull);
-//			return;
-//		}
-//		
-//		if (str_password.length() > 30) {
-//			toastMsg(R.string.action_input_up_isnull);
-//			return ;
-//		}
+		if (str_username.length() > 120) {
+			toastMsg(R.string.action_input_username_toolong);
+			return;
+		}
+		
+		if (str_password.length() > 30) {
+			toastMsg(R.string.action_input_password_toolong);
+			return ;
+		}
 		
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
@@ -271,49 +272,147 @@ public class UserLoginActivity extends BaseActivity implements
 	 * 登录成功
 	 * @param map
 	 */
-	private void sendSuccess(Map<String, List<String>> map){
-//		int useId = CommUtil.parseInt(map.get("userId").get(0));
-//		if (useId > 0) {
-			
-			setPreferenceData("useId",map.get("userId").get(0));
-			
+	private void sendSuccess(final Map<String, List<String>> map){
+		String feildStr1 = map.get("username").get(0);
+		String feildStr2 = map.get("password").get(0);
+		String feildStr3 = map.get("deviceId").get(0);
+		String feildStr4 = map.get("patform").get(0);
+		String feildStr5 = map.get("createtime").get(0);
+		String feildStr6 = map.get("lastlogintime").get(0);
+		
+		setPreferenceData("username",feildStr1);
+		setPreferenceData("password",str_password);
+		
+		queryWhere = "select * from " + CommonText.USERINFO
+				+ " where id = " + kId;
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("id").length > 0) {
+			updResult = dbUtil.updateData(self, CommonText.USERINFO,
+					new String[]{"id=?","username","userpassword","deviceId","patform",
+					"createtime","lastlogintime"}, 
+					new String[]{kId,feildStr1,feildStr2,feildStr3,feildStr4,feildStr5,feildStr6},1);
+			if(updResult == 1){
+				setPreferenceData("useId",map.get("id").get(0));
+				getBaseinfo(map);
+			}
+		}else{
 			ContentValues cValues = new ContentValues();
-			cValues.put("username", map.get("username").get(0));
-			cValues.put("userpassword", map.get("password").get(0));
-			cValues.put("deviceId", map.get("deviceId").get(0));
-			cValues.put("patform", map.get("patform").get(0));
-			cValues.put("createtime", map.get("createtime").get(0));
-			cValues.put("lastlogintime", map.get("lastlogintime").get(0));
+			cValues.put("username", feildStr1);
+			cValues.put("userpassword", feildStr2);
+			cValues.put("deviceId", feildStr3);
+			cValues.put("patform", feildStr4);
+			cValues.put("createtime", feildStr5);
+			cValues.put("lastlogintime", feildStr6);
 			
 			queryResult = dbUtil.insertData(self, CommonText.USERINFO, cValues);
 			if (queryResult) {
-				
-				setPreferenceData("username",map.get("username").get(0));
-//				setPreferenceData("userpwd",map.get("password").get(0));
-				
-//				cValues = new ContentValues();
-//				cValues.put("userId", map.get("userId").get(0));
-				/*cValues.put("realname", map.get("realname").get(0));
-				cValues.put("gender", map.get("gender").get(0));
-				cValues.put("brithday", map.get("joinworktime").get(0));
-				cValues.put("phone", map.get("phone").get(0));
-				cValues.put("hometown", map.get("hometown").get(0));
-				cValues.put("city", map.get("city").get(0));
-				cValues.put("email", map.get("email").get(0));
-				cValues.put("ismarry", map.get("ismarry").get(0));
-				cValues.put("nationality", map.get("nationality").get(0));
-				cValues.put("license", map.get("license").get(0));
-				cValues.put("workingabroad", map.get("workingabroad").get(0));
-				cValues.put("politicalstatus", map.get("politicalstatus").get(0));
-				cValues.put("avator", map.get("avator").get(0));
-				cValues.put("updatime", map.get("updatime").get(0))*/;
-				
-//				queryResult = dbUtil.insertData(self, CommonText.BASEINFO, cValues);
-//				if (queryResult) {
-					startActivity(".ui.HomeActivity",true);
-//				}
-//			}
+				setPreferenceData("useId",map.get("id").get(0));
+				getBaseinfo(map);
+			}
 		}
+	}
+	
+	private void getBaseinfo(Map<String, List<String>> map){
+		ContentValues cValues = new ContentValues();
+		
+		List<String> feildStr10 = map.get("userId");
+		if(feildStr10 != null && feildStr10.size()>0){
+			cValues.put("userId", feildStr10.get(0));
+		}
+		
+		List<String> feildStr11 = map.get("realname");
+		if(feildStr11 != null && feildStr11.size()>0){
+			cValues.put("realname", feildStr11.get(0));
+		}
+		
+		List<String> feildStr12 = map.get("gender");
+		if(feildStr12 != null && feildStr12.size()>0){
+			cValues.put("gender", feildStr12.get(0));
+		}
+		
+		List<String> feildStr13 = map.get("brithday");
+		if(feildStr13 != null && feildStr13.size()>0){
+			cValues.put("brithday", feildStr13.get(0));
+		}
+		
+		List<String> feildStr14 = map.get("joinworktime");
+		if(feildStr14 != null && feildStr14.size()>0){
+			cValues.put("joinworktime", feildStr14.get(0));
+		}
+		
+		List<String> feildStr15 = map.get("phone");
+		if(feildStr15 != null && feildStr15.size()>0){
+			cValues.put("phone", feildStr15.get(0));
+		}
+		
+		List<String> feildStr16 = map.get("hometown");
+		if(feildStr16 != null && feildStr16.size()>0){
+			cValues.put("hometown", feildStr16.get(0));
+		}
+		
+		List<String> feildStr17 = map.get("city");
+		if(feildStr17 != null && feildStr17.size()>0){
+			cValues.put("city", feildStr17.get(0));
+		}
+		
+		List<String> feildStr18 = map.get("email");
+		if(feildStr18 != null && feildStr18.size()>0){
+			cValues.put("email", feildStr18.get(0));
+		}
+		
+		List<String> feildStr19 = map.get("ismarry");
+		if(feildStr19 != null && feildStr19.size()>0){
+			cValues.put("ismarry", feildStr19.get(0));
+		}
+		
+		List<String> feildStr20 = map.get("nationality");
+		if(feildStr20 != null && feildStr20.size()>0){
+			cValues.put("nationality", feildStr20.get(0));
+		}
+		
+		List<String> feildStr21 = map.get("license");
+		if(feildStr21 != null && feildStr21.size()>0){
+			cValues.put("license", feildStr21.get(0));
+		}
+		
+		List<String> feildStr22 = map.get("workingabroad");
+		if(feildStr22 != null && feildStr22.size()>0){
+			cValues.put("workingabroad", feildStr22.get(0));
+		}
+		
+		List<String> feildStr23 = map.get("politicalstatus");
+		if(feildStr23 != null && feildStr23.size()>0){
+			cValues.put("politicalstatus", feildStr23.get(0));
+		}
+		
+		List<String> feildStr24 = map.get("bgcolor");
+		if(feildStr24 != null && feildStr24.size()>0){
+			cValues.put("bgcolor", feildStr24.get(0));
+		}
+		
+		queryWhere = "select * from " + CommonText.BASEINFO
+				+ " where userId = " + kId;
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			kId = commMapArray.get("id")[0];
+			updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
+					new String[]{kId,"realname","gender","brithday","joinworktime",
+					"phone","hometown","city","email","ismarry",
+					"nationality","license","workingabroad","politicalstatus","bgcolor"}, 
+					new String[]{feildStr10.get(0),feildStr11.get(0),feildStr12.get(0),feildStr13.get(0),feildStr14.get(0),
+					feildStr15.get(0),feildStr16.get(0),feildStr17.get(0),feildStr18.get(0),feildStr19.get(0),
+					feildStr20.get(0),feildStr21.get(0),feildStr22.get(0),feildStr23.get(0),feildStr24.get(0)},2);
+			if (updResult == 1) {
+				startActivity(".ui.HomeActivity",true);
+			}
+		}else{
+			queryResult = dbUtil.insertData(self, CommonText.BASEINFO, cValues);
+			if (queryResult) {
+				startActivity(".ui.HomeActivity",true);
+			}
+		}
+		
 	}
 	
 	/**

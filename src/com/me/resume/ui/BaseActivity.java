@@ -61,7 +61,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 
 	protected String queryWhere = "";
 
-	protected String kId = "";
+	// 用户没有登录注册时获取ID
+	public static String kId = "";
 	
 	protected int updResult = -1;
 
@@ -128,8 +129,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		sp = getSharedPreferences(Constants.CONFIG, Context.MODE_PRIVATE);
 		fieldNull = CommUtil.getStrValue(self, R.string.action_input_isnull);
 		
-		TelephonyManager TelephonyMgr = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
-		deviceID = TelephonyMgr.getDeviceId();
+		TelephonyManager telephonyMgr = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
+		deviceID = telephonyMgr.getDeviceId();
 	}
 
 	@Override

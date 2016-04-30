@@ -43,7 +43,7 @@ public class MyApplication extends Application {
    private float displayDensity;
    
    /**
-    * 用户ID
+    * 判断用户是否注册登录成功
     */
    public static String userId = "";
    

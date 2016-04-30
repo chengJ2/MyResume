@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
+import com.me.resume.ui.BaseActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
@@ -212,7 +213,7 @@ public class MainActivity extends Activity {
 		
 		initTopView(view,R.string.resume_baseinfo,"BaseInfoActivity");
 		
-		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = "+ MyApplication.userId +" limit 1";
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = "+ BaseActivity.kId +" limit 1";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			if (!mViewList.contains(view)) {
@@ -281,7 +282,7 @@ public class MainActivity extends Activity {
 		index2layout = (LinearLayout) view.findViewById(R.id.index2layout);
 		weListview = (ListView) view.findViewById(R.id.weListview);
 		initTopView(view,R.string.resume_workexperience,"WorkExperienceActivity");
-		queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = "+ MyApplication.userId +" order by id desc";
+		queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = "+ BaseActivity.kId +" order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			if (!mViewList.contains(view)) {
@@ -328,7 +329,7 @@ public class MainActivity extends Activity {
 		tagFlowLayout = (TagFlowLayout) view.findViewById(R.id.flowlayout);
 		self_evaluation = (TextView)view.findViewById(R.id.self_evaluation);
 		initTopView(view,R.string.resume_evaluation,"EvaluationActivity");
-		queryWhere = "select * from " + CommonText.EVALUATION + " where userId = "+ MyApplication.userId +" order by id desc";
+		queryWhere = "select * from " + CommonText.EVALUATION + " where userId = "+ BaseActivity.kId +" order by id desc";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			if (!mViewList.contains(view)) {
@@ -372,7 +373,7 @@ public class MainActivity extends Activity {
 		index_4_info5 = (TextView)view.findViewById(R.id.index_4_info5);
 		index_4_info6 = (TextView)view.findViewById(R.id.index_4_info6);
 		initTopView(view,R.string.resume_jobintension,"JobIntensionActivity");
-		queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = "+ MyApplication.userId +" order by id desc";
+		queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = "+ BaseActivity.kId +" order by id desc";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			index4layout.setBackgroundColor(CommUtil.getColorValue(self,
@@ -410,7 +411,7 @@ public class MainActivity extends Activity {
 		trListview = (CustomListView)view.findViewById(R.id.trListview);
 		index6_trLayout = (LinearLayout)view.findViewById(R.id.index6_trLayout);
 		initTopView(view,R.string.resume_education,"EducationActivity");
-		queryWhere = "select * from " + CommonText.EDUCATION + " where userId = "+ MyApplication.userId +" order by id desc";
+		queryWhere = "select * from " + CommonText.EDUCATION + " where userId = "+ BaseActivity.kId +" order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			index6layout.setBackgroundColor(CommUtil.getColorValue(self,
@@ -447,7 +448,7 @@ public class MainActivity extends Activity {
 
 			edListview.setAdapter(commMapAdapter);
 			
-			queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = "+ MyApplication.userId +" order by id desc";
+			queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = "+ BaseActivity.kId +" order by id desc";
 			final Map<String, String[]> comm2MapArray = dbUtil.queryData(self, queryWhere);
 			if (comm2MapArray != null && comm2MapArray.get("userId").length > 0) {
 				index6_trLayout.setVisibility(View.VISIBLE);
@@ -510,7 +511,7 @@ public class MainActivity extends Activity {
 		
 		initTopView(view,R.string.resume_otherinfo,"OtherInfoActivity");
 		
-		queryWhere = "select * from " + CommonText.OTHERINFO + " where userId = "+ MyApplication.userId +" order by id desc";
+		queryWhere = "select * from " + CommonText.OTHERINFO + " where userId = "+ BaseActivity.kId +" order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
         	index7layout.setBackgroundColor(CommUtil.getColorValue(self,

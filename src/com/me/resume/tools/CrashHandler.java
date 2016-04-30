@@ -11,6 +11,7 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.FileUtils;
 import com.me.resume.utils.TimeUtils;
 
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
@@ -91,7 +92,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         /* 准备错误日志文件 */
         String filePath = Environment.getExternalStorageDirectory()  
                 .getAbsolutePath() + File.separator + Constants.DIR_PATH + File.separator 
-                + Constants.LOG_PATH + Constants.LOG_NAME;
+                + FileUtils.LOG_PATH + FileUtils.LOG_NAME;
         File logFile = new File(filePath);
         if(!logFile.getParentFile().exists()) {
         	logFile.getParentFile().mkdirs();

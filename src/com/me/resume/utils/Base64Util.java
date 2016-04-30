@@ -29,7 +29,7 @@ public class Base64Util {
 		try {
 			 isa = new FileInputStream(path);// 获取文件输入流
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			byte[] buffer = new byte[1024];
+			byte[] buffer = new byte[1024*4];
 			int count = 0;
 			while ((count = isa.read(buffer)) >= 0) {
 				baos.write(buffer, 0, count);
@@ -75,7 +75,7 @@ public class Base64Util {
 	 */
 	public static byte[] readInputStream(InputStream inputStream)
 			throws IOException {
-		byte[] buffer = new byte[1024];
+		byte[] buffer = new byte[1024*4];
 		int len = 0;
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		while ((len = inputStream.read(buffer)) != -1) {
@@ -116,7 +116,7 @@ public class Base64Util {
 		ByteArrayOutputStream baos = null;
 		try {
 			baos = new ByteArrayOutputStream();
-			byte[] buffer = new byte[1024];
+			byte[] buffer = new byte[1024*4];
 			isa = new FileInputStream(path);// 获取文件输入流
 			int count = 0;
 			while ((count = isa.read(buffer)) >= 0) {

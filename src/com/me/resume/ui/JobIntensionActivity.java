@@ -58,7 +58,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.JOBINTENSION, 
 							new String[]{kId,"background"}, 
-							new String[]{"1",String.valueOf(checkColor)});
+							new String[]{"1",String.valueOf(checkColor)},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 					}else{
@@ -188,7 +188,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 						new String[]{edId,"expworkingproperty","expdworkplace","expworkindustry","expworkcareer",
 										  "expmonthlysalary","workingstate"}, 
 						new String[]{"1",info_exp_workingpropertyStr,info_expworkplaceStr,info_expworkindustryStr,
-										info_expworkcareerStr,info_expmonthlysalaryStr,info_workingstateStr});
+										info_expworkcareerStr,info_expmonthlysalaryStr,info_workingstateStr},2);
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
 				}else{

@@ -10,6 +10,8 @@ import android.os.AsyncTask;
 import android.os.Handler;
 
 import com.me.resume.MyApplication;
+import com.me.resume.R;
+import com.me.resume.ui.BaseActivity;
 import com.me.resume.utils.Base64Util;
 import com.me.resume.utils.CommUtil;
 import com.whjz.android.text.Info;
@@ -32,14 +34,14 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 	private List<String> paramvalue = null;
 	
 	private Handler mHandler;
-	private int style;
+	
+	private String user_avator = "";
 	
 	protected BaseCommonUtil baseCommon = new CommonUtil();;// 通用工具对象实例
 	
-	public UploadPhotoTask(Context context,Handler mHandler,int style){
+	public UploadPhotoTask(Context context,Handler mHandler){
 		this.context = context;
 		this.mHandler = mHandler;
-		this.style = style;
 	}
 	
 	@Override
@@ -49,25 +51,25 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 		}else if(arg0[0]!=null){
 			paramname = new ArrayList<String>();
 			paramvalue = new ArrayList<String>();
-			MyLog.d("photoPath:"+arg0[0].toString()+"---USERID--->"+MyApplication.userId +"-->"+Base64Util.getPath()+" style:"+style);
-			if (style == 4) { // 修改
-				paramname.add("file");
-				paramname.add("puser_pic");
-				paramname.add("puser_id");
-				
-				paramvalue.add(Base64Util.getbyteString(context, arg0[0].toString()));
-				paramvalue.add(Base64Util.getPath());
-				paramvalue.add("3");
-			}
+			MyLog.d("photoPath:"+arg0[0].toString()+"---USERID--->"+MyApplication.userId +"-->"+Base64Util.getPath());
+			
+			paramname.add("file");
+			paramname.add("p_avator");
+			paramname.add("p_userId");
+			
+			paramvalue.add(Base64Util.getbyteString(context, arg0[0].toString()));
+			paramvalue.add(Base64Util.getPath());
+			paramvalue.add(BaseActivity.kId);
 			
 			Info info = new Info();
-			dataSetList = baseCommon.datasetlistUpdata(info.getUse(),info.getPass(), "procdetailed",style, paramname,paramvalue,null);
+			dataSetList = baseCommon.datasetlistUpdata(info.getUse(),info.getPass(), "pro_upload_avator",1, paramname,paramvalue,null);
 			if (dataSetList != null) {
 				if(dataSetList.nameList.size()>0){
 					try {
 						Map<String, List<String>> map = dataSetList.getMap();
 						int userID =  CommUtil.parseInt(map.get("userId").get(0));
 						if(userID>0){
+							user_avator = map.get("avator").get(0);
 //							GlobalApplication.getInstance().setUserId(userID);
 //							GlobalApplication.getInstance().setUserAvatar(map.get("user_pic").get(0));
 							return 1;
@@ -103,17 +105,17 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 		super.onPostExecute(result);
 		pdialog.dismiss();
 		if (result == -1) {// 未联网
-//			Utils.ToastMsg(context, context.getResources().getString(R.string.check_network));
+			CommUtil.ToastMsg(context, context.getResources().getString(R.string.check_network));
 		} else if (result == -2) {// 读取服务器失败
-//			Utils.ToastMsg(context, context.getResources().getString(R.string.m_failLoad));
+			CommUtil.ToastMsg(context, context.getResources().getString(R.string.m_failLoad));
 		} else if(result == -3){
-//			Utils.ToastMsg(context, context.getResources().getString(R.string.file_failLoad));
+			CommUtil.ToastMsg(context, context.getResources().getString(R.string.file_failLoad));
 		}else if (result == 1) {
-//			Utils.ToastMsg(context, context.getResources().getString(R.string.file_successLoad));
-//			if(GlobalApplication.userhead.exists()){
-//				GlobalApplication.userhead.delete();
-//        	}
-			mHandler.sendEmptyMessage(1);
+			CommUtil.ToastMsg(context, context.getResources().getString(R.string.file_successLoad));
+			if(Constants.userhead.exists()){
+				Constants.userhead.delete();
+        	}
+			mHandler.sendMessage(mHandler.obtainMessage(1, user_avator));
 		}
 	}
 	

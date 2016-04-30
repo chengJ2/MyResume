@@ -79,7 +79,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 							new String[]{kId,"background"}, 
-							new String[]{"1",String.valueOf(checkColor)});
+							new String[]{"1",String.valueOf(checkColor)},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 					}else{
@@ -238,7 +238,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 					new String[]{kId,"companyname","companynature","companyscale","industryclassification",
 									  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc"}, 
 					new String[]{"1",info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
-								info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr});
+								info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr},2);
 			if (updResult == 1) {
 				toastMsg(R.string.action_update_success);
 			}else{

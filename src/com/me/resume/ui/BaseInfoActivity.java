@@ -107,15 +107,15 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
 							new String[]{kId,"bgcolor"}, 
-							new String[]{"1",String.valueOf(checkColor)});
+							new String[]{"1",String.valueOf(checkColor)},2);
 					if (updResult == 1) {
-						set3Msg(R.string.action_update_success);
+						toastMsg(R.string.action_update_success);
 						if(MyApplication.userId != ""){
 							set2Msg(R.string.action_syncing);
 							syncData();
 						}
 					}else{
-						set3Msg(R.string.action_update_fail);
+						toastMsg(R.string.action_update_fail);
 					}
 				}
 				break;
@@ -129,7 +129,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				syncData();
 				break;
 			case OnTopMenu.MSG_MENU31:
-				set3Msg(R.string.action_login_head);
+				toastMsg(R.string.action_login_head);
 				break;
 			default:
 				break;
@@ -207,12 +207,13 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void initData() {
-		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = " + MyApplication.userId;
+		L.d("===kid==="+kId);
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = " + kId;
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			setAddBtnSrc(R.drawable.ic_btn_edit);
 			
-			kId = commMapArray.get("userId")[0];
+//			kId = commMapArray.get("userId")[0];
 			
 			info_realname.setText(commMapArray.get("realname")[0]);
 			info_phone.setText(commMapArray.get("phone")[0]);
@@ -308,7 +309,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		case R.id.save:
 			getFeildValue();
 			if(judgeField()){
-				queryWhere = "select * from " + CommonText.BASEINFO + " where userId = " + MyApplication.userId + " limit 1";
+				queryWhere = "select * from " + CommonText.BASEINFO + " where userId = " + kId + " limit 1";
 				commMapArray = dbUtil.queryData(self, queryWhere);
 				if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 					
@@ -319,15 +320,15 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 							"nationality","license","workingabroad","politicalstatus"}, 
 							new String[]{"1",info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
 							info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
-							info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr});
+							info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr},2);
 					if (updResult == 1) {
-						set3Msg(R.string.action_update_success);
+						toastMsg(R.string.action_update_success);
 						if(MyApplication.userId != ""){
 							set2Msg(R.string.action_syncing);
 							syncData();
 						}
 					}else{
-						set3Msg(R.string.action_update_fail);
+						toastMsg(R.string.action_update_fail);
 					}
 				}else{
 					ContentValues cValues = new ContentValues();
@@ -350,7 +351,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 							CommonText.BASEINFO, cValues);
 					if (queryResult) {
 						setAddBtnSrc(R.drawable.ic_btn_edit);
-						set3Msg(R.string.action_add_success);
+						toastMsg(R.string.action_add_success);
 						if(MyApplication.userId != ""){
 							set2Msg(R.string.action_syncing);
 							syncData();
@@ -458,7 +459,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void goActivity(String src){
-		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = " + MyApplication.userId;
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = " + kId;;
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			startActivity(src,false);
@@ -487,7 +488,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	
 	/**
 	 * 
-	 * @Description: 同步数据
+	 * @Description: 同步数据(判断库是否有记录)
 	 * @author Comsys-WH1510032
 	 */
 	private void syncData(){ 
@@ -495,7 +496,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		List<String> values = new ArrayList<String>();
 		
 		params.add("p_userId");
-		values.add(MyApplication.userId);
+		values.add(kId);
 		
 		requestData("pro_get_baseinfo", 1, params, values, new HandlerData() {
 			@Override
@@ -506,7 +507,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			public void success(Map<String, List<String>> map) {
 				try {
 					String p_baId = map.get("id").get(0);
-					if (map.get("userId").get(0).equals(MyApplication.userId)) {
+					if (map.get("userId").get(0).equals(kId)) {
 						syncRun(p_baId,3);
 					}else{
 						syncRun("1",2);
@@ -547,7 +548,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			params.add("p_bgcolor");
 			
 			values.add(bdId);
-			values.add(MyApplication.userId);
+			values.add(kId);
 			values.add(info_realnameStr);
 			values.add(rg_genderStr);
 			values.add(info_brithdayStr);
@@ -563,7 +564,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			values.add(rg_politicalstatusStr);
 			values.add(getCheckColor(checkColor));
 			
-			requestData("pro_baseinfo", 3, params, values, new HandlerData() {
+			requestData("pro_baseinfo", style, params, values, new HandlerData() {
 				@Override
 				public void error() {
 					runOnUiThread(R.string.action_sync_fail);

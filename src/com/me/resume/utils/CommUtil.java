@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.me.resume.tools.L;
+import com.whjz.android.text.CommonText;
 
 public class CommUtil {
 
@@ -380,6 +381,23 @@ public class CommUtil {
 	    	imm.hideSoftInputFromWindow(editText.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
 	    }
 	    
+	}
+	
+	public static String getHttpLink(String link){
+		if(!"".equals(link) || link != null){
+			if(!link.contains("http://")){
+				link = CommonText.endPoint + "/" + link;
+				if(link.contains("\\")){
+					return link.replace("\\", "/");
+				}else{
+					return link;
+				}
+			}else{
+				return link;
+			}
+		}else{
+			return "";
+		}
 	}
 	
 	 /**

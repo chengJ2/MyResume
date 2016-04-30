@@ -90,7 +90,7 @@ public class ImageUtils {
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
-			file = File.createTempFile("test", null, dir);
+			file = File.createTempFile("temp", null, dir);
 			bos = new BufferedOutputStream(new FileOutputStream(file));
 			baos.writeTo(bos);
 		} catch (IOException e) {

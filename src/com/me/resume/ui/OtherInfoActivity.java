@@ -78,7 +78,7 @@ public class OtherInfoActivity extends BaseActivity implements
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.OTHERINFO, 
 							new String[]{kId,"background"}, 
-							new String[]{"1",String.valueOf(checkColor)});
+							new String[]{"1",String.valueOf(checkColor)},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 					}else{
@@ -276,7 +276,7 @@ public class OtherInfoActivity extends BaseActivity implements
 	        	String edId = commMapArray.get("id")[0];
 				updResult = dbUtil.updateData(self, CommonText.OTHERINFO, 
 						new String[]{edId,"language","literacyskills","listeningspeaking"}, 
-						new String[]{"1",info_languageStr,info_literacyskillsStr,info_listeningspeakingStr});
+						new String[]{"1",info_languageStr,info_literacyskillsStr,info_listeningspeakingStr},2);
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
 				}else{
@@ -310,7 +310,7 @@ public class OtherInfoActivity extends BaseActivity implements
 	        	String edId = commMapArray.get("id")[0];
 				updResult = dbUtil.updateData(self, CommonText.OTHERINFO1, 
 						new String[]{edId,"certificate","certificatetime"}, 
-						new String[]{"1",info_certificateStr,info_certificatetimesStr});
+						new String[]{"1",info_certificateStr,info_certificatetimesStr},2);
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
 				}else{
@@ -344,7 +344,7 @@ public class OtherInfoActivity extends BaseActivity implements
 	        	String edId = commMapArray.get("id")[0];
 				updResult = dbUtil.updateData(self, CommonText.OTHERINFO2, 
 						new String[]{edId,"title","description"}, 
-						new String[]{"1",info_titleStr,info_descriptionStr});
+						new String[]{"1",info_titleStr,info_descriptionStr},2);
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
 				}else{

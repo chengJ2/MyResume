@@ -64,8 +64,10 @@
     <string name="action_input_isnull">不能为空</string>
     <string name="action_input_up_isnull">用户名/手机号或密码不能为空!</string>
     <string name="action_input_username_isnull">用户名不能为空!</string>
+    <string name="action_input_username_toolong">用户名太长!</string>
     <string name="action_input_password_isnull">密码不能为空!</string>
     <string name="action_input_password_equal">两次密码不一致!</string>
+    <string name="action_input_password_toolong">密码太长!</string>
     <string name="register_repeatedusername">用户名已存在</string>
     <string name="action_wait_loging">正在登录,请稍后...</string>
     <string name="action_login_error"> 用户名或密码不正确,请重试!</string>
@@ -74,8 +76,12 @@
     <string name="login_input2_hint">请输入密码</string>
     <string name="login_input3_hint">请确认密码</string>
      <string name="action_regist_fail">注册失败</string>
+     <string name="action_logout_fail">注销失败,请重试</string>
      
      <string name="max_photo_size">抱歉!上传的图片不能超过1M!</string>
+      <string name="m_failLoad">请求失败,请重试</string>
+    <string name="file_failLoad">文件上传失败</string>
+    <string name="file_successLoad">文件上传成功</string>
 
     <!-- UI button click msg -->
     <string name="action_notice">提&#160;示</string>

@@ -15,25 +15,6 @@ public class Constants {
 	
 	 /** 保存的总路径 */
     public static final String DIR_PATH = "MyResume";
-    /** 错误日志存放目录*/
-    public static final String LOG_PATH = "log/";
-    
-    /**
-     * 错误日志文件名称
-     */
-    public static final String LOG_NAME = "crash.txt";
-    
-    /**
-     * Logcat文件名称
-     */
-    public static final String LOG_CAT = "logcat.txt";
-
-    /** 截图存放目录*/
-    public static final String IMAGE_PATH =  "images/";
-   
-    /** 缩略图缓存存放目录*/
-    public static final String IMAGECACHE_PATH = IMAGE_PATH + "cache/";
-	
     
 	/**
 	 * 本地配置缓存文件
@@ -68,8 +49,10 @@ public class Constants {
             + Environment.getDataDirectory().getAbsolutePath() + "/"  
             + PACKAGENAME; // 获取存储位置地址  
     
+    public static String fileName="Avatar.jpg";
+    
     public static File userhead = new File(Environment.getExternalStorageDirectory() 
-    		+ File.separator + DIR_PATH + File.separator + "Avatar.jpg"); 
+    		+ File.separator + DIR_PATH + File.separator + fileName); 
     
     // 请求超时
  	public static final int EXECUTE_TIMEOUT = -0X2000;

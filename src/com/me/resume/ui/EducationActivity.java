@@ -56,7 +56,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
 							new String[]{kId,"background"}, 
-							new String[]{"1",String.valueOf(checkColor)});
+							new String[]{"1",String.valueOf(checkColor)},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 					}else{
@@ -244,7 +244,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 								new String[]{edId,"educationtimestart","educationtimeend","school","majorname",
 												  "degree","examination"}, 
 								new String[]{"1",info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,
-								info_degressStr,info_examinationStr});
+								info_degressStr,info_examinationStr},2);
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
 						}else{
@@ -262,7 +262,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 								new String[]{edId,"trainingtimestart","trainingtimeend","trainingorganization","trainingclass",
 								"certificate","description"}, 
 								new String[]{"1",info_starttimeStr,info_endtimeStr,info_trainingorganizationStr,info_trainingclassStr,
-								info_certificateStr,info_descriptionStr});
+								info_certificateStr,info_descriptionStr},2);
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
 						}else{

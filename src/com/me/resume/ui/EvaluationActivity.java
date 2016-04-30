@@ -40,7 +40,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
 							new String[]{kId,"background"}, 
-							new String[]{"1",String.valueOf(checkColor)});
+							new String[]{"1",String.valueOf(checkColor)},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 					}else{
@@ -120,7 +120,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				String edId = commMapArray.get("id")[0];
 				updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
 						new String[]{edId,"selfevaluation","careergoal"}, 
-						new String[]{"1",info_self_evaluationStr,info_career_goalStr});
+						new String[]{"1",info_self_evaluationStr,info_career_goalStr},2);
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
 				}
