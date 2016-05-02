@@ -13,24 +13,32 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
+            <RelativeLayout 
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:background="@color/white">
+            
             <TextView
                 style="@style/home_item_text"
+                 android:layout_width="wrap_content"
+                android:layout_alignParentLeft="true"
                 android:text="@string/item_text2" />
+            
+             <TextView
+                style="@style/home_item_text"
+                 android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dip"
+                android:text="@string/item_text21" />
+            
+            </RelativeLayout>
 
             <View style="@style/line3" />
 
-            <HorizontalScrollView
-                android:id="@+id/horizontalsv"
-                android:layout_width="match_parent"
-                android:layout_height="190dip"
-                android:layout_margin="5dp" 
-                android:scrollbars="none"
-				android:fadingEdge="none"
-				android:fadingEdgeLength="0dip">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="190dip"
                     android:layout_margin="10dp" >
 
                     <GridView
@@ -39,7 +47,8 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:numColumns="auto_fit"
-                        android:stretchMode="spacingWidthUniform"
+                        android:columnWidth="80dp" 
+                        android:stretchMode="columnWidth"
                         android:listSelector="@android:color/transparent" 
                         android:scrollbars="none"
 				        android:scrollingCache="false"
@@ -48,7 +57,6 @@
 				        android:fadingEdgeLength="0dip">
                     </GridView>
                 </LinearLayout>
-            </HorizontalScrollView>
 
             <View style="@style/line3" />
 

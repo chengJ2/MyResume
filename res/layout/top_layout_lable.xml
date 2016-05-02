@@ -17,8 +17,9 @@
     <ImageView
         android:id="@+id/left_lable"
         android:layout_width="50dip"
-        android:layout_height="match_parent"
+        android:layout_height="30dip"
         android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:gravity="center"
         android:scaleType="centerInside"
         android:src="@drawable/icon_back" />

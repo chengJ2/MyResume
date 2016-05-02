@@ -39,8 +39,8 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				if (msg.obj != null) {
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
-							new String[]{kId,"background"}, 
-							new String[]{"1",String.valueOf(checkColor)},2);
+							new String[]{"userId=?","background"}, 
+							new String[]{kId,String.valueOf(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 					}else{

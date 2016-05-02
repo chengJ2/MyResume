@@ -292,7 +292,7 @@ public class UserLoginActivity extends BaseActivity implements
 					"createtime","lastlogintime"}, 
 					new String[]{kId,feildStr1,feildStr2,feildStr3,feildStr4,feildStr5,feildStr6},1);
 			if(updResult == 1){
-				setPreferenceData("useId",map.get("id").get(0));
+				setPreferenceData("useId",CommUtil.parseInt(map.get("id").get(0)));
 				getBaseinfo(map);
 			}
 		}else{

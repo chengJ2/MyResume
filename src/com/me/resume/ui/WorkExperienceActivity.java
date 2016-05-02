@@ -14,9 +14,11 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -78,10 +80,14 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				if (msg.obj != null) {
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
-							new String[]{kId,"background"}, 
-							new String[]{"1",String.valueOf(checkColor)},2);
-					if (updResult == 1) {
+							new String[]{"userId=?","bgcolor"}, 
+							new String[]{kId,String.valueOf(checkColor)},1);
+					if (updResult != -11) {
 						toastMsg(R.string.action_update_success);
+						if(MyApplication.userId != 0){
+							set2Msg(R.string.action_syncing);
+							syncData();
+						}
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -145,27 +151,36 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		info_workdescdetail.addTextChangedListener(this);
 	}
 	
-	private void initViews(){
-		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = 1 order by id desc limit 1";
+	private String weId = "";
+	
+	private void initViews() {
+		if (getWEData()) {
+			info_industryclassification.setText(commMapArray
+					.get("industryclassification")[0]);
+			info_startworktime.setText(commMapArray.get("worktimestart")[0]);
+			info_endworktime.setText(commMapArray.get("worktimeend")[0]);
+			info_expectedsalary.setText(commMapArray.get("expectedsalary")[0]);
+
+			info_companyname.setText(commMapArray.get("companyname")[0]);
+			info_jobtitle.setText(commMapArray.get("jobtitle")[0]);
+			info_workdescdetail.setText(commMapArray.get("workdesc")[0]);
+
+			info_companynature.setText(commMapArray.get("companynature")[0]);
+			info_companyscale.setText(commMapArray.get("companyscale")[0]);
+		}
+
+	}
+	
+	private boolean getWEData(){
+		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = "+ kId +" order by id desc limit 1";
 		 commMapArray = dbUtil.queryData(self, queryWhere);
          if (commMapArray!= null && commMapArray.get("userId").length > 0) {
         	 setEditBtnVisible(View.VISIBLE);
-        	 
-        	 kId = commMapArray.get("id")[0];
-        	 
-        	 info_industryclassification.setText(commMapArray.get("industryclassification")[0]);
-        	 info_startworktime.setText(commMapArray.get("worktimestart")[0]);
-        	 info_endworktime.setText(commMapArray.get("worktimeend")[0]);
-        	 info_expectedsalary.setText(commMapArray.get("expectedsalary")[0]);
-        		
-        	 info_companyname.setText(commMapArray.get("companyname")[0]);
-        	 info_jobtitle.setText(commMapArray.get("jobtitle")[0]);
-             info_workdescdetail.setText(commMapArray.get("workdesc")[0]);
-             
-             info_companynature.setText(commMapArray.get("companynature")[0]);
-     		 info_companyscale.setText(commMapArray.get("companyscale")[0]);
+        	 weId = commMapArray.get("id")[0];
+        	 return true;
          }else{
         	 setEditBtnVisible(View.GONE);
+        	 return false;
          }
 	}
 	
@@ -175,74 +190,49 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		getFeildValue();
 		switch (v.getId()) {
 		case R.id.save:
-			if (!RegexUtil.checkNotNull(info_companynameStr)) {
-				setMsg(R.string.we_info_companyname);
-				return;
+			if(judgeFeild()){
+				ContentValues cValues = new ContentValues();
+				cValues.put("userId", kId);
+				cValues.put("companyname", info_companynameStr);
+				cValues.put("companynature", info_companynatureStr);
+				cValues.put("companyscale", info_companyscaleStr);
+				cValues.put("industryclassification", info_industryclassificationStr);
+				cValues.put("jobtitle", info_jobtitleStr);
+				cValues.put("worktimeStart", info_startworktimeStr);
+				cValues.put("worktimeEnd", info_endworktimeStr);
+				cValues.put("expectedsalary", info_expectedsalaryStr);
+				cValues.put("workdesc", info_workdescdetailStr);
+				cValues.put("createtime", TimeUtils.getCurrentTimeInString());
+				queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);
+				if(queryResult){
+					toastMsg(R.string.action_add_success);
+					setEditBtnVisible(View.VISIBLE);
+					if(MyApplication.userId != 0){
+						set2Msg(R.string.action_syncing);
+						weId = "0";
+						syncData();
+					}
+				}
 			}
 			
-			if (!RegexUtil.checkNotNull(info_industryclassificationStr)) {
-				setMsg(R.string.we_info_industryclassification);
-				return;
-			}
-			
-			if (!RegexUtil.checkNotNull(info_jobtitleStr)) {
-				setMsg(R.string.we_info_jobtitle);
-				return;
-			}
-			
-			if (!RegexUtil.checkNotNull(info_startworktimeStr)) {
-				setMsg(R.string.we_info_start_worktime);
-				return;
-			}
-			
-			if (!RegexUtil.checkNotNull(info_endworktimeStr)) {
-				setMsg(R.string.we_info_end_worktime);
-				return;
-			}
-			
-			if (TimeUtils.compareDate(info_startworktimeStr, info_endworktimeStr) <= 0) {
-				set2Msg(R.string.we_info_compare_worktime);
-				return;
-			}
-			
-			if (!RegexUtil.checkNotNull(info_expectedsalaryStr)) {
-				setMsg(R.string.we_info_jobsalary);
-				return;
-			}
-			
-			if (!RegexUtil.checkNotNull(info_workdescdetailStr)) {
-				setMsg(R.string.we_info_workdesc);
-				return;
-			}
-			
-			ContentValues cValues = new ContentValues();
-			cValues.put("userId", "1");
-			cValues.put("companyname", info_companynameStr);
-			cValues.put("companynature", info_companynatureStr);
-			cValues.put("companyscale", info_companyscaleStr);
-			cValues.put("industryclassification", info_industryclassificationStr);
-			cValues.put("jobtitle", info_jobtitleStr);
-			cValues.put("worktimeStart", info_startworktimeStr);
-			cValues.put("worktimeEnd", info_endworktimeStr);
-			cValues.put("expectedsalary", info_expectedsalaryStr);
-			cValues.put("workdesc", info_workdescdetailStr);
-			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-			queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);
-			if(queryResult){
-				toastMsg(R.string.action_add_success);
-				setEditBtnVisible(View.VISIBLE);
-			}
 			break;
 		case R.id.edit:
-			updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
-					new String[]{kId,"companyname","companynature","companyscale","industryclassification",
-									  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc"}, 
-					new String[]{"1",info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
-								info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr},2);
-			if (updResult == 1) {
-				toastMsg(R.string.action_update_success);
-			}else{
-				toastMsg(R.string.action_update_fail);
+			if(judgeFeild()){
+				getWEData();
+				updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
+						new String[]{weId,"companyname","companynature","companyscale","industryclassification",
+										  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc"}, 
+						new String[]{kId,info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
+									info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr},2);
+				if (updResult == 1) {
+					toastMsg(R.string.action_update_success);
+					if(MyApplication.userId != 0){
+						set2Msg(R.string.action_syncing);
+						syncData();
+					}
+				}else{
+					toastMsg(R.string.action_update_fail);
+				}
 			}
 			break;
 		case R.id.next:
@@ -310,6 +300,83 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		info_expectedsalaryStr = CommUtil.getTextValue(info_expectedsalary);
 	}
 	
+	private boolean judgeFeild(){
+		if (!RegexUtil.checkNotNull(info_companynameStr)) {
+			setMsg(R.string.we_info_companyname);
+			return false;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_industryclassificationStr)) {
+			setMsg(R.string.we_info_industryclassification);
+			return false;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_jobtitleStr)) {
+			setMsg(R.string.we_info_jobtitle);
+			return false;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_startworktimeStr)) {
+			setMsg(R.string.we_info_start_worktime);
+			return false;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_endworktimeStr)) {
+			setMsg(R.string.we_info_end_worktime);
+			return false;
+		}
+		
+		if (TimeUtils.compareDate(info_startworktimeStr, info_endworktimeStr) <= 0) {
+			set2Msg(R.string.we_info_compare_worktime);
+			return false;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_expectedsalaryStr)) {
+			setMsg(R.string.we_info_jobsalary);
+			return false;
+		}
+		
+		if (!RegexUtil.checkNotNull(info_workdescdetailStr)) {
+			setMsg(R.string.we_info_workdesc);
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @Description: 同步数据(判断库是否有记录)
+	 * @author Comsys-WH1510032
+	 */
+	private void syncData(){ 
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		
+		params.add("p_weId");
+		params.add("p_userId");
+		values.add(weId);
+		values.add(kId);
+		requestData("pro_get_workexpericnce", 1, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				syncRun("0",2);
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+					String p_weId = map.get("id").get(0);
+					if (map.get("userId").get(0).equals(kId)) {
+						syncRun(p_weId,3);
+						
+					}else{
+						syncRun("0",2);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 	
 	/**
 	 * 
@@ -317,54 +384,57 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 * @Description: 同步数据
 	 * @author Comsys-WH1510032
 	 */
-	private void syncData(){ 
+	private void syncRun(String weId,int style){ 
 		getFeildValue();
 		
-		List<String> params = new ArrayList<String>();
-		List<String> values = new ArrayList<String>();
-		params.add("p_weId");
-		params.add("p_userId");
-		params.add("p_companyname");
-		params.add("p_industryclassification");
-		params.add("p_jobtitle");
-		params.add("p_worktimestart");
-		params.add("p_worktimeend");
-		params.add("p_expectedsalary");
-		params.add("p_workdesc");
-		params.add("p_companynature");
-		params.add("p_companyscale");
-		params.add("p_bgcolor");
-		
-		values.add("0");
-		values.add("1");
-		values.add(info_companynameStr);
-		values.add(info_industryclassificationStr);
-		values.add(info_jobtitleStr);
-		values.add(info_startworktimeStr);
-		values.add(info_endworktimeStr);
-		values.add(info_expectedsalaryStr);
-		values.add(info_workdescdetailStr);
-		values.add(info_companynatureStr);
-		values.add(info_companyscaleStr);
-		values.add(getCheckColor(checkColor));
-		
-		requestData("pro_workexpericnce", 2, params, values, new HandlerData() {
-			@Override
-			public void error() {
-				runOnUiThread(R.string.action_sync_fail);
-			}
+		if(judgeFeild()){
+			List<String> params = new ArrayList<String>();
+			List<String> values = new ArrayList<String>();
+			params.add("p_weId");
+			params.add("p_userId");
+			params.add("p_companyname");
+			params.add("p_industryclassification");
+			params.add("p_jobtitle");
+			params.add("p_worktimestart");
+			params.add("p_worktimeend");
+			params.add("p_expectedsalary");
+			params.add("p_workdesc");
+			params.add("p_companynature");
+			params.add("p_companyscale");
+			params.add("p_bgcolor");
 			
-			public void success(Map<String, List<String>> map) {
-				try {
-					if (map.get("msg").get(0).equals("200")) {
-						runOnUiThread(R.string.action_sync_success);
-						
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
+			values.add(weId);
+			values.add(kId);
+			values.add(info_companynameStr);
+			values.add(info_industryclassificationStr);
+			values.add(info_jobtitleStr);
+			values.add(info_startworktimeStr);
+			values.add(info_endworktimeStr);
+			values.add(info_expectedsalaryStr);
+			values.add(info_workdescdetailStr);
+			values.add(info_companynatureStr);
+			values.add(info_companyscaleStr);
+			values.add(getCheckColor(checkColor));
+			
+			requestData("pro_workexpericnce", style, params, values, new HandlerData() {
+				@Override
+				public void error() {
+					runOnUiThread(R.string.action_sync_fail);
 				}
-			}
-		});
+				
+				public void success(Map<String, List<String>> map) {
+					try {
+						if (map.get("msg").get(0).equals("200")) {
+							runOnUiThread(R.string.action_sync_success);
+							
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			
+		}
 	}
 	
 	

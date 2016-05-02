@@ -6,6 +6,7 @@ import java.util.Map;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -179,6 +180,16 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 */
 	protected void setLeftIcon(int resId) {
 		left_icon.setImageResource(resId);
+	}
+	
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 设置顶部左边按钮图标
+	 * @param resId
+	 */
+	protected void setLeftIcon(Bitmap bitmap) {
+		left_icon.setImageBitmap(bitmap);
 	}
 
 	/**

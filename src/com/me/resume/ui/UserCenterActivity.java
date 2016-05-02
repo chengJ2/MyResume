@@ -86,6 +86,11 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		setRightIconVisible(View.VISIBLE);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
+		
+		Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.userhead.toString());
+		if (bitmap != null) {
+			user_info_avatar.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
+		}
 	}
 	
 	private void findViews() {
@@ -121,7 +126,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		List<String> values = new ArrayList<String>();
 		
 		params.add("p_userId");
-		values.add(MyApplication.userId);
+		values.add(kId);
 		
 		requestData("pro_login_out", 1, params, values, new HandlerData() {
 			@Override

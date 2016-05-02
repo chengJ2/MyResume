@@ -45,7 +45,7 @@ public class MyApplication extends Application {
    /**
     * 判断用户是否注册登录成功
     */
-   public static String userId = "";
+   public static int userId = 0;
    
 	@Override
 	public void onCreate() {

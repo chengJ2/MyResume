@@ -21,7 +21,6 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -57,6 +56,10 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	String rg_maritalstatusStr = "0";
 	String rg_workingabroadStr = "0";
 	String rg_politicalstatusStr = "0";
+	
+	String info_realnameStr,info_phoneStr,info_emailStr,info_nationalityStr,info_licenseStr;
+	
+	String info_brithdayStr,info_workyearStr,info_hometownStr,info_cityStr;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -106,11 +109,11 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				if (msg.obj != null) {
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
-							new String[]{kId,"bgcolor"}, 
-							new String[]{"1",String.valueOf(checkColor)},2);
+							new String[]{"userId=?","bgcolor"}, 
+							new String[]{kId,String.valueOf(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						if(MyApplication.userId != ""){
+						if(MyApplication.userId != 0){
 							set2Msg(R.string.action_syncing);
 							syncData();
 						}
@@ -213,8 +216,6 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			setAddBtnSrc(R.drawable.ic_btn_edit);
 			
-//			kId = commMapArray.get("userId")[0];
-			
 			info_realname.setText(commMapArray.get("realname")[0]);
 			info_phone.setText(commMapArray.get("phone")[0]);
 			info_email.setText(commMapArray.get("email")[0]);
@@ -230,7 +231,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			
 			// 海外工作经验
 			String workingabroad = commMapArray.get("workingabroad")[0];
-			if(workingabroad.equals("0")){
+			if(workingabroad.equals("1")){
 				radio_yes.setChecked(true);
 			}else{
 				radio_no.setChecked(true);
@@ -299,31 +300,26 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 
 	}
 	
-	String info_realnameStr,info_phoneStr,info_emailStr,info_nationalityStr,info_licenseStr;
-	
-	String info_brithdayStr,info_workyearStr,info_hometownStr,info_cityStr;
-	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.save:
 			getFeildValue();
 			if(judgeField()){
-				queryWhere = "select * from " + CommonText.BASEINFO + " where userId = " + kId + " limit 1";
+				queryWhere = "select * from " + CommonText.BASEINFO + " where userId = " + kId + " order by id desc limit 1";
 				commMapArray = dbUtil.queryData(self, queryWhere);
 				if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-					
-					kId = commMapArray.get("id")[0];
+					String baId = commMapArray.get("id")[0];
 					updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
-							new String[]{kId,"realname","gender","brithday","joinworktime",
+							new String[]{baId,"realname","gender","brithday","joinworktime",
 							"phone","hometown","city","email","ismarry",
 							"nationality","license","workingabroad","politicalstatus"}, 
-							new String[]{"1",info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
+							new String[]{kId,info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
 							info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
 							info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						if(MyApplication.userId != ""){
+						if(MyApplication.userId != 0){
 							set2Msg(R.string.action_syncing);
 							syncData();
 						}
@@ -332,7 +328,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 					}
 				}else{
 					ContentValues cValues = new ContentValues();
-					cValues.put("userId", MyApplication.userId);
+					cValues.put("userId", kId);
 					cValues.put("realname", info_realnameStr);
 					cValues.put("gender", rg_genderStr);
 					cValues.put("brithday", info_brithdayStr);
@@ -352,7 +348,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 					if (queryResult) {
 						setAddBtnSrc(R.drawable.ic_btn_edit);
 						toastMsg(R.string.action_add_success);
-						if(MyApplication.userId != ""){
+						if(MyApplication.userId != 0){
 							set2Msg(R.string.action_syncing);
 							syncData();
 						}

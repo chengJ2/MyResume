@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -28,6 +29,7 @@ import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
+import com.me.resume.utils.ImageUtils;
 import com.me.resume.utils.TimeUtils;
 import com.whjz.android.text.CommonText;
 
@@ -113,6 +115,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		setRightIconVisible(View.VISIBLE);
 		setRight2IconVisible(View.GONE);
 		setLeftIcon(R.drawable.icon_person_avtar);
+		
 		setRightIcon(R.drawable.icon_setting);
 		setfabLayoutVisible(View.GONE);
 		
@@ -145,7 +148,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 						CommonText.USERINFO, cValues);
 			 if (queryResult) {
 				 initData();
-			}
+			 }
 		 }
 	}
 	
@@ -174,7 +177,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	 */
 	private void setData() {
 		resumeModelList = new ArrayList<ResumeModel>();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 3; i++) {
 			ResumeModel item = new ResumeModel();
 			ArrayList<String> url = new ArrayList<String>();
 			url.add(R.drawable.a001 + "");
@@ -192,7 +195,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 	/** 设置GirdView参数，绑定数据 */
 	private void setGridView() {
-		int size = resumeModelList.size();
+		/*int size = resumeModelList.size();
 		int length = 100;
 		DisplayMetrics dm = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -206,7 +209,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		resumeModelgridView.setColumnWidth(itemWidth); // 设置列表项宽
 		resumeModelgridView.setHorizontalSpacing(5); // 设置列表项水平间距
 		resumeModelgridView.setStretchMode(GridView.NO_STRETCH);
-		resumeModelgridView.setNumColumns(size); // 设置列数量=列表集合数
+		resumeModelgridView.setNumColumns(size); // 设置列数量=列表集合数*/
 		commAdapter = new CommonBaseAdapter<ResumeModel>(self, resumeModelList,
 				R.layout.home_grilview_item) {
 
@@ -228,7 +231,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				// TODO Auto-generated method stub
 				Intent intent = new Intent(self, ImagePagerActivity.class);
 				// 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
 				intent.putStringArrayListExtra(
@@ -245,7 +247,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	 */
 	private void setTopicData(){
 		mList = new ArrayList<String>();
-		mList.add("求职简历");
 		mList.add("面试问题");
 		mList.add("自我鉴定");
 		mList.add("面试技巧");
@@ -289,17 +290,22 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		MyApplication.userId = getPreferenceData("useId", "");
-		L.d("===userId==="+MyApplication.userId);
+		MyApplication.userId = getPreferenceData("useId", 0);
+		L.d("===userId==="+MyApplication.userId + "==KID==" + kId);
 		
 		initData();
+		
+		Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.userhead.toString());
+		if (bitmap != null) {
+			setLeftIcon(ImageUtils.toRoundBitmap(bitmap));
+		}
 	}
 	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.make_btn:
-			if (MyApplication.userId == "") {
+			if (MyApplication.userId == 0) {
 				if(getPreferenceData("noticeshow",1) == 1){
 					DialogUtils.showAlertDialog(self, CommUtil.getStrValue(self,
 							R.string.dialog_action_alert), mHandler);
@@ -314,7 +320,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			startActivity(".MainActivity", false);
 			break;
 		case R.id.left_lable:
-			if (MyApplication.userId == "") {
+			if (MyApplication.userId == 0) {
 				startActivity(".ui.UserLoginActivity", false);
 			}else{
 				startActivity(".ui.UserCenterActivity", false);
