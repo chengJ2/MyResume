@@ -16,6 +16,7 @@ import com.me.resume.comm.OnTopMenu;
 import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
+import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.CustomFAB;
 import com.whjz.android.text.CommonText;
@@ -95,10 +96,13 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		info_career_goal.addTextChangedListener(this);
 	}
 	
+	private String evId;
+	
 	private void initData(){
-		queryWhere = "select * from " + CommonText.EVALUATION + " where userId = 1";
+		queryWhere = "select * from " + CommonText.EVALUATION + " where userId = " + kId + " order by id limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+			evId = commMapArray.get("id")[0];
 			info_self_evaluation.setText(commMapArray.get("selfevaluation")[0]);
 			info_career_goal.setText(commMapArray.get("careergoal")[0]);
 			setAddBtnSrc(R.drawable.ic_btn_edit);
@@ -114,26 +118,28 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		switch (v.getId()) {
 		case R.id.save:
 			getFeildValue();
-			queryWhere = "select * from " + CommonText.EVALUATION + " where userId = 1";
-			commMapArray = dbUtil.queryData(self, queryWhere);
-			if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-				String edId = commMapArray.get("id")[0];
-				updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
-						new String[]{edId,"selfevaluation","careergoal"}, 
-						new String[]{"1",info_self_evaluationStr,info_career_goalStr},2);
-				if (updResult == 1) {
-					toastMsg(R.string.action_update_success);
-				}
-			}else{
-				ContentValues cValues = new ContentValues();
-				cValues.put("userId", "1");
-				cValues.put("selfevaluation", info_self_evaluationStr);
-				cValues.put("careergoal", info_career_goalStr);
-				cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-				queryResult = dbUtil.insertData(self, 
-						CommonText.EVALUATION, cValues);
-				if(queryResult){
-					setAddBtnSrc(R.drawable.ic_btn_edit);
+			if(judgeFeild()){
+				queryWhere = "select * from " + CommonText.EVALUATION + " where userId = " + kId + " order by id limit 1";
+				commMapArray = dbUtil.queryData(self, queryWhere);
+				if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+					updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
+							new String[]{evId,"selfevaluation","careergoal"}, 
+							new String[]{kId,info_self_evaluationStr,info_career_goalStr},2);
+					if (updResult == 1) {
+						toastMsg(R.string.action_update_success);
+					}
+				}else{
+					ContentValues cValues = new ContentValues();
+					cValues.put("userId", "1");
+					cValues.put("selfevaluation", info_self_evaluationStr);
+					cValues.put("careergoal", info_career_goalStr);
+					cValues.put("createtime", TimeUtils.getCurrentTimeInString());
+					queryResult = dbUtil.insertData(self, 
+							CommonText.EVALUATION, cValues);
+					if(queryResult){
+						initData();
+						setAddBtnSrc(R.drawable.ic_btn_edit);
+					}
 				}
 			}
 			break;
@@ -159,45 +165,95 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		info_career_goalStr = CommUtil.getEditTextValue(info_career_goal);
 	}
 	
+	private boolean judgeFeild(){
+		if (!RegexUtil.checkNotNull(info_self_evaluationStr)) {
+			setMsg(R.string.ev_info_self_evaluation);
+			return false;
+		}
+		if (!RegexUtil.checkNotNull(info_career_goalStr)) {
+			setMsg(R.string.ev_info_career_goal);
+			return false;
+		}
+		return true;
+	}
+	
 	/**
 	 * 
 	 * @Description: 同步数据
 	 * @author Comsys-WH1510032
 	 */
 	private void syncData(){ 
-		getFeildValue();
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
+		
 		params.add("p_evId");
 		params.add("p_userId");
-		params.add("p_selfevaluation");
-		params.add("p_careergoal");
-		params.add("p_bgcolor");
+		values.add(evId);
+		values.add(kId);
 		
-		values.add("0");
-		values.add("1");
-		values.add(info_self_evaluationStr);
-		values.add(info_career_goalStr);
-		values.add(getCheckColor(checkColor));
-		
-		
-		requestData("pro_evaluation", 2, params, values, new HandlerData() {
+		requestData("pro_get_evalution", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				runOnUiThread(R.string.action_sync_fail);
+				syncRun("0",2);
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					if (map.get("msg").get(0).equals("200")) {
-						runOnUiThread(R.string.action_sync_success);
-						
+					evId = map.get("id").get(0);
+					if (map.get("userId").get(0).equals(kId)) {
+						syncRun(evId,3);
+					}else{
+						syncRun("0",2);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
-					runOnUiThread(R.string.action_sync_fail);
 				}
 			}
 		});
+		
+	}
+	
+	/**
+	 * 
+	 * @Title:WorkExperienceActivity
+	 * @Description: 同步数据
+	 * @author Comsys-WH1510032
+	 */
+	private void syncRun(String weId,int style){ 
+		getFeildValue();
+		
+		if(judgeFeild()){
+			List<String> params = new ArrayList<String>();
+			List<String> values = new ArrayList<String>();
+			params.add("p_evId");
+			params.add("p_userId");
+			params.add("p_selfevaluation");
+			params.add("p_careergoal");
+			params.add("p_bgcolor");
+			
+			values.add(evId);
+			values.add(kId);
+			values.add(info_self_evaluationStr);
+			values.add(info_career_goalStr);
+			values.add(getCheckColor(checkColor));
+			
+			requestData("pro_evaluation", 2, params, values, new HandlerData() {
+				@Override
+				public void error() {
+					runOnUiThread(R.string.action_sync_fail);
+				}
+				
+				public void success(Map<String, List<String>> map) {
+					try {
+						if (map.get("msg").get(0).equals("200")) {
+							runOnUiThread(R.string.action_sync_success);
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						runOnUiThread(R.string.action_sync_fail);
+					}
+				}
+			});
+		}
 	}
 }

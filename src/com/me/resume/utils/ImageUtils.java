@@ -38,21 +38,19 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+/**
+ * 图片处理类
+ * @author Administrator
+ *
+ */
 public class ImageUtils {
 
-	public static final int CEMERA_WITH_DATA = 3023;
-	public static final int CROP_WITH_DATA = 3021;
+	public static final int IMAGE_SELECT = 1; // 调用系统图库
+	public static final int CEMERA_WITH_DATA = 3023; // 调用系统相机
+	public static final int CROP_WITH_DATA = 3021; // 裁剪
 
-	
 	private ImageUtils() {}
 
-	private static ImageUtils imageUtils;
-
-	public static ImageUtils getInstance() {
-		if (imageUtils == null)
-			imageUtils = new ImageUtils();
-		return imageUtils;
-	}
 	
 	public static void doCropPhoto(Activity act, Intent data, int width,
 			int height) {

@@ -1,8 +1,6 @@
 package com.me.resume.ui;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import android.app.AlertDialog;
@@ -12,19 +10,21 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.UploadPhotoTask;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.FileUtils;
 import com.me.resume.utils.ImageUtils;
+import com.me.resume.utils.RegexUtil;
+import com.whjz.android.text.CommonText;
 
 /**
  * 
@@ -37,10 +37,11 @@ import com.me.resume.utils.ImageUtils;
 public class UserCenterActivity extends BaseActivity implements OnClickListener{
 
 	protected File pictureFile = null;
-	private String[] photoPath = new String[] { "通过本地图库", "通过照相机" };
-	private static final int IMAGE_SELECT = 1; // 调用系统图库
+	private String[] photoPath = new String[2];
 	
 	protected ImageView user_info_avatar;
+	
+	private TextView center_username,center_workyear;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -73,29 +74,53 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
 		boayLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_user_center_layout, null);
 		boayLayout.addView(v);
 		findViews();
+		initViews();
+	}
+	
+	private void findViews() {
+		user_info_avatar = findView(R.id.user_info_avatar);
+		user_info_avatar.setOnClickListener(this);
 		
+		center_username = findView(R.id.center_username);
+		center_workyear = findView(R.id.center_username);
+	}
+	
+	private void initViews(){
 		setTopTitle(R.string.action_user_regist);
 		setMsgHide();
 		setRightIconVisible(View.VISIBLE);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
+		photoPath[0] = CommUtil.getStrValue(self, R.string.action_upload_file);
+		photoPath[1] = CommUtil.getStrValue(self, R.string.action_upload_camera);
+		
 		Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.userhead.toString());
 		if (bitmap != null) {
 			user_info_avatar.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
 		}
-	}
-	
-	private void findViews() {
-		user_info_avatar = findView(R.id.user_info_avatar);
-		user_info_avatar.setOnClickListener(this);
+		
+		queryWhere = "select a.username,b.* from " + CommonText.USERINFO + " a,"
+				+ CommonText.BASEINFO +" b where a.id = b.userId and a.id = "+ BaseActivity.kId;
+		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			String realname = commMapArray.get("realname")[0];
+			if (RegexUtil.checkNotNull(realname)) {
+				center_username.setText(realname);
+			}else{
+				center_username.setText(commMapArray.get("username")[0]);
+			}
+			
+			String workyear = commMapArray.get("joinworktime")[0];
+			// TODO
+			center_workyear.setText(workyear);
+		}
 	}
 	
 	@Override
@@ -105,7 +130,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			self.scrollToFinishActivity();
 			break;
 		case R.id.right_icon:
-			logoutSend();
+			startActivity(".MainActivity",true);
 			break;
 		case R.id.user_info_avatar:
 			chooseUserHead();
@@ -115,71 +140,41 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 	
-
 	/**
-	 * 
-	 * @Description: 同步数据
-	 * @author Comsys-WH1510032
+	 * 更换头像选择
 	 */
-	private void logoutSend(){ 
-		List<String> params = new ArrayList<String>();
-		List<String> values = new ArrayList<String>();
-		
-		params.add("p_userId");
-		values.add(kId);
-		
-		requestData("pro_login_out", 1, params, values, new HandlerData() {
-			@Override
-			public void error() {
-				runOnUiThread(R.string.action_logout_fail);
-			}
-			
-			public void success(Map<String, List<String>> map) {
-				try {
-					if (map.get("msg").get(0).equals("200")) {
-						setPreferenceData("useId","");
-						startActivity(".ui.HomeActivity",true);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
 	protected void chooseUserHead(){
 		new AlertDialog.Builder(self).setTitle(
     			"选择照片路径").setItems(photoPath,
-    			new DialogInterface.OnClickListener() {
+			new DialogInterface.OnClickListener() {
 
-    				@Override
-    				public void onClick(DialogInterface dialog,
-    						int which) {
-    					switch (which) {
-    					case 0:
-    						Intent intent = new Intent(
-    								Intent.ACTION_PICK,
-    								android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-    						startActivityForResult(intent, IMAGE_SELECT);
-    						break;
+				@Override
+				public void onClick(DialogInterface dialog,
+						int which) {
+					switch (which) {
+					case 0:
+						Intent intent = new Intent(
+								Intent.ACTION_PICK,
+								android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+						startActivityForResult(intent, ImageUtils.IMAGE_SELECT);
+						break;
 
-    					case 1:
-    						if (FileUtils.isSDCardExist()) {
-    							Intent intentCamera = new Intent(
-    									MediaStore.ACTION_IMAGE_CAPTURE);
-    							startActivityForResult(intentCamera,
-    									ImageUtils.CEMERA_WITH_DATA);
-    						} 
-    						break;
-    					}
-    				}
-    			}).show();
+					case 1:
+						if (FileUtils.isSDCardExist()) {
+							Intent intentCamera = new Intent(
+									MediaStore.ACTION_IMAGE_CAPTURE);
+							startActivityForResult(intentCamera,
+									ImageUtils.CEMERA_WITH_DATA);
+						} 
+						break;
+					}
+				}
+			}).show();
 	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		L.d("data----12--:"+data+"--requestCode----2--:"+requestCode);
 		if (data == null) {
 			return;
 		} else {
@@ -196,15 +191,10 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			case ImageUtils.CEMERA_WITH_DATA:
 				ImageUtils.doCropPhoto(this, data, 128, 128);
 				break;
-			case IMAGE_SELECT:
+			case ImageUtils.IMAGE_SELECT:
 				ImageUtils.doCropPhoto(this, data, 128, 128);
 				break;
 			}
 		}
 	};
-	
-	
-	
-	
-	
 }

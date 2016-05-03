@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	
+
     <string name="app_name">个人简历</string>
     <string name="crash">App发生异常,请重启</string>
     <string name="refresh_down_text">下拉可刷新</string>
@@ -15,13 +15,15 @@
 
     <!-- 设置界面 -->
     <string name="action_settings">设置</string>
-    <string name="settings_item1">每次启动显示简历预览界面</string>
+    <string name="settings_item0">简历预览界面</string>
+    <string name="settings_item1">每次启动显示预览模式</string>
     <string name="settings_item2">自动切换简历预览</string>
     <string name="settings_item21">简历预览界面编辑模式</string>
-    
     <string name="settings_item3">检测新版本</string>
     <string name="settings_item4">反馈意见</string>
     <string name="settings_item5">同步数据</string>
+    <string name="settings_item6">关于我们</string>
+    <string name="settings_item7">向好友分享</string>
     <string name="action_login_head">请先登录</string>
     <string name="action_syncing">正在同步,请稍后...</string>
     <string name="action_sync_success">同步成功</string>
@@ -29,17 +31,16 @@
 
     <!-- base -->
     <string name="item_text1">请选择本栏目在简历预览时的背景色</string>
-   
-    
+
     <!-- Home -->
     <string name="resume_center">简历中心</string>
     <string name="make_resume">定制我的简历</string>
     <string name="review_resume">预&#160;&#160;览</string>
     <string name="edit_resume">编&#160;&#160;辑</string>
-	<string name="item_text2">· 热门简历模板</string>
-	<string name="item_text21">更多</string>
+    <string name="item_text2">· 热门简历模板</string>
+    <string name="item_text21">更多</string>
     <string name="item_text3">· 相关栏目推荐</string>
-    
+
     <!-- Main -->
     <string name="resume_baseinfo">基本资料</string>
     <string name="resume_workexperience">工作经历</string>
@@ -57,10 +58,10 @@
     <string name="action_user_login">用户登录</string>
     <string name="action_user_regist">快速注册</string>
     <string name="action_login">登&#160;&#160;录</string>
-     <string name="action_register">注&#160;&#160;册</string>
+    <string name="action_register">注&#160;&#160;册</string>
     <string name="action_loging">登录中...</string>
-     <string name="action_login_savepwd">保存密码</string>
-      <string name="action_login_forgotpwd">忘记密码?</string>
+    <string name="action_login_savepwd">保存密码</string>
+    <string name="action_login_forgotpwd">忘记密码?</string>
     <string name="action_login_3pl">第三方登录</string>
     <string name="action_input_isnull">不能为空</string>
     <string name="action_input_up_isnull">用户名/手机号或密码不能为空!</string>
@@ -76,11 +77,14 @@
     <string name="login_input1_hint">请输入用户名</string>
     <string name="login_input2_hint">请输入密码</string>
     <string name="login_input3_hint">请确认密码</string>
-     <string name="action_regist_fail">注册失败</string>
-     <string name="action_logout_fail">注销失败,请重试</string>
-     
-     <string name="max_photo_size">抱歉!上传的图片不能超过1M!</string>
-      <string name="m_failLoad">请求失败,请重试</string>
+    <string name="action_regist_fail">注册失败</string>
+    <string name="action_logout">退出登录</string>
+    <string name="action_logout_fail">注销失败,请重试</string>
+    <string name="action_no_login">未登录</string>
+    <string name="action_upload_file">通过本地图库</string>
+    <string name="action_upload_camera">通过照相机</string>
+    <string name="max_photo_size">抱歉!上传的图片不能超过1M!</string>
+    <string name="m_failLoad">请求失败,请重试</string>
     <string name="file_failLoad">文件上传失败</string>
     <string name="file_successLoad">文件上传成功</string>
 
@@ -100,7 +104,7 @@
     <!-- UI button text -->
     <string name="show_button_cancle">取&#160;&#160;消</string>
     <string name="show_button_sure">确&#160;&#160;定</string>
-    
+
     <!-- Search UI -->
     <string name="hint_industry_text">请输入行业名称/拼音</string>
     <string name="hint_address_text">请输入城市/行政区/拼音</string>
@@ -225,6 +229,7 @@
     <string name="ji_info_choose_workingstate">请选择工作状态</string>
     <!-- 求职意向 -->
 
+
     <!-- 其他信息 -->
     <string name="ot_add">新增</string>
     <string name="ot_edit">编辑</string>
@@ -249,16 +254,16 @@
     <string name="ot_info_input_description">请输入描述信息</string>
     <!-- 其他信息 -->
 
-	<!-- 人才附加内容 -->
-	<!-- 项目经验 -->
-	<string name="pe_info_projectname">项目名称</string>
-	<string name="pe_input_projectname">请输入项目名称</string>
-	<string name="pe_info_time">时&#160;&#160;间</string>
-	<string name="pe_info_workduties">项目职责</string>
-	<string name="pe_input_workduties">请输入项目职责(限500字)</string>
-	<string name="pe_info_workdesc">项目描述</string>
-	<string name="pe_input_workdesc">请输入项目描述(限2000字)</string>
-	<!--  -->
-	
+
+    <!-- 人才附加内容 -->
+    <!-- 项目经验 -->
+    <string name="pe_info_projectname">项目名称</string>
+    <string name="pe_input_projectname">请输入项目名称</string>
+    <string name="pe_info_time">时&#160;&#160;间</string>
+    <string name="pe_info_workduties">项目职责</string>
+    <string name="pe_input_workduties">请输入项目职责(限500字)</string>
+    <string name="pe_info_workdesc">项目描述</string>
+    <string name="pe_input_workdesc">请输入项目描述(限2000字)</string>
+    <!--  -->
 
 </resources>

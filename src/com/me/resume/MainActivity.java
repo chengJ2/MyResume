@@ -288,6 +288,7 @@ public class MainActivity extends Activity {
 			if (!mViewList.contains(view)) {
 				mViewList.add(view);
 			}
+			
 			index2layout.setBackgroundColor(CommUtil.getColorValue(self,
 					CommUtil.parseInt(commMapArray.get("bgcolor")[0])));
 			
@@ -653,7 +654,6 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				ActivityUtils.startActivity(self, Constants.PACKAGENAME + ".ui." + src);
 			}
 		});

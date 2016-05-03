@@ -82,7 +82,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 							new String[]{"userId=?","bgcolor"}, 
 							new String[]{kId,String.valueOf(checkColor)},1);
-					if (updResult != -11) {
+					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
 						if(MyApplication.userId != 0){
 							set2Msg(R.string.action_syncing);
