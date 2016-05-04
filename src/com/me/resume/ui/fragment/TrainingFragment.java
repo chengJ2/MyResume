@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.me.resume.R;
+import com.me.resume.ui.BaseActivity;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.whjz.android.text.CommonText;
@@ -31,7 +32,7 @@ import com.whjz.android.util.interfa.DbLocalUtil;
 * @date 2016/4/6 下午1:55:32 
 *
  */
-public class TrainingFragment extends Fragment {
+public class TrainingFragment extends BaseFragment {
 
 	private View view;
 	
@@ -39,9 +40,7 @@ public class TrainingFragment extends Fragment {
 	
 	private EditText info_trainingorganization,info_trainingclass,info_certificate,info_description;
 	
-	protected DbLocalUtil dbUtil = new DbUtilImplement();;// 本地数据库对象
-	protected BaseCommonUtil baseCommon = new CommonUtil();;// 通用工具对象实例
-	protected Info info = new Info();
+	private String trId;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -99,7 +98,6 @@ public class TrainingFragment extends Fragment {
 			
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				DialogUtils.showTimeChooseDialog(getActivity(), info_startime,
 						R.string.we_info_start_worktime, 11,mHandler);
 			}
@@ -108,7 +106,6 @@ public class TrainingFragment extends Fragment {
 			
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
 				DialogUtils.showTimeChooseDialog(getActivity(), info_endtime,
 						R.string.we_info_end_worktime, 12,mHandler);
 			}
@@ -116,15 +113,16 @@ public class TrainingFragment extends Fragment {
 	}
 	
 	private void initData() {
-		String queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = 1 order by id limit 1";
-		Map<String, String[]> map = dbUtil.queryData(getActivity(), queryWhere);
-		if (map!= null && map.get("userId").length > 0) {
-			setInfoStartTime(map.get("trainingtimestart")[0]);
-			setInfoEndTime(map.get("trainingtimeend")[0]);
-			setInfotrainingorganization(map.get("trainingorganization")[0]);
-			setInfotrainingclass(map.get("trainingclass")[0]);
-			setInfocertificate(map.get("certificate")[0]);
-			setInfodescription(map.get("description")[0]);
+		queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = "+ BaseActivity.kId +" order by id desc limit 1";
+		commap = dbUtil.queryData(getActivity(), queryWhere);
+		if (commap!= null && commap.get("userId").length > 0) {
+			trId = commap.get("id")[0];
+			setInfoStartTime(commap.get("trainingtimestart")[0]);
+			setInfoEndTime(commap.get("trainingtimeend")[0]);
+			setInfotrainingorganization(commap.get("trainingorganization")[0]);
+			setInfotrainingclass(commap.get("trainingclass")[0]);
+			setInfocertificate(commap.get("certificate")[0]);
+			setInfodescription(commap.get("description")[0]);
 		}
 	}
 	
@@ -150,6 +148,11 @@ public class TrainingFragment extends Fragment {
 	
 	public void setInfodescription(String value){
 		info_description.setText(value);
+	}
+	
+	
+	public String getTrId(){
+		return trId;
 	}
 	
 	public String getInfoStartTime(){

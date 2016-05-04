@@ -1,6 +1,7 @@
 package com.me.resume.ui.fragment;
 
 import java.util.List;
+import java.util.Map;
 
 import android.support.v4.app.Fragment;
 
@@ -26,4 +27,7 @@ public class BaseFragment extends Fragment {
 	
 	protected List<String> mList = null;
 	
+	protected String queryWhere;
+	
+	protected Map<String, String[]> commap;
 }

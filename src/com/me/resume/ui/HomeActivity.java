@@ -137,6 +137,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		 if (commMapArray!= null && commMapArray.get("id").length > 0) {
 			 kId = commMapArray.get("id")[0];
+			 L.d("======初始化用户ID======="+kId);
 			 initBottomButton();
 		 }else{
 			 ContentValues cValues = new ContentValues();

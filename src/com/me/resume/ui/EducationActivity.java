@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -13,24 +12,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
-import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
-import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
-import com.me.resume.tools.L;
 import com.me.resume.ui.fragment.AllFragmentFactory;
 import com.me.resume.ui.fragment.EducationFragment;
 import com.me.resume.ui.fragment.TrainingFragment;
-import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
-import com.me.resume.views.CustomFAB;
 import com.me.resume.views.SegmentButton;
 import com.whjz.android.text.CommonText;
 
@@ -55,10 +47,14 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				if (msg.obj != null) {
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
-							new String[]{kId,"background"}, 
-							new String[]{"1",String.valueOf(checkColor)},2);
+							new String[]{"userId=?","bgcolor"}, 
+							new String[]{kId,String.valueOf(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
+						if(MyApplication.userId != 0){
+							set2Msg(R.string.action_syncing);
+							syncData(cposition);
+						}
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -72,7 +68,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			case OnTopMenu.MSG_MENU3:
 				if (msg.obj != null) {
 					set2Msg(R.string.action_syncing);
-					syncData();
+					syncData(cposition);
 				}
 				break;
 			case OnTopMenu.MSG_MENU31:
@@ -170,6 +166,8 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	
 	String info_trainingorganizationStr,info_trainingclassStr,info_certificateStr,info_descriptionStr;
 	
+	String edId = "";
+	
 	@Override
 	public void onClick(View v) {
 		String tab = segment_button.getSegmentButton(cposition).getText().toString();
@@ -194,9 +192,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		switch (v.getId()) {
 		case R.id.save:
 			if(cposition == 0){ // 教育背景
-				if( judgeEduField() == 0){
+				if( judgeEduField()){
 					ContentValues cValues = new ContentValues();
-					cValues.put("userId", "1");
+					cValues.put("userId", kId);
 					cValues.put("educationtimestart", info_starttimeStr);
 					cValues.put("educationtimeend", info_endtimeStr);
 					cValues.put("school", info_schoolStr);
@@ -214,9 +212,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				}
 				
 			}else{ // 培训经历
-				if(judegTraField() == 0){
+				if(judgeTraField()){
 					ContentValues cValues = new ContentValues();
-					cValues.put("userId", "1");
+					cValues.put("userId", kId);
 					cValues.put("trainingtimestart", info_starttimeStr);
 					cValues.put("trainingtimeend", info_endtimeStr);
 					cValues.put("trainingorganization", info_trainingorganizationStr);
@@ -235,15 +233,15 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.edit:
 			if(cposition == 0){ // 教育背景
-				if( judgeEduField() == 0){
-					queryWhere = "select * from " + CommonText.EDUCATION + " where userId = 1 order by id limit 1";
+				if( judgeEduField()){
+					queryWhere = "select * from " + CommonText.EDUCATION + " where userId = "+ kId +" order by id desc limit 1";
 					commMapArray = dbUtil.queryData(self, queryWhere);
 					if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-						String edId = commMapArray.get("_id")[0];
+						edId = commMapArray.get("id")[0];
 						updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
 								new String[]{edId,"educationtimestart","educationtimeend","school","majorname",
 												  "degree","examination"}, 
-								new String[]{"1",info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,
+								new String[]{kId,info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,
 								info_degressStr,info_examinationStr},2);
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
@@ -253,18 +251,19 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					}
 				}
 			}else{
-				if(judegTraField() == 0){
-					queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = 1 order by id limit 1";
+				if(judgeTraField()){
+					queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = "+ kId +" order by id desc limit 1";
 					commMapArray = dbUtil.queryData(self, queryWhere);
 					if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-						String edId = commMapArray.get("_id")[0];
+						edId = commMapArray.get("id")[0];
 						updResult = dbUtil.updateData(self, CommonText.EDUCATION_TRAIN, 
 								new String[]{edId,"trainingtimestart","trainingtimeend","trainingorganization","trainingclass",
 								"certificate","description"}, 
-								new String[]{"1",info_starttimeStr,info_endtimeStr,info_trainingorganizationStr,info_trainingclassStr,
+								new String[]{kId,info_starttimeStr,info_endtimeStr,info_trainingorganizationStr,info_trainingclassStr,
 								info_certificateStr,info_descriptionStr},2);
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
+							
 						}else{
 							toastMsg(R.string.action_update_fail);
 						}
@@ -286,35 +285,25 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 	
+	
+	private String procname = "";
+	
 	/**
-	 * 
-	 * @Description: 同步数据
-	 * @author Comsys-WH1510032
+	 * 数据请求是否已同步
+	 * @param cposition
 	 */
-	private void syncData(){ 
+	private void syncData(final int cposition){
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
-		params.add("p_edId");
 		params.add("p_userId");
-		params.add("p_educationtimestart");
-		params.add("p_educationtimeend");
-		params.add("p_school");
-		params.add("p_majorname");
-		params.add("p_degree");
-		params.add("p_examination");
-		params.add("p_bgcolor");
+		values.add(kId);
+		if(cposition == 0){
+			procname = "pro_get_education";
+		}else{
+			procname = "pro_get_trainging";
+		}
 		
-		values.add("0");
-		values.add("1");
-		values.add(info_starttimeStr);
-		values.add(info_endtimeStr);
-		values.add(info_schoolStr);
-		values.add(info_majornameStr);
-		values.add(info_degressStr);
-		values.add(info_examinationStr);
-		values.add(String.valueOf(checkColor));
-		
-		requestData("pro_education", 2, params, values, new HandlerData() {
+		requestData(procname, 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
 				runOnUiThread(R.string.action_sync_fail);
@@ -322,87 +311,175 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					if (map.get("msg").get(0).equals("200")) {
-						runOnUiThread(R.string.action_sync_success);
-						
+					String p_edId = map.get("id").get(0);
+					if (map.get("userId").get(0).equals(kId)) {
+						syncRun(cposition,p_edId,3);
+					}else{
+						syncRun(cposition,"1",2);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		
 	}
 	
-	// 教育背景
-	private int judgeEduField(){
+	/**
+	 * 
+	 * @Description: 同步数据
+	 * @author Comsys-WH1510032
+	 */
+	private void syncRun(int cposition,String edId,int style){ 
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		
+		params.add("p_edId");
+		params.add("p_userId");
+		
+		values.add(edId);
+		values.add(kId);
+		
+		if(cposition == 0){
+			if (judgeEduField()) {
+				params.add("p_educationtimestart");
+				params.add("p_educationtimeend");
+				params.add("p_school");
+				params.add("p_majorname");
+				params.add("p_degree");
+				params.add("p_examination");
+				params.add("p_bgcolor");
+				
+				values.add(info_starttimeStr);
+				values.add(info_endtimeStr);
+				values.add(info_schoolStr);
+				values.add(info_majornameStr);
+				values.add(info_degressStr);
+				values.add(info_examinationStr);
+				values.add(getCheckColor(checkColor));
+				
+				requestData("pro_education", style, params, values, new HandlerData() {
+					@Override
+					public void error() {
+						runOnUiThread(R.string.action_sync_fail);
+					}
+					
+					public void success(Map<String, List<String>> map) {
+						try {
+							if (map.get("msg").get(0).equals("200")) {
+								runOnUiThread(R.string.action_sync_success);
+								
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				
+			}
+		}else{
+			if (judgeTraField()) {
+				params.add("trainingtimestart");
+				params.add("trainingtimeend");
+				params.add("trainingorganization");
+				params.add("trainingclass");
+				params.add("certificate");
+				params.add("description");
+				
+				values.add(info_starttimeStr);
+				values.add(info_endtimeStr);
+				values.add(info_trainingorganizationStr);
+				values.add(info_trainingclassStr);
+				values.add(info_certificateStr);
+				values.add(info_descriptionStr);
+				
+				requestData("pro_training", style, params, values, new HandlerData() {
+					@Override
+					public void error() {
+						runOnUiThread(R.string.action_sync_fail);
+					}
+					
+					public void success(Map<String, List<String>> map) {
+						try {
+							if (map.get("msg").get(0).equals("200")) {
+								runOnUiThread(R.string.action_sync_success);
+								
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		}
+	}
+	
+	/**
+	 * 教育背景模块字段校验
+	 * @return boolean
+	 */
+	private boolean judgeEduField(){
 		if (!RegexUtil.checkNotNull(info_starttimeStr)) {
-			msg.setText(CommUtil.getStrValue(self, R.string.we_info_start_worktime) + fieldNull);
-			msg.setVisibility(View.VISIBLE);
-			return -1;
+			setMsg(R.string.we_info_start_worktime);
+			return false;
 		}
 		
 		if (!RegexUtil.checkNotNull(info_endtimeStr)) {
-			msg.setText(CommUtil.getStrValue(self, R.string.we_info_end_worktime) + fieldNull);
-			msg.setVisibility(View.VISIBLE);
-			return -1;
+			setMsg(R.string.we_info_end_worktime);
+			return false;
 		}
 		
 		if (TimeUtils.compareDate(info_starttimeStr, info_endtimeStr) <= 0) {
-			msg.setText(CommUtil.getStrValue(self, R.string.we_info_compare_worktime));
-			msg.setVisibility(View.VISIBLE);
-			return -1;
+			set2Msg(R.string.we_info_compare_worktime);
+			return false;
 		}
 		
 		if (!RegexUtil.checkNotNull(info_schoolStr)) {
-			msg.setText(CommUtil.getStrValue(self, R.string.ed_info_school) + fieldNull);
-			msg.setVisibility(View.VISIBLE);
-			return -1;
+			setMsg(R.string.ed_info_school);
+			return false;
 		}
 		
 		if (!RegexUtil.checkNotNull(info_majornameStr)) {
-			msg.setText(CommUtil.getStrValue(self, R.string.ed_info_majorname) + fieldNull);
-			msg.setVisibility(View.VISIBLE);
-			return -1;
+			setMsg(R.string.ed_info_majorname);
+			return false;
 		}
 		
 		if (!RegexUtil.checkNotNull(info_degressStr)) {
-			msg.setText(CommUtil.getStrValue(self, R.string.ed_info_degree) + fieldNull);
-			msg.setVisibility(View.VISIBLE);
-			return -1;
+			setMsg(R.string.ed_info_degree);
+			return false;
 		}
-		return 0;
+		return true;
 	}
 	
-	private int judegTraField(){
+	/**
+	 * 培训模块字段校验
+	 * @return boolean
+	 */
+	private boolean judgeTraField(){
 		if (!RegexUtil.checkNotNull(info_starttimeStr)) {
-			msg.setText(CommUtil.getStrValue(self, R.string.we_info_start_worktime) + fieldNull);
-			msg.setVisibility(View.VISIBLE);
-			return -1;
+			setMsg(R.string.we_info_start_worktime);
+			return false;
 		}
 		
 		if (!RegexUtil.checkNotNull(info_endtimeStr)) {
-			msg.setText(CommUtil.getStrValue(self, R.string.we_info_end_worktime) + fieldNull);
-			msg.setVisibility(View.VISIBLE);
-			return -1;
+			setMsg(R.string.we_info_end_worktime);
+			return false;
 		}
 		
 		if (TimeUtils.compareDate(info_starttimeStr, info_endtimeStr) <= 0) {
-			msg.setText(CommUtil.getStrValue(self, R.string.we_info_compare_worktime));
-			msg.setVisibility(View.VISIBLE);
-			return -1;
+			set2Msg(R.string.we_info_compare_worktime);
+			return false;
 		}
 		
 		if (!RegexUtil.checkNotNull(info_trainingorganizationStr)) {
-			msg.setText(CommUtil.getStrValue(self, R.string.ed_info_trainingorganization) + fieldNull);
-			msg.setVisibility(View.VISIBLE);
-			return -1;
+			setMsg(R.string.ed_info_trainingorganization);
+			return false;
 		}
 		
 		if (!RegexUtil.checkNotNull(info_trainingclassStr)) {
-			msg.setText(CommUtil.getStrValue(self, R.string.ed_info_trainingclass) + fieldNull);
-			msg.setVisibility(View.VISIBLE);
-			return -1;
+			setMsg(R.string.ed_info_trainingclass);
+			return false;
 		}
-		return 0;
+		return true;
 	}
 }

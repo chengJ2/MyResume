@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
+import com.me.resume.ui.BaseActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -51,6 +52,7 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 	
 	private String rg_examinationStr = "0";
 	
+	private String eduId;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -99,21 +101,22 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
-			String date = intent.getStringExtra("category");
-			setInfomajorname(date);
+			String category = intent.getStringExtra("category");
+			setInfomajorname(category);
 		}};
 	 
 	 
 	private void initData() {
-		String queryWhere = "select * from " + CommonText.EDUCATION + " where userId = 1 order by id limit 1";
-		Map<String, String[]> map = dbUtil.queryData(getActivity(), queryWhere);
-		if (map!= null && map.get("userId").length > 0) {
-			setInfoStartTime(map.get("educationtimestart")[0]);
-			setInfoEndTime(map.get("educationtimeend")[0]);
-			setInfoSchool(map.get("school")[0]);
-			setInfomajorname(map.get("majorname")[0]);
-			setInfodegree(map.get("degree")[0]);
-			setInfoexamination(map.get("examination")[0]);
+		queryWhere = "select * from " + CommonText.EDUCATION + " where userId  = "+ BaseActivity.kId +" order by id desc limit 1";
+		commap = dbUtil.queryData(getActivity(), queryWhere);
+		if (commap!= null && commap.get("userId").length > 0) {
+			eduId = commap.get("id")[0];
+			setInfoStartTime(commap.get("educationtimestart")[0]);
+			setInfoEndTime(commap.get("educationtimeend")[0]);
+			setInfoSchool(commap.get("school")[0]);
+			setInfomajorname(commap.get("majorname")[0]);
+			setInfodegree(commap.get("degree")[0]);
+			setInfoexamination(commap.get("examination")[0]);
 		}
 		
 		IntentFilter filter = new IntentFilter();
@@ -155,6 +158,8 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 		});
 	}
 	
+	
+	
 	public void setInfoStartTime(String value){
 		info_startime.setText(value);
 	}
@@ -185,6 +190,9 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 		}
 	}
 	
+	public String getEduId(){
+		return eduId;
+	}
 	
 	public String getInfoStartTime(){
 		return CommUtil.getTextValue(info_startime);

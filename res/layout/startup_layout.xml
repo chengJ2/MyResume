@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:id="@+id/startup">
+    
+    <View  
+        android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:background="#00CC00"
+    	android:layout_weight="1"/>
+    
+     <LinearLayout 
+	   android:layout_width="match_parent"
+	   android:layout_height="match_parent"
+	   android:orientation="horizontal"
+	   android:gravity="center"
+	   android:layout_weight="4">
+	   
+         <ImageView  
+	        android:layout_width="match_parent"
+	    	android:layout_height="match_parent"
+	    	android:layout_weight="2"
+	    	android:src="@drawable/ic_launcher"
+	    	android:scaleType="centerInside"/>
+         
+          <LinearLayout 
+			   android:layout_width="match_parent"
+			   android:layout_height="match_parent"
+			   android:layout_weight="1" 
+			   android:fitsSystemWindows="true"
+			   android:orientation="vertical"
+			   android:gravity="center">
+			   
+			   <TextView 
+			       android:id="@+id/version"
+			       android:layout_width="wrap_content"
+			       android:layout_height="wrap_content" 
+			       android:text="随时随地完善我的简历"
+			       android:gravity="center_vertical"
+			       android:textColor="@color/black"
+			       android:textSize="@dimen/medium_text_size"/>
+		    <TextView 
+		       android:id="@+id/versionnum"
+		       android:layout_width="wrap_content"
+		       android:layout_height="wrap_content" 
+		       android:textColor="@color/grey_10"
+		       android:textSize="@dimen/small_middle_text_size"
+		       android:text="V1.0.1"
+		       android:paddingTop="10dip"
+		       android:paddingBottom="10dip"/>
+		    </LinearLayout>
+         
+   </LinearLayout>
+</LinearLayout>
