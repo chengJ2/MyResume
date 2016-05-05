@@ -3,18 +3,31 @@
         android:id="@+id/search_layout"
         android:layout_width="match_parent"
         android:layout_height="45dip"
-        android:background="@color/grey_80"
+        android:background="@color/white"
         android:gravity="center_vertical" >
 
+    	<TextView
+            android:id="@+id/search_cancle"
+            android:layout_width="50dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center|left"
+            android:text="取消"
+            android:textColor="@color/red"
+            android:textSize="@dimen/small_middle_text_size"
+            android:visibility="gone" />
+    
         <EditText
             android:id="@+id/index_search_edit"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/search_cancle"
             android:layout_marginBottom="5dip"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="70dip"
+            android:layout_marginLeft="20dip"
             android:layout_marginTop="5dp"
-            android:background="@drawable/search_box"
+            android:layout_marginRight="20dip"
+            android:background="@drawable/search_bg_corner"
             android:descendantFocusability="blocksDescendants"
             android:drawableLeft="@drawable/search_icon"
             android:focusable="true"
@@ -26,34 +39,18 @@
             android:paddingTop="4dip"
             android:singleLine="true"
             android:textColor="@color/black"
-            android:textSize="@dimen/micro_text_size" />
+            android:textSize="@dimen/small_text_size"
+            android:hint="@string/hint_address_text" 
+            android:textColorHint="@color/grey_10"/>
 
         <ImageView
             android:id="@+id/clear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="73dip"
+            android:layout_marginRight="75dip"
             android:background="@drawable/clear"
             android:gravity="center"
             android:visibility="gone" />
-
-        <Button
-            android:id="@+id/search_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="5dip"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dip"
-            android:background="@drawable/button_select_red"
-            android:paddingBottom="2dip"
-            android:paddingLeft="10dip"
-            android:paddingRight="10dip"
-            android:paddingTop="2dip"
-            android:text="@string/search_button"
-            android:textColor="@color/white"
-            android:textSize="@dimen/small_middle_text_size" />
     </RelativeLayout>

@@ -91,7 +91,7 @@
 
             <TextView
                 style="@style/user_info_item_tv"
-                android:layout_weight="5"
+                android:layout_weight="1"
                 android:padding="5dip"
                 android:text="@string/settings_item5"
                 android:textColor="@color/black" />

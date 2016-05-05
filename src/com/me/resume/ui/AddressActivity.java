@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,7 +49,7 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 	private LinearLayout topLayout;
 	private EditText index_search_edit;
 	private ImageView clearView;
-	private Button search_btn;
+	private TextView search_cancle;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -63,11 +64,7 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 				}else{
 					topLayout.setVisibility(View.VISIBLE);
 				}
-				
-				mList = (List<String>) msg.obj;
-				if (mList != null && mList.size() > 0) {
-					fillAllCity(mList);
-				}
+				fillAllCity((List<String>) msg.obj);
 				break;
 			case 12:
 				topLayout.setVisibility(View.GONE);
@@ -82,27 +79,52 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		boayLayout.removeAllViews();
-		
 		View v = View.inflate(self,R.layout.activity_address_layout, null);
 		boayLayout.addView(v);
 		
-		setTitle(R.string.resume_address);
-		
-		setMsgHide();
-		
-		setRight2IconVisible(View.GONE);
-		
-		setfabLayoutVisible(View.GONE);
-		
 		findViews();
+		initViews();
 		
-		mHandler.sendEmptyMessage(10);
+		searchAction();
 		
-		initHotCity();
+		mHandler.postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				initHotCity();// 热门城市
+				mHandler.sendEmptyMessage(10); // 全国城市
+			}
+		}, 500);
+		
+	}
+	
+	private void findViews(){
+		topLayout = findView(R.id.addrtopLayout);
+		index_search_edit = findView(R.id.index_search_edit);
+		clearView = findView(R.id.clear);
+		search_cancle = findView(R.id.search_cancle);
+		clearView = findView(R.id.clear);
+		hotaddress_gridview = findView(R.id.hotaddress_gridview);
+		alladdrListview = findView(R.id.alladdrListview);
+		
+		search_cancle.setOnClickListener(this);
+		clearView.setOnClickListener(this);
 		
 		index_search_edit.setHint(CommUtil.getStrValue(self, R.string.hint_address_text));
+		index_search_edit.setHintTextColor(CommUtil.getColorValue(self, R.color.grey));
 		index_search_edit.requestFocus();
+	}
+	
+	private void initViews(){
+		setTopTitle(R.string.resume_address);
+		setMsgHide();
 		
+		setRightIconVisible(View.GONE);
+		setRight2IconVisible(View.GONE);
+		setfabLayoutVisible(View.GONE);
+	}
+	
+	private void searchAction(){
 		index_search_edit.addTextChangedListener(new TextWatcher() {
 			
 			@Override
@@ -120,6 +142,9 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 				if (s.toString() != null && !"".equals(s.toString())) {
 					whichTab = 1;
 					clearView.setVisibility(View.VISIBLE);
+					
+					search_cancle.setVisibility(View.VISIBLE);
+					
 					getAllCity(s.toString());
 				}else{
 					whichTab = 0;
@@ -142,18 +167,6 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 				}
 			}
 		});
-	}
-	
-	private void findViews(){
-		topLayout = findView(R.id.addrtopLayout);
-		index_search_edit = findView(R.id.index_search_edit);
-		clearView = findView(R.id.clear);
-		search_btn = findView(R.id.search_btn);
-		clearView = findView(R.id.clear);
-		hotaddress_gridview = findView(R.id.hotaddress_gridview);
-		alladdrListview = findView(R.id.alladdrListview);
-		
-		clearView.setOnClickListener(this);
 	}
 	
 	/**
@@ -219,41 +232,14 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 	 * 
 	 * @Title:AddressActivity
 	 * @Description: 获取全国城市
-	 * @author Comsys-WH1510032
-	 * @return 返回类型
+	 * @param keyword
 	 */
 	private void getAllCity(final String keyword) {
-		/*new Handler().postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-				List<String> mList = new ArrayList<String>();
-				Cursor cursor = null;
-				try {
-					String sql = "select * from (select c.code as code ,c.[cname] as cname from city c " + 
-								" union  select p.code,p.name from province p where p.type = 1 and p.code!=110000)"
-								+ " where cname like '%"+ keyword +"%'";
-					cursor = MyApplication.database.rawQuery(sql, null);
-					if (cursor.getCount() > 0) {
-						while (cursor.moveToNext()) {
-							mList.add(cursor.getString(cursor.getColumnIndex("cname")));
-						}
-						mHandler.sendMessage(mHandler.obtainMessage(11, mList));
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				} finally {
-					cursor.close();
-				}
-			}
-		},100);*/
-		
 		new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
-				List<String> mList = new ArrayList<String>();
+				mList = new ArrayList<String>();
 				Cursor cursor = null;
 				try {
 					String sql = "select * from (select c.code as code ,c.[cname] as cname from city c " + 
@@ -280,28 +266,32 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 	 * 
 	 * @Title:AddressActivity
 	 * @Description: 获取热门城市
-	 * @author Comsys-WH1510032
 	 * @return List<String> 
 	 */
 	private List<String> getHotCity(){
-		Cursor cursor = null;
-		List<String> mList = new ArrayList<String>();
-		try {
-			String sql = "select c.code as code ,c.[cname] as cname from city c where c.type = 1"
-						+ " union  select p.code,p.name from province p where p.type = 1";
-			cursor = MyApplication.database.rawQuery(sql, null);
-			if (cursor.getCount() > 0) {
-				while (cursor.moveToNext()) {
-					mList.add(cursor.getString(cursor.getColumnIndex("cname")));
+		mList = new ArrayList<String>();
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				Cursor cursor = null;
+				try {
+					String sql = "select c.code as code ,c.[cname] as cname from city c where c.type = 1"
+								+ " union  select p.code,p.name from province p where p.type = 1";
+					cursor = MyApplication.database.rawQuery(sql, null);
+					if (cursor.getCount() > 0) {
+						while (cursor.moveToNext()) {
+							mList.add(cursor.getString(cursor.getColumnIndex("cname")));
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					cursor.close();
 				}
-				return mList;
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			cursor.close();
-		}
-		return null;
+		}).start();
+		return mList;
 	}
 
 	@Override
@@ -311,14 +301,15 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 		case R.id.left_lable:
 			self.scrollToFinishActivity();
 			break;
-		case R.id.search_btn:
-			searchCity();
-			break;
-		case R.id.clear:
+		case R.id.search_cancle:
 			whichTab = 0;
 			CommUtil.hideKeyboard(self);
 			index_search_edit.setText("");
 			getAllCity("");
+			clearView.setVisibility(View.GONE);
+		case R.id.clear:
+			whichTab = 0;
+			index_search_edit.setText("");
 			clearView.setVisibility(View.GONE);
 			break;
 		default:

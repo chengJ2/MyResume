@@ -33,7 +33,7 @@
             
             </RelativeLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
 
                 <LinearLayout
@@ -58,13 +58,12 @@
                     </GridView>
                 </LinearLayout>
 
-            <View style="@style/line3" />
-
             <TextView
                 style="@style/home_item_text"
-                android:text="@string/item_text3" />
+                android:text="@string/item_text3"
+                 />
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
             <GridView
                 android:id="@+id/xgln_gridview"

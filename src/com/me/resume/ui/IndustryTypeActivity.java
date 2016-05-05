@@ -42,7 +42,7 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 
 	private EditText index_search_edit;
 	private ImageView clearView;
-	private Button search_btn;
+	private TextView search_cancle;
 	
 	private ListView industry_listview;
 	
@@ -91,14 +91,15 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 	private void findViews(){
 		index_search_edit = findView(R.id.index_search_edit);
 		clearView = findView(R.id.clear);
-		search_btn = findView(R.id.search_btn);
+		search_cancle = findView(R.id.search_cancle);
 		clearView = findView(R.id.clear);
 		
 		industry_listview = findView(R.id.industry_listview);
 		
+		
 		left_icon.setOnClickListener(this);
-		search_btn.setOnClickListener(this);
 		clearView.setOnClickListener(this);
+		search_cancle.setOnClickListener(this);
 	}
 	
 	private void searchEdit(){
@@ -177,14 +178,16 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 		case R.id.left_lable:
 			self.scrollToFinishActivity();
 			break;
-		case R.id.search_btn:
-			searchIndustry();
-			break;
-		case R.id.clear:
+		case R.id.search_cancle:
 			whichTab = 0;
 			CommUtil.hideKeyboard(self);
 			index_search_edit.setText("");
 			getAllIndustry("");
+			clearView.setVisibility(View.GONE);
+			break;
+		case R.id.clear:
+			whichTab = 0;
+			index_search_edit.setText("");
 			clearView.setVisibility(View.GONE);
 			break;
 		default:
