@@ -40,48 +40,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <View style="@style/line3" />
-
-            <LinearLayout
-                style="@style/noraml_item"
-                android:layout_height="wrap_content"
-                android:visibility="gone" >
-
-                <TextView
-                    style="@style/user_info_item_tv"
-                    android:layout_weight="5"
-                    android:text="工作经验在预览界面显示" />
-
-                <RadioGroup
-                    android:id="@+id/radioGroup_show"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left|center"
-                    android:layout_weight="4" >
-
-                    <RadioButton
-                        android:id="@+id/radio_left"
-                        style="@style/user_info_item_radio"
-                        android:checked="true"
-                        android:text="向左" />
-
-                    <RadioButton
-                        android:id="@+id/radio_right"
-                        style="@style/user_info_item_radio"
-                        android:text="向右" />
-
-                    <RadioButton
-                        android:id="@+id/radionv_middle"
-                        style="@style/user_info_item_radio"
-                        android:text="中间" />
-                </RadioGroup>
-
-                <ImageView
-                    style="@style/user_info_item_iv"
-                    android:visibility="invisible" />
-
-            </LinearLayout>
-
+            <View style="@style/line_padding10" />
 
              <LinearLayout
                 android:id="@+id/llout02"
@@ -110,7 +69,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
             
             <LinearLayout
                 android:id="@+id/llout03"
@@ -166,9 +125,10 @@
                     android:visibility="invisible" />
 
             </LinearLayout>
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
             
             <LinearLayout
+                android:id="@+id/feedbackLayout"
                 style="@style/noraml_item">
 
                 <TextView
@@ -182,7 +142,7 @@
                     android:visibility="visible" />
 
             </LinearLayout>
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
              <LinearLayout
                  android:id="@+id/shareLayout"
                 style="@style/noraml_item">
@@ -198,7 +158,7 @@
                     android:visibility="visible" />
 
             </LinearLayout>
-             <View style="@style/line3" />
+             <View style="@style/line_padding10" />
             <LinearLayout
                 style="@style/noraml_item">
 
@@ -240,7 +200,7 @@
                     android:visibility="gone" />
 
             </LinearLayout>
-              <View style="@style/line3" />
+              <View style="@style/line_padding10" />
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
 

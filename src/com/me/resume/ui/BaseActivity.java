@@ -29,6 +29,7 @@ import com.me.resume.tools.SystemBarTintManager;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.views.CustomFAB;
+import com.me.resume.views.MarqueeText;
 
 /**
  * 
@@ -43,7 +44,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	
 	protected TextView toptext;
 	protected ImageView left_icon, right_icon,right_icon_more;
-	protected TextView msg;
+	
+	protected MarqueeText msg;
 	
 	protected LinearLayout boayLayout;
 	

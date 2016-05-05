@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white" >
  
     <com.me.resume.views.CommScrollView
         style="@style/comm_scrollview_style" >
@@ -26,7 +26,7 @@
                     android:drawableLeft="@drawable/usericon"
                     android:hint="@string/login_input1_hint" />
 
-                <View style="@style/line" />
+                <View style="@style/line_padding10" />
 
                 <EditText
                     android:id="@+id/regTxt_password"
@@ -35,7 +35,7 @@
                     android:drawableLeft="@drawable/pwdicon"
                     android:inputType="textPassword" />
 
-                <View style="@style/line" />
+                <View style="@style/line_padding10" />
 
                 <EditText
                     android:id="@+id/regTxt2_password"
@@ -45,6 +45,33 @@
                     android:inputType="textPassword" />
 
             </LinearLayout>
+            
+              <LinearLayout
+		            android:id="@+id/savelayout"
+		            android:layout_width="wrap_content"
+		            android:layout_height="30dip"
+		            android:layout_marginLeft="24dip"
+		            android:layout_marginRight="24dip"
+		            android:layout_marginTop="10dp"
+		            android:orientation="horizontal">
+		
+		            <CheckBox
+		                android:id="@+id/protocol_cb"
+		                android:layout_width="25dip"
+		                android:layout_height="25dip"
+		                android:button="@null"
+		                android:background="@drawable/checkbox_sel" />
+		
+		            <TextView
+		                android:layout_width="wrap_content"
+		                android:layout_height="match_parent"
+		                android:layout_marginLeft="8dp"
+		                android:gravity="center|left"
+		                android:text="@string/register_protocol"
+		                android:textColor="@color/grey_10"
+		                android:textSize="@dimen/small_middle_text_size"
+		                android:textStyle="bold" />
+		        </LinearLayout>
 
                <Button
                    android:id="@+id/btn_register"
@@ -55,4 +82,17 @@
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
 
+     <TextView
+         android:id="@+id/acclogin"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentBottom="true"
+          android:layout_alignParentRight="true"
+          android:layout_marginBottom="10dip"
+          android:layout_marginRight="10dip"
+          android:gravity="center|left"
+          android:text="@string/account_go_login"
+          android:textColor="@color/grey_10"
+          android:textSize="@dimen/small_middle_text_size"/>
+    
 </RelativeLayout>

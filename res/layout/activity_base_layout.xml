@@ -9,7 +9,7 @@
         android:id="@+id/topLayout"
         layout="@layout/top_layout_lable" />
 
-    <TextView
+    <com.me.resume.views.MarqueeText
         android:id="@+id/msg"
         style="@style/comm_errormsg_style"
         android:text="@string/check_network"

@@ -37,6 +37,8 @@ public class UserLoginActivity extends BaseActivity implements
 	private TextView savePassWord;
 	private TextView forgotPassWord;
 	
+	private TextView acclogin;
+	
 	private Button btnLogin;
 	
 	private boolean fflag = true;
@@ -73,12 +75,14 @@ public class UserLoginActivity extends BaseActivity implements
 		save_checkbox = findView(R.id.save_checkbox);
 		savePassWord = findView(R.id.savePassWord);
 		forgotPassWord = findView(R.id.forgotPassWord);
+		acclogin = findView(R.id.acclogin);
 		
 		btnLogin = findView(R.id.btn_login);
 		
 		save_checkbox.setOnClickListener(this);
 		savePassWord.setOnClickListener(this);
 		forgotPassWord.setOnClickListener(this);
+		acclogin.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
 		
 		usernameEt = findView(R.id.regTxt_username);
@@ -114,6 +118,7 @@ public class UserLoginActivity extends BaseActivity implements
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.left_lable:
+		case R.id.acclogin:
 			if (user_login_layout.getVisibility() == View.GONE) {
 				setTopTitle(R.string.action_user_login);
 				setRightIconVisible(View.VISIBLE);
@@ -157,9 +162,9 @@ public class UserLoginActivity extends BaseActivity implements
 			break;
 		case R.id.btn_register:
 			if (CommUtil.isNetworkAvailable(self)) {
-				getUserData();
+				postUserInfo();
 			}else{
-				toastMsg(R.string.check_network);
+				set3Msg(R.string.check_network);
 			}
 			break;
 		default:
@@ -208,64 +213,77 @@ public class UserLoginActivity extends BaseActivity implements
 		btnLogin.setEnabled(true);
 	}
 	
-	
-	private void getUserData() {
+	private void getFeildValue(){
 		str_username = usernameEt.getText().toString();
 		str_password = passwordEt.getText().toString();
+	}
+	
+	private boolean  judgeFeild(){
 		if(!RegexUtil.checkNotNull(str_username)){
-			toastMsg(R.string.action_input_up_isnull);
-			return;
+			setMsg(R.string.action_input_up_isnull);
+			return false;
 		}
 		
 		if(!RegexUtil.checkNotNull(str_password)){
-			toastMsg(R.string.action_input_password_isnull);
-			return;
+			setMsg(R.string.action_input_password_isnull);
+			return false;
 		}
 		
 		if(!CommUtil.getEditTextValue(passwordEt).equals(CommUtil.getEditTextValue(password2Et))){
-			toastMsg(R.string.action_input_password_equal);
-			return;
+			set3Msg(R.string.action_input_password_equal);
+			return false;
 		}
 		
 		if (str_username.length() > 120) {
-			toastMsg(R.string.action_input_username_toolong);
-			return;
+			set3Msg(R.string.action_input_username_toolong);
+			return false;
 		}
 		
 		if (str_password.length() > 30) {
-			toastMsg(R.string.action_input_password_toolong);
-			return ;
+			set3Msg(R.string.action_input_password_toolong);
+			return false;
 		}
-		
-		List<String> params = new ArrayList<String>();
-		List<String> values = new ArrayList<String>();
-		params.add("p_username");
-		params.add("p_userpwd");
-		params.add("p_deviceId");
-		params.add("p_patform");
-		
-		values.add(str_username);
-		values.add(CommUtil.getMD5(str_password));
-		values.add(deviceID);
-		values.add("app");
+		return true;
+	}
 	
-		requestData("pro_user_register", 1, params, values, new HandlerData() {
-			@Override
-			public void error() {
-				toastMsg(R.string.action_regist_fail);
-			}
+	/**
+	 * 提交用户注册信息
+	 */
+	private void postUserInfo() {
+		getFeildValue();
+		
+		if(judgeFeild()){
+			List<String> params = new ArrayList<String>();
+			List<String> values = new ArrayList<String>();
+			params.add("p_username");
+			params.add("p_userpwd");
+			params.add("p_deviceId");
+			params.add("p_patform");
 			
-			public void success(Map<String, List<String>> map) {
-				try {
-					sendSuccess(map);
-				} catch (Exception e) {
-					e.printStackTrace();
-					if(map.get("msg").get(0).equals("405")){
-						toastMsg(R.string.register_repeatedusername);
+			values.add(str_username);
+			values.add(CommUtil.getMD5(str_password));
+			values.add(deviceID);
+			values.add("app");
+		
+			requestData("pro_user_register", 1, params, values, new HandlerData() {
+				@Override
+				public void error() {
+					toastMsg(R.string.action_regist_fail);
+				}
+				
+				public void success(Map<String, List<String>> map) {
+					try {
+						sendSuccess(map);
+					} catch (Exception e) {
+						e.printStackTrace();
+						if(map.get("msg").get(0).equals("405")){
+							toastMsg(R.string.register_repeatedusername);
+						}
 					}
 				}
-			}
-		});
+			});
+		}
+		
 	}
 	
 	/**
@@ -312,6 +330,10 @@ public class UserLoginActivity extends BaseActivity implements
 		}
 	}
 	
+	/**
+	 * 获取用户基本信息
+	 * @param map
+	 */
 	private void getBaseinfo(Map<String, List<String>> map){
 		ContentValues cValues = new ContentValues();
 		
@@ -444,6 +466,11 @@ public class UserLoginActivity extends BaseActivity implements
 		setPreferenceData("fflag", fflag);
 	}
 
+	/**
+	 * View切换动画
+	 * @param v
+	 * @param visible
+	 */
 	private void setAnimView(View v,int visible){
 		AlphaAnimation dismiss = new AlphaAnimation(0, 1);
 		if (visible == 0) {

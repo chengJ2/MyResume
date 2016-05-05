@@ -38,7 +38,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	
 	private SwitchButton setting_start_cb,setting_auto_cb,setting_edit_cb;
 	
-	private LinearLayout versionLayout,logoutLayout,shareLayout;
+	private LinearLayout versionLayout,feedbackLayout,logoutLayout,shareLayout;
 	
 	private TextView version;
 	
@@ -57,16 +57,17 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void findViews(){
-		radioGroup_show = findView(R.id.radioGroup_show);
+/*		radioGroup_show = findView(R.id.radioGroup_show);
 		radio_left = findView(R.id.radio_left);
 		radio_right = findView(R.id.radio_right);
-		radionv_middle = findView(R.id.radionv_middle);
+		radionv_middle = findView(R.id.radionv_middle);*/
 		
 		setting_start_cb = findView(R.id.setting_start_cb);
 		setting_auto_cb = findView(R.id.setting_auto_cb);
 		setting_edit_cb = findView(R.id.setting_edit_cb);
 		
 		versionLayout = findView(R.id.versionLayout);
+		feedbackLayout = findView(R.id.feedbackLayout);
 		version = findView(R.id.viewsion);
 		logoutLayout = findView(R.id.logoutLayout);
 		shareLayout = findView(R.id.shareLayout);
@@ -91,6 +92,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		radionv_middle.setChecked(false);
 		
 		versionLayout.setOnClickListener(this);
+		feedbackLayout.setOnClickListener(this);
 		logoutLayout.setOnClickListener(this);
 		shareLayout.setOnClickListener(this);
 	}
@@ -188,6 +190,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.versionLayout:
 			CommUtil.ToastMsg(self, "暂无新版本");
+			break;
+		case R.id.feedbackLayout:
+			startActivity(".ui.FeedBackActivity", false);
 			break;
 		case R.id.logoutLayout:
 			if (MyApplication.userId != 0) {

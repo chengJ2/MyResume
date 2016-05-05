@@ -28,6 +28,14 @@
     <string name="action_syncing">正在同步,请稍后...</string>
     <string name="action_sync_success">同步成功</string>
     <string name="action_sync_fail">同步失败,请重试</string>
+    
+    
+    <string name="feedback_ed_1">请尽详细地描述您的反馈问题或用户体验不足之处,我们将尽快处理你的意见,谢谢~</string>
+    <string name="feedback_info_1">意见描述</string>
+    <string name="feedback_ed_2">请留下您的QQ/微信/邮箱</string>
+    <string name="feedback_info_2">联系方式</string>
+    <string name="feedback_ed_3">感谢您的反馈</string>
+    <string name="feedback_info_3">您的反馈成功,我们将尽快处理你的意见,谢谢~</string>
 
     <!-- base -->
     <string name="item_text1">请选择简历预览背景色</string>
@@ -64,10 +72,10 @@
     <string name="action_login_forgotpwd">忘记密码?</string>
     <string name="action_login_3pl">第三方登录</string>
     <string name="action_input_isnull">不能为空</string>
-    <string name="action_input_up_isnull">用户名/手机号或密码不能为空!</string>
-    <string name="action_input_username_isnull">用户名不能为空!</string>
+    <string name="action_input_up_isnull">用户名/手机号或密码</string>
+    <string name="action_input_username_isnull">用户名</string>
     <string name="action_input_username_toolong">用户名太长!</string>
-    <string name="action_input_password_isnull">密码不能为空!</string>
+    <string name="action_input_password_isnull">密码</string>
     <string name="action_input_password_equal">两次密码不一致!</string>
     <string name="action_input_password_toolong">密码太长!</string>
     <string name="register_repeatedusername">用户名已存在</string>
@@ -78,6 +86,8 @@
     <string name="login_input2_hint">请输入密码</string>
     <string name="login_input3_hint">请确认密码</string>
     <string name="action_regist_fail">注册失败</string>
+    <string name="register_protocol">同意《我的简历服务协议》</string>
+    <string name="account_go_login">已有账号,登录>></string>
     <string name="action_logout">退出登录</string>
     <string name="action_logout_fail">注销失败,请重试</string>
     <string name="action_no_login">未登录</string>

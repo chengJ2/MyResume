@@ -19,7 +19,7 @@
             android:drawableLeft="@drawable/usericon"
             android:hint="@string/login_input_hint" />
 
-        <View style="@style/line" />
+        <View style="@style/line_padding10" />
 
         <EditText
             android:id="@+id/edtTxt_password"
@@ -72,7 +72,7 @@
         android:id="@+id/btn_login"
         style="@style/button_menu"
         android:layout_below="@id/savelayout"
-        android:layout_marginTop="10dip"
+        android:layout_marginTop="20dip"
         android:text="@string/action_login" />
 
     <LinearLayout
@@ -84,9 +84,9 @@
         android:orientation="vertical" >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="20dip"
-            android:paddingLeft="10dip"
+            android:layout_width="match_parent"
+            android:layout_height="30dip"
+            android:gravity="center"
             android:text="@string/action_login_3pl"
             android:textColor="@color/grey_10"
             android:textSize="@dimen/small_middle_text_size" />
@@ -95,8 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dip"
             android:background="@color/white"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dip" >
+            android:orientation="horizontal" >
 
             <ImageView
                 android:layout_width="match_parent"
@@ -104,7 +103,8 @@
                 android:layout_weight="1"
                 android:src="@drawable/tencent_qq" 
                 android:scaleType="centerInside"/>
-
+			<View style="@style/line2"/>
+            
             <ImageView
                android:layout_width="match_parent"
                 android:layout_height="match_parent"

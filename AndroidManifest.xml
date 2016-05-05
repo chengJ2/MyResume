@@ -32,6 +32,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name="com.me.resume.ui.StartupActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" >
+        </activity>
         <activity
             android:name="com.me.resume.MainActivity"
             android:configChanges="orientation|keyboardHidden"
@@ -122,6 +130,12 @@
         <activity
             android:name="com.me.resume.ui.ProfessionalActivity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.me.resume.ui.FeedBackActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
     </application>
