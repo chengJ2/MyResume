@@ -8,6 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -33,10 +36,11 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+
+import com.me.resume.tools.FileCache;
 
 /**
  * 图片处理类
@@ -51,7 +55,16 @@ public class ImageUtils {
 
 	private ImageUtils() {}
 
-	
+	/**
+	 * 
+	 * @Title:ImageUtils
+	 * @Description: 裁剪图片到指定大小
+	 * @author Comsys-WH1510032
+	 * @param act
+	 * @param data
+	 * @param width
+	 * @param height
+	 */
 	public static void doCropPhoto(Activity act, Intent data, int width,
 			int height) {
 		Intent intent = new Intent("com.android.camera.action.CROP");
@@ -79,12 +92,11 @@ public class ImageUtils {
 			photo = BitmapFactory.decodeFile(uri.getPath());
 		}
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		photo.compress(CompressFormat.JPEG, 70, baos);
+		photo.compress(CompressFormat.JPEG, 100, baos);
 		File file = null;
 		BufferedOutputStream bos = null;
 		try {
-			File dir = new File(Environment.getExternalStorageDirectory(),
-					FileUtils.TEMPDIR);
+			File dir = new File(FileUtils.TEMPDIR);
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
@@ -109,28 +121,33 @@ public class ImageUtils {
 	}
 
 	/**
-	 * 保存图片的bitmap 保存到sdcard
 	 * 
-	 * @throws Exception
-	 * 
+	 * @Title:ImageUtils
+	 * @Description:保存图片的bitmap 保存到sdcard
+	 * @param context
+	 * @param bitmap
+	 * @param filename
 	 */
-	public static void saveImage(Context context, Bitmap bitmap,String filename)
-			throws Exception {
+	public static void saveImage(Context context, Bitmap bitmap,String filename){
 		String filePath = FileUtils.isExistsFilePath(context);
 		File file = new File(filePath, filename);
 		FileOutputStream fos = null;
-		// file.createNewFile();
 		try {
 			fos = new FileOutputStream(file);
 			if (null != fos) {
 				bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-				fos.flush();
-				fos.close();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		} finally{
+			if (fos != null) {
+				try {
+					fos.flush();
+					fos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -218,10 +235,8 @@ public class ImageUtils {
 			return BitmapFactory.decodeByteArray(imageArray, 0,
 					imageArray.length);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -345,11 +360,100 @@ public class ImageUtils {
         paint.getTextBounds(gText, 0, gText.length(), bounds);  
         int x = (bitmap.getWidth() - bounds.width()) / 2;  
         int y = (bitmap.getHeight() + bounds.height()) / 2;  
-        //draw  text  to the bottom  
-//        int x = (bitmap.getWidth() - bounds.width())/10*9 ;  
-//        int y = (bitmap.getHeight() + bounds.height())/10*9;  
         canvas.drawText(gText, x , y, paint);  
-  
         return bitmap;  
     }  
+    
+ // decode这个图片并且按比例缩放以减少内存消耗，虚拟机对每张图片的缓存大小也是有限制的
+ 	public static Bitmap decodeFile(File f) {
+ 		FileInputStream fis = null;
+ 		try {
+ 			// decode image size
+ 			BitmapFactory.Options o = new BitmapFactory.Options();
+ 			o.inJustDecodeBounds = true;
+ 			fis = new FileInputStream(f);
+ 			BitmapFactory.decodeStream(fis, null, o);
+ 			fis.close();
+ 			// Find the correct scale value. It should be the power of 2.
+ 			final int REQUIRED_SIZE = 100;
+ 			int width_tmp = o.outWidth, height_tmp = o.outHeight;
+ 			int scale = 1;
+ 			while (true) {
+ 				if (width_tmp / 2 < REQUIRED_SIZE
+ 						|| height_tmp / 2 < REQUIRED_SIZE)
+ 					break;
+ 				width_tmp /= 2;
+ 				height_tmp /= 2;
+ 				scale *= 2;
+ 			}
+
+ 			// decode with inSampleSize
+ 			BitmapFactory.Options o2 = new BitmapFactory.Options();
+ 			o2.inSampleSize = scale;
+ 			fis = new FileInputStream(f);
+ 			return BitmapFactory.decodeStream(fis, null, o2);
+ 		} catch (Exception e) {
+ 			e.printStackTrace();
+ 		}finally{
+ 			try {
+ 				fis.close();
+ 			} catch (IOException e) {
+ 				e.printStackTrace();
+ 			}
+ 		}
+ 		return null;
+ 	}
+ 	
+ 	/**
+ 	 * 
+ 	 * @Title:ImageUtils
+ 	 * @Description: 下载文件转bitmap
+ 	 * @author Comsys-WH1510032
+ 	 * @param fileCache
+ 	 * @param url
+ 	 * @return Bitmap
+ 	 */
+ 	public static Bitmap getBitmap(FileCache fileCache,String url) {
+		File f = fileCache.getFile(url);
+		// 先从文件缓存中查找是否有
+		Bitmap b = null;
+		if (f != null && f.exists()){
+			b = ImageUtils.decodeFile(f);
+		}
+		if (b != null){
+			return b;
+		}
+		// 最后从指定的url中下载图片
+		try {
+			URL imageUrl = new URL(url);
+			HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
+			conn.setConnectTimeout(30000);
+			conn.setReadTimeout(30000);
+			conn.setInstanceFollowRedirects(true);
+			InputStream is = conn.getInputStream();
+			OutputStream os = new FileOutputStream(f);
+			CopyStream(is, os);
+			os.close();
+			b = ImageUtils.decodeFile(f);
+			return b;
+		} catch (Exception ex) {
+			Log.e("", "getBitmap catch Exception...\nmessage = " + ex.getMessage());
+			return null;
+		}
+	}
+ 	
+ 	public static void CopyStream(InputStream is, OutputStream os) {
+		final int buffer_size = 1024;
+		try {
+			byte[] bytes = new byte[buffer_size];
+			for (;;) {
+				int count = is.read(bytes, 0, buffer_size);
+				if (count == -1)
+					break;
+				os.write(bytes, 0, count);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

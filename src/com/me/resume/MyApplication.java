@@ -10,7 +10,6 @@ import android.util.DisplayMetrics;
 
 import com.me.resume.tools.CrashHandler;
 import com.me.resume.tools.DbManager;
-import com.me.resume.tools.FontsOverride;
 
 /**
  * 

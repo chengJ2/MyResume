@@ -2,6 +2,8 @@ package com.me.resume.comm;
 
 import java.io.File;
 
+import com.me.resume.utils.FileUtils;
+
 import android.os.Environment;
 
 /**
@@ -11,10 +13,13 @@ import android.os.Environment;
  */
 public class Constants {
 
-	public static final String PACKAGENAME = "com.me.resume";
-	
-	 /** 保存的总路径 */
+	/** 保存的总路径 */
     public static final String DIR_PATH = "MyResume";
+    
+    /**
+	 * app包名
+	 */
+	public static final String PACKAGENAME = "com.me.resume";
     
 	/**
 	 * 本地配置缓存文件
@@ -44,15 +49,14 @@ public class Constants {
 	/**
 	 * 本地db文件  
 	 */
-	public static final String DATABASE_FILENAME = "myresume.db"; // 这个是DB文件名字  
+	public static final String DATABASE_FILENAME = "myresume.db"; // DB文件 
     public static final String DATABASE_PATH = "/data"  
             + Environment.getDataDirectory().getAbsolutePath() + "/"  
             + PACKAGENAME; // 获取存储位置地址  
     
     public static String fileName="Avatar.jpg";
     
-    public static File userhead = new File(Environment.getExternalStorageDirectory() 
-    		+ File.separator + DIR_PATH + File.separator + fileName); 
+    public static File userhead = new File(FileUtils.BASE_PATH + File.separator + fileName); 
     
     // 请求超时
  	public static final int EXECUTE_TIMEOUT = -0X2000;

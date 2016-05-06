@@ -4,16 +4,21 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import android.os.Environment;
 import android.os.Looper;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
-import com.me.resume.comm.Constants;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.FileUtils;
 import com.me.resume.utils.TimeUtils;
 
+/**
+ * 
+* @ClassName: CrashHandler 
+* @Description: 捕获全局异常 
+* @date 2016/5/6 下午5:33:06 
+*
+ */
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
    
 	MyApplication application;
@@ -52,7 +57,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
                 Thread.sleep(3000);
                 android.os.Process.killProcess(android.os.Process.myPid());
             } catch (InterruptedException e) {
-                L.e(e);
+            	e.printStackTrace();
             }
         }
     }
@@ -90,17 +95,14 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         final StackTraceElement[] stack = ex.getStackTrace();
         final String message = ex.getMessage();
         /* 准备错误日志文件 */
-        String filePath = Environment.getExternalStorageDirectory()  
-                .getAbsolutePath() + File.separator + Constants.DIR_PATH + File.separator 
-                + FileUtils.LOG_PATH + FileUtils.LOG_NAME;
-        File logFile = new File(filePath);
+        File logFile = new File(FileUtils.LOG_NAME);
         if(!logFile.getParentFile().exists()) {
         	logFile.getParentFile().mkdirs();
     	 }
         try {
 			logFile.createNewFile();
 		} catch (IOException e) {
-			L.e(e);
+			e.printStackTrace();
 		}
         /* 写入错误日志 */
         FileWriter fw = null;
@@ -125,13 +127,13 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             fw.write(lineFeed);
             fw.flush();
         } catch (IOException e) {
-            L.e(e);
+        	e.printStackTrace();
         } finally {
             try {
                 if (null != fw)
                     fw.close();
             } catch (IOException e) {
-                L.e(e);
+            	e.printStackTrace();
             }
         }
     }

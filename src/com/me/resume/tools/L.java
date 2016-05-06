@@ -4,6 +4,14 @@ import android.util.Log;
 
 import com.me.resume.BuildConfig;
 
+/**
+ * 
+* @ClassName: L 
+* @Description: Logcat日志输出
+* @author Comsys-WH1510032 
+* @date 2016/5/6 下午5:43:52 
+*
+ */
 public class L {
     static String className;
     static String methodName;

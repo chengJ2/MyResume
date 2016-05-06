@@ -21,16 +21,16 @@ public class FileUtils {
 	
 	public static final String IMAGE_PATH =  "images";
 	 /** 缩略图缓存存放目录*/
-	public static final String BASE_IMAGE_CACHE = TEMPDIR + File.separator + IMAGE_PATH + File.separator + "cache/";
+	public static final String BASE_IMAGE_CACHE = TEMPDIR + File.separator + IMAGE_PATH + File.separator + "cache" + File.separator;
 	
 	 /** 错误日志存*/
-    public static final String LOG_PATH = "log/";
-    public static final String LOG_NAME = "crash.txt";
+    public static final String LOG_PATH = "log";
+    public static final String LOG_NAME = BASE_PATH + File.separator + LOG_PATH + File.separator + "crash.txt";
     
     /**
      * APk下载目录
      */
-    public static final String DOWNLOAD_APKPATH = TEMPDIR + File.separator + "download/";
+    public static final String DOWNLOAD_APKPATH = TEMPDIR + File.separator + "download" + File.separator;
     
 	/**
      * 判断SDcard是否挂起

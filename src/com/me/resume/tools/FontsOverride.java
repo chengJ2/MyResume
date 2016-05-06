@@ -5,6 +5,14 @@ import java.lang.reflect.Field;
 import android.content.Context;
 import android.graphics.Typeface;
 
+/**
+ * 
+* @ClassName: FontsOverride 
+* @Description: 更改字体样式 
+* @author Comsys-WH1510032 
+* @date 2016/5/6 下午5:17:15 
+*
+ */
 public class FontsOverride {
 
 	public static void setDefaultFont(Context context,
