@@ -235,12 +235,14 @@ public class ImageUtils {
 	 */
 	public static Bitmap getLoacalBitmap(String url) {
 		FileInputStream fis = null;
+		Bitmap bitmap = null;
 		try {
-			fis = new FileInputStream(url);
-			return BitmapFactory.decodeStream(fis);
+			if (new File(url).exists()) {
+				fis = new FileInputStream(url);
+				bitmap = BitmapFactory.decodeStream(fis);
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			return null;
 		}finally{
 			try {
 				if (fis != null) {
@@ -250,6 +252,7 @@ public class ImageUtils {
 				e.printStackTrace();
 			}
 		}
+		return bitmap;
 	}
 
 	/**

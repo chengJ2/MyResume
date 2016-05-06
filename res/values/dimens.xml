@@ -16,7 +16,7 @@
     
     <dimen name="line_height">1px</dimen>
     <dimen name="line_margin_10">10dip</dimen>
-    <dimen name="line_height_20">20dip</dimen>
+    <dimen name="line_height_15">15dip</dimen>
     <dimen name="line_margin">3dip</dimen>
     
     <dimen name="btn_height">43.0dp</dimen>
@@ -26,10 +26,12 @@
     <dimen name="btn_text_margin">10.0dp</dimen>
     <dimen name="button_text_size">16.0sp</dimen>
     
-    <dimen name="normal_item_height">50.0dp</dimen>
+    <dimen name="normal_item_height">48.0dp</dimen>
     <dimen name="mul_item_height">150.0dp</dimen>
     <dimen name="normal_item_padding_left">12.0dp</dimen>
     <dimen name="normal_item_height_set">50.0dp</dimen>
 
     <dimen name="base_comm_padding">2dip</dimen>
+    
+    <dimen name="topbar_pop_item_height">40dip</dimen>
 </resources>

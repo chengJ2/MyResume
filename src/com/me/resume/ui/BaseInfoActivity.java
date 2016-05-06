@@ -106,21 +106,26 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				initData();
 				break;
 			case OnTopMenu.MSG_MENU1:
-				if (msg.obj != null) {
-					checkColor = (Integer) msg.obj;
-					updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
-							new String[]{"userId=?","bgcolor"}, 
-							new String[]{kId,String.valueOf(checkColor)},1);
-					if (updResult == 1) {
-						toastMsg(R.string.action_update_success);
-						if(MyApplication.userId != 0){
-							set2Msg(R.string.action_syncing);
-							syncData();
+				if (commMapArray != null) {
+					if (msg.obj != null) {
+						checkColor = (Integer) msg.obj;
+						updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
+								new String[]{"userId=?","bgcolor"}, 
+								new String[]{kId,String.valueOf(checkColor)},1);
+						if (updResult == 1) {
+							toastMsg(R.string.action_update_success);
+							if(MyApplication.userId != 0){
+								set2Msg(R.string.action_syncing);
+								syncData();
+							}
+						}else{
+							toastMsg(R.string.action_update_fail);
 						}
-					}else{
-						toastMsg(R.string.action_update_fail);
 					}
+				}else{
+					set3Msg(R.string.action_baseinfo_null);
 				}
+					
 				break;
 			case OnTopMenu.MSG_MENU2:
 				if (msg.obj != null) {
@@ -128,11 +133,15 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				set2Msg(R.string.action_syncing);
-				syncData();
+				if (commMapArray != null) {
+					set2Msg(R.string.action_syncing);
+					syncData();
+				}else{
+					set3Msg(R.string.completion_info_frist);
+				}
 				break;
 			case OnTopMenu.MSG_MENU31:
-				toastMsg(R.string.action_login_head);
+				toastMsg(R.string.action_baseinfo_null);
 				break;
 			default:
 				break;
@@ -142,7 +151,6 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		boayLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_baseinfo_layout, null);
@@ -460,7 +468,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			startActivity(src,false);
 		}else{
-			set2Msg(R.string.action_baseinfo_null);
+			set3Msg(R.string.action_baseinfo_null);
 		}
 	}
 	

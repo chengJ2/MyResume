@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true" >
 
-    <com.me.resume.views.CommScrollView
+    <com.me.resume.views.CommScrollView 
         style="@style/comm_scrollview_style" >
 
         <LinearLayout
@@ -13,75 +13,106 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <RelativeLayout 
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:background="@color/white">
-            
-            <TextView
-                style="@style/home_item_text"
-                 android:layout_width="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:text="@string/item_text2" />
-            
-             <TextView
-                style="@style/home_item_text"
-                 android:layout_width="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="5dip"
-                android:text="@string/item_text21" />
-            
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" >
+
+                <TextView
+                    style="@style/home_item_text"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/item_text2" />
+
+                <TextView
+                    style="@style/home_item_text"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dip"
+                    android:text="@string/item_text21" />
             </RelativeLayout>
 
-            <View style="@style/line_padding10" />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="190dip"
-                    android:layout_margin="10dp" >
-
-                    <GridView
-                        android:id="@+id/grid"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:numColumns="auto_fit"
-                        android:columnWidth="80dp" 
-                        android:stretchMode="columnWidth"
-                        android:listSelector="@android:color/transparent" 
-                        android:scrollbars="none"
-				        android:scrollingCache="false"
-				        android:smoothScrollbar="true" 
-				        android:fadingEdge="none"
-				        android:fadingEdgeLength="0dip">
-                    </GridView>
-                </LinearLayout>
+             <GridView
+                 android:id="@+id/grid"
+                 android:layout_width="match_parent"
+                 android:layout_height="190dip"
+           		 android:layout_margin="10dp"
+                 android:columnWidth="80dp"
+                 android:fadingEdge="none"
+                 android:fadingEdgeLength="0dip"
+                 android:gravity="center"
+                 android:listSelector="@android:color/transparent"
+                 android:numColumns="auto_fit"
+                 android:scrollbars="none"
+                 android:scrollingCache="false"
+                 android:smoothScrollbar="true"
+                 android:stretchMode="columnWidth" >
+             </GridView>
 
             <TextView
                 style="@style/home_item_text"
-                android:text="@string/item_text3"
-                 />
-
-            <View style="@style/line_padding10" />
+                android:text="@string/item_text3" />
 
             <GridView
                 android:id="@+id/xgln_gridview"
-                android:layout_width="fill_parent"
-                android:layout_height="250dp"
+                android:layout_width="match_parent"
+                android:layout_height="140dip"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:columnWidth="100dp"
+                android:fadingEdge="none"
+                android:fadingEdgeLength="0dip"
                 android:gravity="center"
                 android:horizontalSpacing="10dp"
                 android:verticalSpacing="10dp"
-                android:layout_marginTop="5dip"
-                android:stretchMode="columnWidth"
-                android:columnWidth="100dp" 
                 android:numColumns="3"
                 android:scrollbars="none"
-		        android:scrollingCache="false"
-		        android:smoothScrollbar="true" 
-		        android:fadingEdge="none"
-		        android:fadingEdgeLength="0dip">
+                android:scrollingCache="false"
+                android:smoothScrollbar="true"
+                android:stretchMode="columnWidth">
             </GridView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white" >
+
+                <TextView
+                    style="@style/home_item_text"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/item_text4" />
+
+                <TextView
+                    android:id="@+id/sharemore"
+                    style="@style/home_item_text"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dip"
+                    android:text="@string/item_text21" />
+            </RelativeLayout>
+
+            <ListView
+                android:id="@+id/reviewsharingListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:cacheColorHint="@android:color/transparent"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0px"
+                android:listSelector="@android:color/transparent"
+                android:scrollbars="none"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/nodata"
+                android:layout_width="match_parent"
+                android:layout_height="100dip"
+                android:gravity="center"
+                android:text="@string/item_text42"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/small_text_size"
+                android:visibility="visible" />
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
 
@@ -89,9 +120,9 @@
         android:layout_width="match_parent"
         android:layout_height="48dip"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal" 
         android:background="@color/white"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/make_btn"
@@ -106,5 +137,5 @@
             android:text="@string/review_resume"
             android:visibility="visible" />
     </LinearLayout>
-    
+
 </RelativeLayout>

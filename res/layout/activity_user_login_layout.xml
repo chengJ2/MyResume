@@ -5,13 +5,15 @@
     android:background="@color/white">
 
     <LinearLayout
-        android:id="@+id/userpwdLayout"
+        android:id="@+id/userloginLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="10dip"
         android:background="@drawable/editbox"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:focusable="true"  
+        android:focusableInTouchMode="true" >
 
         <EditText
             android:id="@+id/edtTxt_username"
@@ -33,7 +35,7 @@
         android:id="@+id/savelayout"
         android:layout_width="match_parent"
         android:layout_height="35dip"
-        android:layout_below="@id/userpwdLayout"
+        android:layout_below="@id/userloginLayout"
         android:layout_marginTop="10dip" >
 
         <ImageView
@@ -103,7 +105,10 @@
                 android:layout_weight="1"
                 android:src="@drawable/tencent_qq" 
                 android:scaleType="centerInside"/>
-			<View style="@style/line2"/>
+            
+			<View style="@style/line2" 
+			    android:layout_height="30dip" 
+			    android:layout_gravity="center_vertical"/>
             
             <ImageView
                android:layout_width="match_parent"

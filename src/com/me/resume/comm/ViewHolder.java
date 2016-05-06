@@ -188,7 +188,6 @@ public class ViewHolder {
 	}
 	
 	
-	
 	public ViewHolder setTextColor(int ViewID,int color){
 		TextView tv=getView(ViewID);
 		tv.setTextColor(color);

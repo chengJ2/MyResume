@@ -87,10 +87,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		
 		version.setText(CommUtil.getVersionName(self));
 		
-		radio_left.setChecked(true);
-		radio_right.setChecked(false);
-		radionv_middle.setChecked(false);
-		
 		versionLayout.setOnClickListener(this);
 		feedbackLayout.setOnClickListener(this);
 		logoutLayout.setOnClickListener(this);

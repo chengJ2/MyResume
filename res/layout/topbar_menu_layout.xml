@@ -9,60 +9,70 @@
         android:id="@+id/horizontalsv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
         android:background="@drawable/dialog_corner"
         android:orientation="vertical" >
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="40dip"
-            android:gravity="center|left"
-            android:padding="5dip"
-            android:text="@string/item_text1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/small_middle_text_size" />
+         <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="@dimen/topbar_pop_item_height"
+	        android:orientation="horizontal"
+	        android:paddingLeft="10dip" >
+        
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:gravity="center|left"
+	            android:text="@string/item_text1"
+	            android:textColor="@color/black"
+	            android:textSize="@dimen/small_middle_text_size" />
+	        
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="match_parent"
+	            android:gravity="center|left"
+	            android:text="@string/item_text11"
+	            android:paddingLeft="5dip"
+	            android:textColor="@color/grey_10"
+	            android:textSize="@dimen/small_text_size" />
+        </LinearLayout>
 
-        <View style="@style/line3" />
+        <View style="@style/line_padding10" />
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="40dip"
-            android:layout_margin="5dp"
-            android:fadingEdge="none"
-            android:fadingEdgeLength="0dip"
-            android:scrollbars="none" >
+          <com.me.resume.views.GrapeGridview
+              android:id="@+id/bgrid"
+              android:layout_width="match_parent"
+              android:layout_height="80dip"
+              android:paddingLeft="12dip"
+              android:paddingTop="5dip"
+              android:gravity="center"
+              android:layout_gravity="center"
+              android:numColumns="auto_fit"
+              android:columnWidth="40dp" 
+              android:horizontalSpacing="10dip"
+              android:verticalSpacing="10dip"
+              android:listSelector="@android:color/transparent"
+              android:stretchMode="columnWidth"
+              android:scrollbars="none"
+              android:scrollingCache="false"
+              android:smoothScrollbar="true"
+              android:fadingEdge="none"
+			  android:fadingEdgeLength="0dip">
+          </com.me.resume.views.GrapeGridview>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <GridView
-                    android:id="@+id/bgrid"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fadingEdge="none"
-                    android:fadingEdgeLength="0dip"
-                    android:gravity="center"
-                    android:numColumns="auto_fit"
-                    android:scrollbars="none"
-                    android:scrollingCache="false"
-                    android:smoothScrollbar="true"
-                    android:stretchMode="spacingWidthUniform" >
-                </GridView>
-            </LinearLayout>
-        </HorizontalScrollView>
-
-        <View style="@style/line3" />
+        <View style="@style/line_padding10" />
 
         <LinearLayout
             android:id="@+id/llout001"
             android:layout_width="match_parent"
-        	android:layout_height="45dip"
+        	android:layout_height="@dimen/topbar_pop_item_height"
+        	android:paddingLeft="10dip"
         	android:orientation="horizontal" >
 
             <TextView
                 style="@style/user_info_item_tv"
                 android:layout_weight="5"
-                android:padding="5dip"
                 android:text="@string/settings_item21"
                 android:textColor="@color/black" />
 
@@ -73,7 +83,7 @@
                 android:gravity="center|right"
                 android:orientation="vertical"
                 android:paddingLeft="50dip"
-                android:paddingTop="10dip" >
+                android:paddingTop="6dip" >
 
                 <com.me.resume.views.SwitchButton
                     android:id="@+id/setting_editmode_cb"
@@ -82,17 +92,17 @@
                     android:visibility="visible" />
             </LinearLayout>
         </LinearLayout>
-        <View style="@style/line3" />
+        <View style="@style/line_padding10" />
         <LinearLayout
             android:id="@+id/llout_sync"
             android:layout_width="match_parent"
-        	android:layout_height="45dip"
+        	android:layout_height="@dimen/topbar_pop_item_height"
+        	android:paddingLeft="10dip"
         	android:orientation="horizontal" >
 
             <TextView
                 style="@style/user_info_item_tv"
                 android:layout_weight="1"
-                android:padding="5dip"
                 android:text="@string/settings_item5"
                 android:textColor="@color/black" />
         </LinearLayout>

@@ -9,6 +9,8 @@
      <color name="grey_50">#50BEBEBE</color>
      <color name="grey_30">#30BEBEBE</color>
      <color name="grey_10">#454545</color>
+     
+     <color name="orange_10">#FFAA00</color>
     
     <color name="line">#DFDFDF</color>
     <!-- 个人基本信息 -->

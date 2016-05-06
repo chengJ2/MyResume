@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white" 
+    android:orientation="horizontal">
+    
+    <ImageView
+         android:id="@+id/share_usernameavator"
+         android:layout_width="50dip"
+         android:layout_height="50dip"
+         android:layout_margin="10dip"
+         android:scaleType="centerInside"
+         android:src="@drawable/user_default_avatar" />
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:background="@color/white"
+         android:gravity="center"
+         android:orientation="vertical" >
+                
+         <RelativeLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="40dip"
+		    android:background="@color/white" >
+			
+            <TextView
+     			 android:id="@+id/share_username"
+      			 style="@style/user_center_text"
+      			 android:maxWidth="200dip"
+      			 android:text="sandy"
+      			 android:layout_alignParentLeft="true"
+      			 android:textSize="@dimen/large_text_size" />
+             
+            <ImageView
+                 android:id="@+id/share_collection"
+		         android:layout_width="40dip"
+		         android:layout_height="40dip"
+		         android:layout_alignParentRight="true"
+		         android:layout_gravity="center"
+		         android:scaleType="centerInside"
+		         android:src="@drawable/icon_sync_def"/>
+             
+    	</RelativeLayout>
+    	
+          <TextView
+     			android:id="@+id/share_content"
+      			 style="@style/user_center_text"
+      			 android:maxHeight="120dip"
+      			 android:singleLine="false"
+      			 android:lineSpacingExtra="3dip"
+      			 android:layout_marginTop="10dip"
+      			 android:paddingRight="8dip"
+      			 android:text="武汉武汉市武汉市武汉武汉市武汉市武汉市武汉市武汉市市武汉市武汉市武汉市市"
+      			 android:textSize="@dimen/small_middle_text_size" />
+         
+         <RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="30dip"
+              android:layout_marginTop="10dip"
+              android:gravity="center|left" >
+                
+                <TextView
+       				 android:id="@+id/share_city"
+        			 style="@style/user_center_text"
+        			 android:layout_alignParentLeft="true"
+        			 android:text="武汉市"
+        			 android:textSize="@dimen/small_text_size" />
+                
+                 <TextView
+       				 android:id="@+id/share_datime"
+        			 style="@style/user_center_text"
+        			 android:layout_alignParentRight="true"
+        			 android:text="2016.5.10"
+        			 android:paddingRight="10dip"
+        			android:textSize="@dimen/small_text_size" />
+   
+         </RelativeLayout>
+         
+    </LinearLayout>
+</LinearLayout>

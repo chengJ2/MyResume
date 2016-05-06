@@ -18,7 +18,7 @@
     <string name="settings_item0">简历预览界面</string>
     <string name="settings_item1">每次启动显示预览模式</string>
     <string name="settings_item2">自动切换简历预览</string>
-    <string name="settings_item21">简历预览界面编辑模式</string>
+    <string name="settings_item21">预览界面编辑模式</string>
     <string name="settings_item3">检测新版本</string>
     <string name="settings_item4">反馈意见</string>
     <string name="settings_item5">同步当前数据</string>
@@ -28,17 +28,20 @@
     <string name="action_syncing">正在同步,请稍后...</string>
     <string name="action_sync_success">同步成功</string>
     <string name="action_sync_fail">同步失败,请重试</string>
+    <string name="completion_info_frist">请先完善资料</string>
     
     
-    <string name="feedback_ed_1">请尽详细地描述您的反馈问题或用户体验不足之处,我们将尽快处理你的意见,谢谢~</string>
+    <string name="feedback_ed_1">请尽详细地描述您的反馈问题或用户体验不足之处,以帮助我们改善产品体验,我们将尽快处理你的意见,谢谢~</string>
     <string name="feedback_info_1">意见描述</string>
     <string name="feedback_ed_2">请留下您的QQ/微信/邮箱</string>
     <string name="feedback_info_2">联系方式</string>
     <string name="feedback_ed_3">感谢您的反馈</string>
     <string name="feedback_info_3">您的反馈成功,我们将尽快处理你的意见,谢谢~</string>
+    <string name="feedback_info_4">发送错误报告</string>
 
     <!-- base -->
-    <string name="item_text1">请选择简历预览背景色</string>
+    <string name="item_text1">请选择背景色</string>
+    <string name="item_text11">(简历预览界面)</string>
 
     <!-- Home -->
     <string name="resume_center">简历中心</string>
@@ -48,6 +51,9 @@
     <string name="item_text2">· 热门简历模板</string>
     <string name="item_text21">更多</string>
     <string name="item_text3">· 相关栏目推荐</string>
+    <string name="item_text4">· 面试心得,大家来说</string>
+    <string name="item_text41">我来一份</string>
+    <string name="item_text42">暂无面试心得分享</string>
 
     <!-- Main -->
     <string name="resume_baseinfo">基本资料</string>
@@ -85,7 +91,7 @@
     <string name="login_input1_hint">请输入用户名</string>
     <string name="login_input2_hint">请输入密码</string>
     <string name="login_input3_hint">请确认密码</string>
-    <string name="action_regist_fail">注册失败</string>
+    <string name="action_regist_fail">注册失败,请重试!</string>
     <string name="register_protocol">同意《我的简历服务协议》</string>
     <string name="account_go_login">已有账号,登录>></string>
     <string name="action_logout">退出登录</string>
@@ -122,6 +128,8 @@
     <string name="location">当前位置</string>
     <string name="hot_city">热门城市</string>
     <string name="all_city">全国城市</string>
+    
+     <string name="date_today">今天是:</string>
 
     <!-- 基本资料 -->
     <string name="reg_info_email">电子邮箱不合法！</string>

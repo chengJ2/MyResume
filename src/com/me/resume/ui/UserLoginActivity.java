@@ -130,8 +130,6 @@ public class UserLoginActivity extends BaseActivity implements
 				user_register_layout.setVisibility(View.GONE);
 				user_login_layout.setVisibility(View.VISIBLE);
 				
-				edtTxt_username.requestFocus();
-				
 			}else if (user_login_layout.getVisibility() == View.VISIBLE) {
 				self.scrollToFinishActivity();
 			}
@@ -139,6 +137,7 @@ public class UserLoginActivity extends BaseActivity implements
 		case R.id.right_icon:
 			setTopTitle(R.string.action_user_regist);
 			setRightIconVisible(View.GONE);
+			
 			setAnimView(user_login_layout,0);
 			
 			setAnimView(user_register_layout,1);
@@ -195,7 +194,7 @@ public class UserLoginActivity extends BaseActivity implements
 					e.printStackTrace();
 					if(map.get("msg").get(0).equals("404")){
 						errorLogin();
-						toastMsg(R.string.action_login_error);
+						set3Msg(R.string.action_login_error);
 					}
 				}
 			}
@@ -268,7 +267,7 @@ public class UserLoginActivity extends BaseActivity implements
 			requestData("pro_user_register", 1, params, values, new HandlerData() {
 				@Override
 				public void error() {
-					toastMsg(R.string.action_regist_fail);
+					set3Msg(R.string.action_regist_fail);
 				}
 				
 				public void success(Map<String, List<String>> map) {
@@ -277,7 +276,7 @@ public class UserLoginActivity extends BaseActivity implements
 					} catch (Exception e) {
 						e.printStackTrace();
 						if(map.get("msg").get(0).equals("405")){
-							toastMsg(R.string.register_repeatedusername);
+							set3Msg(R.string.register_repeatedusername);
 						}
 					}
 				}
@@ -445,7 +444,7 @@ public class UserLoginActivity extends BaseActivity implements
 		str_username = edtTxt_username.getText().toString();
 		str_password = edtTxt_password.getText().toString();
 		if(!RegexUtil.checkNotNull(str_username) || !RegexUtil.checkNotNull(str_password)){
-			toastMsg(R.string.action_input_up_isnull);
+			set3Msg(R.string.action_input_up_isnull);
 			return false;
 		}
 		

@@ -104,9 +104,9 @@
         <item name="android:layout_marginRight">@dimen/line_margin_10</item>
     </style>
     
-    <style name="line_20">
+    <style name="line_h15">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/line_height_20</item>
+        <item name="android:layout_height">@dimen/line_height_15</item>
         <item name="android:background">@color/line</item>
     </style>
 
@@ -196,11 +196,11 @@
 	 
 	   <style name="user_center_text">
 	       <item name="android:layout_width">wrap_content</item>
-	      <item name="android:layout_height">wrap_content</item>
+	      <item name="android:layout_height">match_parent</item>
 	      <item name="android:textColor">@color/black</item>
 	       <item name="android:textSize">@dimen/small_middle_text_size</item>
 	         <item name="android:background">@android:color/transparent</item>
-	         <item name="android:layout_marginTop">8dip</item>
+	         <item name="android:gravity">center|left</item>
 	      <item name="android:typeface">serif</item>
 	 </style>
 	 

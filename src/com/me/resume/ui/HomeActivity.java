@@ -1,13 +1,16 @@
 package com.me.resume.ui;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,18 +20,23 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.model.ResumeModel;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
+import com.me.resume.utils.FileUtils;
 import com.me.resume.utils.ImageUtils;
 import com.me.resume.utils.TimeUtils;
 import com.whjz.android.text.CommonText;
@@ -47,6 +55,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 	private CommonBaseAdapter<ResumeModel> commAdapter = null;
 	private GridView resumeModelgridView;
+	
+	private ListView reviewsharingListView;
+	private TextView sharemore,nodata;
 
 	private Button makeResume,reviewResume;
 
@@ -73,9 +84,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				setData();
 				setGridView();
 				setTopicData();
+//				getShareData();
 				break;
 			case 110:
 				setPreferenceData("noticeshow",0);
+				break;
+			case 111:
+				setShareData((Map<String, List<String>>)msg.obj);
 				break;
 			case 0:
 				isExit = false;
@@ -126,10 +141,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 		right_icon.setImageResource(R.drawable.icon_setting);
 		
+		reviewsharingListView = findView(R.id.reviewsharingListView);
+		sharemore = findView(R.id.sharemore);
+		nodata = findView(R.id.nodata);
 		makeResume.setOnClickListener(this);
 		reviewResume.setOnClickListener(this);
 		
-		
+		sharemore.setOnClickListener(this);
 	}
 
 	private void initData(){
@@ -193,24 +211,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			resumeModelList.add(item);
 		}
 	}
-
-	/** 设置GirdView参数，绑定数据 */
+	
+	/**
+	 * 
+	 * @Title:HomeActivity
+	 * @Description: 简历模板view
+	 */
 	private void setGridView() {
-		/*int size = resumeModelList.size();
-		int length = 100;
-		DisplayMetrics dm = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(dm);
-		float density = dm.density;
-		int gridviewWidth = (int) (size * (length + 4) * density);
-		int itemWidth = (int) (length * density);
-
-		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-				gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
-		resumeModelgridView.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
-		resumeModelgridView.setColumnWidth(itemWidth); // 设置列表项宽
-		resumeModelgridView.setHorizontalSpacing(5); // 设置列表项水平间距
-		resumeModelgridView.setStretchMode(GridView.NO_STRETCH);
-		resumeModelgridView.setNumColumns(size); // 设置列数量=列表集合数*/
 		commAdapter = new CommonBaseAdapter<ResumeModel>(self, resumeModelList,
 				R.layout.home_grilview_item) {
 
@@ -222,7 +229,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 						Integer.parseInt(resumeModelList.get(position)
 								.getPicUrl().get(0)));
 				holder.setText(R.id.item_textview, resumeModelList
-						.get(position).getTitle());
+						.get(position).getDesc());
+				/*holder.setText(R.id.item_datimeview, resumeModelList
+						.get(position).getDatetime());*/
 			}
 		};
 		resumeModelgridView.setAdapter(commAdapter);
@@ -257,8 +266,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		mList.add("面试技巧");
 		mList.add("注意事项");
 		mList.add("笔试经验");
-		mList.add("自我鉴定");
-		mList.add("面试技巧");
 		
 		commStrAdapter = new CommonBaseAdapter<String>(self, mList,
 				R.layout.home_xgln_grilview) {
@@ -286,6 +293,61 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 		resumeQuegridview.setAdapter(commStrAdapter);
 	}
+	
+	/**
+	 * 
+	 * @Title:HomeActivity
+	 * @Description: 面试分享心得
+	 */
+	private void getShareData(){
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		requestData("pro_getshareinfo", 1, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				setShareView(false);
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+					setShareView(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 
+	 * @Title:HomeActivity
+	 * @Description: 面试分享心得
+	 */
+	private void setShareData(Map<String, List<String>> map){
+		CommForMapBaseAdapter mapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.home_share_item,"id") {
+			
+			@Override
+			public void convert(ViewHolder holder, List<String> item, int position) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		
+		reviewsharingListView.setAdapter(mapBaseAdapter);
+	}
+	
+	
+	private void setShareView(boolean hasdata){
+		if(hasdata){
+			reviewsharingListView.setVisibility(View.GONE);
+			sharemore.setVisibility(View.VISIBLE);
+			nodata.setVisibility(View.VISIBLE);
+		}else{
+			reviewsharingListView.setVisibility(View.GONE);
+			sharemore.setVisibility(View.VISIBLE);
+			nodata.setVisibility(View.VISIBLE);
+		}
+	}
 
 	@Override
 	protected void onResume() {
@@ -300,6 +362,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		if (bitmap != null) {
 			setLeftIcon(ImageUtils.toRoundBitmap(bitmap));
 		}
+		
 	}
 	
 	@Override
@@ -329,6 +392,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.right_icon:
 			startActivity(".ui.SettingActivity", false);
+			break;
+		case R.id.sharemore:
+			startActivity(".ui.ResumeShareActivity", false);
 			break;
 		default:
 			break;

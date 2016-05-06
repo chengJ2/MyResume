@@ -17,7 +17,6 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,7 +26,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -36,7 +34,6 @@ import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
@@ -44,6 +41,7 @@ import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.tools.L;
+import com.me.resume.views.GrapeGridview;
 import com.me.resume.views.SwitchButton;
 import com.me.resume.views.SwitchButton.OnChangedListener;
 
@@ -277,8 +275,18 @@ public class DialogUtils {
 	}
 	
 	public static int years,months,days;
-	
-	public static void showTimeChooseDialog(Context context,View parent,int resId,final int msgWhat,Handler handler){
+	public static String today;
+	/**
+	 * 
+	 * @Title:DialogUtils
+	 * @Description: 显示日期选中View
+	 * @param context
+	 * @param parent
+	 * @param resId
+	 * @param msgWhat
+	 * @param handler
+	 */
+	public static void showTimeChooseDialog(final Context context,View parent,final int resId,final int msgWhat,Handler handler){
 		mHandler = handler;
 		View layout = View.inflate(context,R.layout.date_layout, null);
 		mPopupWindow = new PopupWindow(layout, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -286,51 +294,40 @@ public class DialogUtils {
 		mPopupWindow.setTouchable(true);
 		mPopupWindow.setFocusable(true);
 		
+		final TextView msg = (TextView)layout.findViewById(R.id.title);
 		final DatePicker datePicker = (DatePicker)layout.findViewById(R.id.datePicker);
 		//获取当前的年、月、日、小时、分钟  
         Calendar c = Calendar.getInstance();  
         years = c.get(Calendar.YEAR);  
-        months = c.get(Calendar.MONTH);  
+        months = c.get(Calendar.MONTH) ;  
         days = c.get(Calendar.DAY_OF_MONTH);  
         
-        datePicker.init(years, months + 1, days, new OnDateChangedListener() {
+        today = years + "-" + (months + 1) + "-" + days;
+        
+        msg.setText(CommUtil.getStrValue(context, resId) + "   ("+
+        		CommUtil.getStrValue(context, R.string.date_today) +" " + TimeUtils.getWeekOfDate(today) +")");
+        
+        datePicker.init(years, months, days, new OnDateChangedListener() {
 			
 			@Override
 			public void onDateChanged(DatePicker view, int year, int month,
 					int day) {
 				years = year;  
-				months = month + 1;  
-				days = day;  
+				months = month;  
+				days = day;
+				
+				today = years + "-" + (months+1) + "-" + days;
+				
+				msg.setText(CommUtil.getStrValue(context, resId) + "   (" + TimeUtils.getWeekOfDate(today) +")");
 			}
 		});
-		
-        TextView msg = (TextView)layout.findViewById(R.id.title);
-        
-        String today = years + "-" + months + "-" + days;
-        
-		msg.setText(CommUtil.getStrValue(context, resId) + " (" + TimeUtils.getWeekOfDate(today) +")");
         
 		Button btn1 = (Button)layout.findViewById(R.id.btn_sure);
 		btn1.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				 /*Calendar mycalendar=Calendar.getInstance();//获取现在时间
-				 int iyear = mycalendar.get(Calendar.YEAR);//获取年份
-				 int imonth = mycalendar.get(Calendar.MONTH);
-				 int myYear = UserInfoEditActivity.this.year;
-				 if (myYear > iyear) {
-					 Utils.ToastMsg(UserInfoEditActivity.this, "出生年月不能大于等于今年");
-					 return;
-				 }
-				 int myMonth = UserInfoEditActivity.this.month;
-				 int age = iyear - myYear;
-				 if (imonth > myMonth) {
-					 age = age + 1;
-				 }*/
-				 String date = years +"-"+ (months+1) + "-"+days;
-				 sendMsg(msgWhat,date);
-				 
+				 sendMsg(msgWhat,today);
 				 dismissPopwindow();
 				 
 			}
@@ -362,7 +359,7 @@ public class DialogUtils {
 		mPopupWindow.setTouchable(true);
 		mPopupWindow.setFocusable(true);
 		
-		GridView bgrid = (GridView)layout.findViewById(R.id.bgrid);
+		GrapeGridview bgrid = (GrapeGridview)layout.findViewById(R.id.bgrid);
 		SwitchButton setting_editmode_cb = (SwitchButton)layout.findViewById(R.id.setting_editmode_cb);
 		LinearLayout setting_syn = (LinearLayout)layout.findViewById(R.id.llout_sync);
 		
@@ -371,22 +368,6 @@ public class DialogUtils {
 		for (int i = 0; i < typedArray.length(); i++) {
 			nList.add(typedArray.getResourceId(i, 0));
 		}
-		
-		int size = nList.size();
-        int length = 50;
-        DisplayMetrics dm = new DisplayMetrics();
-        context.getWindowManager().getDefaultDisplay().getMetrics(dm);
-        float density = dm.density;
-        int gridviewWidth = (int) (size * (length + 4) * density);
-        int itemWidth = (int) (length * density);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                gridviewWidth, LinearLayout.LayoutParams.MATCH_PARENT);
-        bgrid.setLayoutParams(params); // 设置GirdView布局参数,横向布局的关键
-        bgrid.setColumnWidth(itemWidth); // 设置列表项宽
-        bgrid.setHorizontalSpacing(5); // 设置列表项水平间距
-        bgrid.setStretchMode(GridView.NO_STRETCH);
-        bgrid.setNumColumns(size); // 设置列数量=列表集合数
         CommonBaseAdapter<Integer> commIntAdapter = new CommonBaseAdapter<Integer>(context, nList,
 				R.layout.base_grilview_item) {
 

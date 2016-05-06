@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.me.resume.R;
 import com.me.resume.utils.CommUtil;
@@ -25,6 +27,9 @@ public class FeedBackActivity extends BaseActivity {
 	private Button feedcommit;
 	
 	private String feeddescStr,feedcontactStr;
+	
+	private LinearLayout feedback_layout;
+	private CheckBox feedback_cb;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,9 @@ public class FeedBackActivity extends BaseActivity {
 		feeddesc = findView(R.id.feeddesc);
 		feedcontact = findView(R.id.feedcontact);
 		feedcommit = findView(R.id.feedcommit);
+		feedback_layout = findView(R.id.feedback_layout);
+		feedback_cb = findView(R.id.feedback_cb);
+		
 	}
 	
 	private void initViews(){
@@ -52,6 +60,21 @@ public class FeedBackActivity extends BaseActivity {
 		setRightIconVisible(View.INVISIBLE);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
+		
+		if(getPreferenceData("feedback")){
+			feedback_cb.setChecked(true);
+		}else{
+			feedback_cb.setChecked(false);
+		}
+		
+		left_icon.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				scrollToFinishActivity();
+			}
+		});
 		
 		feedcommit.setOnClickListener(new OnClickListener() {
 			
@@ -63,6 +86,19 @@ public class FeedBackActivity extends BaseActivity {
 					}
 				}else{
 					set3Msg(R.string.check_network);
+				}
+			}
+		});
+		
+		feedback_layout.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				setPreferenceData("feedback",true);
+				if(getPreferenceData("feedback")){
+					feedback_cb.setChecked(true);
+				}else{
+					feedback_cb.setChecked(false);
 				}
 			}
 		});

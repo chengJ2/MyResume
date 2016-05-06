@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true" >
 
     <include
         android:id="@+id/topLayout"
@@ -12,40 +12,38 @@
     <com.me.resume.views.MarqueeText
         android:id="@+id/msg"
         style="@style/comm_errormsg_style"
+        android:layout_below="@id/topLayout"
         android:text="@string/check_network"
-        android:visibility="gone"
-        android:layout_below="@id/topLayout" />
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/bodyLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/msg"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/base_comm_padding"
-        android:paddingRight="@dimen/base_comm_padding"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:orientation="vertical" >
     </LinearLayout>
 
     <RelativeLayout
-    	android:id="@+id/fabLayout"
-	    android:layout_width="match_parent"
-	    android:layout_height="50dip"
-	    android:layout_alignParentBottom="true"
-	    android:visibility="gone"
-	    android:background="@android:color/transparent">
-    
-    <com.me.resume.views.CustomFAB
-        android:id="@+id/save"
-        style="@style/fab_button_left_style"/>
+        android:id="@+id/fabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:visibility="visible" >
 
-    <com.me.resume.views.CustomFAB
-        android:id="@+id/edit"
-        style="@style/fab_button_style"/>
+        <com.me.resume.views.CustomFAB
+            android:id="@+id/save"
+            style="@style/fab_button_left_style" />
 
-    <com.me.resume.views.CustomFAB
-        android:id="@+id/next"
-        style="@style/fab_button_right_style"/>
-    
+        <com.me.resume.views.CustomFAB
+            android:id="@+id/edit"
+            style="@style/fab_button_style" />
+
+        <com.me.resume.views.CustomFAB
+            android:id="@+id/next"
+            style="@style/fab_button_right_style" />
     </RelativeLayout>
+
 </RelativeLayout>

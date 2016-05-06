@@ -5,7 +5,8 @@
     android:background="@color/white" >
 
     <com.me.resume.views.CommScrollView
-         style="@style/comm_scrollview_style" >
+         style="@style/comm_scrollview_style"
+         android:layout_marginBottom="0dip" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -13,6 +14,7 @@
             android:orientation="vertical" 
             android:background="@color/white">
 
+            <View style="@style/line_h15" />
             <LinearLayout
                 android:id="@+id/llout01"
                 style="@style/noraml_item">
@@ -99,7 +101,7 @@
 
             </LinearLayout>
 
-            <View style="@style/line_20" />
+            <View style="@style/line_h15" />
             
             
             <LinearLayout
@@ -174,7 +176,7 @@
 
             </LinearLayout>
           
-            <View style="@style/line_20" />
+            <View style="@style/line_h15" />
             
             <LinearLayout
                 android:id="@+id/logoutLayout"
