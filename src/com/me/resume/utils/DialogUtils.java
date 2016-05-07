@@ -499,7 +499,7 @@ public class DialogUtils {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-					sendMsg(110);
+					sendMsg(2);
 				}
 			});
 			

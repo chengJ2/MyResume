@@ -15,28 +15,41 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dip"
                 android:background="@color/white" >
+                
+                <View 
+                    android:id="@+id/view1"
+                    android:layout_width="22dip"
+               		android:layout_height="20dip"
+               		android:layout_marginLeft="5dip"
+               		android:layout_centerVertical="true"
+               		android:layout_alignParentLeft="true"
+                    android:background="@drawable/hot"/>
 
                 <TextView
                     style="@style/home_item_text"
                     android:layout_width="wrap_content"
-                    android:layout_alignParentLeft="true"
+                    android:layout_toRightOf="@id/view1"
                     android:text="@string/item_text2" />
 
-                <TextView
-                    style="@style/home_item_text"
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/templmore"
+                    android:layout_width="60dip"
+               		android:layout_height="match_parent"
+               		android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="5dip"
-                    android:text="@string/item_text21" />
+                    android:src="@drawable/more"
+                    android:scaleType="centerInside" />
             </RelativeLayout>
 
              <GridView
                  android:id="@+id/grid"
                  android:layout_width="match_parent"
                  android:layout_height="190dip"
-           		 android:layout_margin="10dp"
+           		 android:layout_marginLeft="10dp"
+           		 android:layout_marginRight="10dip"
+           		 android:layout_marginTop="10dip"
                  android:columnWidth="80dp"
                  android:fadingEdge="none"
                  android:fadingEdgeLength="0dip"
@@ -49,9 +62,26 @@
                  android:stretchMode="columnWidth" >
              </GridView>
 
-            <TextView
-                style="@style/home_item_text"
-                android:text="@string/item_text3" />
+               <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:background="@color/white" >
+                
+                <View 
+                    android:id="@+id/view2"
+                    android:layout_width="22dip"
+               		android:layout_height="23dip"
+               		android:layout_marginLeft="5dip"
+               		android:layout_centerVertical="true"
+               		android:layout_alignParentLeft="true"
+                    android:background="@drawable/link"/>
+             
+	            <TextView
+	                style="@style/home_item_text"
+	                 android:layout_width="wrap_content"
+                    android:layout_toRightOf="@id/view2"
+	                android:text="@string/item_text3" />
+            </RelativeLayout>
 
             <GridView
                 android:id="@+id/xgln_gridview"
@@ -74,35 +104,47 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dip"
                 android:background="@color/white" >
 
+                 <View 
+                    android:id="@+id/view3"
+                    android:layout_width="22dip"
+               		android:layout_height="23dip"
+               		android:layout_marginLeft="5dip"
+               		android:layout_centerVertical="true"
+               		android:layout_alignParentLeft="true"
+                    android:background="@drawable/review"/>
+                
                 <TextView
                     style="@style/home_item_text"
                     android:layout_width="wrap_content"
-                    android:layout_alignParentLeft="true"
+                    android:layout_toRightOf="@id/view3"
                     android:text="@string/item_text4" />
-
-                <TextView
+                
+                <ImageView
                     android:id="@+id/sharemore"
-                    style="@style/home_item_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="60dip"
+               		android:layout_height="match_parent"
+               		android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="5dip"
-                    android:text="@string/item_text21" />
+                    android:src="@drawable/more"
+                    android:scaleType="centerInside" />
+                
             </RelativeLayout>
 
-            <ListView
+            <com.me.resume.views.CustomListView
                 android:id="@+id/reviewsharingListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
-                android:cacheColorHint="@android:color/transparent"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="0px"
+                android:cacheColorHint="#00000000"
+                android:divider="@color/grey"
+                android:dividerHeight="1px"
                 android:listSelector="@android:color/transparent"
+                android:footerDividersEnabled="true"
                 android:scrollbars="none"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/nodata"
@@ -112,7 +154,7 @@
                 android:text="@string/item_text42"
                 android:textColor="@color/grey"
                 android:textSize="@dimen/small_text_size"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
 
@@ -138,4 +180,31 @@
             android:visibility="visible" />
     </LinearLayout>
 
+    
+    <LinearLayout
+        android:id="@+id/myshareLayout"
+        android:layout_width="match_parent"
+        android:layout_height="150dip"
+        android:layout_alignParentBottom="true"
+        android:background="@color/red"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone" >
+        
+         <EditText
+              android:id="@+id/info_realname"
+              style="@style/user_info_item_ed"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_weight="2"
+              android:hint="@string/info_name_hint" />
+         
+         <Button
+            style="@style/button_menu"
+            android:layout_weight="1"
+            android:text="提交"
+            android:visibility="visible" />
+   </LinearLayout>
+    
+    
 </RelativeLayout>

@@ -7,13 +7,16 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
-import android.view.TextureView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.me.resume.R;
@@ -39,9 +42,10 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	protected File pictureFile = null;
 	private String[] photoPath = new String[2];
 	
-	protected ImageView user_info_avatar;
+	private LinearLayout llout01;
 	
-	private TextView center_username,center_workyear;
+	protected ImageView user_info_avatar;
+	private TextView center_username,center_workyear,center_city;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -84,15 +88,19 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void findViews() {
+		llout01 = findView(R.id.llout01);
 		user_info_avatar = findView(R.id.user_info_avatar);
 		user_info_avatar.setOnClickListener(this);
 		
 		center_username = findView(R.id.center_username);
-		center_workyear = findView(R.id.center_username);
+		center_workyear = findView(R.id.center_workyear);
+		center_city = findView(R.id.center_city);
+		
+		llout01.setOnClickListener(this);
 	}
 	
 	private void initViews(){
-		setTopTitle(R.string.action_user_regist);
+		setTopTitle(R.string.personal_center);
 		setMsgHide();
 		setRightIconVisible(View.VISIBLE);
 		setRight2IconVisible(View.GONE);
@@ -119,8 +127,16 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			
 			String workyear = commMapArray.get("joinworktime")[0];
 			// TODO
-			center_workyear.setText(workyear);
+			center_workyear.setText("|"+ workyear);
+			
+			String city = commMapArray.get("city")[0];
+			if (RegexUtil.checkNotNull(city)) {
+				center_city.setText("|"+city); 
+			}
+			
 		}
+		
+		
 	}
 	
 	@Override
@@ -130,10 +146,13 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			self.scrollToFinishActivity();
 			break;
 		case R.id.right_icon:
-			startActivity(".MainActivity",true);
+			startActivity(".MainActivity",false);
 			break;
 		case R.id.user_info_avatar:
 			chooseUserHead();
+			break;
+		case R.id.llout01:
+			startActivity(".ui.BaseInfoActivity",false);
 			break;
 		default:
 			break;
@@ -197,4 +216,5 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			}
 		}
 	};
+	
 }

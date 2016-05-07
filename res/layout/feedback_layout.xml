@@ -14,6 +14,7 @@
        android:padding="10dip"
        android:hint="@string/feedback_ed_1" 
        android:singleLine="false"
+       android:textSize="@dimen/small_text_size"
        android:lineSpacingExtra="5dip"
        android:background="@drawable/feedback_ed_corner"/>
     
@@ -26,6 +27,7 @@
        android:layout_marginBottom="20dip"
        android:hint="@string/feedback_ed_2" 
        android:singleLine="true"
+       android:textSize="@dimen/small_text_size"
        android:background="@drawable/feedback_ed_corner"/>
     
      <LinearLayout

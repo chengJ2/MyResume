@@ -383,8 +383,9 @@ public class CommUtil {
 	    
 	}
 	
+	
 	public static String getHttpLink(String link){
-		if(!"".equals(link) || link != null){
+		if(RegexUtil.checkNotNull(link)){
 			if(!link.contains("http://")){
 				link = CommonText.endPoint + "/" + link;
 				if(link.contains("\\")){

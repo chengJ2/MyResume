@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
@@ -71,7 +72,6 @@ public class FeedBackActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				scrollToFinishActivity();
 			}
 		});
@@ -126,11 +126,13 @@ public class FeedBackActivity extends BaseActivity {
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
-		params.add("p_feeddesc");
-		params.add("p_feedcontact");
+		params.add("p_content");
+		params.add("p_contact");
+		params.add("p_userId");
 		
 		values.add(feeddescStr);
 		values.add(feedcontactStr);
+		values.add(String.valueOf(MyApplication.userId));
 		
 		requestData("pro_set_feedback", 1, params, values, new HandlerData() {
 			@Override
@@ -141,7 +143,7 @@ public class FeedBackActivity extends BaseActivity {
 			public void success(Map<String, List<String>> map) {
 				try {
 					if (map.get("msg").get(0).equals("200")) {
-						set3Msg(R.string.feedback_info_3);
+						set3Msg(R.string.feedback_info_3,2000);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

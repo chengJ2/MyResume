@@ -43,20 +43,25 @@ public class ImageLoader {
 	 * @param imageView
 	 * @param isLoadOnlyFromCache
 	 */
-	public void DisplayImage(String url, ImageView imageView, boolean isLoadOnlyFromCache) {
+	public void DisplayImage(String url, ImageView imageView, boolean isLoadOnlyFromCache,boolean round) {
 		imageViews.put(imageView, url);
 		// 先从内存缓存中查找
 		Bitmap bitmap = memoryCache.get(url);
 		if (bitmap != null)
-			imageView.setImageBitmap(bitmap);
+			if (round) {
+				imageView.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
+			}else{
+				imageView.setImageBitmap(bitmap);
+			}
+			
 		else if (!isLoadOnlyFromCache){
 			// 若没有的话则开启新线程加载图片
-			queuePhoto(url, imageView);
+			queuePhoto(url, imageView,round);
 		}
 	}
 
-	private void queuePhoto(String url, ImageView imageView) {
-		PhotoToLoad p = new PhotoToLoad(url, imageView);
+	private void queuePhoto(String url, ImageView imageView,boolean round) {
+		PhotoToLoad p = new PhotoToLoad(url, imageView,round);
 		executorService.submit(new PhotosLoader(p));
 	}
 
@@ -64,10 +69,12 @@ public class ImageLoader {
 	private class PhotoToLoad {
 		public String url;
 		public ImageView imageView;
+		private boolean round;
 
-		public PhotoToLoad(String u, ImageView i) {
-			url = u;
-			imageView = i;
+		public PhotoToLoad(String u, ImageView i,boolean round) {
+			this.url = u;
+			this.imageView = i;
+			this.round = round;
 		}
 	}
 
@@ -132,9 +139,13 @@ public class ImageLoader {
 		public void run() {
 			if (imageViewReused(photoToLoad))
 				return;
-			if (bitmap != null)
-				photoToLoad.imageView.setImageBitmap(bitmap);
-	
+			if (bitmap != null){
+				if (photoToLoad.round) {
+					photoToLoad.imageView.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
+				}else{
+					photoToLoad.imageView.setImageBitmap(bitmap);
+				}
+			}
 		}
 	}
 

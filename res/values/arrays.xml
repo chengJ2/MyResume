@@ -15,6 +15,18 @@
         <item>Accordion</item>
     </string-array>
     
+    <string-array name="review_link">
+        <item>@string/re_link1</item>
+        <item>@string/re_link2</item>
+        <item>@string/re_link3</item>
+        <item>@string/re_link4</item>
+        <item>@string/re_link5</item>
+        <item>@string/re_link6</item>
+        <item>@string/re_link7</item>
+        <item>@string/re_link8</item>
+        
+    </string-array>
+    
     <string-array name="review_bgcolor">
         <item>@color/color_1</item>
         <item>@color/color_2</item>

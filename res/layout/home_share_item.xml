@@ -7,22 +7,24 @@
     
     <ImageView
          android:id="@+id/share_usernameavator"
-         android:layout_width="50dip"
-         android:layout_height="50dip"
-         android:layout_margin="10dip"
-         android:scaleType="centerInside"
-         android:src="@drawable/user_default_avatar" />
+         android:layout_width="40dip"
+         android:layout_height="40dip"
+         android:layout_marginLeft="10dip"
+         android:layout_marginTop="10dip"
+         android:layout_marginRight="15dip"
+         android:scaleType="centerInside" />
 
      <LinearLayout
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:background="@color/white"
          android:gravity="center"
-         android:orientation="vertical" >
+         android:orientation="vertical"
+         android:layout_marginBottom="10dip" >
                 
          <RelativeLayout 
 		    android:layout_width="match_parent"
-		    android:layout_height="40dip"
+		    android:layout_height="35dip"
 		    android:background="@color/white" >
 			
             <TextView
@@ -31,16 +33,19 @@
       			 android:maxWidth="200dip"
       			 android:text="sandy"
       			 android:layout_alignParentLeft="true"
-      			 android:textSize="@dimen/large_text_size" />
+      			 android:textSize="@dimen/small_middle_text_size" 
+      			 android:textColor="@color/black"/>
              
             <ImageView
                  android:id="@+id/share_collection"
-		         android:layout_width="40dip"
-		         android:layout_height="40dip"
+		         android:layout_width="50dip"
+		         android:layout_height="25dip"
 		         android:layout_alignParentRight="true"
+		         android:layout_centerVertical="true"
 		         android:layout_gravity="center"
 		         android:scaleType="centerInside"
-		         android:src="@drawable/icon_sync_def"/>
+		         android:src="@drawable/icon_collection"
+		         android:visibility="visible"/>
              
     	</RelativeLayout>
     	
@@ -52,8 +57,10 @@
       			 android:lineSpacingExtra="3dip"
       			 android:layout_marginTop="10dip"
       			 android:paddingRight="8dip"
+      			 android:gravity="left"
       			 android:text="武汉武汉市武汉市武汉武汉市武汉市武汉市武汉市武汉市市武汉市武汉市武汉市市"
-      			 android:textSize="@dimen/small_middle_text_size" />
+      			 android:textSize="@dimen/small_text_size"
+      			 android:textColor="@color/black" />
          
          <RelativeLayout
               android:layout_width="match_parent"
@@ -66,7 +73,8 @@
         			 style="@style/user_center_text"
         			 android:layout_alignParentLeft="true"
         			 android:text="武汉市"
-        			 android:textSize="@dimen/small_text_size" />
+        			 android:textSize="@dimen/small_text_size" 
+        			 android:textColor="@color/grey_10"/>
                 
                  <TextView
        				 android:id="@+id/share_datime"
@@ -74,7 +82,8 @@
         			 android:layout_alignParentRight="true"
         			 android:text="2016.5.10"
         			 android:paddingRight="10dip"
-        			android:textSize="@dimen/small_text_size" />
+        			android:textSize="@dimen/small_text_size"
+        			android:textColor="@color/grey_10" />
    
          </RelativeLayout>
          

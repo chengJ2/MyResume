@@ -307,6 +307,24 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	/**
 	 * 
 	 * @Title:BaseActivity
+	 * @Description: 设置界面消息delayMillis隐藏
+	 * @param id
+	 */
+	protected void set3Msg(int id,long delayMillis) {
+		msg.setText(CommUtil.getStrValue(self, id));
+		msg.setVisibility(View.VISIBLE);
+		msg.postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				setMsgHide();
+			}
+		}, delayMillis);
+	}
+	
+	/**
+	 * 
+	 * @Title:BaseActivity
 	 * @Description: 设置界面消息1.5S隐藏
 	 * @param id
 	 */

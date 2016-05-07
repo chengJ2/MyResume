@@ -1,6 +1,8 @@
 package com.me.resume.comm;
 
 import com.me.resume.tools.ImageLoader;
+import com.me.resume.tools.L;
+import com.me.resume.utils.RegexUtil;
 import com.me.resume.views.CustomListView;
 
 import android.content.Context;
@@ -236,14 +238,13 @@ public class ViewHolder {
 		return ratingBar;
 	}
 	
-	public ViewHolder showImage(int ViewID,String url){
-		ImageView iv=getView(ViewID);
-		if(!"".equals(url)&&url!=null){
-			iv.setVisibility(View.VISIBLE);
-			if(!mBusy){
-				mImageLoader.DisplayImage(url, iv, false);
-			}else{
-				mImageLoader.DisplayImage(url, iv, true);
+	public ViewHolder showImage(int ViewID, String url, boolean toRound) {
+		ImageView iv = getView(ViewID);
+		if (RegexUtil.checkNotNull(url)) {
+			if (!mBusy) {
+				mImageLoader.DisplayImage(url, iv, false, toRound);
+			} else {
+				mImageLoader.DisplayImage(url, iv, true, toRound);
 			}
 		}
 		return this;
