@@ -1,12 +1,22 @@
 package com.me.resume.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.me.resume.R;
+import com.me.resume.tools.ImageLoader;
+import com.me.resume.tools.L;
+import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.RegexUtil;
+import com.me.resume.views.MarqueeText;
 
 /**
  * 
@@ -18,13 +28,15 @@ import com.me.resume.R;
  */
 public class TopicActivity extends BaseActivity implements OnClickListener{
 
-	private TextView content;
+	private MarqueeText topic_title;
+	private TextView topic_from,topic_datetime;
+	private ImageView topic_frompic;
 	
-	private String source = "<p>(1)一旦和用人单位约好面试时间后，一定要提前5-10分钟到达面试地点，以表示求职者的诚意，给对方以信任感，同时也可调整自己的心态，作一些简单的仪表准备，以免仓促上阵，手忙脚乱。为了做到这一点，一定要牢记面试的时间地点，有条件的同学最好能提前去一趟，以免因一时找不到地方或途中延误而迟到。"
-						  + "如果迟到了，肯定会给招聘者留下不好的印象，甚至会丧失面试的机会。</p>"
-						  + "<p>(2) 进入面试场合时不要紧张。</p>" 
-						  + "<p>(3) 对用人单位的问题要逐一回答。</p> " 
-						  + "<p>(4) 在整个面试过程中，在保持举止文雅大方，谈吐谦虚谨慎，态度积极热情。</p>";
+	private TextView topic_content;
+	
+	private ImageLoader mImageLoader;
+	
+	private String title;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +46,23 @@ public class TopicActivity extends BaseActivity implements OnClickListener{
 		View v = View.inflate(self,R.layout.activity_topic_layout, null);
 		boayLayout.addView(v);
 		
-		setTopTitle(R.string.app_name);
+		initView();
+		
+		topic_title = findView(R.id.topic_title);
+		topic_from = findView(R.id.topic_from);
+		topic_datetime = findView(R.id.topic_datetime);
+		topic_frompic = findView(R.id.topic_frompic);
+		topic_content = findView(R.id.topic_content);
+		
+		mImageLoader=new ImageLoader(self);
+		
+	}
+	
+	private void initView(){
+		title = getIntent().getStringExtra("title");
+		String[] titleArr = title.split(";");
+		
+		setTopTitle(titleArr[0]);
 		
 		setMsgHide();
 		
@@ -42,8 +70,45 @@ public class TopicActivity extends BaseActivity implements OnClickListener{
 		
 		setfabLayoutVisible(View.GONE);
 		
-		content = findView(R.id.content);
-		content.setText(Html.fromHtml(source));
+		
+		getTopicData(titleArr[1]);
+	}
+	
+	/**
+	 * 获取话题
+	 */
+	private void getTopicData(String type){
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		
+		params.add("p_type");
+		values.add(type);
+		
+		requestData("pro_gettopic_info", 1, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+					
+					topic_title.setText(map.get("title").get(0));
+					topic_from.setText(map.get("from").get(0));
+					topic_datetime.setText(map.get("createtime").get(0));
+					String frompicUrl = map.get("from_url").get(0);
+					if (RegexUtil.checkNotNull(frompicUrl)) {
+						topic_frompic.setVisibility(View.VISIBLE);
+						mImageLoader.DisplayImage(CommUtil.getHttpLink(frompicUrl), topic_frompic, false, false);
+					}else{
+						topic_frompic.setVisibility(View.GONE);
+					}
+					topic_content.setText(Html.fromHtml(map.get("detail").get(0)));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	@Override

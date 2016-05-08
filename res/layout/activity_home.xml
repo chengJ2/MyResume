@@ -13,7 +13,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <RelativeLayout
+             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dip"
                 android:background="@color/white" >
@@ -31,10 +31,10 @@
                     style="@style/home_item_text"
                     android:layout_width="wrap_content"
                     android:layout_toRightOf="@id/view1"
-                    android:text="@string/item_text2" />
+                    android:text="@string/item_text6" />
 
                 <ImageView
-                    android:id="@+id/templmore"
+                    android:id="@+id/covermore"
                     android:layout_width="60dip"
                		android:layout_height="match_parent"
                		android:layout_centerVertical="true"
@@ -44,9 +44,9 @@
             </RelativeLayout>
 
              <GridView
-                 android:id="@+id/grid"
+                 android:id="@+id/covergridview"
                  android:layout_width="match_parent"
-                 android:layout_height="190dip"
+                 android:layout_height="180dip"
            		 android:layout_marginLeft="10dp"
            		 android:layout_marginRight="10dip"
            		 android:layout_marginTop="10dip"
@@ -84,7 +84,7 @@
             </RelativeLayout>
 
             <GridView
-                android:id="@+id/xgln_gridview"
+                android:id="@+id/linkgridview"
                 android:layout_width="match_parent"
                 android:layout_height="140dip"
                 android:layout_marginLeft="10dip"

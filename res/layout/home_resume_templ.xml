@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:visibility="visible" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+        android:background="@color/white" >
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="22dip"
+            android:layout_height="20dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/hot" />
+
+        <TextView
+            style="@style/home_item_text"
+            android:layout_width="wrap_content"
+            android:layout_toRightOf="@id/view1"
+            android:text="@string/item_text2" />
+
+        <ImageView
+            android:id="@+id/templmore"
+            android:layout_width="60dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/more" />
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/tempgridview"
+        android:layout_width="match_parent"
+        android:layout_height="190dip"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
+        android:columnWidth="80dp"
+        android:fadingEdge="none"
+        android:fadingEdgeLength="0dip"
+        android:gravity="center"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="auto_fit"
+        android:scrollbars="none"
+        android:scrollingCache="false"
+        android:smoothScrollbar="true"
+        android:stretchMode="columnWidth"
+        android:visibility="gone" >
+    </GridView>
+
+</LinearLayout>

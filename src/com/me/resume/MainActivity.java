@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
 	private JazzyViewPager jazzyViewPager;
 
 	private LayoutInflater mInflater;
-	private View view1, view2, view3, view4, view5,view6,view7,view8;// 页卡视图
+	private View cover,view1, view2, view3, view4, view5,view6,view7,view8;// 页卡视图
 	
 	private List<View> mViewList = new ArrayList<>();// 页卡视图集合
 	
@@ -74,6 +74,9 @@ public class MainActivity extends Activity {
 	
 	private TextView main_top_title;
 	private ImageView main_top_edit;
+	
+	// cover
+	private LinearLayout coverlayout;
 	
 	// View1
 	private LinearLayout index1layout;
@@ -155,6 +158,7 @@ public class MainActivity extends Activity {
 		
 		mInflater = LayoutInflater.from(this);
 		
+		cover = mInflater.inflate(R.layout.index_resume_cover, null);
 		view1 = mInflater.inflate(R.layout.index_resume_1, null);
 		view2 = mInflater.inflate(R.layout.index_resume_2, null);
 		view3 = mInflater.inflate(R.layout.index_resume_3, null);
@@ -163,6 +167,10 @@ public class MainActivity extends Activity {
 		view6 = mInflater.inflate(R.layout.index_resume_6, null);
 		view7 = mInflater.inflate(R.layout.index_resume_7, null);
 		view8 = mInflater.inflate(R.layout.index_resume_8, null);
+		
+		// 添加封面
+		coverlayout = (LinearLayout)cover.findViewById(R.id.coverlayout);
+		mViewList.add(cover);
 		
 		initView1(view1);
 		

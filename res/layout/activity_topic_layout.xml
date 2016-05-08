@@ -7,17 +7,67 @@
     android:orientation="vertical" >
     
      <com.me.resume.views.CommScrollView
-        style="@style/comm_scrollview_style" >
+        style="@style/comm_scrollview_style"
+        android:layout_marginBottom="0dip" >
 
-        <TextView
-            android:id="@+id/content"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dip"
-            android:textColor="@color/black"
-            android:text=""
-            android:textSize="@dimen/small_middle_text_size"
-            android:lineSpacingExtra="3dip"/>
-            
+         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+         
+         	 <com.me.resume.views.MarqueeText
+	            android:id="@+id/topic_title"
+	            android:layout_width="200dip"
+	            android:layout_height="40dip"
+	            android:textColor="@color/black"
+	            android:text="2016求职找工作的8条经验"
+	            android:gravity="center"
+	            android:singleLine="true"
+	            android:layout_gravity="center"
+	            android:textSize="@dimen/small_middle_text_size"/>
+             
+         	<RelativeLayout
+              android:layout_width="match_parent"
+              android:layout_height="30dip"
+              android:gravity="center" >
+                
+                <TextView
+       				 android:id="@+id/topic_from"
+        			 style="@style/user_center_text"
+        			 android:text="武汉市"
+        			 android:textSize="@dimen/small_text_size" 
+        			 android:textColor="@color/grey_10"/>
+                
+                 <TextView
+       				 android:id="@+id/topic_datetime"
+        			 style="@style/user_center_text"
+        			 android:text="2016.5.10"
+        			 android:layout_toRightOf="@id/topic_from"
+        			 android:layout_marginLeft="20dip"
+        			android:textSize="@dimen/small_text_size"
+        			android:textColor="@color/grey_10" />
+   
+         </RelativeLayout>
+         	 
+        	 <ImageView
+                  android:id="@+id/topic_frompic"
+                  android:layout_width="match_parent"
+             	  android:layout_height="180dip"
+             	  android:layout_marginTop="10dip"
+                  android:scaleType="centerInside" />
+         	 
+        	  <TextView
+	            android:id="@+id/topic_content"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:padding="5dip"
+	            android:layout_marginTop="10dip"
+	            android:textColor="@color/black"
+	            android:text="2016求职找工作的8条经验"
+	            android:textSize="@dimen/small_text_size"
+	            android:lineSpacingExtra="3dip"/>
+         	 
+        </LinearLayout>
+        
         </com.me.resume.views.CommScrollView>
 </RelativeLayout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/itemlayout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white" >
+    
+    <ImageView
+        android:id="@+id/item1"
+        android:layout_width="100dip"
+        android:layout_height="100dip"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/resume_cover"
+        android:scaleType="fitCenter">
+    </ImageView>
+ 
+    <TextView
+        android:id="@+id/item2"
+        android:layout_width="80dp"
+        android:layout_height="30dip"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:singleLine="false"
+        android:maxLines="1"
+        android:text="简洁清晰简历封面"
+        android:textSize="@dimen/micro_text_size"
+        android:textColor="@color/grey_10" >
+    </TextView>
+    
+    <Button
+        android:id="@+id/item3"
+        android:layout_width="50dip"
+        android:layout_height="28dip"
+        android:layout_gravity="center_horizontal"
+        android:singleLine="true"
+        android:text="使用"
+        android:textSize="8dip"
+        android:textColor="@color/grey_10"
+        android:visibility="visible" >
+    </Button>
+
+</LinearLayout>

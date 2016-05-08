@@ -34,6 +34,7 @@ import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.ImageUtils;
+import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.CustomListView;
 import com.whjz.android.text.CommonText;
@@ -52,13 +53,15 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	private CommonBaseAdapter<ResumeModel> commAdapter = null;
 	private GridView resumeModelgridView;
 	
+	private GridView resumeCovergridview;
+	
 	private CustomListView reviewsharingListView;
 	private ImageView sharemore,templmore;
 	private TextView nodata;
 
 	private Button makeResume,reviewResume;
 
-	private GridView resumeQuegridview;
+	private GridView resumeLinkgridview;
 	
 	private LinearLayout myshareLayout;
 	
@@ -74,8 +77,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				setPreferenceData("noticeshow",0);
 				break;
 			case 100:
-				getReTemplData();
+//				getReTemplData();
 				if (CommUtil.isNetworkAvailable(self)) {
+					getReCoverData();
 					getShareData();
 				}else{
 					setShareView(false);
@@ -104,9 +108,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		
 		findViews();
 		
-		setTemplInitData();
-		
-		setReTemplView(true);
+//		setTemplInitData();
+//		setReTemplView(true);
 		
 		setTopicData();
 		
@@ -132,8 +135,10 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		
 		makeResume = findView(R.id.make_btn);
 		reviewResume = findView(R.id.review_btn);
-		resumeModelgridView = findView(R.id.grid);
-		resumeQuegridview = findView(R.id.xgln_gridview);
+		
+		resumeModelgridView = findView(R.id.tempgridview);
+		resumeCovergridview = findView(R.id.covergridview);
+		resumeLinkgridview = findView(R.id.linkgridview);
 
 		right_icon.setImageResource(R.drawable.icon_setting);
 		
@@ -189,12 +194,11 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 	
-	
-	
 	/**
 	 * 设置简历模板初始数据
 	 */
 	private void setTemplInitData() {
+		// TODO
 		resumeModelList = new ArrayList<ResumeModel>();
 		for (int i = 0; i < 3; i++) {
 			ResumeModel item = new ResumeModel();
@@ -302,7 +306,10 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void convert(ViewHolder holder, String item,
 					final int position) {
-				holder.setText(R.id.itemName, mList.get(position));
+				
+				final String[] title = mList.get(position).toString().split(";");
+				
+				holder.setText(R.id.itemName, title[0]);
 				if (position == 1 || position == 5 || position == 6) {
 					holder.setTextColor(R.id.itemName,
 							CommUtil.getIntValue(self, R.color.red));
@@ -312,15 +319,68 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 					@Override
 					public void onClick(View view) {
-						ActivityUtils.startActivityPro(self, Constants.PACKAGENAME + ".ui.TopicActivity", "position",
-								String.valueOf(position));
+						ActivityUtils.startActivityPro(self, Constants.PACKAGENAME + ".ui.TopicActivity", "title",
+								title[0]+";"+title[1]);
 
 					}
 				});
 			}
 		};
 
-		resumeQuegridview.setAdapter(commStrAdapter);
+		resumeLinkgridview.setAdapter(commStrAdapter);
+	}
+	
+	
+	/**
+	 * 
+	 * @Title:HomeActivity
+	 * @Description: 面试分享心得
+	 */
+	private void getReCoverData(){
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		requestData("pro_getcover_info", 1, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+					setCoverData(map);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 简历预览封面
+	 * @param map
+	 */
+	private void setCoverData(final Map<String, List<String>> map){
+		CommForMapBaseAdapter mapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.home_cover_gridview_item,"id") {
+			
+			@Override
+			public void convert(ViewHolder holder, List<String> item, int position) {
+					holder.showImage(R.id.item1,
+							CommUtil.getHttpLink(map.get("url").get(position)),true);
+				
+				holder.setText(R.id.item2, map.get("note").get(position));
+				
+				holder.setOnClickEvent(R.id.item3, new ClickEvent() {
+					
+					@Override
+					public void onClick(View view) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+			}
+		};
+		
+		resumeCovergridview.setAdapter(mapBaseAdapter);
 	}
 	
 	/**

@@ -173,6 +173,18 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	protected void setTopTitle(int id) {
 		toptext.setText(CommUtil.getStrValue(self, id));
 	}
+	
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 设置顶部标题 及 图标
+	 * @author Comsys-WH1510032
+	 * @return 返回类型
+	 * @param id
+	 */
+	protected void setTopTitle(String str) {
+		toptext.setText(str);
+	}
 
 	/**
 	 * 

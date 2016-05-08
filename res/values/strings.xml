@@ -55,6 +55,7 @@
     <string name="item_text41">我来说</string>
     <string name="item_text42">暂无面试心得分享</string>
     <string name="item_text5">抱歉!该模块需求联网查看~</string>
+    <string name="item_text6">简历预览封面</string>
 
     <!-- Main -->
     <string name="resume_baseinfo">基本资料</string>
@@ -135,14 +136,13 @@
      <string name="date_today">今天是:</string>
      
      <!-- review link item -->
-     <string name="re_link1">面试技巧</string>
-     <string name="re_link2">求职简历</string>
-     <string name="re_link3">面试问题</string>
-     <string name="re_link4">注意事项</string>
-     <string name="re_link5">面试技巧</string>
-     <string name="re_link6">自我鉴定</string>
-     <string name="re_link7">笔试经验</string>
-     <string name="re_link8">面试技巧</string>
+     <string name="re_link1">面试经验;1</string>
+     <string name="re_link2">求职简历;2</string>
+     <string name="re_link3">职场攻略;3</string>
+     <string name="re_link5">求职指南;5</string>
+     <string name="re_link6">自我介绍;6</string>
+     <string name="re_link7">面试问题;7</string>
+     <string name="re_link8">其他须知;8</string>
      
      <!-- personal center -->
      <string name="personal_c_item1">收藏</string>

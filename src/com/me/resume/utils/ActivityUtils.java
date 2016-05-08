@@ -84,23 +84,6 @@ public class ActivityUtils {
 		}
 	}
 	
-	public static void startActivityPro(Activity src, String obj,String key, String data, boolean isAnim, boolean finish) {
-		try {
-			Class className = Class.forName(obj);
-			Intent intent = new Intent(src, className);
-			intent.putExtra(key, data);
-			src.startActivity(intent);
-//			if (isAnim) {
-//				src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
-//			}
-			if (finish) {
-				((Activity) src).finish();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	/**
 	 * @描述：内部之间的跳转，有返回值 <br>
 	 * @param src
