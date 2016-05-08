@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#b0000000"
+    android:gravity="center" >
+
+    <LinearLayout
+        android:id="@+id/horizontalsv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:background="@drawable/dialog_corner"
+        android:orientation="vertical" >
+
+	        <TextView
+	            android:id="@+id/byfile"
+	            android:layout_width="match_parent"
+	            android:layout_height="40dip"
+	            android:gravity="center"
+	            android:text="@string/action_upload_file"
+	            android:textColor="@color/black"
+	            android:textSize="@dimen/small_middle_text_size" />
+	        
+	        <View style="@style/line_padding10"/>
+	        
+	        <TextView
+	            android:id="@+id/bycamera"
+	            android:layout_width="match_parent"
+	            android:layout_height="40dip"
+	            android:gravity="center"
+	            android:text="@string/action_upload_camera"
+	            android:textColor="@color/black"
+	            android:textSize="@dimen/small_middle_text_size" />
+	        
+	        <View style="@style/line_h15" android:background="@color/grey_50"/>
+	        
+	        <TextView
+	            android:id="@+id/cancle"
+	            android:layout_width="match_parent"
+	            android:layout_height="40dip"
+	            android:gravity="center"
+	            android:background="@color/grey_30"
+	            android:text="@string/action_button_cancle"
+	            android:textColor="@color/grey_10"
+	            android:textSize="@dimen/small_middle_text_size" />
+        </LinearLayout>
+</RelativeLayout>

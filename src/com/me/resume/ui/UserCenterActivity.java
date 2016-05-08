@@ -21,9 +21,11 @@ import android.widget.TextView;
 
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.UploadPhotoTask;
 import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.FileUtils;
 import com.me.resume.utils.ImageUtils;
 import com.me.resume.utils.RegexUtil;
@@ -40,12 +42,13 @@ import com.whjz.android.text.CommonText;
 public class UserCenterActivity extends BaseActivity implements OnClickListener{
 
 	protected File pictureFile = null;
-	private String[] photoPath = new String[2];
 	
 	private LinearLayout llout01;
 	
 	protected ImageView user_info_avatar;
 	private TextView center_username,center_workyear,center_city;
+	
+	private TextView mycollection,viewmode,review_resume;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -68,6 +71,20 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
         				e.printStackTrace();
         			}
         		}
+            	break;
+            case OnTopMenu.MSG_MENU41:
+            	Intent intent = new Intent(
+						Intent.ACTION_PICK,
+						android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				startActivityForResult(intent, ImageUtils.IMAGE_SELECT);
+            	break;
+            case OnTopMenu.MSG_MENU42:
+            	if (FileUtils.isSDCardExist()) {
+					Intent intentCamera = new Intent(
+							MediaStore.ACTION_IMAGE_CAPTURE);
+					startActivityForResult(intentCamera,
+							ImageUtils.CEMERA_WITH_DATA);
+				} 
             	break;
 			default:
 				break;
@@ -96,18 +113,23 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		center_workyear = findView(R.id.center_workyear);
 		center_city = findView(R.id.center_city);
 		
+		mycollection = findView(R.id.mycollection);
+		viewmode = findView(R.id.viewmode);
+		review_resume = findView(R.id.review_resume);
+		
 		llout01.setOnClickListener(this);
+		
+		mycollection.setOnClickListener(this);
+		viewmode.setOnClickListener(this);
+		review_resume.setOnClickListener(this);
 	}
 	
 	private void initViews(){
 		setTopTitle(R.string.personal_center);
 		setMsgHide();
-		setRightIconVisible(View.VISIBLE);
+		setRightIconVisible(View.GONE);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
-		
-		photoPath[0] = CommUtil.getStrValue(self, R.string.action_upload_file);
-		photoPath[1] = CommUtil.getStrValue(self, R.string.action_upload_camera);
 		
 		Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.userhead.toString());
 		if (bitmap != null) {
@@ -133,10 +155,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			if (RegexUtil.checkNotNull(city)) {
 				center_city.setText("|"+city); 
 			}
-			
 		}
-		
-		
 	}
 	
 	@Override
@@ -146,49 +165,25 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			self.scrollToFinishActivity();
 			break;
 		case R.id.right_icon:
-			startActivity(".MainActivity",false);
 			break;
 		case R.id.user_info_avatar:
-			chooseUserHead();
+			DialogUtils.showPhotoPathDialog(self, user_info_avatar, mHandler);
 			break;
 		case R.id.llout01:
 			startActivity(".ui.BaseInfoActivity",false);
 			break;
+		case R.id.mycollection:
+			// TODO
+			break;
+		case R.id.viewmode:
+			// TODO
+			break;
+		case R.id.review_resume:
+			startActivity(".MainActivity",false);
+			break;
 		default:
 			break;
 		}
-	}
-	
-	/**
-	 * 更换头像选择
-	 */
-	protected void chooseUserHead(){
-		new AlertDialog.Builder(self).setTitle(
-    			"选择照片路径").setItems(photoPath,
-			new DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog,
-						int which) {
-					switch (which) {
-					case 0:
-						Intent intent = new Intent(
-								Intent.ACTION_PICK,
-								android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-						startActivityForResult(intent, ImageUtils.IMAGE_SELECT);
-						break;
-
-					case 1:
-						if (FileUtils.isSDCardExist()) {
-							Intent intentCamera = new Intent(
-									MediaStore.ACTION_IMAGE_CAPTURE);
-							startActivityForResult(intentCamera,
-									ImageUtils.CEMERA_WITH_DATA);
-						} 
-						break;
-					}
-				}
-			}).show();
 	}
 	
 	@Override

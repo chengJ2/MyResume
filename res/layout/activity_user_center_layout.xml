@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dip"
+                android:layout_marginTop="@dimen/margin_16"
                 android:background="@color/white"
                 android:gravity="center"
                 android:orientation="vertical" >
@@ -36,7 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="@dimen/margin_16"
                     android:gravity="center"
                     android:orientation="horizontal" >
 
@@ -61,11 +61,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dip"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dip"
+                android:layout_marginTop="@dimen/margin_16"
                 android:background="@color/white"
                 android:orientation="horizontal" >
 
                 <TextView
+                    android:id="@+id/mycollection"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -75,7 +76,10 @@
                     android:textColor="@color/grey_10"
                     android:textSize="@dimen/small_middle_text_size" />
                 
+                <View style="@style/line2"/>
+                
                 <TextView
+                    android:id="@+id/viewmode"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -85,7 +89,10 @@
                     android:textColor="@color/grey_10"
                     android:textSize="@dimen/small_middle_text_size" />
 
+                <View style="@style/line2"/>
+                
                 <TextView
+                    android:id="@+id/review_resume"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -101,8 +108,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dip"
-                android:orientation="vertical" >
+                android:layout_margin="@dimen/margin_8"
+                android:orientation="vertical"
+                android:background="@color/white" >
 
                 <LinearLayout
                     android:id="@+id/feedbackLayout"
@@ -182,7 +190,7 @@
                         android:layout_weight="5"
                         android:text="@string/resume_project_experience"
                         android:textColor="@color/black" />
-
+                    
                     <ImageView
                         style="@style/user_info_item_iv"
                         android:visibility="visible" />
@@ -191,5 +199,4 @@
             </LinearLayout>
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
-
 </RelativeLayout>

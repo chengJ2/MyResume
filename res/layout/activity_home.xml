@@ -5,7 +5,13 @@
     android:background="@color/white"
     android:fitsSystemWindows="true" >
 
+     <com.me.resume.views.RefreshableView
+          android:id="@+id/refreshview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <com.me.resume.views.CommScrollView 
+        android:id="@+id/commscrollview"
         style="@style/comm_scrollview_style" >
 
         <LinearLayout
@@ -54,12 +60,13 @@
                  android:fadingEdge="none"
                  android:fadingEdgeLength="0dip"
                  android:gravity="center"
-                 android:listSelector="@android:color/transparent"
+                 android:listSelector="#00000000"
                  android:numColumns="auto_fit"
                  android:scrollbars="none"
                  android:scrollingCache="false"
                  android:smoothScrollbar="true"
-                 android:stretchMode="columnWidth" >
+                 android:stretchMode="columnWidth"
+                 android:background="@color/white" >
              </GridView>
 
                <RelativeLayout
@@ -90,6 +97,7 @@
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
                 android:columnWidth="100dp"
+                android:listSelector="#00000000"
                 android:fadingEdge="none"
                 android:fadingEdgeLength="0dip"
                 android:gravity="center"
@@ -134,7 +142,7 @@
             </RelativeLayout>
 
             <com.me.resume.views.CustomListView
-                android:id="@+id/reviewsharingListView"
+                android:id="@+id/reviewshareListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
@@ -157,7 +165,7 @@
                 android:visibility="gone" />
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
-
+</com.me.resume.views.RefreshableView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dip"
@@ -179,32 +187,4 @@
             android:text="@string/review_resume"
             android:visibility="visible" />
     </LinearLayout>
-
-    
-    <LinearLayout
-        android:id="@+id/myshareLayout"
-        android:layout_width="match_parent"
-        android:layout_height="150dip"
-        android:layout_alignParentBottom="true"
-        android:background="@color/red"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone" >
-        
-         <EditText
-              android:id="@+id/info_realname"
-              style="@style/user_info_item_ed"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:layout_weight="2"
-              android:hint="@string/info_name_hint" />
-         
-         <Button
-            style="@style/button_menu"
-            android:layout_weight="1"
-            android:text="提交"
-            android:visibility="visible" />
-   </LinearLayout>
-    
-    
 </RelativeLayout>

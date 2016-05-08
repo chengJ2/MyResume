@@ -54,8 +54,11 @@
     <string name="item_text4">说说面试心得</string>
     <string name="item_text41">我来说</string>
     <string name="item_text42">暂无面试心得分享</string>
+    <string name="item_text43">正在加载,请稍后...</string>
     <string name="item_text5">抱歉!该模块需求联网查看~</string>
     <string name="item_text6">简历预览封面</string>
+    <string name="item_text61">简历封面</string>
+    <string name="item_text7">提交成功,感谢您的分享~</string>
 
     <!-- Main -->
     <string name="resume_baseinfo">基本资料</string>
@@ -151,6 +154,8 @@
      
      <string name="personal_c_item11">完整</string>
      <string name="personal_c_item12">完整度</string>
+     
+     <string name="action_button_cancle">取&#160;&#160;消</string>
 
     <!-- 基本资料 -->
     <string name="reg_info_email">电子邮箱不合法！</string>

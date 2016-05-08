@@ -17,14 +17,18 @@ import android.widget.TextView;
 
 import com.me.resume.R;
 
-
+/**
+ * 下拉刷新
+ * @author Administrator
+ *
+ */
 public class RefreshableView extends LinearLayout {
 
 	private static final String TAG = "LILITH";
 	private Scroller scroller;
 	private View refreshView;
 //	private ImageView refreshIndicatorView;
-	private int refreshTargetTop = -100;
+	private int refreshTargetTop = -50;
 	private ProgressBar bar;
 	private TextView downTextView;
 	private TextView timeTextView;

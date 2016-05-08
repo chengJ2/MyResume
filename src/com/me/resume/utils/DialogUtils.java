@@ -446,6 +446,54 @@ public class DialogUtils {
 		mPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 	}
 	
+	
+	/**
+	 * 
+	 * @param context
+	 * @param parent
+	 * @param resId
+	 * @param handler
+	 */
+	public static void showPhotoPathDialog(Activity context,View parent,Handler handler){
+		mHandler = handler;
+		View layout = View.inflate(context,R.layout.choose_photo_path_layout, null);
+		mPopupWindow = new PopupWindow(layout, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		mPopupWindow.setTouchable(true);
+		mPopupWindow.setFocusable(true);
+		
+		TextView byfile = (TextView)layout.findViewById(R.id.byfile);
+		TextView bycamera = (TextView)layout.findViewById(R.id.bycamera);
+		TextView cancle = (TextView)layout.findViewById(R.id.cancle);
+		
+		byfile.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				sendMsg(OnTopMenu.MSG_MENU41);
+				dismissPopwindow();
+			}
+		});
+		bycamera.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				sendMsg(OnTopMenu.MSG_MENU42);
+				dismissPopwindow();
+			}
+		});
+
+		cancle.setOnClickListener(new OnClickListener() {
+	
+			@Override
+			public void onClick(View v) {
+				dismissPopwindow();
+			}
+		});
+		
+		mPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+	}
+	
 	/**
 	 * 
 	 * @param context 上下文

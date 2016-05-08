@@ -58,7 +58,8 @@
       			 android:layout_marginTop="10dip"
       			 android:paddingRight="8dip"
       			 android:gravity="left"
-      			 android:text="武汉武汉市武汉市武汉武汉市武汉市武汉市武汉市武汉市市武汉市武汉市武汉市市"
+      			 android:layout_gravity="left"
+      			 android:text="武汉武汉市武汉市武"
       			 android:textSize="@dimen/small_text_size"
       			 android:textColor="@color/black" />
          

@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.me.resume.R;
+import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.swipeback.SwipeBackActivity;
@@ -57,6 +58,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	protected SharedPreferences sp;
 	
 	protected CommonBaseAdapter<String> commStrAdapter = null;
+	
+	protected CommForMapBaseAdapter commapBaseAdapter = null;
 
 	protected Map<String, String[]> commMapArray = null;
 
@@ -65,7 +68,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	protected String queryWhere = "";
 
 	// 用户没有登录注册时获取ID
-	public static String kId = "";
+	public static String kId = "0";
 	
 	protected int updResult = -1;
 

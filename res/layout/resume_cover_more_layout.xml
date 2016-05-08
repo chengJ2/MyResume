@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true" 
+    android:orientation="vertical">
+    
+    <GridView
+          android:id="@+id/covermoregridview"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+   		  android:layout_marginLeft="10dp"
+   		  android:layout_marginRight="10dip"
+   		  android:layout_marginTop="10dip"
+          android:columnWidth="80dp"
+          android:fadingEdge="none"
+          android:fadingEdgeLength="0dip"
+          android:gravity="center"
+          android:listSelector="@android:color/transparent"
+          android:numColumns="auto_fit"
+          android:scrollbars="none"
+          android:scrollingCache="false"
+          android:smoothScrollbar="true"
+          android:stretchMode="columnWidth" >
+      </GridView>
+    
+</LinearLayout>
