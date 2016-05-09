@@ -113,7 +113,7 @@ public class TrainingFragment extends BaseFragment {
 	}
 	
 	private void initData() {
-		queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = "+ BaseActivity.kId +" order by id desc limit 1";
+		queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = "+ BaseActivity.uTokenId +" order by id desc limit 1";
 		commap = dbUtil.queryData(getActivity(), queryWhere);
 		if (commap!= null && commap.get("userId").length > 0) {
 			trId = commap.get("id")[0];

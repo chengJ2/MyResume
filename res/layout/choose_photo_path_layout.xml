@@ -41,7 +41,6 @@
 	            android:layout_width="match_parent"
 	            android:layout_height="40dip"
 	            android:gravity="center"
-	            android:background="@color/grey_30"
 	            android:text="@string/action_button_cancle"
 	            android:textColor="@color/grey_10"
 	            android:textSize="@dimen/small_middle_text_size" />

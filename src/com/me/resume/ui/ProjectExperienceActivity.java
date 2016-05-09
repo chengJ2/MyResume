@@ -49,7 +49,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 				if (msg.obj != null) {
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
-							new String[]{kId,"background"}, 
+							new String[]{uTokenId,"background"}, 
 							new String[]{"1",String.valueOf(checkColor)},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
@@ -107,12 +107,12 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	}
 	
 	private void initViews(){
-		 queryWhere = "select * from " + CommonText.PROJECT_EXPERIENCE + " where userId = 1 order by id desc limit 1";
+		 queryWhere = "select * from " + CommonText.PROJECT_EXPERIENCE + " where userId = '"+ uTokenId +"' order by id desc limit 1";
 		 commMapArray = dbUtil.queryData(self, queryWhere);
          if (commMapArray!= null && commMapArray.get("userId").length > 0) {
         	 setEditBtnVisible(View.VISIBLE);
         	 
-        	 kId = commMapArray.get("id")[0];
+        	 uTokenId = commMapArray.get("id")[0];
         	 
         	 info_projectname.setText(commMapArray.get("projectname")[0]);
         	 info_startworktime.setText(commMapArray.get("worktimestart")[0]);
@@ -173,7 +173,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 			break;
 		case R.id.edit:
 			updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
-					new String[]{kId,"projectname","worktimestart","worktimeend","duties","prokectdesc"}, 
+					new String[]{uTokenId,"projectname","worktimestart","worktimeend","duties","prokectdesc"}, 
 					new String[]{"1",info_projectnameStr,info_startworktimeStr,info_endworktimeStr,info_workdutiesStr,input_workdescStr},2);
 			if (updResult == 1) {
 				toastMsg(R.string.action_update_success);

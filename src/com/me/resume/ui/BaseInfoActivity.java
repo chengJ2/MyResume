@@ -111,10 +111,10 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 						checkColor = (Integer) msg.obj;
 						updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
 								new String[]{"userId=?","bgcolor"}, 
-								new String[]{kId,String.valueOf(checkColor)},1);
+								new String[]{uTokenId,String.valueOf(checkColor)},1);
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
-							if(MyApplication.userId != 0){
+							if(!MyApplication.userId.equals("0")){
 								set2Msg(R.string.action_syncing);
 								syncData();
 							}
@@ -218,8 +218,8 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void initData() {
-		L.d("===kid==="+kId);
-		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = " + kId;
+		L.d("===kid==="+uTokenId);
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId +"'";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			setAddBtnSrc(R.drawable.ic_btn_edit);
@@ -314,7 +314,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		case R.id.save:
 			getFeildValue();
 			if(judgeField()){
-				queryWhere = "select * from " + CommonText.BASEINFO + " where userId = " + kId + " order by id desc limit 1";
+				queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId + "' order by id desc limit 1";
 				commMapArray = dbUtil.queryData(self, queryWhere);
 				if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 					String baId = commMapArray.get("id")[0];
@@ -322,12 +322,12 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 							new String[]{baId,"realname","gender","brithday","joinworktime",
 							"phone","hometown","city","email","ismarry",
 							"nationality","license","workingabroad","politicalstatus"}, 
-							new String[]{kId,info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
+							new String[]{uTokenId,info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
 							info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
 							info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						if(MyApplication.userId != 0){
+						if(!MyApplication.userId.equals("0")){
 							set2Msg(R.string.action_syncing);
 							syncData();
 						}
@@ -336,7 +336,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 					}
 				}else{
 					ContentValues cValues = new ContentValues();
-					cValues.put("userId", kId);
+					cValues.put("userId", uTokenId);
 					cValues.put("realname", info_realnameStr);
 					cValues.put("gender", rg_genderStr);
 					cValues.put("brithday", info_brithdayStr);
@@ -356,7 +356,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 					if (queryResult) {
 						setAddBtnSrc(R.drawable.ic_btn_edit);
 						toastMsg(R.string.action_add_success);
-						if(MyApplication.userId != 0){
+						if(!MyApplication.userId.equals("0")){
 							set2Msg(R.string.action_syncing);
 							syncData();
 						}
@@ -463,7 +463,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void goActivity(String src){
-		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = " + kId;;
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId +"'";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			startActivity(src,false);
@@ -500,7 +500,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		List<String> values = new ArrayList<String>();
 		
 		params.add("p_userId");
-		values.add(kId);
+		values.add(uTokenId);
 		
 		requestData("pro_get_baseinfo", 1, params, values, new HandlerData() {
 			@Override
@@ -511,7 +511,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			public void success(Map<String, List<String>> map) {
 				try {
 					String p_baId = map.get("id").get(0);
-					if (map.get("userId").get(0).equals(kId)) {
+					if (map.get("userId").get(0).equals(uTokenId)) {
 						syncRun(p_baId,3);
 					}else{
 						syncRun("1",2);
@@ -552,7 +552,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			params.add("p_bgcolor");
 			
 			values.add(bdId);
-			values.add(kId);
+			values.add(uTokenId);
 			values.add(info_realnameStr);
 			values.add(rg_genderStr);
 			values.add(info_brithdayStr);

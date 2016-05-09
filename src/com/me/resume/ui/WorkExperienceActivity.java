@@ -81,10 +81,10 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 							new String[]{"userId=?","bgcolor"}, 
-							new String[]{kId,String.valueOf(checkColor)},1);
+							new String[]{uTokenId,String.valueOf(checkColor)},1);
 					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
-						if(MyApplication.userId != 0){
+						if(!MyApplication.userId.equals("0")){
 							set2Msg(R.string.action_syncing);
 							syncData();
 						}
@@ -172,7 +172,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	}
 	
 	private boolean getWEData(){
-		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = "+ kId +" order by id desc limit 1";
+		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = "+ uTokenId +" order by id desc limit 1";
 		 commMapArray = dbUtil.queryData(self, queryWhere);
          if (commMapArray!= null && commMapArray.get("userId").length > 0) {
         	 setEditBtnVisible(View.VISIBLE);
@@ -192,7 +192,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		case R.id.save:
 			if(judgeFeild()){
 				ContentValues cValues = new ContentValues();
-				cValues.put("userId", kId);
+				cValues.put("userId", uTokenId);
 				cValues.put("companyname", info_companynameStr);
 				cValues.put("companynature", info_companynatureStr);
 				cValues.put("companyscale", info_companyscaleStr);
@@ -207,7 +207,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				if(queryResult){
 					toastMsg(R.string.action_add_success);
 					setEditBtnVisible(View.VISIBLE);
-					if(MyApplication.userId != 0){
+					if(!MyApplication.userId.equals("0")){
 						set2Msg(R.string.action_syncing);
 						weId = "0";
 						syncData();
@@ -222,11 +222,11 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 						new String[]{weId,"companyname","companynature","companyscale","industryclassification",
 										  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc"}, 
-						new String[]{kId,info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
+						new String[]{uTokenId,info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
 									info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr},2);
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
-					if(MyApplication.userId != 0){
+					if(!MyApplication.userId.equals("0")){
 						set2Msg(R.string.action_syncing);
 						syncData();
 					}
@@ -355,7 +355,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		params.add("p_weId");
 		params.add("p_userId");
 		values.add(weId);
-		values.add(kId);
+		values.add(uTokenId);
 		requestData("pro_get_workexpericnce", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
@@ -365,7 +365,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			public void success(Map<String, List<String>> map) {
 				try {
 					String p_weId = map.get("id").get(0);
-					if (map.get("userId").get(0).equals(kId)) {
+					if (map.get("userId").get(0).equals(uTokenId)) {
 						syncRun(p_weId,3);
 						
 					}else{
@@ -404,7 +404,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			params.add("p_bgcolor");
 			
 			values.add(weId);
-			values.add(kId);
+			values.add(uTokenId);
 			values.add(info_companynameStr);
 			values.add(info_industryclassificationStr);
 			values.add(info_jobtitleStr);

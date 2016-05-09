@@ -10,6 +10,7 @@ import android.util.DisplayMetrics;
 
 import com.me.resume.tools.CrashHandler;
 import com.me.resume.tools.DbManager;
+import com.me.resume.tools.L;
 
 /**
  * 
@@ -44,7 +45,7 @@ public class MyApplication extends Application {
    /**
     * 判断用户是否注册登录成功
     */
-   public static int userId = 0;
+   public static String userId = "0";
    
 	@Override
 	public void onCreate() {
@@ -111,6 +112,8 @@ public class MyApplication extends Application {
         displayWitdh = dm.widthPixels;
         displayHeight = dm.heightPixels;
         displayDensity = dm.density;
+        int densityDpi = dm.densityDpi;
+        L.d("宽度（PX）:"+displayWitdh +" 高度（PX）:"+displayHeight + " 密度:" + displayDensity + " 密度DPI:" + densityDpi);
     }
     
     /**

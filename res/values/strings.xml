@@ -24,6 +24,7 @@
     <string name="settings_item5">同步当前数据</string>
     <string name="settings_item6">关于我们</string>
     <string name="settings_item7">向好友分享</string>
+    <string name="settings_item71">分享</string>
     <string name="action_login_head">请先登录</string>
     <string name="action_syncing">正在同步,请稍后...</string>
     <string name="action_sync_success">同步成功</string>
@@ -101,6 +102,7 @@
     <string name="register_protocol">同意《我的简历服务协议》</string>
     <string name="account_go_login">已有账号,登录>></string>
     <string name="action_logout">退出登录</string>
+    <string name="action_logout_success">注销成功</string>
     <string name="action_logout_fail">注销失败,请重试</string>
     <string name="action_no_login">未登录</string>
     <string name="personal_center">个人中心</string>

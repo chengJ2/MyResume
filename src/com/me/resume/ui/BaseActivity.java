@@ -67,8 +67,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 
 	protected String queryWhere = "";
 
-	// 用户没有登录注册时获取ID
-	public static String kId = "0";
+	// 用户没有登录注册时获取UUID
+	public static String uTokenId = "0";
 	
 	protected int updResult = -1;
 

@@ -48,10 +48,10 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
 							new String[]{"userId=?","bgcolor"}, 
-							new String[]{kId,String.valueOf(checkColor)},1);
+							new String[]{uTokenId,String.valueOf(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						if(MyApplication.userId != 0){
+						if(!MyApplication.userId.equals("0")){
 							set2Msg(R.string.action_syncing);
 							syncData(cposition);
 						}
@@ -153,7 +153,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	 * @param tablename
 	 */
 	private void setEditVisible(String tablename){
-		queryWhere = "select * from " + tablename + " where userId = 1 limit 1";
+		queryWhere = "select * from " + tablename + " where userId = '"+ uTokenId +"' limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			setEditBtnVisible(View.VISIBLE);
@@ -194,7 +194,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			if(cposition == 0){ // 教育背景
 				if( judgeEduField()){
 					ContentValues cValues = new ContentValues();
-					cValues.put("userId", kId);
+					cValues.put("userId", uTokenId);
 					cValues.put("educationtimestart", info_starttimeStr);
 					cValues.put("educationtimeend", info_endtimeStr);
 					cValues.put("school", info_schoolStr);
@@ -214,7 +214,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			}else{ // 培训经历
 				if(judgeTraField()){
 					ContentValues cValues = new ContentValues();
-					cValues.put("userId", kId);
+					cValues.put("userId", uTokenId);
 					cValues.put("trainingtimestart", info_starttimeStr);
 					cValues.put("trainingtimeend", info_endtimeStr);
 					cValues.put("trainingorganization", info_trainingorganizationStr);
@@ -234,14 +234,14 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		case R.id.edit:
 			if(cposition == 0){ // 教育背景
 				if( judgeEduField()){
-					queryWhere = "select * from " + CommonText.EDUCATION + " where userId = "+ kId +" order by id desc limit 1";
+					queryWhere = "select * from " + CommonText.EDUCATION + " where userId = '"+ uTokenId +"' order by id desc limit 1";
 					commMapArray = dbUtil.queryData(self, queryWhere);
 					if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 						edId = commMapArray.get("id")[0];
 						updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
 								new String[]{edId,"educationtimestart","educationtimeend","school","majorname",
 												  "degree","examination"}, 
-								new String[]{kId,info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,
+								new String[]{uTokenId,info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,
 								info_degressStr,info_examinationStr},2);
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
@@ -252,14 +252,14 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				}
 			}else{
 				if(judgeTraField()){
-					queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = "+ kId +" order by id desc limit 1";
+					queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = '"+ uTokenId +"' order by id desc limit 1";
 					commMapArray = dbUtil.queryData(self, queryWhere);
 					if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 						edId = commMapArray.get("id")[0];
 						updResult = dbUtil.updateData(self, CommonText.EDUCATION_TRAIN, 
 								new String[]{edId,"trainingtimestart","trainingtimeend","trainingorganization","trainingclass",
 								"certificate","description"}, 
-								new String[]{kId,info_starttimeStr,info_endtimeStr,info_trainingorganizationStr,info_trainingclassStr,
+								new String[]{uTokenId,info_starttimeStr,info_endtimeStr,info_trainingorganizationStr,info_trainingclassStr,
 								info_certificateStr,info_descriptionStr},2);
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
@@ -296,7 +296,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		params.add("p_userId");
-		values.add(kId);
+		values.add(uTokenId);
 		if(cposition == 0){
 			procname = "pro_get_education";
 		}else{
@@ -312,7 +312,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			public void success(Map<String, List<String>> map) {
 				try {
 					String p_edId = map.get("id").get(0);
-					if (map.get("userId").get(0).equals(kId)) {
+					if (map.get("userId").get(0).equals(uTokenId)) {
 						syncRun(cposition,p_edId,3);
 					}else{
 						syncRun(cposition,"1",2);
@@ -338,7 +338,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		params.add("p_userId");
 		
 		values.add(edId);
-		values.add(kId);
+		values.add(uTokenId);
 		
 		if(cposition == 0){
 			if (judgeEduField()) {

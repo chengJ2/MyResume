@@ -59,7 +59,7 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 			
 			paramvalue.add(Base64Util.getbyteString(context, arg0[0].toString()));
 			paramvalue.add(Base64Util.getPath());
-			paramvalue.add(BaseActivity.kId);
+			paramvalue.add(BaseActivity.uTokenId);
 			
 			Info info = new Info();
 			dataSetList = baseCommon.datasetlistUpdata(info.getUse(),info.getPass(), "pro_upload_avator",1, paramname,paramvalue,null);
@@ -112,8 +112,8 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 			CommUtil.ToastMsg(context, context.getResources().getString(R.string.file_failLoad));
 		}else if (result == 1) {
 			CommUtil.ToastMsg(context, context.getResources().getString(R.string.file_successLoad));
-			if(Constants.userhead.exists()){
-				Constants.userhead.delete();
+			if(Constants.USERHEAD.exists()){
+				Constants.USERHEAD.delete();
         	}
 			mHandler.sendMessage(mHandler.obtainMessage(1, user_avator));
 		}

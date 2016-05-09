@@ -11,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkInfo.State;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -434,4 +435,16 @@ public class CommUtil {
          }
          return sb.toString();
       }
+     
+     public static String getDisplay(Activity c){
+    	 DisplayMetrics metric = new DisplayMetrics();
+         c.getWindowManager().getDefaultDisplay().getMetrics(metric);
+
+         int width = metric.widthPixels;  // 宽度（PX）
+         int height = metric.heightPixels;  // 高度（PX）
+
+         float density = metric.density;  // 密度（0.75 / 1.0 / 1.5）
+         int densityDpi = metric.densityDpi;  // 密度DPI（120 / 160 / 240）
+         return "宽度（PX）:"+width +" 高度（PX）:"+height + " 密度:" + density + " 密度DPI:" + densityDpi;
+     }
 }

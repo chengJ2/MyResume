@@ -77,7 +77,7 @@ public class OtherInfoActivity extends BaseActivity implements
 				if (msg.obj != null) {
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.OTHERINFO, 
-							new String[]{kId,"background"}, 
+							new String[]{uTokenId,"background"}, 
 							new String[]{"1",String.valueOf(checkColor)},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
@@ -178,7 +178,7 @@ public class OtherInfoActivity extends BaseActivity implements
 	}
 
 	private void initData(){
-		queryWhere = "select * from " + CommonText.OTHERINFO + " where userId = 1 order by id desc limit 1";
+		queryWhere = "select * from " + CommonText.OTHERINFO + " where userId = '"+ uTokenId +"' order by id desc limit 1";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
         	ot_languages_edit.setVisibility(View.VISIBLE);
@@ -191,7 +191,7 @@ public class OtherInfoActivity extends BaseActivity implements
         	ot_languages_edit.setVisibility(View.GONE);
         }
         
-        queryWhere = "select * from " + CommonText.OTHERINFO1 + " where userId = 1 order by id desc limit 1";
+        queryWhere = "select * from " + CommonText.OTHERINFO1 + " where userId = '"+ uTokenId +"' order by id desc limit 1";
         commMapArray = dbUtil.queryData(self, queryWhere);
         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
         	ot_certificate_edit.setVisibility(View.VISIBLE);
@@ -203,7 +203,7 @@ public class OtherInfoActivity extends BaseActivity implements
         	ot_certificate_edit.setVisibility(View.GONE);
         }
         
-        queryWhere = "select * from " + CommonText.OTHERINFO2 + " where userId = 1 order by id desc limit 1";
+        queryWhere = "select * from " + CommonText.OTHERINFO2 + " where userId = '"+ uTokenId +"' order by id desc limit 1";
         commMapArray = dbUtil.queryData(self, queryWhere);
         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
         	ot_otherinfo_edit.setVisibility(View.VISIBLE);
@@ -270,7 +270,7 @@ public class OtherInfoActivity extends BaseActivity implements
 					.getTextValue(info_literacyskills);
 			info_listeningspeakingStr = CommUtil
 					.getTextValue(info_listeningspeaking);
-			queryWhere = "select * from " + CommonText.OTHERINFO + " where userId = 1 order by id desc limit 1";
+			queryWhere = "select * from " + CommonText.OTHERINFO + " where userId = '"+ uTokenId +"' order by id desc limit 1";
 			 commMapArray = dbUtil.queryData(self, queryWhere);
 	         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 	        	String edId = commMapArray.get("id")[0];
@@ -304,7 +304,7 @@ public class OtherInfoActivity extends BaseActivity implements
 		case R.id.ot_certificate_edit:
 			info_certificateStr = CommUtil.getTextValue(info_certificate);
 			info_certificatetimesStr = CommUtil.getTextValue(info_certificatetime);
-			queryWhere = "select * from " + CommonText.OTHERINFO1 + " where userId = 1 order by id desc limit 1";
+			queryWhere = "select * from " + CommonText.OTHERINFO1 + " where userId = '"+ uTokenId +"' order by id desc limit 1";
 			 commMapArray = dbUtil.queryData(self, queryWhere);
 	         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 	        	String edId = commMapArray.get("id")[0];
@@ -338,7 +338,7 @@ public class OtherInfoActivity extends BaseActivity implements
 			info_titleStr = CommUtil.getTextValue(info_title);
 			info_descriptionStr = CommUtil
 					.getTextValue(info_description);
-			queryWhere = "select * from " + CommonText.OTHERINFO2 + " where userId = 1 order by id desc limit 1";
+			queryWhere = "select * from " + CommonText.OTHERINFO2 + " where userId = '"+ uTokenId +"' order by id desc limit 1";
 			 commMapArray = dbUtil.queryData(self, queryWhere);
 	         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 	        	String edId = commMapArray.get("id")[0];

@@ -107,7 +107,7 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 	 
 	 
 	private void initData() {
-		queryWhere = "select * from " + CommonText.EDUCATION + " where userId  = "+ BaseActivity.kId +" order by id desc limit 1";
+		queryWhere = "select * from " + CommonText.EDUCATION + " where userId  = "+ BaseActivity.uTokenId +" order by id desc limit 1";
 		commap = dbUtil.queryData(getActivity(), queryWhere);
 		if (commap!= null && commap.get("userId").length > 0) {
 			eduId = commap.get("id")[0];

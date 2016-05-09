@@ -62,8 +62,8 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
             case 2:
             	if(msg.obj!= null){
         			try {
-        				ImageUtils.saveImage(self,(Bitmap)msg.obj,Constants.fileName);
-        				Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.userhead.toString());
+        				ImageUtils.saveImage(self,(Bitmap)msg.obj,Constants.FILENAME);
+        				Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.USERHEAD.toString());
         				if (bitmap != null) {
         					user_info_avatar.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
         				}
@@ -131,13 +131,18 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
-		Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.userhead.toString());
+		Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.USERHEAD.toString());
 		if (bitmap != null) {
 			user_info_avatar.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
+		}else{
+			String avatorStr= getPreferenceData("avator", "");
+			if(RegexUtil.checkNotNull(avatorStr)){
+				mHandler.sendMessage(mHandler.obtainMessage(1, avatorStr));
+			}
 		}
 		
 		queryWhere = "select a.username,b.* from " + CommonText.USERINFO + " a,"
-				+ CommonText.BASEINFO +" b where a.id = b.userId and a.id = "+ BaseActivity.kId;
+				+ CommonText.BASEINFO +" b where a.uid = b.userId and a.uid = '"+ uTokenId +"'";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			String realname = commMapArray.get("realname")[0];

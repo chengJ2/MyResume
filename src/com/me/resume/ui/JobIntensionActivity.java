@@ -61,10 +61,10 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.JOBINTENSION, 
 							new String[]{"userId=?","bgcolor"}, 
-							new String[]{kId,String.valueOf(checkColor)},1);
+							new String[]{uTokenId,String.valueOf(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						if(MyApplication.userId != 0){
+						if(!MyApplication.userId.equals("0")){
 							set2Msg(R.string.action_syncing);
 							syncData();
 						}
@@ -132,7 +132,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		setfabLayoutVisible(View.VISIBLE);
 		setEditBtnVisible(View.GONE);
 		
-		 queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = " + kId + " order by id desc limit 1";
+		 queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = '" + uTokenId + "' order by id desc limit 1";
 		 commMapArray = dbUtil.queryData(self, queryWhere);
          if (commMapArray!= null && commMapArray.get("userId").length > 0) {
         	 setAddBtnSrc(R.drawable.ic_btn_edit);
@@ -158,18 +158,18 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			getFeildValue();
 			
 			if(judgeFeild()){
-				queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = " + kId + " order by id desc limit 1";
+				queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = '" + uTokenId + "' order by id desc limit 1";
 				 commMapArray = dbUtil.queryData(self, queryWhere);
 		         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 		        	jiId = commMapArray.get("id")[0];
 					updResult = dbUtil.updateData(self, CommonText.JOBINTENSION, 
 							new String[]{jiId,"expworkingproperty","expdworkplace","expworkindustry","expworkcareer",
 											  "expmonthlysalary","workingstate"}, 
-							new String[]{kId,info_exp_workingpropertyStr,info_expworkplaceStr,info_expworkindustryStr,
+							new String[]{uTokenId,info_exp_workingpropertyStr,info_expworkplaceStr,info_expworkindustryStr,
 											info_expworkcareerStr,info_expmonthlysalaryStr,info_workingstateStr},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						if(MyApplication.userId != 0){
+						if(!MyApplication.userId.equals("0")){
 							set2Msg(R.string.action_syncing);
 							syncData();
 						}
@@ -178,7 +178,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 					}
 		         }else{
 		        	ContentValues cValues = new ContentValues();
-		 			cValues.put("userId", kId);
+		 			cValues.put("userId", uTokenId);
 		 			cValues.put("expworkingproperty", info_exp_workingpropertyStr);
 		 			cValues.put("expdworkplace", info_expworkplaceStr);
 		 			cValues.put("expworkindustry", info_expworkindustryStr);
@@ -191,7 +191,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		 			if(queryResult){
 		 				toastMsg(R.string.action_add_success);
 		 				setAddBtnSrc(R.drawable.ic_btn_edit);
-		 				if(MyApplication.userId != 0){
+		 				if(!MyApplication.userId.equals("0")){
 							set2Msg(R.string.action_syncing);
 							syncData();
 						}
@@ -306,7 +306,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		List<String> values = new ArrayList<String>();
 		
 		params.add("p_userId");
-		values.add(kId);
+		values.add(uTokenId);
 		
 		requestData("pro_get_jobintension", 1, params, values, new HandlerData() {
 			@Override
@@ -317,7 +317,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			public void success(Map<String, List<String>> map) {
 				try {
 					String p_jiId = map.get("id").get(0);
-					if (map.get("userId").get(0).equals(kId)) {
+					if (map.get("userId").get(0).equals(uTokenId)) {
 						syncRun(p_jiId,3);
 					}else{
 						syncRun("1",2);
@@ -351,7 +351,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			params.add("p_bgcolor");
 			
 			values.add(jiId);
-			values.add(kId);
+			values.add(uTokenId);
 			values.add(info_exp_workingpropertyStr);
 			values.add(info_expworkplaceStr);
 			values.add(info_expworkindustryStr);

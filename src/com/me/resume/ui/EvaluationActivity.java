@@ -41,7 +41,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
 							new String[]{"userId=?","background"}, 
-							new String[]{kId,String.valueOf(checkColor)},1);
+							new String[]{uTokenId,String.valueOf(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 					}else{
@@ -99,7 +99,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	private String evId;
 	
 	private void initData(){
-		queryWhere = "select * from " + CommonText.EVALUATION + " where userId = " + kId + " order by id limit 1";
+		queryWhere = "select * from " + CommonText.EVALUATION + " where userId = '" + uTokenId + "' order by id limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			evId = commMapArray.get("id")[0];
@@ -119,12 +119,12 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		case R.id.save:
 			getFeildValue();
 			if(judgeFeild()){
-				queryWhere = "select * from " + CommonText.EVALUATION + " where userId = " + kId + " order by id limit 1";
+				queryWhere = "select * from " + CommonText.EVALUATION + " where userId = '" + uTokenId + "' order by id limit 1";
 				commMapArray = dbUtil.queryData(self, queryWhere);
 				if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 					updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
 							new String[]{evId,"selfevaluation","careergoal"}, 
-							new String[]{kId,info_self_evaluationStr,info_career_goalStr},2);
+							new String[]{uTokenId,info_self_evaluationStr,info_career_goalStr},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 					}
@@ -189,7 +189,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		params.add("p_evId");
 		params.add("p_userId");
 		values.add(evId);
-		values.add(kId);
+		values.add(uTokenId);
 		
 		requestData("pro_get_evalution", 1, params, values, new HandlerData() {
 			@Override
@@ -200,7 +200,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			public void success(Map<String, List<String>> map) {
 				try {
 					evId = map.get("id").get(0);
-					if (map.get("userId").get(0).equals(kId)) {
+					if (map.get("userId").get(0).equals(uTokenId)) {
 						syncRun(evId,3);
 					}else{
 						syncRun("0",2);
@@ -232,7 +232,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			params.add("p_bgcolor");
 			
 			values.add(evId);
-			values.add(kId);
+			values.add(uTokenId);
 			values.add(info_self_evaluationStr);
 			values.add(info_career_goalStr);
 			values.add(getCheckColor(checkColor));

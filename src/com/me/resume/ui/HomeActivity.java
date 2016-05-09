@@ -26,6 +26,7 @@ import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
+import com.me.resume.model.UUIDGenerator;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -97,6 +98,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		MyApplication.getApplication().initDisplay(self);
+		
 		boayLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_home, null);
 		boayLayout.addView(v);
@@ -174,14 +177,16 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 	
 	private void initData(){
-		queryWhere = "select * from " + CommonText.USERINFO +" order by id desc limit 1";
+		uTokenId = getPreferenceData("userId", "0");
+		queryWhere = "select * from " + CommonText.USERINFO +" where uid = '"+ uTokenId +"' order by id desc limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		 if (commMapArray!= null && commMapArray.get("id").length > 0) {
-			 kId = commMapArray.get("id")[0];
-			 L.d("======初始化用户ID======="+kId);
+			 uTokenId = commMapArray.get("uid")[0];
+			 L.d("======初始化用户ID======="+uTokenId);
 			 initBottomButton();
 		 }else{
 			 ContentValues cValues = new ContentValues();
+			 cValues.put("uid", UUIDGenerator.getUUID());
 			 cValues.put("deviceid", deviceID);
 			 cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 			 cValues.put("lastlogintime", TimeUtils.getCurrentTimeInString());
@@ -198,9 +203,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	 * 显示底部button
 	 */
 	private void initBottomButton(){
-		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = " + kId;
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId +"'";
 		commMapArray = dbUtil.queryData(self, queryWhere);
-		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+		if (commMapArray != null && commMapArray.get("realname").length > 0) {
 			makeResume
 					.setText(CommUtil.getStrValue(self, R.string.edit_resume));
 			reviewResume.setVisibility(View.VISIBLE);
@@ -377,18 +382,18 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				holder.setText(R.id.share_city, map.get("city").get(position));
 				holder.setText(R.id.share_datime, map.get("createtime").get(position));
 				
-				if (MyApplication.userId != 0) {
-					holder.setOnClickEvent(R.id.share_collection, new ClickEvent() {
-						
-						@Override
-						public void onClick(View view) {
-							// TODO Auto-generated method stub
+				holder.setOnClickEvent(R.id.share_collection, new ClickEvent() {
+					
+					@Override
+					public void onClick(View view) {
+						// TODO Auto-generated method stub
+						if (!MyApplication.userId.equals("0")) {
 							
+						}else{
+							toastMsg(R.string.action_login_head);
 						}
-					});
-				}else{
-					toastMsg(R.string.action_login_head);
-				}
+					}
+				});
 			}
 		};
 		
@@ -414,12 +419,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		MyApplication.userId = getPreferenceData("useId", 0);
-		L.d("userId:"+MyApplication.userId + "and kId:" + kId);
+		MyApplication.userId = getPreferenceData("useId", "0");
+		L.d("userId:"+MyApplication.userId + "and uuid:" + uTokenId);
 		
 		initData();
 		
-		Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.userhead.toString());
+		Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.USERHEAD.toString());
 		if (bitmap != null) {
 			setLeftIcon(ImageUtils.toRoundBitmap(bitmap));
 		}
@@ -431,7 +436,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.make_btn:
-			if (MyApplication.userId == 0) {
+			if (MyApplication.userId.equals("0")) {
 				if(getPreferenceData("noticeshow",1) == 1){
 					DialogUtils.showAlertDialog(self, CommUtil.getStrValue(self,
 							R.string.dialog_action_alert), mHandler);
@@ -446,7 +451,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			startActivity(".MainActivity", false);
 			break;
 		case R.id.left_lable:
-			if (MyApplication.userId == 0) {
+			
+			if (MyApplication.userId.equals("0")) {
 				startActivity(".ui.UserLoginActivity", false);
 			}else{
 				startActivity(".ui.UserCenterActivity", false);

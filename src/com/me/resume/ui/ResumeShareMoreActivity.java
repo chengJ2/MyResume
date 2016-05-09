@@ -139,18 +139,16 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 				holder.setText(R.id.share_city, map.get("city").get(position));
 				holder.setText(R.id.share_datime, map.get("createtime").get(position));
 				
-				if (MyApplication.userId != 0) {
-					holder.setOnClickEvent(R.id.share_collection, new ClickEvent() {
-						
-						@Override
-						public void onClick(View view) {
-							// TODO Auto-generated method stub
-							
+				holder.setOnClickEvent(R.id.share_collection, new ClickEvent() {
+					
+					@Override
+					public void onClick(View view) {
+						// TODO Auto-generated method stub
+						if (!MyApplication.userId.equals("0")) {
+							toastMsg(R.string.action_login_head);
 						}
-					});
-				}else{
-					toastMsg(R.string.action_login_head);
-				}
+					}
+				});
 			}
 		};
 		
@@ -192,7 +190,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		params.add("p_userId");
 		params.add("p_share");
 		
-		values.add(kId);
+		values.add(uTokenId);
 		values.add(share);
 		
 		requestData("pro_setshareinfo", 1, params, values, new HandlerData() {

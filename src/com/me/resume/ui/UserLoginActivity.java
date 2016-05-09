@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.model.UUIDGenerator;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
@@ -254,11 +255,13 @@ public class UserLoginActivity extends BaseActivity implements
 		if(judgeFeild()){
 			List<String> params = new ArrayList<String>();
 			List<String> values = new ArrayList<String>();
+			params.add("p_uid");
 			params.add("p_username");
 			params.add("p_userpwd");
 			params.add("p_deviceId");
 			params.add("p_patform");
 			
+			values.add(UUIDGenerator.getUUID());
 			values.add(str_username);
 			values.add(CommUtil.getMD5(str_password));
 			values.add(deviceID);
@@ -290,6 +293,7 @@ public class UserLoginActivity extends BaseActivity implements
 	 * @param map
 	 */
 	private void sendSuccess(final Map<String, List<String>> map){
+		uTokenId = map.get("uid").get(0);
 		String feildStr1 = map.get("username").get(0);
 		String feildStr2 = map.get("password").get(0);
 		String feildStr3 = map.get("deviceId").get(0);
@@ -300,20 +304,20 @@ public class UserLoginActivity extends BaseActivity implements
 		setPreferenceData("username",feildStr1);
 		setPreferenceData("password",str_password);
 		
-		queryWhere = "select * from " + CommonText.USERINFO
-				+ " where id = " + kId;
+		queryWhere = "select * from " + CommonText.USERINFO + " where uid = '" + uTokenId + "'";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("id").length > 0) {
 			updResult = dbUtil.updateData(self, CommonText.USERINFO,
-					new String[]{"id=?","username","userpassword","deviceId","patform",
+					new String[]{"uid=?","username","userpassword","deviceId","patform",
 					"createtime","lastlogintime"}, 
-					new String[]{kId,feildStr1,feildStr2,feildStr3,feildStr4,feildStr5,feildStr6},1);
+					new String[]{uTokenId,feildStr1,feildStr2,feildStr3,feildStr4,feildStr5,feildStr6},1);
 			if(updResult == 1){
-				setPreferenceData("useId",CommUtil.parseInt(map.get("id").get(0)));
+				setPreferenceData("useId",uTokenId);
 				getBaseinfo(map);
 			}
 		}else{
 			ContentValues cValues = new ContentValues();
+			cValues.put("uid", uTokenId);
 			cValues.put("username", feildStr1);
 			cValues.put("userpassword", feildStr2);
 			cValues.put("deviceId", feildStr3);
@@ -323,7 +327,7 @@ public class UserLoginActivity extends BaseActivity implements
 			
 			queryResult = dbUtil.insertData(self, CommonText.USERINFO, cValues);
 			if (queryResult) {
-				setPreferenceData("useId",map.get("id").get(0));
+				setPreferenceData("useId",uTokenId);
 				getBaseinfo(map);
 			}
 		}
@@ -411,26 +415,32 @@ public class UserLoginActivity extends BaseActivity implements
 			cValues.put("bgcolor", feildStr24.get(0));
 		}
 		
-		queryWhere = "select * from " + CommonText.BASEINFO
-				+ " where userId = " + kId;
+		List<String> feildStr25 = map.get("avator");
+		if(feildStr25 != null && feildStr25.size()>0){
+			cValues.put("avator", feildStr25.get(0));
+			setPreferenceData("avator",feildStr25.get(0));
+		}
+		
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId + "' limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			kId = commMapArray.get("id")[0];
+			String baid = commMapArray.get("id")[0];
 			updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
-					new String[]{kId,"realname","gender","brithday","joinworktime",
+					new String[]{baid,"realname","gender","brithday","joinworktime",
 					"phone","hometown","city","email","ismarry",
-					"nationality","license","workingabroad","politicalstatus","bgcolor"}, 
-					new String[]{feildStr10.get(0),feildStr11.get(0),feildStr12.get(0),feildStr13.get(0),feildStr14.get(0),
+					"nationality","license","workingabroad","politicalstatus","bgcolor","avator"}, 
+					new String[]{uTokenId,feildStr11.get(0),feildStr12.get(0),feildStr13.get(0),feildStr14.get(0),
 					feildStr15.get(0),feildStr16.get(0),feildStr17.get(0),feildStr18.get(0),feildStr19.get(0),
-					feildStr20.get(0),feildStr21.get(0),feildStr22.get(0),feildStr23.get(0),feildStr24.get(0)},2);
+					feildStr20.get(0),feildStr21.get(0),feildStr22.get(0),feildStr23.get(0),feildStr24.get(0),feildStr25.get(0)},2);
 			if (updResult == 1) {
-				startActivity(".ui.HomeActivity",true);
+				startActivity(".ui.UserCenterActivity",true);
+				
 			}
 		}else{
 			queryResult = dbUtil.insertData(self, CommonText.BASEINFO, cValues);
 			if (queryResult) {
-				startActivity(".ui.HomeActivity",true);
+				startActivity(".ui.UserCenterActivity",true);
 			}
 		}
 		

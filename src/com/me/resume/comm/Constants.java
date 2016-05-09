@@ -3,6 +3,8 @@ package com.me.resume.comm;
 import java.io.File;
 
 import com.me.resume.utils.FileUtils;
+import com.whjz.android.text.CommonText;
+import com.whjz.android.util.common.CommonUtil;
 
 import android.os.Environment;
 
@@ -54,9 +56,14 @@ public class Constants {
             + Environment.getDataDirectory().getAbsolutePath() + "/"  
             + PACKAGENAME; // 获取存储位置地址  
     
-    public static String fileName="Avatar.jpg";
+    public static String FILENAME="Avatar.jpg";
+    public static String APKNAME="resume.apk";
     
-    public static File userhead = new File(FileUtils.BASE_PATH + File.separator + fileName); 
+    public static File USERHEAD = new File(FileUtils.BASE_PATH + File.separator + FILENAME); 
+    
+    public static File APKPATH = new File(FileUtils.DOWNLOAD_APKPATH + File.separator + APKNAME); 
+    
+    public static String APKURLPATH = CommonText.endPoint + "/apk/" + APKNAME;
     
     // 请求超时
  	public static final int EXECUTE_TIMEOUT = -0X2000;

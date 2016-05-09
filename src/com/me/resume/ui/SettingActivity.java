@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import android.graphics.Camera;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -16,9 +15,7 @@ import android.widget.TextView;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
-import com.me.resume.swipeback.SwipeBackActivity;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
-import com.me.resume.tools.L;
+import com.me.resume.comm.Constants;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.views.SwitchButton;
 import com.me.resume.views.SwitchButton.OnChangedListener;
@@ -191,7 +188,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			startActivity(".ui.FeedBackActivity", false);
 			break;
 		case R.id.logoutLayout:
-			if (MyApplication.userId != 0) {
+			if (!MyApplication.userId.equals("0")) {
 				logoutSend();
 			}else{
 				toastMsg(R.string.action_no_login);
@@ -199,6 +196,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.shareLayout:
 			// TODO
+			Intent share = new Intent(Intent.ACTION_SEND);
+            share.putExtra(Intent.EXTRA_STREAM,Constants.APKURLPATH);
+            share.setType("*/*");
+            startActivity(Intent.createChooser(share, 
+            		CommUtil.getStrValue(self, R.string.settings_item71)));
 			break;
 		default:
 			break;
@@ -215,20 +217,20 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		List<String> values = new ArrayList<String>();
 		
 		params.add("p_userId");
-		values.add(kId);
+		values.add(uTokenId);
 		
 		requestData("pro_login_out", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				runOnUiThread(R.string.action_logout_fail);
+				toastMsg(R.string.action_logout_fail);
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
 					if (map.get("msg").get(0).equals("200")) {
-						setPreferenceData("useId",0);
-						
-						MyApplication.userId = getPreferenceData("useId", 0);
+						setPreferenceData("useId","0");
+						MyApplication.userId = "0";
+						toastMsg(R.string.action_logout_success);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
