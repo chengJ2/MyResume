@@ -6,6 +6,7 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
@@ -16,7 +17,9 @@ import android.widget.TextView;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
+import com.me.resume.tools.DataCleanManager;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.DialogUtils;
 import com.me.resume.views.SwitchButton;
 import com.me.resume.views.SwitchButton.OnChangedListener;
 
@@ -35,9 +38,21 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	
 	private SwitchButton setting_start_cb,setting_auto_cb,setting_edit_cb;
 	
-	private LinearLayout versionLayout,feedbackLayout,logoutLayout,shareLayout;
+	private LinearLayout cacheLayout,versionLayout,feedbackLayout,logoutLayout,shareLayout;
 	
-	private TextView version;
+	private TextView cachesize,version;
+	
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case 1:
+				
+				break;
+			default:
+				break;
+			}
+		};
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +78,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		setting_auto_cb = findView(R.id.setting_auto_cb);
 		setting_edit_cb = findView(R.id.setting_edit_cb);
 		
+		cacheLayout = findView(R.id.cacheLayout);
+		cachesize = findView(R.id.cachesize);
 		versionLayout = findView(R.id.versionLayout);
 		feedbackLayout = findView(R.id.feedbackLayout);
 		version = findView(R.id.viewsion);
@@ -82,8 +99,14 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		
 		setfabLayoutVisible(View.GONE);
 		
+		try {
+			cachesize.setText(DataCleanManager.getSQlDataCacheSize(self));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		version.setText(CommUtil.getVersionName(self));
 		
+		cacheLayout.setOnClickListener(this);
 		versionLayout.setOnClickListener(this);
 		feedbackLayout.setOnClickListener(this);
 		logoutLayout.setOnClickListener(this);
@@ -194,6 +217,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 				toastMsg(R.string.action_no_login);
 			}
 			break;
+		case R.id.cacheLayout:
+			DialogUtils.showAlertDialog(self, CommUtil.getStrValue(self,
+					R.string.dialog_action_cache_alert),View.GONE, mHandler);
+			break;
 		case R.id.shareLayout:
 			// TODO
 			Intent share = new Intent(Intent.ACTION_SEND);
@@ -228,7 +255,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			public void success(Map<String, List<String>> map) {
 				try {
 					if (map.get("msg").get(0).equals("200")) {
+//						setPreferenceData("uid","0");
 						setPreferenceData("useId","0");
+//						uTokenId = "0";
 						MyApplication.userId = "0";
 						toastMsg(R.string.action_logout_success);
 					}

@@ -103,6 +103,30 @@
 
             <View style="@style/line_h15" />
             
+             <LinearLayout
+                android:id="@+id/cacheLayout"
+                style="@style/noraml_item">
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:layout_weight="5"
+                    android:textColor="@color/black"
+                    android:text="@string/settings_item8" />
+
+                <TextView
+                    android:id="@+id/cachesize"
+                    style="@style/user_info_item_tv"
+                    android:textColor="@color/black"
+                    android:layout_weight="4"
+                    android:gravity="right|center"
+                    android:text="0kB" />
+                
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
+
+            </LinearLayout>
+            <View style="@style/line_h15" />
             
             <LinearLayout
                 android:id="@+id/versionLayout"

@@ -40,11 +40,8 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
 		boayLayout.removeAllViews();
-		
 		View v = View.inflate(self,R.layout.resume_share_more_layout, null);
 		boayLayout.addView(v);
 		
@@ -71,7 +68,6 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		sharemore_layout.setOnClickListener(this);
 		shareLayout.setOnClickListener(this);
 		submit_btn.setOnClickListener(this);
-		
 		
 		commMapList = new HashMap<String, List<String>>();
 		
@@ -143,7 +139,6 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 					
 					@Override
 					public void onClick(View view) {
-						// TODO Auto-generated method stub
 						if (!MyApplication.userId.equals("0")) {
 							toastMsg(R.string.action_login_head);
 						}
@@ -203,6 +198,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 				try {
 					if("200".equals(map.get("msg").get(0))){
 						toastMsg(R.string.item_text7);
+						input_share.setText("");
 						getShareMoreData(false);
 					}
 				} catch (Exception e) {

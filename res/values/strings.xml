@@ -25,6 +25,7 @@
     <string name="settings_item6">关于我们</string>
     <string name="settings_item7">向好友分享</string>
     <string name="settings_item71">分享</string>
+    <string name="settings_item8">清除本地缓存</string>
     <string name="action_login_head">请先登录</string>
     <string name="action_syncing">正在同步,请稍后...</string>
     <string name="action_sync_success">同步成功</string>
@@ -60,7 +61,10 @@
     <string name="item_text6">简历预览封面</string>
     <string name="item_text61">简历封面</string>
     <string name="item_text7">提交成功,感谢您的分享~</string>
-
+	<string name="item_text8">我也来分享...</string>
+	 <string name="item_text81">优质的分享将会置顶哦~</string>
+	
+	 
     <!-- Main -->
     <string name="resume_baseinfo">基本资料</string>
     <string name="resume_workexperience">工作经历</string>
@@ -122,9 +126,11 @@
     <string name="action_update_success">更新成功</string>
     <string name="action_update_fail">更新失败</string>
     <string name="action_favorites">收藏</string>
+     <string name="action_submit">提&#160;交</string>
 
     <!-- UI dialog msg -->
-    <string name="dialog_action_alert">您还没登录,创建的简历会保存到本地，若卸载APP或清除APP数据，将不会显示出您的简历，请先登录或继续操作...</string>
+    <string name="dialog_action_alert">您还没登录,创建的简历会保存到本地,若卸载APP或清除APP数据,将不会显示出您的简历信息,请先登录或继续操作！</string>
+    <string name="dialog_action_cache_alert">该操作会清除您创建的简历信息,请确保数据已同步！</string>
 
     <!-- UI button text -->
     <string name="show_button_cancle">取&#160;&#160;消</string>

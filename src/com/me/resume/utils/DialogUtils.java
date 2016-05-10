@@ -530,7 +530,7 @@ public class DialogUtils {
 	 * 
 	 * @param context 上下文
 	 */
-	public static void showAlertDialog(Context context,String msgstr,Handler handler){
+	public static void showAlertDialog(Context context,String msgstr,int visibility,Handler handler){
 		try {
 			mHandler = handler;
 			dialog = new Dialog(context);
@@ -542,6 +542,7 @@ public class DialogUtils {
 			dialog.setCanceledOnTouchOutside(true);
 			
 			TextView noshow = (TextView)dialog.findViewById(R.id.noshow);
+			noshow.setVisibility(visibility);
 			noshow.setOnClickListener(new OnClickListener() {
 				
 				@Override
@@ -575,6 +576,7 @@ public class DialogUtils {
 			e.printStackTrace();
 		}
 	}
+	
 	
 	
 	/**

@@ -319,12 +319,14 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 					String baId = commMapArray.get("id")[0];
 					updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
-							new String[]{baId,"realname","gender","brithday","joinworktime",
+							new String[]{baId,
+							"realname","gender","brithday","joinworktime",
 							"phone","hometown","city","email","ismarry",
-							"nationality","license","workingabroad","politicalstatus"}, 
-							new String[]{uTokenId,info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
+							"nationality","license","workingabroad","politicalstatus","bgcolor"}, 
+							new String[]{uTokenId,
+							info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
 							info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
-							info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr},2);
+							info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr,getCheckColor(checkColor)},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 						if(!MyApplication.userId.equals("0")){
@@ -350,9 +352,9 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 					cValues.put("license", info_licenseStr);
 					cValues.put("workingabroad", rg_workingabroadStr);
 					cValues.put("politicalstatus", rg_politicalstatusStr);
+					cValues.put("bgcolor", getCheckColor(checkColor));
 					
-					queryResult = dbUtil.insertData(self, 
-							CommonText.BASEINFO, cValues);
+					queryResult = dbUtil.insertData(self,CommonText.BASEINFO, cValues);
 					if (queryResult) {
 						setAddBtnSrc(R.drawable.ic_btn_edit);
 						toastMsg(R.string.action_add_success);

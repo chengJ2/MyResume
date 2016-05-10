@@ -228,8 +228,7 @@ public class MainActivity extends Activity {
 				mViewList.add(view);
 			}
 			
-			index1layout.setBackgroundColor(CommUtil.getColorValue(self,
-					CommUtil.parseInt(commMapArray.get("bgcolor")[0])));
+			initBgColor(index1layout,commMapArray);
 			
 			index_1_realname.setText(commMapArray.get("realname")[0]);
 			
@@ -296,9 +295,7 @@ public class MainActivity extends Activity {
 			if (!mViewList.contains(view)) {
 				mViewList.add(view);
 			}
-			
-			index2layout.setBackgroundColor(CommUtil.getColorValue(self,
-					CommUtil.parseInt(commMapArray.get("bgcolor")[0])));
+			initBgColor(index2layout,commMapArray);
 			
 //			int we_show_nav = getPreferenceData("we_show_nav", 1);
 			int LayoutID = R.layout.index_2_list_item;
@@ -344,8 +341,7 @@ public class MainActivity extends Activity {
 			if (!mViewList.contains(view)) {
 				mViewList.add(view);
 			}
-			index3layout.setBackgroundColor(CommUtil.getColorValue(self,
-					CommUtil.parseInt(commMapArray.get("bgcolor")[0])));
+			initBgColor(index3layout,commMapArray);
 			self_evaluation.setText(commMapArray.get("selfevaluation")[0]);
 		}
 		
@@ -385,8 +381,7 @@ public class MainActivity extends Activity {
 		queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			index4layout.setBackgroundColor(CommUtil.getColorValue(self,
-					CommUtil.parseInt(commMapArray.get("bgcolor")[0])));
+			initBgColor(index4layout,commMapArray);
 			if (!mViewList.contains(view)) {
 				mViewList.add(view);
 			}
@@ -423,9 +418,7 @@ public class MainActivity extends Activity {
 		queryWhere = "select * from " + CommonText.EDUCATION + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			index6layout.setBackgroundColor(CommUtil.getColorValue(self,
-					CommUtil.parseInt(commMapArray.get("bgcolor")[0])));
-			
+			initBgColor(index6layout,commMapArray);
 			if (!mViewList.contains(view)) {
 				mViewList.add(view);
 			}
@@ -523,8 +516,7 @@ public class MainActivity extends Activity {
 		queryWhere = "select * from " + CommonText.OTHERINFO + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-        	index7layout.setBackgroundColor(CommUtil.getColorValue(self,
-					CommUtil.parseInt(commMapArray.get("bgcolor")[0])));
+        	initBgColor(index7layout,commMapArray);
         	index7_layout1.setVisibility(View.VISIBLE);
         	if (!mViewList.contains(view)) {
         		mViewList.add(view);
@@ -667,7 +659,22 @@ public class MainActivity extends Activity {
 		});
 	}
 	
-
+	/**
+	 * 
+	 * @Title:MainActivity
+	 * @Description: 设置View bgcolor
+	 * @param ll
+	 * @param commMapArray
+	 */
+	private void initBgColor(LinearLayout ll,Map<String, String[]> map){
+		String bgcolor = map.get("bgcolor")[0];
+		if (RegexUtil.checkNotNull(bgcolor)) {
+			ll.setBackgroundColor(CommUtil.getColorValue(self,CommUtil.parseInt(bgcolor)));
+		}
+		
+	}
+	
+	
 	// ViewPager适配器
 	class MyPagerAdapter extends PagerAdapter {
 		private List<View> mViewList;

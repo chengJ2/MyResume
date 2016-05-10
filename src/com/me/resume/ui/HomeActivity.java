@@ -27,11 +27,13 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.model.UUIDGenerator;
+import com.me.resume.tools.DataCleanManager;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.ImageUtils;
+import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.CommScrollView;
 import com.me.resume.views.CustomListView;
@@ -141,6 +143,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			}
 		});
 		
+		try {
+			L.d("==total cache=="+DataCleanManager.getTotalCacheSize(self) + "=SQLite=" + DataCleanManager.getSQlDataCacheSize(self));
+			L.d("==Path==" + self.getFilesDir().getPath());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**
@@ -177,16 +186,17 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 	
 	private void initData(){
-		uTokenId = getPreferenceData("userId", "0");
-		queryWhere = "select * from " + CommonText.USERINFO +" where uid = '"+ uTokenId +"' order by id desc limit 1";
+		String uid = getPreferenceData("uid", "0");
+		queryWhere = "select * from " + CommonText.USERINFO +" where uid = '"+ uid +"' order by id desc limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		 if (commMapArray!= null && commMapArray.get("id").length > 0) {
 			 uTokenId = commMapArray.get("uid")[0];
 			 L.d("======初始化用户ID======="+uTokenId);
 			 initBottomButton();
 		 }else{
+			 String uuid = UUIDGenerator.getUUID();
 			 ContentValues cValues = new ContentValues();
-			 cValues.put("uid", UUIDGenerator.getUUID());
+			 cValues.put("uid", uuid);
 			 cValues.put("deviceid", deviceID);
 			 cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 			 cValues.put("lastlogintime", TimeUtils.getCurrentTimeInString());
@@ -194,6 +204,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			 queryResult = dbUtil.insertData(self, 
 						CommonText.USERINFO, cValues);
 			 if (queryResult) {
+				 setPreferenceData("uid", uuid);
 				 initData();
 			 }
 		 }
@@ -205,13 +216,17 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	private void initBottomButton(){
 		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId +"'";
 		commMapArray = dbUtil.queryData(self, queryWhere);
-		if (commMapArray != null && commMapArray.get("realname").length > 0) {
-			makeResume
-					.setText(CommUtil.getStrValue(self, R.string.edit_resume));
-			reviewResume.setVisibility(View.VISIBLE);
-		} else {
-			makeResume
-					.setText(CommUtil.getStrValue(self, R.string.make_resume));
+		if (commMapArray != null) {
+			String realname = commMapArray.get("realname")[0];
+			if (RegexUtil.checkNotNull(realname)) {
+				makeResume.setText(CommUtil.getStrValue(self, R.string.edit_resume));
+				reviewResume.setVisibility(View.VISIBLE);
+			}else{
+				makeResume.setText(CommUtil.getStrValue(self, R.string.make_resume));
+				reviewResume.setVisibility(View.GONE);
+			}
+		}else{
+			makeResume.setText(CommUtil.getStrValue(self, R.string.make_resume));
 			reviewResume.setVisibility(View.GONE);
 		}
 	}
@@ -349,6 +364,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			
 			public void success(Map<String, List<String>> map) {
 				try {
+					mHandler.sendEmptyMessageDelayed(-1, 1000);
 					setShareView(true);
 					setShareData(map);
 				} catch (Exception e) {
@@ -386,7 +402,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					
 					@Override
 					public void onClick(View view) {
-						// TODO Auto-generated method stub
 						if (!MyApplication.userId.equals("0")) {
 							
 						}else{
@@ -398,8 +413,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		};
 		
 		reviewsharingListView.setAdapter(commapBaseAdapter);
-		mHandler.sendEmptyMessageDelayed(-1, 1000);
-		
 	}
 	
 	
@@ -439,7 +452,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			if (MyApplication.userId.equals("0")) {
 				if(getPreferenceData("noticeshow",1) == 1){
 					DialogUtils.showAlertDialog(self, CommUtil.getStrValue(self,
-							R.string.dialog_action_alert), mHandler);
+							R.string.dialog_action_alert),View.VISIBLE, mHandler);
 				}else{
 					mHandler.sendEmptyMessage(1);
 				}
@@ -474,7 +487,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
 		if (mHandler != null) {
 			mHandler.removeCallbacksAndMessages(null);

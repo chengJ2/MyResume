@@ -67,8 +67,8 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 				if(dataSetList.nameList.size()>0){
 					try {
 						Map<String, List<String>> map = dataSetList.getMap();
-						int userID =  CommUtil.parseInt(map.get("userId").get(0));
-						if(userID>0){
+						String userID = map.get("userId").get(0);
+						if(userID != null && !"0".equals(userID)){
 							user_avator = map.get("avator").get(0);
 //							GlobalApplication.getInstance().setUserId(userID);
 //							GlobalApplication.getInstance().setUserAvatar(map.get("user_pic").get(0));
