@@ -40,7 +40,7 @@ public class SwipeBackActivity extends FragmentActivity implements
 	private SwipeBackActivityHelper mHelper;
 	
 	// activity访问栈
-    private static Stack<FragmentActivity> mLocalStack = new Stack<FragmentActivity>();
+	protected static Stack<FragmentActivity> mLocalStack = new Stack<FragmentActivity>();
 
 	protected DbLocalUtil dbUtil = new DbUtilImplement();;// 本地数据库对象
 	protected BaseCommonUtil baseCommon = new CommonUtil();;// 通用工具对象实例

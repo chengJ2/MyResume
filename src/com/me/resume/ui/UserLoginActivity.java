@@ -17,11 +17,13 @@ import android.widget.TextView;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.ResponseCode;
 import com.me.resume.model.UUIDGenerator;
 import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
+import com.me.resume.utils.TimeUtils;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -164,13 +166,13 @@ public class UserLoginActivity extends BaseActivity implements
 					btnLogin.setText(CommUtil.getStrValue(self, R.string.action_wait_loging));
 					btnLogin.setEnabled(false);
 
-					loginTask();
+					actionLogin();
 				}
 			}
 			break;
 		case R.id.btn_register:
 			if (CommUtil.isNetworkAvailable(self)) {
-				postUserInfo();
+				actionRegister();
 			}else{
 				set3Msg(R.string.check_network);
 			}
@@ -183,7 +185,7 @@ public class UserLoginActivity extends BaseActivity implements
 	/**
 	 * 登录请求
 	 */
-	private void loginTask(){
+	private void actionLogin(){
 		List<String> paramKey = new ArrayList<String>();
     	List<String> paramValue = new ArrayList<String>();
     	
@@ -201,7 +203,7 @@ public class UserLoginActivity extends BaseActivity implements
 					sendSuccess(map);
 				} catch (Exception e) {
 					e.printStackTrace();
-					if(map.get("msg").get(0).equals("404")){
+					if(map.get("msg").get(0).equals(ResponseCode.INVALID_INFO)){
 						errorLogin();
 						set3Msg(R.string.action_login_error);
 					}
@@ -257,7 +259,7 @@ public class UserLoginActivity extends BaseActivity implements
 	/**
 	 * 提交用户注册信息
 	 */
-	private void postUserInfo() {
+	private void actionRegister() {
 		getFeildValue();
 		
 		if(judgeFeild()){
@@ -287,7 +289,7 @@ public class UserLoginActivity extends BaseActivity implements
 						setPreferenceData("isregister", true);
 					} catch (Exception e) {
 						e.printStackTrace();
-						if(map.get("msg").get(0).equals("405")){
+						if(map.get("msg").get(0).equals(ResponseCode.USERNAME_REPEAT)){
 							set3Msg(R.string.register_repeatedusername);
 						}
 					}
@@ -328,7 +330,8 @@ public class UserLoginActivity extends BaseActivity implements
 			cValues.put("userpassword", feildStr2);
 			cValues.put("deviceId", feildStr3);
 			cValues.put("patform", feildStr4);
-			cValues.put("updatetime", feildStr5);
+			cValues.put("createtime", feildStr5);
+			cValues.put("updatetime", TimeUtils.getCurrentTimeInString());
 			cValues.put("lastlogintime", feildStr6);
 			
 			queryResult = dbUtil.insertData(self, CommonText.USERINFO, cValues);
@@ -445,7 +448,7 @@ public class UserLoginActivity extends BaseActivity implements
 		}
 		
 		if (updResult == 1 || queryResult) {
-			startActivity(".ui.UserCenterActivity",true);
+			startChildActivity("UserCenterActivity",true);
 		}
 		
 	}

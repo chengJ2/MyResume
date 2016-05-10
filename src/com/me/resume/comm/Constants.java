@@ -2,11 +2,10 @@ package com.me.resume.comm;
 
 import java.io.File;
 
+import android.os.Environment;
+
 import com.me.resume.utils.FileUtils;
 import com.whjz.android.text.CommonText;
-import com.whjz.android.util.common.CommonUtil;
-
-import android.os.Environment;
 
 /**
  * App 常量
@@ -22,6 +21,16 @@ public class Constants {
 	 * app包名
 	 */
 	public static final String PACKAGENAME = "com.me.resume";
+	
+	/**
+	 * app子包名
+	 */
+	public static final String PACKAGENAMECHILD = PACKAGENAME + ".ui.";
+	
+	/**
+	 * MainActivity
+	 */
+	public static final String MAINACTIVITY = ".MainActivity";
     
 	/**
 	 * 本地配置缓存文件

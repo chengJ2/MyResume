@@ -10,13 +10,12 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.ResponseCode;
 import com.me.resume.tools.DataCleanManager;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -33,9 +32,6 @@ import com.me.resume.views.SwitchButton.OnChangedListener;
  */
 public class SettingActivity extends BaseActivity implements OnClickListener{
 
-	private RadioGroup radioGroup_show;
-	private RadioButton radio_left, radio_right,radionv_middle;
-	
 	private SwitchButton setting_start_cb,setting_auto_cb,setting_edit_cb;
 	
 	private LinearLayout cacheLayout,versionLayout,feedbackLayout,logoutLayout,shareLayout;
@@ -46,7 +42,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 1:
-				
+				// TODO
 				break;
 			default:
 				break;
@@ -69,11 +65,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void findViews(){
-/*		radioGroup_show = findView(R.id.radioGroup_show);
-		radio_left = findView(R.id.radio_left);
-		radio_right = findView(R.id.radio_right);
-		radionv_middle = findView(R.id.radionv_middle);*/
-		
 		setting_start_cb = findView(R.id.setting_start_cb);
 		setting_auto_cb = findView(R.id.setting_auto_cb);
 		setting_edit_cb = findView(R.id.setting_edit_cb);
@@ -114,64 +105,50 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void switchBtnClick(){
-		/*radioGroup_show.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
-		@Override
-		public void onCheckedChanged(RadioGroup group, int checkedId) {
-			if (checkedId == radio_left.getId()) {
-				setPreferenceData("we_show_nav",1);
-			}else if (checkedId == radio_right.getId()){
-				setPreferenceData("we_show_nav",2);
-			}else if (checkedId == radionv_middle.getId()){
-				setPreferenceData("we_show_nav",3);
+		setting_start_cb.setOnChangedListener(new OnChangedListener() {
+			
+			@Override
+			public void OnChanged(SwitchButton switchButton, boolean checkState) {
+				// TODO Auto-generated method stub
+				int onoff = 0;
+				if(getPreferenceData("startVerytime", 0) == 0){
+					onoff = 1;
+				}else{
+					onoff = 0;
+				}
+				setPreferenceData("startVerytime", onoff); 
 			}
-		}
-	});*/
-	
-	setting_start_cb.setOnChangedListener(new OnChangedListener() {
+		});
 		
-		@Override
-		public void OnChanged(SwitchButton switchButton, boolean checkState) {
-			// TODO Auto-generated method stub
-			int onoff = 0;
-			if(getPreferenceData("startVerytime", 0) == 0){
-				onoff = 1;
-			}else{
-				onoff = 0;
+		setting_auto_cb.setOnChangedListener(new OnChangedListener() {
+			
+			@Override
+			public void OnChanged(SwitchButton switchButton, boolean checkState) {
+				// TODO Auto-generated method stub
+				int onoff = 0;
+				if(getPreferenceData("autoShow", 0) == 0){
+					onoff = 1;
+				}else{
+					onoff = 0;
+				}
+				setPreferenceData("autoShow", onoff); 
 			}
-			setPreferenceData("startVerytime", onoff); 
-		}
-	});
-	
-	setting_auto_cb.setOnChangedListener(new OnChangedListener() {
+		});
 		
-		@Override
-		public void OnChanged(SwitchButton switchButton, boolean checkState) {
-			// TODO Auto-generated method stub
-			int onoff = 0;
-			if(getPreferenceData("autoShow", 0) == 0){
-				onoff = 1;
-			}else{
-				onoff = 0;
+		setting_edit_cb.setOnChangedListener(new OnChangedListener() {
+			
+			@Override
+			public void OnChanged(SwitchButton switchButton, boolean checkState) {
+				// TODO Auto-generated method stub
+				int onoff = 0;
+				if(getPreferenceData("editmode", 0) == 0){
+					onoff = 1;
+				}else{
+					onoff = 0;
+				}
+				setPreferenceData("editmode", onoff); 
 			}
-			setPreferenceData("autoShow", onoff); 
-		}
-	});
-	
-	setting_edit_cb.setOnChangedListener(new OnChangedListener() {
-		
-		@Override
-		public void OnChanged(SwitchButton switchButton, boolean checkState) {
-			// TODO Auto-generated method stub
-			int onoff = 0;
-			if(getPreferenceData("editmode", 0) == 0){
-				onoff = 1;
-			}else{
-				onoff = 0;
-			}
-			setPreferenceData("editmode", onoff); 
-		}
-	});
+		});
 	}
 	
 	@Override
@@ -201,18 +178,18 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.left_lable:
-			self.scrollToFinishActivity();
-			break;
+//		case R.id.left_lable:
+//			self.scrollToFinishActivity();
+//			break;
 		case R.id.versionLayout:
 			CommUtil.ToastMsg(self, "暂无新版本");
 			break;
 		case R.id.feedbackLayout:
-			startActivity(".ui.FeedBackActivity", false);
+			startChildActivity("FeedBackActivity", false);
 			break;
 		case R.id.logoutLayout:
 			if (!MyApplication.userId.equals("0")) {
-				logoutSend();
+				actionLogout();
 			}else{
 				toastMsg(R.string.action_no_login);
 			}
@@ -239,7 +216,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	 * @Description: 注销用户
 	 * @author Comsys-WH1510032
 	 */
-	private void logoutSend(){ 
+	private void actionLogout(){ 
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
@@ -254,7 +231,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					if (map.get("msg").get(0).equals("200")) {
+					if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
 //						setPreferenceData("uid","0");
 						setPreferenceData("useId","0");
 //						uTokenId = "0";

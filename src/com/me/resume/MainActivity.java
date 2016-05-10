@@ -625,8 +625,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 //				sp.edit().putInt("startVerytime", 0).commit();
-				ActivityUtils.startActivity(self, Constants.PACKAGENAME
-						+ ".ui.HomeActivity");
+				ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + "HomeActivity");
 			}
 		});
 	}
@@ -654,7 +653,7 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
-				ActivityUtils.startActivity(self, Constants.PACKAGENAME + ".ui." + src);
+				ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + src);
 			}
 		});
 	}

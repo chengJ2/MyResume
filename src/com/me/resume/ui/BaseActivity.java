@@ -21,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.CommonBaseAdapter;
@@ -29,6 +30,8 @@ import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.tools.SystemBarTintManager;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.PreferenceUtil;
+import com.me.resume.utils.RegexUtil;
 import com.me.resume.views.CustomFAB;
 import com.me.resume.views.MarqueeText;
 
@@ -90,6 +93,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	
 	private static BaseActivity mInstance;
 	
+	protected PreferenceUtil preferenceUtil;
+	
 	public static BaseActivity getInstance(){
 		if (mInstance == null) {
 			mInstance = new BaseActivity();
@@ -132,6 +137,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	
 	private void initData(){
 		self = BaseActivity.this;
+		if(preferenceUtil == null)
+			preferenceUtil = new PreferenceUtil(self);
 		sp = getSharedPreferences(Constants.CONFIG, Context.MODE_PRIVATE);
 		fieldNull = CommUtil.getStrValue(self, R.string.action_input_isnull);
 		
@@ -371,6 +378,10 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	protected void startActivity(String src, boolean finish) {
 		ActivityUtils.startActivity(self, Constants.PACKAGENAME + src, finish);
 	}
+	
+	protected void startChildActivity(String src, boolean finish) {
+		ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + src, finish);
+	}
 
 	public void setPreferenceData(String key, String value) {
 		sp.edit().putString(key, value).commit();
@@ -396,13 +407,20 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		return sp.getBoolean(str, false);
 	}
 
-	/*
-	 * protected void switchLang(String newLang){
-	 * setPreferenceData("LANGUAGE",newLang); // finish app内存中的所有activity while
-	 * (0 != mLocalStack.size()) { mLocalStack.pop().finish(); } // 跳转到app首页 //
-	 * MyApplication.getApplication().exitAll(); //
-	 * startActivity("ui.HomeActivity",false); }
+	/**
+	 * 语言切换
+	 * @param newLang
 	 */
+	protected void switchLang(String newLang) {
+		setPreferenceData("LANGUAGE", newLang);
+		while (0 != mLocalStack.size()) {
+			mLocalStack.pop().finish();
+		} 
+		// finish app内存中的所有activity
+		MyApplication.getApplication().exitAll();
+		startChildActivity("HomeActivity", false);
+	}
+	 
 
 	/**
 	 * 
@@ -448,7 +466,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 
 	@Override
 	public void afterTextChanged(Editable s) {
-		if (s.toString() != null && !"".equals(s.toString())) {
+		if (RegexUtil.checkNotNull(s.toString())) {
 			setMsgHide();
 		}
 	}
@@ -456,6 +474,12 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.left_lable:
+			scrollToFinishActivity();
+			break;
+		case R.id.right_icon:
+			startActivity(Constants.PACKAGENAME + Constants.MAINACTIVITY,false);
+			break;
 		default:
 			break;
 		}

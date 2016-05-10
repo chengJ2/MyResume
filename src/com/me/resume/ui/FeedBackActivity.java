@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.ResponseCode;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 
@@ -34,7 +35,6 @@ public class FeedBackActivity extends BaseActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
 		boayLayout.removeAllViews();
@@ -68,13 +68,13 @@ public class FeedBackActivity extends BaseActivity {
 			feedback_cb.setChecked(false);
 		}
 		
-		left_icon.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				scrollToFinishActivity();
-			}
-		});
+//		left_icon.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				scrollToFinishActivity();
+//			}
+//		});
 		
 		feedcommit.setOnClickListener(new OnClickListener() {
 			
@@ -132,7 +132,7 @@ public class FeedBackActivity extends BaseActivity {
 		
 		values.add(feeddescStr);
 		values.add(feedcontactStr);
-		values.add(String.valueOf(MyApplication.userId));
+		values.add(MyApplication.userId);
 		
 		requestData("pro_set_feedback", 1, params, values, new HandlerData() {
 			@Override
@@ -142,7 +142,7 @@ public class FeedBackActivity extends BaseActivity {
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					if (map.get("msg").get(0).equals("200")) {
+					if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
 						set3Msg(R.string.feedback_info_3,2000);
 					}
 				} catch (Exception e) {

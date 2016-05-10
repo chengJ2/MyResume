@@ -72,7 +72,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				startActivity(".ui.BaseInfoActivity",false);
 				break;
 			case 2:
-				setPreferenceData("noticeshow",0);
+				preferenceUtil.setPreferenceData("noticeshow",0);
 				break;
 			case 100:
 				if (CommUtil.isNetworkAvailable(self)) {
@@ -106,7 +106,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		View v = View.inflate(self,R.layout.activity_home, null);
 		boayLayout.addView(v);
 		
-		if (getPreferenceData("startVerytime", 0) == 1) {
+		if (preferenceUtil.getPreferenceData("startVerytime", 0) == 1) {
 			startActivity(".MainActivity", true);
 		}
 		
@@ -186,7 +186,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 	
 	private void initData(){
-		String uid = getPreferenceData("uid", "0");
+		String uid = preferenceUtil.getPreferenceData("uid", "0");
+		L.d("========uid==========" + uid);
 		queryWhere = "select * from " + CommonText.USERINFO +" where uid = '"+ uid +"' order by id desc limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		 if (commMapArray!= null && commMapArray.get("id").length > 0) {
@@ -204,7 +205,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			 queryResult = dbUtil.insertData(self, 
 						CommonText.USERINFO, cValues);
 			 if (queryResult) {
-				 setPreferenceData("uid", uuid);
+				 preferenceUtil.setPreferenceData("uid", uuid);
 				 initData();
 			 }
 		 }
@@ -281,7 +282,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 					@Override
 					public void onClick(View view) {
-						ActivityUtils.startActivityPro(self, Constants.PACKAGENAME + ".ui.TopicActivity", "title",
+						ActivityUtils.startActivityPro(self, Constants.PACKAGENAMECHILD + "TopicActivity", "title",
 								title[0]+";"+title[1]);
 
 					}
@@ -430,10 +431,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
-		MyApplication.userId = getPreferenceData("useId", "0");
-		L.d("userId:"+MyApplication.userId + "and uuid:" + uTokenId);
+		MyApplication.userId = preferenceUtil.getPreferenceData("useId", "0");
+		L.d("======onResume======userId:"+MyApplication.userId + "and uuid:" + uTokenId);
 		
 		initData();
 		
@@ -450,7 +450,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.make_btn:
 			if (MyApplication.userId.equals("0")) {
-				if(getPreferenceData("noticeshow",1) == 1){
+				if(preferenceUtil.getPreferenceData("noticeshow",1) == 1){
 					DialogUtils.showAlertDialog(self, CommUtil.getStrValue(self,
 							R.string.dialog_action_alert),View.VISIBLE, mHandler);
 				}else{
@@ -461,24 +461,23 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			}
 			break;
 		case R.id.review_btn:
-			startActivity(".MainActivity", false);
+			startActivity(Constants.MAINACTIVITY, false);
 			break;
 		case R.id.left_lable:
-			
 			if (MyApplication.userId.equals("0")) {
-				startActivity(".ui.UserLoginActivity", false);
+				startChildActivity("UserLoginActivity", false);
 			}else{
-				startActivity(".ui.UserCenterActivity", false);
+				startChildActivity("UserCenterActivity", false);
 			}
 			break;
 		case R.id.right_icon:
-			startActivity(".ui.SettingActivity", false);
+			startChildActivity("SettingActivity", false);
 			break;
 		case R.id.sharemore:
-			startActivity(".ui.ResumeShareMoreActivity", false);
+			startChildActivity("ResumeShareMoreActivity", false);
 			break;
 		case R.id.covermore:
-			startActivity(".ui.ResumeCoverMoreActivity", false);
+			startChildActivity("ResumeCoverMoreActivity", false);
 			break;
 		default:
 			break;
