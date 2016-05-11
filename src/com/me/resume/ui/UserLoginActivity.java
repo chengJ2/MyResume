@@ -6,6 +6,7 @@ import java.util.Map;
 
 import android.content.ContentValues;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
 import com.me.resume.comm.ResponseCode;
+import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
@@ -51,6 +53,21 @@ public class UserLoginActivity extends BaseActivity implements
 	private EditText usernameEt,passwordEt,password2Et;
 	
 	private Button registBtn;
+	
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case 11:
+				if (updResult == 1 || queryResult) {
+					startChildActivity("UserCenterActivity",true);
+				}
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +168,6 @@ public class UserLoginActivity extends BaseActivity implements
 			
 			user_login_layout.setVisibility(View.GONE);
 			user_register_layout.setVisibility(View.VISIBLE);
-			
 			break;
 		case R.id.save_checkbox:
 		case R.id.savePassWord:
@@ -341,226 +357,147 @@ public class UserLoginActivity extends BaseActivity implements
 	}
 	
 	/**
+	 * 通过本地的key获取values更新远程的values
+	 * @param mapArray
+	 * @param map
+	 * @param key
+	 * @return
+	 */
+	private String getLocalKeyValue(Map<String, String[]> mapArray,Map<String, List<String>> map,String key){
+		String value = mapArray.get(key)[0];
+		if (!RegexUtil.checkNotNull(value)) {
+			List<String> listStr = map.get(key);
+			if(listStr != null && listStr.size()>0){
+				value = listStr.get(0);
+			}
+		}
+		return value;
+	}
+	
+	/**
+	 * 通过远程的key获取values插入到本地
+	 * @param mapArray
+	 * @param map
+	 * @param key
+	 * @return
+	 */
+	private String getServerKeyValue(Map<String, List<String>> map,String key){
+		String value = "";
+		List<String> listStr = map.get(key);
+		if(listStr != null && listStr.size()>0){
+			value = listStr.get(0);
+		}
+		return value;
+	}
+	
+	/**
 	 * 获取用户基本信息
 	 * @param map
 	 */
 	private void getBaseinfo(Map<String, List<String>> map){
+		L.d("========getBaseinfo==========="+uTokenId);
 		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId + "' limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		
-		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			ContentValues cValues = new ContentValues();
-			
-			List<String> feildStr10 = map.get("userId");
-			if(feildStr10 != null && feildStr10.size()>0){
-				cValues.put("userId", feildStr10.get(0));
+		if (commMapArray != null) {
+			String userId = commMapArray.get("userId")[0];
+			if (RegexUtil.checkNotNull(userId)) {
+				ContentValues cValues = new ContentValues();
+				String feildStr10 = getLocalKeyValue(commMapArray,map,"userId");
+				cValues.put("userId", feildStr10);
+				
+				String feildStr11 = getLocalKeyValue(commMapArray,map,"realname");
+				cValues.put("realname", feildStr11);
+				
+				String feildStr12 = getLocalKeyValue(commMapArray,map,"gender");
+				cValues.put("gender", feildStr12);
+				
+				String feildStr13 = getLocalKeyValue(commMapArray,map,"brithday");
+				cValues.put("brithday", feildStr13);
+				
+				String feildStr14 = getLocalKeyValue(commMapArray,map,"joinworktime");
+				cValues.put("joinworktime", feildStr14);
+				
+				String feildStr15 = getLocalKeyValue(commMapArray,map,"phone");
+				cValues.put("phone", feildStr15);
+				
+				String feildStr16 = getLocalKeyValue(commMapArray,map,"hometown");
+				cValues.put("hometown", feildStr16);
+				
+				String feildStr17 = getLocalKeyValue(commMapArray,map,"city");
+				cValues.put("city", feildStr17);
+				
+				String feildStr18 = getLocalKeyValue(commMapArray,map,"email");
+				cValues.put("email", feildStr18);
+				
+				String feildStr19 = getLocalKeyValue(commMapArray,map,"ismarry");
+				cValues.put("ismarry", feildStr19);
+				
+				String feildStr20 = getLocalKeyValue(commMapArray,map,"nationality");
+				cValues.put("nationality", feildStr20);
+				
+				String feildStr21 = getLocalKeyValue(commMapArray,map,"license");
+				cValues.put("license", feildStr21);
+				
+				String feildStr22 = getLocalKeyValue(commMapArray,map,"workingabroad");
+				cValues.put("workingabroad", feildStr22);
+				
+				String feildStr23 = getLocalKeyValue(commMapArray,map,"politicalstatus");
+				cValues.put("politicalstatus", feildStr23);
+				
+				String feildStr24 = getLocalKeyValue(commMapArray,map,"bgcolor");
+				cValues.put("bgcolor", feildStr24);
+				
+				String feildStr25 = getLocalKeyValue(commMapArray,map,"avator");
+				cValues.put("avator", feildStr25);
+				preferenceUtil.setPreferenceData("avator",feildStr25);
+				
+				String baid = commMapArray.get("id")[0];
+				updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
+						new String[]{baid,"realname","gender","brithday","joinworktime",
+						"phone","hometown","city","email","ismarry",
+						"nationality","license","workingabroad","politicalstatus","bgcolor","avator"}, 
+						new String[]{uTokenId,feildStr11,feildStr12,feildStr13,feildStr14,
+						feildStr15,feildStr16,feildStr17,feildStr18,feildStr19,
+						feildStr20,feildStr21,feildStr22,feildStr23,feildStr24,feildStr25},2);
 			}else{
-				String feildStr101 = commMapArray.get("userId")[0];
-				if(RegexUtil.checkNotNull(feildStr101)){
-					cValues.put("userId", feildStr101);
-				}
+				insertBaseInfo(map);
 			}
-			
-			List<String> feildStr11 = map.get("realname");
-			if(feildStr11 != null && feildStr11.size()>0){
-				cValues.put("realname", feildStr11.get(0));
-			}
-			
-			List<String> feildStr12 = map.get("gender");
-			if(feildStr12 != null && feildStr12.size()>0){
-				cValues.put("gender", feildStr12.get(0));
-			}
-			
-			List<String> feildStr13 = map.get("brithday");
-			if(feildStr13 != null && feildStr13.size()>0){
-				cValues.put("brithday", feildStr13.get(0));
-			}
-			
-			List<String> feildStr14 = map.get("joinworktime");
-			if(feildStr14 != null && feildStr14.size()>0){
-				cValues.put("joinworktime", feildStr14.get(0));
-			}
-			
-			List<String> feildStr15 = map.get("phone");
-			if(feildStr15 != null && feildStr15.size()>0){
-				cValues.put("phone", feildStr15.get(0));
-			}
-			
-			List<String> feildStr16 = map.get("hometown");
-			if(feildStr16 != null && feildStr16.size()>0){
-				cValues.put("hometown", feildStr16.get(0));
-			}
-			
-			List<String> feildStr17 = map.get("city");
-			if(feildStr17 != null && feildStr17.size()>0){
-				cValues.put("city", feildStr17.get(0));
-			}
-			
-			List<String> feildStr18 = map.get("email");
-			if(feildStr18 != null && feildStr18.size()>0){
-				cValues.put("email", feildStr18.get(0));
-			}
-			
-			List<String> feildStr19 = map.get("ismarry");
-			if(feildStr19 != null && feildStr19.size()>0){
-				cValues.put("ismarry", feildStr19.get(0));
-			}
-			
-			List<String> feildStr20 = map.get("nationality");
-			if(feildStr20 != null && feildStr20.size()>0){
-				cValues.put("nationality", feildStr20.get(0));
-			}
-			
-			List<String> feildStr21 = map.get("license");
-			if(feildStr21 != null && feildStr21.size()>0){
-				cValues.put("license", feildStr21.get(0));
-			}
-			
-			List<String> feildStr22 = map.get("workingabroad");
-			if(feildStr22 != null && feildStr22.size()>0){
-				cValues.put("workingabroad", feildStr22.get(0));
-			}
-			
-			List<String> feildStr23 = map.get("politicalstatus");
-			if(feildStr23 != null && feildStr23.size()>0){
-				cValues.put("politicalstatus", feildStr23.get(0));
-			}
-			
-			List<String> feildStr24 = map.get("bgcolor");
-			if(feildStr24 != null && feildStr24.size()>0){
-				cValues.put("bgcolor", feildStr24.get(0));
-			}
-			
-			List<String> feildStr25 = map.get("avator");
-			if(feildStr25 != null && feildStr25.size()>0){
-				cValues.put("avator", feildStr25.get(0));
-				preferenceUtil.setPreferenceData("avator",feildStr25.get(0));
-			}
-			
-			String baid = commMapArray.get("id")[0];
-			updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
-					new String[]{baid,"realname","gender","brithday","joinworktime",
-					"phone","hometown","city","email","ismarry",
-					"nationality","license","workingabroad","politicalstatus","bgcolor","avator"}, 
-					new String[]{uTokenId,feildStr11.get(0),feildStr12.get(0),feildStr13.get(0),feildStr14.get(0),
-					feildStr15.get(0),feildStr16.get(0),feildStr17.get(0),feildStr18.get(0),feildStr19.get(0),
-					feildStr20.get(0),feildStr21.get(0),feildStr22.get(0),feildStr23.get(0),feildStr24.get(0),feildStr25.get(0)},2);
-			
-			
-			
-		}
-		
-		
-		
-		
-		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId + "' limit 1";
-		commMapArray = dbUtil.queryData(self, queryWhere);
-		
-		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			String baid = commMapArray.get("id")[0];
-			/*updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
-					new String[]{baid,"realname","gender","brithday","joinworktime",
-					"phone","hometown","city","email","ismarry",
-					"nationality","license","workingabroad","politicalstatus","bgcolor","avator"}, 
-					new String[]{uTokenId,feildStr11.get(0),feildStr12.get(0),feildStr13.get(0),feildStr14.get(0),
-					feildStr15.get(0),feildStr16.get(0),feildStr17.get(0),feildStr18.get(0),feildStr19.get(0),
-					feildStr20.get(0),feildStr21.get(0),feildStr22.get(0),feildStr23.get(0),feildStr24.get(0),feildStr25.get(0)},2);*/
 		}else{
-			/*queryResult = dbUtil.insertData(self, CommonText.BASEINFO, cValues);*/
+			insertBaseInfo(map);
 		}
 		
-		if (updResult == 1 || queryResult) {
-			startChildActivity("UserCenterActivity",true);
-		}
-		
+		mHandler.sendEmptyMessage(11);
 	}
 	
-	
-	private void getMapInfo(Map<String, List<String>> map){
+	/**
+	 * 如本地没有当前用户的数据，将远程数据同步到本地
+	 * @param map
+	 */
+	private void insertBaseInfo(Map<String, List<String>> map){
+		L.d("========insertBaseInfo==========="+uTokenId);
 		ContentValues cValues = new ContentValues();
+		cValues.put("userId",uTokenId);
+		cValues.put("realname",getServerKeyValue(map,"realname"));
+		cValues.put("gender",getServerKeyValue(map,"gender"));
+		cValues.put("brithday",getServerKeyValue(map,"brithday"));
+		cValues.put("joinworktime",getServerKeyValue(map,"joinworktime"));
+		cValues.put("phone",getServerKeyValue(map,"phone"));
+		cValues.put("hometown",getServerKeyValue(map,"hometown"));
+		cValues.put("city",getServerKeyValue(map,"city"));
+		cValues.put("email",getServerKeyValue(map,"email"));
+		cValues.put("ismarry",getServerKeyValue(map,"ismarry"));
+		cValues.put("nationality",getServerKeyValue(map,"nationality"));
+		cValues.put("license",getServerKeyValue(map,"license"));
+		cValues.put("workingabroad",getServerKeyValue(map,"workingabroad"));
+		cValues.put("politicalstatus",getServerKeyValue(map,"politicalstatus"));
+		cValues.put("bgcolor",getServerKeyValue(map,"bgcolor"));
+		String avatorStr = getServerKeyValue(map,"avator");
+		cValues.put("avator",avatorStr);
+		preferenceUtil.setPreferenceData("avator",avatorStr);
 		
-		List<String> feildStr10 = map.get("userId");
-		if(feildStr10 != null && feildStr10.size()>0){
-			cValues.put("userId", feildStr10.get(0));
-		}
-		
-		List<String> feildStr11 = map.get("realname");
-		if(feildStr11 != null && feildStr11.size()>0){
-			cValues.put("realname", feildStr11.get(0));
-		}
-		
-		List<String> feildStr12 = map.get("gender");
-		if(feildStr12 != null && feildStr12.size()>0){
-			cValues.put("gender", feildStr12.get(0));
-		}
-		
-		List<String> feildStr13 = map.get("brithday");
-		if(feildStr13 != null && feildStr13.size()>0){
-			cValues.put("brithday", feildStr13.get(0));
-		}
-		
-		List<String> feildStr14 = map.get("joinworktime");
-		if(feildStr14 != null && feildStr14.size()>0){
-			cValues.put("joinworktime", feildStr14.get(0));
-		}
-		
-		List<String> feildStr15 = map.get("phone");
-		if(feildStr15 != null && feildStr15.size()>0){
-			cValues.put("phone", feildStr15.get(0));
-		}
-		
-		List<String> feildStr16 = map.get("hometown");
-		if(feildStr16 != null && feildStr16.size()>0){
-			cValues.put("hometown", feildStr16.get(0));
-		}
-		
-		List<String> feildStr17 = map.get("city");
-		if(feildStr17 != null && feildStr17.size()>0){
-			cValues.put("city", feildStr17.get(0));
-		}
-		
-		List<String> feildStr18 = map.get("email");
-		if(feildStr18 != null && feildStr18.size()>0){
-			cValues.put("email", feildStr18.get(0));
-		}
-		
-		List<String> feildStr19 = map.get("ismarry");
-		if(feildStr19 != null && feildStr19.size()>0){
-			cValues.put("ismarry", feildStr19.get(0));
-		}
-		
-		List<String> feildStr20 = map.get("nationality");
-		if(feildStr20 != null && feildStr20.size()>0){
-			cValues.put("nationality", feildStr20.get(0));
-		}
-		
-		List<String> feildStr21 = map.get("license");
-		if(feildStr21 != null && feildStr21.size()>0){
-			cValues.put("license", feildStr21.get(0));
-		}
-		
-		List<String> feildStr22 = map.get("workingabroad");
-		if(feildStr22 != null && feildStr22.size()>0){
-			cValues.put("workingabroad", feildStr22.get(0));
-		}
-		
-		List<String> feildStr23 = map.get("politicalstatus");
-		if(feildStr23 != null && feildStr23.size()>0){
-			cValues.put("politicalstatus", feildStr23.get(0));
-		}
-		
-		List<String> feildStr24 = map.get("bgcolor");
-		if(feildStr24 != null && feildStr24.size()>0){
-			cValues.put("bgcolor", feildStr24.get(0));
-		}
-		
-		List<String> feildStr25 = map.get("avator");
-		if(feildStr25 != null && feildStr25.size()>0){
-			cValues.put("avator", feildStr25.get(0));
-			preferenceUtil.setPreferenceData("avator",feildStr25.get(0));
-		}
+		queryResult = dbUtil.insertData(self, CommonText.BASEINFO, cValues);
 	}
-	
 	
 	/**
 	 * 判断用户名和密码
