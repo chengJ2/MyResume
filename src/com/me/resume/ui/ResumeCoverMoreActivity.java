@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.GridView;
 
+import com.me.resume.BaseActivity;
 import com.me.resume.R;
 import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.utils.CommUtil;
 
 /**
@@ -101,10 +103,8 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 	
 	@Override
 	public void onClick(View v) {
+		super.onClick(v);
 		switch (v.getId()) {
-		case R.id.left_lable:
-			scrollToFinishActivity();
-			break;
 		default:
 			break;
 		}

@@ -19,6 +19,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.CommForMapBaseAdapter;
@@ -27,6 +28,7 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.model.UUIDGenerator;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.DataCleanManager;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
@@ -69,9 +71,27 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 1:
-				startActivity(".ui.BaseInfoActivity",false);
+				if(msg.obj != null){
+					ImageUtils.getURLImage(mHandler,CommUtil.getHttpLink((String)msg.obj),2);
+				}
+                break;
+            case 2:
+            	if(msg.obj!= null){
+        			try {
+        				ImageUtils.saveImage(self,(Bitmap)msg.obj,Constants.FILENAME);
+        				Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.USERHEAD.toString());
+        				if (bitmap != null) {
+        					setLeftIcon(ImageUtils.toRoundBitmap(bitmap));
+        				}
+        			} catch (Exception e) {
+        				e.printStackTrace();
+        			}
+        		}
+            	break;
+			case 11:
+				startChildActivity("BaseInfoActivity",false);
 				break;
-			case 2:
+			case 12:
 				preferenceUtil.setPreferenceData("noticeshow",0);
 				break;
 			case 100:
@@ -187,12 +207,11 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	
 	private void initData(){
 		String uid = preferenceUtil.getPreferenceData("uid", "0");
-		L.d("========uid==========" + uid);
 		queryWhere = "select * from " + CommonText.USERINFO +" where uid = '"+ uid +"' order by id desc limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		 if (commMapArray!= null && commMapArray.get("id").length > 0) {
 			 uTokenId = commMapArray.get("uid")[0];
-			 L.d("======初始化用户ID======="+uTokenId);
+			 L.d("======初始化用户ID(uTokenId)======="+uTokenId);
 			 initBottomButton();
 		 }else{
 			 String uuid = UUIDGenerator.getUUID();
@@ -433,13 +452,21 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	protected void onResume() {
 		super.onResume();
 		MyApplication.userId = preferenceUtil.getPreferenceData("useId", "0");
-		L.d("======onResume======userId:"+MyApplication.userId + "and uuid:" + uTokenId);
+		L.d("======onResume======userId:"+MyApplication.userId + "## uuid:" + uTokenId);
 		
 		initData();
 		
 		Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.USERHEAD.toString());
-		if (bitmap != null) {
+		String avatorStr= preferenceUtil.getPreferenceData("avator", "");
+		if (bitmap != null && RegexUtil.checkNotNull(avatorStr)) {
 			setLeftIcon(ImageUtils.toRoundBitmap(bitmap));
+		}else{
+			setLeftIcon(R.drawable.icon_person_avtar);
+			if (CommUtil.isNetworkAvailable(self)) {
+				if(RegexUtil.checkNotNull(avatorStr)){
+					mHandler.sendMessage(mHandler.obtainMessage(1, avatorStr));
+				}
+			}
 		}
 		
 		commscrollview.scrollTo(0, 0);
@@ -454,10 +481,10 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					DialogUtils.showAlertDialog(self, CommUtil.getStrValue(self,
 							R.string.dialog_action_alert),View.VISIBLE, mHandler);
 				}else{
-					mHandler.sendEmptyMessage(1);
+					mHandler.sendEmptyMessage(11);
 				}
 			} else {
-				mHandler.sendEmptyMessage(1);
+				mHandler.sendEmptyMessage(11);
 			}
 			break;
 		case R.id.review_btn:

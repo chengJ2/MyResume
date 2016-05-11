@@ -1,4 +1,4 @@
-package com.me.resume.ui;
+package com.me.resume;
 
 import java.util.List;
 import java.util.Map;
@@ -44,6 +44,8 @@ import com.me.resume.views.MarqueeText;
  */
 public class BaseActivity extends SwipeBackActivity implements OnClickListener,TextWatcher{
 
+	protected BaseActivity self;
+	
 	protected RelativeLayout topLayout;
 	
 	protected TextView toptext;
@@ -56,9 +58,6 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	private RelativeLayout fabLayout;
 	
 	private CustomFAB saveButton,editButton,nextButton;
-	
-	protected BaseActivity self;
-	protected SharedPreferences sp;
 	
 	protected CommonBaseAdapter<String> commStrAdapter = null;
 	
@@ -139,7 +138,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		self = BaseActivity.this;
 		if(preferenceUtil == null)
 			preferenceUtil = new PreferenceUtil(self);
-		sp = getSharedPreferences(Constants.CONFIG, Context.MODE_PRIVATE);
+		
 		fieldNull = CommUtil.getStrValue(self, R.string.action_input_isnull);
 		
 		TelephonyManager telephonyMgr = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
@@ -383,36 +382,13 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + src, finish);
 	}
 
-	public void setPreferenceData(String key, String value) {
-		sp.edit().putString(key, value).commit();
-	}
-
-	public String getPreferenceData(String str, String def) {
-		return sp.getString(str, def);
-	}
-
-	public void setPreferenceData(String key, int value) {
-		sp.edit().putInt(key, value).commit();
-	}
-
-	public int getPreferenceData(String str, int def) {
-		return sp.getInt(str, def);
-	}
-
-	public void setPreferenceData(String key, boolean value) {
-		sp.edit().putBoolean(key, value).commit();
-	}
-
-	public boolean getPreferenceData(String str) {
-		return sp.getBoolean(str, false);
-	}
 
 	/**
 	 * 语言切换
 	 * @param newLang
 	 */
 	protected void switchLang(String newLang) {
-		setPreferenceData("LANGUAGE", newLang);
+		preferenceUtil.setPreferenceData("LANGUAGE", newLang);
 		while (0 != mLocalStack.size()) {
 			mLocalStack.pop().finish();
 		} 

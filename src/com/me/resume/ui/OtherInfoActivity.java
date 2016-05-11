@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.me.resume.BaseActivity;
 import com.me.resume.R;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
@@ -88,7 +89,7 @@ public class OtherInfoActivity extends BaseActivity implements
 				break;
 			case OnTopMenu.MSG_MENU2:
 				if (msg.obj != null) {
-					setPreferenceData("edit_mode",(boolean) msg.obj);
+					preferenceUtil.setPreferenceData("edit_mode",(boolean) msg.obj);
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:

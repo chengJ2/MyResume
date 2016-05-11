@@ -15,13 +15,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.me.resume.MyApplication;
+import com.me.resume.BaseActivity;
 import com.me.resume.R;
 import com.me.resume.comm.ResponseCode;
-import com.me.resume.model.UUIDGenerator;
-import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
-import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
 import com.whjz.android.text.CommonText;
@@ -102,7 +99,7 @@ public class UserLoginActivity extends BaseActivity implements
 		setTopTitle(R.string.action_user_login);
 		setMsgHide();
 		
-		if (getPreferenceData("isregister")) {
+		if (preferenceUtil.getPreferenceData("isregister")) {
 			setRightIconVisible(View.GONE);
 		}else{
 			right_icon.setImageResource(R.drawable.icon_user_register);
@@ -111,9 +108,9 @@ public class UserLoginActivity extends BaseActivity implements
 		
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
-		edtTxt_username.setText(getPreferenceData("username", ""));
-		if (getPreferenceData("fflag")) {
-			edtTxt_password.setText(getPreferenceData("password", ""));
+		edtTxt_username.setText(preferenceUtil.getPreferenceData("username", ""));
+		if (preferenceUtil.getPreferenceData("fflag")) {
+			edtTxt_password.setText(preferenceUtil.getPreferenceData("password", ""));
 			save_checkbox.setBackgroundResource(R.drawable.checkbox_sel);
 		}else{
 			edtTxt_password.setText("");
@@ -286,7 +283,7 @@ public class UserLoginActivity extends BaseActivity implements
 				public void success(Map<String, List<String>> map) {
 					try {
 						sendSuccess(map);
-						setPreferenceData("isregister", true);
+						preferenceUtil.setPreferenceData("isregister", true);
 					} catch (Exception e) {
 						e.printStackTrace();
 						if(map.get("msg").get(0).equals(ResponseCode.USERNAME_REPEAT)){
@@ -305,7 +302,7 @@ public class UserLoginActivity extends BaseActivity implements
 	 */
 	private void sendSuccess(final Map<String, List<String>> map){
 		uTokenId = map.get("uid").get(0);
-		setPreferenceData("uid", uTokenId);
+		preferenceUtil.setPreferenceData("uid", uTokenId);
 		String feildStr1 = map.get("username").get(0);
 		String feildStr2 = map.get("password").get(0);
 		String feildStr3 = map.get("deviceId").get(0);
@@ -313,8 +310,8 @@ public class UserLoginActivity extends BaseActivity implements
 		String feildStr5 = map.get("createtime").get(0);
 		String feildStr6 = map.get("lastlogintime").get(0);
 		
-		setPreferenceData("username",feildStr1);
-		setPreferenceData("password",str_password);
+		preferenceUtil.setPreferenceData("username",feildStr1);
+		preferenceUtil.setPreferenceData("password",str_password);
 		
 		queryWhere = "select * from " + CommonText.USERINFO + " where uid = '" + uTokenId + "'";
 		commMapArray = dbUtil.queryData(self, queryWhere);
@@ -338,7 +335,7 @@ public class UserLoginActivity extends BaseActivity implements
 		}
 		
 		if(updResult == 1 || queryResult){
-			setPreferenceData("useId",uTokenId);
+			preferenceUtil.setPreferenceData("useId",uTokenId);
 			getBaseinfo(map);
 		}
 	}
@@ -348,6 +345,138 @@ public class UserLoginActivity extends BaseActivity implements
 	 * @param map
 	 */
 	private void getBaseinfo(Map<String, List<String>> map){
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId + "' limit 1";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			ContentValues cValues = new ContentValues();
+			
+			List<String> feildStr10 = map.get("userId");
+			if(feildStr10 != null && feildStr10.size()>0){
+				cValues.put("userId", feildStr10.get(0));
+			}else{
+				String feildStr101 = commMapArray.get("userId")[0];
+				if(RegexUtil.checkNotNull(feildStr101)){
+					cValues.put("userId", feildStr101);
+				}
+			}
+			
+			List<String> feildStr11 = map.get("realname");
+			if(feildStr11 != null && feildStr11.size()>0){
+				cValues.put("realname", feildStr11.get(0));
+			}
+			
+			List<String> feildStr12 = map.get("gender");
+			if(feildStr12 != null && feildStr12.size()>0){
+				cValues.put("gender", feildStr12.get(0));
+			}
+			
+			List<String> feildStr13 = map.get("brithday");
+			if(feildStr13 != null && feildStr13.size()>0){
+				cValues.put("brithday", feildStr13.get(0));
+			}
+			
+			List<String> feildStr14 = map.get("joinworktime");
+			if(feildStr14 != null && feildStr14.size()>0){
+				cValues.put("joinworktime", feildStr14.get(0));
+			}
+			
+			List<String> feildStr15 = map.get("phone");
+			if(feildStr15 != null && feildStr15.size()>0){
+				cValues.put("phone", feildStr15.get(0));
+			}
+			
+			List<String> feildStr16 = map.get("hometown");
+			if(feildStr16 != null && feildStr16.size()>0){
+				cValues.put("hometown", feildStr16.get(0));
+			}
+			
+			List<String> feildStr17 = map.get("city");
+			if(feildStr17 != null && feildStr17.size()>0){
+				cValues.put("city", feildStr17.get(0));
+			}
+			
+			List<String> feildStr18 = map.get("email");
+			if(feildStr18 != null && feildStr18.size()>0){
+				cValues.put("email", feildStr18.get(0));
+			}
+			
+			List<String> feildStr19 = map.get("ismarry");
+			if(feildStr19 != null && feildStr19.size()>0){
+				cValues.put("ismarry", feildStr19.get(0));
+			}
+			
+			List<String> feildStr20 = map.get("nationality");
+			if(feildStr20 != null && feildStr20.size()>0){
+				cValues.put("nationality", feildStr20.get(0));
+			}
+			
+			List<String> feildStr21 = map.get("license");
+			if(feildStr21 != null && feildStr21.size()>0){
+				cValues.put("license", feildStr21.get(0));
+			}
+			
+			List<String> feildStr22 = map.get("workingabroad");
+			if(feildStr22 != null && feildStr22.size()>0){
+				cValues.put("workingabroad", feildStr22.get(0));
+			}
+			
+			List<String> feildStr23 = map.get("politicalstatus");
+			if(feildStr23 != null && feildStr23.size()>0){
+				cValues.put("politicalstatus", feildStr23.get(0));
+			}
+			
+			List<String> feildStr24 = map.get("bgcolor");
+			if(feildStr24 != null && feildStr24.size()>0){
+				cValues.put("bgcolor", feildStr24.get(0));
+			}
+			
+			List<String> feildStr25 = map.get("avator");
+			if(feildStr25 != null && feildStr25.size()>0){
+				cValues.put("avator", feildStr25.get(0));
+				preferenceUtil.setPreferenceData("avator",feildStr25.get(0));
+			}
+			
+			String baid = commMapArray.get("id")[0];
+			updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
+					new String[]{baid,"realname","gender","brithday","joinworktime",
+					"phone","hometown","city","email","ismarry",
+					"nationality","license","workingabroad","politicalstatus","bgcolor","avator"}, 
+					new String[]{uTokenId,feildStr11.get(0),feildStr12.get(0),feildStr13.get(0),feildStr14.get(0),
+					feildStr15.get(0),feildStr16.get(0),feildStr17.get(0),feildStr18.get(0),feildStr19.get(0),
+					feildStr20.get(0),feildStr21.get(0),feildStr22.get(0),feildStr23.get(0),feildStr24.get(0),feildStr25.get(0)},2);
+			
+			
+			
+		}
+		
+		
+		
+		
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId + "' limit 1";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			String baid = commMapArray.get("id")[0];
+			/*updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
+					new String[]{baid,"realname","gender","brithday","joinworktime",
+					"phone","hometown","city","email","ismarry",
+					"nationality","license","workingabroad","politicalstatus","bgcolor","avator"}, 
+					new String[]{uTokenId,feildStr11.get(0),feildStr12.get(0),feildStr13.get(0),feildStr14.get(0),
+					feildStr15.get(0),feildStr16.get(0),feildStr17.get(0),feildStr18.get(0),feildStr19.get(0),
+					feildStr20.get(0),feildStr21.get(0),feildStr22.get(0),feildStr23.get(0),feildStr24.get(0),feildStr25.get(0)},2);*/
+		}else{
+			/*queryResult = dbUtil.insertData(self, CommonText.BASEINFO, cValues);*/
+		}
+		
+		if (updResult == 1 || queryResult) {
+			startChildActivity("UserCenterActivity",true);
+		}
+		
+	}
+	
+	
+	private void getMapInfo(Map<String, List<String>> map){
 		ContentValues cValues = new ContentValues();
 		
 		List<String> feildStr10 = map.get("userId");
@@ -428,30 +557,10 @@ public class UserLoginActivity extends BaseActivity implements
 		List<String> feildStr25 = map.get("avator");
 		if(feildStr25 != null && feildStr25.size()>0){
 			cValues.put("avator", feildStr25.get(0));
-			setPreferenceData("avator",feildStr25.get(0));
+			preferenceUtil.setPreferenceData("avator",feildStr25.get(0));
 		}
-		
-		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId + "' limit 1";
-		commMapArray = dbUtil.queryData(self, queryWhere);
-		
-		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			String baid = commMapArray.get("id")[0];
-			updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
-					new String[]{baid,"realname","gender","brithday","joinworktime",
-					"phone","hometown","city","email","ismarry",
-					"nationality","license","workingabroad","politicalstatus","bgcolor","avator"}, 
-					new String[]{uTokenId,feildStr11.get(0),feildStr12.get(0),feildStr13.get(0),feildStr14.get(0),
-					feildStr15.get(0),feildStr16.get(0),feildStr17.get(0),feildStr18.get(0),feildStr19.get(0),
-					feildStr20.get(0),feildStr21.get(0),feildStr22.get(0),feildStr23.get(0),feildStr24.get(0),feildStr25.get(0)},2);
-		}else{
-			queryResult = dbUtil.insertData(self, CommonText.BASEINFO, cValues);
-		}
-		
-		if (updResult == 1 || queryResult) {
-			startChildActivity("UserCenterActivity",true);
-		}
-		
 	}
+	
 	
 	/**
 	 * 判断用户名和密码
@@ -479,7 +588,7 @@ public class UserLoginActivity extends BaseActivity implements
 			fflag = true;
 			save_checkbox.setBackgroundResource(R.drawable.checkbox_sel);
 		}
-		setPreferenceData("fflag", fflag);
+		preferenceUtil.setPreferenceData("fflag", fflag);
 	}
 
 	/**

@@ -59,7 +59,7 @@
             <LinearLayout
                 android:id="@+id/llout03"
                 android:layout_width="match_parent"
-                android:layout_height="70dip"
+                android:layout_height="60dip"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/margin_16"
                 android:background="@color/white"
@@ -74,9 +74,11 @@
                     android:gravity="center"
                     android:text="@string/personal_c_item1"
                     android:textColor="@color/grey_10"
-                    android:textSize="@dimen/small_middle_text_size" />
+                    android:textSize="@dimen/small_text_size" />
                 
-                <View style="@style/line2"/>
+                <View style="@style/line2" 
+                    android:layout_height="40dip" 
+                    android:layout_gravity="center"/>
                 
                 <TextView
                     android:id="@+id/viewmode"
@@ -87,9 +89,11 @@
                     android:gravity="center"
                     android:text="@string/personal_c_item2"
                     android:textColor="@color/grey_10"
-                    android:textSize="@dimen/small_middle_text_size" />
+                    android:textSize="@dimen/small_text_size" />
 
-                <View style="@style/line2"/>
+                <View style="@style/line2" 
+                    android:layout_height="40dip" 
+                    android:layout_gravity="center"/>
                 
                 <TextView
                     android:id="@+id/review_resume"
@@ -100,7 +104,7 @@
                     android:gravity="center"
                     android:text="@string/personal_c_item3"
                     android:textColor="@color/grey_10"
-                    android:textSize="@dimen/small_middle_text_size" />
+                    android:textSize="@dimen/small_text_size" />
             </LinearLayout>
 
             <View style="@style/line_h15" />
@@ -128,7 +132,7 @@
                         android:text="@string/personal_c_item11"
                         android:gravity="center|right"
                         android:textColor="@color/grey_10"
-                   	 	android:textSize="@dimen/small_text_size"
+                   	 	android:textSize="@dimen/micro_text_size"
                         android:drawableRight="@drawable/arrows_right"
                         android:visibility="visible" />
                 </LinearLayout>
@@ -151,7 +155,7 @@
                         android:text="完整度(70%)"
                         android:gravity="center|right"
                         android:textColor="@color/grey_10"
-                   	 	android:textSize="@dimen/small_text_size"
+                   	 	android:textSize="@dimen/micro_text_size"
                         android:drawableRight="@drawable/arrows_right"
                         android:visibility="visible" />
                 </LinearLayout>
@@ -174,7 +178,7 @@
                         android:text="完整度(90%)"
                         android:gravity="center|right"
                         android:textColor="@color/grey_10"
-                   	 	android:textSize="@dimen/small_text_size"
+                   	 	android:textSize="@dimen/micro_text_size"
                         android:drawableRight="@drawable/arrows_right"
                         android:visibility="visible" />
                 </LinearLayout>

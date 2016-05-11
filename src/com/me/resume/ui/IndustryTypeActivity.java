@@ -13,13 +13,13 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.CommonBaseAdapter;
@@ -173,11 +173,8 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 	
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
+		super.onClick(v);
 		switch (v.getId()) {
-		case R.id.left_lable:
-			self.scrollToFinishActivity();
-			break;
 		case R.id.search_cancle:
 			whichTab = 0;
 			CommUtil.hideKeyboard(self);

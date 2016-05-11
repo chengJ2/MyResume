@@ -9,11 +9,12 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Handler;
 
+import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
-import com.me.resume.ui.BaseActivity;
 import com.me.resume.utils.Base64Util;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.PreferenceUtil;
 import com.whjz.android.text.Info;
 import com.whjz.android.util.common.CommonUtil;
 import com.whjz.android.util.common.DataSetList;
@@ -39,9 +40,15 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 	
 	protected BaseCommonUtil baseCommon = new CommonUtil();;// 通用工具对象实例
 	
+	private PreferenceUtil preferenceUtil;
+	
 	public UploadPhotoTask(Context context,Handler mHandler){
 		this.context = context;
 		this.mHandler = mHandler;
+		if (preferenceUtil == null) {
+			preferenceUtil = new PreferenceUtil(context);
+		}
+		
 	}
 	
 	@Override
@@ -70,6 +77,7 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 						String userID = map.get("userId").get(0);
 						if(userID != null && !"0".equals(userID)){
 							user_avator = map.get("avator").get(0);
+							preferenceUtil.setPreferenceData("avator", user_avator);
 //							GlobalApplication.getInstance().setUserId(userID);
 //							GlobalApplication.getInstance().setUserAvatar(map.get("user_pic").get(0));
 							return 1;

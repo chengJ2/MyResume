@@ -14,11 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 
@@ -152,6 +154,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 	
 	@Override
 	public void onClick(View v) {
+		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.shareLayout:
 			inputshareLayout.setVisibility(View.VISIBLE);
@@ -165,9 +168,6 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 			break;
 		case R.id.sharemore_layout:
 			inputshareLayout.setVisibility(View.GONE);
-			break;
-		case R.id.left_lable:
-			scrollToFinishActivity();
 			break;
 		default:
 			break;

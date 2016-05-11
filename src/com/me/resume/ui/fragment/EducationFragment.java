@@ -1,7 +1,6 @@
 package com.me.resume.ui.fragment;
 
 import java.util.Arrays;
-import java.util.Map;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -20,9 +19,9 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
+import com.me.resume.BaseActivity;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
-import com.me.resume.ui.BaseActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;

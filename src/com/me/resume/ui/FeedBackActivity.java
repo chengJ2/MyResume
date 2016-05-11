@@ -12,9 +12,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.ResponseCode;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 
@@ -62,19 +64,11 @@ public class FeedBackActivity extends BaseActivity {
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
-		if(getPreferenceData("feedback")){
+		if(preferenceUtil.getPreferenceData("feedback")){
 			feedback_cb.setChecked(true);
 		}else{
 			feedback_cb.setChecked(false);
 		}
-		
-//		left_icon.setOnClickListener(new OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				scrollToFinishActivity();
-//			}
-//		});
 		
 		feedcommit.setOnClickListener(new OnClickListener() {
 			
@@ -94,8 +88,8 @@ public class FeedBackActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View arg0) {
-				setPreferenceData("feedback",true);
-				if(getPreferenceData("feedback")){
+				preferenceUtil.setPreferenceData("feedback",true);
+				if(preferenceUtil.getPreferenceData("feedback")){
 					feedback_cb.setChecked(true);
 				}else{
 					feedback_cb.setChecked(false);

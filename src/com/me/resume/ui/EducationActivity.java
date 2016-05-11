@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.OnTopMenu;
@@ -20,7 +21,6 @@ import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.ui.fragment.AllFragmentFactory;
 import com.me.resume.ui.fragment.EducationFragment;
 import com.me.resume.ui.fragment.TrainingFragment;
-import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.SegmentButton;
@@ -62,7 +62,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				break;
 			case OnTopMenu.MSG_MENU2:
 				if (msg.obj != null) {
-					setPreferenceData("edit_mode",(boolean) msg.obj);
+					preferenceUtil.setPreferenceData("edit_mode",(boolean) msg.obj);
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:

@@ -11,9 +11,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.me.resume.MyApplication;
+import com.me.resume.BaseActivity;
 import com.me.resume.R;
-import com.me.resume.comm.Constants;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 import com.whjz.android.text.CommonText;

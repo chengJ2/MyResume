@@ -3,13 +3,8 @@ package com.me.resume.ui;
 import java.io.File;
 import java.util.Map;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -19,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.me.resume.BaseActivity;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
@@ -29,6 +25,7 @@ import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.FileUtils;
 import com.me.resume.utils.ImageUtils;
 import com.me.resume.utils.RegexUtil;
+import com.me.resume.utils.TimeUtils;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -132,15 +129,26 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		setfabLayoutVisible(View.GONE);
 		
 		Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.USERHEAD.toString());
-		if (bitmap != null) {
+		String avatorStr= preferenceUtil.getPreferenceData("avator", "");
+		if (bitmap != null && RegexUtil.checkNotNull(avatorStr)) {
 			user_info_avatar.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
 		}else{
-			String avatorStr= getPreferenceData("avator", "");
-			if(RegexUtil.checkNotNull(avatorStr)){
-				mHandler.sendMessage(mHandler.obtainMessage(1, avatorStr));
+			if (CommUtil.isNetworkAvailable(self)) {
+				if(RegexUtil.checkNotNull(avatorStr)){
+					mHandler.sendMessage(mHandler.obtainMessage(1, avatorStr));
+				}
 			}
 		}
-		
+	}
+	
+	/**
+	 * 
+	 * @Title:UserCenterActivity
+	 * @Description: 获取基本资料
+	 * @author Comsys-WH1510032
+	 * @return 返回类型
+	 */
+	private void getBaseInfo(){
 		queryWhere = "select a.username,b.* from " + CommonText.USERINFO + " a,"
 				+ CommonText.BASEINFO +" b where a.uid = b.userId and a.uid = '"+ uTokenId +"'";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
@@ -153,22 +161,34 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			}
 			
 			String workyear = commMapArray.get("joinworktime")[0];
-			// TODO
-			center_workyear.setText("|"+ workyear);
+			if (RegexUtil.checkNotNull(workyear)) {
+				int year = CommUtil.parseInt(workyear.substring(0, 4));
+				int theYear = CommUtil.parseInt(TimeUtils.theYear());
+				center_workyear.setText("|"+ (theYear - year) + "年工作经验");
+			}else{
+				center_workyear.setText("");
+			}
 			
 			String city = commMapArray.get("city")[0];
 			if (RegexUtil.checkNotNull(city)) {
 				center_city.setText("|"+city); 
+			}else{
+				center_city.setText("");
 			}
 		}
 	}
 	
 	@Override
-	public void onClick(View view) {
-		switch (view.getId()) {
-		case R.id.left_lable:
-			self.scrollToFinishActivity();
-			break;
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		getBaseInfo();
+	}
+	
+	@Override
+	public void onClick(View v) {
+		super.onClick(v);
+		switch (v.getId()) {
 		case R.id.right_icon:
 			break;
 		case R.id.user_info_avatar:

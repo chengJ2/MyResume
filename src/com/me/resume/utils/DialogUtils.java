@@ -541,14 +541,14 @@ public class DialogUtils {
 			dialog.getWindow().setBackgroundDrawable(new BitmapDrawable());
 			dialog.setCanceledOnTouchOutside(true);
 			
-			TextView noshow = (TextView)dialog.findViewById(R.id.noshow);
+			final TextView noshow = (TextView)dialog.findViewById(R.id.noshow);
 			noshow.setVisibility(visibility);
 			noshow.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					sendMsg(2);
+					noshow.setVisibility(View.GONE);
+					sendMsg(12);
 				}
 			});
 			

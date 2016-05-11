@@ -11,9 +11,10 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.me.resume.BaseActivity;
 import com.me.resume.R;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.ImageLoader;
-import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.views.MarqueeText;
@@ -113,10 +114,8 @@ public class TopicActivity extends BaseActivity implements OnClickListener{
 
 	@Override
 	public void onClick(View v) {
+		super.onClick(v);
 		switch (v.getId()) {
-		case R.id.left_lable:
-			scrollToFinishActivity();
-			break;
 		case R.id.right_icon:
 			// TODO
 			break;

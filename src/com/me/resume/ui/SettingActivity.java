@@ -12,13 +12,16 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.DataCleanManager;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
+import com.me.resume.utils.PreferenceUtil;
 import com.me.resume.views.SwitchButton;
 import com.me.resume.views.SwitchButton.OnChangedListener;
 
@@ -42,7 +45,15 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 1:
-				// TODO
+				try {
+					DataCleanManager.cleanDatabases(self);
+					preferenceUtil.clearPreferenceData();
+					preferenceUtil.setPreferenceData("useId","0");
+					cachesize.setText("0KB");
+					toastMsg(R.string.action_clearcache_success);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				break;
 			default:
 				break;
@@ -111,12 +122,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			public void OnChanged(SwitchButton switchButton, boolean checkState) {
 				// TODO Auto-generated method stub
 				int onoff = 0;
-				if(getPreferenceData("startVerytime", 0) == 0){
+				if(preferenceUtil.getPreferenceData("startVerytime", 0) == 0){
 					onoff = 1;
 				}else{
 					onoff = 0;
 				}
-				setPreferenceData("startVerytime", onoff); 
+				preferenceUtil.setPreferenceData("startVerytime", onoff); 
 			}
 		});
 		
@@ -126,12 +137,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			public void OnChanged(SwitchButton switchButton, boolean checkState) {
 				// TODO Auto-generated method stub
 				int onoff = 0;
-				if(getPreferenceData("autoShow", 0) == 0){
+				if(preferenceUtil.getPreferenceData("autoShow", 0) == 0){
 					onoff = 1;
 				}else{
 					onoff = 0;
 				}
-				setPreferenceData("autoShow", onoff); 
+				preferenceUtil.setPreferenceData("autoShow", onoff); 
 			}
 		});
 		
@@ -141,12 +152,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			public void OnChanged(SwitchButton switchButton, boolean checkState) {
 				// TODO Auto-generated method stub
 				int onoff = 0;
-				if(getPreferenceData("editmode", 0) == 0){
+				if(preferenceUtil.getPreferenceData("editmode", 0) == 0){
 					onoff = 1;
 				}else{
 					onoff = 0;
 				}
-				setPreferenceData("editmode", onoff); 
+				preferenceUtil.setPreferenceData("editmode", onoff); 
 			}
 		});
 	}
@@ -155,9 +166,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		int autoShow = getPreferenceData("autoShow", 0);
-		int startVerytime = getPreferenceData("startVerytime", 0);
-		int editmode = getPreferenceData("editmode", 0);
+		int autoShow = preferenceUtil.getPreferenceData("autoShow", 0);
+		int startVerytime = preferenceUtil.getPreferenceData("startVerytime", 0);
+		int editmode = preferenceUtil.getPreferenceData("editmode", 0);
 		if (startVerytime == 0) {
 			setting_start_cb.setChecked(false);
 		}else{
@@ -177,10 +188,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public void onClick(View v) {
+		super.onClick(v);
 		switch (v.getId()) {
-//		case R.id.left_lable:
-//			self.scrollToFinishActivity();
-//			break;
 		case R.id.versionLayout:
 			CommUtil.ToastMsg(self, "暂无新版本");
 			break;
@@ -232,10 +241,14 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			public void success(Map<String, List<String>> map) {
 				try {
 					if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
-//						setPreferenceData("uid","0");
-						setPreferenceData("useId","0");
-//						uTokenId = "0";
+//						preferenceUtil.clearPreferenceData();
+						preferenceUtil.setPreferenceData("avator", "");
+						preferenceUtil.setPreferenceData("useId","0");
+						preferenceUtil.setPreferenceData("isregister", false);
 						MyApplication.userId = "0";
+						if(Constants.USERHEAD.exists()){
+							Constants.USERHEAD.delete();
+			        	}
 						toastMsg(R.string.action_logout_success);
 					}
 				} catch (Exception e) {

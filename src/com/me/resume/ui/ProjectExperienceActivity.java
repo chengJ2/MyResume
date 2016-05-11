@@ -3,14 +3,6 @@ package com.me.resume.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.me.resume.R;
-import com.me.resume.comm.OnTopMenu;
-import com.me.resume.utils.CommUtil;
-import com.me.resume.utils.DialogUtils;
-import com.me.resume.utils.RegexUtil;
-import com.me.resume.utils.TimeUtils;
-import com.whjz.android.text.CommonText;
-
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +10,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.me.resume.BaseActivity;
+import com.me.resume.R;
+import com.me.resume.comm.OnTopMenu;
+import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.DialogUtils;
+import com.me.resume.utils.RegexUtil;
+import com.me.resume.utils.TimeUtils;
+import com.whjz.android.text.CommonText;
 
 /**
  * 
@@ -60,7 +61,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 				break;
 			case OnTopMenu.MSG_MENU2:
 				if (msg.obj != null) {
-					setPreferenceData("edit_mode",(boolean) msg.obj);
+					preferenceUtil.setPreferenceData("edit_mode",(boolean) msg.obj);
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:

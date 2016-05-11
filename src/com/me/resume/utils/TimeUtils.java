@@ -457,6 +457,19 @@ public class TimeUtils {
         return b;
     }
     
+    /**
+     * 
+     * @Title:TimeUtils
+     * @Description: 获取今年
+     * @return year
+     */
+    public static String theYear() {
+        Date today = new Date();
+        String year = dateFormaterYear.get().format(today);
+        return year;
+    }
+    
+    
     public static String getWeekOfDate(String pTime) {
     	SimpleDateFormat format = new SimpleDateFormat(SHORT_FORMAT_STRING);
     	String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};

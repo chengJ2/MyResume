@@ -17,10 +17,12 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
+import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -129,7 +131,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				break;
 			case OnTopMenu.MSG_MENU2:
 				if (msg.obj != null) {
-					setPreferenceData("edit_mode",(boolean) msg.obj);
+					preferenceUtil.setPreferenceData("edit_mode",(boolean) msg.obj);
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
@@ -310,6 +312,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public void onClick(View v) {
+		super.onClick(v);
 		msg.setVisibility(View.GONE);
 		switch (v.getId()) {
 		case R.id.save:
@@ -343,9 +346,6 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		case R.id.next:
 			goActivity(".ui.WorkExperienceActivity");
 			break;
-//		case R.id.left_lable:
-//			self.scrollToFinishActivity();
-//			break;
 		case R.id.right_icon:
 			goActivity(Constants.MAINACTIVITY);
 			break;
