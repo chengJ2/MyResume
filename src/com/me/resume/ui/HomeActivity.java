@@ -58,7 +58,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	private GridView reviewCovergridview;
 	
 	private CustomListView reviewsharingListView;
-	private ImageView sharemore,covermore;
+	private ImageView sharemore,linkmore,covermore;
 	private TextView msgText;
 
 	private Button makeResume,reviewResume;
@@ -191,6 +191,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 		reviewsharingListView = findView(R.id.reviewshareListView);
 		covermore = findView(R.id.covermore);
+		linkmore = findView(R.id.linkmore);
 		sharemore = findView(R.id.sharemore);
 		msgText = findView(R.id.nodata);
 		
@@ -198,6 +199,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		reviewResume = findView(R.id.review_btn);
 		
 		covermore.setOnClickListener(this);
+		linkmore.setOnClickListener(this);
 		sharemore.setOnClickListener(this);
 		
 		makeResume.setOnClickListener(this);
@@ -505,6 +507,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.covermore:
 			startChildActivity("ResumeCoverMoreActivity", false);
+			break;
+		case R.id.linkmore:
+			startChildActivity("TopicListDetailActivity", false);
 			break;
 		default:
 			break;
