@@ -9,7 +9,7 @@
     </style>
     <!--
         Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <item name="android:windowNoTitle">true</item>
@@ -56,7 +56,7 @@
         <item name="android:singleLine">true</item>
         <item name="android:typeface">serif</item>
     </style>
-    
+
     <style name="user_info_item_radio">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
@@ -65,11 +65,11 @@
         <item name="android:textSize">@dimen/small_middle_text_size</item>
         <item name="android:background">@null</item>
         <item name="android:singleLine">true</item>
-         <item name="android:button">@null</item>
-         <item name="android:drawableLeft">@drawable/icon_radio</item>
-         <item name="android:drawablePadding">5dip</item>
+        <item name="android:button">@null</item>
+        <item name="android:drawableLeft">@drawable/icon_radio</item>
+        <item name="android:drawablePadding">5dip</item>
     </style>
-    
+
     <style name="user_info_item_iv">
         <item name="android:layout_width">0dip</item>
         <item name="android:layout_height">match_parent</item>
@@ -98,12 +98,12 @@
         <item name="android:layout_height">@dimen/line_height</item>
         <item name="android:background">@color/line</item>
     </style>
-    
+
     <style name="line_padding10" parent="@style/line3">
         <item name="android:layout_marginLeft">@dimen/line_margin_10</item>
         <item name="android:layout_marginRight">@dimen/line_margin_10</item>
     </style>
-    
+
     <style name="line_h15">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/line_height_16</item>
@@ -121,130 +121,146 @@
         <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:typeface">serif</item>
     </style>
-    
+
     <!-- 一般Item项Parent -->
-     <style name="noraml_item">
+    <style name="noraml_item">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/normal_item_height</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">@dimen/normal_item_padding_left</item>
         <item name="android:orientation">horizontal</item>
     </style>
-    
-     <style name="noraml_item_mul" parent="@style/noraml_item">
+
+    <style name="noraml_item_mul" parent="@style/noraml_item">
         <item name="android:layout_height">@dimen/mul_item_height</item>
     </style>
-    
-     <!-- 用户信息列表 -->
-	   <style name="userinfo_item_style">
-	      <item name="android:layout_width">match_parent</item>
-	      <item name="android:layout_height">48dip</item>
-	      <item name="android:textColor">@color/black</item>
-	      <item name="android:textSize">@dimen/small_middle_text_size</item>
-	      <item name="android:textColorHint">#c4c4c4</item>
-	      <item name="android:padding">5dip</item>
-	      <item name="android:background">@null</item>
-	      <item name="android:singleLine">true</item>
-	      <item name="android:drawablePadding">8dip</item>
-	      <item name="android:typeface">serif</item>
-	 </style>
-    
-      <style name="my_pb"   parent="@android:style/Widget.ProgressBar.Horizontal">
-	    <item name="android:indeterminateOnly">false</item>
-	    <item name="android:progressDrawable">@drawable/progressbar_style</item>
-	   <!--  <item name="android:indeterminateDrawable">@drawable/progressbar_indeter</item>
+
+    <!-- 用户信息列表 -->
+    <style name="userinfo_item_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dip</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/small_middle_text_size</item>
+        <item name="android:textColorHint">#c4c4c4</item>
+        <item name="android:padding">5dip</item>
+        <item name="android:background">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:drawablePadding">8dip</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="my_pb" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/progressbar_style</item>
+        <!--
+        <item name="android:indeterminateDrawable">@drawable/progressbar_indeter</item>
 	    <item name="android:minHeight">20dip</item>
-	    <item name="android:maxHeight">20dip</item> -->
-	</style>
-	
-       <!-- 列表提示消息 -->
-	   <style name="comm_errormsg_style">
-	      <item name="android:layout_width">match_parent</item>
-	      <item name="android:layout_height">wrap_content</item>
-	      <item name="android:textColor">@color/red</item>
-	      <item name="android:textSize">@dimen/small_middle_text_size</item>
-	      <item name="android:padding">10dip</item>
-	      <item name="android:gravity">center|left</item>
-	      <item name="android:background">@color/grey_50</item>
-	      <item name="android:ellipsize">marquee</item>
-	      <item name="android:focusable">true</item>
-	      <item name="android:marqueeRepeatLimit">marquee_forever</item>
-	      <item name="android:singleLine">true</item>
-	      <item name="android:typeface">serif</item>
-	 </style>
-	 
-	   <style name="index_top_text">
-	      <item name="android:layout_width">match_parent</item>
-	      <item name="android:layout_height">60dip</item>
-	      <item name="android:textColor">@color/white</item>
-	      <item name="android:textSize">@dimen/large_text_size</item>
-	      <item name="android:gravity">center</item>
-	      <item name="android:typeface">serif</item>
-	 </style>
-	   
-	   <style name="index1_text">
-	      <item name="android:layout_width">match_parent</item>
-	      <item name="android:layout_height">wrap_content</item>
-	      <item name="android:textColor">@color/white</item>
-	      <item name="android:textSize">@dimen/small_middle_text_size</item>
-	      <item name="android:paddingLeft">20dip</item>
-	      <item name="android:gravity">center|left</item>
-	      <item name="android:layout_marginTop">8dip</item>
-	      <item name="android:background">@android:color/transparent</item>
-	      <item name="android:typeface">serif</item>
-	 </style>
-	 
-	   <style name="user_center_text">
-	       <item name="android:layout_width">wrap_content</item>
-	      <item name="android:layout_height">match_parent</item>
-	      <item name="android:textColor">@color/black</item>
-	       <item name="android:textSize">@dimen/small_middle_text_size</item>
-	         <item name="android:background">@android:color/transparent</item>
-	         <item name="android:gravity">center|left</item>
-	      <item name="android:typeface">serif</item>
-	 </style>
-	 
-	   <style name="home_item_text">
-	      <item name="android:layout_width">match_parent</item>
-	      <item name="android:layout_height">40dip</item>
-	      <item name="android:textColor">@color/grey_10</item>
-	      <item name="android:textSize">@dimen/small_middle_text_size</item>
-	      <item name="android:padding">5dip</item>
-	      <item name="android:gravity">center|left</item>
-	      <item name="android:typeface">serif</item>
-	 </style>
-	 
-	   <style name="fab_button_style">
-	      <item name="android:layout_width">50dip</item>
-	      <item name="android:layout_height">match_parent</item>
-	      <item name="android:layout_alignParentBottom">true</item>
-	      <item name="android:layout_centerHorizontal">true</item>
-	      <item name="android:src">@drawable/ic_btn_edit</item>
-	 </style>
-	 
-	   <style name="fab_button_left_style" parent="@style/fab_button_style">
-	      <item name="android:layout_alignParentLeft">true</item>
-	      <item name="android:layout_marginLeft">10dip</item>
-	       <item name="android:src">@drawable/ic_btn_add</item>
-	 </style>
-	 
-	   <style name="fab_button_right_style" parent="@style/fab_button_style">
-	      <item name="android:layout_alignParentBottom">true</item>
-	      <item name="android:layout_alignParentRight">true</item>
-	      <item name="android:layout_marginRight">10dip</item>
-	       <item name="android:src">@drawable/ic_btn_next</item>
-	 </style>
-	 
-	   <style name="comm_scrollview_style">
-	       <item name="android:layout_width">match_parent</item>
-	       <item name="android:layout_height">match_parent</item>
-	       <item name="android:fadingEdge">none</item>
-	       <item name="android:fadingEdgeLength">0dip</item>
-	       <item name="android:overScrollMode">never</item>
-	       <item name="android:scrollbars">none</item>
-	       <item name="android:fillViewport">true</item>
-	       <item name="android:background">@color/white</item>
-	       <item name="android:layout_marginBottom">52dip</item>
-	   </style>
+	    <item name="android:maxHeight">20dip</item>
+        -->
+    </style>
+
+    <!-- 列表提示消息 -->
+    <style name="comm_errormsg_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">@dimen/small_middle_text_size</item>
+        <item name="android:padding">10dip</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:background">@color/grey_50</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:focusable">true</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="index_top_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dip</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/large_text_size</item>
+        <item name="android:gravity">center</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="index1_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/small_middle_text_size</item>
+        <item name="android:paddingLeft">20dip</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:layout_marginTop">8dip</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="user_center_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/small_middle_text_size</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="home_item_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dip</item>
+        <item name="android:textColor">@color/grey_10</item>
+        <item name="android:textSize">@dimen/small_middle_text_size</item>
+        <item name="android:padding">5dip</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:typeface">serif</item>
+    </style>
+
+    <style name="fab_button_style">
+        <item name="android:layout_width">50dip</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:src">@drawable/ic_btn_edit</item>
+    </style>
+
+    <style name="fab_button_left_style" parent="@style/fab_button_style">
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_marginLeft">10dip</item>
+        <item name="android:src">@drawable/ic_btn_add</item>
+    </style>
+
+    <style name="fab_button_right_style" parent="@style/fab_button_style">
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_marginRight">10dip</item>
+        <item name="android:src">@drawable/ic_btn_next</item>
+    </style>
+
+    <style name="comm_scrollview_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:fadingEdge">none</item>
+        <item name="android:fadingEdgeLength">0dip</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:scrollbars">none</item>
+        <item name="android:fillViewport">true</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginBottom">52dip</item>
+    </style>
+
+    <!-- 暂无数据 -->
+    <style name="comm_nodata_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:text">@string/en_nodata</item>
+        <item name="android:textColor">@color/grey_10</item>
+        <item name="android:drawablePadding">5dip</item>
+        <item name="android:textSize">@dimen/small_middle_text_size</item>
+        <item name="android:drawableLeft">@drawable/nodata</item>
+        <item name="android:visibility">gone</item>
+    </style>
 
 </resources>

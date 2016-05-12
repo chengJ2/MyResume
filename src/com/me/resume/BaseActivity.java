@@ -27,6 +27,7 @@ import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.swipeback.SwipeBackActivity;
+import com.me.resume.tools.ImageLoader;
 import com.me.resume.tools.SystemBarTintManager;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -94,6 +95,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	
 	protected PreferenceUtil preferenceUtil;
 	
+//	protected ImageLoader mImageLoader;
+	
 	public static BaseActivity getInstance(){
 		if (mInstance == null) {
 			mInstance = new BaseActivity();
@@ -138,7 +141,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		self = BaseActivity.this;
 		if(preferenceUtil == null)
 			preferenceUtil = new PreferenceUtil(self);
-		
+//		if(mImageLoader == null)
+//			mImageLoader = new ImageLoader(self);
 		fieldNull = CommUtil.getStrValue(self, R.string.action_input_isnull);
 		
 		TelephonyManager telephonyMgr = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);

@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.ImageLoader;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
@@ -35,9 +34,9 @@ public class TopicActivity extends BaseActivity implements OnClickListener{
 	
 	private TextView topic_content;
 	
-	private ImageLoader mImageLoader;
-	
 	private String title;
+	
+	private ImageLoader mImageLoader;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +54,8 @@ public class TopicActivity extends BaseActivity implements OnClickListener{
 		topic_frompic = findView(R.id.topic_frompic);
 		topic_content = findView(R.id.topic_content);
 		
-		mImageLoader=new ImageLoader(self);
+		if(mImageLoader == null)
+			mImageLoader = new ImageLoader(self);
 		
 	}
 	
