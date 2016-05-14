@@ -11,7 +11,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
+import com.me.resume.R;
 import com.me.resume.utils.ImageUtils;
+import com.me.resume.utils.RegexUtil;
 
 /**
  * 
@@ -45,19 +47,36 @@ public class ImageLoader {
 	 */
 	public void DisplayImage(String url, ImageView imageView, boolean isLoadOnlyFromCache,boolean round) {
 		imageViews.put(imageView, url);
-		// 先从内存缓存中查找
-		Bitmap bitmap = memoryCache.get(url);
-		if (bitmap != null)
-			if (round) {
-				imageView.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
-			}else{
-				imageView.setImageBitmap(bitmap);
+		String tag = imageViews.get(imageView);
+		if (!RegexUtil.checkNotNull(url) || !tag.equals(url)){
+			imageView.setImageResource(R.drawable.ic_launcher);
+		}else{
+			// 先从内存缓存中查找
+			Bitmap bitmap = memoryCache.get(url);
+			if (bitmap != null){
+				if (round) {
+					imageView.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
+				}else{
+					imageView.setImageBitmap(bitmap);
+				}
+				return;
 			}
-			
-		else if (!isLoadOnlyFromCache){
+			bitmap = fileCache.get(url);
+			if(bitmap != null){
+				if (round) {
+					imageView.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
+				}else{
+					imageView.setImageBitmap(bitmap);
+				}
+				memoryCache.put(url, bitmap);
+				return;
+			}
 			// 若没有的话则开启新线程加载图片
-			queuePhoto(url, imageView,round);
+			if (!isLoadOnlyFromCache){
+				queuePhoto(url, imageView,round);
+			}
 		}
+			
 	}
 
 	private void queuePhoto(String url, ImageView imageView,boolean round) {

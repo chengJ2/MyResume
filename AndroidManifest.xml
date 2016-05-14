@@ -134,6 +134,13 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" >
         </activity>
+        
+        <activity
+            android:name="com.me.resume.ui.TopicListDetailActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" >
+        </activity>
         <activity
             android:name="com.me.resume.ui.AddressActivity"
             android:label="@string/app_name"

@@ -22,6 +22,7 @@ import com.me.resume.R;
 import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.XListView;
 import com.me.resume.views.XListView.IXListViewListener;
@@ -60,16 +61,19 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 						commapBaseAdapter.notifyDataSetChanged(pos);
 						finishLoading();
 					}
+					
 				}
 				break;
 			case 12:
 				isAll=true;
-				toastMsg(R.string.en_nodata);
 				finishLoading();
 				if(!isLoadMore){
 					topicdetailListView.setVisibility(View.GONE); 
 					nodata.setVisibility(View.VISIBLE);
 				}
+				break;
+			case 100:
+				getTopciListData(pos);
 				break;
 			default:
 				break;
@@ -91,6 +95,8 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		topicdetailListView.setXListViewListener(this);
 		
 		nodata = findView(R.id.nodata);
+		nodata.setText(CommUtil.getStrValue(self,R.string.item_text43));
+		nodata.setVisibility(View.VISIBLE);
 		
 		commMapList = new HashMap<String, List<String>>();
 		
@@ -98,15 +104,13 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 	}
 	
 	private void initView(){
-		
-//		setTopTitle(titleArr[0]);
-		
+		setTopTitle(R.string.item_text31);
 		setMsgHide();
-		setRightIconVisible(View.GONE);
+		setRightIconVisible(View.VISIBLE);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
-		getTopciListData(pos);
+		mHandler.sendEmptyMessageDelayed(100, 200);
 	}
 	
 	private void getTopciListData(int position){
@@ -116,19 +120,19 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		params.add("p_index");
 		values.add(String.valueOf(position));
 		
-		requestData("pro_getAlltopic", 1, params, values, new HandlerData() {
+		requestData("pro_gettopic_bypage", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
 				mHandler.sendEmptyMessage(12);
 			}
 			
 			public void success(Map<String, List<String>> map) {
-				if (map.get("id").size() < 10) {
+				if (map.get("id").size() < 3) {
 					isAll = true;
 				}else{
 					isAll = false;
 				}
-				mHandler.sendEmptyMessage(11);
+				mHandler.sendMessage(mHandler.obtainMessage(11, map));
 				
 			}
 		});
@@ -137,24 +141,26 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 	private ViewHolder viewHolder;
 	
 	private void setTopicListData(final Map<String, List<String>> map){
-		topicdetailListView.setVisibility(View.VISIBLE); 
-		nodata.setVisibility(View.GONE);
 		commapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.topic_list_detail_item,"id") {
 			
 			@Override
 			public void convert(ViewHolder holder, List<String> item, int position) {
+				String fromUrl = map.get("from_url").get(position);
 				holder.showImage(R.id.topic_icon,
-						CommUtil.getHttpLink(map.get("topic_icon").get(position)),false);
-				holder.setText(R.id.topic_title, map.get("topic_title").get(position));
-				holder.setText(R.id.topic_content, map.get("topic_content").get(position));
-				holder.setText(R.id.topic_from, map.get("topic_from").get(position));
-				holder.setText(R.id.topic_datime, map.get("topic_datime").get(position));
+						CommUtil.getHttpLink(fromUrl),false);
+				holder.setText(R.id.topic_title, map.get("title").get(position));
+				holder.setText(R.id.topic_content, map.get("detail").get(position));
+				holder.setText(R.id.topic_from, map.get("from").get(position));
+				holder.setText(R.id.topic_datime, map.get("createtime").get(position));
 				
 				viewHolder = holder;
 			}
 		};
 		
 		topicdetailListView.setAdapter(commapBaseAdapter);
+		topicdetailListView.setVisibility(View.VISIBLE); 
+		nodata.setVisibility(View.GONE);
+		finishLoading();
 		topicdetailListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -170,13 +176,19 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				switch (scrollState) {
 				case OnScrollListener.SCROLL_STATE_FLING:
-					viewHolder.setFlagBusy(true);
+					if (viewHolder != null) {
+						viewHolder.setFlagBusy(true);
+					}
 					break;
 				case OnScrollListener.SCROLL_STATE_IDLE:
-					viewHolder.setFlagBusy(false);
+					if (viewHolder != null) {
+						viewHolder.setFlagBusy(false);
+					}
 					break;
 				case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
-					viewHolder.setFlagBusy(false);
+					if (viewHolder != null) {
+						viewHolder.setFlagBusy(false);
+					}
 					break;
 				default:
 					break;

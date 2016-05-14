@@ -41,6 +41,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.me.resume.tools.FileCache;
+import com.me.resume.tools.L;
 
 /**
  * 图片处理类
@@ -437,7 +438,7 @@ public class ImageUtils {
 			b = ImageUtils.decodeFile(f);
 			return b;
 		} catch (Exception ex) {
-			Log.e("", "getBitmap catch Exception...\nmessage = " + ex.getMessage());
+			L.e("ErrorCode", "getBitmap catch Exception...url = " + ex.getMessage());
 			return null;
 		}
 	}

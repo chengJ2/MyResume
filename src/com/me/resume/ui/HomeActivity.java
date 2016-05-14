@@ -193,7 +193,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		covermore = findView(R.id.covermore);
 		linkmore = findView(R.id.linkmore);
 		sharemore = findView(R.id.sharemore);
-		msgText = findView(R.id.nodata);
+		msgText = findView(R.id.msgText);
 		
 		makeResume = findView(R.id.make_btn);
 		reviewResume = findView(R.id.review_btn);
@@ -275,8 +275,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		setCoverData(map,islocal);
 	}
 	
-	private String[] id = {"1","2","3"};
-	private String[] note = {"aaaaaaa","bbbbbbbbb","cccccccccc"};
+	private String[] id = {"111","222","333"};
+	private String[] note = {"简历预览封面1","简历预览封面2","简历预览封面3"};
 	private String[] url = {R.drawable.resume_cover+"",R.drawable.resume_cover+"",R.drawable.resume_cover+""};
 	
 	/**
@@ -405,9 +405,18 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		commapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.home_share_item,"id") {
 			
 			@Override
-			public void convert(ViewHolder holder, List<String> item, int position) {
-				holder.showImage(R.id.share_usernameavator,
-						CommUtil.getHttpLink(map.get("avator").get(position)),true);
+			public void convert(final ViewHolder holder, List<String> item, final int position) {
+				if(map.get("userId").get(position).equals(MyApplication.userId)){
+					if (Constants.USERHEAD.exists()) {
+						Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.USERHEAD.toString());
+	    				if (bitmap != null) {
+	    					holder.setImageBitmap(R.id.share_usernameavator,ImageUtils.toRoundBitmap(bitmap));
+	    				}
+					}
+				}else{
+					holder.showImage(R.id.share_usernameavator,
+							CommUtil.getHttpLink(map.get("avator").get(position)),true);
+				}
 				
 				String realname = map.get("realname").get(position);
 				if (!realname.equals("") && realname != null) {
@@ -416,25 +425,71 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					holder.setText(R.id.share_username, map.get("username").get(position));
 				}
 				
-				holder.setText(R.id.share_content, map.get("content").get(position));
+				final String content = map.get("content").get(position);
+				holder.setText(R.id.share_content, content);
 				holder.setText(R.id.share_city, map.get("city").get(position));
 				holder.setText(R.id.share_datime, map.get("createtime").get(position));
+				
+				queryWhere = "select * from " + CommonText.MYCOLLECTION + " where content = '" + content +"'";
+				commMapArray = dbUtil.queryData(self, queryWhere);
+				if (commMapArray == null) {
+					holder.setImageResource(R.id.share_collection, R.drawable.icon_collection_nor);
+				}else{
+					holder.setImageResource(R.id.share_collection, R.drawable.icon_collection_sel);
+				}
 				
 				holder.setOnClickEvent(R.id.share_collection, new ClickEvent() {
 					
 					@Override
 					public void onClick(View view) {
-						if (!MyApplication.userId.equals("0")) {
-							
+						if (commMapArray == null) {
+							if (!MyApplication.userId.equals("0")) {
+								addCollection(holder,map,position);
+							}else{
+								toastMsg(R.string.action_login_head);
+							}
 						}else{
-							toastMsg(R.string.action_login_head);
+							queryWhere = "delete from " + CommonText.MYCOLLECTION + " where content = '" + content +"'";
+							dbUtil.deleteData(self, queryWhere);
+							commapBaseAdapter.notifyDataSetChanged();
+							toastMsg(R.string.item_text91);
 						}
+						
 					}
 				});
 			}
 		};
 		
 		reviewsharingListView.setAdapter(commapBaseAdapter);
+	}
+	
+	private void addCollection(ViewHolder holder,Map<String, List<String>> map,int position){
+		String content = map.get("content").get(position);
+		String sharename = map.get("realname").get(position);
+		if (RegexUtil.checkNotNull(sharename)) {
+			sharename = map.get("username").get(position);
+		}
+		
+		queryWhere = "select * from " + CommonText.MYCOLLECTION + " where content = '" + content +"'";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray == null) {
+			 ContentValues cValues = new ContentValues();
+			 cValues.put("userId", map.get("userId").get(position));
+			 cValues.put("title", "");
+			 cValues.put("content", content);
+			 cValues.put("sharename", sharename);
+			 cValues.put("sharenamecity", map.get("city").get(position));
+			 cValues.put("sharedatime", TimeUtils.getCurrentTimeInString());
+			 cValues.put("type", "0");// 0:面试分享心得;  !0:话题
+			 
+			 queryResult = dbUtil.insertData(self, 
+						CommonText.MYCOLLECTION, cValues);
+			 if (queryResult) {
+				 holder.setImageResource(R.id.share_collection, R.drawable.icon_collection_sel);
+				 toastMsg(R.string.item_text9);
+				 commapBaseAdapter.notifyDataSetChanged();
+			 }
+		}
 	}
 	
 	

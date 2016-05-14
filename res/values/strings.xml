@@ -60,6 +60,7 @@
     <string name="item_text2">热门简历预览</string>
     <string name="item_text21">更多</string>
     <string name="item_text3">相关话题推荐</string>
+    <string name="item_text31">更多推荐</string>
     <string name="item_text4">说说面试心得</string>
     <string name="item_text41">我来说</string>
     <string name="item_text42">暂无面试心得分享</string>
@@ -69,8 +70,9 @@
     <string name="item_text61">简历封面</string>
     <string name="item_text7">提交成功,感谢您的分享~</string>
 	<string name="item_text8">我也来分享...</string>
-	 <string name="item_text81">优质的分享将会置顶哦~</string>
-	
+	<string name="item_text81">优质的分享将会置顶哦~</string>
+	<string name="item_text9">收藏成功</string>
+	<string name="item_text91">已收藏</string>
 	 
     <!-- Main -->
     <string name="resume_baseinfo">基本资料</string>

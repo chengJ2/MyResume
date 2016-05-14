@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical" >
+    android:fitsSystemWindows="true">
 
    <com.me.resume.views.XListView
         android:id="@+id/topicdetailListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
+        android:layout_marginLeft="@dimen/margin_8"
+        android:layout_marginRight="@dimen/margin_8"
         android:cacheColorHint="#00000000"
         android:divider="@color/grey"
         android:dividerHeight="1px"
@@ -21,6 +21,7 @@
 
     <TextView
         android:id="@+id/nodata"
-        style="@style/comm_nodata_style" />
+        style="@style/comm_nodata_style"
+        android:layout_centerInParent="true" />
 
-</LinearLayout>
+</RelativeLayout>

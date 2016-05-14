@@ -141,8 +141,6 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		self = BaseActivity.this;
 		if(preferenceUtil == null)
 			preferenceUtil = new PreferenceUtil(self);
-//		if(mImageLoader == null)
-//			mImageLoader = new ImageLoader(self);
 		fieldNull = CommUtil.getStrValue(self, R.string.action_input_isnull);
 		
 		TelephonyManager telephonyMgr = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
@@ -458,7 +456,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 			scrollToFinishActivity();
 			break;
 		case R.id.right_icon:
-			startActivity(Constants.PACKAGENAME + Constants.MAINACTIVITY,false);
+			startActivity(Constants.MAINACTIVITY,false);
 			break;
 		default:
 			break;

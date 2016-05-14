@@ -6,6 +6,7 @@ import com.me.resume.utils.RegexUtil;
 import com.me.resume.views.CustomListView;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.text.Html;
 import android.text.InputType;
@@ -92,26 +93,39 @@ public class ViewHolder {
 		convertview.setEnabled(enable);
 	}
 
+	public View getLayoutView(int ViewID) {
+		return getView(ViewID);
+	}
+	
+	public CustomListView getCustomListView(int ViewID) {
+		CustomListView tv = getView(ViewID);
+		return tv;
+	}
+	
+
 	public ViewHolder setText(int ViewID, String str) {
 		TextView tv = getView(ViewID);
 		tv.setText(str);
 		return this;
 	}
-
-	public View getLayoutView(int ViewID) {
-		return getView(ViewID);
+	
+	public ViewHolder setTextColor(int ViewID, int color) {
+		TextView tv = getView(ViewID);
+		tv.setTextColor(color);
+		return this;
 	}
-
+	
 	public TextView getText(int ViewID) {
 		TextView tv = getView(ViewID);
 		return tv;
 	}
-
-	public CustomListView getCustomListView(int ViewID) {
-		CustomListView tv = getView(ViewID);
-		return tv;
+	
+	public ViewHolder setTextVisibe(int ViewID, int visible) {
+		TextView tv = getView(ViewID);
+		tv.setVisibility(visible);
+		return this;
 	}
-
+	
 	public ViewHolder setTextTypeface(Context context, int ViewID) {
 		TextView tv = getView(ViewID);
 		Typeface fontFace = Typeface.createFromAsset(context.getAssets(),
@@ -123,13 +137,15 @@ public class ViewHolder {
 	public ViewHolder setTextSingleLine(int ViewID, boolean singleline) {
 		TextView tv = getView(ViewID);
 		tv.setSingleLine(singleline);
-		tv.setMaxLines(2);
+		if (!singleline) {
+			tv.setMaxLines(2);
+		}
 		return this;
 	}
 
 	public ViewHolder setTextForHtml(int ViewID, String str) {
 		TextView tv = getView(ViewID);
-		if (str != null && !"".equals(str)) {
+		if (RegexUtil.checkNotNull(str)) {
 			tv.setText(Html.fromHtml(str));
 		} else {
 			tv.setText(str);
@@ -137,19 +153,27 @@ public class ViewHolder {
 		return this;
 	}
 
+	public ViewHolder setTextHint(int ViewID, String str) {
+		EditText tv = getView(ViewID);
+		tv.setHint(str);
+		return this;
+	}
+	
+	
+	public ViewHolder setEditText(int ViewID, String str) {
+		EditText tv = getView(ViewID);
+		tv.setText(str);
+		return this;
+	}
+	
 	public EditText getEditText(int ViewID) {
 		EditText tv = getView(ViewID);
 		return tv;
 	}
-
-	// public String getText(int ViewID){
-	// EditText tv=getView(ViewID);
-	// return tv.getText().toString().trim();
-	// }
-
-	public ViewHolder setTextHint(int ViewID, String str) {
+	
+	public ViewHolder setEditTextVisibe(int ViewID, int visible) {
 		EditText tv = getView(ViewID);
-		tv.setHint(str);
+		tv.setVisibility(visible);
 		return this;
 	}
 
@@ -159,39 +183,15 @@ public class ViewHolder {
 		return this;
 	}
 
-	public ViewHolder setInputype1(int ViewID) {
+	public ViewHolder setInputType(int ViewID,int type) {
 		EditText tv = getView(ViewID);
-		tv.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		tv.setInputType(type);
 		return this;
 	}
-
-	public ViewHolder setTextVisibe(int ViewID, int visible) {
-		TextView tv = getView(ViewID);
-		tv.setVisibility(visible);
-		return this;
-	}
-
-	public ViewHolder setEditText(int ViewID, String str) {
-		EditText tv = getView(ViewID);
-		tv.setText(str);
-		return this;
-	}
-
-	public ViewHolder setEditTextVisibe(int ViewID, int visible) {
-		EditText tv = getView(ViewID);
-		tv.setVisibility(visible);
-		return this;
-	}
-
+	
 	public ViewHolder setEditTextEnable(int ViewID, boolean enable) {
 		EditText tv = getView(ViewID);
 		tv.setEnabled(enable);
-		return this;
-	}
-
-	public ViewHolder setTextColor(int ViewID, int color) {
-		TextView tv = getView(ViewID);
-		tv.setTextColor(color);
 		return this;
 	}
 
@@ -210,6 +210,12 @@ public class ViewHolder {
 	public ViewHolder setImageResource(int ViewID, int resID) {
 		ImageView iv = getView(ViewID);
 		iv.setImageResource(resID);
+		return this;
+	}
+	
+	public ViewHolder setImageBitmap(int ViewID, Bitmap bitmap) {
+		ImageView iv = getView(ViewID);
+		iv.setImageBitmap(bitmap);
 		return this;
 	}
 
@@ -238,13 +244,13 @@ public class ViewHolder {
 
 	public ViewHolder showImage(int ViewID, String url, boolean toRound) {
 		ImageView iv = getView(ViewID);
-		if (RegexUtil.checkNotNull(url)) {
+//		if (RegexUtil.checkNotNull(url)) {
 			if (!mBusy) {
 				mImageLoader.DisplayImage(url, iv, false, toRound);
 			} else {
 				mImageLoader.DisplayImage(url, iv, true, toRound);
 			}
-		}
+//		}
 		return this;
 	}
 

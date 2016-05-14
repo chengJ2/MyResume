@@ -51,7 +51,7 @@ public class Base64Util {
 				+ ".jpg";
 	}
 
-	public static String getbyteStr(String path, boolean islocal) {
+	/*public static String getbyteStr(String path, boolean islocal) {
 		byte[] localStream = null;
 		if (islocal) {
 			localStream = getLocalStream(path);
@@ -60,7 +60,7 @@ public class Base64Util {
 		}
 
 		return new String(Base64.encode(localStream, Base64.DEFAULT)); // 进行Base64编码
-	}
+	}*/
 
 	public static Bitmap getBitmap(Context context, String str) {
 		if (str != null && str.length() > 0) {
@@ -73,7 +73,7 @@ public class Base64Util {
 	/*
 	 * 从数据流中获得数据
 	 */
-	public static byte[] readInputStream(InputStream inputStream)
+	/*public static byte[] readInputStream(InputStream inputStream)
 			throws IOException {
 		byte[] buffer = new byte[1024*4];
 		int len = 0;
@@ -84,9 +84,9 @@ public class Base64Util {
 		bos.close();
 		return bos.toByteArray();
 
-	}
+	}*/
 
-	public static byte[] getURLStream(String imageUrl) {
+	/*public static byte[] getURLStream(String imageUrl) {
 		HttpGet httpRequest = new HttpGet(imageUrl);
 		HttpClient httpclient = new DefaultHttpClient();
 		byte[] data = null;
@@ -108,7 +108,7 @@ public class Base64Util {
 			e.printStackTrace();
 		}
 		return data;
-	}
+	}*/
 
 	
 	private static byte[] getLocalStream(String path) {

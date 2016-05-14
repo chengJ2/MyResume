@@ -21,8 +21,4 @@ public class ResponseCode {
 	 * 用户名重复
 	 */
 	public static final String USERNAME_REPEAT = "405"; 
-	
-	
-	
-	
 }

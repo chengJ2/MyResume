@@ -325,6 +325,7 @@ public class UserLoginActivity extends BaseActivity implements
 		String feildStr4 = map.get("patform").get(0);
 		String feildStr5 = map.get("createtime").get(0);
 		String feildStr6 = map.get("lastlogintime").get(0);
+		String feildStr7 = map.get("userstatus").get(0);
 		
 		preferenceUtil.setPreferenceData("username",feildStr1);
 		preferenceUtil.setPreferenceData("password",str_password);
@@ -334,8 +335,8 @@ public class UserLoginActivity extends BaseActivity implements
 		if (commMapArray != null && commMapArray.get("id").length > 0) {
 			updResult = dbUtil.updateData(self, CommonText.USERINFO,
 					new String[]{"uid=?","username","userpassword","patform",
-										 "updatetime","lastlogintime"}, 
-					new String[]{uTokenId,feildStr1,feildStr2,feildStr4,feildStr5,feildStr6},1);
+										 "updatetime","lastlogintime","userstatus"}, 
+					new String[]{uTokenId,feildStr1,feildStr2,feildStr4,feildStr5,feildStr6,feildStr7},1);
 		}else{
 			ContentValues cValues = new ContentValues();
 			cValues.put("uid", uTokenId);
@@ -346,6 +347,7 @@ public class UserLoginActivity extends BaseActivity implements
 			cValues.put("createtime", feildStr5);
 			cValues.put("updatetime", TimeUtils.getCurrentTimeInString());
 			cValues.put("lastlogintime", feildStr6);
+			cValues.put("userstatus", feildStr7);
 			
 			queryResult = dbUtil.insertData(self, CommonText.USERINFO, cValues);
 		}

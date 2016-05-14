@@ -48,8 +48,14 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 				try {
 					DataCleanManager.cleanDatabases(self);
 					preferenceUtil.clearPreferenceData();
-					preferenceUtil.setPreferenceData("useId","0");
 					cachesize.setText("0KB");
+					
+					if (!preferenceUtil.getPreferenceData("useId","0").equals("0")) {
+						preferenceUtil.setPreferenceData("useId","0");
+						if(CommUtil.isNetworkAvailable(self)){
+							actionLogout();
+						}
+					}
 					toastMsg(R.string.action_clearcache_success);
 				} catch (Exception e) {
 					e.printStackTrace();
