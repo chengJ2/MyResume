@@ -28,8 +28,6 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.model.UUIDGenerator;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
-import com.me.resume.tools.DataCleanManager;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -136,17 +134,51 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		
 		setTopicData();
 		
-		msgText.setText(CommUtil.getStrValue(self, R.string.item_text43));
-		
 		mHandler.postDelayed(new Runnable() {
 			
 			@Override
 			public void run() {
 				mHandler.sendEmptyMessage(100);
 			}
-		},50);
-
+		},100);
+	}
+	
+	/**
+	 * 初始化界面
+	 */
+	private void findViews(){
+		setTopTitle(R.string.resume_center);
+		setMsgVisibility(View.GONE);
+		setRightIconVisible(View.VISIBLE);
+		setRight2IconVisible(View.GONE);
+		setLeftIcon(R.drawable.icon_person_avtar);
+		setRightIcon(R.drawable.icon_setting);
+		setfabLayoutVisible(View.GONE);
+		
 		refreshview = findView(R.id.refreshview);
+		commscrollview = findView(R.id.commscrollview);
+		
+		reviewCovergridview = findView(R.id.covergridview);
+		resumeLinkgridview = findView(R.id.linkgridview);
+
+		reviewsharingListView = findView(R.id.reviewshareListView);
+		covermore = findView(R.id.covermore);
+		linkmore = findView(R.id.linkmore);
+		sharemore = findView(R.id.sharemore);
+		msgText = findView(R.id.msgText);
+		msgText.setVisibility(View.VISIBLE);
+		msgText.setText(CommUtil.getStrValue(self, R.string.item_text43));
+		
+		makeResume = findView(R.id.make_btn);
+		reviewResume = findView(R.id.review_btn);
+		
+		covermore.setOnClickListener(this);
+		linkmore.setOnClickListener(this);
+		sharemore.setOnClickListener(this);
+		
+		makeResume.setOnClickListener(this);
+		reviewResume.setOnClickListener(this);
+		
 		refreshview.setRefreshListener(new RefreshListener() {
 			@Override
 			public void onRefresh(RefreshableView view) {
@@ -162,48 +194,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				}
 			}
 		});
-		
-		try {
-			L.d("==total cache=="+DataCleanManager.getTotalCacheSize(self) + "=SQLite=" + DataCleanManager.getSQlDataCacheSize(self));
-			L.d("==Path==" + self.getFilesDir().getPath());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	/**
-	 * 初始化界面
-	 */
-	private void findViews(){
-		setTopTitle(R.string.resume_center);
-		setMsgHide();
-		setRightIconVisible(View.VISIBLE);
-		setRight2IconVisible(View.GONE);
-		setLeftIcon(R.drawable.icon_person_avtar);
-		setRightIcon(R.drawable.icon_setting);
-		setfabLayoutVisible(View.GONE);
-		
-		commscrollview = findView(R.id.commscrollview);
-		
-		reviewCovergridview = findView(R.id.covergridview);
-		resumeLinkgridview = findView(R.id.linkgridview);
-
-		reviewsharingListView = findView(R.id.reviewshareListView);
-		covermore = findView(R.id.covermore);
-		linkmore = findView(R.id.linkmore);
-		sharemore = findView(R.id.sharemore);
-		msgText = findView(R.id.msgText);
-		
-		makeResume = findView(R.id.make_btn);
-		reviewResume = findView(R.id.review_btn);
-		
-		covermore.setOnClickListener(this);
-		linkmore.setOnClickListener(this);
-		sharemore.setOnClickListener(this);
-		
-		makeResume.setOnClickListener(this);
-		reviewResume.setOnClickListener(this);
 	}
 
 	
@@ -406,6 +396,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			
 			@Override
 			public void convert(final ViewHolder holder, List<String> item, final int position) {
+				
 				if(map.get("userId").get(position).equals(MyApplication.userId)){
 					if (Constants.USERHEAD.exists()) {
 						Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.USERHEAD.toString());
@@ -425,6 +416,28 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					holder.setText(R.id.share_username, map.get("username").get(position));
 				}
 				
+				String jobtitleStr = map.get("jobtitle").get(position);
+				if (RegexUtil.checkNotNull(jobtitleStr)) {
+					holder.setTextVisibe(R.id.share_jobtitle, View.VISIBLE);
+					holder.setText(R.id.share_jobtitle, jobtitleStr);
+				}else{
+					holder.setTextVisibe(R.id.share_jobtitle, View.GONE);
+				}
+				
+				String workyear = map.get("joinworktime").get(position);
+				if (RegexUtil.checkNotNull(workyear)) {
+					int year = CommUtil.parseInt(workyear.substring(0, 4));
+					int theYear = CommUtil.parseInt(TimeUtils.theYear());
+					holder.setTextVisibe(R.id.share_workyear, View.VISIBLE);
+					holder.setText(R.id.share_workyear,(theYear - year) + "年工作经验");
+				}else{
+					holder.setTextVisibe(R.id.share_workyear, View.GONE);
+				}
+				
+				if (!RegexUtil.checkNotNull(workyear) && !RegexUtil.checkNotNull(jobtitleStr)) {
+					holder.setViewVisible(R.id.info2Layout, View.GONE);
+				}
+				
 				final String content = map.get("content").get(position);
 				holder.setText(R.id.share_content, content);
 				holder.setText(R.id.share_city, map.get("city").get(position));
@@ -442,6 +455,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					
 					@Override
 					public void onClick(View view) {
+						queryWhere = "select * from " + CommonText.MYCOLLECTION + " where content = '" + content +"'";
+						commMapArray = dbUtil.queryData(self, queryWhere);
 						if (commMapArray == null) {
 							if (!MyApplication.userId.equals("0")) {
 								addCollection(holder,map,position);
@@ -463,6 +478,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		reviewsharingListView.setAdapter(commapBaseAdapter);
 	}
 	
+	/**
+	 * 添加到我的收藏
+	 * @param holder
+	 * @param map
+	 * @param position
+	 */
 	private void addCollection(ViewHolder holder,Map<String, List<String>> map,int position){
 		String content = map.get("content").get(position);
 		String sharename = map.get("realname").get(position);
@@ -485,7 +506,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			 queryResult = dbUtil.insertData(self, 
 						CommonText.MYCOLLECTION, cValues);
 			 if (queryResult) {
-				 holder.setImageResource(R.id.share_collection, R.drawable.icon_collection_sel);
 				 toastMsg(R.string.item_text9);
 				 commapBaseAdapter.notifyDataSetChanged();
 			 }

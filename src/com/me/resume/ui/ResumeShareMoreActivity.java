@@ -23,6 +23,7 @@ import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
+import com.me.resume.utils.TimeUtils;
 
 /**
  * 更多面试分享心得
@@ -131,6 +132,28 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 					holder.setText(R.id.share_username, map.get("realname").get(position));
 				}else{
 					holder.setText(R.id.share_username, map.get("username").get(position));
+				}
+				
+				String jobtitleStr = map.get("jobtitle").get(position);
+				if (RegexUtil.checkNotNull(jobtitleStr)) {
+					holder.setTextVisibe(R.id.share_jobtitle, View.VISIBLE);
+					holder.setText(R.id.share_jobtitle, jobtitleStr);
+				}else{
+					holder.setTextVisibe(R.id.share_jobtitle, View.GONE);
+				}
+				
+				String workyear = map.get("joinworktime").get(position);
+				if (RegexUtil.checkNotNull(workyear)) {
+					int year = CommUtil.parseInt(workyear.substring(0, 4));
+					int theYear = CommUtil.parseInt(TimeUtils.theYear());
+					holder.setTextVisibe(R.id.share_workyear, View.VISIBLE);
+					holder.setText(R.id.share_workyear,(theYear - year) + "年工作经验");
+				}else{
+					holder.setTextVisibe(R.id.share_workyear, View.GONE);
+				}
+				
+				if (!RegexUtil.checkNotNull(workyear) && !RegexUtil.checkNotNull(jobtitleStr)) {
+					holder.setViewVisible(R.id.info2Layout, View.GONE);
 				}
 				
 				holder.setText(R.id.share_content, map.get("content").get(position).toString().trim());

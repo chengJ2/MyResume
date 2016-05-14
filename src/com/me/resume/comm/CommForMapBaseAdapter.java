@@ -54,16 +54,16 @@ public abstract class CommForMapBaseAdapter extends BaseAdapter {
 		return mList.get(keyId);
 	}
 
-	// public void setItemList(Map<String,List<String>> list) {
-	// mList = list;
-	// }
+	public void setItemList(Map<String, List<String>> list) {
+		mList = list;
+	}
 
-	// public void clear() {
-	// mList.clear();
-	// //page = 1;
-	// notifyDataSetChanged();
-	// }
-	//
+	public void clear() {
+		mList.clear();
+		// page = 1;
+		notifyDataSetChanged();
+	}
+	
 	public void notifyDataSetChanged(int pos) {
 		if (position > pos * 3) {
 			convertView.invalidate();

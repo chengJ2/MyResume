@@ -40,4 +40,6 @@
     <dimen name="base_comm_padding">2dip</dimen>
     
     <dimen name="topbar_pop_item_height">40dip</dimen>
+    
+    <dimen name="button_use_textsize">13dip</dimen>
 </resources>

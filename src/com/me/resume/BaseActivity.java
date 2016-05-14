@@ -375,6 +375,19 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	protected void setMsgHide() {
 		msg.setVisibility(View.GONE);
 	}
+	
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 设置界面消息
+	 * @author Comsys-WH1510032
+	 * @return 返回类型  
+	 * @param id
+	 * @param visibility
+	 */
+	protected void setMsgVisibility(int visibility) {
+		msg.setVisibility(visibility);
+	}
 
 	protected void startActivity(String src, boolean finish) {
 		ActivityUtils.startActivity(self, Constants.PACKAGENAME + src, finish);

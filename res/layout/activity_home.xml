@@ -54,10 +54,9 @@
                     android:id="@+id/covergridview"
                     android:layout_width="match_parent"
                     android:layout_height="180dip"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dip"
-                    android:layout_marginTop="10dip"
-                    android:background="@color/white"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginRight="@dimen/margin_10"
+                    android:layout_marginTop="@dimen/margin_8"
                     android:columnWidth="80dp"
                     android:fadingEdge="none"
                     android:fadingEdgeLength="0dip"
@@ -67,12 +66,14 @@
                     android:scrollbars="none"
                     android:scrollingCache="false"
                     android:smoothScrollbar="true"
-                    android:stretchMode="columnWidth" >
+                    android:stretchMode="columnWidth"
+                    android:background="@color/white" >
                 </GridView>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
+                    android:layout_marginTop="@dimen/margin_10"
                     android:background="@color/white" >
 
                     <View
@@ -103,26 +104,29 @@
                 <GridView
                     android:id="@+id/linkgridview"
                     android:layout_width="match_parent"
-                    android:layout_height="140dip"
-                    android:layout_marginLeft="10dip"
-                    android:layout_marginRight="10dip"
-                    android:columnWidth="100dp"
+                    android:layout_height="90dip"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginRight="@dimen/margin_10"
+                    android:columnWidth="80dp"
                     android:fadingEdge="none"
                     android:fadingEdgeLength="0dip"
                     android:gravity="center"
                     android:horizontalSpacing="10dp"
+                    android:verticalSpacing="10dp"
                     android:listSelector="#00000000"
                     android:numColumns="3"
                     android:scrollbars="none"
                     android:scrollingCache="false"
                     android:smoothScrollbar="true"
                     android:stretchMode="columnWidth"
-                    android:verticalSpacing="10dp" >
+                    android:background="@color/white" >
                 </GridView>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dip"
+                    android:layout_marginTop="@dimen/margin_10"
                     android:background="@color/white" >
 
                     <View
@@ -154,7 +158,9 @@
                     android:id="@+id/reviewshareListView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginRight="@dimen/margin_10"
                     android:cacheColorHint="#00000000"
                     android:divider="@color/grey"
                     android:dividerHeight="1px"
@@ -166,7 +172,7 @@
                 <TextView
                     android:id="@+id/msgText"
                     style="@style/comm_nodata_style"
-                    android:layout_height="100dip"
+                    android:layout_marginTop="80dip"
                     android:visibility="gone" />
             </LinearLayout>
         </com.me.resume.views.CommScrollView>

@@ -18,6 +18,7 @@
     <color name="user_info_edit_hint">#CCCCCC</color>
     <!-- 个人基本信息 -->
     
+    <color name="color_green">#6699FF</color>
     
     <!-- review bgcolor -->
     <color name="color_1">#CC0000</color>

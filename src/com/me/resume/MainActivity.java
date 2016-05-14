@@ -170,6 +170,9 @@ public class MainActivity extends Activity {
 		// 添加封面
 		coverlayout = (LinearLayout)cover.findViewById(R.id.coverlayout);
 		mViewList.add(cover);
+		if (showEffect) {
+			
+		}
 		
 		initView1(view1);
 		

@@ -144,6 +144,8 @@
     <!-- UI button text -->
     <string name="show_button_cancle">取&#160;&#160;消</string>
     <string name="show_button_sure">确&#160;&#160;定</string>
+    <string name="button_use">使&#160;用</string>
+    <string name="button_useing">在&#160;用</string>
 
     <!-- Search UI -->
     <string name="hint_industry_text">请输入行业名称/拼音</string>
@@ -160,7 +162,7 @@
      <string name="re_link2">求职简历;2</string>
      <string name="re_link3">职场攻略;3</string>
      <string name="re_link5">求职指南;5</string>
-     <string name="re_link6">自我介绍;6</string>
+<!--      <string name="re_link6">自我介绍;6</string> -->
      <string name="re_link7">面试问题;7</string>
      <string name="re_link8">每日推荐;8</string>
      

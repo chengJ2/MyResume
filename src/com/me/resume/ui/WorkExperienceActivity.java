@@ -156,8 +156,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	
 	private void initViews() {
 		if (getWEData()) {
-			info_industryclassification.setText(commMapArray
-					.get("industryclassification")[0]);
+			info_industryclassification.setText(commMapArray.get("industryclassification")[0]);
 			info_startworktime.setText(commMapArray.get("worktimestart")[0]);
 			info_endworktime.setText(commMapArray.get("worktimeend")[0]);
 			info_expectedsalary.setText(commMapArray.get("expectedsalary")[0]);
@@ -172,17 +171,22 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 
 	}
 	
+	/**
+	 * 初始化UI数据
+	 * @return
+	 */
 	private boolean getWEData(){
-		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = "+ uTokenId +" order by id desc limit 1";
-		 commMapArray = dbUtil.queryData(self, queryWhere);
-         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-        	 setEditBtnVisible(View.VISIBLE);
-        	 weId = commMapArray.get("id")[0];
-        	 return true;
-         }else{
-        	 setEditBtnVisible(View.GONE);
-        	 return false;
-         }
+		queryWhere = "select * from " + CommonText.WORKEXPERIENCE
+				+ " where userId = '" + uTokenId + "' order by id desc limit 1";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			setEditBtnVisible(View.VISIBLE);
+			weId = commMapArray.get("id")[0];
+			return true;
+		} else {
+			setEditBtnVisible(View.GONE);
+			return false;
+		}
 	}
 	
 	
@@ -219,20 +223,21 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			break;
 		case R.id.edit:
 			if(judgeFeild()){
-				getWEData();
-				updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
-						new String[]{weId,"companyname","companynature","companyscale","industryclassification",
-										  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc"}, 
-						new String[]{uTokenId,info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
-									info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr},2);
-				if (updResult == 1) {
-					toastMsg(R.string.action_update_success);
-					if(!MyApplication.userId.equals("0")){
-						set2Msg(R.string.action_syncing);
-						syncData();
+				if(getWEData()){
+					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
+							new String[]{weId,"companyname","companynature","companyscale","industryclassification",
+											  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc"}, 
+							new String[]{uTokenId,info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
+										info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr},2);
+					if (updResult == 1) {
+						toastMsg(R.string.action_update_success);
+						if(!MyApplication.userId.equals("0")){
+							set2Msg(R.string.action_syncing);
+							syncData();
+						}
+					}else{
+						toastMsg(R.string.action_update_fail);
 					}
-				}else{
-					toastMsg(R.string.action_update_fail);
 				}
 			}
 			break;
