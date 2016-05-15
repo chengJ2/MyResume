@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/top_bar" >
+    android:background="@color/color_green" >
 
     <TextView
         android:id="@+id/item1"
@@ -14,25 +14,14 @@
         android:layout_below="@id/item1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dip"
-        android:padding="5dip"
+        android:layout_marginTop="@dimen/margin_20"
+        android:padding="@dimen/margin_8"
         android:gravity="left"
         android:lineSpacingExtra="3dip"
         android:textSize="@dimen/small_middle_text_size"
         android:textColor="@color/white"
         android:text="我坚信在贵公司,我将学到更多知识,发挥出个人的最大效益." />
     
-    
-	<TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dip"
-        android:gravity="center"
-        android:textSize="@dimen/blarge_text_size"
-        android:textColor="@color/white"
-        android:text="谢谢~"
-        android:layout_below="@id/item2" />
-	
     <ImageView 
         android:id="@+id/gohome"
         android:layout_width="60dip"
@@ -41,4 +30,14 @@
         android:scaleType="centerInside"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"/>
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="@dimen/blarge_text_size"
+        android:textColor="@color/white"
+        android:text="谢谢"
+        android:layout_marginBottom="50dip"
+        android:layout_above="@id/gohome" />
 </RelativeLayout>

@@ -47,6 +47,11 @@ public class MyApplication extends Application {
     */
    public static String userId = "0";
    
+   /**
+    * 栏目id
+    */
+   public static int KID = 0;
+   
 	@Override
 	public void onCreate() {
 		super.onCreate();

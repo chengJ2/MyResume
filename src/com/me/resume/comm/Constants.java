@@ -48,6 +48,7 @@ public class Constants {
 	public static final int RESULT_CODE = 1001;
 	
 	public static final int WE_REQUEST_CODE = 1000;
+	public static final int WE_MANAGER_REQUEST_CODE = 1100;
 	public static final int JI_REQUEST_CODE = 2000;
 	public static final int JI_REQUEST_CODE2 = 2002;
 	public static final int BI_REQUEST_CODE = 3000;

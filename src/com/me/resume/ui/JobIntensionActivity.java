@@ -244,7 +244,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 					mHandler);
 			break;
 		case R.id.right_icon_more:
-			DialogUtils.showTopMenuDialog(self, topLayout, mHandler);
+			DialogUtils.showTopMenuDialog(self, topLayout,1, mHandler);
 			break;
 		default:
 			break;

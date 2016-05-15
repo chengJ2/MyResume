@@ -106,6 +106,24 @@
                 android:text="@string/settings_item5"
                 android:textColor="@color/black" />
         </LinearLayout>
+        
+         <View 
+             android:id="@+id/line_manage"
+             style="@style/line_padding10" />
+        <LinearLayout
+            android:id="@+id/llout_manage"
+            android:layout_width="match_parent"
+        	android:layout_height="@dimen/topbar_pop_item_height"
+        	android:paddingLeft="10dip"
+        	android:visibility="gone"
+        	android:orientation="horizontal" >
+
+            <TextView
+                style="@style/user_info_item_tv"
+                android:layout_weight="1"
+                android:text="@string/settings_item51"
+                android:textColor="@color/black" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

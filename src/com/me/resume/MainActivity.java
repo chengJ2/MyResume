@@ -668,11 +668,16 @@ public class MainActivity extends Activity {
 	 * @param commMapArray
 	 */
 	private void initBgColor(LinearLayout ll,Map<String, String[]> map){
-		String bgcolor = map.get("bgcolor")[0];
-		if (RegexUtil.checkNotNull(bgcolor)) {
-			ll.setBackgroundColor(CommUtil.getColorValue(self,CommUtil.parseInt(bgcolor)));
+		try {
+			String bgcolor = map.get("bgcolor")[0];
+			if (RegexUtil.checkNotNull(bgcolor)) {
+				ll.setBackgroundColor(CommUtil.getColorValue(self,
+						CommUtil.parseInt(bgcolor)));
+			}
+		} catch (Exception e) {
+			ll.setBackgroundColor(CommUtil.getColorValue(self,R.color.red));
+			e.printStackTrace();
 		}
-		
 	}
 	
 	

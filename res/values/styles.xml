@@ -103,6 +103,12 @@
         <item name="android:layout_marginLeft">@dimen/line_margin_10</item>
         <item name="android:layout_marginRight">@dimen/line_margin_10</item>
     </style>
+    
+    <style name="line_padding10_grey" parent="@style/line3">
+        <item name="android:layout_marginLeft">@dimen/line_margin_10</item>
+        <item name="android:layout_marginRight">@dimen/line_margin_10</item>
+        <item name="android:background">@color/grey</item>
+    </style>
 
     <style name="line_h15">
         <item name="android:layout_width">match_parent</item>

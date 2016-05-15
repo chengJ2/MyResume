@@ -348,10 +348,10 @@ public class DialogUtils {
 	 * 
 	 * @param context
 	 * @param parent
-	 * @param resId
+	 * @param more 是否显示管理栏目
 	 * @param handler
 	 */
-	public static void showTopMenuDialog(Activity context,View parent,Handler handler){
+	public static void showTopMenuDialog(Activity context,View parent,int more,Handler handler){
 		mHandler = handler;
 		View layout = View.inflate(context,R.layout.topbar_menu_layout, null);
 		mPopupWindow = new PopupWindow(layout, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -362,6 +362,15 @@ public class DialogUtils {
 		GrapeGridview bgrid = (GrapeGridview)layout.findViewById(R.id.bgrid);
 		SwitchButton setting_editmode_cb = (SwitchButton)layout.findViewById(R.id.setting_editmode_cb);
 		LinearLayout setting_syn = (LinearLayout)layout.findViewById(R.id.llout_sync);
+		LinearLayout setting_manage = (LinearLayout)layout.findViewById(R.id.llout_manage);
+		View line_manage = (View)layout.findViewById(R.id.line_manage);
+		if (more == 1) {
+			line_manage.setVisibility(View.VISIBLE);
+			setting_manage.setVisibility(View.VISIBLE);
+		}else{
+			line_manage.setVisibility(View.GONE);
+			setting_manage.setVisibility(View.GONE);
+		}
 		
 		final TypedArray typedArray = context.getResources().obtainTypedArray(R.array.review_bgcolor);
 		List<Integer> nList = new ArrayList<Integer>();
@@ -439,6 +448,15 @@ public class DialogUtils {
 //				}else{
 //					sendMsg(OnTopMenu.MSG_MENU31);
 //				}
+				dismissPopwindow();
+			}
+		});
+		
+		setting_manage.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				sendMsg(OnTopMenu.MSG_MENU32);
 				dismissPopwindow();
 			}
 		});
@@ -569,6 +587,45 @@ public class DialogUtils {
 				public void onClick(View v) {
 					dismissDialog();
 					sendMsg(1);
+				}
+			});
+			dialog.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param context 上下文
+	 */
+	public static void showDeleteDialog(Context context,final String weId,Handler handler){
+		try {
+			mHandler = handler;
+			dialog = new Dialog(context);
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialog.setContentView(R.layout.base_more_alert_dialog);
+			WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
+			dialog.getWindow().setAttributes(layoutParams);
+			dialog.getWindow().setBackgroundDrawable(new BitmapDrawable());
+			dialog.setCanceledOnTouchOutside(true);
+			
+			Button btnCancle = (Button)dialog.findViewById(R.id.btn_cancle);
+			btnCancle.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					dismissDialog();
+				}
+			});
+			
+			Button btnSure = (Button)dialog.findViewById(R.id.btn_sure);
+			btnSure.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					dismissDialog();
+					sendMsg(1,weId);
 				}
 			});
 			dialog.show();

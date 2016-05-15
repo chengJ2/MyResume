@@ -19,6 +19,7 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
+import com.me.resume.model.UUIDGenerator;
 import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
@@ -86,8 +87,14 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
 						if(!MyApplication.userId.equals("0")){
-							set2Msg(R.string.action_syncing);
-							syncData();
+							if (CommUtil.isNetworkAvailable(self)) {
+								set2Msg(R.string.action_syncing);
+								syncData();
+							}else{
+								set3Msg(R.string.check_network);
+							}
+						}else{
+							set3Msg(R.string.action_login_head);
 						}
 					}else{
 						toastMsg(R.string.action_update_fail);
@@ -100,11 +107,23 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				set2Msg(R.string.action_syncing);
-				syncData();
+				if(!MyApplication.userId.equals("0")){
+					if (CommUtil.isNetworkAvailable(self)) {
+						set2Msg(R.string.action_syncing);
+						syncData();
+					}else{
+						set3Msg(R.string.check_network);
+					}
+				}else{
+					set3Msg(R.string.action_login_head);
+				}
 				break;
 			case OnTopMenu.MSG_MENU31:
 				toastMsg(R.string.action_login_head);
+				break;
+			case OnTopMenu.MSG_MENU32:
+				ActivityUtils.startActivityForResult(self, 
+						Constants.PACKAGENAMECHILD + "InfoManagerActivity", false, Constants.WE_MANAGER_REQUEST_CODE);
 				break;
 			default:
 				break;
@@ -120,7 +139,15 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		boayLayout.addView(v);
 		
 		findViews();
+		
 		initViews();
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
 	}
 	
 	private void findViews(){
@@ -156,28 +183,38 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	
 	private void initViews() {
 		if (getWEData()) {
-			info_industryclassification.setText(commMapArray.get("industryclassification")[0]);
-			info_startworktime.setText(commMapArray.get("worktimestart")[0]);
-			info_endworktime.setText(commMapArray.get("worktimeend")[0]);
-			info_expectedsalary.setText(commMapArray.get("expectedsalary")[0]);
-
-			info_companyname.setText(commMapArray.get("companyname")[0]);
-			info_jobtitle.setText(commMapArray.get("jobtitle")[0]);
-			info_workdescdetail.setText(commMapArray.get("workdesc")[0]);
-
-			info_companynature.setText(commMapArray.get("companynature")[0]);
-			info_companyscale.setText(commMapArray.get("companyscale")[0]);
+			setFeildValue();
 		}
 
 	}
+	
+	private void setFeildValue(){
+		info_industryclassification.setText(commMapArray.get("industryclassification")[0]);
+		info_startworktime.setText(commMapArray.get("worktimestart")[0]);
+		info_endworktime.setText(commMapArray.get("worktimeend")[0]);
+		info_expectedsalary.setText(commMapArray.get("expectedsalary")[0]);
+
+		info_companyname.setText(commMapArray.get("companyname")[0]);
+		info_jobtitle.setText(commMapArray.get("jobtitle")[0]);
+		info_workdescdetail.setText(commMapArray.get("workdesc")[0]);
+
+		info_companynature.setText(commMapArray.get("companynature")[0]);
+		info_companyscale.setText(commMapArray.get("companyscale")[0]);
+	}
+	
 	
 	/**
 	 * 初始化UI数据
 	 * @return
 	 */
 	private boolean getWEData(){
-		queryWhere = "select * from " + CommonText.WORKEXPERIENCE
-				+ " where userId = '" + uTokenId + "' order by id desc limit 1";
+		if (MyApplication.KID == 0) {
+			queryWhere = "select * from " + CommonText.WORKEXPERIENCE
+					+ " where userId = '" + uTokenId + "' order by id desc limit 1";
+		}else{
+			queryWhere = "select * from " + CommonText.WORKEXPERIENCE
+					+ " where userId = '" + uTokenId + "' and id = "+ MyApplication.KID +" limit 1";
+		}
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			setEditBtnVisible(View.VISIBLE);
@@ -192,11 +229,13 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	
 	@Override
 	public void onClick(View v) {
-		getFeildValue();
+		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.save:
+			getFeildValue();
 			if(judgeFeild()){
 				ContentValues cValues = new ContentValues();
+				cValues.put("weToken", UUIDGenerator.getUUID());
 				cValues.put("userId", uTokenId);
 				cValues.put("companyname", info_companynameStr);
 				cValues.put("companynature", info_companynatureStr);
@@ -212,28 +251,43 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				if(queryResult){
 					toastMsg(R.string.action_add_success);
 					setEditBtnVisible(View.VISIBLE);
-					if(!MyApplication.userId.equals("0")){
-						set2Msg(R.string.action_syncing);
-						weId = "0";
-						syncData();
+					
+					if(getWEData()){
+						if(!MyApplication.userId.equals("0")){
+							if (CommUtil.isNetworkAvailable(self)) {
+								set2Msg(R.string.action_syncing);
+								syncData();
+							}else{
+								set3Msg(R.string.check_network);
+							}
+						}else{
+							set3Msg(R.string.action_login_head);
+						}
 					}
 				}
 			}
 			
 			break;
 		case R.id.edit:
+			getFeildValue();
 			if(judgeFeild()){
 				if(getWEData()){
 					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 							new String[]{weId,"companyname","companynature","companyscale","industryclassification",
-											  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc"}, 
+											  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc","updatetime"}, 
 							new String[]{uTokenId,info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
-										info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr},2);
+										info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr,TimeUtils.getCurrentTimeInString()},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 						if(!MyApplication.userId.equals("0")){
-							set2Msg(R.string.action_syncing);
-							syncData();
+							if (CommUtil.isNetworkAvailable(self)) {
+								set2Msg(R.string.action_syncing);
+								syncData();
+							}else{
+								set3Msg(R.string.check_network);
+							}
+						}else{
+							set3Msg(R.string.action_login_head);
 						}
 					}else{
 						toastMsg(R.string.action_update_fail);
@@ -243,12 +297,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			break;
 		case R.id.next:
 			startActivity(".ui.EvaluationActivity", false);
-			break;
-		case R.id.left_lable:
-			scrollToFinishActivity();
-			break;
-		case R.id.right_icon:
-			startActivity(".MainActivity", false);
 			break;
 		case R.id.info_companynature:
 			whichTab = 4;
@@ -260,7 +308,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			break;
 		case R.id.info_industryclassification:
 			ActivityUtils.startActivityForResult(self, 
-					Constants.PACKAGENAME + ".ui.IndustryTypeActivity", false, Constants.WE_REQUEST_CODE);
+					Constants.PACKAGENAMECHILD + "IndustryTypeActivity", false, Constants.WE_REQUEST_CODE);
 			break;
 		case R.id.info_expectedsalary:
 			whichTab = 2;
@@ -273,7 +321,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			DialogUtils.showTimeChooseDialog(self, info_endworktime,R.string.we_info_end_worktime, 12,mHandler);
 			break;
 		case R.id.right_icon_more:
-			DialogUtils.showTopMenuDialog(self, topLayout, mHandler);
+			DialogUtils.showTopMenuDialog(self, topLayout,1, mHandler);
 			break;
 		default:
 			break;
@@ -333,7 +381,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		}
 		
 		if (TimeUtils.compareDate(info_startworktimeStr, info_endworktimeStr) <= 0) {
-			set2Msg(R.string.we_info_compare_worktime);
+			set3Msg(R.string.we_info_compare_worktime);
 			return false;
 		}
 		
@@ -365,17 +413,14 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		requestData("pro_get_workexpericnce", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				syncRun("0",2);
+				syncRun(weId,2);
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					String p_weId = map.get("id").get(0);
+					String p_weId = map.get("weId").get(0);
 					if (map.get("userId").get(0).equals(uTokenId)) {
 						syncRun(p_weId,3);
-						
-					}else{
-						syncRun("0",2);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -443,6 +488,21 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		}
 	}
 	
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		MyApplication.KID = 0;
+	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -452,6 +512,18 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
                 String result = data.getStringExtra("name");
                 info_industryclassification.setText(result);
             }
+        }else if(requestCode == Constants.WE_MANAGER_REQUEST_CODE){
+        	 if(resultCode == Constants.RESULT_CODE) {
+        		 String weId = data.getStringExtra("weId");
+        		 MyApplication.KID = CommUtil.parseInt(weId);
+        		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE
+     					+ " where userId = '" + uTokenId + "' and id = "+ weId +" limit 1";
+        		 commMapArray = dbUtil.queryData(self, queryWhere);
+          		 if (commMapArray != null && commMapArray.get("userId").length > 0) {
+          			weId = commMapArray.get("id")[0];
+          			setFeildValue();
+                 }
+     		}
         }
 		super.onActivityResult(requestCode, resultCode, data);
 		

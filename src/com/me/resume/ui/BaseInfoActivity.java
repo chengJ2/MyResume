@@ -12,9 +12,12 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
@@ -53,6 +56,10 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		
 	// 出生日期; 工作时间; 家乡所在地; 现居住地;婚姻;政治面貌
 	private TextView info_brithday,info_workyear,info_hometown,info_city,info_maritalstatus,info_politicalstatus;
+	
+	private RelativeLayout uselesstitleLayoyut;
+	private LinearLayout uselessLayoyut;
+	private ImageView arrow_updown;
 	
 	String rg_genderStr = "0";
 	String rg_maritalstatusStr = "0";
@@ -116,9 +123,16 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 								new String[]{uTokenId,String.valueOf(checkColor)},1);
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
-							if(!MyApplication.userId.equals("0")){
-								set2Msg(R.string.action_syncing);
-								syncData();
+							if (!MyApplication.userId.equals("0")) {
+								if (CommUtil.isNetworkAvailable(self)) {
+									set2Msg(R.string.action_syncing);
+									syncData();
+								}else{
+									set3Msg(R.string.check_network);
+								}
+								
+							}else{
+								set3Msg(R.string.action_login_head);
 							}
 						}else{
 							toastMsg(R.string.action_update_fail);
@@ -136,8 +150,16 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				break;
 			case OnTopMenu.MSG_MENU3:
 				if (commMapArray != null) {
-					set2Msg(R.string.action_syncing);
-					syncData();
+					if (!MyApplication.userId.equals("0")) {
+						if (CommUtil.isNetworkAvailable(self)) {
+							set2Msg(R.string.action_syncing);
+							syncData();
+						}else{
+							set3Msg(R.string.check_network);
+						}
+					}else{
+						set3Msg(R.string.action_login_head);
+					}
 				}else{
 					set3Msg(R.string.completion_info_frist);
 				}
@@ -193,6 +215,12 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		info_politicalstatus = findView(R.id.info_politicalstatus);
 		
 		rg_workingabroad = findView(R.id.rg_workingabroad);
+		
+		uselesstitleLayoyut = findView(R.id.uselesstitleLayoyut);
+		uselessLayoyut = findView(R.id.uselessLayoyut);
+		uselessLayoyut.setVisibility(View.GONE);
+		arrow_updown = findView(R.id.arrow_updown);
+		
 		radio_yes  = findView(R.id.radio_yes);
 		radio_yes.setChecked(false);
 		radio_no = findView(R.id.radio_no);
@@ -212,11 +240,16 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		info_maritalstatus.setOnClickListener(this);
 		info_politicalstatus.setOnClickListener(this);
 		
+		uselesstitleLayoyut.setOnClickListener(this);
+		arrow_updown.setOnClickListener(this);
+		
 		info_realname.addTextChangedListener(this);
 		info_phone.addTextChangedListener(this);
 		info_email.addTextChangedListener(this);
 		info_nationality.addTextChangedListener(this);
 		info_license.addTextChangedListener(this);
+		
+		
 	}
 	
 	private void initData() {
@@ -346,17 +379,26 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		case R.id.next:
 			goActivity(".ui.WorkExperienceActivity");
 			break;
-		case R.id.right_icon:
-			goActivity(Constants.MAINACTIVITY);
-			break;
 		case R.id.right_icon_more:
-			DialogUtils.showTopMenuDialog(self, topLayout, mHandler);
+			DialogUtils.showTopMenuDialog(self, topLayout,0,mHandler);
+			break;
+		case R.id.uselesstitleLayoyut:
+		case R.id.arrow_updown:
+			if (isShow) {
+				isShow = false;
+				uselessLayoyut.setVisibility(View.VISIBLE);
+			}else{
+				isShow = true;
+				uselessLayoyut.setVisibility(View.GONE);
+			}
 			break;
 		default:
 			break;
 		}
 		
 	}
+	
+	private boolean isShow = false;
 	
 	/**
 	 * 同步本地库数据
@@ -378,8 +420,14 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			if (updResult == 1) {
 				toastMsg(R.string.action_update_success);
 				if(!MyApplication.userId.equals("0")){
-					set2Msg(R.string.action_syncing);
-					syncData();
+					if (CommUtil.isNetworkAvailable(self)) {
+						set2Msg(R.string.action_syncing);
+						syncData();
+					}else{
+						set3Msg(R.string.check_network);
+					}
+				}else{
+					set3Msg(R.string.action_login_head);
 				}
 			}else{
 				toastMsg(R.string.action_update_fail);
@@ -407,8 +455,14 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				setAddBtnSrc(R.drawable.ic_btn_edit);
 				toastMsg(R.string.action_add_success);
 				if(!MyApplication.userId.equals("0")){
-					set2Msg(R.string.action_syncing);
-					syncData();
+					if (CommUtil.isNetworkAvailable(self)) {
+						set2Msg(R.string.action_syncing);
+						syncData();
+					}else{
+						set3Msg(R.string.check_network);
+					}
+				}else{
+					set3Msg(R.string.action_login_head);
 				}
 			}
 		}
@@ -443,6 +497,11 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			return false;
 		}
 		
+		if (!RegexUtil.checkNotNull(info_cityStr)) {
+			setMsg(R.string.info_city);
+			return false;
+		}
+		
 		if (!RegexUtil.checkNotNull(info_emailStr)) {
 			setMsg(R.string.info_email);
 			return false;
@@ -453,15 +512,11 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			return false;
 		}
 		
-		if (!RegexUtil.checkNotNull(info_hometownStr)) {
+/*		if (!RegexUtil.checkNotNull(info_hometownStr)) {
 			setMsg(R.string.info_hometown);
 			return false;
-		}
-
-		if (!RegexUtil.checkNotNull(info_cityStr)) {
-			setMsg(R.string.info_city);
-			return false;
-		}
+		}*/
+		
 		return true;
 	}
 	

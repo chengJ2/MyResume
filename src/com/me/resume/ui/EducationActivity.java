@@ -430,7 +430,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		}
 		
 		if (TimeUtils.compareDate(info_starttimeStr, info_endtimeStr) <= 0) {
-			set2Msg(R.string.we_info_compare_worktime);
+			set3Msg(R.string.we_info_compare_worktime);
 			return false;
 		}
 		
@@ -467,7 +467,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		}
 		
 		if (TimeUtils.compareDate(info_starttimeStr, info_endtimeStr) <= 0) {
-			set2Msg(R.string.we_info_compare_worktime);
+			set3Msg(R.string.we_info_compare_worktime);
 			return false;
 		}
 		

@@ -153,7 +153,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			startActivity(".MainActivity",false);
 			break;
 		case R.id.right_icon_more:
-			DialogUtils.showTopMenuDialog(self, topLayout, mHandler);
+			DialogUtils.showTopMenuDialog(self, topLayout,0, mHandler);
 			break;
 		default:
 			break;

@@ -134,13 +134,13 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 					holder.setText(R.id.share_username, map.get("username").get(position));
 				}
 				
-				String jobtitleStr = map.get("jobtitle").get(position);
+				/*String jobtitleStr = map.get("jobtitle").get(position);
 				if (RegexUtil.checkNotNull(jobtitleStr)) {
 					holder.setTextVisibe(R.id.share_jobtitle, View.VISIBLE);
 					holder.setText(R.id.share_jobtitle, jobtitleStr);
 				}else{
 					holder.setTextVisibe(R.id.share_jobtitle, View.GONE);
-				}
+				}*/
 				
 				String workyear = map.get("joinworktime").get(position);
 				if (RegexUtil.checkNotNull(workyear)) {
@@ -152,9 +152,6 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 					holder.setTextVisibe(R.id.share_workyear, View.GONE);
 				}
 				
-				if (!RegexUtil.checkNotNull(workyear) && !RegexUtil.checkNotNull(jobtitleStr)) {
-					holder.setViewVisible(R.id.info2Layout, View.GONE);
-				}
 				
 				holder.setText(R.id.share_content, map.get("content").get(position).toString().trim());
 				holder.setText(R.id.share_city, map.get("city").get(position));

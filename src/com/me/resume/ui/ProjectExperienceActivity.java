@@ -154,7 +154,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 			}
 			
 			if (TimeUtils.compareDate(info_startworktimeStr, info_endworktimeStr) <= 0) {
-				set2Msg(R.string.we_info_compare_worktime);
+				set3Msg(R.string.we_info_compare_worktime);
 				return;
 			}
 			ContentValues cValues = new ContentValues();
@@ -198,7 +198,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 			DialogUtils.showTimeChooseDialog(self, info_endworktime,R.string.we_info_end_worktime, 12,mHandler);
 			break;
 		case R.id.right_icon_more:
-			DialogUtils.showTopMenuDialog(self, topLayout, mHandler);
+			DialogUtils.showTopMenuDialog(self, topLayout,1, mHandler);
 			break;
 		default:
 			break;

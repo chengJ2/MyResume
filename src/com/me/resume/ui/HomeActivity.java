@@ -284,7 +284,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					final int position) {
 				final String[] title = mList.get(position).toString().split(";");
 				holder.setText(R.id.itemName, title[0]);
-				if (position == 1 || position == 5 || position == 6) {
+				if (position == 5) {
 					holder.setTextColor(R.id.itemName,
 							CommUtil.getIntValue(self, R.color.red));
 				}
@@ -416,13 +416,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					holder.setText(R.id.share_username, map.get("username").get(position));
 				}
 				
-				String jobtitleStr = map.get("jobtitle").get(position);
+				/*String jobtitleStr = map.get("jobtitle").get(position);
 				if (RegexUtil.checkNotNull(jobtitleStr)) {
 					holder.setTextVisibe(R.id.share_jobtitle, View.VISIBLE);
 					holder.setText(R.id.share_jobtitle, jobtitleStr);
 				}else{
 					holder.setTextVisibe(R.id.share_jobtitle, View.GONE);
-				}
+				}*/
 				
 				String workyear = map.get("joinworktime").get(position);
 				if (RegexUtil.checkNotNull(workyear)) {
@@ -432,10 +432,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					holder.setText(R.id.share_workyear,(theYear - year) + "年工作经验");
 				}else{
 					holder.setTextVisibe(R.id.share_workyear, View.GONE);
-				}
-				
-				if (!RegexUtil.checkNotNull(workyear) && !RegexUtil.checkNotNull(jobtitleStr)) {
-					holder.setViewVisible(R.id.info2Layout, View.GONE);
 				}
 				
 				final String content = map.get("content").get(position);

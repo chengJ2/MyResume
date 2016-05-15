@@ -53,30 +53,31 @@
          <RelativeLayout 
              android:id="@+id/info2Layout"
 		    android:layout_width="match_parent"
-		    android:layout_height="20dip"
-		    android:background="@color/white"
-		    android:visibility="visible" >
+		    android:layout_height="wrap_content"
+		    android:background="@color/white">
 			
             <TextView
      			 android:id="@+id/share_jobtitle"
       			 style="@style/user_center_text"
+      			 android:layout_height="20dip"
       			 android:maxWidth="200dip"
       			 android:text="Android开发工程师"
       			 android:layout_alignParentLeft="true"
       			 android:textSize="@dimen/microd_text_size" 
       			 android:textColor="@color/grey_10"
-      			 android:visibility="visible"/>
+      			 android:visibility="gone"/>
              
              <TextView
      			 android:id="@+id/share_workyear"
       			 style="@style/user_center_text"
+      			 android:layout_height="20dip"
       			 android:maxWidth="200dip"
       			 android:text="2年工作经验"
       			 android:layout_toRightOf="@id/share_jobtitle"
       			 android:layout_marginLeft="10dip"
       			 android:textSize="@dimen/microd_text_size" 
       			 android:textColor="@color/grey_10"
-      			 android:visibility="visible"/>
+      			 android:visibility="gone"/>
              
     	</RelativeLayout>
          

@@ -13,9 +13,11 @@ public interface OnTopMenu {
 	public static final int MSG_MENU2 = 1002;
 	public static final int MSG_MENU3 = 1003;
 	public static final int MSG_MENU31 = 1004;
+	public static final int MSG_MENU32 = 1014;
 	
 	public static final int MSG_MENU41 = 1005;
 	public static final int MSG_MENU42 = 1006;
+	
 
 //	boolean isCheck();
 //
