@@ -208,17 +208,17 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 * @return
 	 */
 	private boolean getWEData(){
-		if (MyApplication.KID == 0) {
+		if (MyApplication.KID.equals("0")) {
 			queryWhere = "select * from " + CommonText.WORKEXPERIENCE
 					+ " where userId = '" + uTokenId + "' order by id desc limit 1";
 		}else{
 			queryWhere = "select * from " + CommonText.WORKEXPERIENCE
-					+ " where userId = '" + uTokenId + "' and id = "+ MyApplication.KID +" limit 1";
+					+ " where userId = '" + uTokenId + "' and weToken = "+ MyApplication.KID +" limit 1";
 		}
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			setEditBtnVisible(View.VISIBLE);
-			weId = commMapArray.get("id")[0];
+			weId = commMapArray.get("weToken")[0];
 			return true;
 		} else {
 			setEditBtnVisible(View.GONE);
@@ -501,7 +501,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		MyApplication.KID = 0;
 	}
 	
 	@Override
@@ -515,12 +514,12 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
         }else if(requestCode == Constants.WE_MANAGER_REQUEST_CODE){
         	 if(resultCode == Constants.RESULT_CODE) {
         		 String weId = data.getStringExtra("weId");
-        		 MyApplication.KID = CommUtil.parseInt(weId);
+        		 MyApplication.KID = weId;
         		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE
-     					+ " where userId = '" + uTokenId + "' and id = "+ weId +" limit 1";
+     					+ " where userId = '" + uTokenId + "' and weToken = "+ weId +" limit 1";
         		 commMapArray = dbUtil.queryData(self, queryWhere);
           		 if (commMapArray != null && commMapArray.get("userId").length > 0) {
-          			weId = commMapArray.get("id")[0];
+          			weId = commMapArray.get("weToken")[0];
           			setFeildValue();
                  }
      		}

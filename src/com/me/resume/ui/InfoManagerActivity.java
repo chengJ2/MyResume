@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,10 +21,12 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
+import com.me.resume.model.UUIDGenerator;
 import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
+import com.me.resume.utils.TimeUtils;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -31,7 +35,7 @@ import com.whjz.android.text.CommonText;
  * @author Administrator
  * 
  */
-public class InfoManagerActivity extends BaseActivity {
+public class InfoManagerActivity extends BaseActivity implements OnClickListener{
 
 	private ListView infoMoreListView;
 	private TextView nodata;
@@ -46,12 +50,14 @@ public class InfoManagerActivity extends BaseActivity {
 			case 1:
 				String weId = (String)msg.obj;
 				queryWhere = "delete from " + CommonText.WORKEXPERIENCE
-						+ " where userId = '" + uTokenId +"' and id = " + weId;
+						+ " where userId = '" + uTokenId +"' and weToken = " + weId;
 				dbUtil.deleteData(self, queryWhere);
 				
 				set3Msg(R.string.action_delete_success);
 				
 				initData();
+				
+				// TODO
 				if (!MyApplication.userId.equals("0")) {
 					if (CommUtil.isNetworkAvailable(self)) {
 						syncData(weId);
@@ -75,7 +81,8 @@ public class InfoManagerActivity extends BaseActivity {
 		setTopTitle(R.string.resume_workexperience);
 
 		setMsgHide();
-		setRightIconVisible(View.INVISIBLE);
+		setRightIconVisible(View.VISIBLE);
+		setRightIcon(R.drawable.icon_sync);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 
@@ -147,12 +154,11 @@ public class InfoManagerActivity extends BaseActivity {
 
 						holder.setText(R.id.item11, sbStr.toString());
 
-						final String weId = commMapArray.get("id")[position];
+						final String weId = commMapArray.get("weToken")[position];
 						holder.setOnClickEvent(R.id.item21, new ClickEvent() {
 
 							@Override
 							public void onClick(View view) {
-//								MyApplication.KID = CommUtil.parseInt(weId);
 								DialogUtils.showDeleteDialog(self, weId, mHandler);
 							}
 						});
@@ -211,6 +217,92 @@ public class InfoManagerActivity extends BaseActivity {
 				}
 			}
 		});
+	}
+	
+	private void getServerData(){
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		
+		params.add("p_weId");
+		params.add("p_userId");
+		values.add("0");
+		values.add(uTokenId);
+		requestData("pro_get_workexpericnce", 3, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				set3Msg(R.string.action_sync_success);
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+					// 删除本地数据
+					queryWhere = "delete from " + CommonText.WORKEXPERIENCE;
+					dbUtil.deleteData(self, queryWhere);
+					
+					// 更新本地数据
+					setDataFromServer(map);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+	}
+	
+	/**
+	 * 更新本地数据
+	 * @param map
+	 */
+	private void setDataFromServer(Map<String, List<String>> map){
+		int size = map.get("userId").size();
+		for (int i = 0; i < size; i++) {
+			ContentValues cValues = new ContentValues();
+			cValues.put("weToken", map.get("weToken").get(i));
+			cValues.put("userId", map.get("userId").get(i));
+			cValues.put("companyname", map.get("companyname").get(i));
+			cValues.put("companynature", map.get("companynature").get(i));
+			cValues.put("companyscale", map.get("companyscale").get(i));
+			cValues.put("industryclassification", map.get("industryclassification").get(i));
+			cValues.put("jobtitle", map.get("jobtitle").get(i));
+			cValues.put("worktimeStart", map.get("worktimeStart").get(i));
+			cValues.put("worktimeEnd", map.get("worktimeEnd").get(i));
+			cValues.put("expectedsalary", map.get("expectedsalary").get(i));
+			cValues.put("workdesc", map.get("workdesc").get(i));
+			cValues.put("createtime", map.get("createtime").get(i));
+			cValues.put("updatetime", map.get("updatetime").get(i));
+			queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);
+		}
+		
+		if (queryResult) {
+			set3Msg(R.string.action_sync_success);
+			initData();
+		}
+		
+	}
+	
+	
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		super.onClick(v);
+		switch (v.getId()) {
+		case R.id.right_icon:
+			if (!MyApplication.userId.equals("0")) {
+				if (CommUtil.isNetworkAvailable(self)) {
+					set2Msg(R.string.action_syncing);
+					getServerData();
+				}else{
+					set3Msg(R.string.check_network);
+				}
+			}else{
+				set3Msg(R.string.action_login_head);
+			}
+			
+			break;
+		default:
+			break;
+		}
 	}
 
 }
