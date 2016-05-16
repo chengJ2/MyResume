@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,6 +27,7 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.PreferenceUtil;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.views.CustomListView;
 import com.me.resume.views.JazzyViewPager;
@@ -59,7 +58,7 @@ public class MainActivity extends Activity {
 	
 	private static final int MSG_CHANGE_PHOTO = 1;
 	/** view自动切换时间 */
-	private static final int VIEW_CHANGE_TIME = 10000;
+	private static final int VIEW_CHANGE_TIME = 5000;
 	
 	private boolean showEffect = true;
 	
@@ -69,7 +68,7 @@ public class MainActivity extends Activity {
 	
 	private String queryWhere = "";
 	
-	private SharedPreferences sp;
+	protected PreferenceUtil preferenceUtil;
 	
 	private TextView main_top_title;
 	private ImageView main_top_edit;
@@ -147,14 +146,19 @@ public class MainActivity extends Activity {
 	}
 
 	private void findViews() {
-		sp = getSharedPreferences(Constants.CONFIG, Context.MODE_PRIVATE);
+		self = MainActivity.this;
+		if(preferenceUtil == null)
+			preferenceUtil = new PreferenceUtil(self);
+		
 		jazzyViewPager = (JazzyViewPager)findViewById(R.id.index_product_container);
+		jazzyViewPager.setPageMargin(100);//两个页面之间的间距
+		jazzyViewPager.setFadeEnabled(true);//有淡入淡出效果
+		jazzyViewPager.setOutlineEnabled(true);//有边框
+		jazzyViewPager.setOutlineColor(0xff0000ff);//边框颜色
 	}
 	
 
 	private void initViews() {
-		self = MainActivity.this;
-		
 		mInflater = LayoutInflater.from(this);
 		
 		cover = mInflater.inflate(R.layout.index_resume_cover, null);
@@ -193,19 +197,21 @@ public class MainActivity extends Activity {
 	}
 	
 	private void showViews() {
-		if (showEffect) {
-			jazzyViewPager.setTransitionEffect(TransitionEffect.Tablet);
-		}
-
+//		if (showEffect) {
+//			jazzyViewPager.setTransitionEffect(TransitionEffect.CubeIn);
+//		}
 		jazzyViewPager.setCurrentItem(0);
-
-		if (sp.getInt("autoShow", 0) == 1) {
+		if (preferenceUtil.getPreferenceData("autoShow")) {
+			TransitionEffect effect = TransitionEffect.valueOf(preferenceUtil.getPreferenceData("switchAnim", "Standard"));
+			jazzyViewPager.setTransitionEffect(effect);
 			mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO, VIEW_CHANGE_TIME);
 		}
 
 		jazzyViewPager.setAdapter(new MyPagerAdapter(mViewList));
+		
 	}
 	
+
 	/**
 	 * 
 	 * @Title:MainActivity
@@ -621,12 +627,11 @@ public class MainActivity extends Activity {
 		mViewList.add(view8);
 		
 		goHome = (ImageView) view8.findViewById(R.id.gohome);
-		
 		goHome.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-//				sp.edit().putInt("startVerytime", 0).commit();
+				preferenceUtil.setPreferenceData("startVerytime", false);
 				ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + "HomeActivity");
 			}
 		});
@@ -645,7 +650,7 @@ public class MainActivity extends Activity {
 		main_top_title.setText(CommUtil.getStrValue(self, redId));
 		main_top_edit = (ImageView) view.findViewById(R.id.main_top_edit);
 		
-		if (sp.getBoolean("edit_mode", false) == true) {
+		if (preferenceUtil.getPreferenceData("edit_mode") == true) {
 			main_top_edit.setVisibility(View.VISIBLE);
 		}else{
 			main_top_edit.setVisibility(View.GONE);
@@ -702,6 +707,7 @@ public class MainActivity extends Activity {
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
 			container.addView(mViewList.get(position));// 添加页卡
+			jazzyViewPager.setObjectForPosition(mViewList.get(position), position); 
 			return mViewList.get(position);
 		}
 

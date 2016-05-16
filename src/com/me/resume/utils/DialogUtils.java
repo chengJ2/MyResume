@@ -464,7 +464,6 @@ public class DialogUtils {
 		mPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 	}
 	
-	
 	/**
 	 * 
 	 * @param context

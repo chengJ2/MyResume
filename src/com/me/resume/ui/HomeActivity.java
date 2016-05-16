@@ -124,8 +124,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		View v = View.inflate(self,R.layout.activity_home, null);
 		boayLayout.addView(v);
 		
-		if (preferenceUtil.getPreferenceData("startVerytime", 0) == 1) {
-			startActivity(".MainActivity", true);
+		if (preferenceUtil.getPreferenceData("startVerytime")) {
+			startActivity(Constants.MAINACTIVITY, true);
+			return;
 		}
 		
 		findViews();

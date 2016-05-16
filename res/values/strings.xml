@@ -24,6 +24,7 @@
     <string name="action_settings">设置</string>
     <string name="settings_item0">简历预览界面</string>
     <string name="settings_item1">每次启动显示预览模式</string>
+    <string name="settings_item11">选择切换效果</string>
     <string name="settings_item2">自动切换简历预览</string>
     <string name="settings_item21">预览界面编辑模式</string>
     <string name="settings_item3">检测新版本</string>

@@ -15,6 +15,21 @@
         <item>Accordion</item>
     </string-array>
     
+     <string-array name="jazzy_effects_cn">
+        <item>一般</item>
+        <item>Tablet</item>
+        <item>CubeIn</item>
+        <item>CubeOut</item>
+        <item>垂直翻转</item>
+        <item>水平翻转</item>
+        <item>Stack</item>
+        <item>ZoomIn</item>
+        <item>ZoomOut</item>
+        <item>RotateUp</item>
+        <item>RotateDown</item>
+        <item>Accordion</item>
+    </string-array>
+    
     <string-array name="review_link">
         <item>@string/re_link1</item>
         <item>@string/re_link2</item>

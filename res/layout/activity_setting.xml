@@ -70,6 +70,53 @@
                         android:visibility="visible" />
                 </LinearLayout>
             </LinearLayout>
+            
+              <View style="@style/line_padding10" />
+
+             <LinearLayout
+                android:id="@+id/llout021"
+                style="@style/noraml_item">
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:layout_weight="5"
+                    android:textColor="@color/black"
+                    android:text="简历预览切换动画" />
+
+                <TextView
+                    android:id="@+id/animvalue"
+                    style="@style/user_info_item_tv"
+                    android:textColor="@color/black"
+                    android:layout_weight="4"
+                    android:gravity="right|center"
+                    android:text="一般" />
+                
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="visible" />
+            </LinearLayout>
+             
+             <com.me.resume.views.GrapeGridview
+              android:id="@+id/animgridview"
+              android:layout_width="match_parent"
+              android:layout_height="80dip"
+              android:paddingLeft="12dip"
+              android:paddingTop="5dip"
+              android:gravity="center"
+              android:layout_gravity="center"
+              android:numColumns="auto_fit"
+              android:columnWidth="40dp" 
+              android:horizontalSpacing="10dip"
+              android:verticalSpacing="10dip"
+              android:listSelector="@android:color/transparent"
+              android:stretchMode="columnWidth"
+              android:scrollbars="none"
+              android:scrollingCache="false"
+              android:smoothScrollbar="true"
+              android:fadingEdge="none"
+			  android:fadingEdgeLength="0dip"
+			  android:visibility="gone"/>
+             
 
             <View style="@style/line_padding10" />
             

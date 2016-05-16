@@ -23,8 +23,11 @@ public class JazzyViewPager extends ViewPager {
 	public static final String TAG = "JazzyViewPager";
 
 	private boolean mEnabled = true;
+	// 是否有淡入淡出效果
 	private boolean mFadeEnabled = false;
+	// viewpager一个视图周边是否有边框
 	private boolean mOutlineEnabled = false;
+	// 边框颜色
 	public static int sOutlineColor = Color.WHITE;
 	private TransitionEffect mEffect = TransitionEffect.Standard;
 

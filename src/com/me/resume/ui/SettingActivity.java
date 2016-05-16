@@ -1,22 +1,29 @@
 package com.me.resume.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ResponseCode;
+import com.me.resume.comm.ViewHolder;
+import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.DataCleanManager;
 import com.me.resume.utils.CommUtil;
@@ -41,6 +48,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	
 	private TextView cachesize,version;
 	
+	private LinearLayout llout021;
+	private TextView animvalue;
+	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -61,6 +71,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 					e.printStackTrace();
 				}
 				break;
+			case 2:
+				int position = (int) msg.obj;
+				String animValueStr = mList.get(position);
+				animvalue.setText(animValueStr);
+				preferenceUtil.setPreferenceData("switchAnim", animValueStr);
+				break;
 			default:
 				break;
 			}
@@ -78,9 +94,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		findViews();
 		initViews();
 		switchBtnClick();
-		
 	}
-	
+
 	private void findViews(){
 		setting_start_cb = findView(R.id.setting_start_cb);
 		setting_auto_cb = findView(R.id.setting_auto_cb);
@@ -93,6 +108,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		version = findView(R.id.viewsion);
 		logoutLayout = findView(R.id.logoutLayout);
 		shareLayout = findView(R.id.shareLayout);
+		
+		llout021 = findView(R.id.llout021); 
+		animvalue = findView(R.id.animvalue);
 		
 	}
 	
@@ -119,6 +137,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		feedbackLayout.setOnClickListener(this);
 		logoutLayout.setOnClickListener(this);
 		shareLayout.setOnClickListener(this);
+		llout021.setOnClickListener(this);
 	}
 	
 	private void switchBtnClick(){
@@ -127,11 +146,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void OnChanged(SwitchButton switchButton, boolean checkState) {
 				// TODO Auto-generated method stub
-				int onoff = 0;
-				if(preferenceUtil.getPreferenceData("startVerytime", 0) == 0){
-					onoff = 1;
+				boolean onoff = false;
+				if(!preferenceUtil.getPreferenceData("startVerytime")){
+					onoff = true;
 				}else{
-					onoff = 0;
+					onoff = false;
 				}
 				preferenceUtil.setPreferenceData("startVerytime", onoff); 
 			}
@@ -142,11 +161,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void OnChanged(SwitchButton switchButton, boolean checkState) {
 				// TODO Auto-generated method stub
-				int onoff = 0;
-				if(preferenceUtil.getPreferenceData("autoShow", 0) == 0){
-					onoff = 1;
+				boolean onoff = false;
+				if(!preferenceUtil.getPreferenceData("autoShow")){
+					onoff = true;
 				}else{
-					onoff = 0;
+					onoff = false;
 				}
 				preferenceUtil.setPreferenceData("autoShow", onoff); 
 			}
@@ -157,11 +176,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void OnChanged(SwitchButton switchButton, boolean checkState) {
 				// TODO Auto-generated method stub
-				int onoff = 0;
-				if(preferenceUtil.getPreferenceData("editmode", 0) == 0){
-					onoff = 1;
+				boolean onoff = false;
+				if(!preferenceUtil.getPreferenceData("editmode")){
+					onoff = true;
 				}else{
-					onoff = 0;
+					onoff = false;
 				}
 				preferenceUtil.setPreferenceData("editmode", onoff); 
 			}
@@ -170,25 +189,24 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
-		int autoShow = preferenceUtil.getPreferenceData("autoShow", 0);
-		int startVerytime = preferenceUtil.getPreferenceData("startVerytime", 0);
-		int editmode = preferenceUtil.getPreferenceData("editmode", 0);
-		if (startVerytime == 0) {
-			setting_start_cb.setChecked(false);
-		}else{
+		boolean autoShow = preferenceUtil.getPreferenceData("autoShow");
+		boolean startVerytime = preferenceUtil.getPreferenceData("startVerytime");
+		boolean editmode = preferenceUtil.getPreferenceData("editmode");
+		if (startVerytime) {
 			setting_start_cb.setChecked(true);
-		}
-		if (autoShow == 0) {
-			setting_auto_cb.setChecked(false);
 		}else{
+			setting_start_cb.setChecked(false);
+		}
+		if (autoShow ) {
 			setting_auto_cb.setChecked(true);
-		}
-		if (editmode == 0) {
-			setting_edit_cb.setChecked(false);
 		}else{
+			setting_auto_cb.setChecked(false);
+		}
+		if (editmode) {
 			setting_edit_cb.setChecked(true);
+		}else{
+			setting_edit_cb.setChecked(false);
 		}
 	}
 	
@@ -220,6 +238,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
             share.setType("*/*");
             startActivity(Intent.createChooser(share, 
             		CommUtil.getStrValue(self, R.string.settings_item71)));
+			break;
+		case R.id.llout021:
+			String[] item_text = CommUtil.getArrayValue(self,R.array.jazzy_effects); 
+			mList = Arrays.asList(item_text);
+			DialogUtils.showPopWindow(self, llout021, R.string.settings_item11, mList, mHandler);
 			break;
 		default:
 			break;
