@@ -6,7 +6,7 @@
     android:fitsSystemWindows="true">
     
     <com.me.resume.views.JazzyViewPager
-         android:id="@+id/index_product_container"
+         android:id="@+id/mainviewpager"
          android:layout_width="match_parent"
          android:layout_height="match_parent"/>
 </RelativeLayout>

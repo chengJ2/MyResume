@@ -48,8 +48,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	
 	private TextView cachesize,version;
 	
-	private LinearLayout llout021;
-	private TextView animvalue;
+	private LinearLayout llout020,llout021;
+	private TextView effectsdurationfeild,effectsduration,animvaluefeild,animvalue;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -72,10 +72,15 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 				}
 				break;
 			case 2:
-				int position = (int) msg.obj;
-				String animValueStr = mList.get(position);
-				animvalue.setText(animValueStr);
-				preferenceUtil.setPreferenceData("switchAnim", animValueStr);
+				if (whichTab == 1) {
+					int position = (int) msg.obj;
+					setEffectsDuration(effectsduration,position);
+				}else{
+					int position = (int) msg.obj;
+					String animValueStr = mList.get(position);
+					animvalue.setText(animValueStr);
+					preferenceUtil.setPreferenceData("switchAnim", animValueStr);
+				}
 				break;
 			default:
 				break;
@@ -109,7 +114,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		logoutLayout = findView(R.id.logoutLayout);
 		shareLayout = findView(R.id.shareLayout);
 		
+		llout020 = findView(R.id.llout020);
+		effectsdurationfeild = findView(R.id.effectsdurationfeild);
+		effectsduration = findView(R.id.effectsduration);
 		llout021 = findView(R.id.llout021); 
+		animvaluefeild = findView(R.id.animvaluefeild);
 		animvalue = findView(R.id.animvalue);
 		
 	}
@@ -132,11 +141,15 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		}
 		version.setText(CommUtil.getVersionName(self));
 		
+		effectsduration.setText(getEffectdDuration(preferenceUtil.getPreferenceData("switchEffDuration",5*1000)));
+		animvalue.setText(preferenceUtil.getPreferenceData("switchAnim", "Standard"));
+		
 		cacheLayout.setOnClickListener(this);
 		versionLayout.setOnClickListener(this);
 		feedbackLayout.setOnClickListener(this);
 		logoutLayout.setOnClickListener(this);
 		shareLayout.setOnClickListener(this);
+		llout020.setOnClickListener(this);
 		llout021.setOnClickListener(this);
 	}
 	
@@ -164,8 +177,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 				boolean onoff = false;
 				if(!preferenceUtil.getPreferenceData("autoShow")){
 					onoff = true;
+					setEffectDuration(true,R.color.black);
 				}else{
 					onoff = false;
+					setEffectDuration(false,R.color.grey_70);
 				}
 				preferenceUtil.setPreferenceData("autoShow", onoff); 
 			}
@@ -187,6 +202,18 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		});
 	}
 	
+	/**
+	 * 设置效果切换及时段item项
+	 */
+	private void setEffectDuration(boolean enabled,int color){
+		llout020.setEnabled(enabled);
+		llout021.setEnabled(enabled);
+		effectsdurationfeild.setTextColor(CommUtil.getColorValue(self, color));
+		effectsduration.setTextColor(CommUtil.getColorValue(self, color));
+		animvaluefeild.setTextColor(CommUtil.getColorValue(self, color));
+		animvalue.setTextColor(CommUtil.getColorValue(self, color));
+	}
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -198,9 +225,14 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		}else{
 			setting_start_cb.setChecked(false);
 		}
-		if (autoShow ) {
+		if (autoShow) {
+			setEffectDuration(true,R.color.black);
 			setting_auto_cb.setChecked(true);
 		}else{
+			setEffectDuration(false,R.color.grey_70);
+			llout020.setEnabled(false);
+			llout021.setEnabled(false);
+			
 			setting_auto_cb.setChecked(false);
 		}
 		if (editmode) {
@@ -240,9 +272,16 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
             		CommUtil.getStrValue(self, R.string.settings_item71)));
 			break;
 		case R.id.llout021:
-			String[] item_text = CommUtil.getArrayValue(self,R.array.jazzy_effects); 
-			mList = Arrays.asList(item_text);
+			whichTab = 2;
+			item_values = CommUtil.getArrayValue(self,R.array.jazzy_effects); 
+			mList = Arrays.asList(item_values);
 			DialogUtils.showPopWindow(self, llout021, R.string.settings_item11, mList, mHandler);
+			break;
+		case R.id.llout020:
+			whichTab = 1;
+			item_values = CommUtil.getArrayValue(self,R.array.auto_show_effects_duration); 
+			mList = Arrays.asList(item_values);
+			DialogUtils.showPopWindow(self, llout020, R.string.settings_item20, mList, mHandler);
 			break;
 		default:
 			break;
@@ -285,5 +324,54 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 				}
 			}
 		});
+	}
+	
+	/**
+	 * 设置动画切换时段
+	 * @param tv
+	 * @param position
+	 */
+	private void setEffectsDuration(TextView tv,int position){
+		int duration = 5 * 1000;
+		item_values = CommUtil.getArrayValue(self,R.array.auto_show_effects_duration); 
+		if(position == 0){
+			duration = 5 * 1000;
+		}else if(position == 1){
+			duration = 10 * 1000;
+		}else if(position == 1){
+			duration = 15 * 1000;
+		}else if(position == 1){
+			duration = 30 * 1000;
+		}else if(position == 1){
+			duration = 45 * 1000;
+		}else if(position == 1){
+			duration = 60 * 1000;
+		}
+		tv.setText(item_values[position]);
+		preferenceUtil.setPreferenceData("switchEffDuration", duration);
+	}
+	
+	/**
+	 * 设置动画切换时段
+	 * @param tv
+	 * @param position
+	 */
+	private String getEffectdDuration(int duration){
+		int position = 0;
+		item_values = CommUtil.getArrayValue(self,R.array.auto_show_effects_duration); 
+		if(duration == 5 * 1000){
+			position = 0;
+		}else if(duration == 10 * 1000){
+			position = 1;
+		}else if(duration == 15 * 1000){
+			position = 2;
+		}else if(duration == 30 * 1000){
+			position = 3;
+		}else if(duration == 45 * 1000){
+			position = 4;
+		}else if(duration == 06 * 1000){
+			position = 5;
+		}
+		return item_values[position];
 	}
 }

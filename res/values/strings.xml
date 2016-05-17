@@ -24,8 +24,18 @@
     <string name="action_settings">设置</string>
     <string name="settings_item0">简历预览界面</string>
     <string name="settings_item1">每次启动显示预览模式</string>
+    
     <string name="settings_item11">选择切换效果</string>
     <string name="settings_item2">自动切换简历预览</string>
+    <string name="settings_item20">自动切换预览间隔</string>
+    <string name="settings_item201">5秒</string>
+    <string name="settings_item202">10秒</string>
+    <string name="settings_item203">15秒</string>
+    <string name="settings_item204">30秒</string>
+    <string name="settings_item205">45秒</string>
+    <string name="settings_item206">60秒</string>
+    <string name="settings_item22">简历预览切换动画</string>
+    
     <string name="settings_item21">预览界面编辑模式</string>
     <string name="settings_item3">检测新版本</string>
     <string name="settings_item4">反馈意见</string>

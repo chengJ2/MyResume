@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
+import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.PreferenceUtil;
@@ -57,8 +58,9 @@ public class MainActivity extends Activity {
 	private List<View> mViewList = new ArrayList<>();// 页卡视图集合
 	
 	private static final int MSG_CHANGE_PHOTO = 1;
+	
 	/** view自动切换时间 */
-	private static final int VIEW_CHANGE_TIME = 5000;
+	private int view_change_time = 5000;
 	
 	private boolean showEffect = true;
 	
@@ -127,7 +129,7 @@ public class MainActivity extends Activity {
 				}
 				jazzyViewPager.setCurrentItem(index + 1);
 				mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO,
-						VIEW_CHANGE_TIME);
+						view_change_time);
 				break;
 			case 2:
 				break;
@@ -144,18 +146,23 @@ public class MainActivity extends Activity {
 		initViews();
 		showViews();
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+	}
 
 	private void findViews() {
 		self = MainActivity.this;
 		if(preferenceUtil == null)
 			preferenceUtil = new PreferenceUtil(self);
 		
-		jazzyViewPager = (JazzyViewPager)findViewById(R.id.index_product_container);
-		jazzyViewPager.setPageMargin(100);//两个页面之间的间距
+		jazzyViewPager = (JazzyViewPager)findViewById(R.id.mainviewpager);
+/*		jazzyViewPager.setPageMargin(100);//两个页面之间的间距
 		jazzyViewPager.setFadeEnabled(true);//有淡入淡出效果
 		jazzyViewPager.setOutlineEnabled(true);//有边框
 		jazzyViewPager.setOutlineColor(0xff0000ff);//边框颜色
-	}
+*/	}
 	
 
 	private void initViews() {
@@ -202,9 +209,13 @@ public class MainActivity extends Activity {
 //		}
 		jazzyViewPager.setCurrentItem(0);
 		if (preferenceUtil.getPreferenceData("autoShow")) {
+			view_change_time = preferenceUtil.getPreferenceData("switchEffDuration",5*1000);
 			TransitionEffect effect = TransitionEffect.valueOf(preferenceUtil.getPreferenceData("switchAnim", "Standard"));
+			
+			L.d("=view_change_time="+view_change_time + "=effect=" + effect);
+			
 			jazzyViewPager.setTransitionEffect(effect);
-			mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO, VIEW_CHANGE_TIME);
+			mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO, view_change_time);
 		}
 
 		jazzyViewPager.setAdapter(new MyPagerAdapter(mViewList));

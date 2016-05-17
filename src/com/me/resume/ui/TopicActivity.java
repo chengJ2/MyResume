@@ -103,7 +103,11 @@ public class TopicActivity extends BaseActivity implements OnClickListener{
 					}else{
 						topic_frompic.setVisibility(View.GONE);
 					}
-					topic_content.setText(Html.fromHtml(map.get("detail").get(0)));
+					
+					String detail = map.get("detail").get(0);
+					detail = detail.replaceAll("小于", "<");
+					detail = detail.replaceAll("大于", ">");
+					topic_content.setText(Html.fromHtml(detail.toString()));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

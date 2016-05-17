@@ -71,6 +71,33 @@
                 </LinearLayout>
             </LinearLayout>
             
+             <View style="@style/line_padding10" />
+
+             <LinearLayout
+                android:id="@+id/llout020"
+                style="@style/noraml_item">
+
+                <TextView
+                    android:id="@+id/effectsdurationfeild"
+                    style="@style/user_info_item_tv"
+                    android:layout_weight="5"
+                    android:textColor="@color/black"
+                    android:text="@string/settings_item20" />
+
+                <TextView
+                    android:id="@+id/effectsduration"
+                    style="@style/user_info_item_tv"
+                    android:textColor="@color/black"
+                    android:layout_weight="4"
+                    android:gravity="right|center"
+                    android:text="@string/settings_item201" />
+                
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="visible" />
+            </LinearLayout>
+             
+             
               <View style="@style/line_padding10" />
 
              <LinearLayout
@@ -78,10 +105,11 @@
                 style="@style/noraml_item">
 
                 <TextView
+                    android:id="@+id/animvaluefeild"
                     style="@style/user_info_item_tv"
                     android:layout_weight="5"
                     android:textColor="@color/black"
-                    android:text="简历预览切换动画" />
+                    android:text="@string/settings_item22" />
 
                 <TextView
                     android:id="@+id/animvalue"
@@ -118,11 +146,13 @@
 			  android:visibility="gone"/>
              
 
-            <View style="@style/line_padding10" />
+            <View style="@style/line_padding10" 
+                android:visibility="gone"/>
             
             <LinearLayout
                 android:id="@+id/llout03"
-                style="@style/noraml_item">
+                style="@style/noraml_item"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/user_info_item_tv"

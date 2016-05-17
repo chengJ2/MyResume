@@ -30,6 +30,15 @@
         <item>Accordion</item>
     </string-array>
     
+      <string-array name="auto_show_effects_duration">
+        <item>@string/settings_item201</item>
+        <item>@string/settings_item202</item>
+        <item>@string/settings_item203</item>
+        <item>@string/settings_item204</item>
+        <item>@string/settings_item205</item>
+        <item>@string/settings_item206</item>
+    </string-array>
+    
     <string-array name="review_link">
         <item>@string/re_link1</item>
         <item>@string/re_link2</item>
