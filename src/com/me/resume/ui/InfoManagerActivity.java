@@ -279,6 +279,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 				cValues.put("worktimeEnd", map.get("worktimeEnd").get(i));
 				cValues.put("expectedsalary", map.get("expectedsalary").get(i));
 				cValues.put("workdesc", map.get("workdesc").get(i));
+				cValues.put("bgcolor", map.get("bgcolor").get(i));
 				cValues.put("createtime", map.get("createtime").get(i));
 				cValues.put("updatetime", map.get("updatetime").get(i));
 				queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);

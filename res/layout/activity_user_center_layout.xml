@@ -140,7 +140,6 @@
                 <View style="@style/line_padding10" />
 
                 <LinearLayout
-                    android:id="@+id/feedbackLayout"
                     style="@style/noraml_item" >
 
                     <TextView
@@ -163,7 +162,6 @@
                 <View style="@style/line_padding10" />
 
                 <LinearLayout
-                    android:id="@+id/feedbackLayout"
                     style="@style/noraml_item" >
 
                     <TextView
@@ -186,7 +184,6 @@
                 <View style="@style/line_padding10" />
 
                 <LinearLayout
-                    android:id="@+id/feedbackLayout"
                     style="@style/noraml_item" >
 
                     <TextView

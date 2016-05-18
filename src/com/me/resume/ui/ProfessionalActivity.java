@@ -108,7 +108,7 @@ public class ProfessionalActivity extends BaseActivity implements OnClickListene
 						if (flag == 2) {
 							Intent intent=new Intent();
 							intent.putExtra("category", data[1]);
-							intent.setAction(Constants.EDCATION);
+							intent.setAction(Constants.EDUCATION);
 			           		sendBroadcast(intent);
 							scrollToFinishActivity();
 						}else{

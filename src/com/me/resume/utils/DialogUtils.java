@@ -41,6 +41,7 @@ import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.tools.L;
+import com.me.resume.views.CustomProgressDialog;
 import com.me.resume.views.GrapeGridview;
 import com.me.resume.views.SwitchButton;
 import com.me.resume.views.SwitchButton.OnChangedListener;
@@ -131,19 +132,31 @@ public class DialogUtils {
 		mpDialog.setIndeterminate(false);// 设置进度条是否为不明确
 		mpDialog.setCancelable(true);// 设置进度条是否可以按退回键取消
 		mpDialog.setCanceledOnTouchOutside(false);
-//		mpDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-//			public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-//				if (keyCode == KeyEvent.KEYCODE_BACK) {
-//					if(thread != null){
-//						thread.interrupt();
-//						thread = null;
-//						loadDataFlag = false;
-//					}
-//				}
-//				return false;
-//			}
-//		});
 		return mpDialog;
+	}
+	
+	/**
+	 * 自定义Dialog
+	 */
+	public static void showProgress(Context context,String message) {
+		if (dialog != null) {
+			dialog.cancel();
+		}
+		dialog = new CustomProgressDialog(context,message);
+		dialog.setCancelable(true);
+		dialog.setCanceledOnTouchOutside(false);
+		dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+		public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+			if (keyCode == KeyEvent.KEYCODE_BACK) {
+//				if (dialog != null) {
+//					dialog.cancel();
+//				}
+				return false;
+			}
+			return false;
+		}
+		});
+		dialog.show();
 	}
 	
 	/**

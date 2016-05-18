@@ -4,7 +4,6 @@ import java.io.File;
 
 import android.os.Environment;
 
-import com.me.resume.MyApplication;
 import com.me.resume.utils.FileUtils;
 import com.whjz.android.text.CommonText;
 
@@ -57,37 +56,24 @@ public class Constants {
 	
 	public static final int ED_REQUEST_CODE = 4000;
 	
-	public static final String EDCATION = "com.me.resume.education";
 	
-	/**
-	 * 本地db文件  
-	 */
+	public static final String EDUCATION = "com.me.resume.education";
+	
+	// 本地db文件  
 	public static final String DATABASE_FILENAME = "myresume.db"; // DB文件 
-    public static final String DATABASE_PATH = "/data"  
-            + Environment.getDataDirectory().getAbsolutePath() + "/"  
-            + PACKAGENAME; // 获取存储位置地址  
+	
+	// 获取存储位置地址
+    public static final String DATABASE_PATH = File.separator + "data"  
+            + Environment.getDataDirectory().getAbsolutePath() + File.separator  + PACKAGENAME;   
     
+    // 用户头像名 apk下载地址
     public static String FILENAME="avatar.jpg";
+    
+    // apk下载路径
     public static String APKNAME="resume.apk";
-    
-//    public static File USERHEAD = new File(FileUtils.BASE_PATH + File.separator + MyApplication.USERNAME + File.separator + FILENAME); 
-    
     public static File APKPATH = new File(FileUtils.DOWNLOAD_APKPATH + File.separator + APKNAME); 
     
+    // apk下载地址
     public static String APKURLPATH = CommonText.endPoint + "/apk/" + APKNAME;
     
-    // 请求超时
- 	public static final int EXECUTE_TIMEOUT = -0X2000;
- 	
- 	// 请求网络异常
- 	public static final int EXECUTE_NETERROR = -0X1000;
- 	
- 	// 加载数据成功
- 	public static final int LOAD_DATA_SUCCESS = 0X1000;
- 	
- 	// 加载数据失败
- 	public static final int LOAD_DATA_ERROR = 0X8000;
- 	
- 	// 加载暂无数据
- 	public static final int LOAD_NO_DATA = -0X8000;
 }

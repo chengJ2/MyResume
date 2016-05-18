@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Handler;
 
@@ -15,7 +16,9 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.utils.Base64Util;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.FileUtils;
+import com.me.resume.utils.ImageUtils;
 import com.me.resume.utils.PreferenceUtil;
 import com.whjz.android.text.Info;
 import com.whjz.android.util.common.CommonUtil;
@@ -31,7 +34,7 @@ import com.whjz.android.util.interfa.BaseCommonUtil;
 public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 
 	private Context context;
-	private ProgressDialog pdialog;
+//	private ProgressDialog pdialog;
 	private DataSetList dataSetList = null;
 	private List<String> paramname = null;
 	private List<String> paramvalue = null;
@@ -39,6 +42,8 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 	private Handler mHandler;
 	
 	private String user_avator = "";
+	
+	private Bitmap bitmap = null;
 	
 	protected BaseCommonUtil baseCommon = new CommonUtil();;// 通用工具对象实例
 	
@@ -80,8 +85,12 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 						if(userID != null && !"0".equals(userID)){
 							user_avator = map.get("avator").get(0);
 							preferenceUtil.setPreferenceData("avator", user_avator);
-//							GlobalApplication.getInstance().setUserId(userID);
-//							GlobalApplication.getInstance().setUserAvatar(map.get("user_pic").get(0));
+							
+							// 删除已存在的头像
+							FileUtils.deleteFile(new File(MyApplication.USERAVATORPATH));
+//							mHandler.sendMessage(mHandler.obtainMessage(1, user_avator));
+							bitmap = ImageUtils.getURLBitmap(CommUtil.getHttpLink(user_avator));
+							
 							return 1;
 						}else{
 							return -3;
@@ -102,30 +111,24 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 	
 	protected void onPreExecute() {
 		super.onPreExecute();
-		pdialog = new ProgressDialog(context);
-		pdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);  //圆形进度条
-		pdialog.setMessage("正在提交，请稍后...");
-		pdialog.setIndeterminate(false);
-		pdialog.setCancelable(false);
-		pdialog.show();
+		DialogUtils.showProgress(context, CommUtil.getStrValue(context, R.string.upload_loading));
 	}
 	
 	@Override
 	protected void onPostExecute(Integer result) {
 		super.onPostExecute(result);
-		pdialog.dismiss();
+		DialogUtils.dismissDialog();
 		if (result == -1) {// 未联网
-			CommUtil.ToastMsg(context, context.getResources().getString(R.string.check_network));
+			CommUtil.ToastMsg(context, R.string.check_network);
 		} else if (result == -2) {// 读取服务器失败
-			CommUtil.ToastMsg(context, context.getResources().getString(R.string.m_failLoad));
+			CommUtil.ToastMsg(context, R.string.m_failLoad);
 		} else if(result == -3){
-			CommUtil.ToastMsg(context, context.getResources().getString(R.string.file_failLoad));
+			CommUtil.ToastMsg(context, R.string.file_failLoad);
 		}else if (result == 1) {
-			CommUtil.ToastMsg(context, context.getResources().getString(R.string.file_successLoad));
-			if(FileUtils.existsFile(MyApplication.USERAVATORPATH)){
-				new File(MyApplication.USERAVATORPATH).delete();
-        	}
-			mHandler.sendMessage(mHandler.obtainMessage(1, user_avator));
+			CommUtil.ToastMsg(context, R.string.file_successLoad);
+			if (bitmap != null) {
+				mHandler.sendMessage(mHandler.obtainMessage(2, bitmap));
+			}
 		}
 	}
 	

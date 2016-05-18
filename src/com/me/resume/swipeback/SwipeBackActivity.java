@@ -18,7 +18,7 @@ import android.view.View;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
-import com.me.resume.tools.L;
+import com.me.resume.comm.ResponseCode;
 import com.me.resume.utils.CommUtil;
 import com.whjz.android.text.Info;
 import com.whjz.android.util.common.CommonUtil;
@@ -284,24 +284,24 @@ public class SwipeBackActivity extends FragmentActivity implements
 			dataSetlist = baseCommon.selects(info.getUse(), info.getPass(),
 					procname, style, params, values);
 			if (isCancelled()) {
-				return Constants.LOAD_DATA_ERROR;
+				return ResponseCode.LOAD_DATA_ERROR;
 			}
 			if (!CommUtil.isNetworkAvailable(SwipeBackActivity.this)) {
-				return Constants.EXECUTE_NETERROR;
+				return ResponseCode.EXECUTE_NETERROR;
 			}
 			if (dataSetlist != null && dataSetlist.valueList.size() > 0) {
 				if (dataSetlist.valueList.get(0).equals("timeout")) {
-					return Constants.EXECUTE_TIMEOUT;
+					return ResponseCode.EXECUTE_TIMEOUT;
 				} else {
 					if (isLocalCache) {
 						dbUtil.deleteData(SwipeBackActivity.this, where);
 						dbUtil.insertDataSetList(SwipeBackActivity.this, tablename, dataSetlist);
 					}
 					map = dataSetlist.getMap();
-					return Constants.LOAD_DATA_SUCCESS;
+					return ResponseCode.LOAD_DATA_SUCCESS;
 				}
 			} else {
-				return Constants.LOAD_NO_DATA;
+				return ResponseCode.LOAD_NO_DATA;
 			}
 		}
 
@@ -311,13 +311,13 @@ public class SwipeBackActivity extends FragmentActivity implements
 			if (progressDialog != null) {
 				progressDialog.dismiss();
 			}
-			if (result == Constants.LOAD_NO_DATA || result == Constants.LOAD_DATA_ERROR) {
+			if (result == ResponseCode.LOAD_NO_DATA || result == ResponseCode.LOAD_DATA_ERROR) {
 				handlerData.error();
-			} else if (result == Constants.LOAD_DATA_SUCCESS) {
+			} else if (result == ResponseCode.LOAD_DATA_SUCCESS) {
 				handlerData.success(map);
-			} else if (result == Constants.EXECUTE_TIMEOUT) {
+			} else if (result == ResponseCode.EXECUTE_TIMEOUT) {
 				toastMsg(R.string.timeout_network);
-			} else if (result == Constants.EXECUTE_NETERROR) {
+			} else if (result == ResponseCode.EXECUTE_NETERROR) {
 				toastMsg(R.string.check_network);
 			}
 		}

@@ -47,11 +47,11 @@ public class FileUtils {
 	}
     
     /**
-	 * 获取缓存文件夹目录 如果不存在创建 否则则创建文件夹
+	 * 获取用户名目录存放用户信息
 	 * 
 	 * @return filePath
 	 */
-	public static String isExistsFilePath(Context context) {
+	public static String isExistsFilePath() {
 		String filePath = BASE_PATH + File.separator +  MyApplication.USERNAME;
 		File file = new File(filePath);
 		if (!file.exists()) {
@@ -61,9 +61,9 @@ public class FileUtils {
 	}
 	
 	/**
-	 * 获取缓存文件 如果不存在创建 否则则创建文件夹
-	 * 
-	 * @return filePath
+	 * 文件是否存在
+	 * @param path
+	 * @return boolean
 	 */
 	public static boolean existsFile(String path) {
 		File file = new File(path);
@@ -95,11 +95,11 @@ public class FileUtils {
 
 	/**
 	 * 创建临时下载根目录
-	 * @param dirName 指定的目录名
+	 * 
 	 * @return 返回创建的临时下载目录
 	 */
 	public static File createDownloadDir() {
-		File updateDir = new File(Environment.getExternalStorageDirectory(), DOWNLOAD_APKPATH);
+		File updateDir = new File(DOWNLOAD_APKPATH);
 		if (!updateDir.exists()) {
 			updateDir.mkdirs();
 		}

@@ -403,6 +403,22 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	private boolean isShow = false;
 	
 	/**
+	 * @Description: 执行同步操作
+	 */
+	private void actionAync(){
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				set2Msg(R.string.action_syncing);
+				syncData();
+			} else {
+				set3Msg(R.string.check_network);
+			}
+		} else {
+			set3Msg(R.string.action_login_head);
+		}
+	}
+	
+	/**
 	 * 同步本地库数据
 	 */
 	private void syncLocalData(){
@@ -414,23 +430,14 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 					new String[]{baId,
 					"realname","gender","brithday","joinworktime",
 					"phone","hometown","city","email","ismarry",
-					"nationality","license","workingabroad","politicalstatus","bgcolor"}, 
+					"nationality","license","workingabroad","politicalstatus"}, 
 					new String[]{uTokenId,
 					info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
 					info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
-					info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr,getCheckColor(checkColor)},2);
+					info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr},2);
 			if (updResult == 1) {
 				toastMsg(R.string.action_update_success);
-				if(!MyApplication.USERID.equals("0")){
-					if (CommUtil.isNetworkAvailable(self)) {
-						set2Msg(R.string.action_syncing);
-						syncData();
-					}else{
-						set3Msg(R.string.check_network);
-					}
-				}else{
-					set3Msg(R.string.action_login_head);
-				}
+				actionAync();
 			}else{
 				toastMsg(R.string.action_update_fail);
 			}
@@ -456,16 +463,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			if (queryResult) {
 				setAddBtnSrc(R.drawable.ic_btn_edit);
 				toastMsg(R.string.action_add_success);
-				if(!MyApplication.USERID.equals("0")){
-					if (CommUtil.isNetworkAvailable(self)) {
-						set2Msg(R.string.action_syncing);
-						syncData();
-					}else{
-						set3Msg(R.string.check_network);
-					}
-				}else{
-					set3Msg(R.string.action_login_head);
-				}
+				actionAync();
 			}
 		}
 	}

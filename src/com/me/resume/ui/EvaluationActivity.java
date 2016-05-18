@@ -89,7 +89,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		
 		findViews();
 		getEvData();
-		initViews();
+		setFeildValue();
 		
 	}
 	
@@ -114,7 +114,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 	
-	private void initViews(){
+	private void setFeildValue(){
 		if(getEvData()){
 			info_self_evaluation.setText(commMapArray.get("selfevaluation")[0]);
 			info_career_goal.setText(commMapArray.get("careergoal")[0]);
@@ -143,10 +143,12 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 					cValues.put("tokenId", UUIDGenerator.getKUUID());
 					cValues.put("userId", uTokenId);
 					cValues.put("selfevaluation", info_self_evaluationStr);
+					cValues.put("bgcolor", getCheckColor(checkColor));
 					cValues.put("careergoal", info_career_goalStr);
 					cValues.put("createtime",TimeUtils.getCurrentTimeInString());
 					queryResult = dbUtil.insertData(self,CommonText.EVALUATION, cValues);
 					if (queryResult) {
+						toastMsg(R.string.action_add_success);
 						if (getEvData()) {
 							actionAync();
 						}
@@ -155,7 +157,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.next:
-			startActivity(".ui.JobIntensionActivity",false);
+			startChildActivity("JobIntensionActivity",false);
 			break;
 		case R.id.right_icon_more:
 			DialogUtils.showTopMenuDialog(self, topLayout,0, mHandler);
@@ -166,8 +168,6 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
-	 * 
-	 * @Title:EvaluationActivity
 	 * @Description: 执行同步操作
 	 */
 	private void actionAync(){
@@ -260,7 +260,6 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 						// 更新本地数据
 						setDataFromServer(map);
 					}
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -291,6 +290,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				cValues.put("userId", map.get("userId").get(i));
 				cValues.put("selfevaluation", map.get("selfevaluation").get(i));
 				cValues.put("careergoal", map.get("careergoal").get(i));
+				cValues.put("bgcolor", map.get("bgcolor").get(i));
 				cValues.put("createtime", map.get("createtime").get(i));
 				cValues.put("updatetime", map.get("updatetime").get(i));
 				queryResult = dbUtil.insertData(self, CommonText.EVALUATION, cValues);
@@ -299,7 +299,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		
 		if (updResult == 1 || queryResult) {
 			set3Msg(R.string.action_sync_success);
-			initViews();
+			setFeildValue();
 		}
 	}
 	

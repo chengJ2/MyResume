@@ -152,6 +152,7 @@
      <string name="action_delete_fail">删除失败,请重试</string>
 
     <!-- UI dialog msg -->
+    <string name="upload_loading">正在更新,请稍后...</string>
     <string name="dialog_action_alert">您还没登录,创建的简历会保存到本地,若卸载APP或清除APP数据,将不会显示出您的简历信息,请先登录或继续操作！</string>
     <string name="dialog_action_cache_alert">该操作会清除您创建的简历信息,请确保数据已同步！</string>
     <string name="dialog_action_delete_alert">该操作会删除本地数据,确认删除吗？</string>

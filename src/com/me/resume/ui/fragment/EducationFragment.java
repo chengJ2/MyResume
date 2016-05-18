@@ -119,7 +119,7 @@ public class EducationFragment extends BaseFragment implements OnClickListener{
 		}
 		
 		IntentFilter filter = new IntentFilter();
-		filter.addAction(Constants.EDCATION);
+		filter.addAction(Constants.EDUCATION);
 		getActivity().registerReceiver(majornameReceiver, filter);
 	}
 

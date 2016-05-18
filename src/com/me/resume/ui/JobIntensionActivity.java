@@ -18,7 +18,7 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
+import com.me.resume.model.UUIDGenerator;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -31,15 +31,16 @@ import com.whjz.android.text.CommonText;
  * 
 * @ClassName: JobIntensionActivity 
 * @Description: 求职意向 
-* @author Comsys-WH1510032 
 * @date 2016/4/7 下午4:42:34 
 *
  */
 public class JobIntensionActivity extends BaseActivity implements OnClickListener{
+	
 	// 工作性质，工作点，职业,从事行业，薪资，状态
 	private TextView info_exp_workingproperty,info_expworkplace,info_expworkcareer,info_expworkindustry,info_expmonthlysalary,info_workingstate;
 	
-	private String jiId;
+	private String info_exp_workingpropertyStr,info_expworkplaceStr,info_expworkcareerStr; 
+	private String info_expworkindustryStr,info_expmonthlysalaryStr,info_workingstateStr;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -66,10 +67,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 							new String[]{uTokenId,String.valueOf(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						if(!MyApplication.USERID.equals("0")){
-							set2Msg(R.string.action_syncing);
-							syncData();
-						}
+						actionAync();
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -81,8 +79,11 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				set2Msg(R.string.action_syncing);
-				syncData();
+				if (actionFlag == 0) {
+					syncData(3);
+				}else{
+					actionAync();
+				}
 				break;
 			case OnTopMenu.MSG_MENU31:
 				toastMsg(R.string.action_login_head);
@@ -134,82 +135,99 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		setfabLayoutVisible(View.VISIBLE);
 		setEditBtnVisible(View.GONE);
 		
+		setFeildValue();
+	}
+
+	
+	private boolean getJobIntensionData(){
 		 queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = '" + uTokenId + "' order by id desc limit 1";
 		 commMapArray = dbUtil.queryData(self, queryWhere);
          if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+        	 tokenId = commMapArray.get("tokenId")[0];
         	 setAddBtnSrc(R.drawable.ic_btn_edit);
-        	 jiId = commMapArray.get("id")[0];
-        	 info_exp_workingproperty.setText(commMapArray.get("expworkingproperty")[0]);
-        	 info_expworkplace.setText(commMapArray.get("expdworkplace")[0]);
-        	 info_expworkindustry.setText(commMapArray.get("expworkindustry")[0]);
-        	 info_expmonthlysalary.setText(commMapArray.get("expmonthlysalary")[0]);
-        	 info_workingstate.setText(commMapArray.get("workingstate")[0]);
-        	 info_expworkcareer.setText(commMapArray.get("expworkcareer")[0]);
+        	 return true;
          }else{
         	 setAddBtnSrc(R.drawable.ic_btn_add);
+        	 return false;
          }
 	}
-
-	private String info_exp_workingpropertyStr,info_expworkplaceStr,info_expworkcareerStr; 
-	private String info_expworkindustryStr,info_expmonthlysalaryStr,info_workingstateStr;
+	
+	
+	private void setFeildValue(){
+		if(getJobIntensionData()){
+			 info_exp_workingproperty.setText(commMapArray.get("expworkingproperty")[0]);
+	    	 info_expworkplace.setText(commMapArray.get("expdworkplace")[0]);
+	    	 info_expworkindustry.setText(commMapArray.get("expworkindustry")[0]);
+	    	 info_expmonthlysalary.setText(commMapArray.get("expmonthlysalary")[0]);
+	    	 info_workingstate.setText(commMapArray.get("workingstate")[0]);
+	    	 info_expworkcareer.setText(commMapArray.get("expworkcareer")[0]);
+		}
+	}
+	
+	/**
+	 * 
+	 * @Title:EvaluationActivity
+	 * @Description: 执行同步操作
+	 */
+	private void actionAync(){
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				set2Msg(R.string.action_syncing);
+				syncData(1);
+			} else {
+				set3Msg(R.string.check_network);
+			}
+		} else {
+			set3Msg(R.string.action_login_head);
+		}
+	}
 	
 	@Override
 	public void onClick(View v) {
+		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.save:
 			getFeildValue();
-			
 			if(judgeFeild()){
-				queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = '" + uTokenId + "' order by id desc limit 1";
-				 commMapArray = dbUtil.queryData(self, queryWhere);
-		         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-		        	jiId = commMapArray.get("id")[0];
+				if(getJobIntensionData()){
+					actionFlag = 2;
 					updResult = dbUtil.updateData(self, CommonText.JOBINTENSION, 
-							new String[]{jiId,"expworkingproperty","expdworkplace","expworkindustry","expworkcareer",
-											  "expmonthlysalary","workingstate"}, 
+							new String[]{tokenId,"expworkingproperty","expdworkplace","expworkindustry","expworkcareer",
+											  "expmonthlysalary","workingstate","updatetime"}, 
 							new String[]{uTokenId,info_exp_workingpropertyStr,info_expworkplaceStr,info_expworkindustryStr,
-											info_expworkcareerStr,info_expmonthlysalaryStr,info_workingstateStr},2);
+											info_expworkcareerStr,info_expmonthlysalaryStr,info_workingstateStr,TimeUtils.getCurrentTimeInString()},3);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						if(!MyApplication.USERID.equals("0")){
-							set2Msg(R.string.action_syncing);
-							syncData();
-						}
+						actionAync();
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
-		         }else{
-		        	ContentValues cValues = new ContentValues();
-		 			cValues.put("userId", uTokenId);
+				}else{
+					actionFlag = 3;
+					ContentValues cValues = new ContentValues();
+					cValues.put("tokenId", UUIDGenerator.getKUUID());
+					cValues.put("userId", uTokenId);
 		 			cValues.put("expworkingproperty", info_exp_workingpropertyStr);
 		 			cValues.put("expdworkplace", info_expworkplaceStr);
 		 			cValues.put("expworkindustry", info_expworkindustryStr);
 		 			cValues.put("expworkcareer", info_expworkcareerStr);
 		 			cValues.put("expmonthlysalary", info_expmonthlysalaryStr);
 		 			cValues.put("workingstate", info_workingstateStr);
+		 			cValues.put("bgcolor", getCheckColor(checkColor));
 		 			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 		 			
 		 			queryResult = dbUtil.insertData(self, CommonText.JOBINTENSION, cValues);
 		 			if(queryResult){
 		 				toastMsg(R.string.action_add_success);
-		 				setAddBtnSrc(R.drawable.ic_btn_edit);
-		 				if(!MyApplication.USERID.equals("0")){
-							set2Msg(R.string.action_syncing);
-							syncData();
-						}
+		 				if(getJobIntensionData()){
+		 					actionAync();
+		 				}
 		 			}
-		         }
+				}
 			}
-			 
 			break;
 		case R.id.next:
-			startActivity(".ui.EducationActivity",false);
-			break;
-		case R.id.left_lable:
-			scrollToFinishActivity();
-			break;
-		case R.id.right_icon:
-			startActivity(".MainActivity",false);
+			startChildActivity("EducationActivity",false);
 			break;
 		case R.id.info_exp_workingproperty:
 			whichTab = 1;
@@ -221,11 +239,11 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			break;
 		case R.id.info_expworkplace:
 			ActivityUtils.startActivityForResult(self, 
-					Constants.PACKAGENAME + ".ui.AddressActivity", false, Constants.JI_REQUEST_CODE2);
+					Constants.PACKAGENAMECHILD + "AddressActivity", false, Constants.JI_REQUEST_CODE2);
 			break;
 		case R.id.info_expworkindustry:
 			ActivityUtils.startActivityForResult(self, 
-					Constants.PACKAGENAME + ".ui.IndustryTypeActivity", false, Constants.JI_REQUEST_CODE);
+					Constants.PACKAGENAMECHILD + "IndustryTypeActivity", false, Constants.JI_REQUEST_CODE);
 			break;
 		case R.id.info_expmonthlysalary:
 			whichTab = 4;
@@ -303,26 +321,34 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	 * 
 	 * @Description: 数据请求是否已同步
 	 */
-	private void syncData(){
+	private void syncData(final int style){
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
 		params.add("p_userId");
 		values.add(uTokenId);
 		
-		requestData("pro_get_jobintension", 1, params, values, new HandlerData() {
+		requestData("pro_get_jobintension", style, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				runOnUiThread(R.string.action_sync_fail);
+				if (style == 1) {
+					syncRun("1",2);
+				}else{
+					runOnUiThread(R.string.action_sync_success);
+				}
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					String p_jiId = map.get("id").get(0);
-					if (map.get("userId").get(0).equals(uTokenId)) {
-						syncRun(p_jiId,3);
+					if (style == 1) {
+						tokenId = map.get("tokenId").get(0);
+						if (map.get("userId").get(0).equals(uTokenId)) {
+							syncRun(tokenId,3);
+						}else{
+							syncRun("1",2);
+						}
 					}else{
-						syncRun("1",2);
+						setDataFromServer(map);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -333,16 +359,63 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	
 	
 	/**
+	 * 更新本地数据
+	 * @param map
+	 */
+	private void setDataFromServer(Map<String, List<String>> map){
+		queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = '" + uTokenId + "' limit 1";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			info_exp_workingpropertyStr= map.get("expworkingproperty").get(0);
+			info_expworkplaceStr= map.get("expdworkplace").get(0);
+			info_expworkcareerStr= map.get("expworkcareer").get(0);; 
+			info_expworkindustryStr= map.get("expworkindustry").get(0);
+			info_expmonthlysalaryStr= map.get("expmonthlysalary").get(0);
+			info_workingstateStr= map.get("workingstate").get(0);
+			
+			updResult = dbUtil.updateData(self, CommonText.JOBINTENSION, 
+					new String[]{tokenId,"expworkingproperty","expdworkplace","expworkindustry","expworkcareer",
+									  "expmonthlysalary","workingstate","updatetime"}, 
+					new String[]{uTokenId,info_exp_workingpropertyStr,info_expworkplaceStr,info_expworkindustryStr,
+									info_expworkcareerStr,info_expmonthlysalaryStr,info_workingstateStr,TimeUtils.getCurrentTimeInString()},3);
+		}else{
+			int size = map.get("userId").size();
+			for (int i = 0; i < size; i++) {
+				ContentValues cValues = new ContentValues();
+				cValues.put("tokenId", map.get("tokenId").get(i));
+				cValues.put("userId", map.get("userId").get(i));
+				cValues.put("expworkingproperty", map.get("expworkingproperty").get(i));
+				cValues.put("expdworkplace", map.get("expdworkplace").get(i));
+				cValues.put("expworkindustry", map.get("expworkindustry").get(i));
+				cValues.put("expworkcareer", map.get("expworkcareer").get(i));
+				cValues.put("expmonthlysalary", map.get("expmonthlysalary").get(i));
+				cValues.put("workingstate", map.get("workingstate").get(i));
+				cValues.put("bgcolor", map.get("bgcolor").get(i));
+				cValues.put("createtime", map.get("createtime").get(i));
+				cValues.put("updatetime", map.get("updatetime").get(i));
+				queryResult = dbUtil.insertData(self, CommonText.EVALUATION, cValues);
+			}
+		}
+		
+		if (updResult == 1 || queryResult) {
+			set3Msg(R.string.action_sync_success);
+			setFeildValue();
+		}
+	}
+	
+	
+	/**
 	 * 
 	 * @Description: 同步数据
 	 * @author Comsys-WH1510032
 	 */
 	private void syncRun(String jiId,int style){ 
 		getFeildValue();
+		
 		if(judgeFeild()){
 			List<String> params = new ArrayList<String>();
 			List<String> values = new ArrayList<String>();
-			params.add("p_joId");
+			params.add("p_tokenId");
 			params.add("p_userId");
 			params.add("p_expworkingproperty");
 			params.add("p_expdworkplace");
@@ -352,7 +425,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			params.add("p_workingstate");
 			params.add("p_bgcolor");
 			
-			values.add(jiId);
+			values.add(tokenId);
 			values.add(uTokenId);
 			values.add(info_exp_workingpropertyStr);
 			values.add(info_expworkplaceStr);
@@ -362,7 +435,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			values.add(info_workingstateStr);
 			values.add(getCheckColor(checkColor));
 			
-			requestData("pro_jobintension", style, params, values, new HandlerData() {
+			requestData("pro_set_jobintension", style, params, values, new HandlerData() {
 				@Override
 				public void error() {
 					runOnUiThread(R.string.action_sync_fail);

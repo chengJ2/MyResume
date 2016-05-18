@@ -50,13 +50,12 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
-			L.d("==what=="+msg.what + " --->>>"+msg.obj);
 			switch (msg.what) {
-			case 1:
+			/*case 1:
 				if(msg.obj != null){
 					ImageUtils.getURLImage(mHandler,CommUtil.getHttpLink((String)msg.obj),2);
 				}
-                break;
+                break;*/
             case 2:
             	if(msg.obj!= null){
         			try {
@@ -127,7 +126,8 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	private void initViews(){
 		setTopTitle(R.string.personal_center);
 		setMsgHide();
-		setRightIconVisible(View.GONE);
+		setRightIconVisible(View.VISIBLE);
+		setRightIcon(R.drawable.icon_setting);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		MyApplication.USERNAME = preferenceUtil.getPreferenceData("username", "");
@@ -195,12 +195,13 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.right_icon:
+			startChildActivity("SettingActivity", false);
 			break;
 		case R.id.user_info_avatar:
 			DialogUtils.showPhotoPathDialog(self, user_info_avatar, mHandler);
 			break;
 		case R.id.llout01:
-			startActivity(".ui.BaseInfoActivity",false);
+			startChildActivity("BaseInfoActivity",false);
 			break;
 		case R.id.mycollection:
 			// TODO
@@ -209,7 +210,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			// TODO
 			break;
 		case R.id.review_resume:
-			startActivity(".MainActivity",false);
+			startActivity(Constants.MAINACTIVITY,false);
 			break;
 		default:
 			break;

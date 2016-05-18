@@ -130,7 +130,7 @@ public class ImageUtils {
 	 * @param filename
 	 */
 	public static void saveImage(Context context, Bitmap bitmap,String filename){
-		String filePath = FileUtils.isExistsFilePath(context);
+		String filePath = FileUtils.isExistsFilePath();
 		File file = new File(filePath, filename);
 		FileOutputStream fos = null;
 		try {
@@ -152,28 +152,36 @@ public class ImageUtils {
 		}
 	}
 
-
+	/**
+	 * 获取下载的图片bitmap发送消息
+	 * @param handler
+	 * @param imageUrl
+	 * @param what
+	 */
 	public static void getURLImage(final Handler handler,
 			final String imageUrl, final int what) {
 		new Thread() {
 			public void run() {
 				Bitmap bitmap = ImageUtils.getURLBitmap(imageUrl);
-				Message msg = new Message();
-				msg.what = what;
-				msg.obj = bitmap;
-				handler.sendMessage(msg);
+				if (bitmap != null) {
+					handler.sendMessage(handler.obtainMessage(what, bitmap));
+				}
 			}
 		}.start();
 	}
 
+	/**
+	 * 下载图片转成bitmap
+	 * @param imageUrl
+	 * @return Bitmap
+	 */
 	public static Bitmap getURLBitmap(String imageUrl) {
 		HttpGet httpRequest = new HttpGet(imageUrl);
 		HttpClient httpclient = new DefaultHttpClient();
 		Bitmap bitmap = null;
 		try {
 			HttpResponse httpResponse = httpclient.execute(httpRequest);
-			// System.out.println("SC_OK:"+httpResponse.getStatusLine().getStatusCode()
-			// );
+//			L.d("SC_OK:" + httpResponse.getStatusLine().getStatusCode());
 			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				// 取得相关信息 取得HttpEntiy
 				HttpEntity httpEntity = httpResponse.getEntity();
