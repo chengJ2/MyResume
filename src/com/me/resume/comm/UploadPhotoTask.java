@@ -1,5 +1,6 @@
 package com.me.resume.comm;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.utils.Base64Util;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.FileUtils;
 import com.me.resume.utils.PreferenceUtil;
 import com.whjz.android.text.Info;
 import com.whjz.android.util.common.CommonUtil;
@@ -58,7 +60,7 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 		}else if(arg0[0]!=null){
 			paramname = new ArrayList<String>();
 			paramvalue = new ArrayList<String>();
-			MyLog.d("photoPath:"+arg0[0].toString()+"---USERID--->"+MyApplication.userId +"-->"+Base64Util.getPath());
+			MyLog.d("photoPath:"+arg0[0].toString()+"---USERID--->"+MyApplication.USERID +"-->"+Base64Util.getPath());
 			
 			paramname.add("file");
 			paramname.add("p_avator");
@@ -120,8 +122,8 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 			CommUtil.ToastMsg(context, context.getResources().getString(R.string.file_failLoad));
 		}else if (result == 1) {
 			CommUtil.ToastMsg(context, context.getResources().getString(R.string.file_successLoad));
-			if(Constants.USERHEAD.exists()){
-				Constants.USERHEAD.delete();
+			if(FileUtils.existsFile(MyApplication.USERAVATORPATH)){
+				new File(MyApplication.USERAVATORPATH).delete();
         	}
 			mHandler.sendMessage(mHandler.obtainMessage(1, user_avator));
 		}

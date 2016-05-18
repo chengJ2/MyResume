@@ -73,6 +73,9 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	// 用户没有登录注册时获取UUID
 	public static String uTokenId = "0";
 	
+	// 标示用户本地的id
+	protected String tokenId = "";
+	
 	protected int updResult = -1;
 
 	protected boolean queryResult = false;
@@ -90,6 +93,13 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	protected Integer checkColor = 0;
 	
 	protected String deviceID = "";// 设备标识码
+	
+	/**
+	 * 操作类型 
+	 * 0:从服务器同步数据到本地
+	 * 1：add 2：update 3：delete
+	 */
+	protected int actionFlag = 0; 
 	
 	private static BaseActivity mInstance;
 	

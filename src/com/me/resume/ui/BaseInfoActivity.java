@@ -123,7 +123,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 								new String[]{uTokenId,String.valueOf(checkColor)},1);
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
-							if (!MyApplication.userId.equals("0")) {
+							if (!MyApplication.USERID.equals("0")) {
 								if (CommUtil.isNetworkAvailable(self)) {
 									set2Msg(R.string.action_syncing);
 									syncData();
@@ -150,7 +150,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				break;
 			case OnTopMenu.MSG_MENU3:
 				if (commMapArray != null) {
-					if (!MyApplication.userId.equals("0")) {
+					if (!MyApplication.USERID.equals("0")) {
 						if (CommUtil.isNetworkAvailable(self)) {
 							set2Msg(R.string.action_syncing);
 							syncData();
@@ -386,9 +386,11 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		case R.id.arrow_updown:
 			if (isShow) {
 				isShow = false;
+				arrow_updown.setImageResource(R.drawable.icon_arrow_up);
 				uselessLayoyut.setVisibility(View.VISIBLE);
 			}else{
 				isShow = true;
+				arrow_updown.setImageResource(R.drawable.icon_arrow_down);
 				uselessLayoyut.setVisibility(View.GONE);
 			}
 			break;
@@ -419,7 +421,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 					info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr,getCheckColor(checkColor)},2);
 			if (updResult == 1) {
 				toastMsg(R.string.action_update_success);
-				if(!MyApplication.userId.equals("0")){
+				if(!MyApplication.USERID.equals("0")){
 					if (CommUtil.isNetworkAvailable(self)) {
 						set2Msg(R.string.action_syncing);
 						syncData();
@@ -454,7 +456,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			if (queryResult) {
 				setAddBtnSrc(R.drawable.ic_btn_edit);
 				toastMsg(R.string.action_add_success);
-				if(!MyApplication.userId.equals("0")){
+				if(!MyApplication.USERID.equals("0")){
 					if (CommUtil.isNetworkAvailable(self)) {
 						set2Msg(R.string.action_syncing);
 						syncData();

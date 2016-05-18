@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
+import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
@@ -59,8 +60,10 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
             case 2:
             	if(msg.obj!= null){
         			try {
+        				MyApplication.USERNAME = preferenceUtil.getPreferenceData("username", "");
+        				MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator + MyApplication.USERNAME + File.separator + Constants.FILENAME;
         				ImageUtils.saveImage(self,(Bitmap)msg.obj,Constants.FILENAME);
-        				Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.USERHEAD.toString());
+        				Bitmap bitmap = ImageUtils.getLoacalBitmap(MyApplication.USERAVATORPATH.toString());
         				if (bitmap != null) {
         					user_info_avatar.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
         				}
@@ -127,8 +130,10 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		setRightIconVisible(View.GONE);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
+		MyApplication.USERNAME = preferenceUtil.getPreferenceData("username", "");
+		MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator + MyApplication.USERNAME + File.separator + Constants.FILENAME;
 		
-		Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.USERHEAD.toString());
+		Bitmap bitmap = ImageUtils.getLoacalBitmap(MyApplication.USERAVATORPATH);
 		String avatorStr= preferenceUtil.getPreferenceData("avator", "");
 		if (bitmap != null && RegexUtil.checkNotNull(avatorStr)) {
 			user_info_avatar.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));

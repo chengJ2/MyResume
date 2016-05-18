@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center|left"
-                android:padding="5dip"
+                android:padding="@dimen/margin_8"
                 android:text="@string/ev_info_default_2"
                 android:textColor="@color/grey_10"
                 android:textSize="@dimen/micro_text_size" />

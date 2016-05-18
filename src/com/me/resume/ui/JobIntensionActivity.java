@@ -66,7 +66,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 							new String[]{uTokenId,String.valueOf(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						if(!MyApplication.userId.equals("0")){
+						if(!MyApplication.USERID.equals("0")){
 							set2Msg(R.string.action_syncing);
 							syncData();
 						}
@@ -171,7 +171,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 											info_expworkcareerStr,info_expmonthlysalaryStr,info_workingstateStr},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						if(!MyApplication.userId.equals("0")){
+						if(!MyApplication.USERID.equals("0")){
 							set2Msg(R.string.action_syncing);
 							syncData();
 						}
@@ -193,7 +193,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		 			if(queryResult){
 		 				toastMsg(R.string.action_add_success);
 		 				setAddBtnSrc(R.drawable.ic_btn_edit);
-		 				if(!MyApplication.userId.equals("0")){
+		 				if(!MyApplication.USERID.equals("0")){
 							set2Msg(R.string.action_syncing);
 							syncData();
 						}

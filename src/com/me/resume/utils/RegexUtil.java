@@ -11,6 +11,7 @@ public class RegexUtil {
 		else
 			return false;
 	}
+	
 
 	// 非空字符长度限制
 	public static boolean checkStringLength(String s, int length) {

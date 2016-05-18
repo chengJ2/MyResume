@@ -45,7 +45,17 @@ public class MyApplication extends Application {
    /**
     * 判断用户是否注册登录成功
     */
-   public static String userId = "0";
+   public static String USERID = "0";
+   
+   /**
+    * 用户名
+    */
+   public static String USERNAME = "";
+   
+   /**
+    * 用户名头像
+    */
+   public static String USERAVATORPATH = "";
    
    /**
     * 栏目id

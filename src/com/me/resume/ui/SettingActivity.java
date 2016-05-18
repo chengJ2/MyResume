@@ -1,5 +1,6 @@
 package com.me.resume.ui;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +29,7 @@ import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.DataCleanManager;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
+import com.me.resume.utils.FileUtils;
 import com.me.resume.utils.PreferenceUtil;
 import com.me.resume.views.SwitchButton;
 import com.me.resume.views.SwitchButton.OnChangedListener;
@@ -253,7 +255,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			startChildActivity("FeedBackActivity", false);
 			break;
 		case R.id.logoutLayout:
-			if (!MyApplication.userId.equals("0")) {
+			if (!MyApplication.USERID.equals("0")) {
 				actionLogout();
 			}else{
 				toastMsg(R.string.action_no_login);
@@ -313,9 +315,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 						preferenceUtil.setPreferenceData("avator", "");
 						preferenceUtil.setPreferenceData("useId","0");
 						preferenceUtil.setPreferenceData("isregister", false);
-						MyApplication.userId = "0";
-						if(Constants.USERHEAD.exists()){
-							Constants.USERHEAD.delete();
+						MyApplication.USERID = "0";
+						if(FileUtils.existsFile(MyApplication.USERAVATORPATH)){
+							new File(MyApplication.USERAVATORPATH).delete();
 			        	}
 						toastMsg(R.string.action_logout_success);
 					}

@@ -4,6 +4,7 @@ import java.io.File;
 
 import android.os.Environment;
 
+import com.me.resume.MyApplication;
 import com.me.resume.utils.FileUtils;
 import com.whjz.android.text.CommonText;
 
@@ -66,10 +67,10 @@ public class Constants {
             + Environment.getDataDirectory().getAbsolutePath() + "/"  
             + PACKAGENAME; // 获取存储位置地址  
     
-    public static String FILENAME="Avatar.jpg";
+    public static String FILENAME="avatar.jpg";
     public static String APKNAME="resume.apk";
     
-    public static File USERHEAD = new File(FileUtils.BASE_PATH + File.separator + FILENAME); 
+//    public static File USERHEAD = new File(FileUtils.BASE_PATH + File.separator + MyApplication.USERNAME + File.separator + FILENAME); 
     
     public static File APKPATH = new File(FileUtils.DOWNLOAD_APKPATH + File.separator + APKNAME); 
     

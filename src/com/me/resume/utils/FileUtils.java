@@ -5,6 +5,7 @@ import java.io.File;
 import android.content.Context;
 import android.os.Environment;
 
+import com.me.resume.MyApplication;
 import com.me.resume.comm.Constants;
 
 /**
@@ -51,12 +52,25 @@ public class FileUtils {
 	 * @return filePath
 	 */
 	public static String isExistsFilePath(Context context) {
-		String filePath = BASE_PATH;
+		String filePath = BASE_PATH + File.separator +  MyApplication.USERNAME;
 		File file = new File(filePath);
 		if (!file.exists()) {
 			file.mkdirs();
 		}
 		return filePath;
+	}
+	
+	/**
+	 * 获取缓存文件 如果不存在创建 否则则创建文件夹
+	 * 
+	 * @return filePath
+	 */
+	public static boolean existsFile(String path) {
+		File file = new File(path);
+		if (file.exists()) {
+			return true;
+		}
+		return false;
 	}
     
 	/**

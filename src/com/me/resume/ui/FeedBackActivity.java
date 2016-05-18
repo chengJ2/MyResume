@@ -126,7 +126,7 @@ public class FeedBackActivity extends BaseActivity {
 		
 		values.add(feeddescStr);
 		values.add(feedcontactStr);
-		values.add(MyApplication.userId);
+		values.add(MyApplication.USERID);
 		
 		requestData("pro_set_feedback", 1, params, values, new HandlerData() {
 			@Override

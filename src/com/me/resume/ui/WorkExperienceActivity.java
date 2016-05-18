@@ -86,16 +86,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 							new String[]{uTokenId,String.valueOf(checkColor)},1);
 					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
-						if(!MyApplication.userId.equals("0")){
-							if (CommUtil.isNetworkAvailable(self)) {
-								set2Msg(R.string.action_syncing);
-								syncData();
-							}else{
-								set3Msg(R.string.check_network);
-							}
-						}else{
-							set3Msg(R.string.action_login_head);
-						}
+						actionAync();
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -107,15 +98,10 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if(!MyApplication.userId.equals("0")){
-					if (CommUtil.isNetworkAvailable(self)) {
-						set2Msg(R.string.action_syncing);
-						syncData();
-					}else{
-						set3Msg(R.string.check_network);
-					}
+				if (add_insert) { // 同步新的info
+					actionAync();
 				}else{
-					set3Msg(R.string.action_login_head);
+					
 				}
 				break;
 			case OnTopMenu.MSG_MENU31:
@@ -139,15 +125,12 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		boayLayout.addView(v);
 		
 		findViews();
-		
-		initViews();
 	}
 	
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
-		
+		initViews();
 	}
 	
 	private void findViews(){
@@ -179,15 +162,12 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		info_workdescdetail.addTextChangedListener(this);
 	}
 	
-	private String weId = "";
 	
 	private void initViews() {
 		if (getWEData()) {
 			setFeildValue();
 		}
-
 	}
-	
 	private void setFeildValue(){
 		info_industryclassification.setText(commMapArray.get("industryclassification")[0]);
 		info_startworktime.setText(commMapArray.get("worktimestart")[0]);
@@ -213,12 +193,12 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 					+ " where userId = '" + uTokenId + "' order by id desc limit 1";
 		}else{
 			queryWhere = "select * from " + CommonText.WORKEXPERIENCE
-					+ " where userId = '" + uTokenId + "' and weToken = "+ MyApplication.KID +" limit 1";
+					+ " where userId = '" + uTokenId + "' and tokenId = "+ MyApplication.KID +" limit 1";
 		}
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			setEditBtnVisible(View.VISIBLE);
-			weId = commMapArray.get("weToken")[0];
+			tokenId = commMapArray.get("tokenId")[0];
 			return true;
 		} else {
 			setEditBtnVisible(View.GONE);
@@ -226,16 +206,18 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		}
 	}
 	
+	private boolean add_insert = false;
 	
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.save:
+			add_insert = true;
 			getFeildValue();
 			if(judgeFeild()){
 				ContentValues cValues = new ContentValues();
-				cValues.put("weToken", UUIDGenerator.getUUID());
+				cValues.put("tokenId", UUIDGenerator.getKUUID());
 				cValues.put("userId", uTokenId);
 				cValues.put("companyname", info_companynameStr);
 				cValues.put("companynature", info_companynatureStr);
@@ -253,42 +235,25 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 					setEditBtnVisible(View.VISIBLE);
 					
 					if(getWEData()){
-						if(!MyApplication.userId.equals("0")){
-							if (CommUtil.isNetworkAvailable(self)) {
-								set2Msg(R.string.action_syncing);
-								syncData();
-							}else{
-								set3Msg(R.string.check_network);
-							}
-						}else{
-							set3Msg(R.string.action_login_head);
-						}
+						actionAync();
 					}
 				}
 			}
 			
 			break;
 		case R.id.edit:
+			add_insert = true;
 			getFeildValue();
 			if(judgeFeild()){
 				if(getWEData()){
 					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
-							new String[]{weId,"companyname","companynature","companyscale","industryclassification",
+							new String[]{tokenId,"companyname","companynature","companyscale","industryclassification",
 											  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc","updatetime"}, 
 							new String[]{uTokenId,info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
-										info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr,TimeUtils.getCurrentTimeInString()},2);
+										info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr,TimeUtils.getCurrentTimeInString()},3);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						if(!MyApplication.userId.equals("0")){
-							if (CommUtil.isNetworkAvailable(self)) {
-								set2Msg(R.string.action_syncing);
-								syncData();
-							}else{
-								set3Msg(R.string.check_network);
-							}
-						}else{
-							set3Msg(R.string.action_login_head);
-						}
+						actionAync();
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -336,8 +301,24 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	
 	/**
 	 * 
+	 * @Description: 执行同步操作
+	 */
+	private void actionAync(){
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				set2Msg(R.string.action_syncing);
+				syncData();
+			} else {
+				set3Msg(R.string.check_network);
+			}
+		} else {
+			set3Msg(R.string.action_login_head);
+		}
+	}
+	
+	/**
+	 * 
 	 * @Description: 获取界面字段值
-	 * @author Comsys-WH1510032
 	 */
 	private void getFeildValue(){
 		info_companynameStr = CommUtil.getEditTextValue(info_companyname);
@@ -406,21 +387,21 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
-		params.add("p_weId");
+		params.add("p_tokenId");
 		params.add("p_userId");
-		values.add(weId);
+		values.add(tokenId);
 		values.add(uTokenId);
 		requestData("pro_get_workexpericnce", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				syncRun(weId,2);
+				syncRun(tokenId,2);
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					String p_weId = map.get("weId").get(0);
+					String p_tokenId = map.get("tokenId").get(0);
 					if (map.get("userId").get(0).equals(uTokenId)) {
-						syncRun(p_weId,3);
+						syncRun(p_tokenId,3);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -435,13 +416,13 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 * @Description: 同步数据
 	 * @author Comsys-WH1510032
 	 */
-	private void syncRun(String weId,int style){ 
+	private void syncRun(String tokenId,int style){ 
 		getFeildValue();
 		
 		if(judgeFeild()){
 			List<String> params = new ArrayList<String>();
 			List<String> values = new ArrayList<String>();
-			params.add("p_weId");
+			params.add("p_tokenId");
 			params.add("p_userId");
 			params.add("p_companyname");
 			params.add("p_industryclassification");
@@ -454,7 +435,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			params.add("p_companyscale");
 			params.add("p_bgcolor");
 			
-			values.add(weId);
+			values.add(tokenId);
 			values.add(uTokenId);
 			values.add(info_companynameStr);
 			values.add(info_industryclassificationStr);
@@ -467,7 +448,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			values.add(info_companyscaleStr);
 			values.add(getCheckColor(checkColor));
 			
-			requestData("pro_workexpericnce", style, params, values, new HandlerData() {
+			requestData("pro_set_workexpericnce", style, params, values, new HandlerData() {
 				@Override
 				public void error() {
 					runOnUiThread(R.string.action_sync_fail);
@@ -477,7 +458,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 					try {
 						if (map.get("msg").get(0).equals("200")) {
 							runOnUiThread(R.string.action_sync_success);
-							
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -516,10 +496,10 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
         		 String weId = data.getStringExtra("weId");
         		 MyApplication.KID = weId;
         		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE
-     					+ " where userId = '" + uTokenId + "' and weToken = "+ weId +" limit 1";
+     					+ " where userId = '" + uTokenId + "' and tokenId = "+ weId +" limit 1";
         		 commMapArray = dbUtil.queryData(self, queryWhere);
           		 if (commMapArray != null && commMapArray.get("userId").length > 0) {
-          			weId = commMapArray.get("weToken")[0];
+          			weId = commMapArray.get("tokenId")[0];
           			setFeildValue();
                  }
      		}

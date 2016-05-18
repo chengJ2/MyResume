@@ -266,12 +266,14 @@
 
 
     <!-- 自我评价 -->
-    <string name="ev_info_default_1">对自己做一个简短评价，简明扼要地描述您的职业优势，让用人单位快速地了解您！</string>
-    <string name="ev_info_default_2">填写文字在100个字以上评定等级，少于不计算，内容越详细，等级越高!</string>
+    <string name="ev_info_default_1">对自己做一个简短评价,简明扼要地描述您的职业优势,让用人单位快速地了解您!</string>
+    <string name="ev_info_default_2">请填写内容在1000字以内!</string>
     <string name="ev_info_self_evaluation">自我评价</string>
     <string name="ev_info_input_self_evaluation">请输入自我评价</string>
     <string name="ev_info_career_goal">职业目标</string>
     <string name="ev_info_input_career_goal">请输入职业目标</string>
+    <string name="ev_info_self_evaluation_length">自我评价不能超过1000字</string>
+    <string name="ev_info_career_goal_length">职业目标不能超过1000字</string>
     <!-- 自我评价 -->
 
 

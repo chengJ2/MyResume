@@ -161,7 +161,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 					
 					@Override
 					public void onClick(View view) {
-						if (!MyApplication.userId.equals("0")) {
+						if (!MyApplication.USERID.equals("0")) {
 							toastMsg(R.string.action_login_head);
 						}
 					}

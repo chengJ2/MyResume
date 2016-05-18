@@ -1,5 +1,6 @@
 package com.me.resume.ui;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
+import com.me.resume.utils.FileUtils;
 import com.me.resume.utils.ImageUtils;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
@@ -77,7 +79,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
             	if(msg.obj!= null){
         			try {
         				ImageUtils.saveImage(self,(Bitmap)msg.obj,Constants.FILENAME);
-        				Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.USERHEAD.toString());
+        				MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator + MyApplication.USERNAME + File.separator + Constants.FILENAME;
+        				Bitmap bitmap = ImageUtils.getLoacalBitmap(MyApplication.USERAVATORPATH);
         				if (bitmap != null) {
         					setLeftIcon(ImageUtils.toRoundBitmap(bitmap));
         				}
@@ -398,9 +401,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void convert(final ViewHolder holder, List<String> item, final int position) {
 				
-				if(map.get("userId").get(position).equals(MyApplication.userId)){
-					if (Constants.USERHEAD.exists()) {
-						Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.USERHEAD.toString());
+				if(map.get("userId").get(position).equals(MyApplication.USERID)){
+					if (FileUtils.existsFile(MyApplication.USERAVATORPATH)) {
+						Bitmap bitmap = ImageUtils.getLoacalBitmap(MyApplication.USERAVATORPATH);
 	    				if (bitmap != null) {
 	    					holder.setImageBitmap(R.id.share_usernameavator,ImageUtils.toRoundBitmap(bitmap));
 	    				}
@@ -455,7 +458,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 						queryWhere = "select * from " + CommonText.MYCOLLECTION + " where content = '" + content +"'";
 						commMapArray = dbUtil.queryData(self, queryWhere);
 						if (commMapArray == null) {
-							if (!MyApplication.userId.equals("0")) {
+							if (!MyApplication.USERID.equals("0")) {
 								addCollection(holder,map,position);
 							}else{
 								toastMsg(R.string.action_login_head);
@@ -525,12 +528,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		MyApplication.userId = preferenceUtil.getPreferenceData("useId", "0");
-		L.d("======onResume======userId:"+MyApplication.userId + "## uuid:" + uTokenId);
+		MyApplication.USERID = preferenceUtil.getPreferenceData("useId", "0");
+		MyApplication.USERNAME = preferenceUtil.getPreferenceData("username", "");
+		L.d("======onResume======userId:"+MyApplication.USERID + "## uuid:" + uTokenId);
 		
 		initData();
-		
-		Bitmap bitmap = ImageUtils.getLoacalBitmap(Constants.USERHEAD.toString());
+		MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator + MyApplication.USERNAME + File.separator + Constants.FILENAME;
+		Bitmap bitmap = ImageUtils.getLoacalBitmap(MyApplication.USERAVATORPATH);
 		String avatorStr= preferenceUtil.getPreferenceData("avator", "");
 		if (bitmap != null && RegexUtil.checkNotNull(avatorStr)) {
 			setLeftIcon(ImageUtils.toRoundBitmap(bitmap));
@@ -550,7 +554,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.make_btn:
-			if (MyApplication.userId.equals("0")) {
+			if (MyApplication.USERID.equals("0")) {
 				if(preferenceUtil.getPreferenceData("noticeshow",1) == 1){
 					DialogUtils.showAlertDialog(self, CommUtil.getStrValue(self,
 							R.string.dialog_action_alert),View.VISIBLE, mHandler);
@@ -565,7 +569,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			startActivity(Constants.MAINACTIVITY, false);
 			break;
 		case R.id.left_lable:
-			if (MyApplication.userId.equals("0")) {
+			if (MyApplication.USERID.equals("0")) {
 				startChildActivity("UserLoginActivity", false);
 			}else{
 				startChildActivity("UserCenterActivity", false);

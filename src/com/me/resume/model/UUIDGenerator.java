@@ -17,10 +17,19 @@ public class UUIDGenerator {
    
 	 /** 
      * 去掉UUID里的'-'
-     * @return String UUID 
+     * @return String UUID 32位
      */ 
     public static String getUUID(){ 
         String s = UUID.randomUUID().toString();
         return s.substring(0,8)+s.substring(9,13)+s.substring(14,18)+s.substring(19,23)+s.substring(24); 
+    } 
+    
+    /** 
+     * 去掉UUID里的'-'
+     * @return String UUID 16位
+     */ 
+    public static String getKUUID(){ 
+        String s = UUID.randomUUID().toString();
+        return s.substring(0,8)+s.substring(9,13)+s.substring(14,18); 
     } 
 }

@@ -51,7 +51,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 							new String[]{uTokenId,String.valueOf(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						if(!MyApplication.userId.equals("0")){
+						if(!MyApplication.USERID.equals("0")){
 							set2Msg(R.string.action_syncing);
 							syncData(cposition);
 						}
