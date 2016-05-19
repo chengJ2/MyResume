@@ -96,6 +96,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				break;
 			case 100:
 				if (CommUtil.isNetworkAvailable(self)) {
+					getNoticeInfo();
 					getReCoverData();
 				}else{
 					setShareView(false);
@@ -141,6 +142,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			
 			@Override
 			public void run() {
+				
 				mHandler.sendEmptyMessage(100);
 			}
 		},100);
@@ -245,6 +247,31 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			reviewResume.setVisibility(View.GONE);
 		}
 	}
+	
+	
+	/**
+	 * @Description: app通知
+	 */
+	private void getNoticeInfo(){
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		requestData("pro_get_noticeinfo", 1, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				setMsgVisibility(View.GONE);
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+					set2Msg(map.get("notice").get(0));
+				} catch (Exception e) {
+					setMsgVisibility(View.GONE);
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 	
 	/**
 	 * 初始化封面视图(default)
@@ -413,13 +440,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					holder.setText(R.id.share_username, map.get("username").get(position));
 				}
 				
-				/*String jobtitleStr = map.get("jobtitle").get(position);
+				String jobtitleStr = map.get("expworkindustry").get(position);
 				if (RegexUtil.checkNotNull(jobtitleStr)) {
 					holder.setTextVisibe(R.id.share_jobtitle, View.VISIBLE);
 					holder.setText(R.id.share_jobtitle, jobtitleStr);
 				}else{
 					holder.setTextVisibe(R.id.share_jobtitle, View.GONE);
-				}*/
+				}
 				
 				String workyear = map.get("joinworktime").get(position);
 				if (RegexUtil.checkNotNull(workyear)) {

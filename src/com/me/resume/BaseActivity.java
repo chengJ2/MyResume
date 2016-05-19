@@ -340,6 +340,17 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	/**
 	 * 
 	 * @Title:BaseActivity
+	 * @Description: 设置界面消息
+	 * @param id
+	 */
+	protected void set2Msg(String s) {
+		msg.setText(s.toString().trim());
+		msg.setVisibility(View.VISIBLE);
+	}
+	
+	/**
+	 * 
+	 * @Title:BaseActivity
 	 * @Description: 设置界面消息delayMillis隐藏
 	 * @param id
 	 */

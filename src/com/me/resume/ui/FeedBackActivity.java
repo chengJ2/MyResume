@@ -123,10 +123,13 @@ public class FeedBackActivity extends BaseActivity {
 		params.add("p_content");
 		params.add("p_contact");
 		params.add("p_userId");
+		params.add("p_version");
+		
 		
 		values.add(feeddescStr);
 		values.add(feedcontactStr);
-		values.add(MyApplication.USERID);
+		values.add(uTokenId);
+		values.add(CommUtil.getVersionName(self));
 		
 		requestData("pro_set_feedback", 1, params, values, new HandlerData() {
 			@Override
