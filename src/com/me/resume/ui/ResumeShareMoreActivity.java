@@ -81,8 +81,6 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 	}
 	
 	/**
-	 * 
-	 * @Title:HomeActivity
 	 * @Description: 面试分享心得
 	 */
 	private void getShareMoreData(final boolean frsitReq){
@@ -115,8 +113,6 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 	}
 	
 	/**
-	 * 
-	 * @Title:HomeActivity
 	 * @Description: 面试分享心得
 	 */
 	private void setShareData(final Map<String, List<String>> map){

@@ -22,8 +22,8 @@
             android:layout_height="wrap_content"
             android:gravity="center|left"
             android:text="@string/resume_workexperience"
-            android:textColor="@color/grey_10"
-            android:textSize="@dimen/small_text_size" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/micro_text_size" />
 
         <TextView
             android:id="@+id/item2"

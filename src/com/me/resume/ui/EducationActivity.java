@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -16,11 +17,15 @@ import android.widget.Button;
 import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
+import com.me.resume.model.UUIDGenerator;
 import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.ui.fragment.AllFragmentFactory;
 import com.me.resume.ui.fragment.EducationFragment;
 import com.me.resume.ui.fragment.TrainingFragment;
+import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.SegmentButton;
@@ -38,7 +43,12 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 
 	private SegmentButton segment_button;
 	
+	private String info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,info_degressStr,info_examinationStr;
+	
+	private String info_trainingorganizationStr,info_trainingclassStr,info_certificateStr,info_descriptionStr;
+	
 	private int cposition = 0;
+	private String procname = ""; 
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -48,12 +58,12 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
 							new String[]{"userId=?","bgcolor"}, 
-							new String[]{uTokenId,String.valueOf(checkColor)},1);
+							new String[]{uTokenId,getCheckColor(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 						if(!MyApplication.USERID.equals("0")){
 							set2Msg(R.string.action_syncing);
-							syncData(cposition);
+							syncData(cposition,1);
 						}
 					}else{
 						toastMsg(R.string.action_update_fail);
@@ -66,36 +76,48 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if (msg.obj != null) {
-					set2Msg(R.string.action_syncing);
-					syncData(cposition);
+				if (actionFlag == 0) {
+					syncData(cposition,3);
+				}else{
+					actionAync(cposition);
 				}
 				break;
 			case OnTopMenu.MSG_MENU31:
 				toastMsg(R.string.action_login_head);
 				break;
-
 			default:
 				break;
 			}
 		};
 	};
 	
-	
+	/**
+	 * @Description: 执行同步操作
+	 * position 0 教育 1 培训
+	 */
+	private void actionAync(int position){
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				set3Msg(R.string.action_syncing,5*1000);
+				syncData(position,1);
+			} else {
+				set3Msg(R.string.check_network);
+			}
+		} else {
+			set3Msg(R.string.action_login_head);
+		}
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		boayLayout.removeAllViews();
-		
 		View v = View.inflate(self,R.layout.activity_education_layout, null);
 		boayLayout.addView(v);
 		
 		setTitle(R.string.resume_education);
 		setMsgHide();
 		setRight2IconVisible(View.VISIBLE);
-		
 		setfabLayoutVisible(View.VISIBLE);
 		setEditBtnVisible(View.GONE);
 		
@@ -133,7 +155,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				tablename = CommonText.EDUCATION_TRAIN ;
 				break;
 			}
-			setEditVisible(tablename);
+			getData(tablename);
 			AllFragmentFactory.putFragment(fragment, tab);
 		}
 		if(fragment.isAdded()){
@@ -144,32 +166,113 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 	
-	/**
-	 * 
-	 * @Title:EducationActivity
-	 * @Description: 编辑按钮显示隐藏
-	 * @author Comsys-WH1510032
-	 * @return 返回类型  
-	 * @param tablename
-	 */
-	private void setEditVisible(String tablename){
-		queryWhere = "select * from " + tablename + " where userId = '"+ uTokenId +"' limit 1";
-		commMapArray = dbUtil.queryData(self, queryWhere);
-		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-			setEditBtnVisible(View.VISIBLE);
-		}else{
-			setEditBtnVisible(View.GONE);
+	@Override
+	public void onClick(View v) {
+		super.onClick(v);
+		switch (v.getId()) {
+		case R.id.save:
+			getFeild();
+			if(cposition == 0){ // 教育背景
+				if(judgeEduField()){
+					ContentValues cValues = new ContentValues();
+					cValues.put("tokenId", UUIDGenerator.getKUUID());
+					cValues.put("userId", uTokenId);
+					cValues.put("educationtimestart", info_starttimeStr);
+					cValues.put("educationtimeend", info_endtimeStr);
+					cValues.put("school", info_schoolStr);
+					cValues.put("majorname", info_majornameStr);
+					cValues.put("degree", info_degressStr);
+					cValues.put("examination", info_examinationStr);
+					cValues.put("bgcolor", getCheckColor(checkColor));
+					cValues.put("createtime", TimeUtils.getCurrentTimeInString());
+					
+					queryResult= dbUtil.insertData(self, CommonText.EDUCATION, cValues);
+					if (queryResult) {
+						toastMsg(R.string.action_add_success);
+						if (getData(CommonText.EDUCATION)) {
+							actionAync(0);
+						}
+					}
+				}
+				
+			}else{ // 培训经历
+				if(judgeTraField()){
+					ContentValues cValues = new ContentValues();
+					cValues.put("tokenId", UUIDGenerator.getKUUID());
+					cValues.put("userId", uTokenId);
+					cValues.put("trainingtimestart", info_starttimeStr);
+					cValues.put("trainingtimeend", info_endtimeStr);
+					cValues.put("trainingorganization", info_trainingorganizationStr);
+					cValues.put("trainingclass", info_trainingclassStr);
+					cValues.put("certificate", info_certificateStr);
+					cValues.put("description", info_descriptionStr);
+					cValues.put("bgcolor", getCheckColor(checkColor));
+					cValues.put("createtime", TimeUtils.getCurrentTimeInString());
+					
+					queryResult = dbUtil.insertData(self, 
+							CommonText.EDUCATION_TRAIN, cValues);
+					if (queryResult) {
+						toastMsg(R.string.action_add_success);
+						if (getData(CommonText.EDUCATION_TRAIN)) {
+							actionAync(1);
+						}
+					}
+				}
+			}
+			break;
+		case R.id.edit:
+			getFeild();
+			if(cposition == 0){ // 教育背景
+				if(judgeEduField()){
+					if (getData(CommonText.EDUCATION)) {
+						updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
+								new String[]{tokenId,"educationtimestart","educationtimeend","school","majorname",
+												  "degree","examination"}, 
+								new String[]{uTokenId,info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,
+								info_degressStr,info_examinationStr},3);
+						if (updResult == 1) {
+							toastMsg(R.string.action_update_success);
+							actionAync(0);
+						}else{
+							toastMsg(R.string.action_update_fail);
+						}
+					}
+				}
+			}else{
+				if(judgeTraField()){
+					if (getData(CommonText.EDUCATION_TRAIN)) {
+						updResult = dbUtil.updateData(self, CommonText.EDUCATION_TRAIN, 
+								new String[]{tokenId,"trainingtimestart","trainingtimeend","trainingorganization","trainingclass",
+								"certificate","description"}, 
+								new String[]{uTokenId,info_starttimeStr,info_endtimeStr,info_trainingorganizationStr,info_trainingclassStr,
+								info_certificateStr,info_descriptionStr},3);
+						if (updResult == 1) {
+							toastMsg(R.string.action_update_success);
+							actionAync(1);
+						}else{
+							toastMsg(R.string.action_update_fail);
+						}
+					}
+				}
+			}
+			break;
+		case R.id.next:
+			startChildActivity("OtherInfoActivity",false);
+			break;
+		case R.id.right_icon_more:
+			DialogUtils.showTopMenuDialog(self, topLayout,1, mHandler);
+			break;
+		default:
+			break;
 		}
 	}
 	
-	String info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,info_degressStr,info_examinationStr;
-	
-	String info_trainingorganizationStr,info_trainingclassStr,info_certificateStr,info_descriptionStr;
-	
-	String edId = "";
-	
-	@Override
-	public void onClick(View v) {
+	/**
+	 * 
+	 * @Title:EducationActivity
+	 * @Description: 获取初始字段的值
+	 */
+	private void getFeild(){
 		String tab = segment_button.getSegmentButton(cposition).getText().toString();
 		Fragment f = AllFragmentFactory.getFragment(tab);
 		if(f != null){
@@ -189,134 +292,72 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				info_descriptionStr = ((TrainingFragment)f).getInfodescription();
 			}
 		}
-		switch (v.getId()) {
-		case R.id.save:
-			if(cposition == 0){ // 教育背景
-				if( judgeEduField()){
-					ContentValues cValues = new ContentValues();
-					cValues.put("userId", uTokenId);
-					cValues.put("educationtimestart", info_starttimeStr);
-					cValues.put("educationtimeend", info_endtimeStr);
-					cValues.put("school", info_schoolStr);
-					cValues.put("majorname", info_majornameStr);
-					cValues.put("degree", info_degressStr);
-					cValues.put("examination", info_examinationStr);
-					cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-					
-					queryResult= dbUtil.insertData(self, 
-							CommonText.EDUCATION, cValues);
-					if (queryResult) {
-						toastMsg(R.string.action_add_success);
-						
-					}
-				}
-				
-			}else{ // 培训经历
-				if(judgeTraField()){
-					ContentValues cValues = new ContentValues();
-					cValues.put("userId", uTokenId);
-					cValues.put("trainingtimestart", info_starttimeStr);
-					cValues.put("trainingtimeend", info_endtimeStr);
-					cValues.put("trainingorganization", info_trainingorganizationStr);
-					cValues.put("trainingclass", info_trainingclassStr);
-					cValues.put("certificate", info_certificateStr);
-					cValues.put("description", info_descriptionStr);
-					cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-					
-					queryResult = dbUtil.insertData(self, 
-							CommonText.EDUCATION_TRAIN, cValues);
-					if (queryResult) {
-						toastMsg(R.string.action_add_success);
-					}
-				}
-			}
-			break;
-		case R.id.edit:
-			if(cposition == 0){ // 教育背景
-				if( judgeEduField()){
-					queryWhere = "select * from " + CommonText.EDUCATION + " where userId = '"+ uTokenId +"' order by id desc limit 1";
-					commMapArray = dbUtil.queryData(self, queryWhere);
-					if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-						edId = commMapArray.get("id")[0];
-						updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
-								new String[]{edId,"educationtimestart","educationtimeend","school","majorname",
-												  "degree","examination"}, 
-								new String[]{uTokenId,info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,
-								info_degressStr,info_examinationStr},2);
-						if (updResult == 1) {
-							toastMsg(R.string.action_update_success);
-						}else{
-							toastMsg(R.string.action_update_fail);
-						}
-					}
-				}
-			}else{
-				if(judgeTraField()){
-					queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = '"+ uTokenId +"' order by id desc limit 1";
-					commMapArray = dbUtil.queryData(self, queryWhere);
-					if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-						edId = commMapArray.get("id")[0];
-						updResult = dbUtil.updateData(self, CommonText.EDUCATION_TRAIN, 
-								new String[]{edId,"trainingtimestart","trainingtimeend","trainingorganization","trainingclass",
-								"certificate","description"}, 
-								new String[]{uTokenId,info_starttimeStr,info_endtimeStr,info_trainingorganizationStr,info_trainingclassStr,
-								info_certificateStr,info_descriptionStr},2);
-						if (updResult == 1) {
-							toastMsg(R.string.action_update_success);
-							
-						}else{
-							toastMsg(R.string.action_update_fail);
-						}
-					}
-				}
-			}
-			break;
-		case R.id.next:
-			startActivity(".ui.OtherInfoActivity",false);
-			break;
-		case R.id.left_lable:
-			scrollToFinishActivity();
-			break;
-		case R.id.right_icon:
-			startActivity(".MainActivity",false);
-			break;
-		default:
-			break;
-		}
 	}
 	
-	
-	private String procname = "";
+	/**
+	 * 
+	 * @Title:EducationActivity
+	 * @Description: 编辑按钮显示隐藏
+	 * @param tablename CommonText.EDUCATION  |  CommonText.EDUCATION_TRAIN
+	 */
+	private boolean getData(String tablename){
+		queryWhere = "select * from " + tablename + " where userId = '"+ uTokenId +"' order by id desc limit 1";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+			tokenId = commMapArray.get("tokenId")[0];
+			setEditBtnVisible(View.VISIBLE);
+			return true;
+		}else{
+			setEditBtnVisible(View.GONE);
+			return false;
+		}
+	}
 	
 	/**
 	 * 数据请求是否已同步
 	 * @param cposition
 	 */
-	private void syncData(final int cposition){
+	private void syncData(final int cposition,final int style){
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
+		params.add("p_tokenId");
 		params.add("p_userId");
+		values.add(tokenId);
 		values.add(uTokenId);
 		if(cposition == 0){
 			procname = "pro_get_education";
 		}else{
-			procname = "pro_get_trainging";
+			procname = "pro_get_training";
 		}
 		
-		requestData(procname, 1, params, values, new HandlerData() {
+		requestData(procname, style, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				runOnUiThread(R.string.action_sync_fail);
+				if (style == 1) {
+					syncRun(cposition,tokenId,2);
+				}else{
+					runOnUiThread(R.string.action_sync_success);
+				}
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					String p_edId = map.get("id").get(0);
-					if (map.get("userId").get(0).equals(uTokenId)) {
-						syncRun(cposition,p_edId,3);
+					if (style == 1) {
+						String tokenId = map.get("tokenId").get(0);
+						if (map.get("userId").get(0).equals(uTokenId)) {
+							syncRun(cposition,tokenId,3);
+						}else{
+							syncRun(cposition,tokenId,2);
+						}	
 					}else{
-						syncRun(cposition,"1",2);
+						// TODO
+						if(cposition == 0){
+							setEdDataFromServer(map);
+						}else{
+							setTrDataFromServer(map);
+						}
 					}
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -324,6 +365,107 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		});
 		
 	}
+	
+	
+	/**
+	 * 更新本地数据
+	 * @param map
+	 */
+	private void setEdDataFromServer(Map<String, List<String>> map){
+		queryWhere = "select * from " + CommonText.EDUCATION + " where userId = '" + uTokenId + "' limit 1";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			
+			tokenId = map.get("tokenId").get(0);
+			
+			info_starttimeStr = map.get("educationtimestart").get(0);
+			info_endtimeStr = map.get("educationtimeend").get(0);
+			info_schoolStr = map.get("school").get(0);
+			info_majornameStr = map.get("majorname").get(0);
+			info_degressStr = map.get("degree").get(0);
+			info_examinationStr= map.get("examination").get(0);
+			
+			updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
+					new String[]{tokenId,"educationtimestart","educationtimeend","school","majorname",
+									  "degree","examination"}, 
+					new String[]{uTokenId,info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,
+					info_degressStr,info_examinationStr},3);
+		}else{
+			int size = map.get("userId").size();
+			for (int i = 0; i < size; i++) {
+				ContentValues cValues = new ContentValues();
+				cValues.put("tokenId", map.get("tokenId").get(i));
+				cValues.put("userId", map.get("userId").get(i));
+				cValues.put("educationtimestart", map.get("educationtimestart").get(i));
+				cValues.put("educationtimeend", map.get("educationtimeend").get(i));
+				cValues.put("school", map.get("school").get(i));
+				cValues.put("majorname", map.get("majorname").get(i));
+				cValues.put("degree", map.get("degree").get(i));
+				cValues.put("bgcolor", map.get("bgcolor").get(i));
+				cValues.put("createtime", map.get("createtime").get(i));
+				cValues.put("updatetime", map.get("updatetime").get(i));
+				queryResult = dbUtil.insertData(self, CommonText.EDUCATION, cValues);
+			}
+		}
+		
+		if (updResult == 1 || queryResult) {
+			set3Msg(R.string.action_sync_success);
+			
+			Intent intent=new Intent();
+			intent.setAction(Constants.EDUCATION_RECEIVE_ED);
+       		sendBroadcast(intent);
+		}
+	}
+	
+	
+	/**
+	 * 更新本地数据
+	 * @param map
+	 */
+	private void setTrDataFromServer(Map<String, List<String>> map){
+		queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = '" + uTokenId + "' limit 1";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			tokenId = map.get("tokenId").get(0);
+			info_starttimeStr = map.get("educationtimestart").get(0);
+			info_endtimeStr = map.get("educationtimeend").get(0);
+			info_trainingorganizationStr = map.get("educationtimestart").get(0);
+			info_trainingclassStr= map.get("educationtimestart").get(0);
+			info_certificateStr= map.get("educationtimestart").get(0);
+			info_descriptionStr= map.get("educationtimestart").get(0);
+			
+			updResult = dbUtil.updateData(self, CommonText.EDUCATION_TRAIN, 
+					new String[]{tokenId,"trainingtimestart","trainingtimeend","trainingorganization","trainingclass",
+					"certificate","description"}, 
+					new String[]{uTokenId,info_starttimeStr,info_endtimeStr,info_trainingorganizationStr,info_trainingclassStr,
+					info_certificateStr,info_descriptionStr},3);
+		}else{
+			int size = map.get("userId").size();
+			for (int i = 0; i < size; i++) {
+				ContentValues cValues = new ContentValues();
+				cValues.put("tokenId", map.get("tokenId").get(i));
+				cValues.put("userId", map.get("userId").get(i));
+				cValues.put("trainingtimestart", map.get("trainingtimestart").get(i));
+				cValues.put("trainingtimeend", map.get("trainingtimeend").get(i));
+				cValues.put("trainingorganization", map.get("trainingorganization").get(i));
+				cValues.put("trainingclass", map.get("trainingclass").get(i));
+				cValues.put("certificate", map.get("certificate").get(i));
+				cValues.put("description", map.get("description").get(i));
+				cValues.put("bgcolor", map.get("bgcolor").get(i));
+				cValues.put("createtime", map.get("createtime").get(i));
+				cValues.put("updatetime", map.get("updatetime").get(i));
+				queryResult = dbUtil.insertData(self, CommonText.EDUCATION_TRAIN, cValues);
+			}
+		}
+		
+		if (updResult == 1 || queryResult) {
+			set3Msg(R.string.action_sync_success);
+			Intent intent=new Intent();
+			intent.setAction(Constants.EDUCATION_RECEIVE_TR);
+       		sendBroadcast(intent);
+		}
+	}
+	
 	
 	/**
 	 * 
@@ -334,7 +476,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
-		params.add("p_edId");
+		params.add("p_tokenId");
 		params.add("p_userId");
 		
 		values.add(edId);
@@ -358,7 +500,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				values.add(info_examinationStr);
 				values.add(getCheckColor(checkColor));
 				
-				requestData("pro_education", style, params, values, new HandlerData() {
+				requestData("pro_set_education", style, params, values, new HandlerData() {
 					@Override
 					public void error() {
 						runOnUiThread(R.string.action_sync_fail);
@@ -379,12 +521,13 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			}
 		}else{
 			if (judgeTraField()) {
-				params.add("trainingtimestart");
-				params.add("trainingtimeend");
-				params.add("trainingorganization");
-				params.add("trainingclass");
-				params.add("certificate");
-				params.add("description");
+				params.add("p_trainingtimestart");
+				params.add("p_trainingtimeend");
+				params.add("p_trainingorganization");
+				params.add("p_trainingclass");
+				params.add("p_certificate");				
+				params.add("p_description");
+				params.add("p_bgcolor");
 				
 				values.add(info_starttimeStr);
 				values.add(info_endtimeStr);
@@ -392,8 +535,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				values.add(info_trainingclassStr);
 				values.add(info_certificateStr);
 				values.add(info_descriptionStr);
+				values.add(getCheckColor(checkColor));
 				
-				requestData("pro_training", style, params, values, new HandlerData() {
+				requestData("pro_set_training", style, params, values, new HandlerData() {
 					@Override
 					public void error() {
 						runOnUiThread(R.string.action_sync_fail);
@@ -403,7 +547,6 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 						try {
 							if (map.get("msg").get(0).equals("200")) {
 								runOnUiThread(R.string.action_sync_success);
-								
 							}
 						} catch (Exception e) {
 							e.printStackTrace();

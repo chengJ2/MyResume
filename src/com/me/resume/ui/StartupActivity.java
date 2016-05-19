@@ -43,7 +43,7 @@ public class StartupActivity extends Activity {
 			
 			public void onAnimationEnd(Animation animation) {
 				ActivityUtils.startActivity(StartupActivity.this, 
-						Constants.PACKAGENAME + ".ui.HomeActivity", false, true);
+						Constants.PACKAGENAMECHILD + "HomeActivity", false, true);
 			}
         });
 	}

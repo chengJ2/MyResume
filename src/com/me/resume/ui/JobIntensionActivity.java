@@ -64,7 +64,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.JOBINTENSION, 
 							new String[]{"userId=?","bgcolor"}, 
-							new String[]{uTokenId,String.valueOf(checkColor)},1);
+							new String[]{uTokenId,getCheckColor(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 						actionAync();
@@ -96,7 +96,6 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		boayLayout.removeAllViews();
 		
@@ -262,7 +261,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 					mHandler);
 			break;
 		case R.id.right_icon_more:
-			DialogUtils.showTopMenuDialog(self, topLayout,1, mHandler);
+			DialogUtils.showTopMenuDialog(self, topLayout,2, mHandler);
 			break;
 		default:
 			break;
@@ -325,14 +324,16 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
+		params.add("p_tokenId");
 		params.add("p_userId");
+		values.add(tokenId);
 		values.add(uTokenId);
 		
 		requestData("pro_get_jobintension", style, params, values, new HandlerData() {
 			@Override
 			public void error() {
 				if (style == 1) {
-					syncRun("1",2);
+					syncRun(tokenId,2);
 				}else{
 					runOnUiThread(R.string.action_sync_success);
 				}
@@ -345,7 +346,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 						if (map.get("userId").get(0).equals(uTokenId)) {
 							syncRun(tokenId,3);
 						}else{
-							syncRun("1",2);
+							syncRun(tokenId,2);
 						}
 					}else{
 						setDataFromServer(map);
@@ -356,7 +357,6 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			}
 		});
 	}
-	
 	
 	/**
 	 * 更新本地数据
@@ -409,7 +409,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	 * @Description: 同步数据
 	 * @author Comsys-WH1510032
 	 */
-	private void syncRun(String jiId,int style){ 
+	private void syncRun(String tokenId,int style){ 
 		getFeildValue();
 		
 		if(judgeFeild()){

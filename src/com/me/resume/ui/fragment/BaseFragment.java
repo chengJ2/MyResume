@@ -29,5 +29,5 @@ public class BaseFragment extends Fragment {
 	
 	protected String queryWhere;
 	
-	protected Map<String, String[]> commap;
+	protected Map<String, String[]> commap = null;
 }

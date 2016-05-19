@@ -120,7 +120,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 						checkColor = (Integer) msg.obj;
 						updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
 								new String[]{"userId=?","bgcolor"}, 
-								new String[]{uTokenId,String.valueOf(checkColor)},1);
+								new String[]{uTokenId,getCheckColor(checkColor)},1);
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
 							if (!MyApplication.USERID.equals("0")) {
@@ -149,20 +149,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if (commMapArray != null) {
-					if (!MyApplication.USERID.equals("0")) {
-						if (CommUtil.isNetworkAvailable(self)) {
-							set2Msg(R.string.action_syncing);
-							syncData();
-						}else{
-							set3Msg(R.string.check_network);
-						}
-					}else{
-						set3Msg(R.string.action_login_head);
-					}
-				}else{
-					set3Msg(R.string.completion_info_frist);
-				}
+				actionAync();
 				break;
 			case OnTopMenu.MSG_MENU31:
 				toastMsg(R.string.action_baseinfo_null);
@@ -377,7 +364,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			getValues(R.array.ba_politicalstatus_values,info_politicalstatus,R.string.info_politicalstatus);
 			break;
 		case R.id.next:
-			goActivity(".ui.WorkExperienceActivity");
+			goActivity("WorkExperienceActivity");
 			break;
 		case R.id.right_icon_more:
 			DialogUtils.showTopMenuDialog(self, topLayout,0,mHandler);
@@ -408,7 +395,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	private void actionAync(){
 		if (!MyApplication.USERID.equals("0")) {
 			if (CommUtil.isNetworkAvailable(self)) {
-				set2Msg(R.string.action_syncing);
+				set3Msg(R.string.action_syncing,5*1000);
 				syncData();
 			} else {
 				set3Msg(R.string.check_network);
@@ -542,7 +529,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		if (commMapArray!= null) {
 			String realname = commMapArray.get("realname")[0];
 			if (RegexUtil.checkNotNull(realname)) {
-				startActivity(src,false);
+				startChildActivity(src,false);
 			}else{
 				set3Msg(R.string.action_baseinfo_null);
 			}

@@ -186,7 +186,7 @@
         <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:padding">8dip</item>
         <item name="android:gravity">center|left</item>
-        <item name="android:background">@color/grey_50</item>
+        <item name="android:background">@color/orange_50</item>
         <item name="android:drawableLeft">@drawable/nodata</item>
         <item name="android:drawablePadding">5dip</item>
         <item name="android:ellipsize">marquee</item>
@@ -284,4 +284,9 @@
         <item name="android:visibility">gone</item>
     </style>
 
+    <style name="popupAnim" parent="@android:style/Animation.Activity">
+	    <item name="android:windowEnterAnimation">@anim/popupwindow_fade_in</item>
+	    <item name="android:windowExitAnimation">@anim/popupwindow_fade_out</item>
+	</style>
+    
 </resources>

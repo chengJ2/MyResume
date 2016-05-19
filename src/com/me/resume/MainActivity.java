@@ -17,6 +17,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup.MarginLayoutParams;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -315,32 +317,28 @@ public class MainActivity extends Activity {
 				mViewList.add(view);
 			}
 			initBgColor(index2layout,commMapArray);
-			
-//			int we_show_nav = getPreferenceData("we_show_nav", 1);
-			int LayoutID = R.layout.index_2_list_item;
-//			if (we_show_nav == 1) {
-//				LayoutID = R.layout.index_2_list_item;
-//			} else if (we_show_nav == 2) {
-//				LayoutID = R.layout.index_2_list2_item;
-//			} else if (we_show_nav == 3) {
-//
-//			}
-			
 			commMapAdapter = new CommForMapArrayBaseAdapter(
-					self, commMapArray, LayoutID, "userId") {
+					self, commMapArray, R.layout.index_2_list_item, "userId") {
 
 				@Override
 				public void convert(ViewHolder holder, String[] item,
 						int position) {
-					// TODO Auto-generated method stub
 					holder.setText(R.id.item1, commMapArray.get("companyname")[position]);
 					holder.setText(R.id.item2,
-							commMapArray.get("worktimestart")[position] + " 至 "
+							commMapArray.get("worktimestart")[position] + " — "
 									+ commMapArray.get("worktimeend")[position]);
 				}
 			};
 
 			weListview.setAdapter(commMapAdapter);
+			weListview.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + "InfoManagerActivity",false);
+				}
+			});
 		}
 	}
 	

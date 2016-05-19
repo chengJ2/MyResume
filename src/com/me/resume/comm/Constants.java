@@ -56,8 +56,9 @@ public class Constants {
 	
 	public static final int ED_REQUEST_CODE = 4000;
 	
-	
-	public static final String EDUCATION = "com.me.resume.education";
+	public static final String EDUCATION_SEND = "com.me.resume.education.send";
+	public static final String EDUCATION_RECEIVE_ED = "com.me.resume.education_receive_ed";
+	public static final String EDUCATION_RECEIVE_TR = "com.me.resume.education_receive_tr";
 	
 	// 本地db文件  
 	public static final String DATABASE_FILENAME = "myresume.db"; // DB文件 

@@ -1,6 +1,10 @@
 package com.me.resume.ui.fragment;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -12,6 +16,7 @@ import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.whjz.android.text.CommonText;
@@ -37,7 +42,6 @@ public class TrainingFragment extends BaseFragment {
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-			case 1:
 			case 11:
 				if (msg.obj != null) {
 					info_startime.setText((String)msg.obj);
@@ -56,7 +60,6 @@ public class TrainingFragment extends BaseFragment {
 	
 	@Override
 	public void onAttach(Activity activity) {
-		// TODO Auto-generated method stub
 		super.onAttach(activity);
 	}
 	
@@ -68,14 +71,15 @@ public class TrainingFragment extends BaseFragment {
 	 @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.fragment_training_layout, container, false);
+		initview();
+		initData();
+		registerReceiver();
         return view;
     }
 	 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		initview();
-		initData();
 	}
 
 	private void initview() {
@@ -104,11 +108,27 @@ public class TrainingFragment extends BaseFragment {
 		});
 	}
 	
+	private void registerReceiver(){
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(Constants.EDUCATION_RECEIVE_TR);
+		getActivity().registerReceiver(trainReceiver, filter);
+	}
+	
+	 private BroadcastReceiver trainReceiver = new BroadcastReceiver(){
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if(intent.getAction().equals(Constants.EDUCATION_RECEIVE_TR)){
+				initData();
+			}
+	}};
+	
+	
 	private void initData() {
-		queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = "+ BaseActivity.uTokenId +" order by id desc limit 1";
+		queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc limit 1";
 		commap = dbUtil.queryData(getActivity(), queryWhere);
 		if (commap!= null && commap.get("userId").length > 0) {
-			trId = commap.get("id")[0];
+			trId = commap.get("tokenId")[0];
 			setInfoStartTime(commap.get("trainingtimestart")[0]);
 			setInfoEndTime(commap.get("trainingtimeend")[0]);
 			setInfotrainingorganization(commap.get("trainingorganization")[0]);
@@ -170,4 +190,11 @@ public class TrainingFragment extends BaseFragment {
 		return CommUtil.getTextValue(info_description);
 	}
 	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (trainReceiver != null) {
+			getActivity().unregisterReceiver(trainReceiver);
+		}
+	}
 }

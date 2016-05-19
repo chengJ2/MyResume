@@ -83,7 +83,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 							new String[]{"userId=?","bgcolor"}, 
-							new String[]{uTokenId,String.valueOf(checkColor)},1);
+							new String[]{uTokenId,getCheckColor(checkColor)},1);
 					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
 						actionAync();
@@ -307,7 +307,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	private void actionAync(){
 		if (!MyApplication.USERID.equals("0")) {
 			if (CommUtil.isNetworkAvailable(self)) {
-				set2Msg(R.string.action_syncing);
+				set3Msg(R.string.action_syncing,5*1000);
 				syncData();
 			} else {
 				set3Msg(R.string.check_network);

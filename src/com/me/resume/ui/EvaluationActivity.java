@@ -44,9 +44,10 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
 							new String[]{"userId=?","background"}, 
-							new String[]{uTokenId,String.valueOf(checkColor)},1);
+							new String[]{uTokenId,getCheckColor(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
+						actionAync();
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -173,7 +174,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	private void actionAync(){
 		if (!MyApplication.USERID.equals("0")) {
 			if (CommUtil.isNetworkAvailable(self)) {
-				set2Msg(R.string.action_syncing);
+				set3Msg(R.string.action_syncing,5*1000);
 				syncData(1);
 			} else {
 				set3Msg(R.string.check_network);
@@ -240,7 +241,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void error() {
 				if (style == 1) {
-					syncRun("0",2);
+					syncRun(tokenId,2);
 				}else{
 					runOnUiThread(R.string.action_sync_success);
 				}
@@ -254,7 +255,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 						if (map.get("userId").get(0).equals(uTokenId)) {
 							syncRun(tokenId,3);
 						}else{
-							syncRun("0",2);
+							syncRun(tokenId,2);
 						}	
 					}else{
 						// 更新本地数据
@@ -310,7 +311,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	 * @Description: 同步数据
 	 * @author Comsys-WH1510032
 	 */
-	private void syncRun(String weId,int style){ 
+	private void syncRun(String tokenId,int style){ 
 		getFeildValue();
 		
 		if(judgeFeild()){
@@ -328,7 +329,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			values.add(info_career_goalStr);
 			values.add(getCheckColor(checkColor));
 			
-			requestData("pro_set_evaluation", 2, params, values, new HandlerData() {
+			requestData("pro_set_evaluation", style, params, values, new HandlerData() {
 				@Override
 				public void error() {
 					runOnUiThread(R.string.action_sync_fail);

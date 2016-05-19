@@ -201,7 +201,7 @@ public class DialogUtils {
 		mPopupWindow = new PopupWindow(popView, LayoutParams.MATCH_PARENT,
 												LayoutParams.MATCH_PARENT,true);
 		mPopupWindow.setTouchable(true);
-		mPopupWindow.setOutsideTouchable(false);
+		mPopupWindow.setOutsideTouchable(true);
 		mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		mPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 		
@@ -306,6 +306,8 @@ public class DialogUtils {
 		mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		mPopupWindow.setTouchable(true);
 		mPopupWindow.setFocusable(true);
+		mPopupWindow.setOutsideTouchable(true);
+		mPopupWindow.setAnimationStyle(R.style.popupAnim); 
 		
 		final TextView msg = (TextView)layout.findViewById(R.id.title);
 		final DatePicker datePicker = (DatePicker)layout.findViewById(R.id.datePicker);
@@ -369,8 +371,9 @@ public class DialogUtils {
 		View layout = View.inflate(context,R.layout.topbar_menu_layout, null);
 		mPopupWindow = new PopupWindow(layout, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-		mPopupWindow.setTouchable(true);
 		mPopupWindow.setFocusable(true);
+		mPopupWindow.setOutsideTouchable(true);
+		mPopupWindow.setAnimationStyle(R.style.popupAnim); 
 		
 		GrapeGridview bgrid = (GrapeGridview)layout.findViewById(R.id.bgrid);
 		SwitchButton setting_editmode_cb = (SwitchButton)layout.findViewById(R.id.setting_editmode_cb);
@@ -451,7 +454,7 @@ public class DialogUtils {
 				sendMsg(OnTopMenu.MSG_MENU2, checkState);
 			}
 		});
-		
+	
 		setting_syn.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -489,8 +492,9 @@ public class DialogUtils {
 		View layout = View.inflate(context,R.layout.choose_photo_path_layout, null);
 		mPopupWindow = new PopupWindow(layout, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-		mPopupWindow.setTouchable(true);
 		mPopupWindow.setFocusable(true);
+		mPopupWindow.setOutsideTouchable(true);
+		mPopupWindow.setAnimationStyle(R.style.popupAnim); 
 		
 		TextView byfile = (TextView)layout.findViewById(R.id.byfile);
 		TextView bycamera = (TextView)layout.findViewById(R.id.bycamera);

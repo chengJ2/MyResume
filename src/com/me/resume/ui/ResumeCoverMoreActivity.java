@@ -50,8 +50,6 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 	}
 	
 	/**
-	 * 
-	 * @Title:HomeActivity
 	 * @Description: 面试分享心得
 	 */
 	private void getReCoverMoreData(){

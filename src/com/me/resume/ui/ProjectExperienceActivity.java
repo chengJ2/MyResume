@@ -12,7 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
+import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -51,9 +53,10 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 							new String[]{uTokenId,"background"}, 
-							new String[]{"1",String.valueOf(checkColor)},2);
+							new String[]{"1",getCheckColor(checkColor)},2);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
+						actionAync();
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -65,10 +68,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if (msg.obj != null) {
-					set2Msg(R.string.action_syncing);
-					syncData();
-				}
+				actionAync();
 				break;
 			case OnTopMenu.MSG_MENU31:
 				toastMsg(R.string.action_login_head);
@@ -124,6 +124,24 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
         	 setEditBtnVisible(View.GONE);
          }
 	}
+	
+	/**
+	 * 
+	 * @Description: 执行同步操作
+	 */
+	private void actionAync(){
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				set3Msg(R.string.action_syncing,5*1000);
+				syncData();
+			} else {
+				set3Msg(R.string.check_network);
+			}
+		} else {
+			set3Msg(R.string.action_login_head);
+		}
+	}
+	
 	
 	private String info_projectnameStr,info_workdutiesStr,input_workdescStr;
 	private String info_startworktimeStr,info_endworktimeStr;
@@ -189,7 +207,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 			scrollToFinishActivity();
 			break;
 		case R.id.right_icon:
-			startActivity(".MainActivity", false);
+			startActivity(Constants.MAINACTIVITY,false);
 			break;
 		case R.id.info_startworktime:
 			DialogUtils.showTimeChooseDialog(self, info_startworktime,R.string.we_info_start_worktime, 11,mHandler);

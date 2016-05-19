@@ -52,6 +52,11 @@
     <string name="completion_info_frist">请先完善资料</string>
     <string name="action_clearcache_success">已成功清除缓存</string>
     
+    <string name="action_syncing_lang">正在同步语言能力,请稍后...</string>
+    <string name="action_syncing_cert">正在同步证书信息,请稍后...</string>
+    <string name="action_syncing_other">正在同步其他信息,请稍后...</string>
+    
+    
     <string name="feedback_ed_1">请尽详细地描述您的反馈问题或用户体验不足之处,以帮助我们改善产品体验,我们将尽快处理你的意见,谢谢~</string>
     <string name="feedback_info_1">意见描述</string>
     <string name="feedback_ed_2">请留下您的QQ/微信/邮箱</string>

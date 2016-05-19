@@ -35,7 +35,7 @@
                 <View
                     android:layout_width="6dip"
                     android:layout_height="18dip"
-                    android:background="@color/red" />
+                    android:background="@color/top_bar" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                         android:layout_height="20dip"
                         android:gravity="center|left"
                         android:text="@string/resume_education"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/small_middle_text_size" />
 
                     <com.me.resume.views.CustomListView
@@ -91,7 +91,7 @@
                         android:layout_height="20dip"
                         android:gravity="center|left"
                         android:text="@string/resume_training"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/small_middle_text_size" />
 
                      <com.me.resume.views.CustomListView

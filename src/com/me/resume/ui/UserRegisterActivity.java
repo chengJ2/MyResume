@@ -13,7 +13,6 @@ import android.widget.EditText;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 import com.whjz.android.text.CommonText;
@@ -170,7 +169,7 @@ public class UserRegisterActivity extends BaseActivity implements OnClickListene
 				
 				queryResult = dbUtil.insertData(self, CommonText.BASEINFO, cValues);
 				if (queryResult) {
-					startActivity(".ui.HomeActivity",true);
+					startChildActivity("HomeActivity",true);
 				}
 			}
 		}

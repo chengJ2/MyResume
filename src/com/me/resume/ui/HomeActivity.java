@@ -45,7 +45,6 @@ import com.whjz.android.text.CommonText;
 
 /**
  * 
- * @ClassName: HomeActivity
  * @Description: 首页
  * @date 2016/3/29 下午4:56:41
  * 
@@ -310,8 +309,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	
 	
 	/**
-	 * 
-	 * @Title:HomeActivity
 	 * @Description: 面试分享心得
 	 */
 	private void getReCoverData(){
@@ -365,8 +362,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		reviewCovergridview.setAdapter(commapBaseAdapter);
 	}
 	/**
-	 * 
-	 * @Title:HomeActivity
 	 * @Description: 面试分享心得
 	 */
 	private void getShareData(){
@@ -391,8 +386,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	}
 	
 	/**
-	 * 
-	 * @Title:HomeActivity
 	 * @Description: 面试分享心得
 	 */
 	private void setShareData(final Map<String, List<String>> map){

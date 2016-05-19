@@ -86,7 +86,7 @@
 
                 <ImageView
                     style="@style/user_info_item_iv"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
             </LinearLayout>
 
             <View style="@style/line3" />
@@ -111,7 +111,8 @@
             <View style="@style/line3" />
 
             <LinearLayout
-                style="@style/noraml_item" >
+                style="@style/noraml_item" 
+                android:layout_height="70dip">
 
                 <TextView
                     style="@style/user_info_item_tv"
@@ -120,6 +121,7 @@
                 <TextView
                     android:id="@+id/info_workingstate"
                     style="@style/user_info_item_ed"
+                    android:singleLine="false"
                     android:hint="@string/ji_info_workingstate" />
 
                 <ImageView
