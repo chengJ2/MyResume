@@ -520,7 +520,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			 cValues.put("content", content);
 			 cValues.put("sharename", sharename);
 			 cValues.put("sharenamecity", map.get("city").get(position));
-			 cValues.put("sharedatime", TimeUtils.getCurrentTimeInString());
+			 cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 			 cValues.put("type", "0");// 0:面试分享心得;  !0:话题
 			 
 			 queryResult = dbUtil.insertData(self, 
@@ -590,22 +590,22 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.left_lable:
 			if (MyApplication.USERID.equals("0")) {
-				startChildActivity("UserLoginActivity", false);
+				startChildActivity(Constants.USERLOGIN, false);
 			}else{
-				startChildActivity("UserCenterActivity", false);
+				startChildActivity(Constants.USERCENTER, false);
 			}
 			break;
 		case R.id.right_icon:
-			startChildActivity("SettingActivity", false);
+			startChildActivity(Constants.SETTING, false);
 			break;
 		case R.id.sharemore:
-			startChildActivity("ResumeShareMoreActivity", false);
+			startChildActivity(Constants.RESUMESHAREMORE, false);
 			break;
 		case R.id.covermore:
-			startChildActivity("ResumeCoverMoreActivity", false);
+			startChildActivity(Constants.RESUMECOVERMORE, false);
 			break;
 		case R.id.linkmore:
-			startChildActivity("TopicListDetailActivity", false);
+			startChildActivity(Constants.TOPICLISTDETAIL, false);
 			break;
 		default:
 			break;

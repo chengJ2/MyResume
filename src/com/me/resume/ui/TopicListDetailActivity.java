@@ -145,9 +145,13 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 			
 			@Override
 			public void convert(ViewHolder holder, List<String> item, int position) {
-				String fromUrl = map.get("from_url").get(position);
-				holder.showImage(R.id.topic_icon,
-						CommUtil.getHttpLink(fromUrl),false);
+				String fromUrl = commMapArray.get("from_url")[position];
+				if (RegexUtil.checkNotNull(fromUrl)) {
+					holder.setImageVisibe(R.id.topic_icon, View.GONE);
+				}else{
+					holder.setImageVisibe(R.id.topic_icon, View.VISIBLE);
+					holder.showImage(R.id.topic_icon,CommUtil.getHttpLink(fromUrl),false);
+				}
 				holder.setText(R.id.topic_title, map.get("title").get(position));
 				holder.setText(R.id.topic_content, map.get("detail").get(position));
 				holder.setText(R.id.topic_from, map.get("from").get(position));

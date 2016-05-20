@@ -109,7 +109,9 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				break;
 			case OnTopMenu.MSG_MENU32:
 				ActivityUtils.startActivityForResult(self, 
-						Constants.PACKAGENAMECHILD + "InfoManagerActivity", false, Constants.WE_MANAGER_REQUEST_CODE);
+						Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
+						"type",CommonText.WORKEXPERIENCE,
+						Constants.WE_MANAGER_REQUEST_CODE);
 				break;
 			default:
 				break;
@@ -262,7 +264,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			}
 			break;
 		case R.id.next:
-			startChildActivity("EvaluationActivity", false);
+			startChildActivity(Constants.EVALUATION, false);
 			break;
 		case R.id.info_companynature:
 			whichTab = 4;
@@ -274,7 +276,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			break;
 		case R.id.info_industryclassification:
 			ActivityUtils.startActivityForResult(self, 
-					Constants.PACKAGENAMECHILD + "IndustryTypeActivity", false, Constants.WE_REQUEST_CODE);
+					Constants.PACKAGENAMECHILD + Constants.INDUSTRYTYPE, false, Constants.WE_REQUEST_CODE);
 			break;
 		case R.id.info_expectedsalary:
 			whichTab = 2;

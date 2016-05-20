@@ -4,6 +4,8 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#CC0000</color>
+    <color name="red_50">#50CC0000</color>
+    
      <color name="grey">#BEBEBE</color>
      <color name="grey_80">#80BEBEBE</color>
      <color name="grey_70">#70808080</color>

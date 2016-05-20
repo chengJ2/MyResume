@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,16 +23,14 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
-import com.me.resume.model.UUIDGenerator;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
+import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
-import com.me.resume.utils.TimeUtils;
 import com.whjz.android.text.CommonText;
 
 /**
- * 栏目管理界面
+ * 栏目管理界面;个人收藏;
  * 
  * @author Administrator
  * 
@@ -44,6 +44,8 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 	
 	private Map<String, String[]> commMapArray = null;
 	
+	private String type = "";
+	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -55,7 +57,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 				
 				set3Msg(R.string.action_delete_success);
 				
-				initData();
+				initData(CommonText.WORKEXPERIENCE);
 				
 				// TODO
 				if (!MyApplication.USERID.equals("0")) {
@@ -91,7 +93,9 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		nodata.setText(CommUtil.getStrValue(self, R.string.item_text43));
 		nodata.setVisibility(View.VISIBLE);
 
-		initData();
+		type = getIntent().getStringExtra("type");
+		L.d("==type==" + type);
+		initData(type);
 	}
 
 	@Override
@@ -100,83 +104,29 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		
 	}
 
-	private void initData() {
-		queryWhere = "select * from " + CommonText.WORKEXPERIENCE
-				+ " where userId = '" + uTokenId + "' order by id desc";
+	private void initData(final String type) {
+		int layoutID = 0;
+		if (type.equals(CommonText.MYCOLLECTION)) {
+			layoutID =  R.layout.topic_list_detail_item;
+			tableName = CommonText.MYCOLLECTION;
+		}else if(type.equals(CommonText.WORKEXPERIENCE)){
+			layoutID = R.layout.manage_info_list_item;
+			tableName = CommonText.WORKEXPERIENCE;
+		}
+		queryWhere = "select * from " + tableName + " where userId = '" + uTokenId + "' order by createtime desc";
 		commMapArray = dbUtil.queryData(self,queryWhere);
-		
-		if (commMapArray != null) {
-			String userId = commMapArray.get("userId")[0];
-			if (RegexUtil.checkNotNull(userId)) {
+		if (commMapArray != null && commMapArray.get("userId").length>0) {
 				commMapAdapter = new CommForMapArrayBaseAdapter(self, commMapArray,
-						R.layout.manage_info_list_item, "userId") {
+						layoutID, "userId") {
 
 					@Override
 					public void convert(ViewHolder holder, String[] item,
 							int position) {
-						holder.setText(R.id.item1,commMapArray.get("companyname")[position]);
-
-						String info_jobtitleStr = commMapArray.get("jobtitle")[position];
-
-						String info_companynatureStr = commMapArray.get("companynature")[position];
-						String info_companyscaleStr = commMapArray.get("companyscale")[position];
-
-						String info_industryclassificationStr = commMapArray.get("industryclassification")[position];
-
-						String info_startworktimeStr = commMapArray.get("worktimestart")[position];
-						String info_endworktimeStr = commMapArray.get("worktimeend")[position];
-						String info_expectedsalaryStr = commMapArray.get("expectedsalary")[position];
-
-						StringBuffer sbStr = new StringBuffer();
-						if (RegexUtil.checkNotNull(info_industryclassificationStr)) {
-							sbStr.append(info_industryclassificationStr );
+						if(type.equals(CommonText.MYCOLLECTION)){
+							setCollectionData(holder,commMapArray,position);
+						}else if(type.equals(CommonText.WORKEXPERIENCE)){
+							setWEData(holder,commMapArray,position);
 						}
-
-						if (RegexUtil.checkNotNull(info_companynatureStr)) {
-							sbStr.append(" | " + info_companynatureStr);
-						}
-
-						if (RegexUtil.checkNotNull(info_companyscaleStr)) {
-							sbStr.append(" | " + info_companyscaleStr);
-						}
-
-						StringBuffer sbStr2 = new StringBuffer();
-						if (RegexUtil.checkNotNull(info_jobtitleStr)) {
-							sbStr2.append(info_jobtitleStr);
-						}
-						if (RegexUtil.checkNotNull(info_expectedsalaryStr)) {
-							sbStr2.append(" | " +info_expectedsalaryStr);
-						}
-						
-						if (RegexUtil.checkNotNull(info_startworktimeStr)
-								&& RegexUtil.checkNotNull(info_endworktimeStr)) {
-							sbStr2.append(" | " + info_startworktimeStr + " 至 "
-									+ info_endworktimeStr);
-						}
-						
-						holder.setText(R.id.item11, sbStr.toString());
-						
-						holder.setText(R.id.item12, sbStr2.toString());
-						
-						final String tokenId = commMapArray.get("tokenId")[position];
-						holder.setOnClickEvent(R.id.item21, new ClickEvent() {
-
-							@Override
-							public void onClick(View view) {
-								DialogUtils.showDeleteDialog(self, tokenId, mHandler);
-							}
-						});
-
-						holder.setOnClickEvent(R.id.item22, new ClickEvent() {
-
-							@Override
-							public void onClick(View view) {
-								Intent intent=new Intent();
-						        intent.putExtra("tokenId", tokenId);
-						        setResult(Constants.RESULT_CODE, intent);
-								scrollToFinishActivity();
-							}
-						});
 					}
 				};
 
@@ -186,10 +136,128 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 				nodata.setText(CommUtil.getStrValue(self, R.string.en_nodata));
 				nodata.setVisibility(View.VISIBLE);
 			}
-		} else {
-			nodata.setText(CommUtil.getStrValue(self, R.string.en_nodata));
-			nodata.setVisibility(View.VISIBLE);
+	}
+	
+	/**
+	 * 
+	 * @Title:InfoManagerActivity
+	 * @Description: 我的收藏
+	 * @param holder
+	 * @param commMapArray
+	 * @param position
+	 */
+	private void setCollectionData(ViewHolder holder,final Map<String, String[]> commMapArray,int position){
+		String type = commMapArray.get("type")[position];//  0:面试分享心得;  !0:话题
+		if ("0".equals(type)) {
+			holder.setImageVisibe(R.id.topic_icon, View.GONE);
+			holder.setText(R.id.topic_content, commMapArray.get("content")[position]);
+			holder.setText(R.id.topic_title, "来自 " + commMapArray.get("sharename")[position] + "的分享");
+			holder.setText(R.id.topic_from, "面试心得"); // TODO 
+			holder.setText(R.id.topic_datime, commMapArray.get("createtime")[position]);
+		}else{
+			String fromUrl = commMapArray.get("from_url")[position];
+			if (RegexUtil.checkNotNull(fromUrl)) {
+				holder.setImageVisibe(R.id.topic_icon, View.GONE);
+			}else{
+				holder.setImageVisibe(R.id.topic_icon, View.VISIBLE);
+				holder.showImage(R.id.topic_icon,CommUtil.getHttpLink(fromUrl),false);
+			}
+			
+			holder.setText(R.id.topic_title, commMapArray.get("title")[position]);
+			holder.setText(R.id.topic_content, commMapArray.get("content")[position]);
+			holder.setText(R.id.topic_from, commMapArray.get("topic_from")[position]);
+			holder.setText(R.id.topic_datime, commMapArray.get("sharedatime")[position]);
 		}
+		
+		infoMoreListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				String type = commMapArray.get("type")[position];
+				if ("0".equals(type)) {
+					// 取消关注
+				}else{
+					// 跳转到详情
+					String topicId = commMapArray.get("topicId")[position];
+					
+				}
+			}
+		});
+	}
+	
+	/**
+	 * 
+	 * @Title:InfoManagerActivity
+	 * @Description: 管理我的工作经验
+	 * @param holder
+	 * @param commMapArray
+	 * @param position
+	 */
+	private void setWEData(ViewHolder holder,Map<String, String[]> commMapArray,int position){
+		holder.setText(R.id.item1,commMapArray.get("companyname")[position]);
+
+		String info_jobtitleStr = commMapArray.get("jobtitle")[position];
+
+		String info_companynatureStr = commMapArray.get("companynature")[position];
+		String info_companyscaleStr = commMapArray.get("companyscale")[position];
+
+		String info_industryclassificationStr = commMapArray.get("industryclassification")[position];
+
+		String info_startworktimeStr = commMapArray.get("worktimestart")[position];
+		String info_endworktimeStr = commMapArray.get("worktimeend")[position];
+		String info_expectedsalaryStr = commMapArray.get("expectedsalary")[position];
+
+		StringBuffer sbStr = new StringBuffer();
+		if (RegexUtil.checkNotNull(info_industryclassificationStr)) {
+			sbStr.append(info_industryclassificationStr );
+		}
+
+		if (RegexUtil.checkNotNull(info_companynatureStr)) {
+			sbStr.append(" | " + info_companynatureStr);
+		}
+
+		if (RegexUtil.checkNotNull(info_companyscaleStr)) {
+			sbStr.append(" | " + info_companyscaleStr);
+		}
+
+		StringBuffer sbStr2 = new StringBuffer();
+		if (RegexUtil.checkNotNull(info_jobtitleStr)) {
+			sbStr2.append(info_jobtitleStr);
+		}
+		if (RegexUtil.checkNotNull(info_expectedsalaryStr)) {
+			sbStr2.append(" | " +info_expectedsalaryStr);
+		}
+		
+		if (RegexUtil.checkNotNull(info_startworktimeStr)
+				&& RegexUtil.checkNotNull(info_endworktimeStr)) {
+			sbStr2.append(" | " + info_startworktimeStr + " 至 "
+					+ info_endworktimeStr);
+		}
+		
+		holder.setText(R.id.item11, sbStr.toString());
+		
+		holder.setText(R.id.item12, sbStr2.toString());
+		
+		final String tokenId = commMapArray.get("tokenId")[position];
+		holder.setOnClickEvent(R.id.item21, new ClickEvent() {
+
+			@Override
+			public void onClick(View view) {
+				DialogUtils.showDeleteDialog(self, tokenId, mHandler);
+			}
+		});
+
+		holder.setOnClickEvent(R.id.item22, new ClickEvent() {
+
+			@Override
+			public void onClick(View view) {
+				Intent intent=new Intent();
+		        intent.putExtra("tokenId", tokenId);
+		        setResult(Constants.RESULT_CODE, intent);
+				scrollToFinishActivity();
+			}
+		});
 	}
 	
 	/**
@@ -287,7 +355,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			
 			if (queryResult) {
 				set3Msg(R.string.action_sync_success);
-				initData();
+				initData(CommonText.WORKEXPERIENCE);
 			}
 		}
 	}

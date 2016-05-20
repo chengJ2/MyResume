@@ -24,6 +24,8 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 import android.widget.ImageView;
@@ -33,6 +35,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.me.resume.R;
 import com.me.resume.comm.CommonBaseAdapter;
@@ -43,8 +46,6 @@ import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.tools.L;
 import com.me.resume.views.CustomProgressDialog;
 import com.me.resume.views.GrapeGridview;
-import com.me.resume.views.SwitchButton;
-import com.me.resume.views.SwitchButton.OnChangedListener;
 
 /**
  * 
@@ -376,7 +377,7 @@ public class DialogUtils {
 		mPopupWindow.setAnimationStyle(R.style.popupAnim); 
 		
 		GrapeGridview bgrid = (GrapeGridview)layout.findViewById(R.id.bgrid);
-		SwitchButton setting_editmode_cb = (SwitchButton)layout.findViewById(R.id.setting_editmode_cb);
+		ToggleButton setting_editmode_cb = (ToggleButton)layout.findViewById(R.id.setting_editmode_cb);
 		LinearLayout setting_syn = (LinearLayout)layout.findViewById(R.id.llout_sync);
 		LinearLayout setting_manage = (LinearLayout)layout.findViewById(R.id.llout_manage);
 		View line_manage = (View)layout.findViewById(R.id.line_manage);
@@ -447,11 +448,11 @@ public class DialogUtils {
 			setting_editmode_cb.setChecked(false);
 		}
 		
-		setting_editmode_cb.setOnChangedListener(new OnChangedListener() {
+		setting_editmode_cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
-			public void OnChanged(SwitchButton switchButton, final boolean checkState) {
-				sendMsg(OnTopMenu.MSG_MENU2, checkState);
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				sendMsg(OnTopMenu.MSG_MENU2, isChecked);
 			}
 		});
 	

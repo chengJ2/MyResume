@@ -349,11 +349,11 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.info_hometown:
 			ActivityUtils.startActivityForResult(self, 
-					Constants.PACKAGENAMECHILD + "AddressActivity", false, Constants.BI_REQUEST_CODE2);
+					Constants.PACKAGENAMECHILD + Constants.ADDRESS, false, Constants.BI_REQUEST_CODE2);
 			break;
 		case R.id.info_city:
 			ActivityUtils.startActivityForResult(self, 
-					Constants.PACKAGENAMECHILD + "AddressActivity", false, Constants.BI_REQUEST_CODE);
+					Constants.PACKAGENAMECHILD + Constants.ADDRESS, false, Constants.BI_REQUEST_CODE);
 			break;
 		case R.id.info_maritalstatus:
 			whichTab = 1;
@@ -364,7 +364,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			getValues(R.array.ba_politicalstatus_values,info_politicalstatus,R.string.info_politicalstatus);
 			break;
 		case R.id.next:
-			goActivity("WorkExperienceActivity");
+			goActivity(Constants.WORKEXPERIENCE);
 			break;
 		case R.id.right_icon_more:
 			DialogUtils.showTopMenuDialog(self, topLayout,0,mHandler);

@@ -27,12 +27,12 @@
 
                     <View
                         android:id="@+id/view1"
-                        android:layout_width="22dip"
+                        android:layout_width="20dip"
                         android:layout_height="20dip"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="5dip"
-                        android:background="@drawable/hot" />
+                        android:background="@drawable/cover" />
 
                     <TextView
                         style="@style/home_item_text"

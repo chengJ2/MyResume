@@ -7,30 +7,25 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.GridView;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
-import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
-import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ResponseCode;
-import com.me.resume.comm.ViewHolder;
-import com.me.resume.comm.ViewHolder.ClickEvent;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.DataCleanManager;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.FileUtils;
-import com.me.resume.utils.PreferenceUtil;
 import com.me.resume.views.SwitchButton;
 import com.me.resume.views.SwitchButton.OnChangedListener;
 
@@ -44,7 +39,8 @@ import com.me.resume.views.SwitchButton.OnChangedListener;
  */
 public class SettingActivity extends BaseActivity implements OnClickListener{
 
-	private SwitchButton setting_start_cb,setting_auto_cb,setting_edit_cb;
+	private ToggleButton setting_start_cb,setting_auto_cb;
+	private SwitchButton setting_edit_cb;
 	
 	private LinearLayout cacheLayout,versionLayout,feedbackLayout,logoutLayout,shareLayout;
 	
@@ -127,13 +123,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	
 	private void initViews(){
 		setTopTitle(R.string.action_settings);
-		
 		setMsgHide();
-		
 		setRightIconVisible(View.INVISIBLE);
-		
 		setRight2IconVisible(View.GONE);
-		
 		setfabLayoutVisible(View.GONE);
 		
 		try {
@@ -156,11 +148,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void switchBtnClick(){
-		setting_start_cb.setOnChangedListener(new OnChangedListener() {
+		setting_start_cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
-			public void OnChanged(SwitchButton switchButton, boolean checkState) {
-				// TODO Auto-generated method stub
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				boolean onoff = false;
 				if(!preferenceUtil.getPreferenceData("startVerytime")){
 					onoff = true;
@@ -171,11 +162,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			}
 		});
 		
-		setting_auto_cb.setOnChangedListener(new OnChangedListener() {
+		setting_auto_cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
-			public void OnChanged(SwitchButton switchButton, boolean checkState) {
-				// TODO Auto-generated method stub
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				boolean onoff = false;
 				if(!preferenceUtil.getPreferenceData("autoShow")){
 					onoff = true;
@@ -192,7 +182,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			
 			@Override
 			public void OnChanged(SwitchButton switchButton, boolean checkState) {
-				// TODO Auto-generated method stub
 				boolean onoff = false;
 				if(!preferenceUtil.getPreferenceData("editmode")){
 					onoff = true;
@@ -219,8 +208,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void onResume() {
 		super.onResume();
-		boolean autoShow = preferenceUtil.getPreferenceData("autoShow");
 		boolean startVerytime = preferenceUtil.getPreferenceData("startVerytime");
+		boolean autoShow = preferenceUtil.getPreferenceData("autoShow");
 		boolean editmode = preferenceUtil.getPreferenceData("editmode");
 		if (startVerytime) {
 			setting_start_cb.setChecked(true);
@@ -232,9 +221,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			setting_auto_cb.setChecked(true);
 		}else{
 			setEffectDuration(false,R.color.grey_70);
-			llout020.setEnabled(false);
-			llout021.setEnabled(false);
-			
 			setting_auto_cb.setChecked(false);
 		}
 		if (editmode) {

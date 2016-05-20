@@ -226,7 +226,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			}
 			break;
 		case R.id.next:
-			startChildActivity("EducationActivity",false);
+			startChildActivity(Constants.EDUCATION,false);
 			break;
 		case R.id.info_exp_workingproperty:
 			whichTab = 1;
@@ -238,11 +238,11 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			break;
 		case R.id.info_expworkplace:
 			ActivityUtils.startActivityForResult(self, 
-					Constants.PACKAGENAMECHILD + "AddressActivity", false, Constants.JI_REQUEST_CODE2);
+					Constants.PACKAGENAMECHILD + Constants.ADDRESS, false, Constants.JI_REQUEST_CODE2);
 			break;
 		case R.id.info_expworkindustry:
 			ActivityUtils.startActivityForResult(self, 
-					Constants.PACKAGENAMECHILD + "IndustryTypeActivity", false, Constants.JI_REQUEST_CODE);
+					Constants.PACKAGENAMECHILD + Constants.INDUSTRYTYPE, false, Constants.JI_REQUEST_CODE);
 			break;
 		case R.id.info_expmonthlysalary:
 			whichTab = 4;

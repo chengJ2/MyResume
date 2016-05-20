@@ -18,7 +18,6 @@ public interface OnTopMenu {
 	public static final int MSG_MENU41 = 1005;
 	public static final int MSG_MENU42 = 1006;
 	
-
 //	boolean isCheck();
 //
 //	String checkColor();

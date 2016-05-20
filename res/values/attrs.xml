@@ -19,16 +19,15 @@
         <attr name="outlineEnabled" format="boolean" />
         <attr name="outlineColor" format="color|reference" />
     </declare-styleable>
-    
-     <declare-styleable name="SegmentButton">
+    <declare-styleable name="SegmentButton">
         <attr name="textSize" format="float" />
         <attr name="textPressColor" format="color" />
         <attr name="textNormalColor" format="color" />
         <!-- Button内容以分号隔开 -->
         <attr name="buttonContent" format="string" />
     </declare-styleable>
-    
-         <!-- SwipeBackLayout -->
+
+    <!-- SwipeBackLayout -->
     <declare-styleable name="SwipeBackLayout">
         <attr name="edge_size" format="dimension" />
         <attr name="edge_flag">
@@ -41,12 +40,13 @@
         <attr name="shadow_right" format="reference" />
         <attr name="shadow_bottom" format="reference" />
     </declare-styleable>
-    
+
     <attr name="SwipeBackLayoutStyle" format="reference" />
-    
+
     <declare-styleable name="FAB">
         <!-- Background color -->
-        <attr name="bg_color" format="color|reference"/>
-        <attr name="bg_color_pressed" format="color|reference"/>
+        <attr name="bg_color" format="color|reference" />
+        <attr name="bg_color_pressed" format="color|reference" />
     </declare-styleable>
+
 </resources>

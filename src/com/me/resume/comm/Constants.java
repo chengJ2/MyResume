@@ -77,4 +77,29 @@ public class Constants {
     // apk下载地址
     public static String APKURLPATH = CommonText.endPoint + "/apk/" + APKNAME;
     
+    // UI activity
+    public static final String ADDRESS = "AddressActivity";
+    public static final String BASEINFO = "BaseInfoActivity";
+    public static final String EDUCATION = "EducationActivity";
+    public static final String EVALUATION = "EvaluationActivity";
+    public static final String FEEDBACK = "FeedBackActivity";
+    public static final String HOME = "HomeActivity";
+    public static final String IMAGEPAGER = "ImagePagerActivity";
+    public static final String INDUSTRYTYPE = "IndustryTypeActivity";
+    public static final String INFOMANAGER = "InfoManagerActivity";
+    public static final String JOBINTENSION = "JobIntensionActivity";
+    public static final String MYCOLLECTION = "MyCollectionActivity";
+    public static final String OTHERINFO = "OtherInfoActivity";
+    public static final String PROFESSIONAL = "ProfessionalActivity";
+    public static final String PROJECTEXPERIENCE = "ProjectExperienceActivity";
+    public static final String RESUMECOVERMORE = "ResumeCoverMoreActivity";
+    public static final String RESUMESHAREMORE = "ResumeShareMoreActivity";
+    public static final String RESUMETEMPLMORE = "ResumeTemplMoreActivity";
+    public static final String SETTING = "SettingActivity";
+    public static final String STARTUP = "StartupActivity";
+    public static final String TOPIC = "TopicActivity";
+    public static final String TOPICLISTDETAIL = "TopicListDetailActivity";
+    public static final String USERCENTER = "UserCenterActivity";
+    public static final String USERLOGIN = "UserLoginActivity";
+    public static final String WORKEXPERIENCE = "WorkExperienceActivity";
 }

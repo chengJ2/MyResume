@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
+        android:background="@android:color/transparent"
         android:visibility="visible" >
 
         <com.me.resume.views.CustomFAB

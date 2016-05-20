@@ -69,6 +69,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	protected Map<String, List<String>> commMapList = null;
 
 	protected String queryWhere = "";
+	
+	protected String tableName = "";
 
 	// 用户没有登录注册时获取UUID
 	public static String uTokenId = "0";
@@ -104,8 +106,6 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	private static BaseActivity mInstance;
 	
 	protected PreferenceUtil preferenceUtil;
-	
-//	protected ImageLoader mImageLoader;
 	
 	public static BaseActivity getInstance(){
 		if (mInstance == null) {
@@ -181,6 +181,18 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 			winParams.flags &= ~bits;
 		}
 		win.setAttributes(winParams);
+	}
+	
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 设置顶部标题 及 图标
+	 * @author Comsys-WH1510032
+	 * @return 返回类型
+	 * @param id
+	 */
+	protected void setTopBarVisibility(int visibility) {
+		topLayout.setVisibility(visibility);
 	}
 	
 	/**

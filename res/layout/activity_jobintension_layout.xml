@@ -122,7 +122,7 @@
                     android:id="@+id/info_workingstate"
                     style="@style/user_info_item_ed"
                     android:singleLine="false"
-                    android:hint="@string/ji_info_workingstate" />
+                    android:hint="@string/ji_info_choose_workingstate" />
 
                 <ImageView
                     style="@style/user_info_item_iv"

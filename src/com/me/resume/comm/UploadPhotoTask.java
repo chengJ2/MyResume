@@ -88,7 +88,6 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 							
 							// 删除已存在的头像
 							FileUtils.deleteFile(new File(MyApplication.USERAVATORPATH));
-//							mHandler.sendMessage(mHandler.obtainMessage(1, user_avator));
 							bitmap = ImageUtils.getURLBitmap(CommUtil.getHttpLink(user_avator));
 							
 							return 1;

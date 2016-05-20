@@ -240,7 +240,7 @@ public class MainActivity extends Activity {
 		index_1_phone = ((TextView) view.findViewById(R.id.index_1_phone));
 		index_1_email = ((TextView) view.findViewById(R.id.index_1_email));
 		
-		initTopView(view,R.string.resume_baseinfo,"BaseInfoActivity");
+		initTopView(view,R.string.resume_baseinfo,Constants.BASEINFO);
 		
 		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '"+ BaseActivity.uTokenId +"' limit 1";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
@@ -309,7 +309,7 @@ public class MainActivity extends Activity {
 	private void initView2(View view){
 		index2layout = (LinearLayout) view.findViewById(R.id.index2layout);
 		weListview = (ListView) view.findViewById(R.id.weListview);
-		initTopView(view,R.string.resume_workexperience,"WorkExperienceActivity");
+		initTopView(view,R.string.resume_workexperience,Constants.WORKEXPERIENCE);
 		queryWhere = "select * from " + CommonText.WORKEXPERIENCE + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
@@ -336,7 +336,7 @@ public class MainActivity extends Activity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + "InfoManagerActivity",false);
+					ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + Constants.INFOMANAGER,false);
 				}
 			});
 		}
@@ -351,7 +351,7 @@ public class MainActivity extends Activity {
 		index3layout = (LinearLayout) view.findViewById(R.id.index3layout);
 		tagFlowLayout = (TagFlowLayout) view.findViewById(R.id.flowlayout);
 		self_evaluation = (TextView)view.findViewById(R.id.self_evaluation);
-		initTopView(view,R.string.resume_evaluation,"EvaluationActivity");
+		initTopView(view,R.string.resume_evaluation,Constants.EVALUATION);
 		queryWhere = "select * from " + CommonText.EVALUATION + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
@@ -394,7 +394,7 @@ public class MainActivity extends Activity {
 		index_4_info4 = (TextView)view.findViewById(R.id.index_4_info4);
 		index_4_info5 = (TextView)view.findViewById(R.id.index_4_info5);
 		index_4_info6 = (TextView)view.findViewById(R.id.index_4_info6);
-		initTopView(view,R.string.resume_jobintension,"JobIntensionActivity");
+		initTopView(view,R.string.resume_jobintension,Constants.JOBINTENSION);
 		queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
@@ -431,7 +431,7 @@ public class MainActivity extends Activity {
 		edListview = (CustomListView)view.findViewById(R.id.edListview);
 		trListview = (CustomListView)view.findViewById(R.id.trListview);
 		index6_trLayout = (LinearLayout)view.findViewById(R.id.index6_trLayout);
-		initTopView(view,R.string.resume_education,"EducationActivity");
+		initTopView(view,R.string.resume_education,Constants.EDUCATION);
 		queryWhere = "select * from " + CommonText.EDUCATION + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
@@ -528,7 +528,7 @@ public class MainActivity extends Activity {
 		listview2= (CustomListView) view.findViewById(R.id.listview2);
 		listview3= (CustomListView) view.findViewById(R.id.listview3);
 		
-		initTopView(view,R.string.resume_otherinfo,"OtherInfoActivity");
+		initTopView(view,R.string.resume_otherinfo,Constants.OTHERINFO);
 		
 		queryWhere = "select * from " + CommonText.OTHERINFO + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
@@ -641,7 +641,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				preferenceUtil.setPreferenceData("startVerytime", false);
-				ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + "HomeActivity");
+				ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + "HomeActivity",true);
 			}
 		});
 	}

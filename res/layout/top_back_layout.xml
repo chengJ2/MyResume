@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/top_bar_height"
+    android:background="@android:color/transparent">
+
+     <TextView
+        android:id="@+id/top_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:text="@string/resume_baseinfo"
+        android:textColor="@color/white"
+        android:textSize="@dimen/medium_text_size" />
+
+    <ImageView
+        android:id="@+id/left_back"
+        android:layout_width="50dip"
+        android:layout_height="30dip"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_back" />
+
+</RelativeLayout>
