@@ -241,17 +241,18 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 	
-	private boolean getotherinfoData(){
-		 queryWhere = "select * from " + CommonText.OTHERINFO2 + " where userId = '"+ uTokenId +"' order by id desc limit 1";
-		 mapArray2 = dbUtil.queryData(self, queryWhere);
-	        if (mapArray2!= null && mapArray2.get("userId").length > 0) {
-	        	otTokenId = mapArray2.get("tokenId")[0];
-	        	ot_otherinfo_edit.setVisibility(View.VISIBLE);
-	    		return true;
-	        }else{
-	        	ot_otherinfo_edit.setVisibility(View.GONE);
-	        	return false;
-	        }
+	private boolean getotherinfoData() {
+		queryWhere = "select * from " + CommonText.OTHERINFO2
+				+ " where userId = '" + uTokenId + "' order by id desc limit 1";
+		mapArray2 = dbUtil.queryData(self, queryWhere);
+		if (mapArray2 != null && mapArray2.get("userId").length > 0) {
+			otTokenId = mapArray2.get("tokenId")[0];
+			ot_otherinfo_edit.setVisibility(View.VISIBLE);
+			return true;
+		} else {
+			ot_otherinfo_edit.setVisibility(View.GONE);
+			return false;
+		}
 	}
 	
 	private void setOtherinfoData(){

@@ -78,7 +78,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
             	if(msg.obj!= null){
         			try {
         				ImageUtils.saveImage(self,(Bitmap)msg.obj,Constants.FILENAME);
-        				MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator + MyApplication.USERNAME + File.separator + Constants.FILENAME;
+        				MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator + MyApplication.USERNAME 
+        						+ File.separator + Constants.FILENAME; // 创建用户名文件夹
         				Bitmap bitmap = ImageUtils.getLoacalBitmap(MyApplication.USERAVATORPATH);
         				if (bitmap != null) {
         					setLeftIcon(ImageUtils.toRoundBitmap(bitmap));
@@ -89,7 +90,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         		}
             	break;
 			case 11:
-				startChildActivity("BaseInfoActivity",false);
+				startChildActivity(Constants.BASEINFO,false);
 				break;
 			case 12:
 				preferenceUtil.setPreferenceData("noticeshow",0);
@@ -323,7 +324,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 					@Override
 					public void onClick(View view) {
-						ActivityUtils.startActivityPro(self, Constants.PACKAGENAMECHILD + "TopicActivity", "title",
+						ActivityUtils.startActivityPro(self, 
+								Constants.PACKAGENAMECHILD + Constants.TOPIC, "title",
 								title[0]+";"+title[1]);
 
 					}
@@ -388,6 +390,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		
 		reviewCovergridview.setAdapter(commapBaseAdapter);
 	}
+	
 	/**
 	 * @Description: 面试分享心得
 	 */
@@ -463,7 +466,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				holder.setText(R.id.share_city, map.get("city").get(position));
 				holder.setText(R.id.share_datime, map.get("createtime").get(position));
 				
-				queryWhere = "select * from " + CommonText.MYCOLLECTION + " where content = '" + content +"'";
+				queryWhere = "select * from " + CommonText.MYCOLLECTION 
+						+ " where content = '" + content +"'";
 				commMapArray = dbUtil.queryData(self, queryWhere);
 				if (commMapArray == null) {
 					holder.setImageResource(R.id.share_collection, R.drawable.icon_collection_nor);
@@ -507,32 +511,30 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	private void addCollection(ViewHolder holder,Map<String, List<String>> map,int position){
 		String content = map.get("content").get(position);
 		String sharename = map.get("realname").get(position);
-		if (RegexUtil.checkNotNull(sharename)) {
+		if (!RegexUtil.checkNotNull(sharename)) {
 			sharename = map.get("username").get(position);
 		}
-		
-		queryWhere = "select * from " + CommonText.MYCOLLECTION + " where content = '" + content +"'";
-		commMapArray = dbUtil.queryData(self, queryWhere);
-		if (commMapArray == null) {
-			 ContentValues cValues = new ContentValues();
-			 cValues.put("userId", map.get("userId").get(position));
-			 cValues.put("title", "");
-			 cValues.put("content", content);
-			 cValues.put("sharename", sharename);
-			 cValues.put("sharenamecity", map.get("city").get(position));
-			 cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-			 cValues.put("type", "0");// 0:面试分享心得;  !0:话题
-			 
-			 queryResult = dbUtil.insertData(self, 
-						CommonText.MYCOLLECTION, cValues);
-			 if (queryResult) {
-				 toastMsg(R.string.item_text9);
-				 commapBaseAdapter.notifyDataSetChanged();
-			 }
+
+		ContentValues cValues = new ContentValues();
+		cValues.put("userId", uTokenId);
+		cValues.put("shareUserId", map.get("userId").get(position));
+		cValues.put("content", content);
+		cValues.put("sharename", sharename);
+		cValues.put("sharenamecity", map.get("city").get(position));
+		cValues.put("createtime", TimeUtils.getCurrentTimeInString());
+		cValues.put("type", "0");// 0:面试分享心得; !0:话题
+
+		queryResult = dbUtil.insertData(self, CommonText.MYCOLLECTION, cValues);
+		if (queryResult) {
+			toastMsg(R.string.item_text9);
+			commapBaseAdapter.notifyDataSetChanged();
 		}
 	}
 	
-	
+	/**
+	 * 面试分享是否有数据
+	 * @param hasdata
+	 */
 	private void setShareView(boolean hasdata){
 		if(hasdata){
 			reviewsharingListView.setVisibility(View.VISIBLE);
@@ -553,7 +555,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		L.d("======onResume======userId:"+MyApplication.USERID + "## uuid:" + uTokenId);
 		
 		initData();
-		MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator + MyApplication.USERNAME + File.separator + Constants.FILENAME;
+		MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator + MyApplication.USERNAME
+					+ File.separator + Constants.FILENAME; // 创建用户名文件夹
 		Bitmap bitmap = ImageUtils.getLoacalBitmap(MyApplication.USERAVATORPATH);
 		String avatorStr= preferenceUtil.getPreferenceData("avator", "");
 		if (bitmap != null && RegexUtil.checkNotNull(avatorStr)) {

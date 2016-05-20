@@ -14,7 +14,12 @@
     
     <dimen name="blarge_text_size">60dip</dimen>
     
+    <dimen name="home_item_height">40dip</dimen>
+    <dimen name="home_bottombar_height">48dip</dimen>
+    <dimen name="home_content_gridview_columnWidth">80dip</dimen>
+    
     <!-- 元素之间的 间距-->
+    <dimen name="margin_5">5dip</dimen>
     <dimen name="margin_8">8dip</dimen>
     <dimen name="margin_10">10dip</dimen>
     <dimen name="margin_16">16dip</dimen>

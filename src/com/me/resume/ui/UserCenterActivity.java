@@ -364,8 +364,9 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			startChildActivity(Constants.BASEINFO,false);
 			break;
 		case R.id.mycollection:
-			ActivityUtils.startActivityPro(self,
-					Constants.PACKAGENAMECHILD +Constants.INFOMANAGER,"type",CommonText.MYCOLLECTION);
+			startChildActivity(Constants.MYCOLLECTION,false);
+//			ActivityUtils.startActivityPro(self,
+//					Constants.PACKAGENAMECHILD +Constants.INFOMANAGER,"type",CommonText.MYCOLLECTION);
 			break;
 		case R.id.viewmode:
 			// TODO

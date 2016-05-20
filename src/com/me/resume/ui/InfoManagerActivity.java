@@ -30,7 +30,7 @@ import com.me.resume.utils.RegexUtil;
 import com.whjz.android.text.CommonText;
 
 /**
- * 栏目管理界面;个人收藏;
+ * 栏目管理界面;
  * 
  * @author Administrator
  * 
@@ -106,9 +106,8 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 
 	private void initData(final String type) {
 		int layoutID = 0;
-		if (type.equals(CommonText.MYCOLLECTION)) {
-			layoutID =  R.layout.topic_list_detail_item;
-			tableName = CommonText.MYCOLLECTION;
+		if (type.equals(CommonText.EDUCATION) || type.equals(CommonText.EDUCATION_TRAIN)) {
+			
 		}else if(type.equals(CommonText.WORKEXPERIENCE)){
 			layoutID = R.layout.manage_info_list_item;
 			tableName = CommonText.WORKEXPERIENCE;
@@ -122,8 +121,8 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 					@Override
 					public void convert(ViewHolder holder, String[] item,
 							int position) {
-						if(type.equals(CommonText.MYCOLLECTION)){
-							setCollectionData(holder,commMapArray,position);
+						if(type.equals(CommonText.EDUCATION) || type.equals(CommonText.EDUCATION_TRAIN)){
+							
 						}else if(type.equals(CommonText.WORKEXPERIENCE)){
 							setWEData(holder,commMapArray,position);
 						}
@@ -138,53 +137,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			}
 	}
 	
-	/**
-	 * 
-	 * @Title:InfoManagerActivity
-	 * @Description: 我的收藏
-	 * @param holder
-	 * @param commMapArray
-	 * @param position
-	 */
-	private void setCollectionData(ViewHolder holder,final Map<String, String[]> commMapArray,int position){
-		String type = commMapArray.get("type")[position];//  0:面试分享心得;  !0:话题
-		if ("0".equals(type)) {
-			holder.setImageVisibe(R.id.topic_icon, View.GONE);
-			holder.setText(R.id.topic_content, commMapArray.get("content")[position]);
-			holder.setText(R.id.topic_title, "来自 " + commMapArray.get("sharename")[position] + "的分享");
-			holder.setText(R.id.topic_from, "面试心得"); // TODO 
-			holder.setText(R.id.topic_datime, commMapArray.get("createtime")[position]);
-		}else{
-			String fromUrl = commMapArray.get("from_url")[position];
-			if (RegexUtil.checkNotNull(fromUrl)) {
-				holder.setImageVisibe(R.id.topic_icon, View.GONE);
-			}else{
-				holder.setImageVisibe(R.id.topic_icon, View.VISIBLE);
-				holder.showImage(R.id.topic_icon,CommUtil.getHttpLink(fromUrl),false);
-			}
-			
-			holder.setText(R.id.topic_title, commMapArray.get("title")[position]);
-			holder.setText(R.id.topic_content, commMapArray.get("content")[position]);
-			holder.setText(R.id.topic_from, commMapArray.get("topic_from")[position]);
-			holder.setText(R.id.topic_datime, commMapArray.get("sharedatime")[position]);
-		}
-		
-		infoMoreListView.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				String type = commMapArray.get("type")[position];
-				if ("0".equals(type)) {
-					// 取消关注
-				}else{
-					// 跳转到详情
-					String topicId = commMapArray.get("topicId")[position];
-					
-				}
-			}
-		});
-	}
 	
 	/**
 	 * 

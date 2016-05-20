@@ -21,158 +21,78 @@
                 android:orientation="vertical" >
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dip"
-                    android:background="@color/white" >
+                    style="@style/home_item">
 
                     <View
                         android:id="@+id/view1"
-                        android:layout_width="20dip"
-                        android:layout_height="20dip"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dip"
+                        style="@style/home_item_icon"
                         android:background="@drawable/cover" />
 
                     <TextView
                         style="@style/home_item_text"
-                        android:layout_width="wrap_content"
                         android:layout_toRightOf="@id/view1"
                         android:text="@string/item_text6" />
 
                     <ImageView
                         android:id="@+id/covermore"
-                        android:layout_width="60dip"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/more" />
+                        style="@style/home_item_more" />
                 </RelativeLayout>
 
                 <GridView
                     android:id="@+id/covergridview"
-                    android:layout_width="match_parent"
                     android:layout_height="180dip"
-                    android:layout_marginLeft="@dimen/margin_10"
-                    android:layout_marginRight="@dimen/margin_10"
-                    android:layout_marginTop="@dimen/margin_8"
-                    android:columnWidth="80dp"
-                    android:fadingEdge="none"
-                    android:fadingEdgeLength="0dip"
-                    android:gravity="center"
-                    android:listSelector="#00000000"
-                    android:numColumns="auto_fit"
-                    android:scrollbars="none"
-                    android:scrollingCache="false"
-                    android:smoothScrollbar="true"
-                    android:stretchMode="columnWidth"
-                    android:background="@color/white" >
-                </GridView>
+                    style="@style/home_content_grilview" />
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dip"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:background="@color/white" >
+                    style="@style/home_item" >
 
                     <View
                         android:id="@+id/view2"
-                        android:layout_width="22dip"
-                        android:layout_height="23dip"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dip"
+                        style="@style/home_item_icon"
                         android:background="@drawable/link" />
 
                     <TextView
                         style="@style/home_item_text"
-                        android:layout_width="wrap_content"
                         android:layout_toRightOf="@id/view2"
                         android:text="@string/item_text3" />
 
                     <ImageView
                         android:id="@+id/linkmore"
-                        android:layout_width="60dip"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:scaleType="centerInside"
-                        android:src="@drawable/more" />
+                        style="@style/home_item_more"/>
                 </RelativeLayout>
 
                 <GridView
                     android:id="@+id/linkgridview"
-                    android:layout_width="match_parent"
-                    android:layout_height="90dip"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:layout_marginLeft="@dimen/margin_10"
-                    android:layout_marginRight="@dimen/margin_10"
-                    android:columnWidth="80dp"
-                    android:fadingEdge="none"
-                    android:fadingEdgeLength="0dip"
-                    android:gravity="center"
-                    android:horizontalSpacing="10dp"
-                    android:verticalSpacing="10dp"
-                    android:listSelector="#00000000"
-                    android:numColumns="3"
-                    android:scrollbars="none"
-                    android:scrollingCache="false"
-                    android:smoothScrollbar="true"
-                    android:stretchMode="columnWidth"
-                    android:background="@color/white" >
-                </GridView>
+                    style="@style/home_content_grilview"
+                    android:layout_height="90dip"/>
 
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dip"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:background="@color/white" >
+                    style="@style/home_item" >
 
                     <View
                         android:id="@+id/view3"
-                        android:layout_width="22dip"
-                        android:layout_height="23dip"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="5dip"
+                       style="@style/home_item_icon"
                         android:background="@drawable/review" />
 
                     <TextView
                         style="@style/home_item_text"
-                        android:layout_width="wrap_content"
                         android:layout_toRightOf="@id/view3"
                         android:text="@string/item_text4" />
 
                     <ImageView
                         android:id="@+id/sharemore"
-                        android:layout_width="60dip"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:scaleType="centerInside"
+                        style="@style/home_item_more"
                         android:src="@drawable/more" />
                 </RelativeLayout>
 
                 <com.me.resume.views.CustomListView
                     android:id="@+id/reviewshareListView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:layout_marginLeft="@dimen/margin_10"
-                    android:layout_marginRight="@dimen/margin_10"
-                    android:cacheColorHint="#00000000"
-                    android:divider="@color/grey"
-                    android:dividerHeight="1px"
-                    android:footerDividersEnabled="true"
-                    android:listSelector="@android:color/transparent"
-                    android:scrollbars="none"
-                    android:visibility="visible" />
+                    style="@style/comm_listview_style" />
 
                 <TextView
                     android:id="@+id/msgText"
                     style="@style/comm_nodata_style"
-                    android:layout_marginTop="80dip"
+                    android:layout_marginTop="40dip"
                     android:visibility="gone" />
             </LinearLayout>
         </com.me.resume.views.CommScrollView>
@@ -180,7 +100,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dip"
+        android:layout_height="@dimen/home_bottombar_height"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:gravity="center"
@@ -189,13 +109,11 @@
         <Button
             android:id="@+id/make_btn"
             style="@style/button_menu"
-            android:layout_weight="1"
             android:text="@string/edit_resume" />
 
         <Button
             android:id="@+id/review_btn"
             style="@style/button_menu"
-            android:layout_weight="1"
             android:text="@string/review_resume"
             android:visibility="visible" />
     </LinearLayout>

@@ -46,31 +46,17 @@
                     <TextView
                         android:id="@+id/center_username"
                         style="@style/user_center_text"
-                        android:textColor="@color/white"
                         android:text="程健"/>
 
                     <TextView
                         android:id="@+id/center_workyear"
                         style="@style/user_center_text"
-                        android:textColor="@color/white"
                         android:text="|2年工作经验" />
                     <TextView
                         android:id="@+id/center_city"
                         style="@style/user_center_text"
-                        android:textColor="@color/white"
                         android:text="|武汉"/>
                 </LinearLayout>
-                
-                  <TextView
-                        android:id="@+id/info_complete"
-                        android:layout_width="match_parent"
-                		android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:textSize="@dimen/microd_text_size"
-                        android:textColor="@color/grey_10"
-                        android:paddingRight="@dimen/margin_10"
-                        android:text="完整度:12%"
-                        android:visibility="gone"/>
                 
             </LinearLayout>
             
@@ -216,8 +202,15 @@
                         android:text="@string/resume_project_experience"
                         android:textColor="@color/black" />
                     
-                    <ImageView
-                        style="@style/user_info_item_iv"
+                    <TextView
+                        android:id="@+id/info_item4"
+                        android:layout_width="150dip"
+                    	android:layout_height="match_parent"
+                        android:text=""
+                        android:gravity="center|right"
+                        android:textColor="@color/grey_10"
+                   	 	android:textSize="@dimen/micro_text_size"
+                        android:drawableRight="@drawable/arrows_right"
                         android:visibility="visible" />
                 </LinearLayout>
                 <View style="@style/line_padding10" />
