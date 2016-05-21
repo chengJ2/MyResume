@@ -25,12 +25,13 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
+import com.me.resume.comm.ResponseCode;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
+import com.me.resume.utils.TimeUtils;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -61,14 +62,15 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	private LinearLayout uselessLayoyut;
 	private ImageView arrow_updown;
 	
-	String rg_genderStr = "0";
-	String rg_maritalstatusStr = "0";
-	String rg_workingabroadStr = "0";
-	String rg_politicalstatusStr = "0";
+	private String rg_genderStr = "0";
+	private String rg_maritalstatusStr = "0";
+	private String rg_workingabroadStr = "0";
+	private String rg_politicalstatusStr = "0";
 	
-	String info_realnameStr,info_phoneStr,info_emailStr,info_nationalityStr,info_licenseStr;
+	private String info_realnameStr,info_phoneStr,info_emailStr,info_nationalityStr,info_licenseStr;
+	private String info_brithdayStr,info_workyearStr,info_hometownStr,info_cityStr;
 	
-	String info_brithdayStr,info_workyearStr,info_hometownStr,info_cityStr;
+	private boolean isShow = false;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -123,19 +125,9 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 								new String[]{uTokenId,getCheckColor(checkColor)},1);
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
-							if (!MyApplication.USERID.equals("0")) {
-								if (CommUtil.isNetworkAvailable(self)) {
-									set2Msg(R.string.action_syncing);
-									syncData();
-								}else{
-									set3Msg(R.string.check_network);
-								}
-								
-							}else{
-								set3Msg(R.string.action_login_head);
-							}
+							actionAync();
 						}else{
-							toastMsg(R.string.action_update_fail);
+							set3Msg(R.string.action_update_fail);
 						}
 					}
 				}else{
@@ -145,7 +137,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				break;
 			case OnTopMenu.MSG_MENU2:
 				if (msg.obj != null) {
-					preferenceUtil.setPreferenceData("edit_mode",(boolean) msg.obj);
+					preferenceUtil.setPreferenceData(Constants.EDITMODE,(boolean) msg.obj);
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
@@ -168,13 +160,13 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		boayLayout.addView(v);
 		
 		findViews();
+		
 		getChooseValue();
 		
 		mHandler.postDelayed(new Runnable() {
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				mHandler.sendEmptyMessage(100);
 			}
 		},100);
@@ -235,17 +227,35 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		info_email.addTextChangedListener(this);
 		info_nationality.addTextChangedListener(this);
 		info_license.addTextChangedListener(this);
-		
-		
 	}
 	
-	private void initData() {
-		L.d("===kid==="+uTokenId);
-		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId +"'";
+	/**
+	 * 初始化基本信息
+	 * @return
+	 */
+	private boolean getBaseInfo(){
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId + "' order by id desc limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+			LocalHasData = true;
 			setAddBtnSrc(R.drawable.ic_btn_edit);
-			
+			return true;
+		}else{
+			LocalHasData = false;
+			radioman.setChecked(true);
+			radio_no.setChecked(true);
+			info_maritalstatus.setText(CommUtil.getStrValue(self, R.string.info_maritalstatus_1));
+			info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_1));
+			setAddBtnSrc(R.drawable.ic_btn_add);
+			return false;
+		}
+	}
+	
+	/**
+	 * 显示数据
+	 */
+	private void initData() {
+		if (getBaseInfo()) {
 			info_realname.setText(commMapArray.get("realname")[0]);
 			info_phone.setText(commMapArray.get("phone")[0]);
 			info_email.setText(commMapArray.get("email")[0]);
@@ -292,12 +302,6 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			}else{
 				info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_1));
 			}
-		}else{
-			radioman.setChecked(true);
-			radio_no.setChecked(true);
-			info_maritalstatus.setText(CommUtil.getStrValue(self, R.string.info_maritalstatus_1));
-			info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_1));
-			setAddBtnSrc(R.drawable.ic_btn_add);
 		}
 		
 	}
@@ -319,7 +323,6 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				// TODO Auto-generated method stub
 				if (checkedId == radio_yes.getId()) {
 					rg_workingabroadStr = "1";
 				}else if (checkedId == radio_no.getId()){
@@ -371,12 +374,11 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.uselesstitleLayoyut:
 		case R.id.arrow_updown:
+			isShow = !isShow;
 			if (isShow) {
-				isShow = false;
 				arrow_updown.setImageResource(R.drawable.icon_arrow_up);
 				uselessLayoyut.setVisibility(View.VISIBLE);
 			}else{
-				isShow = true;
 				arrow_updown.setImageResource(R.drawable.icon_arrow_down);
 				uselessLayoyut.setVisibility(View.GONE);
 			}
@@ -386,8 +388,6 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		}
 		
 	}
-	
-	private boolean isShow = false;
 	
 	/**
 	 * @Description: 执行同步操作
@@ -409,24 +409,23 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	 * 同步本地库数据
 	 */
 	private void syncLocalData(){
-		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId + "' order by id desc limit 1";
-		commMapArray = dbUtil.queryData(self, queryWhere);
-		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-			String baId = commMapArray.get("id")[0];
+//		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId + "' order by id desc limit 1";
+//		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (LocalHasData) {
 			updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
-					new String[]{baId,
+					new String[]{"userId",
 					"realname","gender","brithday","joinworktime",
 					"phone","hometown","city","email","ismarry",
-					"nationality","license","workingabroad","politicalstatus"}, 
+					"nationality","license","workingabroad","politicalstatus","updatetime"}, 
 					new String[]{uTokenId,
 					info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
 					info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
-					info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr},2);
+					info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr,TimeUtils.getCurrentTimeInString()},3);
 			if (updResult == 1) {
 				toastMsg(R.string.action_update_success);
 				actionAync();
 			}else{
-				toastMsg(R.string.action_update_fail);
+				set3Msg(R.string.action_update_fail);
 			}
 		}else{
 			ContentValues cValues = new ContentValues();
@@ -445,6 +444,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			cValues.put("workingabroad", rg_workingabroadStr);
 			cValues.put("politicalstatus", rg_politicalstatusStr);
 			cValues.put("bgcolor", getCheckColor(checkColor));
+			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 			
 			queryResult = dbUtil.insertData(self,CommonText.BASEINFO, cValues);
 			if (queryResult) {
@@ -495,14 +495,9 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		}
 		
 		if (!RegexUtil.checkEmail(info_emailStr)) {
-			set2Msg(R.string.reg_info_email);
+			set3Msg(R.string.reg_info_email);
 			return false;
 		}
-		
-/*		if (!RegexUtil.checkNotNull(info_hometownStr)) {
-			setMsg(R.string.info_hometown);
-			return false;
-		}*/
 		
 		return true;
 	}
@@ -524,9 +519,9 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	 * @param src
 	 */
 	private void goActivity(String src){
-		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId +"'";
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId + "' order by id desc limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
-		if (commMapArray!= null) {
+		if (commMapArray != null) {
 			String realname = commMapArray.get("realname")[0];
 			if (RegexUtil.checkNotNull(realname)) {
 				startChildActivity(src,false);
@@ -558,8 +553,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	
 	/**
 	 * 
-	 * @Description: 同步数据(判断库是否有记录)
-	 * @author Comsys-WH1510032
+	 * @Description: 同步数据(判断库是否存在记录)
 	 */
 	private void syncData(){ 
 		List<String> params = new ArrayList<String>();
@@ -571,16 +565,15 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		requestData("pro_get_baseinfo", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				runOnUiThread(R.string.action_sync_fail);
+				syncRun(2);
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					String p_baId = map.get("id").get(0);
 					if (map.get("userId").get(0).equals(uTokenId)) {
-						syncRun(p_baId,3);
+						syncRun(3);
 					}else{
-						syncRun("1",2);
+						syncRun(2);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -591,16 +584,14 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	
 	/**
 	 * 执行同步数据请求
-	 * @param bdId
-	 * @param style
+	 * @param style 2：add 3.update
 	 */
-	private void syncRun(String bdId,int style){
+	private void syncRun(int style){
 		getFeildValue();
 		if(judgeField()){
 			List<String> params = new ArrayList<String>();
 			List<String> values = new ArrayList<String>();
 			
-			params.add("p_baId");
 			params.add("p_userId");
 			params.add("p_realname");
 			params.add("p_gender");
@@ -617,7 +608,6 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			params.add("p_politicalstatus");
 			params.add("p_bgcolor");
 			
-			values.add(bdId);
 			values.add(uTokenId);
 			values.add(info_realnameStr);
 			values.add(rg_genderStr);
@@ -634,7 +624,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			values.add(rg_politicalstatusStr);
 			values.add(getCheckColor(checkColor));
 			
-			requestData("pro_baseinfo", style, params, values, new HandlerData() {
+			requestData("pro_set_baseinfo", style, params, values, new HandlerData() {
 				@Override
 				public void error() {
 					runOnUiThread(R.string.action_sync_fail);
@@ -642,7 +632,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				
 				public void success(Map<String, List<String>> map) {
 					try {
-						if (map.get("msg").get(0).equals("200")) {
+						if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
 							runOnUiThread(R.string.action_sync_success);
 						}
 					} catch (Exception e) {
@@ -657,12 +647,12 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == Constants.BI_REQUEST_CODE){
         	if(resultCode == Constants.RESULT_CODE) {
-                String city = data.getStringExtra("city");
+                String city = data.getStringExtra(Constants.CITY);
                 info_city.setText(city);
             }
         }else if(requestCode == Constants.BI_REQUEST_CODE2){
         	if(resultCode == Constants.RESULT_CODE) {
-                String city = data.getStringExtra("city");
+                String city = data.getStringExtra(Constants.CITY);
                 info_hometown.setText(city);
             }
         }

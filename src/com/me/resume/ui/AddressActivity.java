@@ -184,16 +184,21 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 
 					@Override
 					public void onClick(View view) {
-						Intent intent=new Intent();
-				        intent.putExtra("city", mList.get(position));
-				        setResult(Constants.RESULT_CODE, intent);
-						scrollToFinishActivity();
+						setKeyResult(position);
 					}
 				});
 			}
 		};
 
 		hotaddress_gridview.setAdapter(commAdapter);
+	}
+	
+	
+	private void setKeyResult(int position){
+		Intent intent=new Intent();
+        intent.putExtra(Constants.CITY, mList.get(position));
+        setResult(Constants.RESULT_CODE, intent);
+		scrollToFinishActivity();
 	}
 	
 	/**
@@ -214,10 +219,7 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 
 					@Override
 					public void onClick(View view) {
-						Intent intent=new Intent();
-				        intent.putExtra("city", mList.get(position));
-				        setResult(Constants.RESULT_CODE, intent);
-						scrollToFinishActivity();
+						setKeyResult(position);
 					}
 				});
 			}

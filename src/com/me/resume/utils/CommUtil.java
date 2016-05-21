@@ -421,11 +421,14 @@ public class CommUtil {
         return sb.toString();
      }
      
-     
+     /**
+      * 获得随机数
+      * @param passLenth
+      * @return
+      */
      public static String getRandomNo(int passLenth) {
 
-         StringBuffer buffer = new StringBuffer(
-           "123456789");
+         StringBuffer buffer = new StringBuffer("123456789abcdefghijklmnupqrstuvwsyz");
          StringBuffer sb = new StringBuffer();
          Random r = new Random();
          int range = buffer.length();

@@ -7,10 +7,10 @@
     android:orientation="vertical"
     android:id="@+id/startup">
     
-    <View  
+    <ImageView  
         android:layout_width="match_parent"
     	android:layout_height="match_parent"
-    	android:background="#00CC00"
+    	android:background="@drawable/resume_cover"
     	android:layout_weight="1"/>
     
      <LinearLayout 

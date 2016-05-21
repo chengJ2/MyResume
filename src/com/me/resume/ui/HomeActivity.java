@@ -26,6 +26,7 @@ import com.me.resume.R;
 import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.UserInfoCode;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.model.UUIDGenerator;
@@ -204,7 +205,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 	
 	private void initData(){
-		String uid = preferenceUtil.getPreferenceData("uid", "0");
+		String uid = preferenceUtil.getPreferenceData(UserInfoCode.UTOKENID, "0");
 		queryWhere = "select * from " + CommonText.USERINFO +" where uid = '"+ uid +"' order by id desc limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		 if (commMapArray!= null && commMapArray.get("id").length > 0) {
@@ -216,13 +217,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			 ContentValues cValues = new ContentValues();
 			 cValues.put("uid", uuid);
 			 cValues.put("deviceid", deviceID);
+			 cValues.put("patform", "app");// 默认 app qq,sina...
 			 cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-			 cValues.put("lastlogintime", TimeUtils.getCurrentTimeInString());
 			 
-			 queryResult = dbUtil.insertData(self, 
-						CommonText.USERINFO, cValues);
+			 queryResult = dbUtil.insertData(self, CommonText.USERINFO, cValues);
 			 if (queryResult) {
-				 preferenceUtil.setPreferenceData("uid", uuid);
+				 preferenceUtil.setPreferenceData(UserInfoCode.UTOKENID, uuid);
 				 initData();
 			 }
 		 }
@@ -232,7 +232,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	 * 显示底部button
 	 */
 	private void initBottomButton(){
-		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId +"'";
+		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId +"' limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null) {
 			String realname = commMapArray.get("realname")[0];
@@ -550,22 +550,28 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		MyApplication.USERID = preferenceUtil.getPreferenceData("useId", "0");
-		MyApplication.USERNAME = preferenceUtil.getPreferenceData("username", "");
-		L.d("======onResume======userId:"+MyApplication.USERID + "## uuid:" + uTokenId);
-		
 		initData();
-		MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator + MyApplication.USERNAME
-					+ File.separator + Constants.FILENAME; // 创建用户名文件夹
-		Bitmap bitmap = ImageUtils.getLoacalBitmap(MyApplication.USERAVATORPATH);
-		String avatorStr= preferenceUtil.getPreferenceData("avator", "");
-		if (bitmap != null && RegexUtil.checkNotNull(avatorStr)) {
-			setLeftIcon(ImageUtils.toRoundBitmap(bitmap));
-		}else{
-			setLeftIcon(R.drawable.icon_person_avtar);
-			if (CommUtil.isNetworkAvailable(self)) {
-				if(RegexUtil.checkNotNull(avatorStr)){
-					mHandler.sendMessage(mHandler.obtainMessage(1, avatorStr));
+		
+		MyApplication.USERID = preferenceUtil.getPreferenceData(UserInfoCode.USEID, "0");
+		MyApplication.USERNAME = preferenceUtil.getPreferenceData(UserInfoCode.USERNAME,"");
+		L.d("======onResume======userId:" + MyApplication.USERID + "## uuid:"
+				+ uTokenId);
+
+		if (!MyApplication.USERID.equals(0)) { // 登录用户显示头像
+			MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator
+					+ MyApplication.USERNAME + File.separator
+					+ Constants.FILENAME; // 创建用户名文件夹
+			Bitmap bitmap = ImageUtils
+					.getLoacalBitmap(MyApplication.USERAVATORPATH);
+			String avatorStr = preferenceUtil.getPreferenceData(UserInfoCode.AVATOR, "");
+			if (bitmap != null && RegexUtil.checkNotNull(avatorStr)) {
+				setLeftIcon(ImageUtils.toRoundBitmap(bitmap));
+			} else {
+				setLeftIcon(R.drawable.icon_person_avtar);
+				if (CommUtil.isNetworkAvailable(self)) {
+					if (RegexUtil.checkNotNull(avatorStr)) {
+						mHandler.sendMessage(mHandler.obtainMessage(1,avatorStr));
+					}
 				}
 			}
 		}

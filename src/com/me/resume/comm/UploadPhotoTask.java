@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -34,19 +33,8 @@ import com.whjz.android.util.interfa.BaseCommonUtil;
 public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 
 	private Context context;
-//	private ProgressDialog pdialog;
-	private DataSetList dataSetList = null;
-	private List<String> paramname = null;
-	private List<String> paramvalue = null;
-	
 	private Handler mHandler;
-	
-	private String user_avator = "";
-	
 	private Bitmap bitmap = null;
-	
-	protected BaseCommonUtil baseCommon = new CommonUtil();;// 通用工具对象实例
-	
 	private PreferenceUtil preferenceUtil;
 	
 	public UploadPhotoTask(Context context,Handler mHandler){
@@ -63,9 +51,10 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 		if(!CommUtil.isNetworkAvailable(context)){
 			return -1;
 		}else if(arg0[0]!=null){
-			paramname = new ArrayList<String>();
-			paramvalue = new ArrayList<String>();
-			MyLog.d("photoPath:"+arg0[0].toString()+"---USERID--->"+MyApplication.USERID +"-->"+Base64Util.getPath());
+			List<String> paramname = new ArrayList<String>();
+			List<String> paramvalue = new ArrayList<String>();
+			MyLog.d("photoPath:"+arg0[0].toString()+"---USERID--->"
+					+ MyApplication.USERID +"-->"+Base64Util.getPath());
 			
 			paramname.add("file");
 			paramname.add("p_avator");
@@ -76,15 +65,16 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 			paramvalue.add(BaseActivity.uTokenId);
 			
 			Info info = new Info();
-			dataSetList = baseCommon.datasetlistUpdata(info.getUse(),info.getPass(), "pro_upload_avator",1, paramname,paramvalue,null);
+			BaseCommonUtil baseCommon = new CommonUtil();
+			DataSetList dataSetList = baseCommon.datasetlistUpdata(info.getUse(),info.getPass(), "pro_upload_avator",1, paramname,paramvalue,null);
 			if (dataSetList != null) {
 				if(dataSetList.nameList.size()>0){
 					try {
 						Map<String, List<String>> map = dataSetList.getMap();
 						String userID = map.get("userId").get(0);
 						if(userID != null && !"0".equals(userID)){
-							user_avator = map.get("avator").get(0);
-							preferenceUtil.setPreferenceData("avator", user_avator);
+							String user_avator = map.get(UserInfoCode.AVATOR).get(0);
+							preferenceUtil.setPreferenceData(UserInfoCode.AVATOR, user_avator);
 							
 							// 删除已存在的头像
 							FileUtils.deleteFile(new File(MyApplication.USERAVATORPATH));

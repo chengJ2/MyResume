@@ -86,6 +86,44 @@
         <item name="android:background">@color/white</item>
     </style>
 	<!-- Home style -->
+	
+	<!-- user center -->
+	<style name="user_center_content_func">
+	    <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+	    <item name="android:layout_weight">1</item>
+	    <item name="android:gravity">center</item>
+	    <item name="android:textColor">@color/grey_10</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
+	</style>
+	
+	<style name="user_center_item_left" parent="@style/user_info_item_tv">
+	    <item name="android:textColor">@color/black</item>
+	    <item name="android:layout_weight">5</item>
+	</style>
+	
+	<style name="user_center_item_right">
+	    <item name="android:layout_width">0dip</item>
+	     <item name="android:layout_height">match_parent</item>
+	    <item name="android:gravity">center|right</item>
+	    <item name="android:textColor">@color/grey_10</item>
+	    <item name="android:layout_weight">5</item>
+	    <item name="android:textColor">@color/grey_10</item>
+        <item name="android:textSize">@dimen/micro_text_size</item>
+        <item name="android:drawableRight">@drawable/arrows_right</item>
+	</style>
+	
+	<!-- user center -->
+	
+	<!-- base info -->
+	<style name="baseinfo_item_text" parent="@style/home_item_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">@dimen/home_item_height</item>
+        <item name="android:textColor">@color/grey_10</item>
+        <item name="android:paddingLeft">@dimen/margin_10</item>
+        <item name="android:background">@color/grey_80</item>
+    </style>
+	
     
     <style name="comm_listview_style">
         <item name="android:layout_width">match_parent</item>
@@ -108,7 +146,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">3</item>
         <item name="android:gravity">center|left</item>
-        <item name="android:textColor">@color/user_edit_text</item>
+        <item name="android:textColor">@color/grey_10</item>
         <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:singleLine">false</item>
         <item name="android:typeface">serif</item>
@@ -223,7 +261,7 @@
         <item name="android:padding">5dip</item>
         <item name="android:background">@null</item>
         <item name="android:singleLine">true</item>
-        <item name="android:drawablePadding">8dip</item>
+        <item name="android:drawablePadding">@dimen/margin_8</item>
         <item name="android:typeface">serif</item>
     </style>
 

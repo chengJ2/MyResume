@@ -101,5 +101,14 @@ public class Constants {
     public static final String TOPICLISTDETAIL = "TopicListDetailActivity";
     public static final String USERCENTER = "UserCenterActivity";
     public static final String USERLOGIN = "UserLoginActivity";
+    public static final String USERNEWPWD = "UserNewPwdActivity";
     public static final String WORKEXPERIENCE = "WorkExperienceActivity";
+    
+    public static final String TYPE = "type";
+    public static final String RESETPWD = "resetpwd";
+    public static final String FORGOTPWD = "forgotpwd";
+    
+    public static final String EDITMODE = "editmode";
+    public static final String CITY = "city";
+  
 }

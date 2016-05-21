@@ -65,20 +65,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginBottom="@dimen/margin_5"
                 android:background="@color/white"
                 android:orientation="horizontal" >
 
                 <TextView
                     android:id="@+id/mycollection"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                     style="@style/user_center_content_func"
                     android:drawableTop="@drawable/icon_collection_small"
-                    android:gravity="center"
-                    android:text="@string/personal_c_item1"
-                    android:textColor="@color/grey_10"
-                    android:textSize="@dimen/small_text_size" />
+                    android:text="@string/personal_c_item1"/>
                 
                 <View style="@style/line2" 
                     android:layout_height="40dip" 
@@ -86,14 +82,9 @@
                 
                 <TextView
                     android:id="@+id/viewmode"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                     style="@style/user_center_content_func"
                     android:drawableTop="@drawable/icon_sun_mode"
-                    android:gravity="center"
-                    android:text="@string/personal_c_item2"
-                    android:textColor="@color/grey_10"
-                    android:textSize="@dimen/small_text_size" />
+                    android:text="@string/personal_c_item2"/>
 
                 <View style="@style/line2" 
                     android:layout_height="40dip" 
@@ -101,14 +92,9 @@
                 
                 <TextView
                     android:id="@+id/review_resume"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
+                     style="@style/user_center_content_func"
                     android:drawableTop="@drawable/icon_review_small"
-                    android:gravity="center"
-                    android:text="@string/personal_c_item3"
-                    android:textColor="@color/grey_10"
-                    android:textSize="@dimen/small_text_size" />
+                    android:text="@string/personal_c_item3" />
             </LinearLayout>
 
             <View style="@style/line_h15" />
@@ -125,21 +111,13 @@
                     style="@style/noraml_item" >
 
                     <TextView
-                        style="@style/user_info_item_tv"
-                        android:layout_weight="5"
-                        android:text="@string/resume_jobintension"
-                        android:textColor="@color/black" />
+                        style="@style/user_center_item_left"
+                        android:text="@string/resume_jobintension"/>
 
                     <TextView
                         android:id="@+id/info_item1"
-                        android:layout_width="150dip"
-                    	android:layout_height="match_parent"
-                        android:text="@string/personal_c_item11"
-                        android:gravity="center|right"
-                        android:textColor="@color/grey_10"
-                   	 	android:textSize="@dimen/micro_text_size"
-                        android:drawableRight="@drawable/arrows_right"
-                        android:visibility="visible" />
+                        style="@style/user_center_item_right"
+                        android:text="未填写" />
                 </LinearLayout>
 
                 <View style="@style/line_padding10" />
@@ -149,21 +127,13 @@
                     style="@style/noraml_item" >
 
                     <TextView
-                        style="@style/user_info_item_tv"
-                        android:layout_weight="5"
-                        android:text="@string/resume_education"
-                        android:textColor="@color/black" />
+                        style="@style/user_center_item_left"
+                        android:text="@string/resume_education"/>
 
                    <TextView
                        android:id="@+id/info_item2"
-                        android:layout_width="150dip"
-                    	android:layout_height="match_parent"
-                        android:text="完整度：70%"
-                        android:gravity="center|right"
-                        android:textColor="@color/grey_10"
-                   	 	android:textSize="@dimen/micro_text_size"
-                        android:drawableRight="@drawable/arrows_right"
-                        android:visibility="visible" />
+                       style="@style/user_center_item_right"
+                       android:text="完整度：70%" />
                 </LinearLayout>
 
                 <View style="@style/line_padding10" />
@@ -173,21 +143,13 @@
                     style="@style/noraml_item" >
 
                     <TextView
-                        style="@style/user_info_item_tv"
-                        android:layout_weight="5"
-                        android:text="@string/resume_workexperience2"
-                        android:textColor="@color/black" />
+                        style="@style/user_center_item_left"
+                        android:text="@string/resume_workexperience2"/>
 
                     <TextView
                         android:id="@+id/info_item3"
-                        android:layout_width="150dip"
-                    	android:layout_height="match_parent"
-                        android:text="完整度(90%)"
-                        android:gravity="center|right"
-                        android:textColor="@color/grey_10"
-                   	 	android:textSize="@dimen/micro_text_size"
-                        android:drawableRight="@drawable/arrows_right"
-                        android:visibility="visible" />
+                        style="@style/user_center_item_right"
+                        android:text="完整度(90%)" />
                 </LinearLayout>
                 
                 <View style="@style/line_padding10" />
@@ -197,21 +159,12 @@
                     style="@style/noraml_item" >
 
                     <TextView
-                        style="@style/user_info_item_tv"
-                        android:layout_weight="5"
-                        android:text="@string/resume_project_experience"
-                        android:textColor="@color/black" />
-                    
+                        style="@style/user_center_item_left"
+                        android:text="@string/resume_project_experience" />
                     <TextView
                         android:id="@+id/info_item4"
-                        android:layout_width="150dip"
-                    	android:layout_height="match_parent"
-                        android:text=""
-                        android:gravity="center|right"
-                        android:textColor="@color/grey_10"
-                   	 	android:textSize="@dimen/micro_text_size"
-                        android:drawableRight="@drawable/arrows_right"
-                        android:visibility="visible" />
+                        style="@style/user_center_item_right"
+                        android:text="已有1项目经验"/>
                 </LinearLayout>
                 <View style="@style/line_padding10" />
             </LinearLayout>

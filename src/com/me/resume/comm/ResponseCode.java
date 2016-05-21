@@ -23,7 +23,11 @@ public class ResponseCode {
 	 */
 	public static final String USERNAME_REPEAT = "405";
 	
-
+	/**
+	 * 用户名/手机号不存在
+	 */
+	public static final String USERNAME_NOEXIST = "406";
+	
 	// 请求超时
 	public static final int EXECUTE_TIMEOUT = -0X2000;
 

@@ -116,8 +116,6 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		findViews();
 		
 		setTopBarVisibility(View.GONE);
-		top_text.setText(CommUtil.getStrValue(self, R.string.personal_center));
-		
 		setMsgHide();
 		setRightIconVisible(View.VISIBLE);
 		setRightIcon(R.drawable.icon_setting);
@@ -140,7 +138,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		setAnimView(center_topbar,1);
 		top_text = findView(R.id.top_text);
 		left_back = findView(R.id.left_back);
-		
+		top_text.setText(CommUtil.getStrValue(self, R.string.personal_center));
 		center_topbar.postDelayed(new Runnable() {
 			
 			@Override
@@ -272,6 +270,19 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			info_item1.setText("未填写");
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/*public void stopAudioThread() {
 		if (athread != null) {

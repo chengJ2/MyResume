@@ -297,7 +297,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			public void success(Map<String, List<String>> map) {
 				try {
 					if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
-//						preferenceUtil.clearPreferenceData();
 						preferenceUtil.setPreferenceData("avator", "");
 						preferenceUtil.setPreferenceData("useId","0");
 						preferenceUtil.setPreferenceData("isregister", false);

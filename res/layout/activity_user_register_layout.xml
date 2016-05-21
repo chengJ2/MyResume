@@ -27,7 +27,7 @@
             android:id="@+id/regTxt_password"
             style="@style/userinfo_item_style"
             android:drawableLeft="@drawable/pwdicon"
-            android:hint="@string/login_input2_hint"
+            android:hint="@string/login_input_pwd_hint"
             android:inputType="textPassword" />
 
         <View style="@style/line_padding10" />
@@ -36,7 +36,7 @@
             android:id="@+id/regTxt2_password"
             style="@style/userinfo_item_style"
             android:drawableLeft="@drawable/pwdicon"
-            android:hint="@string/login_input3_hint"
+            android:hint="@string/login_input_snew_pwd_hint"
             android:inputType="textPassword" />
     </LinearLayout>
 

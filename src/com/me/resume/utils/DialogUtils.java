@@ -442,7 +442,7 @@ public class DialogUtils {
 		
 		SharedPreferences sp = context.getSharedPreferences(Constants.CONFIG, Context.MODE_PRIVATE);
 		
-		if (sp.getBoolean("edit_mode", false)) {
+		if (sp.getBoolean(Constants.EDITMODE, false)) {
 			setting_editmode_cb.setChecked(true);
 		}else{
 			setting_editmode_cb.setChecked(false);
@@ -460,11 +460,7 @@ public class DialogUtils {
 			
 			@Override
 			public void onClick(View v) {
-//				if (MyApplication.userId > 0) {
-					sendMsg(OnTopMenu.MSG_MENU3);
-//				}else{
-//					sendMsg(OnTopMenu.MSG_MENU31);
-//				}
+				sendMsg(OnTopMenu.MSG_MENU3);
 				dismissPopwindow();
 			}
 		});

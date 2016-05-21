@@ -96,6 +96,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	
 	protected String deviceID = "";// 设备标识码
 	
+	protected Boolean LocalHasData = false;// 本地是否有数据
+	
 	/**
 	 * 操作类型 
 	 * 0:从服务器同步数据到本地

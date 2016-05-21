@@ -18,8 +18,11 @@ import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
+import com.me.resume.comm.UserInfoCode;
 import com.me.resume.tools.L;
+import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
@@ -38,13 +41,13 @@ public class UserLoginActivity extends BaseActivity implements
 	
 	private ImageView save_checkbox;
 	private TextView savePassWord;
-	private TextView forgotPassWord;
+	private TextView resetPassWord,forgotPassWord;
 	
 	private TextView acclogin;
 	
 	private Button btnLogin;
 	
-	private boolean fflag = true;
+	private boolean fflag = false;
 	
 	private String str_username,str_password;
 	
@@ -59,10 +62,9 @@ public class UserLoginActivity extends BaseActivity implements
 			switch (msg.what) {
 			case 11:
 				if (updResult == 1 || queryResult) {
-					startChildActivity("UserCenterActivity",true);
+					startChildActivity(Constants.USERCENTER,true);
 				}
 				break;
-
 			default:
 				break;
 			}
@@ -75,6 +77,7 @@ public class UserLoginActivity extends BaseActivity implements
 		boayLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_user_layout, null);
 		boayLayout.addView(v);
+		
 		findViews();
 		
 		initViews();
@@ -92,6 +95,7 @@ public class UserLoginActivity extends BaseActivity implements
 		
 		save_checkbox = findView(R.id.save_checkbox);
 		savePassWord = findView(R.id.savePassWord);
+		resetPassWord = findView(R.id.resetPassWord);
 		forgotPassWord = findView(R.id.forgotPassWord);
 		acclogin = findView(R.id.acclogin);
 		
@@ -99,6 +103,7 @@ public class UserLoginActivity extends BaseActivity implements
 		
 		save_checkbox.setOnClickListener(this);
 		savePassWord.setOnClickListener(this);
+		resetPassWord.setOnClickListener(this);
 		forgotPassWord.setOnClickListener(this);
 		acclogin.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
@@ -112,28 +117,32 @@ public class UserLoginActivity extends BaseActivity implements
 		
 	}
 	
-	private void initViews(){
-		setTopTitle(R.string.action_user_login);
-		setMsgHide();
+	@Override
+	protected void onResume() {
+		super.onResume();
 		
-		if (preferenceUtil.getPreferenceData("isregister")) {
-			setRightIconVisible(View.GONE);
-		}else{
-			right_icon.setImageResource(R.drawable.icon_user_register);
-			setRightIconVisible(View.VISIBLE);
-		}
-		
-		setRight2IconVisible(View.GONE);
-		setfabLayoutVisible(View.GONE);
-		edtTxt_username.setText(preferenceUtil.getPreferenceData("username", ""));
-		if (preferenceUtil.getPreferenceData("fflag")) {
-			edtTxt_password.setText(preferenceUtil.getPreferenceData("password", ""));
+		edtTxt_username.setText(preferenceUtil.getPreferenceData(UserInfoCode.USERNAME, ""));
+		if (preferenceUtil.getPreferenceData(UserInfoCode.SAVEPWD)) {
+			edtTxt_password.setText(preferenceUtil.getPreferenceData(UserInfoCode.PASSWORD, ""));
 			save_checkbox.setBackgroundResource(R.drawable.checkbox_sel);
 		}else{
 			edtTxt_password.setText("");
 			save_checkbox.setBackgroundResource(R.drawable.checkbox_nor);
 		}
+	}
+	
+	private void initViews(){
+		setTopTitle(R.string.action_user_login);
+		setMsgHide();
+		setRight2IconVisible(View.GONE);
+		setfabLayoutVisible(View.GONE);
 		
+		if (preferenceUtil.getPreferenceData(UserInfoCode.ISREGISTER)) {
+			setRightIconVisible(View.GONE);
+		}else{
+			right_icon.setImageResource(R.drawable.icon_user_register);
+			setRightIconVisible(View.VISIBLE);
+		}
 		btnLogin.setText(CommUtil.getStrValue(self, R.string.action_login));
 		btnLogin.setEnabled(true);
 	}
@@ -163,7 +172,6 @@ public class UserLoginActivity extends BaseActivity implements
 			setRightIconVisible(View.GONE);
 			
 			setAnimView(user_login_layout,0);
-			
 			setAnimView(user_register_layout,1);
 			
 			user_login_layout.setVisibility(View.GONE);
@@ -172,6 +180,14 @@ public class UserLoginActivity extends BaseActivity implements
 		case R.id.save_checkbox:
 		case R.id.savePassWord:
 			setState();
+			break;
+		case R.id.resetPassWord:
+			ActivityUtils.startActivityPro(self,
+			Constants.PACKAGENAMECHILD +Constants.USERNEWPWD,Constants.TYPE,Constants.RESETPWD);
+			break;
+		case R.id.forgotPassWord:
+			ActivityUtils.startActivityPro(self,
+					Constants.PACKAGENAMECHILD +Constants.USERNEWPWD,Constants.TYPE,Constants.FORGOTPWD);
 			break;
 		case R.id.btn_login:
 			if (CommUtil.isNetworkAvailable(self)) {
@@ -318,7 +334,7 @@ public class UserLoginActivity extends BaseActivity implements
 	 */
 	private void sendSuccess(final Map<String, List<String>> map){
 		uTokenId = map.get("uid").get(0);
-		preferenceUtil.setPreferenceData("uid", uTokenId);
+		preferenceUtil.setPreferenceData(UserInfoCode.UTOKENID, uTokenId);
 		String feildStr1 = map.get("username").get(0);
 		String feildStr2 = map.get("password").get(0);
 		String feildStr3 = map.get("deviceId").get(0);
@@ -327,16 +343,17 @@ public class UserLoginActivity extends BaseActivity implements
 		String feildStr6 = map.get("lastlogintime").get(0);
 		String feildStr7 = map.get("userstatus").get(0);
 		
-		preferenceUtil.setPreferenceData("username",feildStr1);
-		preferenceUtil.setPreferenceData("password",str_password);
+		preferenceUtil.setPreferenceData(UserInfoCode.USERNAME,feildStr1);
+		preferenceUtil.setPreferenceData(UserInfoCode.PASSWORD,str_password);
 		
 		queryWhere = "select * from " + CommonText.USERINFO + " where uid = '" + uTokenId + "'";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("id").length > 0) {
-			updResult = dbUtil.updateData(self, CommonText.USERINFO,
+			/*updResult = dbUtil.updateData(self, CommonText.USERINFO,
 					new String[]{"uid=?","username","userpassword","patform",
-										 "updatetime","lastlogintime","userstatus"}, 
-					new String[]{uTokenId,feildStr1,feildStr2,feildStr4,feildStr5,feildStr6,feildStr7},1);
+										 "createtime","updatetime","lastlogintime","userstatus"}, 
+					new String[]{uTokenId,feildStr1,feildStr2,feildStr4,
+										feildStr5,TimeUtils.getCurrentTimeInString(),feildStr6,feildStr7},1);*/
 		}else{
 			ContentValues cValues = new ContentValues();
 			cValues.put("uid", uTokenId);
@@ -353,7 +370,7 @@ public class UserLoginActivity extends BaseActivity implements
 		}
 		
 		if(updResult == 1 || queryResult){
-			preferenceUtil.setPreferenceData("useId",uTokenId);
+			preferenceUtil.setPreferenceData(UserInfoCode.USEID,uTokenId);
 			getBaseinfo(map);
 		}
 	}
@@ -401,71 +418,40 @@ public class UserLoginActivity extends BaseActivity implements
 		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId + "' limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		
-		if (commMapArray != null) {
+		if (commMapArray != null) {/*
 			String userId = commMapArray.get("userId")[0];
 			if (RegexUtil.checkNotNull(userId)) {
-				ContentValues cValues = new ContentValues();
-				String feildStr10 = getLocalKeyValue(commMapArray,map,"userId");
-				cValues.put("userId", feildStr10);
-				
+//				String feildStr10 = getLocalKeyValue(commMapArray,map,"userId");
 				String feildStr11 = getLocalKeyValue(commMapArray,map,"realname");
-				cValues.put("realname", feildStr11);
-				
 				String feildStr12 = getLocalKeyValue(commMapArray,map,"gender");
-				cValues.put("gender", feildStr12);
-				
 				String feildStr13 = getLocalKeyValue(commMapArray,map,"brithday");
-				cValues.put("brithday", feildStr13);
-				
 				String feildStr14 = getLocalKeyValue(commMapArray,map,"joinworktime");
-				cValues.put("joinworktime", feildStr14);
-				
 				String feildStr15 = getLocalKeyValue(commMapArray,map,"phone");
-				cValues.put("phone", feildStr15);
-				
 				String feildStr16 = getLocalKeyValue(commMapArray,map,"hometown");
-				cValues.put("hometown", feildStr16);
-				
 				String feildStr17 = getLocalKeyValue(commMapArray,map,"city");
-				cValues.put("city", feildStr17);
-				
 				String feildStr18 = getLocalKeyValue(commMapArray,map,"email");
-				cValues.put("email", feildStr18);
-				
 				String feildStr19 = getLocalKeyValue(commMapArray,map,"ismarry");
-				cValues.put("ismarry", feildStr19);
-				
 				String feildStr20 = getLocalKeyValue(commMapArray,map,"nationality");
-				cValues.put("nationality", feildStr20);
-				
 				String feildStr21 = getLocalKeyValue(commMapArray,map,"license");
-				cValues.put("license", feildStr21);
-				
 				String feildStr22 = getLocalKeyValue(commMapArray,map,"workingabroad");
-				cValues.put("workingabroad", feildStr22);
-				
 				String feildStr23 = getLocalKeyValue(commMapArray,map,"politicalstatus");
-				cValues.put("politicalstatus", feildStr23);
-				
 				String feildStr24 = getLocalKeyValue(commMapArray,map,"bgcolor");
-				cValues.put("bgcolor", feildStr24);
-				
 				String feildStr25 = getLocalKeyValue(commMapArray,map,"avator");
-				cValues.put("avator", feildStr25);
+				String feildStr26 = getLocalKeyValue(commMapArray,map,"updatetime");
 				preferenceUtil.setPreferenceData("avator",feildStr25);
 				
 				String baid = commMapArray.get("id")[0];
 				updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
 						new String[]{baid,"realname","gender","brithday","joinworktime",
 						"phone","hometown","city","email","ismarry",
-						"nationality","license","workingabroad","politicalstatus","bgcolor","avator"}, 
+						"nationality","license","workingabroad","politicalstatus","bgcolor","avator","updatetime"}, 
 						new String[]{uTokenId,feildStr11,feildStr12,feildStr13,feildStr14,
 						feildStr15,feildStr16,feildStr17,feildStr18,feildStr19,
-						feildStr20,feildStr21,feildStr22,feildStr23,feildStr24,feildStr25},2);
+						feildStr20,feildStr21,feildStr22,feildStr23,feildStr24,feildStr25,feildStr26},2);
 			}else{
 				insertBaseInfo(map);
 			}
-		}else{
+		*/}else{
 			insertBaseInfo(map);
 		}
 		
@@ -496,7 +482,7 @@ public class UserLoginActivity extends BaseActivity implements
 		cValues.put("bgcolor",getServerKeyValue(map,"bgcolor"));
 		String avatorStr = getServerKeyValue(map,"avator");
 		cValues.put("avator",avatorStr);
-		preferenceUtil.setPreferenceData("avator",avatorStr);
+		preferenceUtil.setPreferenceData(UserInfoCode.AVATOR,avatorStr);
 		
 		queryResult = dbUtil.insertData(self, CommonText.BASEINFO, cValues);
 	}
@@ -520,14 +506,13 @@ public class UserLoginActivity extends BaseActivity implements
 	 * 记住密码
 	 */
 	private void setState() {
+		fflag = !fflag;
 		if (fflag) {
-			fflag = false;
-			save_checkbox.setBackgroundResource(R.drawable.checkbox_nor);
-		} else {
-			fflag = true;
 			save_checkbox.setBackgroundResource(R.drawable.checkbox_sel);
+		} else {
+			save_checkbox.setBackgroundResource(R.drawable.checkbox_nor);
 		}
-		preferenceUtil.setPreferenceData("fflag", fflag);
+		preferenceUtil.setPreferenceData(UserInfoCode.SAVEPWD, fflag);
 	}
 
 	/**
