@@ -281,27 +281,12 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			info_workyear.setText(commMapArray.get("joinworktime")[0]);
 			info_hometown.setText(commMapArray.get("hometown")[0]);
 			info_city.setText(commMapArray.get("city")[0]);
+			
 			String ismarry = commMapArray.get("ismarry")[0];
-			if(ismarry.equals("1")){
-				info_maritalstatus.setText(CommUtil.getStrValue(self, R.string.info_maritalstatus_2));
-			}else if(ismarry.equals("2")){
-				info_maritalstatus.setText(CommUtil.getStrValue(self, R.string.info_maritalstatus_3));
-			}else{
-				info_maritalstatus.setText(CommUtil.getStrValue(self, R.string.info_maritalstatus_1));
-			}
+			setArrayValue(R.array.ba_maritalstatus_values,info_maritalstatus,CommUtil.parseInt(ismarry));
 			
 			String politicalstatus = commMapArray.get("politicalstatus")[0];
-			if(politicalstatus.equals("1")){
-				info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_2));
-			}else if(politicalstatus.equals("2")){
-				info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_3));
-			}else if(politicalstatus.equals("3")){
-				info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_4));
-			}else if(politicalstatus.equals("4")){
-				info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_5));
-			}else{
-				info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_1));
-			}
+			setArrayValue(R.array.ba_politicalstatus_values,info_politicalstatus,CommUtil.parseInt(politicalstatus));
 		}
 		
 	}
@@ -512,6 +497,17 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		String[] item_text = CommUtil.getArrayValue(self,array); 
 		mList = Arrays.asList(item_text);
 		DialogUtils.showPopWindow(self, parent, resId, mList, mHandler);
+	}
+	
+	/**
+	 * 设置弹出窗数据
+	 * @param array
+	 * @param parent
+	 * @param resId
+	 */
+	private void setArrayValue(int array,TextView tv,int value){
+		String[] item_text = CommUtil.getArrayValue(self,array); 
+		tv.setText(item_text[value]);
 	}
 	
 	/**

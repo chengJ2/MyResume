@@ -81,9 +81,9 @@
         android:layout_below="@id/btn_register"
         android:layout_margin="@dimen/margin_10"
         android:textSize="@dimen/micro_text_size"
-        android:textColor="@color/grey_10"
+        android:textColor="@color/red"
         android:lineSpacingExtra="3dip"
-        android:text="(备注:每个用户只能注册一次,请注意同步资料！ 若想重新注册,请到设置界面进行清除本地缓存操作)"/>
+        android:text="@string/register_warn"/>
 
     <TextView
         android:id="@+id/acclogin"

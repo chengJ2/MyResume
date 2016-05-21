@@ -93,7 +93,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		nodata.setText(CommUtil.getStrValue(self, R.string.item_text43));
 		nodata.setVisibility(View.VISIBLE);
 
-		type = getIntent().getStringExtra("type");
+		type = getIntent().getStringExtra(Constants.TYPE);
 		L.d("==type==" + type);
 		initData(type);
 	}
@@ -106,11 +106,13 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 
 	private void initData(final String type) {
 		int layoutID = 0;
-		if (type.equals(CommonText.EDUCATION) || type.equals(CommonText.EDUCATION_TRAIN)) {
+		if (type.equals(CommonText.EDUCATION)) {
 			
 		}else if(type.equals(CommonText.WORKEXPERIENCE)){
 			layoutID = R.layout.manage_info_list_item;
 			tableName = CommonText.WORKEXPERIENCE;
+		}else if (type.equals(CommonText.PROJECT_EXPERIENCE)) {
+			tableName = CommonText.PROJECT_EXPERIENCE;
 		}
 		queryWhere = "select * from " + tableName + " where userId = '" + uTokenId + "' order by createtime desc";
 		commMapArray = dbUtil.queryData(self,queryWhere);
@@ -121,10 +123,12 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 					@Override
 					public void convert(ViewHolder holder, String[] item,
 							int position) {
-						if(type.equals(CommonText.EDUCATION) || type.equals(CommonText.EDUCATION_TRAIN)){
+						if (type.equals(CommonText.EDUCATION)) {
 							
 						}else if(type.equals(CommonText.WORKEXPERIENCE)){
 							setWEData(holder,commMapArray,position);
+						}else if (type.equals(CommonText.PROJECT_EXPERIENCE)) {
+							tableName = CommonText.PROJECT_EXPERIENCE;
 						}
 					}
 				};
@@ -184,7 +188,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		
 		if (RegexUtil.checkNotNull(info_startworktimeStr)
 				&& RegexUtil.checkNotNull(info_endworktimeStr)) {
-			sbStr2.append(" | " + info_startworktimeStr + " 至 "
+			sbStr2.append(" | " + info_startworktimeStr + " — "
 					+ info_endworktimeStr);
 		}
 		

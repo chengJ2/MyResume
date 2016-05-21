@@ -72,7 +72,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				break;
 			case OnTopMenu.MSG_MENU2:
 				if (msg.obj != null) {
-					preferenceUtil.setPreferenceData("edit_mode",(boolean) msg.obj);
+					preferenceUtil.setPreferenceData(Constants.EDITMODE,(boolean) msg.obj);
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:

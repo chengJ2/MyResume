@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.model.UUIDGenerator;
@@ -100,7 +101,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 				break;
 			case OnTopMenu.MSG_MENU2:
 				if (msg.obj != null) {
-					preferenceUtil.setPreferenceData("edit_mode",(boolean) msg.obj);
+					preferenceUtil.setPreferenceData(Constants.EDITMODE,(boolean) msg.obj);
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:

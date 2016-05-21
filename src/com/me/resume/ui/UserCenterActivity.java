@@ -50,7 +50,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	protected File pictureFile = null;
 	
 	private RelativeLayout center_topbar;
-	private TextView top_text;
+	private TextView center_top_text;
 	private ImageView left_back;
 	
 	private LinearLayout llout01,llout02;
@@ -60,9 +60,10 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	
 	private TextView mycollection,viewmode,review_resume;
 	
-	private LinearLayout info_layout1,info_layout2,info_layout3;
-	private TextView info_item1,info_item2,info_item3;
+	private LinearLayout info_layout1,info_layout2,info_layout3,info_layout4;
+	private TextView info_item1,info_item2,info_item3,info_item4;
 	
+	private Runnable topbarRunnable = null;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -136,14 +137,13 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	private void findViews() {
 		center_topbar = findView(R.id.center_topbar);
 		setAnimView(center_topbar,1);
-		top_text = findView(R.id.top_text);
+		center_top_text = findView(R.id.center_top_text);
 		left_back = findView(R.id.left_back);
-		top_text.setText(CommUtil.getStrValue(self, R.string.personal_center));
+		center_top_text.setText(CommUtil.getStrValue(self, R.string.personal_center));
 		center_topbar.postDelayed(new Runnable() {
 			
 			@Override
 			public void run() {
-				center_topbar.setVisibility(View.INVISIBLE);
 				setAnimView(center_topbar,0);
 			}
 		}, 1500);
@@ -169,10 +169,12 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		info_layout1 = findView(R.id.info_layout1);
 		info_layout2 = findView(R.id.info_layout2);
 		info_layout3 = findView(R.id.info_layout3);
+		info_layout4 = findView(R.id.info_layout4);
 		
 		info_item1 = findView(R.id.info_item1);
 		info_item2 = findView(R.id.info_item2);
 		info_item3 = findView(R.id.info_item3);
+		info_item4 = findView(R.id.info_item3);
 		
 		mycollection.setOnClickListener(this);
 		viewmode.setOnClickListener(this);
@@ -181,6 +183,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		info_layout1.setOnClickListener(this);
 		info_layout2.setOnClickListener(this);
 		info_layout3.setOnClickListener(this);
+		info_layout4.setOnClickListener(this);
 	}
 	
 	private void initViews(){	
@@ -199,7 +202,18 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 				}
 			}
 		}
+		
+		topbarRunnable = new Runnable() {
+			
+			@Override
+			public void run() {
+				center_topbar.setVisibility(View.INVISIBLE);
+				mHandler.postDelayed(topbarRunnable, 3000);
+			}
+		};
+		topbarRunnable.run();
 	}
+	
 	
 	/**
 	 * 
@@ -240,10 +254,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	
 	/**
 	 * 
-	 * @Title:UserCenterActivity
 	 * @Description:求职意向完整度
-	 * @author Comsys-WH1510032
-	 * @return 返回类型
 	 */
 	private void getJobIntensionComplete(){
 		queryWhere = "select (a1+a2+a3+a4+a5+a6) num"
@@ -269,19 +280,94 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		}else{
 			info_item1.setText("未填写");
 		}
+		
+		
 	}
 	
 	
+	/**
+	 * 
+	 * @Description:教育背景完整度
+	 */
+	private void getEducationComplete(){
+		queryWhere = "select (a1+a2+a3+a4+a5+a6) num"
+					+ " from ("
+					+ " select case when educationtimestart='' then 1 else 0 end a1,"
+					+ " case when educationtimeend='' then 1 else 0 end a2,"
+					+ " case when school='' then 1 else 0 end a3,"
+					+ " case when examination='' then 1 else 0 end a4,"
+					+ " case when majorname='' then 1 else 0 end a5,"
+					+ " case when degree='' then 1 else 0 end a6"
+					+ " from "+ CommonText.EDUCATION +" where userId = '"+ uTokenId +"') a";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray!=null && commMapArray.get("num").length>0) {
+			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
+			int nPercent = 0;
+			nPercent = (int) (((6 - num) * 100 / 6));
+			if (nPercent >= 100){
+				info_item2.setText("已完整");
+			}
+			if (nPercent <= 0)
+				nPercent = 0;
+			info_item2.setText("完整度("+nPercent +"%)");
+		}else{
+			info_item2.setText("未填写");
+		}
+	}
 	
 	
+	/**
+	 * 
+	 * @Description:工作实习完整度
+	 */
+	private void getWorkExperienceComplete(){
+		queryWhere = "select (a1+a2+a3+a4+a5+a6+a7+a8+a9) num"
+					+ " from ("
+					+ " select case when companyname='' then 1 else 0 end a1,"
+					+ " case when companynature='' then 1 else 0 end a2,"
+					+ " case when companyscale='' then 1 else 0 end a3,"
+					+ " case when industryclassification='' then 1 else 0 end a4,"
+					+ " case when jobtitle='' then 1 else 0 end a5,"
+					+ " case when worktimestart='' then 1 else 0 end a6,"
+					+ " case when worktimeend='' then 1 else 0 end a7"
+					+ " case when expectedsalary='' then 1 else 0 end a8,"
+					+ " case when workdesc='' then 1 else 0 end a9"
+					+ " from "+ CommonText.WORKEXPERIENCE +" where userId = '"+ uTokenId +"') a";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray!=null && commMapArray.get("num").length>0) {
+			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
+			int nPercent = 0;
+			nPercent = (int) (((9 - num) * 100 / 9));
+			if (nPercent >= 100){
+				info_item3.setText("已完整");
+			}
+			if (nPercent <= 0)
+				nPercent = 0;
+			info_item3.setText("完整度("+nPercent +"%)");
+		}else{
+			info_item3.setText("未填写");
+		}
+	}
 	
 	
-	
-	
-	
-	
-	
-	
+	/**
+	 * 
+	 * @Description:项目经验
+	 */
+	private void getProjectExperienceComplete(){
+		queryWhere = "select count(*) num from "+ CommonText.PROJECT_EXPERIENCE +" where userId = '"+ uTokenId +"') a";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray!=null && commMapArray.get("num").length>0) {
+			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
+			if (num > 0) {
+				info_item4.setText("已有"+ num +"项经验");
+			}else{
+				info_item4.setText("未填写");
+			}
+		}else{
+			info_item4.setText("未填写");
+		}
+	}
 	
 	
 	/*public void stopAudioThread() {
@@ -376,8 +462,6 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.mycollection:
 			startChildActivity(Constants.MYCOLLECTION,false);
-//			ActivityUtils.startActivityPro(self,
-//					Constants.PACKAGENAMECHILD +Constants.INFOMANAGER,"type",CommonText.MYCOLLECTION);
 			break;
 		case R.id.viewmode:
 			// TODO
@@ -387,6 +471,21 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.info_layout1:
 			startChildActivity(Constants.JOBINTENSION,false);
+			break;
+		case R.id.info_layout2:
+			ActivityUtils.startActivityPro(self, 
+					Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
+					Constants.TYPE,CommonText.EDUCATION);
+			break;
+		case R.id.info_layout3:
+			ActivityUtils.startActivityPro(self, 
+					Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
+					Constants.TYPE,CommonText.WORKEXPERIENCE);
+			break;
+		case R.id.info_layout4:
+			ActivityUtils.startActivityPro(self, 
+					Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
+					Constants.TYPE,CommonText.PROJECT_EXPERIENCE);
 			break;
 		default:
 			break;

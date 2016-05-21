@@ -201,6 +201,8 @@ public class UserLoginActivity extends BaseActivity implements
 			break;
 		case R.id.btn_register:
 			if (CommUtil.isNetworkAvailable(self)) {
+				registBtn.setText(CommUtil.getStrValue(self, R.string.action_wait_reging));
+				registBtn.setEnabled(false);
 				actionRegister();
 			}else{
 				set3Msg(R.string.check_network);
@@ -310,11 +312,15 @@ public class UserLoginActivity extends BaseActivity implements
 				@Override
 				public void error() {
 					set3Msg(R.string.action_regist_fail);
+					registBtn.setText(CommUtil.getStrValue(self, R.string.action_register));
+					registBtn.setEnabled(true);
 				}
 				
 				public void success(Map<String, List<String>> map) {
 					try {
 						sendSuccess(map);
+						registBtn.setText(CommUtil.getStrValue(self, R.string.action_wait_regsuccess));
+						registBtn.setEnabled(false);
 						preferenceUtil.setPreferenceData("isregister", true);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -349,11 +355,11 @@ public class UserLoginActivity extends BaseActivity implements
 		queryWhere = "select * from " + CommonText.USERINFO + " where uid = '" + uTokenId + "'";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("id").length > 0) {
-			/*updResult = dbUtil.updateData(self, CommonText.USERINFO,
+			updResult = dbUtil.updateData(self, CommonText.USERINFO,
 					new String[]{"uid=?","username","userpassword","patform",
 										 "createtime","updatetime","lastlogintime","userstatus"}, 
 					new String[]{uTokenId,feildStr1,feildStr2,feildStr4,
-										feildStr5,TimeUtils.getCurrentTimeInString(),feildStr6,feildStr7},1);*/
+										feildStr5,TimeUtils.getCurrentTimeInString(),feildStr6,feildStr7},1);
 		}else{
 			ContentValues cValues = new ContentValues();
 			cValues.put("uid", uTokenId);
@@ -373,6 +379,7 @@ public class UserLoginActivity extends BaseActivity implements
 			preferenceUtil.setPreferenceData(UserInfoCode.USEID,uTokenId);
 			getBaseinfo(map);
 		}
+		
 	}
 	
 	/**
@@ -418,7 +425,7 @@ public class UserLoginActivity extends BaseActivity implements
 		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId + "' limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		
-		if (commMapArray != null) {/*
+		if (commMapArray != null) {
 			String userId = commMapArray.get("userId")[0];
 			if (RegexUtil.checkNotNull(userId)) {
 //				String feildStr10 = getLocalKeyValue(commMapArray,map,"userId");
@@ -451,11 +458,12 @@ public class UserLoginActivity extends BaseActivity implements
 			}else{
 				insertBaseInfo(map);
 			}
-		*/}else{
+		}else{
 			insertBaseInfo(map);
 		}
 		
 		mHandler.sendEmptyMessage(11);
+		
 	}
 	
 	/**
@@ -485,6 +493,9 @@ public class UserLoginActivity extends BaseActivity implements
 		preferenceUtil.setPreferenceData(UserInfoCode.AVATOR,avatorStr);
 		
 		queryResult = dbUtil.insertData(self, CommonText.BASEINFO, cValues);
+		if (queryResult) {
+			startChildActivity(Constants.USERCENTER,true);
+		}
 	}
 	
 	/**

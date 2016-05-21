@@ -5,7 +5,7 @@
     android:background="@android:color/transparent">
 
      <TextView
-        android:id="@+id/top_text"
+        android:id="@+id/center_top_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"

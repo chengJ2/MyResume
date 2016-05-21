@@ -94,7 +94,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				break;
 			case OnTopMenu.MSG_MENU2:
 				if (msg.obj != null) {
-					preferenceUtil.setPreferenceData("edit_mode",(boolean) msg.obj);
+					preferenceUtil.setPreferenceData(Constants.EDITMODE,(boolean) msg.obj);
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
@@ -110,7 +110,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			case OnTopMenu.MSG_MENU32:
 				ActivityUtils.startActivityForResult(self, 
 						Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
-						"type",CommonText.WORKEXPERIENCE,
+						Constants.TYPE,CommonText.WORKEXPERIENCE,
 						Constants.WE_MANAGER_REQUEST_CODE);
 				break;
 			default:

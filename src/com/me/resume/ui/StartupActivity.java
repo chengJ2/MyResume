@@ -30,7 +30,7 @@ public class StartupActivity extends Activity {
 		startup = (LinearLayout)findViewById(R.id.startup);
 	    
         AlphaAnimation animation = new AlphaAnimation(0.2f, 1.0f);
-        animation.setDuration(3000);
+        animation.setDuration(1500);
         startup.startAnimation(animation);
         animation.setAnimationListener(new AnimationListener() {
 			
