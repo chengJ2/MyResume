@@ -15,6 +15,7 @@
     <dimen name="blarge_text_size">60dip</dimen>
     
     <dimen name="home_item_height">40dip</dimen>
+    <dimen name="address_item_height">48dip</dimen>
     <dimen name="home_bottombar_height">48dip</dimen>
     <dimen name="home_content_gridview_columnWidth">80dip</dimen>
     

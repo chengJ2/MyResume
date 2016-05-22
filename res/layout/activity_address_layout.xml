@@ -8,20 +8,15 @@
    <include layout="@layout/comm_search_layout"/>
 
     <com.me.resume.views.CommScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fadingEdge="none"
-        android:fadingEdgeLength="0dp"
-        android:overScrollMode="never"
-        android:scrollbars="none" 
-        android:background="@color/grey_30">
+        style="@style/comm_scrollview_style"
+        android:layout_marginBottom="0dip">
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingLeft="15dip"
-            android:paddingRight="15dip" >
+            android:paddingLeft="@dimen/margin_10"
+            android:paddingRight="@dimen/margin_10">
 
             <LinearLayout
                 android:id="@+id/addrtopLayout"
@@ -31,87 +26,57 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dip"
+                    android:layout_height="@dimen/address_item_height"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:gravity="left|center"
-                        android:text="@string/location"
-                        android:drawableLeft="@drawable/location"
-                        android:textColor="@color/grey_10"
-                        android:textSize="@dimen/small_middle_text_size" />
+                        style="@style/address_item_left_text"
+                        android:text="@string/location"/>
 
                     <Button
                         android:id="@+id/review_btn"
-                        android:layout_width="wrap_content"
+                        android:layout_width="70dip"
                         android:layout_height="32dip"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="5dip"
                         android:background="@drawable/button_bg_corner"
                         android:gravity="center"
-                        android:paddingBottom="2dip"
-                        android:paddingLeft="15dip"
-                        android:paddingRight="15dip"
-                        android:paddingTop="2dip"
-                        android:text="武汉"
+                        android:text="@string/default_city"
                         android:textColor="@color/black"
                         android:textSize="@dimen/small_middle_text_size"
                         android:visibility="visible" />
                 </RelativeLayout>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:layout_marginTop="10dip"
+                    style="@style/address_item_text"
                     android:text="@string/hot_city"
-                    android:textColor="@color/grey_10"
-                    android:textSize="@dimen/small_middle_text_size" />
+                    android:textColor="@color/red"/>
 
                 <GridView
                     android:id="@+id/hotaddress_gridview"
-                    android:layout_width="match_parent"
-                    android:layout_height="144dip"
-                    android:layout_marginTop="8dip"
-                    android:columnWidth="80dp"
-                    android:fadingEdge="none"
-                    android:fadingEdgeLength="0dip"
-                    android:gravity="center"
-                    android:horizontalSpacing="10dp"
-                    android:numColumns="4"
-                    android:scrollbars="none"
-                    android:scrollingCache="false"
-                    android:smoothScrollbar="true"
-                    android:stretchMode="columnWidth"
-                    android:verticalSpacing="10dp" >
+                    style="@style/home_content_grilview"
+                    android:layout_marginTop="0dip"
+                    android:layout_height="140dip"
+                    android:background="#00000000"
+                    android:numColumns="4" >
                 </GridView>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dip"
-                    android:gravity="left|center"
-                    android:layout_marginTop="10dip"
-                    android:text="@string/all_city"
-                    android:textColor="@color/grey_10"
-                    android:textSize="@dimen/small_middle_text_size" />
+                    style="@style/address_item_text"
+                    android:text="@string/all_city" />
             </LinearLayout>
 
-            <com.me.resume.views.CustomListView
-                android:id="@+id/alladdrListview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:cacheColorHint="@android:color/transparent"
-                android:divider="@color/grey"
-                android:dividerHeight="1px"
-                android:listSelector="@android:color/transparent"
-                android:footerDividersEnabled="true"
-                android:scrollbars="none"
-                android:visibility="visible" />
+              <com.me.resume.views.CustomListView
+                    android:id="@+id/alladdrListview"
+                    android:layout_marginTop="0dip"
+                    style="@style/comm_listview_style"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/msgText"
+                    style="@style/comm_nodata_style"
+                    android:layout_marginTop="50dip"
+                    android:visibility="gone" />
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
 

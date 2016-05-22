@@ -115,7 +115,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		View v = View.inflate(self,R.layout.activity_education_layout, null);
 		boayLayout.addView(v);
 		
-		setTitle(R.string.resume_education);
+		setTopTitle(R.string.resume_education);
 		setMsgHide();
 		setRight2IconVisible(View.VISIBLE);
 		setfabLayoutVisible(View.VISIBLE);

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fitsSystemWindows="true">
+    android:background="@color/grey_80"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
    <ListView
         android:id="@+id/collectionListView"
@@ -17,11 +18,11 @@
         android:footerDividersEnabled="true"
         android:listSelector="@android:color/transparent"
         android:scrollbars="none"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/nodata"
-        style="@style/comm_nodata_style"
-        android:layout_centerInParent="true" />
+        android:visibility="visible"
+        style="@style/comm_nodata_style" />
 
-</RelativeLayout>
+</LinearLayout>

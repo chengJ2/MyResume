@@ -52,8 +52,9 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	private RelativeLayout center_topbar;
 	private TextView center_top_text;
 	private ImageView left_back;
+	private ImageView right_lable;
 	
-	private LinearLayout llout01,llout02;
+	private LinearLayout llout01,llout02,llout03;
 	
 	protected ImageView user_info_avatar;
 	private TextView center_username,center_workyear,center_city;
@@ -63,7 +64,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	private LinearLayout info_layout1,info_layout2,info_layout3,info_layout4;
 	private TextView info_item1,info_item2,info_item3,info_item4;
 	
-	private Runnable topbarRunnable = null;
+	private TextView resume_complete,resume_updatime;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -101,6 +102,10 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
             case 100:
             	initViews();
             	break;
+            case 101:
+            	setAnimView(center_topbar,0);
+            	mHandler.sendEmptyMessageDelayed(101,Constants.DEFAULTIME);
+            	break;
 			default:
 				break;
 			}
@@ -127,7 +132,6 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			
 			@Override
 			public void run() {
-				
 				mHandler.sendEmptyMessage(100);
 			}
 		},100);
@@ -139,17 +143,14 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		setAnimView(center_topbar,1);
 		center_top_text = findView(R.id.center_top_text);
 		left_back = findView(R.id.left_back);
+		right_lable = findView(R.id.right_lable);
 		center_top_text.setText(CommUtil.getStrValue(self, R.string.personal_center));
-		center_topbar.postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-				setAnimView(center_topbar,0);
-			}
-		}, 1500);
+		
+		mHandler.sendEmptyMessageDelayed(101,Constants.DEFAULTIME);
 		
 		llout01 = findView(R.id.llout01);
 		llout02 = findView(R.id.llout02);
+		llout03 = findView(R.id.llout03);
 		user_info_avatar = findView(R.id.user_info_avatar);
 		user_info_avatar.setOnClickListener(this);
 		
@@ -163,8 +164,13 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		
 		center_topbar.setOnClickListener(this);
 		left_back.setOnClickListener(this);
+		right_lable.setOnClickListener(this);
 		llout01.setOnClickListener(this);
 		llout02.setOnClickListener(this);
+		llout03.setOnClickListener(this);
+		
+		resume_complete = findView(R.id.review_resume);
+		resume_updatime = findView(R.id.resume_updatime);
 		
 		info_layout1 = findView(R.id.info_layout1);
 		info_layout2 = findView(R.id.info_layout2);
@@ -186,9 +192,13 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		info_layout4.setOnClickListener(this);
 	}
 	
+	/**
+	 * 显示用户头像
+	 */
 	private void initViews(){	
 		MyApplication.USERNAME = preferenceUtil.getPreferenceData("username", "");
-		MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator + MyApplication.USERNAME + File.separator + Constants.FILENAME;
+		MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator 
+				+ MyApplication.USERNAME + File.separator + Constants.FILENAME;
 		
 		Bitmap bitmap = ImageUtils.getLoacalBitmap(MyApplication.USERAVATORPATH);
 		String avatorStr= preferenceUtil.getPreferenceData("avator", "");
@@ -203,17 +213,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			}
 		}
 		
-		topbarRunnable = new Runnable() {
-			
-			@Override
-			public void run() {
-				center_topbar.setVisibility(View.INVISIBLE);
-				mHandler.postDelayed(topbarRunnable, 3000);
-			}
-		};
-		topbarRunnable.run();
 	}
-	
 	
 	/**
 	 * 
@@ -252,6 +252,45 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 	
+	
+	/**
+	 * 
+	 * @Description:求职意向完整度
+	 */
+	private void getBaseInfoComplete(){
+		resume_updatime.setText("上次更新："+resumeUpdatime);
+		queryWhere = "select (a1+a2+a3+a4+a5+a6+a7+a8+a9+a10+a11+a12) num"
+					+ " from ("
+					+ " select case when realname='' then 1 else 0 end a1,"
+					+ " case when gender='' then 1 else 0 end a2,"
+					+ " case when brithday='' then 1 else 0 end a3,"
+					+ " case when joinworktime='' then 1 else 0 end a4,"
+					+ " case when phone='' then 1 else 0 end a5,"
+					+ " case when city='' then 1 else 0 end a6,"
+					+ " case when email='' then 1 else 0 end a7,"
+					+ " case when ismarry='' then 1 else 0 end a8,"
+					+ " case when nationality='' then 1 else 0 end a9,"
+					+ " case when license='' then 1 else 0 end a10,"
+					+ " case when workingabroad='' then 1 else 0 end a11,"
+					+ " case when politicalstatus='' then 1 else 0 end a12"
+					+ " from "+ CommonText.BASEINFO +" where userId = '"+ uTokenId +"') a";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray!=null && commMapArray.get("num").length>0) {
+			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
+			int nPercent = 0;
+			nPercent = (int) (((12 - num) * 100 / 12));
+			if (nPercent >= 100){
+				resume_complete.setText("已完整");
+			}
+			if (nPercent <= 0)
+				nPercent = 0;
+			resume_complete.setText("完整度("+nPercent +"%)");
+		}else{
+			resume_complete.setText("未填写");
+		}
+		
+	}
+	
 	/**
 	 * 
 	 * @Description:求职意向完整度
@@ -280,7 +319,6 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		}else{
 			info_item1.setText("未填写");
 		}
-		
 		
 	}
 	
@@ -416,7 +454,11 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	protected void onResume() {
 		super.onResume();
 		getBaseInfo();
+		getBaseInfoComplete();
 		getJobIntensionComplete();
+		getEducationComplete();
+		getWorkExperienceComplete();
+		getProjectExperienceComplete();
 	}
 	
 	private boolean topbarView = false;
@@ -451,13 +493,14 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		case R.id.left_back:
 			scrollToFinishActivity();
 			break;
-//		case R.id.right_icon:
-//			startChildActivity(Constants.SETTING, false);
-//			break;
+		case R.id.right_lable:
+			startChildActivity(Constants.SETTING, false);
+			break;
 		case R.id.user_info_avatar:
 			DialogUtils.showPhotoPathDialog(self, user_info_avatar, mHandler);
 			break;
 		case R.id.llout02:
+		case R.id.llout03:
 			startChildActivity(Constants.BASEINFO,false);
 			break;
 		case R.id.mycollection:

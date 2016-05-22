@@ -12,7 +12,7 @@
         android:layout_height="118dip"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/resume_cover"
-        android:scaleType="fitCenter">
+        android:scaleType="fitXY">
     </ImageView>
  
     <TextView

@@ -224,10 +224,10 @@ public class RefreshableView extends LinearLayout {
 			refreshView.invalidate();
 			invalidate();
 		}
-		timeTextView.setVisibility(View.VISIBLE);
+		/*timeTextView.setVisibility(View.VISIBLE);
 		if(refreshTime!= null){
 			setRefreshTime(refreshTime);
-		}
+		}*/
 		downTextView.setVisibility(View.VISIBLE);
 		
 //		refreshIndicatorView.setVisibility(View.VISIBLE);

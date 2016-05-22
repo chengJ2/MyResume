@@ -92,6 +92,7 @@ public class MainActivity extends Activity {
 	private LinearLayout index3layout;
 	private TextView self_evaluation;
 	private TagFlowLayout tagFlowLayout;
+	
 	private String mTags[] = { "活泼好动", "易随波逐流", "多愁善感", "不善言谈",
 			"务实", "适应能力差", "易怒而难以自制"};
 	
@@ -121,7 +122,6 @@ public class MainActivity extends Activity {
 
 		@Override
 		public void handleMessage(Message msg) {
-			// TODO Auto-generated method stub
 			super.handleMessage(msg);
 			switch (msg.what) {
 			case MSG_CHANGE_PHOTO:
@@ -130,8 +130,7 @@ public class MainActivity extends Activity {
 					index = -1;
 				}
 				jazzyViewPager.setCurrentItem(index + 1);
-				mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO,
-						view_change_time);
+				mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO,view_change_time);
 				break;
 			case 2:
 				break;
@@ -160,11 +159,11 @@ public class MainActivity extends Activity {
 			preferenceUtil = new PreferenceUtil(self);
 		
 		jazzyViewPager = (JazzyViewPager)findViewById(R.id.mainviewpager);
-/*		jazzyViewPager.setPageMargin(100);//两个页面之间的间距
+//		jazzyViewPager.setPageMargin(100);//两个页面之间的间距
 		jazzyViewPager.setFadeEnabled(true);//有淡入淡出效果
-		jazzyViewPager.setOutlineEnabled(true);//有边框
-		jazzyViewPager.setOutlineColor(0xff0000ff);//边框颜色
-*/	}
+//		jazzyViewPager.setOutlineEnabled(true);//有边框
+//		jazzyViewPager.setOutlineColor(0xff0000ff);//边框颜色
+	}
 	
 
 	private void initViews() {
@@ -211,7 +210,7 @@ public class MainActivity extends Activity {
 //		}
 		jazzyViewPager.setCurrentItem(0);
 		if (preferenceUtil.getPreferenceData("autoShow")) {
-			view_change_time = preferenceUtil.getPreferenceData("switchEffDuration",5*1000);
+			view_change_time = preferenceUtil.getPreferenceData("switchEffDuration",view_change_time);
 			TransitionEffect effect = TransitionEffect.valueOf(preferenceUtil.getPreferenceData("switchAnim", "Standard"));
 			
 			L.d("=view_change_time="+view_change_time + "=effect=" + effect);

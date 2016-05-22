@@ -394,18 +394,19 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	 * 同步本地库数据
 	 */
 	private void syncLocalData(){
-//		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId + "' order by id desc limit 1";
-//		commMapArray = dbUtil.queryData(self, queryWhere);
+		resumeUpdatime = TimeUtils.getCurrentTimeString();
 		if (LocalHasData) {
 			updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
-					new String[]{"userId",
+					new String[]{"userId=?",
 					"realname","gender","brithday","joinworktime",
 					"phone","hometown","city","email","ismarry",
-					"nationality","license","workingabroad","politicalstatus","updatetime"}, 
+					"nationality","license","workingabroad","politicalstatus",
+					"updatetime"}, 
 					new String[]{uTokenId,
 					info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
 					info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
-					info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr,TimeUtils.getCurrentTimeInString()},3);
+					info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr,
+					TimeUtils.getCurrentTimeInString()},1);
 			if (updResult == 1) {
 				toastMsg(R.string.action_update_success);
 				actionAync();
@@ -454,17 +455,17 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			return false;
 		}
 		
-		if (!RegexUtil.checkNotNull(info_workyearStr)) {
-			setMsg(R.string.info_workyear);
-			return false;
-		}
+//		if (!RegexUtil.checkNotNull(info_workyearStr)) {
+//			setMsg(R.string.info_workyear);
+//			return false;
+//		}
 		
-		if (!RegexUtil.checkNotNull(info_phoneStr)) {
+		/*if (!RegexUtil.checkNotNull(info_phoneStr)) {
 			setMsg(R.string.info_contack);
 			return false;
-		}
+		}*/
 		
-		if (!RegexUtil.isPhone(info_phoneStr)) {
+		if (RegexUtil.checkNotNull(info_phoneStr) && !RegexUtil.isPhone(info_phoneStr)) {
 			setMsg(R.string.reg_info_phone);
 			return false;
 		}

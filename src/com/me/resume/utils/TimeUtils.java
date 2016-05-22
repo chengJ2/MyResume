@@ -189,6 +189,17 @@ public class TimeUtils {
     public static String getCurrentTimeInString(SimpleDateFormat dateFormat) {
         return getCurTime(getCurrentTimeInLong(), dateFormat);
     }
+    
+    /**
+    * get current time in milliseconds
+    *
+    * @return
+    */
+   public static String getCurrentTimeString() {
+	   SimpleDateFormat simpleDateFormat = new SimpleDateFormat(SHORT_FORMAT_STRING);
+       simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+       return getCurTime(getCurrentTimeInLong(), simpleDateFormat);
+   }
 
     /**
      * 群组创建时间格式

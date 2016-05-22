@@ -98,6 +98,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	
 	protected Boolean LocalHasData = false;// 本地是否有数据
 	
+	protected String resumeUpdatime = "";// 更新简历时间
+	
 	/**
 	 * 操作类型 
 	 * 0:从服务器同步数据到本地

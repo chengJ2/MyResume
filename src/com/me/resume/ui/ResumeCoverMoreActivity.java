@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
@@ -25,7 +26,7 @@ import com.me.resume.utils.CommUtil;
 public class ResumeCoverMoreActivity extends BaseActivity implements OnClickListener{
 
 	private GridView covermoregridview;
-	
+	private TextView msgText;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,6 +46,10 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 		setfabLayoutVisible(View.GONE);
 		
 		covermoregridview = findView(R.id.covermoregridview);
+		msgText = findView(R.id.msgText);
+		msgText.setVisibility(View.VISIBLE);
+		msgText.setText(CommUtil.getStrValue(self, R.string.item_text43));
+		
 		
 		getReCoverMoreData();
 	}
@@ -58,11 +63,13 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 		requestData("pro_getcover_info", 2, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				
+				msgText.setVisibility(View.VISIBLE);
+				msgText.setText(CommUtil.getStrValue(self, R.string.en_nodata));	
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
+					msgText.setVisibility(View.GONE);
 					setCoverData(map);
 				} catch (Exception e) {
 					e.printStackTrace();

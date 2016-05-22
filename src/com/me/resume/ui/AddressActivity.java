@@ -34,7 +34,7 @@ import com.me.resume.utils.RegexUtil;
 /**
  * 
 * @ClassName: AddressActivity 
-* @Description：所在地 
+* @Description：城市列表 
 * @date 2016/4/21 上午10:01:29 
 *
  */
@@ -49,9 +49,14 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 	private ImageView clearView;
 	private TextView search_cancle;
 	
+	private TextView msgText;
+	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
+			case 9:
+				initHotCity((List<String>) msg.obj);// 热门城市
+				break;
 			case 10:
 				whichTab = 0;
 				getAllCity("");
@@ -85,14 +90,15 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 		
 		searchAction();
 		
+		getHotCity();
+		
 		mHandler.postDelayed(new Runnable() {
 			
 			@Override
 			public void run() {
-				initHotCity();// 热门城市
 				mHandler.sendEmptyMessage(10); // 全国城市
 			}
-		}, 500);
+		}, 200);
 		
 	}
 	
@@ -111,6 +117,10 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 		index_search_edit.setHint(CommUtil.getStrValue(self, R.string.hint_address_text));
 		index_search_edit.setHintTextColor(CommUtil.getColorValue(self, R.color.grey));
 		index_search_edit.requestFocus();
+		
+		msgText = findView(R.id.msgText);
+		msgText.setVisibility(View.VISIBLE);
+		msgText.setText(CommUtil.getStrValue(self, R.string.item_text43));
 	}
 	
 	private void initViews(){
@@ -172,19 +182,19 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 	 * @Title:AddressActivity
 	 * @Description: 显示热门城市
 	 */
-	private void initHotCity(){
-		CommonBaseAdapter<String> commAdapter = new CommonBaseAdapter<String>(self, getHotCity(),
+	private void initHotCity(final List<String> list){
+		CommonBaseAdapter<String> commAdapter = new CommonBaseAdapter<String>(self, list,
 				R.layout.home_xgln_grilview) {
 
 			@Override
 			public void convert(ViewHolder holder, String item,
 					final int position) {
-				holder.setText(R.id.itemName, mList.get(position));
+				holder.setText(R.id.itemName, list.get(position));
 				holder.setOnClickEvent(R.id.itemName, new ClickEvent() {
 
 					@Override
 					public void onClick(View view) {
-						setKeyResult(position);
+						setKeyResult(mList.get(position));
 					}
 				});
 			}
@@ -194,9 +204,9 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	
-	private void setKeyResult(int position){
+	private void setKeyResult(String city){
 		Intent intent=new Intent();
-        intent.putExtra(Constants.CITY, mList.get(position));
+        intent.putExtra(Constants.CITY, city);
         setResult(Constants.RESULT_CODE, intent);
 		scrollToFinishActivity();
 	}
@@ -208,6 +218,7 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 	 * @param mList
 	 */
 	private void fillAllCity(List<String> mList){
+		msgText.setVisibility(View.GONE);
 		CommonBaseAdapter<String> commAdapter = new CommonBaseAdapter<String>(self, mList,
 				R.layout.home_xgln_listview) {
 
@@ -219,7 +230,7 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 
 					@Override
 					public void onClick(View view) {
-						setKeyResult(position);
+						setKeyResult(mList.get(position));
 					}
 				});
 			}
@@ -255,7 +266,9 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 				} catch (Exception e) {
 					e.printStackTrace();
 				} finally {
-					cursor.close();
+					if (cursor != null) {
+						cursor.close();
+					}
 				}
 			}
 		}).start();
@@ -268,12 +281,12 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 	 * @Description: 获取热门城市
 	 * @return List<String> 
 	 */
-	private List<String> getHotCity(){
-		mList = new ArrayList<String>();
+	private void getHotCity(){
 		new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
+				mList = new ArrayList<String>();
 				Cursor cursor = null;
 				try {
 					String sql = "select c.code as code ,c.[cname] as cname from city c where c.type = 1"
@@ -284,14 +297,17 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 							mList.add(cursor.getString(cursor.getColumnIndex("cname")));
 						}
 					}
+					mHandler.sendMessage(mHandler.obtainMessage(9, mList));
 				} catch (Exception e) {
 					e.printStackTrace();
 				} finally {
-					cursor.close();
+					if (cursor != null) {
+						cursor.close();
+					}
+					
 				}
 			}
 		}).start();
-		return mList;
 	}
 
 	@Override

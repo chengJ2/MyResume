@@ -2,20 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/search_layout"
         android:layout_width="match_parent"
-        android:layout_height="45dip"
+        android:layout_height="@dimen/address_item_height"
         android:background="@color/white"
         android:gravity="center_vertical" >
 
     	<TextView
             android:id="@+id/search_cancle"
-            android:layout_width="50dip"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:gravity="center|left"
-            android:text="取消"
+            style="@style/search_item_right_text"
+            android:text="@string/search_cancle"
             android:textColor="@color/red"
-            android:textSize="@dimen/small_middle_text_size"
             android:visibility="gone" />
     
         <EditText

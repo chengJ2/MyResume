@@ -133,7 +133,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		if ("0".equals(type)) {
 			holder.setImageVisibe(R.id.topic_icon, View.GONE);
 			holder.setText(R.id.topic_content, commMapArray.get("content")[position]);
-			holder.setText(R.id.topic_title, "来自 " + commMapArray.get("sharename")[position] + "的分享");
+			holder.setText(R.id.topic_title, "来自 " + commMapArray.get("sharename")[position] + " 的分享");
 			holder.setText(R.id.topic_from, "面试心得"); // TODO 
 			holder.setText(R.id.topic_datime, commMapArray.get("createtime")[position]);
 		}else{

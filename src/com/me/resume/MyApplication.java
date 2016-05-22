@@ -10,6 +10,7 @@ import android.util.DisplayMetrics;
 
 import com.me.resume.tools.CrashHandler;
 import com.me.resume.tools.DbManager;
+import com.me.resume.tools.FontsOverride;
 import com.me.resume.tools.L;
 
 /**
@@ -78,7 +79,7 @@ public class MyApplication extends Application {
 		
 //		CrashReport.initCrashReport(getApplicationContext(), "900025676", true);
     	
-//    	FontsOverride.setDefaultFont(this, "SERIF", "fonts/FZY1JW.ttf");
+//    	FontsOverride.setDefaultFont(this, "SERIF", "fonts/Roboto-Medium.ttf");
 	}
 
 	/**

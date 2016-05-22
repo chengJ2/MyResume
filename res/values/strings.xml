@@ -82,6 +82,7 @@
     <string name="item_text41">我来说</string>
     <string name="item_text42">暂无面试心得分享</string>
     <string name="item_text43">正在加载,请稍后...</string>
+    <string name="item_text44">正在更新,请稍后...</string>
     <string name="item_text5">抱歉!该模块需求联网查看~</string>
     <string name="item_text6">简历预览封面</string>
     <string name="item_text61">简历封面</string>
@@ -190,6 +191,8 @@
     <string name="location">当前位置</string>
     <string name="hot_city">热门城市</string>
     <string name="all_city">全国城市</string>
+    <string name="search_cancle">取消</string>
+    <string name="default_city">武汉</string>
     
      <string name="date_today">今天是:</string>
      
@@ -204,7 +207,7 @@
      
      <!-- personal center -->
      <string name="personal_c_item1">我的收藏</string>
-     <string name="personal_c_item2">日间模式</string>
+     <string name="personal_c_item2">行事历</string>
      <string name="personal_c_item3">预览简历</string>
      
      <string name="personal_c_item11">完整</string>
@@ -217,7 +220,7 @@
     <string name="reg_info_phone">手机号不合法！</string>
     <string name="resume_address">城市列表</string>
     <string name="action_baseinfo_null">请先填写基本信息</string>
-    <string name="baseinfo_bt_item">挤点时间,完善以下信息~</string>
+    <string name="baseinfo_bt_item">完善以下,就可预览属于自己的简历喽~</string>
     <string name="baseinfo_xt_item">选填信息</string>
     <string name="tag_time_between">至</string>
     <string name="info_name">姓名</string>

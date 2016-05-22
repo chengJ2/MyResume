@@ -72,6 +72,8 @@ public class TopicActivity extends BaseActivity implements OnClickListener{
 		setfabLayoutVisible(View.GONE);
 		
 		getTopicData(titleArr[1]);
+		
+		
 	}
 	
 	/**

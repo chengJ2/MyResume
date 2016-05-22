@@ -423,42 +423,53 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			
 			@Override
 			public void convert(final ViewHolder holder, List<String> item, final int position) {
-				
-				if(map.get("userId").get(position).equals(MyApplication.USERID)){
-					if (FileUtils.existsFile(MyApplication.USERAVATORPATH)) {
-						Bitmap bitmap = ImageUtils.getLoacalBitmap(MyApplication.USERAVATORPATH);
-	    				if (bitmap != null) {
-	    					holder.setImageBitmap(R.id.share_usernameavator,ImageUtils.toRoundBitmap(bitmap));
-	    				}
+//				L.d("==userId1=="+ map.get("userId").get(position) + " ==userId2==" + MyApplication.USERID);
+//				if(map.get("userId").get(position).equals(MyApplication.USERID)){
+//					if (FileUtils.existsFile(MyApplication.USERAVATORPATH)) {
+//						Bitmap bitmap = ImageUtils.getLoacalBitmap(MyApplication.USERAVATORPATH);
+//	    				if (bitmap != null) {
+//	    					holder.setImageBitmap(R.id.share_usernameavator,ImageUtils.toRoundBitmap(bitmap));
+//	    				}
+//					}
+//				}else{
+					String avatorStr = map.get("avator").get(position);
+					if (RegexUtil.checkNotNull(avatorStr)) {
+						holder.showImage(R.id.share_usernameavator,
+								CommUtil.getHttpLink(map.get("avator").get(position)),true);
+					}else{
+						holder.setImageResource(R.id.share_usernameavator, R.drawable.user_default_avatar);
 					}
-				}else{
-					holder.showImage(R.id.share_usernameavator,
-							CommUtil.getHttpLink(map.get("avator").get(position)),true);
-				}
+//				}
 				
 				String realname = map.get("realname").get(position);
 				if (!realname.equals("") && realname != null) {
-					holder.setText(R.id.share_username, map.get("realname").get(position));
+					holder.setText(R.id.share_username, realname);
 				}else{
 					holder.setText(R.id.share_username, map.get("username").get(position));
 				}
 				
 				String jobtitleStr = map.get("expworkindustry").get(position);
-				if (RegexUtil.checkNotNull(jobtitleStr)) {
-					holder.setTextVisibe(R.id.share_jobtitle, View.VISIBLE);
-					holder.setText(R.id.share_jobtitle, jobtitleStr);
-				}else{
-					holder.setTextVisibe(R.id.share_jobtitle, View.GONE);
-				}
-				
 				String workyear = map.get("joinworktime").get(position);
-				if (RegexUtil.checkNotNull(workyear)) {
-					int year = CommUtil.parseInt(workyear.substring(0, 4));
-					int theYear = CommUtil.parseInt(TimeUtils.theYear());
-					holder.setTextVisibe(R.id.share_workyear, View.VISIBLE);
-					holder.setText(R.id.share_workyear,(theYear - year) + "年工作经验");
+				if (!RegexUtil.checkNotNull(jobtitleStr) && !RegexUtil.checkNotNull(workyear)) {
+					holder.setViewVisible(R.id.info2Layout, View.GONE);
 				}else{
-					holder.setTextVisibe(R.id.share_workyear, View.GONE);
+					holder.setViewVisible(R.id.info2Layout, View.VISIBLE);
+					
+					if (RegexUtil.checkNotNull(jobtitleStr)) {
+						holder.setTextVisibe(R.id.share_jobtitle, View.VISIBLE);
+						holder.setText(R.id.share_jobtitle, jobtitleStr);
+					}else{
+						holder.setTextVisibe(R.id.share_jobtitle, View.GONE);
+					}
+					
+					if (RegexUtil.checkNotNull(workyear)) {
+						int year = CommUtil.parseInt(workyear.substring(0, 4));
+						int theYear = CommUtil.parseInt(TimeUtils.theYear());
+						holder.setTextVisibe(R.id.share_workyear, View.VISIBLE);
+						holder.setText(R.id.share_workyear,(theYear - year) + "年工作经验");
+					}else{
+						holder.setTextVisibe(R.id.share_workyear, View.GONE);
+					}
 				}
 				
 				final String content = map.get("content").get(position);

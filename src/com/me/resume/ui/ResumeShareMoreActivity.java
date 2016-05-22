@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +23,8 @@ import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.FileUtils;
+import com.me.resume.utils.ImageUtils;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
 
@@ -120,32 +123,44 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 			
 			@Override
 			public void convert(ViewHolder holder, List<String> item, int position) {
-				holder.showImage(R.id.share_usernameavator,
-						CommUtil.getHttpLink(map.get("avator").get(position)),true);
+				String avatorStr = map.get("avator").get(position);
+				if (RegexUtil.checkNotNull(avatorStr)) {
+					holder.showImage(R.id.share_usernameavator,
+							CommUtil.getHttpLink(map.get("avator").get(position)),true);
+				}else{
+					holder.setImageResource(R.id.share_usernameavator, R.drawable.user_default_avatar);
+				}
 				
 				String realname = map.get("realname").get(position);
 				if (!realname.equals("") && realname != null) {
-					holder.setText(R.id.share_username, map.get("realname").get(position));
+					holder.setText(R.id.share_username, realname);
 				}else{
 					holder.setText(R.id.share_username, map.get("username").get(position));
 				}
 				
-				/*String jobtitleStr = map.get("jobtitle").get(position);
-				if (RegexUtil.checkNotNull(jobtitleStr)) {
-					holder.setTextVisibe(R.id.share_jobtitle, View.VISIBLE);
-					holder.setText(R.id.share_jobtitle, jobtitleStr);
-				}else{
-					holder.setTextVisibe(R.id.share_jobtitle, View.GONE);
-				}*/
-				
+				String jobtitleStr = map.get("expworkindustry").get(position);
 				String workyear = map.get("joinworktime").get(position);
-				if (RegexUtil.checkNotNull(workyear)) {
-					int year = CommUtil.parseInt(workyear.substring(0, 4));
-					int theYear = CommUtil.parseInt(TimeUtils.theYear());
-					holder.setTextVisibe(R.id.share_workyear, View.VISIBLE);
-					holder.setText(R.id.share_workyear,(theYear - year) + "年工作经验");
+				
+				if (!RegexUtil.checkNotNull(jobtitleStr) && !RegexUtil.checkNotNull(workyear)) {
+					holder.setViewVisible(R.id.info2Layout, View.GONE);
 				}else{
-					holder.setTextVisibe(R.id.share_workyear, View.GONE);
+					holder.setViewVisible(R.id.info2Layout, View.VISIBLE);
+					
+					if (RegexUtil.checkNotNull(jobtitleStr)) {
+						holder.setTextVisibe(R.id.share_jobtitle, View.VISIBLE);
+						holder.setText(R.id.share_jobtitle, jobtitleStr);
+					}else{
+						holder.setTextVisibe(R.id.share_jobtitle, View.GONE);
+					}
+					
+					if (RegexUtil.checkNotNull(workyear)) {
+						int year = CommUtil.parseInt(workyear.substring(0, 4));
+						int theYear = CommUtil.parseInt(TimeUtils.theYear());
+						holder.setTextVisibe(R.id.share_workyear, View.VISIBLE);
+						holder.setText(R.id.share_workyear,(theYear - year) + "年工作经验");
+					}else{
+						holder.setTextVisibe(R.id.share_workyear, View.GONE);
+					}
 				}
 				
 				

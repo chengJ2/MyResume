@@ -56,6 +56,23 @@
         <item name="android:typeface">serif</item>
     </style>
     
+    <style name="address_item_text" parent="@style/home_item_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/home_item_height</item>
+    </style>
+    
+     <style name="address_item_left_text" parent="@style/home_item_text">
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:drawableLeft">@drawable/location</item>
+    </style>
+    
+     <style name="search_item_right_text" parent="@style/home_item_text">
+         <item name="android:layout_width">50dip</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+    
     <style name="home_item_more">
         <item name="android:layout_width">60dip</item>
         <item name="android:layout_height">match_parent</item>
@@ -222,7 +239,7 @@
     <style name="line_h15">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/line_height_16</item>
-        <item name="android:background">@color/line</item>
+        <item name="android:background">@color/grey_80</item>
     </style>
 
     <!-- 界面按钮 -->
@@ -334,10 +351,13 @@
         <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:gravity">center|left</item>
+        <item name="android:singleLine">true</item>
         <item name="android:typeface">serif</item>
     </style>
 
-    
+    <style name="user_center_small_text" parent="@style/user_center_text">
+        <item name="android:textSize">@dimen/micro_text_size</item>
+    </style>
     
     <style name="fab_button_style">
         <item name="android:layout_width">50dip</item>

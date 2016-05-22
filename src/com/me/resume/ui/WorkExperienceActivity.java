@@ -218,6 +218,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			add_insert = true;
 			getFeildValue();
 			if(judgeFeild()){
+				resumeUpdatime = TimeUtils.getCurrentTimeString();
 				ContentValues cValues = new ContentValues();
 				cValues.put("tokenId", UUIDGenerator.getKUUID());
 				cValues.put("userId", uTokenId);
@@ -249,6 +250,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			getFeildValue();
 			if(judgeFeild()){
 				if(getWEData()){
+					resumeUpdatime = TimeUtils.getCurrentTimeString();
 					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 							new String[]{tokenId,"companyname","companynature","companyscale","industryclassification",
 											  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc","updatetime"}, 

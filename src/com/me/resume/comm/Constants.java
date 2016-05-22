@@ -77,6 +77,9 @@ public class Constants {
     // apk下载地址
     public static String APKURLPATH = CommonText.endPoint + "/apk/" + APKNAME;
     
+    // 默认显示时间
+    public static final int DEFAULTIME = 3000;
+    
     // UI activity
     public static final String ADDRESS = "AddressActivity";
     public static final String BASEINFO = "BaseInfoActivity";
