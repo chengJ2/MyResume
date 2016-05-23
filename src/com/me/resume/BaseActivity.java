@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
@@ -63,6 +64,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	protected CommonBaseAdapter<String> commStrAdapter = null;
 	
 	protected CommForMapBaseAdapter commapBaseAdapter = null;
+	
+	protected CommForMapArrayBaseAdapter commMapArrayAdapter = null;
 
 	protected Map<String, String[]> commMapArray = null;
 
@@ -97,8 +100,6 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	protected String deviceID = "";// 设备标识码
 	
 	protected Boolean LocalHasData = false;// 本地是否有数据
-	
-	protected String resumeUpdatime = "";// 更新简历时间
 	
 	/**
 	 * 操作类型 
@@ -250,6 +251,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * @param resId
 	 */
 	protected void setRightIcon(int resId) {
+		right_icon.setVisibility(View.VISIBLE);
 		right_icon.setImageResource(resId);
 	}
 	

@@ -10,12 +10,15 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.model.UUIDGenerator;
+import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
@@ -35,6 +38,8 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	private EditText info_self_evaluation,info_career_goal;
 	
 	private String info_self_evaluationStr,info_career_goalStr;
+	
+	private TextView info_character;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -97,9 +102,11 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	private void findViews(){
 		info_self_evaluation = findView(R.id.info_self_evaluation);
 		info_career_goal = findView(R.id.info_career_goal);
+		info_character = findView(R.id.info_character);
 		
 		info_self_evaluation.addTextChangedListener(this);
 		info_career_goal.addTextChangedListener(this);
+		info_character.addTextChangedListener(this);
 	}
 	
 	private boolean getEvData(){
@@ -162,6 +169,10 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.right_icon_more:
 			DialogUtils.showTopMenuDialog(self, topLayout,0, mHandler);
+			break;
+		case R.id.info_character:
+			ActivityUtils.startActivityForResult(self, 
+					Constants.PACKAGENAMECHILD + Constants.ADDRESS, false, Constants.EV_REQUEST_CODE);
 			break;
 		default:
 			break;

@@ -384,7 +384,11 @@ public class CommUtil {
 	    
 	}
 	
-	
+	/**
+	 * 
+	 * @Description: 获取请求地址
+	 * @return url  
+	 */
 	public static String getHttpLink(String link){
 		if(RegexUtil.checkNotNull(link)){
 			if(!link.contains("http://")){
@@ -400,6 +404,20 @@ public class CommUtil {
 		}else{
 			return "";
 		}
+	}
+	
+	/**
+	 * 
+	 * @Description: 获取请求地址
+	 * @return url  
+	 */
+	public static String getHtml(String content){
+		if(RegexUtil.checkNotNull(content)){
+			content = content.replaceAll("小于", "<");
+			content = content.replaceAll("大于", "<");
+			return content.trim();
+		}
+		return null;
 	}
 	
 	 /**

@@ -49,11 +49,11 @@ public class UserLoginActivity extends BaseActivity implements
 	
 	private boolean fflag = false;
 	
-	private String str_username,str_password;
+	private String str_username,str_phoneoremial,str_password;
 	
 	private RelativeLayout user_login_layout,user_register_layout;
 	
-	private EditText usernameEt,passwordEt,password2Et;
+	private EditText usernameEt,regTxt_phoneoremial,passwordEt,password2Et;
 	
 	private Button registBtn;
 	
@@ -109,6 +109,7 @@ public class UserLoginActivity extends BaseActivity implements
 		btnLogin.setOnClickListener(this);
 		
 		usernameEt = findView(R.id.regTxt_username);
+		regTxt_phoneoremial = findView(R.id.regTxt_phoneoremial);
 		passwordEt = findView(R.id.regTxt_password);
 		password2Et = findView(R.id.regTxt2_password);
 		
@@ -231,6 +232,7 @@ public class UserLoginActivity extends BaseActivity implements
 			@Override
 			public void success(Map<String, List<String>> map) {
 				try {
+					CommUtil.hideKeyboard(self);
 					sendSuccess(map);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -257,12 +259,30 @@ public class UserLoginActivity extends BaseActivity implements
 	private void getFeildValue(){
 		str_username = usernameEt.getText().toString();
 		str_password = passwordEt.getText().toString();
+		str_phoneoremial = regTxt_phoneoremial.getText().toString();
 	}
 	
 	private boolean  judgeFeild(){
 		if(!RegexUtil.checkNotNull(str_username)){
 			setMsg(R.string.action_input_up_isnull);
 			return false;
+		}
+		
+		if (!RegexUtil.checkNotNull(str_phoneoremial)) {
+			set3Msg(R.string.action_input_up_phone_email);
+			return false;
+		}
+		
+		if (str_phoneoremial.contains("@")) {
+			if(!RegexUtil.checkEmail(str_phoneoremial)){
+				set3Msg(R.string.reg_info_email);
+				return false;
+			}
+		}else{
+			if(!RegexUtil.isPhone(str_phoneoremial)){
+				set3Msg(R.string.reg_info_phone);
+				return false;
+			}
 		}
 		
 		if(!RegexUtil.checkNotNull(str_password)){
@@ -318,10 +338,11 @@ public class UserLoginActivity extends BaseActivity implements
 				
 				public void success(Map<String, List<String>> map) {
 					try {
-						sendSuccess(map);
+						CommUtil.hideKeyboard(self);
 						registBtn.setText(CommUtil.getStrValue(self, R.string.action_wait_regsuccess));
 						registBtn.setEnabled(false);
 						preferenceUtil.setPreferenceData("isregister", true);
+						sendSuccess(map);
 					} catch (Exception e) {
 						e.printStackTrace();
 						if(map.get("msg").get(0).equals(ResponseCode.USERNAME_REPEAT)){

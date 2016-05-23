@@ -53,8 +53,8 @@ public class Constants {
 	public static final int JI_REQUEST_CODE2 = 2002;
 	public static final int BI_REQUEST_CODE = 3000;
 	public static final int BI_REQUEST_CODE2 = 3002;
-	
 	public static final int ED_REQUEST_CODE = 4000;
+	public static final int EV_REQUEST_CODE = 5000;
 	
 	public static final String EDUCATION_SEND = "com.me.resume.education.send";
 	public static final String EDUCATION_RECEIVE_ED = "com.me.resume.education_receive_ed";
@@ -78,13 +78,14 @@ public class Constants {
     public static String APKURLPATH = CommonText.endPoint + "/apk/" + APKNAME;
     
     // 默认显示时间
-    public static final int DEFAULTIME = 3000;
+    public static final int DEFAULTIME = 5000;
     
     // UI activity
     public static final String ADDRESS = "AddressActivity";
     public static final String BASEINFO = "BaseInfoActivity";
     public static final String EDUCATION = "EducationActivity";
     public static final String EVALUATION = "EvaluationActivity";
+    public static final String EVALUATIONMORE = "EvaluationMoreActivity";
     public static final String FEEDBACK = "FeedBackActivity";
     public static final String HOME = "HomeActivity";
     public static final String IMAGEPAGER = "ImagePagerActivity";
@@ -100,7 +101,7 @@ public class Constants {
     public static final String RESUMETEMPLMORE = "ResumeTemplMoreActivity";
     public static final String SETTING = "SettingActivity";
     public static final String STARTUP = "StartupActivity";
-    public static final String TOPIC = "TopicActivity";
+    public static final String TOPICVIEW = "TopicViewActivity";
     public static final String TOPICLISTDETAIL = "TopicListDetailActivity";
     public static final String USERCENTER = "UserCenterActivity";
     public static final String USERLOGIN = "UserLoginActivity";

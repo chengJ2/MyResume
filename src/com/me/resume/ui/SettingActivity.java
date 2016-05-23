@@ -288,7 +288,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		params.add("p_userId");
 		values.add(uTokenId);
 		
-		requestData("pro_login_out", 1, params, values, new HandlerData() {
+		requestData("pro_user_loginout", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
 				toastMsg(R.string.action_logout_fail);

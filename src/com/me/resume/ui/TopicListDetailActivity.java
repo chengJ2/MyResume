@@ -20,7 +20,10 @@ import android.widget.TextView;
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
 import com.me.resume.comm.CommForMapBaseAdapter;
+import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
+import com.me.resume.comm.ViewHolder.ClickEvent;
+import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
@@ -103,14 +106,29 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		initView();
 	}
 	
+	String typeStr = "";
+	
 	private void initView(){
+		
 		setTopTitle(R.string.item_text31);
 		setMsgHide();
-		setRightIconVisible(View.VISIBLE);
+		setRightIconVisible(View.GONE);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
-		mHandler.sendEmptyMessageDelayed(100, 200);
+		
+		String title = getIntent().getStringExtra("title");
+		String[] titleArr = null;
+		if (RegexUtil.checkNotNull(title)) {
+			titleArr = title.split(";");
+			setTopTitle(titleArr[0]);
+			typeStr = titleArr[1];
+			
+			mHandler.sendEmptyMessageDelayed(100, 200);
+		}else{
+			return;
+		}
+		
 	}
 	
 	private void getTopciListData(int position){
@@ -118,7 +136,9 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		List<String> values = new ArrayList<String>();
 		
 		params.add("p_index");
+		params.add("p_type");
 		values.add(String.valueOf(position));
+		values.add(typeStr);
 		
 		requestData("pro_gettopic_bypage", 1, params, values, new HandlerData() {
 			@Override
@@ -141,12 +161,13 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 	private ViewHolder viewHolder;
 	
 	private void setTopicListData(final Map<String, List<String>> map){
+		finishLoading();
 		commapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.topic_list_detail_item,"id") {
 			
 			@Override
-			public void convert(ViewHolder holder, List<String> item, int position) {
-				String fromUrl = commMapArray.get("from_url")[position];
-				if (RegexUtil.checkNotNull(fromUrl)) {
+			public void convert(ViewHolder holder, List<String> item, final int position) {
+				String fromUrl = map.get("from_url").get(position);
+				if (!RegexUtil.checkNotNull(fromUrl)) {
 					holder.setImageVisibe(R.id.topic_icon, View.GONE);
 				}else{
 					holder.setImageVisibe(R.id.topic_icon, View.VISIBLE);
@@ -158,22 +179,24 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 				holder.setText(R.id.topic_datime, map.get("createtime").get(position));
 				
 				viewHolder = holder;
+				
+				holder.setOnClickEvent(R.id.toplistitemlayout, new ClickEvent() {
+					
+					@Override
+					public void onClick(View view) {
+						String topicId = map.get("id").get(position);
+						String type = map.get("type").get(position);
+						ActivityUtils.startActivityPro(self, 
+								Constants.PACKAGENAMECHILD + Constants.TOPICVIEW, "tidtype",
+								topicId + ";" +type);
+					}
+				});
 			}
 		};
 		
 		topicdetailListView.setAdapter(commapBaseAdapter);
 		topicdetailListView.setVisibility(View.VISIBLE); 
 		nodata.setVisibility(View.GONE);
-		finishLoading();
-		topicdetailListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 		
 		topicdetailListView.setOnScrollListener(new OnScrollListener() {
 			@Override

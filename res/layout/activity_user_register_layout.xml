@@ -22,7 +22,16 @@
             android:hint="@string/login_input1_hint" />
 
         <View style="@style/line_padding10" />
+        
+        
+       <EditText
+            android:id="@+id/regTxt_phoneoremial"
+            style="@style/userinfo_item_style"
+            android:drawableLeft="@drawable/usericon"
+            android:hint="@string/login_input2_hint" />
 
+        <View style="@style/line_padding10" />
+        
         <EditText
             android:id="@+id/regTxt_password"
             style="@style/userinfo_item_style"

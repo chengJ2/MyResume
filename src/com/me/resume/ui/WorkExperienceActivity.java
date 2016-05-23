@@ -19,6 +19,7 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
+import com.me.resume.comm.UserInfoCode;
 import com.me.resume.model.UUIDGenerator;
 import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.L;
@@ -218,7 +219,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			add_insert = true;
 			getFeildValue();
 			if(judgeFeild()){
-				resumeUpdatime = TimeUtils.getCurrentTimeString();
+				preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
 				ContentValues cValues = new ContentValues();
 				cValues.put("tokenId", UUIDGenerator.getKUUID());
 				cValues.put("userId", uTokenId);
@@ -250,7 +251,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			getFeildValue();
 			if(judgeFeild()){
 				if(getWEData()){
-					resumeUpdatime = TimeUtils.getCurrentTimeString();
+					preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
 					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 							new String[]{tokenId,"companyname","companynature","companyscale","industryclassification",
 											  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc","updatetime"}, 

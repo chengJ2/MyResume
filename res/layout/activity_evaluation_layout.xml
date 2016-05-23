@@ -23,7 +23,7 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/small_text_size" />
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
             <LinearLayout style="@style/noraml_item_mul" >
 
@@ -39,10 +39,10 @@
 
                 <ImageView
                     style="@style/user_info_item_iv"
-                    android:visibility="visible" />
+                    android:visibility="invisible" />
             </LinearLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
             <LinearLayout style="@style/noraml_item_mul" >
 
@@ -58,19 +58,41 @@
 
                 <ImageView
                     style="@style/user_info_item_iv"
+                    android:visibility="invisible" />
+            </LinearLayout>
+            
+             <View style="@style/line_padding10" />
+
+            
+              <LinearLayout
+                android:id="@+id/llout03"
+                style="@style/noraml_item" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:text="@string/ev_info_character" />
+
+                <TextView
+                    android:id="@+id/info_character"
+                    style="@style/user_info_item_ed"
+                    android:hint="@string/ev_info_choose_character" />
+
+                <ImageView
+                    style="@style/user_info_item_iv"
                     android:visibility="visible" />
             </LinearLayout>
-
-            <View style="@style/line3" />
+            
+              <View style="@style/line_padding10" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center|left"
                 android:padding="@dimen/margin_8"
-                android:text="@string/ev_info_default_2"
-                android:textColor="@color/grey_10"
+                android:text="@string/ev_info_default_3"
+                android:textColor="@color/red"
                 android:textSize="@dimen/micro_text_size" />
+            
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
 </RelativeLayout>

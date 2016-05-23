@@ -86,13 +86,15 @@
      			android:id="@+id/share_content"
       			 style="@style/user_center_text"
       			 android:maxHeight="120dip"
+      			 android:maxLines="3"
+      			 android:ellipsize="end"
       			 android:singleLine="false"
       			 android:lineSpacingExtra="3dip"
       			 android:layout_marginTop="10dip"
       			 android:paddingRight="8dip"
       			 android:gravity="left"
       			 android:layout_gravity="left"
-      			 android:text="武汉武汉市武汉市武"
+      			 android:text="测试测试测试测试测试测试测试测试测试测试测试测试"
       			 android:textSize="@dimen/small_text_size"
       			 android:textColor="@color/black" />
          

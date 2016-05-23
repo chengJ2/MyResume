@@ -92,7 +92,7 @@
                 <TextView
                     android:id="@+id/mycollection"
                      style="@style/user_center_content_func"
-                    android:drawableTop="@drawable/icon_collection_small"
+                    android:drawableTop="@drawable/icon_collection_middle"
                     android:text="@string/personal_c_item1"/>
                 
                 <View style="@style/line2" 

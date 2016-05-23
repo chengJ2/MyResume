@@ -124,7 +124,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 					CommUtil.hideKeyboard(self);
 					final String uname = pwdTxt_username.getText().toString().trim();
 					if (RegexUtil.checkNotNull(uname)) {
-						getNewPwd(uname);
+						judgeUserExist(uname);
 					}
 					return true;
 				}else{
@@ -224,13 +224,13 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 	 * 获得新密码
 	 * @param str
 	 */
-	private void getNewPwd(String str){
+	private void judgeUserExist(String str){
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		params.add("p_username");
 		values.add(str);
 	
-		requestData("pro_find_password", 1, params, values, new HandlerData() {
+		requestData("pro_user_exist", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
 				
@@ -271,11 +271,14 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 				values.add(username2Str);
 				values.add(CommUtil.getMD5(passwordStr)); // 旧密码
 				values.add(CommUtil.getMD5(password2Str)); // 新密码
-				procname = "pro_reset_password";
+				
+				procname = "pro_user_resetpwd";
+				
 			}else if (type.equals(Constants.FORGOTPWD)){
 				values.add(usernameStr);
-				values.add(CommUtil.getMD5(passwordStr));
-				procname = "pro_new_password";
+				values.add(CommUtil.getMD5(passwordStr)); // 新密码
+				
+				procname = "pro_user_newpwd";
 			}
 			
 			requestData(procname, 1, params, values, new HandlerData() {

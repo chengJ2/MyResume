@@ -66,7 +66,7 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 			
 			Info info = new Info();
 			BaseCommonUtil baseCommon = new CommonUtil();
-			DataSetList dataSetList = baseCommon.datasetlistUpdata(info.getUse(),info.getPass(), "pro_upload_avator",1, paramname,paramvalue,null);
+			DataSetList dataSetList = baseCommon.datasetlistUpdata(info.getUse(),info.getPass(), "pro_user_avator",1, paramname,paramvalue,null);
 			if (dataSetList != null) {
 				if(dataSetList.nameList.size()>0){
 					try {

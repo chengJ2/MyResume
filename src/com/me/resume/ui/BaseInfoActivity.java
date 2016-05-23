@@ -26,6 +26,7 @@ import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ResponseCode;
+import com.me.resume.comm.UserInfoCode;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -394,7 +395,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	 * 同步本地库数据
 	 */
 	private void syncLocalData(){
-		resumeUpdatime = TimeUtils.getCurrentTimeString();
+		preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
 		if (LocalHasData) {
 			updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
 					new String[]{"userId=?",
@@ -466,7 +467,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		}*/
 		
 		if (RegexUtil.checkNotNull(info_phoneStr) && !RegexUtil.isPhone(info_phoneStr)) {
-			setMsg(R.string.reg_info_phone);
+			set3Msg(R.string.reg_info_phone);
 			return false;
 		}
 		

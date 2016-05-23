@@ -27,6 +27,7 @@ import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.UploadPhotoTask;
+import com.me.resume.comm.UserInfoCode;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -104,7 +105,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
             	break;
             case 101:
             	setAnimView(center_topbar,0);
-            	mHandler.sendEmptyMessageDelayed(101,Constants.DEFAULTIME);
+//            	mHandler.sendEmptyMessageDelayed(101,Constants.DEFAULTIME);
             	break;
 			default:
 				break;
@@ -169,7 +170,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		llout02.setOnClickListener(this);
 		llout03.setOnClickListener(this);
 		
-		resume_complete = findView(R.id.review_resume);
+		resume_complete = findView(R.id.resume_complete);
 		resume_updatime = findView(R.id.resume_updatime);
 		
 		info_layout1 = findView(R.id.info_layout1);
@@ -180,7 +181,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		info_item1 = findView(R.id.info_item1);
 		info_item2 = findView(R.id.info_item2);
 		info_item3 = findView(R.id.info_item3);
-		info_item4 = findView(R.id.info_item3);
+		info_item4 = findView(R.id.info_item4);
 		
 		mycollection.setOnClickListener(this);
 		viewmode.setOnClickListener(this);
@@ -252,13 +253,13 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 	
-	
 	/**
 	 * 
 	 * @Description:求职意向完整度
 	 */
 	private void getBaseInfoComplete(){
-		resume_updatime.setText("上次更新："+resumeUpdatime);
+		resume_updatime.setText("上次更新："
+				+ preferenceUtil.getPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString()));
 		queryWhere = "select (a1+a2+a3+a4+a5+a6+a7+a8+a9+a10+a11+a12) num"
 					+ " from ("
 					+ " select case when realname='' then 1 else 0 end a1,"
@@ -284,7 +285,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			}
 			if (nPercent <= 0)
 				nPercent = 0;
-			resume_complete.setText("完整度("+nPercent +"%)");
+			resume_complete.setText("完整度:"+nPercent +"%");
 		}else{
 			resume_complete.setText("未填写");
 		}
@@ -367,7 +368,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 					+ " case when industryclassification='' then 1 else 0 end a4,"
 					+ " case when jobtitle='' then 1 else 0 end a5,"
 					+ " case when worktimestart='' then 1 else 0 end a6,"
-					+ " case when worktimeend='' then 1 else 0 end a7"
+					+ " case when worktimeend='' then 1 else 0 end a7,"
 					+ " case when expectedsalary='' then 1 else 0 end a8,"
 					+ " case when workdesc='' then 1 else 0 end a9"
 					+ " from "+ CommonText.WORKEXPERIENCE +" where userId = '"+ uTokenId +"') a";
@@ -393,7 +394,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	 * @Description:项目经验
 	 */
 	private void getProjectExperienceComplete(){
-		queryWhere = "select count(*) num from "+ CommonText.PROJECT_EXPERIENCE +" where userId = '"+ uTokenId +"') a";
+		queryWhere = "select count(*) as num from "+ CommonText.PROJECT_EXPERIENCE +" where userId = '"+ uTokenId +"'";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!=null && commMapArray.get("num").length>0) {
 			int num = CommUtil.parseInt(commMapArray.get("num")[0]);

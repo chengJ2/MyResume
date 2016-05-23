@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white" 
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:id="@+id/toplistitemlayout" >
     
     <ImageView
          android:id="@+id/topic_icon"
@@ -12,14 +13,14 @@
          android:layout_gravity="center"
          android:src="@drawable/ic_launcher"
          android:scaleType="fitXY"
-         android:visibility="visible" />
+         android:visibility="visible"/>
 
      <LinearLayout
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:background="@color/white"
-         android:padding="@dimen/margin_8"
-         android:orientation="vertical" >
+         android:orientation="vertical"
+         android:layout_margin="@dimen/margin_8" >
                
            <TextView
     			 android:id="@+id/topic_title"
@@ -27,26 +28,24 @@
      			 style="@style/user_center_text"
      			 android:text="@string/dialog_action_cache_alert"
      			 android:singleLine="true"
-     			 android:paddingRight="@dimen/margin_10"
      			 android:gravity="center|left"
      			 android:textSize="@dimen/small_text_size" 
      			 android:textColor="@color/black"/>
              
-    	
           <TextView
-     			android:id="@+id/topic_content"
-     			android:layout_height="40dip"
-      			 style="@style/user_center_text"
-      			 android:maxLines="2"
-      			 android:singleLine="false"
-      			 android:lineSpacingExtra="2dip"
-      			 android:layout_marginTop="8dip"
-      			 android:paddingRight="8dip"
-      			 android:gravity="left"
-      			 android:layout_gravity="left"
-      			 android:text="@string/dialog_action_alert"
-      			 android:textSize="@dimen/micro_text_size"
-      			 android:textColor="@color/grey_10" />
+              android:id="@+id/topic_content"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_gravity="left"
+              android:layout_marginTop="@dimen/margin_10"
+              android:ellipsize="end"
+              android:gravity="left|center_horizontal"
+              android:lineSpacingExtra="3dip"
+              android:maxLines="2"
+              android:singleLine="false"
+              android:text="@string/dialog_action_alert"
+              android:textColor="@color/grey_10"
+              android:textSize="@dimen/micro_text_size" />
          
          <RelativeLayout
               android:layout_width="match_parent"
@@ -70,8 +69,6 @@
         			 android:paddingRight="10dip"
         			android:textSize="@dimen/microd_text_size"
         			android:textColor="@color/grey_10" />
-   
          </RelativeLayout>
-         
     </LinearLayout>
 </LinearLayout>

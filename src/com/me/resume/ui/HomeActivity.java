@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -325,7 +326,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					@Override
 					public void onClick(View view) {
 						ActivityUtils.startActivityPro(self, 
-								Constants.PACKAGENAMECHILD + Constants.TOPIC, "title",
+								Constants.PACKAGENAMECHILD + Constants.TOPICLISTDETAIL, "title",
 								title[0]+";"+title[1]);
 
 					}
@@ -423,23 +424,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			
 			@Override
 			public void convert(final ViewHolder holder, List<String> item, final int position) {
-//				L.d("==userId1=="+ map.get("userId").get(position) + " ==userId2==" + MyApplication.USERID);
-//				if(map.get("userId").get(position).equals(MyApplication.USERID)){
-//					if (FileUtils.existsFile(MyApplication.USERAVATORPATH)) {
-//						Bitmap bitmap = ImageUtils.getLoacalBitmap(MyApplication.USERAVATORPATH);
-//	    				if (bitmap != null) {
-//	    					holder.setImageBitmap(R.id.share_usernameavator,ImageUtils.toRoundBitmap(bitmap));
-//	    				}
-//					}
-//				}else{
-					String avatorStr = map.get("avator").get(position);
-					if (RegexUtil.checkNotNull(avatorStr)) {
-						holder.showImage(R.id.share_usernameavator,
-								CommUtil.getHttpLink(map.get("avator").get(position)),true);
-					}else{
-						holder.setImageResource(R.id.share_usernameavator, R.drawable.user_default_avatar);
-					}
-//				}
+				String avatorStr = map.get("avator").get(position);
+				if (RegexUtil.checkNotNull(avatorStr)) {
+					holder.showImage(R.id.share_usernameavator,
+							CommUtil.getHttpLink(map.get("avator").get(position)),true);
+				}else{
+					holder.setImageResource(R.id.share_usernameavator, R.drawable.user_default_avatar);
+				}
 				
 				String realname = map.get("realname").get(position);
 				if (!realname.equals("") && realname != null) {
@@ -472,13 +463,15 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					}
 				}
 				
-				final String content = map.get("content").get(position);
-				holder.setText(R.id.share_content, content);
+				holder.setText(R.id.share_content, map.get("content").get(position));
+				
 				holder.setText(R.id.share_city, map.get("city").get(position));
 				holder.setText(R.id.share_datime, map.get("createtime").get(position));
 				
+				final String cid = map.get("id").get(position);
+				
 				queryWhere = "select * from " + CommonText.MYCOLLECTION 
-						+ " where content = '" + content +"'";
+						+ " where cid = "+ cid +" and userId = '"+ uTokenId+"' and type=0";
 				commMapArray = dbUtil.queryData(self, queryWhere);
 				if (commMapArray == null) {
 					holder.setImageResource(R.id.share_collection, R.drawable.icon_collection_nor);
@@ -490,21 +483,22 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					
 					@Override
 					public void onClick(View view) {
-						queryWhere = "select * from " + CommonText.MYCOLLECTION + " where content = '" + content +"'";
-						commMapArray = dbUtil.queryData(self, queryWhere);
-						if (commMapArray == null) {
-							if (!MyApplication.USERID.equals("0")) {
-								addCollection(holder,map,position);
+						if (!MyApplication.USERID.equals("0")) {
+							queryWhere = "select * from " + CommonText.MYCOLLECTION 
+									+ " where cid = "+ cid +" and userId = '"+ uTokenId+"' and type=0";
+							commMapArray = dbUtil.queryData(self, queryWhere);
+							if (commMapArray == null) {
+								addCollection(map,position);
 							}else{
-								toastMsg(R.string.action_login_head);
+								queryWhere = "delete from " + CommonText.MYCOLLECTION 
+										+ " where cid = "+ cid +" and userId = '"+ uTokenId+"' and type=0";
+								dbUtil.deleteData(self, queryWhere);
+								commapBaseAdapter.notifyDataSetChanged();
+								toastMsg(R.string.item_text91);
 							}
 						}else{
-							queryWhere = "delete from " + CommonText.MYCOLLECTION + " where content = '" + content +"'";
-							dbUtil.deleteData(self, queryWhere);
-							commapBaseAdapter.notifyDataSetChanged();
-							toastMsg(R.string.item_text91);
+							toastMsg(R.string.action_login_head);
 						}
-						
 					}
 				});
 			}
@@ -519,7 +513,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	 * @param map
 	 * @param position
 	 */
-	private void addCollection(ViewHolder holder,Map<String, List<String>> map,int position){
+	private void addCollection(Map<String, List<String>> map,int position){
+		String cid = map.get("id").get(position);
 		String content = map.get("content").get(position);
 		String sharename = map.get("realname").get(position);
 		if (!RegexUtil.checkNotNull(sharename)) {
@@ -527,6 +522,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		}
 
 		ContentValues cValues = new ContentValues();
+		cValues.put("cId", cid);
 		cValues.put("userId", uTokenId);
 		cValues.put("shareUserId", map.get("userId").get(position));
 		cValues.put("content", content);

@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -142,7 +144,7 @@ public class ViewHolder {
 		}
 		return this;
 	}
-
+	
 	public ViewHolder setTextForHtml(int ViewID, String str) {
 		TextView tv = getView(ViewID);
 		if (RegexUtil.checkNotNull(str)) {

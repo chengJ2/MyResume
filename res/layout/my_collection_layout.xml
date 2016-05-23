@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_80"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
 
    <ListView
         android:id="@+id/collectionListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/margin_8"
-        android:layout_marginRight="@dimen/margin_8"
-        android:cacheColorHint="#00000000"
-        android:divider="@color/grey"
-        android:dividerHeight="1px"
-        android:footerDividersEnabled="true"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="none"
+        style="@style/comm_listview_style"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/nodata"
         android:visibility="visible"
+        android:layout_centerInParent="true"
         style="@style/comm_nodata_style" />
 
-</LinearLayout>
+</RelativeLayout>

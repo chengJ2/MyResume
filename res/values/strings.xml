@@ -90,7 +90,7 @@
 	<string name="item_text8">我也来分享...</string>
 	<string name="item_text81">优质的分享将会置顶哦~</string>
 	<string name="item_text9">收藏成功</string>
-	<string name="item_text91">已收藏</string>
+	<string name="item_text91">取消收藏</string>
 	 
     <!-- Main -->
     <string name="resume_baseinfo">基本资料</string>
@@ -119,6 +119,7 @@
     <string name="action_login_3pl">第三方登录</string>
     <string name="action_input_isnull">不能为空</string>
     <string name="action_input_up_isnull">用户名/手机号或密码</string>
+    <string name="action_input_up_phone_email">手机号或邮箱用于找回密码,请选填</string>
     <string name="action_input_username_isnull">用户名/手机号</string>
     <string name="action_input_username_toolong">用户名太长!</string>
     <string name="action_input_password_isnull">密码</string>
@@ -134,6 +135,7 @@
     <string name="action_login_error"> 用户名或密码不正确,请重试!</string>
     <string name="login_input_hint">请输入手机号/用户名</string>
     <string name="login_input1_hint">请输入用户名</string>
+    <string name="login_input2_hint">请输入手机号或邮箱</string>
     <string name="login_input_pwd_hint">请输入登录密码</string>
     <string name="login_input_old_pwd_hint">请输入原密码</string>
     <string name="login_input_new_pwd_hint">请输入新密码</string>
@@ -200,10 +202,9 @@
      <string name="re_link1">面试经验;1</string>
      <string name="re_link2">求职简历;2</string>
      <string name="re_link3">职场攻略;3</string>
-     <string name="re_link5">求职指南;5</string>
-<!--      <string name="re_link6">自我介绍;6</string> -->
-     <string name="re_link7">面试问题;7</string>
-     <string name="re_link8">每日推荐;8</string>
+     <string name="re_link5">求职指南;4</string>
+     <string name="re_link7">面试问题;5</string>
+     <string name="re_link8">每日推荐;6</string>
      
      <!-- personal center -->
      <string name="personal_c_item1">我的收藏</string>
@@ -260,14 +261,14 @@
     <!-- 基本资料 -->
 
 
-    <!-- 工作简历 -->
+    <!-- 工作经历-->
     <string name="we_info_companyname">企业名称</string>
     <string name="we_info_input_companyname">请输入企业名称</string>
     <string name="we_info_industryclassification">行业类别</string>
     <string name="we_info_companynature">企业性质</string>
-    <string name="we_info_choose_companynature">请选择企业性质</string>
+    <string name="we_info_choose_companynature">请选择企业性质(选填)</string>
     <string name="we_info_companyscale">企业规模</string>
-    <string name="we_info_choose_companyscale">请选择企业规模</string>
+    <string name="we_info_choose_companyscale">请选择企业规模(选填)</string>
     <string name="we_info_choose_industryclassification">请选择行业类别</string>
     <string name="we_info_jobtitle">职位名称</string>
     <string name="we_info_choose_jobtitle">请输入职位名称</string>
@@ -286,11 +287,14 @@
 
     <!-- 自我评价 -->
     <string name="ev_info_default_1">对自己做一个简短评价,简明扼要地描述您的职业优势,让用人单位快速地了解您!</string>
-    <string name="ev_info_default_2">请填写内容在1000字以内!</string>
+    <string name="ev_info_default_2">以上请填写内容在1000字以内!</string>
+    <string name="ev_info_default_3">存一份性格标签,让他人更能了解你</string>
     <string name="ev_info_self_evaluation">自我评价</string>
-    <string name="ev_info_input_self_evaluation">请输入自我评价</string>
+    <string name="ev_info_input_self_evaluation">请输入自我评价(限1000字)</string>
     <string name="ev_info_career_goal">职业目标</string>
-    <string name="ev_info_input_career_goal">请输入职业目标</string>
+    <string name="ev_info_input_career_goal">请输入职业目标(限1000字)</string>
+    <string name="ev_info_character">性格类型</string>
+    <string name="ev_info_choose_character">请选择性格类型(选填)</string>
     <string name="ev_info_self_evaluation_length">自我评价不能超过1000字</string>
     <string name="ev_info_career_goal_length">职业目标不能超过1000字</string>
     <!-- 自我评价 -->

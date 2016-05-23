@@ -5,15 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
@@ -22,11 +21,8 @@ import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.ViewHolder;
-import com.me.resume.comm.ViewHolder.ClickEvent;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
-import com.me.resume.tools.L;
+import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
-import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
 import com.whjz.android.text.CommonText;
 
@@ -42,7 +38,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 	private ListView collectionListView;
 	private TextView nodata;
 
-	private CommForMapArrayBaseAdapter commMapAdapter = null;
+	private boolean loadFlag = true;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -90,19 +86,24 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		nodata = findView(R.id.nodata);
 		nodata.setText(CommUtil.getStrValue(self, R.string.item_text43));
 		nodata.setVisibility(View.VISIBLE);
-		initData();
+		
 	}
-
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if (loadFlag) {
+			loadFlag = false;
+			initData();
+		}
 	}
 
 	private void initData() {
-		queryWhere = "select * from " + CommonText.MYCOLLECTION + " where userId = '" + uTokenId + "' order by createtime desc";
+		queryWhere = "select * from " + CommonText.MYCOLLECTION + " where userId = '" 
+						+ uTokenId + "' order by createtime desc";
 		commMapArray = dbUtil.queryData(self,queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length>0) {
-				commMapAdapter = new CommForMapArrayBaseAdapter(self, commMapArray,
+			commMapArrayAdapter = new CommForMapArrayBaseAdapter(self, commMapArray,
 						R.layout.topic_list_detail_item, "userId") {
 
 					@Override
@@ -111,8 +112,8 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 						setCollectionData(holder,commMapArray,position);
 					}
 				};
-
-				collectionListView.setAdapter(commMapAdapter);
+				collectionListView.setVisibility(View.VISIBLE);
+				collectionListView.setAdapter(commMapArrayAdapter);
 				nodata.setVisibility(View.GONE);
 			}else{
 				nodata.setText(CommUtil.getStrValue(self, R.string.en_nodata));
@@ -133,12 +134,21 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		if ("0".equals(type)) {
 			holder.setImageVisibe(R.id.topic_icon, View.GONE);
 			holder.setText(R.id.topic_content, commMapArray.get("content")[position]);
-			holder.setText(R.id.topic_title, "来自 " + commMapArray.get("sharename")[position] + " 的分享");
+			
+			StringBuffer sbStr = new StringBuffer();
+			sbStr.append("来自  ");
+			sbStr.append("<font color=\"red\">");
+			sbStr.append(commMapArray.get("sharename")[position]);
+			sbStr.append("</font>");
+			sbStr.append(" 的分享");
+			
+			holder.setTextForHtml(R.id.topic_title, sbStr.toString());
+			
 			holder.setText(R.id.topic_from, "面试心得"); // TODO 
 			holder.setText(R.id.topic_datime, commMapArray.get("createtime")[position]);
 		}else{
 			String fromUrl = commMapArray.get("from_url")[position];
-			if (RegexUtil.checkNotNull(fromUrl)) {
+			if (!RegexUtil.checkNotNull(fromUrl)) {
 				holder.setImageVisibe(R.id.topic_icon, View.GONE);
 			}else{
 				holder.setImageVisibe(R.id.topic_icon, View.VISIBLE);
@@ -148,7 +158,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 			holder.setText(R.id.topic_title, commMapArray.get("title")[position]);
 			holder.setText(R.id.topic_content, commMapArray.get("content")[position]);
 			holder.setText(R.id.topic_from, commMapArray.get("topic_from")[position]);
-			holder.setText(R.id.topic_datime, commMapArray.get("sharedatime")[position]);
+			holder.setText(R.id.topic_datime, commMapArray.get("createtime")[position]);
 		}
 		
 		collectionListView.setOnItemClickListener(new OnItemClickListener() {
@@ -158,11 +168,13 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 					int position, long id) {
 				String type = commMapArray.get("type")[position];
 				if ("0".equals(type)) {
-					// 取消关注
+					// TODO 取消关注
 				}else{
 					// 跳转到详情
 					String topicId = commMapArray.get("topicId")[position];
-					
+					ActivityUtils.startActivityPro(self, 
+							Constants.PACKAGENAMECHILD + Constants.TOPICVIEW, "tidtype",
+							topicId + ";" +type);
 				}
 			}
 		});
