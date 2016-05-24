@@ -24,7 +24,7 @@ public class PreferenceUtil {
 	}
 
 	public void setPreferenceData(String key, String value) {
-		editor.putString(key, value).commit();
+		editor.putString(key, value).apply();
 	}
 
 	public String getPreferenceData(String str, String def) {
@@ -32,7 +32,7 @@ public class PreferenceUtil {
 	}
 
 	public void setPreferenceData(String key, int value) {
-		editor.putInt(key, value).commit();
+		editor.putInt(key, value).apply();
 	}
 
 	public int getPreferenceData(String str, int def) {
@@ -40,7 +40,7 @@ public class PreferenceUtil {
 	}
 
 	public void setPreferenceData(String key, boolean value) {
-		editor.putBoolean(key, value).commit();
+		editor.putBoolean(key, value).apply();
 	}
 
 	public boolean getPreferenceData(String str) {
@@ -48,6 +48,6 @@ public class PreferenceUtil {
 	}
 	
 	public void clearPreferenceData() {
-		editor.clear().commit();
+		editor.clear().apply();
 	}
 }

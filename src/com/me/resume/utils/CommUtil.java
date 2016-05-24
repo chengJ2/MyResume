@@ -335,6 +335,21 @@ public class CommUtil {
 	}
 	
 	/**
+	 * 检测版本
+	 * @param remoteVersion
+	 * @return
+	 */
+    public static boolean checkVersionIsUpdate(Context context,int remoteVersion) {
+		boolean update = false;
+		int localVersion = getVersionCode(context);
+		L.d("localVersion:"+localVersion + "--remoteVersion:"+remoteVersion);
+		if (remoteVersion > localVersion) {
+			update = true;
+		}
+		return update;
+	}
+	
+	/**
      * MD5加密
      * @param str 要加密的密码
      * @return MD5加密的密码

@@ -561,8 +561,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		
 		MyApplication.USERID = preferenceUtil.getPreferenceData(UserInfoCode.USEID, "0");
 		MyApplication.USERNAME = preferenceUtil.getPreferenceData(UserInfoCode.USERNAME,"");
-		L.d("======onResume======userId:" + MyApplication.USERID + "## uuid:"
-				+ uTokenId);
+		L.d("======onResume======userId:" + MyApplication.USERID + "## uuid:"+ uTokenId);
 
 		if (!MyApplication.USERID.equals(0)) { // 登录用户显示头像
 			MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator

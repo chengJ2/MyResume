@@ -25,6 +25,7 @@
     <dimen name="margin_10">10dip</dimen>
     <dimen name="margin_16">16dip</dimen>
      <dimen name="margin_20">20dip</dimen>
+     <dimen name="margin_40">40dip</dimen>
     
     <dimen name="line_height">1px</dimen>
     <dimen name="line_margin_10">10dip</dimen>

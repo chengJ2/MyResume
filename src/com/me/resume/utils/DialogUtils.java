@@ -65,33 +65,40 @@ public class DialogUtils {
 	private static PopupWindow mPopupWindow = null;
 	
 	/**
-	 * 
+	 * App更新弹出框
 	 * @param context 上下文
 	 */
-	public static void showDialog(Context context,String content,String btnText,Handler handler,final int msgwhich){
+	public static void showDialog(Context context,String content,Handler handler){
 		try {
-			/*mHandler = handler;
+			mHandler = handler;
 			dialog = new Dialog(context);
 			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-			dialog.setContentView(R.layout.dialog_simple_layout);
-//			WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
-//		    layoutParams.width = width;  
-//		    layoutParams.height = heigth;
-//			dialog.getWindow().setAttributes(layoutParams);
+			dialog.setContentView(R.layout.app_update_dialog);
+			WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
+			dialog.getWindow().setAttributes(layoutParams);
 			dialog.getWindow().setBackgroundDrawable(new BitmapDrawable());
 			dialog.setCanceledOnTouchOutside(true);
 			TextView msg = (TextView)dialog.findViewById(R.id.content);
 			msg.setText(content);
-			Button btn = (Button)dialog.findViewById(R.id.connabtn);
-			btn.setText(btnText);
-			btn.setOnClickListener(new OnClickListener() {
+			Button btnCancle = (Button)dialog.findViewById(R.id.btn_cancle);
+			btnCancle.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
 					dismissDialog();
 				}
 			});
-			dialog.show();*/
+			
+			Button btnSure = (Button)dialog.findViewById(R.id.btn_sure);
+			btnSure.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					dismissDialog();
+					sendMsg(100);
+				}
+			});
+			dialog.show();
 		} catch (Exception e) {
 			L.e(e);
 		}

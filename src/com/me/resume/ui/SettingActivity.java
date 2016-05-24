@@ -9,6 +9,7 @@ import java.util.Map;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
@@ -22,12 +23,16 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
+import com.me.resume.comm.UserInfoCode;
+import com.me.resume.service.UpdateService;
 import com.me.resume.tools.DataCleanManager;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.FileUtils;
 import com.me.resume.views.SwitchButton;
 import com.me.resume.views.SwitchButton.OnChangedListener;
+import com.whjz.android.text.CommonText;
+import com.whjz.android.util.common.CommonUtil;
 
 /**
  * 
@@ -48,6 +53,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	
 	private LinearLayout llout020,llout021;
 	private TextView effectsdurationfeild,effectsduration,animvaluefeild,animvalue;
+	
+	private boolean isupdate = false;
+	private String apk_url;
+	private String upd_content;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -79,6 +88,17 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 					animvalue.setText(animValueStr);
 					preferenceUtil.setPreferenceData("switchAnim", animValueStr);
 				}
+				break;
+			case 100:
+				Intent intentService = new Intent(self,UpdateService.class);
+				intentService.putExtra("url", CommonText.endPoint + apk_url);
+				intentService.putExtra("icon", R.drawable.ic_launcher);
+				intentService.putExtra("layoutId", R.layout.updateprogress);
+				intentService.putExtra("progressBarId",R.id.notificationProgress);
+				intentService.putExtra("title", R.id.notificationTitle);
+				intentService.putExtra("percent", R.id.notificationPercent);
+				intentService.putExtra("desc", upd_content);
+				startService(intentService);
 				break;
 			default:
 				break;
@@ -235,7 +255,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.versionLayout:
-			CommUtil.ToastMsg(self, "暂无新版本");
+			checkNewVersin();
 			break;
 		case R.id.feedbackLayout:
 			startChildActivity("FeedBackActivity", false);
@@ -252,7 +272,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 					R.string.dialog_action_cache_alert),View.GONE, mHandler);
 			break;
 		case R.id.shareLayout:
-			// TODO
 			Intent share = new Intent(Intent.ACTION_SEND);
             share.putExtra(Intent.EXTRA_STREAM,Constants.APKURLPATH);
             share.setType("*/*");
@@ -277,6 +296,35 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
+	 * 监测新版本
+	 */
+	private void checkNewVersin(){
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		
+		requestData("GETAPKINFO", 1, params, values, new HandlerData() {		
+			@Override
+			public void success(Map<String, List<String>> map) {
+				try {
+					String apk_version = map.get("version").get(0); // 版本号
+					apk_url =  map.get("downloadpath").get(0);
+					upd_content = map.get("updcontent").get(0); // 更新内容 
+					
+					isupdate = CommUtil.checkVersionIsUpdate(self,Integer.valueOf(apk_version));
+					if (isupdate) {
+						DialogUtils.showDialog(self,  Html.fromHtml(CommUtil.getHtml(upd_content)).toString(), mHandler);
+					} 
+				} catch (Exception e) {
+					e.printStackTrace();
+				} 
+			}
+			
+			public void error() {
+			}
+		});
+	} 
+	
+	/**
 	 * 
 	 * @Description: 注销用户
 	 * @author Comsys-WH1510032
@@ -297,13 +345,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			public void success(Map<String, List<String>> map) {
 				try {
 					if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
-						preferenceUtil.setPreferenceData("avator", "");
-						preferenceUtil.setPreferenceData("useId","0");
-						preferenceUtil.setPreferenceData("isregister", false);
+						preferenceUtil.setPreferenceData(UserInfoCode.AVATOR, "");
+						preferenceUtil.setPreferenceData(UserInfoCode.USEID,"0");
+						preferenceUtil.setPreferenceData(UserInfoCode.ISREGISTER, false);
 						MyApplication.USERID = "0";
-						if(FileUtils.existsFile(MyApplication.USERAVATORPATH)){
-							new File(MyApplication.USERAVATORPATH).delete();
-			        	}
+//						if(FileUtils.existsFile(MyApplication.USERAVATORPATH)){
+//							new File(MyApplication.USERAVATORPATH).delete();
+//			        	}
 						toastMsg(R.string.action_logout_success);
 					}
 				} catch (Exception e) {
