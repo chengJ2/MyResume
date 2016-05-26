@@ -61,7 +61,7 @@ public class Constants {
 	public static final String EDUCATION_RECEIVE_TR = "com.me.resume.education_receive_tr";
 	
 	// 本地db文件  
-	public static final String DATABASE_FILENAME = "myresume.db"; // DB文件 
+	public static final String DATABASE_FILENAME = "resume.db"; // DB文件 
 	
 	// 获取存储位置地址
     public static final String DATABASE_PATH = File.separator + "data"  

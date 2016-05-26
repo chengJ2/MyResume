@@ -43,7 +43,7 @@ public class StartupActivity extends Activity {
 			
 			public void onAnimationEnd(Animation animation) {
 				ActivityUtils.startActivity(StartupActivity.this, 
-						Constants.PACKAGENAMECHILD + Constants.HOME,true);
+						Constants.PACKAGENAMECHILD + Constants.EVALUATIONMORE,true);
 			}
         });
 	}

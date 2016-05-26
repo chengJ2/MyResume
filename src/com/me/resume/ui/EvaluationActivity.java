@@ -106,7 +106,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		
 		info_self_evaluation.addTextChangedListener(this);
 		info_career_goal.addTextChangedListener(this);
-		info_character.addTextChangedListener(this);
+		info_character.setOnClickListener(this);
 	}
 	
 	private boolean getEvData(){
@@ -172,7 +172,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.info_character:
 			ActivityUtils.startActivityForResult(self, 
-					Constants.PACKAGENAMECHILD + Constants.ADDRESS, false, Constants.EV_REQUEST_CODE);
+					Constants.PACKAGENAMECHILD + Constants.EVALUATIONMORE, false, Constants.EV_REQUEST_CODE);
 			break;
 		default:
 			break;

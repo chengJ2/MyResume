@@ -25,7 +25,7 @@ public class DbManager {
                 dir.mkdir();  
             }  
             if (!(new File(databaseFilename)).exists()) {  
-                InputStream is = context.getResources().openRawResource(R.raw.myresume);  
+                InputStream is = context.getResources().openRawResource(R.raw.resume);  
                 FileOutputStream fos = new FileOutputStream(databaseFilename);  
                 byte[] buffer = new byte[8192];  
                 int count = 0;  

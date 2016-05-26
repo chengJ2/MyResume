@@ -15,7 +15,6 @@ import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
