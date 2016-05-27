@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.annotation.TargetApi;
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.ContentValues;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,26 +15,30 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.me.resume.MyApplication;
-import com.me.resume.R;
 import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.ViewHolder;
+import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.swipeback.SwipeBackActivity;
-import com.me.resume.tools.ImageLoader;
 import com.me.resume.tools.SystemBarTintManager;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.PreferenceUtil;
 import com.me.resume.utils.RegexUtil;
+import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.CustomFAB;
 import com.me.resume.views.MarqueeText;
+import com.whjz.android.text.CommonText;
 
 /**
  * 
@@ -501,6 +504,161 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		}
 	}
 
+	private ViewHolder viewHolder;
+	/**
+	 * @Description: 面试分享心得
+	 */
+	protected void setShareData(ListView listview,final Map<String, List<String>> map){
+		commapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.home_share_item,"id") {
+			
+			@Override
+			public void convert(final ViewHolder holder, List<String> item, final int position) {
+				String avatorStr = map.get("avator").get(position);
+				if (RegexUtil.checkNotNull(avatorStr)) {
+					holder.showImage(R.id.share_usernameavator,
+							CommUtil.getHttpLink(map.get("avator").get(position)),true);
+				}else{
+					holder.setImageResource(R.id.share_usernameavator, R.drawable.user_default_avatar);
+				}
+				
+				String realname = map.get("realname").get(position);
+				if (!realname.equals("") && realname != null) {
+					holder.setText(R.id.share_username, realname);
+				}else{
+					holder.setText(R.id.share_username, map.get("username").get(position));
+				}
+				
+				String jobtitleStr = map.get("expworkindustry").get(position);
+				String workyear = map.get("joinworktime").get(position);
+				if (!RegexUtil.checkNotNull(jobtitleStr) && !RegexUtil.checkNotNull(workyear)) {
+					holder.setViewVisible(R.id.info2Layout, View.GONE);
+				}else{
+					holder.setViewVisible(R.id.info2Layout, View.VISIBLE);
+					
+					if (RegexUtil.checkNotNull(jobtitleStr)) {
+						holder.setTextVisibe(R.id.share_jobtitle, View.VISIBLE);
+						holder.setText(R.id.share_jobtitle, jobtitleStr);
+					}else{
+						holder.setTextVisibe(R.id.share_jobtitle, View.GONE);
+					}
+					
+					if (RegexUtil.checkNotNull(workyear)) {
+						int year = CommUtil.parseInt(workyear.substring(0, 4));
+						int theYear = CommUtil.parseInt(TimeUtils.theYear());
+						holder.setTextVisibe(R.id.share_workyear, View.VISIBLE);
+						holder.setText(R.id.share_workyear,(theYear - year) + "年工作经验");
+					}else{
+						holder.setTextVisibe(R.id.share_workyear, View.GONE);
+					}
+				}
+				
+				holder.setText(R.id.share_content, map.get("content").get(position));
+				
+				holder.setText(R.id.share_city, map.get("city").get(position));
+				holder.setText(R.id.share_datime, map.get("createtime").get(position));
+				
+				final String cid = map.get("id").get(position);
+				
+				queryWhere = "select * from " + CommonText.MYCOLLECTION 
+						+ " where cid = "+ cid +" and userId = '"+ uTokenId+"' and type=0";
+				commMapArray = dbUtil.queryData(self, queryWhere);
+				if (commMapArray == null) {
+					holder.setImageResource(R.id.share_collection, R.drawable.icon_collection_nor);
+				}else{
+					holder.setImageResource(R.id.share_collection, R.drawable.icon_collection_sel);
+				}
+				
+				holder.setOnClickEvent(R.id.share_collection, new ClickEvent() {
+					
+					@Override
+					public void onClick(View view) {
+						if (!MyApplication.USERID.equals("0")) {
+							queryWhere = "select * from " + CommonText.MYCOLLECTION 
+									+ " where cid = "+ cid +" and userId = '"+ uTokenId+"' and type=0";
+							commMapArray = dbUtil.queryData(self, queryWhere);
+							if (commMapArray == null) {
+								addCollection(map,position);
+							}else{
+								queryWhere = "delete from " + CommonText.MYCOLLECTION 
+										+ " where cid = "+ cid +" and userId = '"+ uTokenId+"' and type=0";
+								dbUtil.deleteData(self, queryWhere);
+								commapBaseAdapter.notifyDataSetChanged();
+								toastMsg(R.string.item_text91);
+							}
+						}else{
+							toastMsg(R.string.action_login_head);
+						}
+					}
+				});
+			}
+		};
+		
+		listview.setAdapter(commapBaseAdapter);
+		
+		listview.setOnScrollListener(new OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				switch (scrollState) {
+				case OnScrollListener.SCROLL_STATE_FLING:
+					if (viewHolder != null) {
+						viewHolder.setFlagBusy(true);
+					}
+					break;
+				case OnScrollListener.SCROLL_STATE_IDLE:
+					if (viewHolder != null) {
+						viewHolder.setFlagBusy(false);
+					}
+					break;
+				case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
+					if (viewHolder != null) {
+						viewHolder.setFlagBusy(false);
+					}
+					break;
+				default:
+					break;
+				}
+				commapBaseAdapter.notifyDataSetChanged();
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+			}
+		});
+		
+	}
+	
+	/**
+	 * 添加到我的收藏
+	 * @param holder
+	 * @param map
+	 * @param position
+	 */
+	private void addCollection(Map<String, List<String>> map,int position){
+		String cid = map.get("id").get(position);
+		String content = map.get("content").get(position);
+		String sharename = map.get("realname").get(position);
+		if (!RegexUtil.checkNotNull(sharename)) {
+			sharename = map.get("username").get(position);
+		}
+
+		ContentValues cValues = new ContentValues();
+		cValues.put("cId", cid);
+		cValues.put("userId", uTokenId);
+		cValues.put("shareUserId", map.get("userId").get(position));
+		cValues.put("content", content);
+		cValues.put("sharename", sharename);
+		cValues.put("sharenamecity", map.get("city").get(position));
+		cValues.put("createtime", TimeUtils.getCurrentTimeInString());
+		cValues.put("type", "0");// 0:面试分享心得; !0:话题
+
+		queryResult = dbUtil.insertData(self, CommonText.MYCOLLECTION, cValues);
+		if (queryResult) {
+			toastMsg(R.string.item_text9);
+			commapBaseAdapter.notifyDataSetChanged();
+		}
+	}
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {

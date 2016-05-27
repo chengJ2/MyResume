@@ -1,6 +1,7 @@
 package com.me.resume;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -92,9 +93,6 @@ public class MainActivity extends Activity {
 	private LinearLayout index3layout;
 	private TextView self_evaluation;
 	private TagFlowLayout tagFlowLayout;
-	
-	private String mTags[] = { "活泼好动", "易随波逐流", "多愁善感", "不善言谈",
-			"务实", "适应能力差", "易怒而难以自制"};
 	
 	// View4
 	private LinearLayout index4layout;
@@ -361,21 +359,43 @@ public class MainActivity extends Activity {
 			self_evaluation.setText(commMapArray.get("selfevaluation")[0]);
 		}
 		
-		MarginLayoutParams lp = new MarginLayoutParams(
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		lp.leftMargin = 5;
-		lp.rightMargin = 5;
-		lp.topMargin = 5;
-		lp.bottomMargin = 5;
-		for (int i = 0; i < mTags.length; i++) {
-			TextView tview = new TextView(this);
-			tview.setText(mTags[i].toString().trim());
-			tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.tiny_text_size));
-			tview.setTextColor(CommUtil.getIntValue(self, R.color.red));
-			tview.setTypeface(Typeface.SERIF);
-			tview.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_tag_text_select));
-			tview.setPadding(6, 8, 6, 8);
-			tagFlowLayout.addView(tview, lp);
+		queryWhere = "select * from " + CommonText.CHARACTER + " where userId = '"+ BaseActivity.uTokenId+"'";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null) {
+			
+			if (!mViewList.contains(view)) {
+				mViewList.add(view);
+			}
+			
+			int count = commMapArray.get("userId").length;
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < count; i++) {
+				sb.append(commMapArray.get("character")[i]).append(";");
+			}
+			
+			String tag = CommUtil.getStringLable(sb.toString());
+			String[] tags = tag.split(";");
+			
+			List<String> ll = Arrays.asList(tags);
+			if (ll != null && ll.size() > 0) {
+				MarginLayoutParams lp = new MarginLayoutParams(
+						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				lp.leftMargin = 5;
+				lp.rightMargin = 5;
+				lp.topMargin = 5;
+				lp.bottomMargin = 5;
+				for (int i = 0,cun = ll.size(); i < cun; i++) {
+					TextView tview = new TextView(this);
+					tview.setText(ll.get(i).toString().trim());
+					tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.tiny_text_size));
+					tview.setTextColor(CommUtil.getIntValue(self, R.color.red));
+					tview.setTypeface(Typeface.SERIF);
+					tview.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_tag_text_select));
+					tview.setPadding(6, 8, 6, 8);
+					tagFlowLayout.addView(tview, lp);
+				}
+			}
+			
 		}
 		
 	}
@@ -639,8 +659,8 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				preferenceUtil.setPreferenceData("startVerytime", false);
-				ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + "HomeActivity",true);
+				preferenceUtil.setPreferenceData(Constants.SET_STARTVERYTIME, false);
+				ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + Constants.HOME,true);
 			}
 		});
 	}
@@ -658,7 +678,7 @@ public class MainActivity extends Activity {
 		main_top_title.setText(CommUtil.getStrValue(self, redId));
 		main_top_edit = (ImageView) view.findViewById(R.id.main_top_edit);
 		
-		if (preferenceUtil.getPreferenceData("edit_mode") == true) {
+		if (preferenceUtil.getPreferenceData(Constants.EDITMODE) == true) {
 			main_top_edit.setVisibility(View.VISIBLE);
 		}else{
 			main_top_edit.setVisibility(View.GONE);

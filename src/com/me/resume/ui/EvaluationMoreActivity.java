@@ -1,18 +1,15 @@
 package com.me.resume.ui;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.RadioButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
@@ -22,15 +19,14 @@ import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
-import com.me.resume.tools.L;
+import com.me.resume.utils.CommUtil;
 import com.me.resume.views.CommScrollView;
-import com.me.resume.views.CustomListView;
+import com.whjz.android.text.CommonText;
 
 /**
  * 
 * @ClassName: EvaluationMoreActivity 
 * @Description: 自我评价更多详情
-* @author Comsys-WH1510032 
 * @date 2016/5/23 下午1:22:03 
 *
  */
@@ -40,9 +36,7 @@ public class EvaluationMoreActivity extends BaseActivity implements OnClickListe
 	
 	private TextView item1,item2,item3,item4;
 	
-	private CustomListView characterListView;
-	
-	private int style = 1;
+	private ListView characterListView;
 	
 	private CommonBaseAdapter<String> commAdapter;
 	
@@ -81,13 +75,32 @@ public class EvaluationMoreActivity extends BaseActivity implements OnClickListe
 	private void initView() {
 		setTopTitle(R.string.ev_info_character);
 		setMsgHide();
-		setRightIcon(R.drawable.icon_sync);
+		
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
+		
+		getData();
 		
 		showCharacterData(getCharacterListData(1));
 	}
 
+	private int getData(){
+		queryWhere = "select count(*) as cun from " + CommonText.CHARACTER + " where userId = '"+ uTokenId+"'";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("cun").length > 0) {
+			int cun = CommUtil.parseInt(commMapArray.get("cun")[0]);
+			if (cun > 0) {
+				setRightIcon(R.drawable.icon_done);
+			}else{
+				setRightIconVisible(View.GONE);
+			}
+			return cun;
+		}else{
+			setRightIconVisible(View.GONE);
+		}
+		return 0;
+	}
+	
 	
 	private List<String> getCharacterListData(final int style){
 		List<String> mList = new ArrayList<String>();
@@ -111,8 +124,6 @@ public class EvaluationMoreActivity extends BaseActivity implements OnClickListe
 		return mList;
 	}
 	
-	private Map<Integer,Boolean> states = new HashMap<Integer,Boolean>();
-	private List<String> charData = new ArrayList<String>();
 	/**
 	 * 
 	 * @Description: 显示数据
@@ -122,37 +133,26 @@ public class EvaluationMoreActivity extends BaseActivity implements OnClickListe
 		
 		@Override
 		public void convert(final ViewHolder holder, String item, final int position) {
+				
+				final String characterStr = mList.get(position);
 				holder.setText(R.id.item_text,mList.get(position));
-				/*if (!charData.isEmpty()) {
-					charData.clear();
-				}*/
-				if (states.isEmpty()) {
-					states.put(position, false);
-//				}else{
-//					L.d("======ddd======" + states.get(position));
-//					if (states.get(position)) {
-//						holder.setViewVisible(R.id.item_radio_btn, View.VISIBLE);
-//						charData.add(mList.get(position));
-//					}else{
-//						holder.setViewVisible(R.id.item_radio_btn, View.GONE);
-//						charData.remove(mList.get(position));
-//					}
+
+				queryWhere = "select * from " + CommonText.CHARACTER 
+						+ " where character = '"+ characterStr +"' and userId = '"+ uTokenId+"'";
+				commMapArray = dbUtil.queryData(self, queryWhere);
+				if (commMapArray != null && commMapArray.get("character").length > 0) {
+					holder.setViewVisible(R.id.item_check, View.VISIBLE);
+				}else{
+					holder.setViewVisible(R.id.item_check, View.GONE);
 				}
+				
+				getData();
 				
 				holder.setOnClickEvent(R.id.itemcheckLayout, new ClickEvent() {
 					
 					@Override
 					public void onClick(View view) {
-						
-						if (!states.get(position)) {
-							states.put(position, true);
-							holder.setViewVisible(R.id.item_radio_btn, View.VISIBLE);
-						}else{
-							states.put(position, false);
-							holder.setViewVisible(R.id.item_radio_btn, View.GONE);
-						}
-						
-						notifyDataSetChanged();
+						addCharacterData(characterStr);
 					}
 				});
 				
@@ -160,13 +160,7 @@ public class EvaluationMoreActivity extends BaseActivity implements OnClickListe
 					
 					@Override
 					public void onClick(View view) {
-						if (!states.get(position)) {
-							states.put(position, true);
-						}else{
-							states.put(position, false);
-						}
-						
-						notifyDataSetChanged();
+						addCharacterData(characterStr);
 					}
 				});
 				
@@ -176,37 +170,75 @@ public class EvaluationMoreActivity extends BaseActivity implements OnClickListe
 		
 	}
 	
+	/**
+	 * 
+	 * @Description: 添加性格标签
+	 * @param s 性格
+	 */
+	private void addCharacterData(String s){
+		queryWhere = "select * from " + CommonText.CHARACTER 
+				+ " where character = '"+ s +"' and userId = '"+ uTokenId+"'";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray == null) {
+			if (getData() > 3) {
+				toastMsg(R.string.ev_info_choose_character_cun);
+				return;
+			}else{
+				ContentValues cValues = new ContentValues();
+				cValues.put("userId", uTokenId);
+				cValues.put("character", s);
+				queryResult = dbUtil.insertData(self, CommonText.CHARACTER, cValues);
+				if (queryResult) {
+					setRightIcon(R.drawable.icon_done);
+					commAdapter.notifyDataSetChanged();
+				}
+			}
+		}else{
+			queryWhere = "delete from " + CommonText.CHARACTER 
+					+ " where character = '"+ s +"' and userId = '"+ uTokenId+"'";
+			dbUtil.deleteData(self, queryWhere);
+			commAdapter.notifyDataSetChanged();
+			
+		}
+	}
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.item1:
-			style = 1;
+			showCharacterData(getCharacterListData(1));
 			break;
 		case R.id.item2:
-			style = 2;
+			showCharacterData(getCharacterListData(2));
 			break;
 		case R.id.item3:
-			style = 3;
+			showCharacterData(getCharacterListData(3));
 			break;
 		case R.id.item4:
-			style = 4;
+			showCharacterData(getCharacterListData(4));
 			break;
 		case R.id.left_lable:
 			scrollToFinishActivity();
 			break;
-		case R.id.right_lable:
-			
-			L.d("===charData=="+charData);
-			
-			
-//			Intent intent=new Intent();
-//	        intent.putExtra(Constants.CITY, city);
-//	        setResult(Constants.RESULT_CODE, intent);
-//			scrollToFinishActivity();
+		case R.id.right_icon:
+			queryWhere = "select * from " + CommonText.CHARACTER + " where userId = '"+ uTokenId+"'";
+			commMapArray = dbUtil.queryData(self, queryWhere);
+			if (commMapArray != null) {
+				int count = commMapArray.get("userId").length;
+				StringBuffer sb = new StringBuffer();
+				for (int i = 0; i < count; i++) {
+					sb.append(commMapArray.get("character")[i]).append(";");
+				}
+				
+				Intent intent=new Intent();
+		        intent.putExtra(Constants.CHARACTER, sb.toString());
+		        setResult(Constants.RESULT_CODE, intent);
+		        scrollToFinishActivity();
+			}
 			break;
 		default:
 			break;
 		}
-		showCharacterData(getCharacterListData(style));
+		
 	}
 }

@@ -1,6 +1,5 @@
 package com.me.resume.ui;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,24 +27,18 @@ import com.me.resume.service.UpdateService;
 import com.me.resume.tools.DataCleanManager;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
-import com.me.resume.utils.FileUtils;
-import com.me.resume.views.SwitchButton;
-import com.me.resume.views.SwitchButton.OnChangedListener;
 import com.whjz.android.text.CommonText;
-import com.whjz.android.util.common.CommonUtil;
 
 /**
  * 
 * @ClassName: SettingActivity 
 * @Description: App设置界面 
-* @author Comsys-WH1510032 
 * @date 2016/3/29 下午5:04:43 
 *
  */
 public class SettingActivity extends BaseActivity implements OnClickListener{
 
 	private ToggleButton setting_start_cb,setting_auto_cb;
-	private SwitchButton setting_edit_cb;
 	
 	private LinearLayout cacheLayout,versionLayout,feedbackLayout,logoutLayout,shareLayout;
 	
@@ -67,8 +60,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 					preferenceUtil.clearPreferenceData();
 					cachesize.setText("0KB");
 					
-					if (!preferenceUtil.getPreferenceData("useId","0").equals("0")) {
-						preferenceUtil.setPreferenceData("useId","0");
+					if (!preferenceUtil.getPreferenceData(UserInfoCode.USEID,"0").equals("0")) {
+						preferenceUtil.setPreferenceData(UserInfoCode.USEID,"0");
 						if(CommUtil.isNetworkAvailable(self)){
 							actionLogout();
 						}
@@ -86,7 +79,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 					int position = (int) msg.obj;
 					String animValueStr = mList.get(position);
 					animvalue.setText(animValueStr);
-					preferenceUtil.setPreferenceData("switchAnim", animValueStr);
+					preferenceUtil.setPreferenceData(Constants.SET_SWITCHANIM, animValueStr);
 				}
 				break;
 			case 100:
@@ -122,7 +115,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	private void findViews(){
 		setting_start_cb = findView(R.id.setting_start_cb);
 		setting_auto_cb = findView(R.id.setting_auto_cb);
-		setting_edit_cb = findView(R.id.setting_edit_cb);
 		
 		cacheLayout = findView(R.id.cacheLayout);
 		cachesize = findView(R.id.cachesize);
@@ -155,8 +147,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		}
 		version.setText(CommUtil.getVersionName(self));
 		
-		effectsduration.setText(getEffectdDuration(preferenceUtil.getPreferenceData("switchEffDuration",5*1000)));
-		animvalue.setText(preferenceUtil.getPreferenceData("switchAnim", "Standard"));
+		effectsduration.setText(getEffectdDuration(preferenceUtil.getPreferenceData(Constants.SET_SWITCHEFFDURATION,Constants.DEFAULTIME)));
+		animvalue.setText(preferenceUtil.getPreferenceData(Constants.SET_SWITCHANIM, "Standard"));
 		
 		cacheLayout.setOnClickListener(this);
 		versionLayout.setOnClickListener(this);
@@ -173,12 +165,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				boolean onoff = false;
-				if(!preferenceUtil.getPreferenceData("startVerytime")){
+				if(!preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME)){
 					onoff = true;
 				}else{
 					onoff = false;
 				}
-				preferenceUtil.setPreferenceData("startVerytime", onoff); 
+				preferenceUtil.setPreferenceData(Constants.SET_STARTVERYTIME, onoff); 
 			}
 		});
 		
@@ -187,30 +179,17 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				boolean onoff = false;
-				if(!preferenceUtil.getPreferenceData("autoShow")){
+				if(!preferenceUtil.getPreferenceData(Constants.SET_AUTOSHOW)){
 					onoff = true;
 					setEffectDuration(true,R.color.black);
 				}else{
 					onoff = false;
 					setEffectDuration(false,R.color.grey_70);
 				}
-				preferenceUtil.setPreferenceData("autoShow", onoff); 
+				preferenceUtil.setPreferenceData(Constants.SET_AUTOSHOW, onoff); 
 			}
 		});
 		
-		setting_edit_cb.setOnChangedListener(new OnChangedListener() {
-			
-			@Override
-			public void OnChanged(SwitchButton switchButton, boolean checkState) {
-				boolean onoff = false;
-				if(!preferenceUtil.getPreferenceData("editmode")){
-					onoff = true;
-				}else{
-					onoff = false;
-				}
-				preferenceUtil.setPreferenceData("editmode", onoff); 
-			}
-		});
 	}
 	
 	/**
@@ -228,9 +207,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void onResume() {
 		super.onResume();
-		boolean startVerytime = preferenceUtil.getPreferenceData("startVerytime");
-		boolean autoShow = preferenceUtil.getPreferenceData("autoShow");
-		boolean editmode = preferenceUtil.getPreferenceData("editmode");
+		boolean startVerytime = preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME);
+		boolean autoShow = preferenceUtil.getPreferenceData(Constants.SET_AUTOSHOW);
 		if (startVerytime) {
 			setting_start_cb.setChecked(true);
 		}else{
@@ -243,11 +221,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			setEffectDuration(false,R.color.grey_70);
 			setting_auto_cb.setChecked(false);
 		}
-		if (editmode) {
-			setting_edit_cb.setChecked(true);
-		}else{
-			setting_edit_cb.setChecked(false);
-		}
 	}
 	
 	@Override
@@ -258,7 +231,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			checkNewVersin();
 			break;
 		case R.id.feedbackLayout:
-			startChildActivity("FeedBackActivity", false);
+			startChildActivity(Constants.FEEDBACK, false);
 			break;
 		case R.id.logoutLayout:
 			if (!MyApplication.USERID.equals("0")) {
@@ -383,7 +356,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			duration = 60 * 1000;
 		}
 		tv.setText(item_values[position]);
-		preferenceUtil.setPreferenceData("switchEffDuration", duration);
+		preferenceUtil.setPreferenceData(Constants.SET_SWITCHEFFDURATION, duration);
 	}
 	
 	/**
@@ -393,7 +366,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	 */
 	private String getEffectdDuration(int duration){
 		int position = 0;
-		item_values = CommUtil.getArrayValue(self,R.array.auto_show_effects_duration); 
+		item_values = CommUtil.getArrayValue(self,R.array.auto_show_effects_duration);
 		if(duration == 5 * 1000){
 			position = 0;
 		}else if(duration == 10 * 1000){

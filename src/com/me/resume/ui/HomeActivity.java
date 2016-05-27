@@ -65,8 +65,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 
 	private GridView resumeLinkgridview;
 	
+	// 构建cover本地数据
+	private String[] id = {"111","222","333"};
+	private String[] note = {"简历预览封面1","简历预览封面2","简历预览封面3"};
+	private String[] url = {R.drawable.resume_cover+"",R.drawable.resume_cover+"",R.drawable.resume_cover+""};
+	
 	private boolean isExit = false;
-
+	
 	private Handler mHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -129,7 +134,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		View v = View.inflate(self,R.layout.activity_home, null);
 		boayLayout.addView(v);
 		
-		if (preferenceUtil.getPreferenceData("startVerytime")) {
+		if (preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME)) {
 			startActivity(Constants.MAINACTIVITY, true);
 			return;
 		}
@@ -191,7 +196,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			public void onRefresh(RefreshableView view) {
 				if(CommUtil.isNetworkAvailable(self)){
 					if (!view.isRefreshing()) {
-						view.setRefreshText("刷新时间: " + TimeUtils.getCurrentTimeInString());
+//						view.setRefreshText("刷新时间: " + TimeUtils.getCurrentTimeInString());
 						mHandler.sendEmptyMessage(101);
 					} else {
 						L.d("刷新中。。。");
@@ -296,10 +301,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		setCoverData(map,islocal);
 	}
 	
-	private String[] id = {"111","222","333"};
-	private String[] note = {"简历预览封面1","简历预览封面2","简历预览封面3"};
-	private String[] url = {R.drawable.resume_cover+"",R.drawable.resume_cover+"",R.drawable.resume_cover+""};
-	
 	/**
 	 * 设置简历面试相关话题数据
 	 */
@@ -381,7 +382,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					
 					@Override
 					public void onClick(View view) {
-						// TODO Auto-generated method stub
+						// TODO
 						
 					}
 				});
@@ -405,9 +406,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					mHandler.sendEmptyMessageDelayed(-1, 1000);
 					setShareView(true);
-					setShareData(map);
+					setShareData(reviewsharingListView,map);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -416,132 +416,11 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	}
 	
 	/**
-	 * @Description: 面试分享心得
-	 */
-	private void setShareData(final Map<String, List<String>> map){
-		commapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.home_share_item,"id") {
-			
-			@Override
-			public void convert(final ViewHolder holder, List<String> item, final int position) {
-				String avatorStr = map.get("avator").get(position);
-				if (RegexUtil.checkNotNull(avatorStr)) {
-					holder.showImage(R.id.share_usernameavator,
-							CommUtil.getHttpLink(map.get("avator").get(position)),true);
-				}else{
-					holder.setImageResource(R.id.share_usernameavator, R.drawable.user_default_avatar);
-				}
-				
-				String realname = map.get("realname").get(position);
-				if (!realname.equals("") && realname != null) {
-					holder.setText(R.id.share_username, realname);
-				}else{
-					holder.setText(R.id.share_username, map.get("username").get(position));
-				}
-				
-				String jobtitleStr = map.get("expworkindustry").get(position);
-				String workyear = map.get("joinworktime").get(position);
-				if (!RegexUtil.checkNotNull(jobtitleStr) && !RegexUtil.checkNotNull(workyear)) {
-					holder.setViewVisible(R.id.info2Layout, View.GONE);
-				}else{
-					holder.setViewVisible(R.id.info2Layout, View.VISIBLE);
-					
-					if (RegexUtil.checkNotNull(jobtitleStr)) {
-						holder.setTextVisibe(R.id.share_jobtitle, View.VISIBLE);
-						holder.setText(R.id.share_jobtitle, jobtitleStr);
-					}else{
-						holder.setTextVisibe(R.id.share_jobtitle, View.GONE);
-					}
-					
-					if (RegexUtil.checkNotNull(workyear)) {
-						int year = CommUtil.parseInt(workyear.substring(0, 4));
-						int theYear = CommUtil.parseInt(TimeUtils.theYear());
-						holder.setTextVisibe(R.id.share_workyear, View.VISIBLE);
-						holder.setText(R.id.share_workyear,(theYear - year) + "年工作经验");
-					}else{
-						holder.setTextVisibe(R.id.share_workyear, View.GONE);
-					}
-				}
-				
-				holder.setText(R.id.share_content, map.get("content").get(position));
-				
-				holder.setText(R.id.share_city, map.get("city").get(position));
-				holder.setText(R.id.share_datime, map.get("createtime").get(position));
-				
-				final String cid = map.get("id").get(position);
-				
-				queryWhere = "select * from " + CommonText.MYCOLLECTION 
-						+ " where cid = "+ cid +" and userId = '"+ uTokenId+"' and type=0";
-				commMapArray = dbUtil.queryData(self, queryWhere);
-				if (commMapArray == null) {
-					holder.setImageResource(R.id.share_collection, R.drawable.icon_collection_nor);
-				}else{
-					holder.setImageResource(R.id.share_collection, R.drawable.icon_collection_sel);
-				}
-				
-				holder.setOnClickEvent(R.id.share_collection, new ClickEvent() {
-					
-					@Override
-					public void onClick(View view) {
-						if (!MyApplication.USERID.equals("0")) {
-							queryWhere = "select * from " + CommonText.MYCOLLECTION 
-									+ " where cid = "+ cid +" and userId = '"+ uTokenId+"' and type=0";
-							commMapArray = dbUtil.queryData(self, queryWhere);
-							if (commMapArray == null) {
-								addCollection(map,position);
-							}else{
-								queryWhere = "delete from " + CommonText.MYCOLLECTION 
-										+ " where cid = "+ cid +" and userId = '"+ uTokenId+"' and type=0";
-								dbUtil.deleteData(self, queryWhere);
-								commapBaseAdapter.notifyDataSetChanged();
-								toastMsg(R.string.item_text91);
-							}
-						}else{
-							toastMsg(R.string.action_login_head);
-						}
-					}
-				});
-			}
-		};
-		
-		reviewsharingListView.setAdapter(commapBaseAdapter);
-	}
-	
-	/**
-	 * 添加到我的收藏
-	 * @param holder
-	 * @param map
-	 * @param position
-	 */
-	private void addCollection(Map<String, List<String>> map,int position){
-		String cid = map.get("id").get(position);
-		String content = map.get("content").get(position);
-		String sharename = map.get("realname").get(position);
-		if (!RegexUtil.checkNotNull(sharename)) {
-			sharename = map.get("username").get(position);
-		}
-
-		ContentValues cValues = new ContentValues();
-		cValues.put("cId", cid);
-		cValues.put("userId", uTokenId);
-		cValues.put("shareUserId", map.get("userId").get(position));
-		cValues.put("content", content);
-		cValues.put("sharename", sharename);
-		cValues.put("sharenamecity", map.get("city").get(position));
-		cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-		cValues.put("type", "0");// 0:面试分享心得; !0:话题
-
-		queryResult = dbUtil.insertData(self, CommonText.MYCOLLECTION, cValues);
-		if (queryResult) {
-			toastMsg(R.string.item_text9);
-			commapBaseAdapter.notifyDataSetChanged();
-		}
-	}
-	
-	/**
 	 * 面试分享是否有数据
 	 * @param hasdata
 	 */
 	private void setShareView(boolean hasdata){
+		mHandler.sendEmptyMessageDelayed(-1, 100);
 		if(hasdata){
 			reviewsharingListView.setVisibility(View.VISIBLE);
 			sharemore.setVisibility(View.VISIBLE);

@@ -34,7 +34,7 @@
     <style name="home_item">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/home_item_height</item>
-        <item name="android:layout_marginTop">@dimen/margin_10</item>
+        <item name="android:layout_marginTop">@dimen/margin_8</item>
         <item name="android:background">@color/white</item>
     </style>
     

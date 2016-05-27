@@ -156,8 +156,6 @@ public class TagFlowLayout extends ViewGroup{
      */  
     @Override  
     public LayoutParams generateLayoutParams(AttributeSet attrs) {  
-        // TODO Auto-generated method stub  
-          
         return new MarginLayoutParams(getContext(), attrs);  
     }  
 }

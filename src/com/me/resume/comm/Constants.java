@@ -114,5 +114,10 @@ public class Constants {
     
     public static final String EDITMODE = "editmode";
     public static final String CITY = "city";
-  
+    public static final String CHARACTER = "character";
+    
+    public static final String SET_AUTOSHOW= "autoShow";
+    public static final String SET_STARTVERYTIME= "startVerytime";
+    public static final String SET_SWITCHANIM= "switchAnim";
+    public static final String SET_SWITCHEFFDURATION= "switchEffDuration";
 }

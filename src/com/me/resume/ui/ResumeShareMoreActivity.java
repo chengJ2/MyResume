@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,17 +15,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.me.resume.BaseActivity;
-import com.me.resume.MyApplication;
 import com.me.resume.R;
-import com.me.resume.comm.CommForMapBaseAdapter;
-import com.me.resume.comm.ViewHolder;
-import com.me.resume.comm.ViewHolder.ClickEvent;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.utils.CommUtil;
-import com.me.resume.utils.FileUtils;
-import com.me.resume.utils.ImageUtils;
 import com.me.resume.utils.RegexUtil;
-import com.me.resume.utils.TimeUtils;
 
 /**
  * 更多面试分享心得
@@ -51,7 +42,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		View v = View.inflate(self,R.layout.resume_share_more_layout, null);
 		boayLayout.addView(v);
 		
-		setTopTitle(R.string.item_text61);
+		setTopTitle(R.string.item_text71);
 		
 		setMsgHide();
 		
@@ -105,7 +96,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 							commapBaseAdapter.notifyDataSetChanged();
 							reviewsharemoreListView.invalidate();
 						}else{
-							setShareData(commMapList);
+							setShareData(reviewsharemoreListView,commMapList);
 						}
 					}
 				} catch (Exception e) {
@@ -115,9 +106,11 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		});
 	}
 	
-	/**
+	/*private ViewHolder viewHolder;
+	
+	*//**
 	 * @Description: 面试分享心得
-	 */
+	 *//*
 	private void setShareData(final Map<String, List<String>> map){
 		commapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.home_share_item,"id") {
 			
@@ -163,6 +156,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 					}
 				}
 				
+				viewHolder= holder;
 				
 				holder.setText(R.id.share_content, map.get("content").get(position).toString().trim());
 				holder.setText(R.id.share_city, map.get("city").get(position));
@@ -181,7 +175,39 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		};
 		
 		reviewsharemoreListView.setAdapter(commapBaseAdapter);
-	}
+		
+		reviewsharemoreListView.setOnScrollListener(new OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				switch (scrollState) {
+				case OnScrollListener.SCROLL_STATE_FLING:
+					if (viewHolder != null) {
+						viewHolder.setFlagBusy(true);
+					}
+					break;
+				case OnScrollListener.SCROLL_STATE_IDLE:
+					if (viewHolder != null) {
+						viewHolder.setFlagBusy(false);
+					}
+					break;
+				case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
+					if (viewHolder != null) {
+						viewHolder.setFlagBusy(false);
+					}
+					break;
+				default:
+					break;
+				}
+				commapBaseAdapter.notifyDataSetChanged();
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+			}
+		});
+		
+	}*/
 	
 	@Override
 	public void onClick(View v) {

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -35,9 +36,9 @@ import com.whjz.android.text.CommonText;
 public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	
 	// 自我评价;职业目标
-	private EditText info_self_evaluation,info_career_goal;
+	private EditText info_self_evaluation,info_career_goal,info_c;
 	
-	private String info_self_evaluationStr,info_career_goalStr;
+	private String info_self_evaluationStr,info_career_goalStr,info_character_goalStr;
 	
 	private TextView info_character;
 	
@@ -95,6 +96,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		
 		findViews();
 		getEvData();
+		getCharacter();
 		setFeildValue();
 		
 	}
@@ -119,6 +121,25 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		}else{
 			setAddBtnSrc(R.drawable.ic_btn_add);
 			return false;
+		}
+	}
+	
+	/**
+	 * 
+	 * @Title:EvaluationActivity
+	 * @Description: 获得性格标签
+	 */
+	private void getCharacter() {
+		queryWhere = "select * from " + CommonText.CHARACTER + " where userId = '"+ uTokenId+"'";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null) {
+			int count = commMapArray.get("userId").length;
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < count; i++) {
+				sb.append(commMapArray.get("character")[i]).append(";");
+			}
+			
+			info_character.setText(CommUtil.getStringLable(sb.toString()));
 		}
 	}
 	
@@ -153,6 +174,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 					cValues.put("selfevaluation", info_self_evaluationStr);
 					cValues.put("bgcolor", getCheckColor(checkColor));
 					cValues.put("careergoal", info_career_goalStr);
+					cValues.put("character", info_career_goalStr);
 					cValues.put("createtime",TimeUtils.getCurrentTimeInString());
 					queryResult = dbUtil.insertData(self,CommonText.EVALUATION, cValues);
 					if (queryResult) {
@@ -358,5 +380,16 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				}
 			});
 		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode == Constants.EV_REQUEST_CODE){
+        	if(resultCode == Constants.RESULT_CODE) {
+                String character = data.getStringExtra(Constants.CHARACTER);
+                info_character.setText(CommUtil.getStringLable(character));
+            }
+        }
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 }

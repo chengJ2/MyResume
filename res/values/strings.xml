@@ -1,30 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+	<!-- app相关 -->
     <string name="app_name">个人简历</string>
-    <string name="crash">App发生异常,请重启</string>
-    <string name="refresh_down_text">下拉可刷新</string>
-    <string name="refresh_release_text">松开可刷新</string>
-    <string name="toast_text">ScrollView下拉刷新完毕</string>
-    <string name="xlistview_header_hint_normal">下拉刷新</string>
-    <string name="xlistview_header_hint_ready">松开刷新数据</string>
-    <string name="xlistview_header_hint_loading">正在加载...</string>
-    <string name="xlistview_header_last_time">上次更新时间：</string>
-    <string name="xlistview_footer_hint_normal">查看更多</string>
-    <string name="xlistview_footer_hint_ready">松开载入更多</string>
-    <string name="xlistview_footer_loadfinish">加载完毕</string>
+    <string name="app_about">随时随地完善预览我的简历</string>
+    <string name="app_crash">App发生异常,请重启</string>
+    <string name="app_exit">再按一次退出</string>
+    
+    <!-- 网络相关 -->
     <string name="check_network">网络异常,请检查!</string>
     <string name="en_nodata">暂无数据</string>
     <string name="timeout_network">网络请求数据超时</string>
     <string name="request_error">请求异常,请检查!</string>
-    <string name="viewpager_indicator">%1$d/%2$d</string>
-    <string name="app_exit">再按一次退出</string>
-
+    
+  	 <!-- Main -->
+    <string name="resume_baseinfo">基本资料</string>
+    <string name="resume_workexperience">工作经历</string>
+    <string name="resume_workexperience2">工作/实习经历</string>
+    <string name="resume_project_experience">项目经验</string>
+    <string name="resume_industrytype">行业类别</string>
+    <string name="resume_jobintension">求职意向</string>
+    <string name="resume_evaluation">自我评价</string>
+    <string name="resume_excellentskills">擅长技能</string>
+    <string name="resume_education">教育经历</string>
+    <string name="resume_training">培训经历</string>
+    <string name="resume_otherinfo">附加信息</string>
+    <string name="resume_message">我的留言</string>
+    
+     <!-- Home -->
+    <string name="resume_center">简历中心</string>
+    <string name="make_resume">定制我的简历</string>
+    <string name="review_resume">预&#160;&#160;览</string>
+    <string name="edit_resume">编&#160;&#160;辑</string>
+    <string name="item_text1">请选择背景色</string>
+    <string name="item_text11">(简历预览界面)</string>
+    <string name="item_text2">热门简历预览</string>
+    <string name="item_text21">更多</string>
+    <string name="item_text3">相关话题推荐</string>
+    <string name="item_text31">更多推荐</string>
+    <string name="item_text4">说说面试心得</string>
+    <string name="item_text41">我来说</string>
+    <string name="item_text42">暂无面试心得分享</string>
+    <string name="item_text43">正在加载,请稍后...</string>
+    <string name="item_text44">正在更新,请稍后...</string>
+    <string name="item_text5">抱歉!该模块需求联网查看~</string>
+    <string name="item_text6">简历预览封面</string>
+    <string name="item_text61">简历封面</string>
+    <string name="item_text7">提交成功,感谢您的分享~</string>
+    <string name="item_text71">更多分享</string>
+    <string name="item_text8">我也来分享...</string>
+    <string name="item_text81">优质的分享将会置顶哦~</string>
+    <string name="item_text9">收藏成功</string>
+    <string name="item_text91">取消收藏</string>
+    
     <!-- 设置界面 -->
     <string name="action_settings">设置</string>
     <string name="settings_item0">简历预览界面</string>
     <string name="settings_item1">每次启动显示预览模式</string>
-    
     <string name="settings_item11">选择切换效果</string>
     <string name="settings_item2">自动切换简历预览</string>
     <string name="settings_item20">自动切换预览间隔</string>
@@ -35,7 +66,6 @@
     <string name="settings_item205">45秒</string>
     <string name="settings_item206">60秒</string>
     <string name="settings_item22">简历预览切换动画</string>
-    
     <string name="settings_item21">预览界面编辑模式</string>
     <string name="settings_item3">检测新版本</string>
     <string name="settings_item4">反馈意见</string>
@@ -51,12 +81,10 @@
     <string name="action_sync_fail">同步失败,请重试</string>
     <string name="completion_info_frist">请先完善资料</string>
     <string name="action_clearcache_success">已成功清除缓存</string>
-    
     <string name="action_syncing_lang">正在同步语言能力,请稍后...</string>
     <string name="action_syncing_cert">正在同步证书信息,请稍后...</string>
     <string name="action_syncing_other">正在同步其他信息,请稍后...</string>
-    
-    
+    <string name="viewpager_indicator">%1$d/%2$d</string>
     <string name="feedback_ed_1">请尽详细地描述您的反馈问题或用户体验不足之处,以帮助我们改善产品体验,我们将尽快处理你的意见,谢谢~</string>
     <string name="feedback_info_1">意见描述</string>
     <string name="feedback_ed_2">请留下您的QQ/微信/邮箱</string>
@@ -64,47 +92,6 @@
     <string name="feedback_ed_3">感谢您的反馈</string>
     <string name="feedback_info_3">您的反馈成功,我们将尽快处理你的意见,谢谢~</string>
     <string name="feedback_info_4">发送错误报告</string>
-
-    <!-- base -->
-    <string name="item_text1">请选择背景色</string>
-    <string name="item_text11">(简历预览界面)</string>
-
-    <!-- Home -->
-    <string name="resume_center">简历中心</string>
-    <string name="make_resume">定制我的简历</string>
-    <string name="review_resume">预&#160;&#160;览</string>
-    <string name="edit_resume">编&#160;&#160;辑</string>
-    <string name="item_text2">热门简历预览</string>
-    <string name="item_text21">更多</string>
-    <string name="item_text3">相关话题推荐</string>
-    <string name="item_text31">更多推荐</string>
-    <string name="item_text4">说说面试心得</string>
-    <string name="item_text41">我来说</string>
-    <string name="item_text42">暂无面试心得分享</string>
-    <string name="item_text43">正在加载,请稍后...</string>
-    <string name="item_text44">正在更新,请稍后...</string>
-    <string name="item_text5">抱歉!该模块需求联网查看~</string>
-    <string name="item_text6">简历预览封面</string>
-    <string name="item_text61">简历封面</string>
-    <string name="item_text7">提交成功,感谢您的分享~</string>
-	<string name="item_text8">我也来分享...</string>
-	<string name="item_text81">优质的分享将会置顶哦~</string>
-	<string name="item_text9">收藏成功</string>
-	<string name="item_text91">取消收藏</string>
-	 
-    <!-- Main -->
-    <string name="resume_baseinfo">基本资料</string>
-    <string name="resume_workexperience">工作经历</string>
-    <string name="resume_workexperience2">工作/实习经历</string>
-    <string name="resume_project_experience">项目经验</string>
-    <string name="resume_industrytype">行业类别</string>
-    <string name="resume_jobintension">求职意向</string>
-    <string name="resume_evaluation">自我评价</string>
-    <string name="resume_excellentskills">擅长技能</string>
-    <string name="resume_education">教育经历</string>
-    <string name="resume_training">培训经历</string>
-    <string name="resume_otherinfo">附加信息</string>
-    <string name="resume_message">我的留言</string>
 
     <!-- user login register -->
     <string name="action_user_login">用户登录</string>
@@ -156,7 +143,14 @@
     <string name="m_failLoad">请求失败,请重试</string>
     <string name="file_failLoad">文件上传失败</string>
     <string name="file_successLoad">文件上传成功</string>
-
+    
+     <!-- personal center -->
+    <string name="personal_c_item1">我的收藏</string>
+    <string name="personal_c_item2">行事历</string>
+    <string name="personal_c_item3">预览简历</string>
+    <string name="personal_c_item11">完整</string>
+    <string name="personal_c_item12">完整度</string>
+    
     <!-- UI button click msg -->
     <string name="action_notice">提&#160;示</string>
     <string name="action_add_success">新增成功</string>
@@ -166,10 +160,11 @@
     <string name="action_update_success">更新成功</string>
     <string name="action_update_fail">更新失败,请重试</string>
     <string name="action_favorites">收藏</string>
-     <string name="action_submit">提&#160;交</string>
-     <string name="action_delete_success">删除成功</string>
-     <string name="action_delete_fail">删除失败,请重试</string>
-
+    <string name="action_submit">提&#160;交</string>
+    <string name="action_delete_success">删除成功</string>
+    <string name="action_delete_fail">删除失败,请重试</string>
+	<string name="action_button_cancle">取&#160;&#160;消</string>
+	
     <!-- UI dialog msg -->
     <string name="upload_loading">正在更新,请稍后...</string>
     <string name="dialog_action_alert">您还没登录,创建的简历会保存到本地,若卸载APP或清除APP数据,将不会显示出您的简历信息,请先登录或继续操作！</string>
@@ -185,6 +180,16 @@
     <string name="button_delete">删&#160;除</string>
     <string name="button_update">更&#160;新</string>
     
+    <!-- refresh -->
+    <string name="refresh_down_text">下拉刷新</string>
+    <string name="refresh_release_text">释放可刷新</string>
+    <string name="xlistview_header_hint_normal">下拉刷新</string>
+    <string name="xlistview_header_hint_ready">释放可刷新</string>
+    <string name="xlistview_header_hint_loading">正在加载...</string>
+    <string name="xlistview_header_last_time">上次更新时间：</string>
+    <string name="xlistview_footer_hint_normal">查看更多</string>
+    <string name="xlistview_footer_hint_ready">松开载入更多</string>
+    <string name="xlistview_footer_loadfinish">加载完毕</string>
 
     <!-- Search UI -->
     <string name="hint_industry_text">请输入行业名称/拼音</string>
@@ -195,26 +200,15 @@
     <string name="all_city">全国城市</string>
     <string name="search_cancle">取消</string>
     <string name="default_city">武汉</string>
-    
-     <string name="date_today">今天是:</string>
-     
-     <!-- review link item -->
-     <string name="re_link1">面试经验;1</string>
-     <string name="re_link2">求职简历;2</string>
-     <string name="re_link3">职场攻略;3</string>
-     <string name="re_link5">求职指南;4</string>
-     <string name="re_link7">面试问题;5</string>
-     <string name="re_link8">每日推荐;6</string>
-     
-     <!-- personal center -->
-     <string name="personal_c_item1">我的收藏</string>
-     <string name="personal_c_item2">行事历</string>
-     <string name="personal_c_item3">预览简历</string>
-     
-     <string name="personal_c_item11">完整</string>
-     <string name="personal_c_item12">完整度</string>
-     
-     <string name="action_button_cancle">取&#160;&#160;消</string>
+    <string name="date_today">今天是:</string>
+
+    <!-- review link item -->
+    <string name="re_link1">面试经验;1</string>
+    <string name="re_link2">求职简历;2</string>
+    <string name="re_link3">职场攻略;3</string>
+    <string name="re_link5">求职指南;4</string>
+    <string name="re_link7">面试问题;5</string>
+    <string name="re_link8">每日推荐;6</string>
 
     <!-- 基本资料 -->
     <string name="reg_info_email">电子邮箱不合法！</string>
@@ -260,8 +254,7 @@
     <string name="info_politicalstatus_5">无党派人士</string>
     <!-- 基本资料 -->
 
-
-    <!-- 工作经历-->
+    <!-- 工作经历 -->
     <string name="we_info_companyname">企业名称</string>
     <string name="we_info_input_companyname">请输入企业名称</string>
     <string name="we_info_industryclassification">行业类别</string>
@@ -284,7 +277,6 @@
     <string name="we_info_workdescdetail">请详细描述您的职责范围,工作任务以及取得的成绩等</string>
     <!-- 工作简历 -->
 
-
     <!-- 自我评价 -->
     <string name="ev_info_default_1">对自己做一个简短评价,简明扼要地描述您的职业优势,让用人单位快速地了解您!</string>
     <string name="ev_info_default_2">以上请填写内容在1000字以内!</string>
@@ -297,8 +289,8 @@
     <string name="ev_info_choose_character">请选择性格类型(选填)</string>
     <string name="ev_info_self_evaluation_length">自我评价不能超过1000字</string>
     <string name="ev_info_career_goal_length">职业目标不能超过1000字</string>
+    <string name="ev_info_choose_character_cun">标签最多能添加4项</string>
     <!-- 自我评价 -->
-
 
     <!-- 教育培训经历 -->
     <string name="ed_info_time">时&#160;&#160;间</string>
@@ -322,7 +314,6 @@
     <string name="ed_info_input_description">请输入详细描述</string>
     <!-- 教育培训经历 -->
 
-
     <!-- 求职意向 -->
     <string name="ji_info_expectedworkingproperty">期望工作性质</string>
     <string name="ji_info_choose_expectedworkingproperty">请选择期望工作性质</string>
@@ -340,7 +331,6 @@
     <string name="ji_info_workingstate">工作状态</string>
     <string name="ji_info_choose_workingstate">请选择工作状态</string>
     <!-- 求职意向 -->
-
 
     <!-- 其他信息 -->
     <string name="ot_add">新增</string>
@@ -366,7 +356,6 @@
     <string name="ot_info_input_description">请输入描述信息</string>
     <!-- 其他信息 -->
 
-
     <!-- 人才附加内容 -->
     <!-- 项目经验 -->
     <string name="pe_info_projectname">项目名称</string>
@@ -376,6 +365,6 @@
     <string name="pe_input_workduties">请输入项目职责(限500字)</string>
     <string name="pe_info_workdesc">项目描述</string>
     <string name="pe_input_workdesc">请输入项目描述(限2000字)</string>
-    <!--  -->
+    <!-- 人才附加内容 -->
 
 </resources>

@@ -14,7 +14,7 @@
     
     <dimen name="blarge_text_size">60dip</dimen>
     
-    <dimen name="home_item_height">40dip</dimen>
+    <dimen name="home_item_height">33dip</dimen>
     <dimen name="address_item_height">48dip</dimen>
     <dimen name="home_bottombar_height">48dip</dimen>
     <dimen name="home_content_gridview_columnWidth">80dip</dimen>
@@ -25,6 +25,7 @@
     <dimen name="margin_10">10dip</dimen>
     <dimen name="margin_16">16dip</dimen>
      <dimen name="margin_20">20dip</dimen>
+     <dimen name="margin_30">30dip</dimen>
      <dimen name="margin_40">40dip</dimen>
     
     <dimen name="line_height">1px</dimen>

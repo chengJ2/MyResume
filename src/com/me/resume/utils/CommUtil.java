@@ -435,6 +435,18 @@ public class CommUtil {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @return url  
+	 */
+	public static String getStringLable(String content){
+		if(RegexUtil.checkNotNull(content)){
+			content = content.replaceAll("、", ";");
+			return content.trim();
+		}
+		return null;
+	}
+	
 	 /**
      * 生成随机密码
      * @param passLenth 生成的密码长度

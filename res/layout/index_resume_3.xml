@@ -42,13 +42,14 @@
                     android:textSize="@dimen/small_text_size"
                     android:layout_marginTop="10dip"
                     android:lineSpacingExtra="3dip"
-                    android:text="自我评价自我评价自我评价自我评价自我评价自我评价自我评价自我评价自我评价自我评价自我评价自我评价自我评价自我评价" />
+                    android:text="" />
                 
                 
                 <com.me.resume.views.TagFlowLayout 
                     android:id="@+id/flowlayout"
                     android:layout_width="match_parent"
             		android:layout_height="200dip"
+            		android:layout_gravity="center"
             		android:layout_marginTop="20dip"/>
                 
             </LinearLayout>

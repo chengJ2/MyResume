@@ -78,7 +78,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             @Override
             public void run() {
                 Looper.prepare();
-                CommUtil.ToastMsg(application, R.string.crash);
+                CommUtil.ToastMsg(application, R.string.app_crash);
                 Looper.loop();
             }
         }.start();

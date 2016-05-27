@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="30.0dip"
+    android:layout_height="@dimen/margin_30"
     android:orientation="vertical"
     android:background="@color/white" >
 
@@ -10,14 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="--"
         android:textSize="@dimen/microd_text_size"
         android:textColor="@color/grey_10"
         android:visibility="gone" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="horizontal" >
 
@@ -37,7 +36,7 @@
             android:gravity="center_vertical"
             android:text="@string/refresh_down_text"
             android:textColor="@color/grey_10"
-            android:textSize="@dimen/microd_text_size" />
+            android:textSize="@dimen/micro_text_size" />
     </LinearLayout>
 
 </LinearLayout>

@@ -30,7 +30,7 @@ public class StartupActivity extends Activity {
 		startup = (LinearLayout)findViewById(R.id.startup);
 	    
         AlphaAnimation animation = new AlphaAnimation(0.2f, 1.0f);
-        animation.setDuration(1500);
+        animation.setDuration(1800);
         startup.startAnimation(animation);
         animation.setAnimationListener(new AnimationListener() {
 			
@@ -43,7 +43,7 @@ public class StartupActivity extends Activity {
 			
 			public void onAnimationEnd(Animation animation) {
 				ActivityUtils.startActivity(StartupActivity.this, 
-						Constants.PACKAGENAMECHILD + Constants.EVALUATIONMORE,true);
+						Constants.PACKAGENAMECHILD + Constants.HOME,true);
 			}
         });
 	}
