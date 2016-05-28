@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.me.resume"
-    android:versionCode="1"
-    android:versionName="v1.0.12" >
+    android:versionCode="2"
+    android:versionName="v2.0.1" >
 
     <uses-sdk
         android:minSdkVersion="17"
@@ -195,7 +195,7 @@
             android:screenOrientation="portrait" >
         </activity>
         
-         <service android:name="com.me.resume.service.UpdateService"
+         <service android:name="com.me.resume.service.DownloadService"
 			android:process=".updateService" />
         
         <service android:name="com.baidu.location.f" 

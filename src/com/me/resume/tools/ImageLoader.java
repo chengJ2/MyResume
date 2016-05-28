@@ -18,34 +18,39 @@ import com.me.resume.utils.RegexUtil;
 /**
  * 
 * @ClassName: ImageLoader 
-* @Description:文件下载类
+* @Description:三阶缓存下载类
 * @date 2016/5/6 下午4:58:05 
 *
  */
 public class ImageLoader {
 
-	private MemoryCache memoryCache = new MemoryCache();
-	private FileCache fileCache;
+	private MemoryCache memoryCache = null;
+	private FileCache fileCache = null;
 	private Map<ImageView, String> imageViews = Collections
 			.synchronizedMap(new WeakHashMap<ImageView, String>());
 	// 线程池
 	private ExecutorService executorService;
 
 	public ImageLoader(Context context) {
-		fileCache = new FileCache(context);
+		if (memoryCache == null) {
+			memoryCache = new MemoryCache();
+		}
+		if(fileCache == null){
+			fileCache = new FileCache(context);
+		}
+		
 		executorService = Executors.newFixedThreadPool(5);
 	}
 
 	/**
 	 * 
-	 * @Title:ImageLoader
 	 * @Description: 三阶缓存下载任务
-	 * @author Comsys-WH1510032
 	 * @param url
 	 * @param imageView
 	 * @param isLoadOnlyFromCache
+	 * @param round 是否圆角
 	 */
-	public void DisplayImage(String url, ImageView imageView, boolean isLoadOnlyFromCache,boolean round) {
+	public void displayImage(String url, ImageView imageView, boolean isLoadOnlyFromCache,boolean round) {
 		imageViews.put(imageView, url);
 		String tag = imageViews.get(imageView);
 		if (!RegexUtil.checkNotNull(url) || !tag.equals(url)){
@@ -99,11 +104,7 @@ public class ImageLoader {
 
 	/**
 	 * 
-	 * @Title:ImageLoader
 	 * @Description: 下载任务
-	 * @author Comsys-WH1510032
-	 * @param url
-	 * @param imageView
 	 */
 	class PhotosLoader implements Runnable {
 		PhotoToLoad photoToLoad;

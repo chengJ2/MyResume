@@ -6,20 +6,15 @@
     android:fitsSystemWindows="true"
     android:id="@+id/sharemore_layout">
 
-    <ListView
+    <com.me.resume.views.XListView
         android:id="@+id/reviewsharemoreListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="62dip"
-        android:layout_marginLeft="5dip"
-        android:layout_marginRight="5dip"
-        android:cacheColorHint="#00000000"
-        android:divider="@color/grey"
-        android:dividerHeight="1px"
-        android:footerDividersEnabled="true"
-        android:listSelector="#00000000"
-        android:scrollbars="none"
-        android:visibility="visible" />
+        style="@style/comm_listview_style"
+        android:layout_marginTop="0dip"
+        android:layout_marginLeft="0dip"
+        android:layout_marginRight="0dip"
+        android:layout_marginBottom="60dip"
+        android:footerDividersEnabled="false"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/msgtext"
@@ -29,14 +24,14 @@
         android:text="@string/item_text43"
         android:textColor="@color/grey_10"
         android:textSize="@dimen/small_text_size"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/shareLayout"
         android:layout_width="match_parent"
         android:layout_height="60dip"
         android:layout_alignParentBottom="true"
-        android:background="@color/grey"
+        android:background="@color/grey_50"
         android:gravity="center"
         android:orientation="vertical"
         android:visibility="visible" >
@@ -58,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="160dip"
         android:layout_alignParentBottom="true"
-        android:background="@color/grey"
+        android:background="@color/grey_50"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="vertical"
@@ -80,7 +75,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dip"
-            android:background="@color/grey"
             android:orientation="horizontal" >
 
             <TextView

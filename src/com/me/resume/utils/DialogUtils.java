@@ -17,6 +17,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -79,7 +80,8 @@ public class DialogUtils {
 			dialog.getWindow().setBackgroundDrawable(new BitmapDrawable());
 			dialog.setCanceledOnTouchOutside(true);
 			TextView msg = (TextView)dialog.findViewById(R.id.content);
-			msg.setText(content);
+			msg.setText(Html.fromHtml(CommUtil.getHtml(content)));
+			
 			Button btnCancle = (Button)dialog.findViewById(R.id.btn_cancle);
 			btnCancle.setOnClickListener(new OnClickListener() {
 				

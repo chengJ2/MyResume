@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -27,12 +29,15 @@ import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.DownloadTask;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.swipeback.SwipeBackActivity;
+import com.me.resume.tools.L;
 import com.me.resume.tools.SystemBarTintManager;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.FileUtils;
 import com.me.resume.utils.PreferenceUtil;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
@@ -628,6 +633,86 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		
 	}
 	
+	private boolean isDownload = false;
+	/**
+	 * 简历封面数据显示
+	 * @param listview
+	 * @param map
+	 * @param isLocal
+	 */
+	protected void setCoverData(GridView gridView,final Map<String, List<String>> map,final boolean isLocal){
+		commapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.home_cover_gridview_item,"id") {
+			
+			@Override
+			public void convert(final ViewHolder holder, List<String> item, final int position) {
+				holder.setText(R.id.item2, map.get("note").get(position));
+				if (isLocal) {
+					holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_canuse));
+					holder.setImageResource(R.id.item1,CommUtil.parseInt(map.get("url").get(position)));
+				}else{
+					String coverPath = CommUtil.getHttpLink(map.get("url").get(position));
+					holder.showImage(R.id.item1,coverPath,false);
+					String fileNameStr = FileUtils.getFileName(coverPath);
+					queryWhere = "select * from " + CommonText.COVER_FILE 
+							+ " where filename = '"+ fileNameStr +"' and isfinish = 1";
+					commMapArray = dbUtil.queryData(self, queryWhere);
+					if (commMapArray != null && commMapArray.get("filename").length > 0) {
+						if (FileUtils.existsFile(FileUtils.COVER_DOWNLOAD_APKPATH + fileNameStr)) {
+							String lacalCoverName = preferenceUtil.getPreferenceData(Constants.COVER,"");
+							if (RegexUtil.checkNotNull(lacalCoverName)){
+								if (fileNameStr.toString().equals(lacalCoverName)) {
+									holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_useing));
+								}else{
+									holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_canuse));
+								}
+							}else{
+								holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_canuse));
+							}
+						}else{
+							holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_canuse));
+						}
+					}else{
+						holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_use));
+					}
+				}
+				
+				if (!isLocal) {
+					holder.setOnClickEvent(R.id.item3, new ClickEvent() {
+						
+						@Override
+						public void onClick(View view) {
+							String coverPath = CommUtil.getHttpLink(map.get("url").get(position));
+							String fileNameStr = FileUtils.getFileName(coverPath);
+							if (!isDownload) {
+								queryWhere = "select * from " + CommonText.COVER_FILE 
+										+ " where filename = '"+ fileNameStr +"' and isfinish = 1";
+								commMapArray = dbUtil.queryData(self, queryWhere);
+								if (commMapArray == null) {
+									holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_downloading));
+									new DownloadTask(mHandler,1).execute(coverPath);
+								}else{
+									String file = FileUtils.COVER_DOWNLOAD_APKPATH + fileNameStr;
+									if (!FileUtils.existsFile(file)) {
+										holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_downloading));
+										new DownloadTask(mHandler,1).execute(coverPath);
+									}else{
+										preferenceUtil.setPreferenceData(Constants.COVER,file);
+										commapBaseAdapter.notifyDataSetChanged();
+									}
+								}
+							}else{
+								toastMsg(R.string.item_text100);
+							}
+						}
+					});
+				}
+				
+			}
+		};
+		
+		gridView.setAdapter(commapBaseAdapter);
+	}
+	
 	/**
 	 * 添加到我的收藏
 	 * @param holder
@@ -658,6 +743,40 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 			commapBaseAdapter.notifyDataSetChanged();
 		}
 	}
+	
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case DownloadTask.DOWNLOAD_PROGRESS:
+				isDownload = true;
+				break;
+			case DownloadTask.DOWNLOAD_COMPLETE:
+				isDownload = false;
+				String file = (String) msg.obj;
+				L.d("======file=====" + file);
+				String filename = FileUtils.getFileName(file);
+				
+				queryWhere = "select * from " + CommonText.COVER_FILE 
+						+ " where filename = '"+ filename +"' and isfinish = 1";
+				commMapArray = dbUtil.queryData(self, queryWhere);
+				if (commMapArray == null) {
+					ContentValues cValues = new ContentValues();
+					cValues.put("filename", filename);
+					cValues.put("isfinish", 1);
+					queryResult = dbUtil.insertData(self, CommonText.COVER_FILE, cValues);
+					if (queryResult) {
+						preferenceUtil.setPreferenceData(Constants.COVER, filename);
+						commapBaseAdapter.notifyDataSetChanged();
+					}
+				}
+				
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
 	
 	@Override
 	public void onClick(View v) {

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/red"
+    android:background="#00000000"
     android:gravity="center" >
 
     <LinearLayout
@@ -32,7 +32,7 @@
             android:lineSpacingExtra="3dip"
             android:padding="@dimen/margin_10"
             android:paddingBottom="5dip"
-            android:maxLines="5"
+            android:maxLines="6"
             android:ellipsize="end"
             android:textColor="@color/black"
             android:textSize="@dimen/small_text_size" />

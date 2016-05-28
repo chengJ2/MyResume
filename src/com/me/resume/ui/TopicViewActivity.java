@@ -153,7 +153,7 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 					String frompicUrl = map.get("from_url").get(0);
 					if (RegexUtil.checkNotNull(frompicUrl)) {
 						topic_frompic.setVisibility(View.VISIBLE);
-						mImageLoader.DisplayImage(CommUtil.getHttpLink(frompicUrl), topic_frompic, false, false);
+						mImageLoader.displayImage(CommUtil.getHttpLink(frompicUrl), topic_frompic, false, false);
 					}else{
 						topic_frompic.setVisibility(View.GONE);
 					}

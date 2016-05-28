@@ -71,10 +71,11 @@ public class ProfessionalActivity extends BaseActivity implements OnClickListene
 		View v = View.inflate(self,R.layout.activity_category_layout, null);
 		boayLayout.addView(v);
 		
-		setTopTitle(R.string.resume_address);
+		setTopTitle(R.string.ed_info_majorname);
 		setMsgHide();
 		setRightIconVisible(View.GONE);
 		setRight2IconVisible(View.GONE);
+		setfabLayoutVisible(View.GONE);
 		
 		catelayout = findView(R.id.catelayout);
 		category =  findView(R.id.category);

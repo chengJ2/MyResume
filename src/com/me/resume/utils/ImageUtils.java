@@ -45,6 +45,7 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.util.Log;
 
+import com.me.resume.comm.Constants;
 import com.me.resume.tools.FileCache;
 import com.me.resume.tools.L;
 
@@ -106,7 +107,7 @@ public class ImageUtils {
 			if (!dir.exists()) {
 				dir.mkdirs();
 			}
-			file = File.createTempFile("temp", null, dir);
+			file = File.createTempFile(Constants.TEMP_PATH, null, dir);
 			bos = new BufferedOutputStream(new FileOutputStream(file));
 			baos.writeTo(bos);
 		} catch (IOException e) {
@@ -186,7 +187,6 @@ public class ImageUtils {
 		Bitmap bitmap = null;
 		try {
 			HttpResponse httpResponse = httpclient.execute(httpRequest);
-//			L.d("SC_OK:" + httpResponse.getStatusLine().getStatusCode());
 			if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				// 取得相关信息 取得HttpEntiy
 				HttpEntity httpEntity = httpResponse.getEntity();
@@ -195,7 +195,6 @@ public class ImageUtils {
 				bitmap = BitmapFactory.decodeStream(is);
 				is.close();
 			}
-
 		} catch (FileNotFoundException err) {
 			err.printStackTrace();
 		} catch (Exception e) {
@@ -378,7 +377,7 @@ public class ImageUtils {
         return bitmap;  
     }  
     
- // decode这个图片并且按比例缩放以减少内存消耗，虚拟机对每张图片的缓存大小也是有限制的
+    // decode这个图片并且按比例缩放以减少内存消耗，虚拟机对每张图片的缓存大小也是有限制的
  	public static Bitmap decodeFile(File f) {
  		FileInputStream fis = null;
  		try {
@@ -420,25 +419,22 @@ public class ImageUtils {
  	
  	/**
  	 * 
- 	 * @Title:ImageUtils
  	 * @Description: 下载文件转bitmap
- 	 * @author Comsys-WH1510032
  	 * @param fileCache
  	 * @param url
  	 * @return Bitmap
  	 */
  	public static Bitmap getBitmap(FileCache fileCache,String url) {
-		File f = fileCache.getFile(url);
-		// 先从文件缓存中查找是否有
-		Bitmap b = null;
-		if (f != null && f.exists()){
-			b = ImageUtils.decodeFile(f);
-		}
-		if (b != null){
-			return b;
-		}
-		// 最后从指定的url中下载图片
 		try {
+	 		Bitmap b = null;
+			File f = fileCache.getFile(url);// 先从文件缓存中查找是否有
+			if (f != null && f.exists()){
+				b = ImageUtils.decodeFile(f);
+			}
+			if (b != null){
+				return b;
+			}
+			// 最后从指定的url中下载图片
 			URL imageUrl = new URL(url);
 			HttpURLConnection conn = (HttpURLConnection) imageUrl.openConnection();
 			conn.setConnectTimeout(30000);
@@ -446,7 +442,7 @@ public class ImageUtils {
 			conn.setInstanceFollowRedirects(true);
 			InputStream is = conn.getInputStream();
 			OutputStream os = new FileOutputStream(f);
-			CopyStream(is, os);
+			copyStream(is, os);
 			os.close();
 			b = ImageUtils.decodeFile(f);
 			return b;
@@ -456,7 +452,12 @@ public class ImageUtils {
 		}
 	}
  	
- 	public static void CopyStream(InputStream is, OutputStream os) {
+ 	/**
+ 	 * 输入流转输出流
+ 	 * @param is
+ 	 * @param os
+ 	 */
+ 	public static void copyStream(InputStream is, OutputStream os) {
 		final int buffer_size = 1024;
 		try {
 			byte[] bytes = new byte[buffer_size];

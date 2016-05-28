@@ -248,9 +248,9 @@ public class ViewHolder {
 		ImageView iv = getView(ViewID);
 //		if (RegexUtil.checkNotNull(url)) {
 			if (!mBusy) {
-				mImageLoader.DisplayImage(url, iv, false, toRound);
+				mImageLoader.displayImage(url, iv, false, toRound);
 			} else {
-				mImageLoader.DisplayImage(url, iv, true, toRound);
+				mImageLoader.displayImage(url, iv, true, toRound);
 			}
 //		}
 		return this;

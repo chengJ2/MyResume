@@ -12,10 +12,6 @@ import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
-import com.me.resume.comm.CommForMapBaseAdapter;
-import com.me.resume.comm.ViewHolder;
-import com.me.resume.comm.ViewHolder.ClickEvent;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.utils.CommUtil;
 
 /**
@@ -27,6 +23,7 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 
 	private GridView covermoregridview;
 	private TextView msgText;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,40 +67,12 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 			public void success(Map<String, List<String>> map) {
 				try {
 					msgText.setVisibility(View.GONE);
-					setCoverData(map);
+					setCoverData(covermoregridview,map,false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
-	
-	/**
-	 * 简历预览封面
-	 * @param map
-	 */
-	private void setCoverData(final Map<String, List<String>> map){
-		commapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.home_cover_gridview_item,"id") {
-			
-			@Override
-			public void convert(ViewHolder holder, List<String> item, int position) {
-					holder.showImage(R.id.item1,
-							CommUtil.getHttpLink(map.get("url").get(position)),false);
-				
-				holder.setText(R.id.item2, map.get("note").get(position));
-				
-				holder.setOnClickEvent(R.id.item3, new ClickEvent() {
-					
-					@Override
-					public void onClick(View view) {
-						// TODO Auto-generated method stub
-						
-					}
-				});
-			}
-		};
-		
-		covermoregridview.setAdapter(commapBaseAdapter);
 	}
 	
 	@Override

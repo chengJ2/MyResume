@@ -13,26 +13,32 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
+import com.me.resume.tools.L;
 import com.me.resume.utils.FileUtils;
+import com.me.resume.utils.RegexUtil;
 
 /**
  * 下载Apk文件
  * @author Administrator
  *
  */
-public class DownloadNewVersionTask extends AsyncTask<String, Integer, String> {
+public class DownloadTask extends AsyncTask<String, Integer, String> {
 
-	private static final String TAG = "DownloadNewVersionTask";
-	
-	public static final int DOWNLOAD_PROGRESS = 0;
-	public static final int DOWNLOAD_COMPLETE = 1;
+	public static final int DOWNLOAD_PROGRESS = 10000;
+	public static final int DOWNLOAD_COMPLETE = 10001;
 	
 	private Handler handler;
+	/**
+	 * 下载的类型
+	 * 1:首页 cover
+	 * 2:apk
+	 */
+	private int style = 1;
 
-	public DownloadNewVersionTask(Handler handler){
+	public DownloadTask(Handler handler,int style){
 		this.handler = handler;
+		this.style = style;
 	}
 	
 	@Override
@@ -43,7 +49,8 @@ public class DownloadNewVersionTask extends AsyncTask<String, Integer, String> {
 	
 	@Override
 	protected void onPostExecute(String result) {
-		if ("".equals(result) || result != null) {
+		L.d("====filePath===" + result);
+		if (RegexUtil.checkNotNull(result)) {
 			handler.sendMessage(handler.obtainMessage(DOWNLOAD_COMPLETE, result));
 		}
 
@@ -71,8 +78,13 @@ public class DownloadNewVersionTask extends AsyncTask<String, Integer, String> {
 			conn.connect();
 			int contentLength = conn.getContentLength();
 			
-			File tempDir = FileUtils.createDownloadDir();
-			// 安装包文件的临时路径
+			File tempDir = null;
+			if (style == 1) {
+				tempDir = FileUtils.createCoverDownloadDir();// 简历封面下载路径
+			}else{
+				tempDir = FileUtils.createDownloadDir();// 安装包文件的临时路径
+			}
+			
 			tempFile = new File(tempDir, fileName);
 			if (tempFile.exists()) {
 				tempFile.delete();
@@ -95,7 +107,6 @@ public class DownloadNewVersionTask extends AsyncTask<String, Integer, String> {
 					// 发送更新进度消息
 					Message msg = handler.obtainMessage(DOWNLOAD_PROGRESS);
 					Bundle data = new Bundle();
-					data.putString("fileName", fileName);
 					data.putInt("progress", progress);
 					msg.setData(data);
 					handler.sendMessage(msg);
@@ -107,7 +118,7 @@ public class DownloadNewVersionTask extends AsyncTask<String, Integer, String> {
 			e.printStackTrace();
 			FileUtils.deleteFile(tempFile);
 		} catch (IOException e) {
-			Log.e(TAG, "下载文件异常：" + e.getLocalizedMessage());
+			L.e("下载文件异常：" + e.getLocalizedMessage());
 			FileUtils.deleteFile(tempFile);
 		} finally {
 			try {
@@ -124,7 +135,7 @@ public class DownloadNewVersionTask extends AsyncTask<String, Integer, String> {
 					conn = null;
 				}
 			} catch (IOException e) {
-				Log.e(TAG, e.getMessage());
+				L.e(e.getMessage());
 				FileUtils.deleteFile(tempFile);
 			}
 		}

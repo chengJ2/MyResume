@@ -26,6 +26,7 @@ import com.me.resume.R;
 import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.DownloadTask;
 import com.me.resume.comm.UserInfoCode;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
@@ -66,9 +67,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	private GridView resumeLinkgridview;
 	
 	// 构建cover本地数据
-	private String[] id = {"111","222","333"};
+	private String[] id = {"1","2","3"};
 	private String[] note = {"简历预览封面1","简历预览封面2","简历预览封面3"};
-	private String[] url = {R.drawable.resume_cover+"",R.drawable.resume_cover+"",R.drawable.resume_cover+""};
+	private String[] url = {R.drawable.default_cover1+"",R.drawable.default_cover2+"",R.drawable.default_cover3+""};
 	
 	private boolean isExit = false;
 	
@@ -298,7 +299,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		urlList = Arrays.asList(url);
 		map.put("url",urlList);
 		
-		setCoverData(map,islocal);
+		setCoverData(reviewCovergridview,map,islocal);
 	}
 	
 	/**
@@ -353,43 +354,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			public void success(Map<String, List<String>> map) {
 				try {
 					mHandler.sendEmptyMessage(101);
-					setCoverData(map,false);
+					setCoverData(reviewCovergridview,map,false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
-	
-	/**
-	 * 简历预览封面
-	 * @param map
-	 */
-	private void setCoverData(final Map<String, List<String>> map,final boolean isLocal){
-		commapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.home_cover_gridview_item,"id") {
-			
-			@Override
-			public void convert(ViewHolder holder, List<String> item, int position) {
-				if (isLocal) {
-					holder.setImageResource(R.id.item1,CommUtil.parseInt(map.get("url").get(position)));
-				}else{
-					holder.showImage(R.id.item1,
-							CommUtil.getHttpLink(map.get("url").get(position)),false);
-				}
-				holder.setText(R.id.item2, map.get("note").get(position));
-				
-				holder.setOnClickEvent(R.id.item3, new ClickEvent() {
-					
-					@Override
-					public void onClick(View view) {
-						// TODO
-						
-					}
-				});
-			}
-		};
-		
-		reviewCovergridview.setAdapter(commapBaseAdapter);
 	}
 	
 	/**

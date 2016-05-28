@@ -2,6 +2,11 @@ package com.me.resume.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import android.app.Activity;
@@ -407,7 +412,7 @@ public class CommUtil {
 	public static String getHttpLink(String link){
 		if(RegexUtil.checkNotNull(link)){
 			if(!link.contains("http://")){
-				link = CommonText.endPoint + "/" + link;
+				link = CommonText.ENDPOINT + "/" + link;
 				if(link.contains("\\")){
 					return link.replace("\\", "/");
 				}else{
@@ -429,7 +434,7 @@ public class CommUtil {
 	public static String getHtml(String content){
 		if(RegexUtil.checkNotNull(content)){
 			content = content.replaceAll("小于", "<");
-			content = content.replaceAll("大于", "<");
+			content = content.replaceAll("大于", ">");
 			return content.trim();
 		}
 		return null;
@@ -467,23 +472,10 @@ public class CommUtil {
      }
      
      /**
-      * 获得随机数
-      * @param passLenth
+      * 屏幕分辨率
+      * @param c
       * @return
       */
-     public static String getRandomNo(int passLenth) {
-
-         StringBuffer buffer = new StringBuffer("123456789abcdefghijklmnupqrstuvwsyz");
-         StringBuffer sb = new StringBuffer();
-         Random r = new Random();
-         int range = buffer.length();
-         for (int i = 0; i < passLenth; i++) {
-              //生成指定范围类的随机数0—字符串长度(包括0、不包括字符串长度)
-              sb.append(buffer.charAt(r.nextInt(range)));
-         }
-         return sb.toString();
-      }
-     
      public static String getDisplay(Activity c){
     	 DisplayMetrics metric = new DisplayMetrics();
          c.getWindowManager().getDefaultDisplay().getMetrics(metric);
@@ -495,4 +487,21 @@ public class CommUtil {
          int densityDpi = metric.densityDpi;  // 密度DPI（120 / 160 / 240）
          return "宽度（PX）:"+width +" 高度（PX）:"+height + " 密度:" + density + " 密度DPI:" + densityDpi;
      }
+     
+ 	/**
+ 	 * 将泛型一致且key相同的两个Map个并为一个新的map
+ 	 * @param map1
+ 	 * @param map2
+ 	 * @return
+ 	 */
+ 	public static Map<String,List<String>> getNewMap(Map<String,List<String>> map1,Map<String,List<String>> map2){
+ 		Map<String,List<String>> map=new HashMap<String, List<String>>();
+ 		Iterator<Entry<String, List<String>>> it=map1.entrySet().iterator();
+ 		while(it.hasNext()){
+ 			Entry<String, List<String>> entry=it.next();
+ 			entry.getValue().addAll(map2.get(entry.getKey()));
+ 			map.put(entry.getKey(), entry.getValue());
+ 		}
+ 		return map;
+ 	}
 }

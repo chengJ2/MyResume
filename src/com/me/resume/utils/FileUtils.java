@@ -2,7 +2,6 @@ package com.me.resume.utils;
 
 import java.io.File;
 
-import android.content.Context;
 import android.os.Environment;
 
 import com.me.resume.MyApplication;
@@ -18,20 +17,27 @@ public class FileUtils {
 	public static final String SD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();// SDCard路径
 	public static final String BASE_PATH = SD_PATH + File.separator + Constants.DIR_PATH; // 根目录
 	
-	public static final String TEMPDIR = BASE_PATH + File.separator + "temp";
+	/** 下载存放总目录*/
+	public static final String DOWNLOAD = BASE_PATH + File.separator + Constants.DOWNLOAD + File.separator;
 	
-	public static final String IMAGE_PATH =  "images";
-	 /** 缩略图缓存存放目录*/
-	public static final String BASE_IMAGE_CACHE = TEMPDIR + File.separator + IMAGE_PATH + File.separator + "cache" + File.separator;
+	/** 下载存放总目录*/
+	public static final String TEMPDIR = DOWNLOAD + Constants.TEMP_PATH + File.separator;
+	
+	/** 缩略图缓存存放目录*/
+	public static final String BASE_IMAGE_CACHE = DOWNLOAD  + File.separator + Constants.IMAGE_PATH + File.separator + Constants.CACHE_PATH + File.separator;
 	
 	 /** 错误日志存*/
-    public static final String LOG_PATH = "log";
-    public static final String LOG_NAME = BASE_PATH + File.separator + LOG_PATH + File.separator + "crash.txt";
+    public static final String LOG_NAME = BASE_PATH + File.separator + Constants.LOG_PATH + File.separator + Constants.LOG_NAME;
     
     /**
      * APk下载目录
      */
-    public static final String DOWNLOAD_APKPATH = TEMPDIR + File.separator + "download" + File.separator;
+    public static final String DOWNLOAD_APKPATH = DOWNLOAD + Constants.APK_PATH + File.separator;
+    
+    /**
+     * Cover下载目录
+     */
+    public static final String COVER_DOWNLOAD_APKPATH = DOWNLOAD  + Constants.COVER_PATH + File.separator;
     
 	/**
      * 判断SDcard是否挂起
@@ -100,6 +106,17 @@ public class FileUtils {
 	 */
 	public static File createDownloadDir() {
 		File updateDir = new File(DOWNLOAD_APKPATH);
+		if (!updateDir.exists()) {
+			updateDir.mkdirs();
+		}
+		return updateDir;
+	}
+	
+	/**
+	 * @return 返回创建的Cover下载目录
+	 */
+	public static File createCoverDownloadDir() {
+		File updateDir = new File(COVER_DOWNLOAD_APKPATH);
 		if (!updateDir.exists()) {
 			updateDir.mkdirs();
 		}

@@ -10,6 +10,7 @@ import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 
 import com.me.resume.utils.FileUtils;
+import com.me.resume.utils.ImageUtils;
 
 /**
  * 文件缓存类
@@ -41,26 +42,29 @@ public class FileCache {
 
 	/**
 	 * 获取缓存的图片
-	 * 
 	 * @param url
-	 * @return
+	 * @return Bitmap
 	 */
 	public Bitmap get(String url) {
-		File file = new File(cacheDir, getFileName(url));
-		if (file.exists()) {
-			Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
-			if (bitmap == null) {
-				file.delete();
-			} else {
-				return bitmap;
+		try {
+			File file = new File(cacheDir, getFileName(url));
+			if (file.exists()) {
+//				Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+				Bitmap bitmap = ImageUtils.decodeFile(file);
+				if (bitmap == null) {
+					file.delete();
+				} else {
+					return bitmap;
+				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
 
 	/**
 	 * 保存图片到SDCard
-	 * 
 	 * @param url
 	 * @param bitmap
 	 */
@@ -118,6 +122,9 @@ public class FileCache {
 		return f;
 	}
 
+	/**
+	 * 删除本地缓存文件
+	 */
 	public void clear() {
 		File[] files = cacheDir.listFiles();
 		if (files == null) {

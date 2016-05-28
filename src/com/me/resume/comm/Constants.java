@@ -63,6 +63,18 @@ public class Constants {
 	// 本地db文件  
 	public static final String DATABASE_FILENAME = "resume.db"; // DB文件 
 	
+	// 下载总路径
+	public static final String DOWNLOAD =  "download";
+	
+	public static final String TEMP_PATH =  "temp"; // 临时文件
+	public static final String APK_PATH =  "apk"; // apk
+	public static final String COVER_PATH =  "cover"; // 封面
+	public static final String IMAGE_PATH =  "images"; //  缩略图
+	public static final String CACHE_PATH =  "cache"; //  缓存
+	
+	public static final String LOG_PATH =  "log"; //  日志
+	public static final String LOG_NAME =  "crash.txt"; //  日志文件
+	
 	// 获取存储位置地址
     public static final String DATABASE_PATH = File.separator + "data"  
             + Environment.getDataDirectory().getAbsolutePath() + File.separator  + PACKAGENAME;   
@@ -75,7 +87,7 @@ public class Constants {
     public static File APKPATH = new File(FileUtils.DOWNLOAD_APKPATH + File.separator + APKNAME); 
     
     // apk下载地址
-    public static String APKURLPATH = CommonText.endPoint + "/apk/" + APKNAME;
+    public static String APKURLPATH = CommonText.ENDPOINT + File.separator + "apkFile" + File.separator + APKNAME;
     
     // 默认显示时间
     public static final int DEFAULTIME = 5000;
@@ -116,8 +128,13 @@ public class Constants {
     public static final String CITY = "city";
     public static final String CHARACTER = "character";
     
+    public static final String COVER = "cover";
+    
     public static final String SET_AUTOSHOW= "autoShow";
     public static final String SET_STARTVERYTIME= "startVerytime";
     public static final String SET_SWITCHANIM= "switchAnim";
     public static final String SET_SWITCHEFFDURATION= "switchEffDuration";
+    
+    
+    
 }

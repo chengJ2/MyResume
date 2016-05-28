@@ -238,7 +238,7 @@ public class EducationFragment extends BaseFragment implements OnClickListener {
 			break;
 		case R.id.info_majorname:
 			ActivityUtils.startActivityForResult(getActivity(),
-					Constants.PACKAGENAMECHILD + "ProfessionalActivity", false,
+					Constants.PACKAGENAMECHILD + Constants.PROFESSIONAL, false,
 					Constants.ED_REQUEST_CODE);
 			break;
 		case R.id.info_startworktime:

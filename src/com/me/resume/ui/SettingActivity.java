@@ -8,7 +8,6 @@ import java.util.Map;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
@@ -23,11 +22,10 @@ import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.UserInfoCode;
-import com.me.resume.service.UpdateService;
+import com.me.resume.service.DownloadService;
 import com.me.resume.tools.DataCleanManager;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
-import com.whjz.android.text.CommonText;
 
 /**
  * 
@@ -48,8 +46,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	private TextView effectsdurationfeild,effectsduration,animvaluefeild,animvalue;
 	
 	private boolean isupdate = false;
-	private String apk_url;
-	private String upd_content;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -83,14 +79,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 				}
 				break;
 			case 100:
-				Intent intentService = new Intent(self,UpdateService.class);
-				intentService.putExtra("url", CommonText.endPoint + apk_url);
-				intentService.putExtra("icon", R.drawable.ic_launcher);
-				intentService.putExtra("layoutId", R.layout.updateprogress);
-				intentService.putExtra("progressBarId",R.id.notificationProgress);
-				intentService.putExtra("title", R.id.notificationTitle);
-				intentService.putExtra("percent", R.id.notificationPercent);
-				intentService.putExtra("desc", upd_content);
+				Intent intentService = new Intent(self,DownloadService.class);
+				intentService.putExtra("url", Constants.APKURLPATH);
 				startService(intentService);
 				break;
 			default:
@@ -275,24 +265,25 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
-		requestData("GETAPKINFO", 1, params, values, new HandlerData() {		
+		requestData("pro_get_apkinfo", 1, params, values, new HandlerData() {		
 			@Override
 			public void success(Map<String, List<String>> map) {
 				try {
 					String apk_version = map.get("version").get(0); // 版本号
-					apk_url =  map.get("downloadpath").get(0);
-					upd_content = map.get("updcontent").get(0); // 更新内容 
-					
+					String upd_content = map.get("updcontent").get(0); // 更新内容 
 					isupdate = CommUtil.checkVersionIsUpdate(self,Integer.valueOf(apk_version));
 					if (isupdate) {
-						DialogUtils.showDialog(self,  Html.fromHtml(CommUtil.getHtml(upd_content)).toString(), mHandler);
-					} 
+						DialogUtils.showDialog(self, upd_content, mHandler);
+					}else{
+						toastMsg(R.string.settings_item31);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				} 
 			}
 			
 			public void error() {
+				toastMsg(R.string.settings_item31);
 			}
 		});
 	} 

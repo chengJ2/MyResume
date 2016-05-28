@@ -11,7 +11,6 @@ public class RegexUtil {
 		else
 			return false;
 	}
-	
 
 	// 非空字符长度限制
 	public static boolean checkStringLength(String s, int length) {
@@ -42,7 +41,8 @@ public class RegexUtil {
 
 	// 邮箱
 	public static boolean checkEmail(String s) {
-		Pattern pattern = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
+		Pattern pattern = Pattern
+				.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
 		Matcher matcher = pattern.matcher(s);
 		return matcher.matches();
 	}

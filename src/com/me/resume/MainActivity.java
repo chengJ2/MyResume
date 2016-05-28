@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +32,8 @@ import com.me.resume.comm.ViewHolder;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.FileUtils;
+import com.me.resume.utils.ImageUtils;
 import com.me.resume.utils.PreferenceUtil;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.views.CustomListView;
@@ -45,7 +48,6 @@ import com.whjz.android.util.interfa.DbLocalUtil;
  * 
  * @ClassName: MainActivity
  * @Description: 简历模板预览界面
- * @author Comsys-WH1510032
  * @date 2016/3/29 下午2:13:45
  * 
  */
@@ -79,7 +81,7 @@ public class MainActivity extends Activity {
 	private ImageView main_top_edit;
 	
 	// cover
-	private LinearLayout coverlayout;
+	private ImageView coverlayout;
 	
 	// View1
 	private LinearLayout index1layout;
@@ -178,10 +180,16 @@ public class MainActivity extends Activity {
 		view8 = mInflater.inflate(R.layout.index_resume_8, null);
 		
 		// 添加封面
-		coverlayout = (LinearLayout)cover.findViewById(R.id.coverlayout);
+		coverlayout = (ImageView)cover.findViewById(R.id.coverlayout);
 		mViewList.add(cover);
-		if (showEffect) {
-			
+		
+		String coverName = preferenceUtil.getPreferenceData(Constants.COVER,"");
+		L.d("====coverName====="+coverName);
+		if (RegexUtil.checkNotNull(coverName)) {
+			Bitmap bitmap = ImageUtils.getLoacalBitmap(FileUtils.COVER_DOWNLOAD_APKPATH + coverName);
+			if (bitmap != null) {
+				coverlayout.setImageBitmap(bitmap);
+			}
 		}
 		
 		initView1(view1);
@@ -207,9 +215,9 @@ public class MainActivity extends Activity {
 //			jazzyViewPager.setTransitionEffect(TransitionEffect.CubeIn);
 //		}
 		jazzyViewPager.setCurrentItem(0);
-		if (preferenceUtil.getPreferenceData("autoShow")) {
-			view_change_time = preferenceUtil.getPreferenceData("switchEffDuration",view_change_time);
-			TransitionEffect effect = TransitionEffect.valueOf(preferenceUtil.getPreferenceData("switchAnim", "Standard"));
+		if (preferenceUtil.getPreferenceData(Constants.SET_AUTOSHOW)) {
+			view_change_time = preferenceUtil.getPreferenceData(Constants.SET_SWITCHEFFDURATION,view_change_time);
+			TransitionEffect effect = TransitionEffect.valueOf(preferenceUtil.getPreferenceData(Constants.SET_SWITCHANIM, "Standard"));
 			
 			L.d("=view_change_time="+view_change_time + "=effect=" + effect);
 			
@@ -277,7 +285,7 @@ public class MainActivity extends Activity {
 			sbStr = new StringBuffer();
 			info = commMapArray.get("hometown")[0];
 			if(RegexUtil.checkNotNull(info)){
-				sbStr.append("户口："+info);
+				sbStr.append("家乡："+info);
 				sbStr.append(" | ");
 			}
 			
@@ -387,7 +395,7 @@ public class MainActivity extends Activity {
 				for (int i = 0,cun = ll.size(); i < cun; i++) {
 					TextView tview = new TextView(this);
 					tview.setText(ll.get(i).toString().trim());
-					tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.tiny_text_size));
+					tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.microd_text_size));
 					tview.setTextColor(CommUtil.getIntValue(self, R.color.red));
 					tview.setTypeface(Typeface.SERIF);
 					tview.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_tag_text_select));

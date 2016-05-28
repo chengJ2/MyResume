@@ -8,7 +8,9 @@
    <com.me.resume.views.XListView
         android:id="@+id/topicdetailListView"
         style="@style/comm_listview_style"
-        android:layout_marginTop="0dip"
+        android:layout_marginTop="-1px"
+        android:layout_marginLeft="0dip"
+        android:layout_marginRight="0dip"
         android:footerDividersEnabled="false" />
 
     <TextView

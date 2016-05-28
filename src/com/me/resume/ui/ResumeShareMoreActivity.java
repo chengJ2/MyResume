@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -13,27 +14,84 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
+import com.me.resume.comm.ResponseCode;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
+import com.me.resume.utils.TimeUtils;
+import com.me.resume.views.XListView;
+import com.me.resume.views.XListView.IXListViewListener;
 
 /**
  * 更多面试分享心得
  * @author Administrator
  *
  */
-public class ResumeShareMoreActivity extends BaseActivity implements OnClickListener{
+public class ResumeShareMoreActivity extends BaseActivity implements OnClickListener,IXListViewListener{
 
 	private RelativeLayout sharemore_layout;
-	private ListView reviewsharemoreListView;
+	private XListView reviewsharemoreListView;
+	
+	private TextView msgtext;
 	
 	private LinearLayout shareLayout;
 	
 	private LinearLayout inputshareLayout;
 	private EditText input_share;
 	private Button submit_btn;
+	
+	private boolean isAll=false;//是否加载完毕
+	private int pos=0;
+	private boolean isLoadMore=false;
+	private boolean isRequest=false;
+	
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case 11:
+				if (msg.obj != null) {
+					msgtext.setVisibility(View.GONE);
+					reviewsharemoreListView.setVisibility(View.VISIBLE);
+					Map<String, List<String>> newMap = (Map<String, List<String>>)msg.obj;
+					if(pos == 0){ //刷新
+						if(commMapList != null){
+							commMapList.clear();
+						}
+						commMapList.putAll(newMap);
+						
+						if (commapBaseAdapter != null) {
+							commapBaseAdapter.notifyDataSetChanged();
+							reviewsharemoreListView.invalidate();
+						}else{
+							setShareData(reviewsharemoreListView,commMapList);
+						}
+					}else{//加载更多
+						commMapList.putAll(CommUtil.getNewMap(commMapList, newMap));
+						commapBaseAdapter.notifyDataSetChanged(pos);
+					}
+					finishLoading();
+				}
+				break;
+			case 12:
+				isAll=true;
+				finishLoading();
+				if(!isLoadMore){
+					reviewsharemoreListView.setVisibility(View.GONE); 
+					msgtext.setVisibility(View.VISIBLE);
+					msgtext.setText(CommUtil.getStrValue(self, R.string.item_text72));
+				}
+				break;
+			case 100:
+				getShareMoreData(pos);
+				break;
+			default:
+				break;
+			}
+		};
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,21 +101,17 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		boayLayout.addView(v);
 		
 		setTopTitle(R.string.item_text71);
-		
 		setMsgHide();
-		
 		setRightIconVisible(View.INVISIBLE);
-		
 		setRight2IconVisible(View.GONE);
-		
 		setfabLayoutVisible(View.GONE);
 		
 		sharemore_layout = findView(R.id.sharemore_layout);
-		
 		reviewsharemoreListView = findView(R.id.reviewsharemoreListView);
-		
+		reviewsharemoreListView.setPullLoadEnable(true);
+		reviewsharemoreListView.setXListViewListener(this);
+		msgtext = findView(R.id.msgtext);
 		shareLayout = findView(R.id.shareLayout);
-		
 		inputshareLayout = findView(R.id.inputshareLayout);
 		input_share = findView(R.id.input_share);
 		submit_btn = findView(R.id.submit_btn);
@@ -69,7 +123,10 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		commMapList = new HashMap<String, List<String>>();
 		
 		if (CommUtil.isNetworkAvailable(self)) {
-			getShareMoreData(true);
+			mHandler.sendEmptyMessageDelayed(100, 200);
+		}else{
+			msgtext.setVisibility(View.VISIBLE);
+			msgtext.setText(CommUtil.getStrValue(self, R.string.item_text5));
 		}
 		
 	}
@@ -77,28 +134,27 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 	/**
 	 * @Description: 面试分享心得
 	 */
-	private void getShareMoreData(final boolean frsitReq){
+	private void getShareMoreData(int position){
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
-		requestData("pro_getshareinfo", 2, params, values, new HandlerData() {
+		
+		params.add("p_index");
+		values.add(String.valueOf(position));
+		
+		requestData("pro_getshareinfo_bypage", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				
+				mHandler.sendEmptyMessage(12);
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					if (map != null) {
-						commMapList.clear();
-						commMapList.putAll(map);
-						
-						if (commapBaseAdapter != null) {
-							commapBaseAdapter.notifyDataSetChanged();
-							reviewsharemoreListView.invalidate();
-						}else{
-							setShareData(reviewsharemoreListView,commMapList);
-						}
+					if (map.get("id").size() < 3) {
+						isAll = true;
+					}else{
+						isAll = false;
 					}
+					mHandler.sendMessage(mHandler.obtainMessage(11, map));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -106,124 +162,25 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		});
 	}
 	
-	/*private ViewHolder viewHolder;
-	
-	*//**
-	 * @Description: 面试分享心得
-	 *//*
-	private void setShareData(final Map<String, List<String>> map){
-		commapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.home_share_item,"id") {
-			
-			@Override
-			public void convert(ViewHolder holder, List<String> item, int position) {
-				String avatorStr = map.get("avator").get(position);
-				if (RegexUtil.checkNotNull(avatorStr)) {
-					holder.showImage(R.id.share_usernameavator,
-							CommUtil.getHttpLink(map.get("avator").get(position)),true);
-				}else{
-					holder.setImageResource(R.id.share_usernameavator, R.drawable.user_default_avatar);
-				}
-				
-				String realname = map.get("realname").get(position);
-				if (!realname.equals("") && realname != null) {
-					holder.setText(R.id.share_username, realname);
-				}else{
-					holder.setText(R.id.share_username, map.get("username").get(position));
-				}
-				
-				String jobtitleStr = map.get("expworkindustry").get(position);
-				String workyear = map.get("joinworktime").get(position);
-				
-				if (!RegexUtil.checkNotNull(jobtitleStr) && !RegexUtil.checkNotNull(workyear)) {
-					holder.setViewVisible(R.id.info2Layout, View.GONE);
-				}else{
-					holder.setViewVisible(R.id.info2Layout, View.VISIBLE);
-					
-					if (RegexUtil.checkNotNull(jobtitleStr)) {
-						holder.setTextVisibe(R.id.share_jobtitle, View.VISIBLE);
-						holder.setText(R.id.share_jobtitle, jobtitleStr);
-					}else{
-						holder.setTextVisibe(R.id.share_jobtitle, View.GONE);
-					}
-					
-					if (RegexUtil.checkNotNull(workyear)) {
-						int year = CommUtil.parseInt(workyear.substring(0, 4));
-						int theYear = CommUtil.parseInt(TimeUtils.theYear());
-						holder.setTextVisibe(R.id.share_workyear, View.VISIBLE);
-						holder.setText(R.id.share_workyear,(theYear - year) + "年工作经验");
-					}else{
-						holder.setTextVisibe(R.id.share_workyear, View.GONE);
-					}
-				}
-				
-				viewHolder= holder;
-				
-				holder.setText(R.id.share_content, map.get("content").get(position).toString().trim());
-				holder.setText(R.id.share_city, map.get("city").get(position));
-				holder.setText(R.id.share_datime, map.get("createtime").get(position));
-				
-				holder.setOnClickEvent(R.id.share_collection, new ClickEvent() {
-					
-					@Override
-					public void onClick(View view) {
-						if (!MyApplication.USERID.equals("0")) {
-							toastMsg(R.string.action_login_head);
-						}
-					}
-				});
-			}
-		};
-		
-		reviewsharemoreListView.setAdapter(commapBaseAdapter);
-		
-		reviewsharemoreListView.setOnScrollListener(new OnScrollListener() {
-			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				switch (scrollState) {
-				case OnScrollListener.SCROLL_STATE_FLING:
-					if (viewHolder != null) {
-						viewHolder.setFlagBusy(true);
-					}
-					break;
-				case OnScrollListener.SCROLL_STATE_IDLE:
-					if (viewHolder != null) {
-						viewHolder.setFlagBusy(false);
-					}
-					break;
-				case OnScrollListener.SCROLL_STATE_TOUCH_SCROLL:
-					if (viewHolder != null) {
-						viewHolder.setFlagBusy(false);
-					}
-					break;
-				default:
-					break;
-				}
-				commapBaseAdapter.notifyDataSetChanged();
-			}
-			
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
-			}
-		});
-		
-	}*/
 	
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.shareLayout:
+			shareLayout.setVisibility(View.GONE);
 			inputshareLayout.setVisibility(View.VISIBLE);
 			break;
 		case R.id.submit_btn:
 			String content = input_share.getText().toString();
-			if (RegexUtil.checkNotNull(input_share.getText().toString())) {
+			if (RegexUtil.checkNotNull(content)) {
+				shareLayout.setVisibility(View.VISIBLE);
 				inputshareLayout.setVisibility(View.GONE);
 				postShareData(content);
 			}
 			break;
 		case R.id.sharemore_layout:
+			shareLayout.setVisibility(View.VISIBLE);
 			inputshareLayout.setVisibility(View.GONE);
 			break;
 		default:
@@ -253,15 +210,42 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					if("200".equals(map.get("msg").get(0))){
+					if(map.get("msg").get(0).equals(ResponseCode.RESULT_OK)){
 						toastMsg(R.string.item_text7);
 						input_share.setText("");
-						getShareMoreData(false);
+						getShareMoreData(0);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	}
+	
+	@Override
+	public void onRefresh() {
+		isLoadMore=false;
+		pos = 0;
+		if(!isRequest){
+			getShareMoreData(pos);
+		}
+	}
+
+	@Override
+	public void onLoadMore() {
+		isLoadMore=true;
+		if(!isAll){
+			pos++;
+			getShareMoreData(pos);
+		}else{
+			toastMsg(R.string.xlistview_footer_loadfinish);
+			finishLoading();
+		}
+	}
+	
+	public void finishLoading(){
+		reviewsharemoreListView.stopLoadMore();
+		reviewsharemoreListView.stopRefresh();
+//		reviewsharemoreListView.setRefreshTime(TimeUtils.getCurrentTimeInString());
 	}
 }
