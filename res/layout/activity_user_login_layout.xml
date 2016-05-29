@@ -18,7 +18,7 @@
         <EditText
             android:id="@+id/edtTxt_username"
             style="@style/userinfo_item_style"
-            android:drawableLeft="@drawable/usericon"
+            android:drawableLeft="@drawable/icon_username"
             android:hint="@string/login_input_hint" />
 
         <View style="@style/line_padding10" />
@@ -26,7 +26,7 @@
         <EditText
             android:id="@+id/edtTxt_password"
             style="@style/userinfo_item_style"
-            android:drawableLeft="@drawable/pwdicon"
+            android:drawableLeft="@drawable/icon_pwd"
             android:hint="@string/login_input_pwd_hint"
             android:inputType="textPassword" />
     </LinearLayout>
@@ -94,7 +94,7 @@
     <LinearLayout
         android:id="@+id/login_pt_layout"
         android:layout_width="match_parent"
-        android:layout_height="80dip"
+        android:layout_height="88dip"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:orientation="vertical" >
@@ -107,18 +107,23 @@
             android:textColor="@color/grey_10"
             android:textSize="@dimen/small_middle_text_size" />
 
+        
+          <View
+             style="@style/line_padding10"/>
+        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dip"
+            android:layout_marginTop="@dimen/margin_8"
             android:background="@color/white"
             android:orientation="horizontal" >
-
+            
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
-                android:src="@drawable/tencent_qq" />
+                android:src="@drawable/ic_weixin_login_normal" />
 
             <View
                 style="@style/line2"
@@ -130,7 +135,19 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="centerInside"
-                android:src="@drawable/sina_wb" />
+                android:src="@drawable/ic_qq_login_normal" />
+
+            <View
+                style="@style/line2"
+                android:layout_height="30dip"
+                android:layout_gravity="center_vertical" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_weibo_login_normal" />
         </LinearLayout>
     </LinearLayout>
 

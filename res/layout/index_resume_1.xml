@@ -12,7 +12,7 @@
      <ImageView 
         android:layout_width="match_parent"
         android:layout_height="200dip"
-        android:background="@drawable/index_1_base"/>
+        android:background="@drawable/main_index_icon1"/>
     
     <TextView
         android:id="@+id/index_1_realname"

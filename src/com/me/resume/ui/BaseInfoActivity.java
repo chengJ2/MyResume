@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,7 +26,6 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.UserInfoCode;
-import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -164,6 +162,8 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		
 		getChooseValue();
 		
+		getBaseInfo();
+		
 		mHandler.postDelayed(new Runnable() {
 			
 			@Override
@@ -211,6 +211,10 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		info_hometown = findView(R.id.info_hometown);
 		info_city = findView(R.id.info_city);
 		
+		radioman.setChecked(true);
+		info_maritalstatus.setText(CommUtil.getStrValue(self, R.string.info_maritalstatus_1));
+		info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_1));
+		
 		info_brithday.setOnClickListener(this);
 		info_workyear.setOnClickListener(this);
 		
@@ -238,25 +242,18 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '" + uTokenId + "' order by id desc limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-			LocalHasData = true;
+			localHasData = true;
 			setAddBtnSrc(R.drawable.ic_btn_edit);
 			return true;
-		}else{
-			LocalHasData = false;
-			radioman.setChecked(true);
-			radio_no.setChecked(true);
-			info_maritalstatus.setText(CommUtil.getStrValue(self, R.string.info_maritalstatus_1));
-			info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_1));
-			setAddBtnSrc(R.drawable.ic_btn_add);
-			return false;
 		}
+		return false;
 	}
 	
 	/**
 	 * 显示数据
 	 */
 	private void initData() {
-		if (getBaseInfo()) {
+		if (localHasData) {
 			info_realname.setText(commMapArray.get("realname")[0]);
 			info_phone.setText(commMapArray.get("phone")[0]);
 			info_email.setText(commMapArray.get("email")[0]);
@@ -292,6 +289,9 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		
 	}
 
+	/**
+	 * 获取radiobutton值
+	 */
 	private  void getChooseValue(){
 		rg_gender.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
@@ -381,7 +381,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	private void actionAync(){
 		if (!MyApplication.USERID.equals("0")) {
 			if (CommUtil.isNetworkAvailable(self)) {
-				set3Msg(R.string.action_syncing,5*1000);
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 				syncData();
 			} else {
 				set3Msg(R.string.check_network);
@@ -396,49 +396,22 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void syncLocalData(){
 		preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
-		if (LocalHasData) {
-			updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
-					new String[]{"userId=?",
-					"realname","gender","brithday","joinworktime",
-					"phone","hometown","city","email","ismarry",
-					"nationality","license","workingabroad","politicalstatus",
-					"updatetime"}, 
-					new String[]{uTokenId,
-					info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
-					info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
-					info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr,
-					TimeUtils.getCurrentTimeInString()},1);
-			if (updResult == 1) {
-				toastMsg(R.string.action_update_success);
-				actionAync();
-			}else{
-				set3Msg(R.string.action_update_fail);
-			}
+		updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
+				new String[]{"userId=?",
+				"realname","gender","brithday","joinworktime",
+				"phone","hometown","city","email","ismarry",
+				"nationality","license","workingabroad","politicalstatus",
+				"updatetime"}, 
+				new String[]{uTokenId,
+				info_realnameStr,rg_genderStr,info_brithdayStr,info_workyearStr,
+				info_phoneStr,info_hometownStr,info_cityStr,info_emailStr,rg_maritalstatusStr,
+				info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr,
+				TimeUtils.getCurrentTimeInString()},1);
+		if (updResult == 1) {
+			toastMsg(R.string.action_update_success);
+			actionAync();
 		}else{
-			ContentValues cValues = new ContentValues();
-			cValues.put("userId", uTokenId);
-			cValues.put("realname", info_realnameStr);
-			cValues.put("gender", rg_genderStr);
-			cValues.put("brithday", info_brithdayStr);
-			cValues.put("joinworktime", info_workyearStr);
-			cValues.put("phone", info_phoneStr);
-			cValues.put("hometown", info_hometownStr);
-			cValues.put("city", info_cityStr);
-			cValues.put("email", info_emailStr);
-			cValues.put("ismarry", rg_maritalstatusStr);
-			cValues.put("nationality", info_nationalityStr);
-			cValues.put("license", info_licenseStr);
-			cValues.put("workingabroad", rg_workingabroadStr);
-			cValues.put("politicalstatus", rg_politicalstatusStr);
-			cValues.put("bgcolor", getCheckColor(checkColor));
-			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-			
-			queryResult = dbUtil.insertData(self,CommonText.BASEINFO, cValues);
-			if (queryResult) {
-				setAddBtnSrc(R.drawable.ic_btn_edit);
-				toastMsg(R.string.action_add_success);
-				actionAync();
-			}
+			set3Msg(R.string.action_update_fail);
 		}
 	}
 
@@ -456,15 +429,15 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			return false;
 		}
 		
-//		if (!RegexUtil.checkNotNull(info_workyearStr)) {
-//			setMsg(R.string.info_workyear);
-//			return false;
-//		}
+		if (!RegexUtil.checkNotNull(info_workyearStr)) {
+			setMsg(R.string.info_workyear);
+			return false;
+		}
 		
-		/*if (!RegexUtil.checkNotNull(info_phoneStr)) {
+		if (!RegexUtil.checkNotNull(info_phoneStr)) {
 			setMsg(R.string.info_contack);
 			return false;
-		}*/
+		}
 		
 		if (RegexUtil.checkNotNull(info_phoneStr) && !RegexUtil.isPhone(info_phoneStr)) {
 			set3Msg(R.string.reg_info_phone);
@@ -487,18 +460,6 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		}
 		
 		return true;
-	}
-	
-	/**
-	 * 获取弹出窗数据
-	 * @param array
-	 * @param parent
-	 * @param resId
-	 */
-	private void getValues(int array,View parent,int resId) {
-		String[] item_text = CommUtil.getArrayValue(self,array); 
-		mList = Arrays.asList(item_text);
-		DialogUtils.showPopWindow(self, parent, resId, mList, mHandler);
 	}
 	
 	/**
@@ -532,9 +493,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
-	 * 
 	 * @Description: 获取界面字段值
-	 * @author Comsys-WH1510032
 	 */
 	private void getFeildValue(){
 		info_realnameStr = CommUtil.getEditTextValue(info_realname);

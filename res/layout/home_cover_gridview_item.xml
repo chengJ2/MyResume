@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="118dip"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/resume_cover"
+        android:src="@drawable/default_cover1"
         android:scaleType="fitXY">
     </ImageView>
  

@@ -1,5 +1,6 @@
 package com.me.resume;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,7 @@ import com.me.resume.tools.L;
 import com.me.resume.tools.SystemBarTintManager;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.FileUtils;
 import com.me.resume.utils.PreferenceUtil;
 import com.me.resume.utils.RegexUtil;
@@ -107,7 +109,9 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	
 	protected String deviceID = "";// 设备标识码
 	
-	protected Boolean LocalHasData = false;// 本地是否有数据
+	protected Boolean localHasData = false;// 本地是否有数据
+	
+	private ViewHolder viewHolder;
 	
 	/**
 	 * 操作类型 
@@ -412,12 +416,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	
 	/**
 	 * 
-	 * @Title:BaseActivity
 	 * @Description: 设置界面消息
-	 * @author Comsys-WH1510032
-	 * @return 返回类型  
-	 * @param id
-	 * @param visibility
 	 */
 	protected void setMsgHide() {
 		msg.setVisibility(View.GONE);
@@ -425,21 +424,27 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	
 	/**
 	 * 
-	 * @Title:BaseActivity
 	 * @Description: 设置界面消息
-	 * @author Comsys-WH1510032
-	 * @return 返回类型  
-	 * @param id
 	 * @param visibility
 	 */
 	protected void setMsgVisibility(int visibility) {
 		msg.setVisibility(visibility);
 	}
 
+	/**
+	 * Activity跳转
+	 * @param src
+	 * @param finish
+	 */
 	protected void startActivity(String src, boolean finish) {
 		ActivityUtils.startActivity(self, Constants.PACKAGENAME + src, finish);
 	}
 	
+	/**
+	 *子Activity跳转
+	 * @param src
+	 * @param finish
+	 */
 	protected void startChildActivity(String src, boolean finish) {
 		ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + src, finish);
 	}
@@ -509,7 +514,18 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		}
 	}
 
-	private ViewHolder viewHolder;
+	/**
+	 * 获取弹出窗数据
+	 * @param array
+	 * @param parent
+	 * @param resId
+	 */
+	protected void getValues(int array,View parent,int resId) {
+		String[] item_text = CommUtil.getArrayValue(self,array); 
+		mList = Arrays.asList(item_text);
+		DialogUtils.showPopWindow(self, parent, resId, mList, mHandler);
+	}
+	
 	/**
 	 * @Description: 面试分享心得
 	 */
@@ -741,6 +757,9 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		if (queryResult) {
 			toastMsg(R.string.item_text9);
 			commapBaseAdapter.notifyDataSetChanged();
+			
+			//TODO 同步到远程
+			
 		}
 	}
 	

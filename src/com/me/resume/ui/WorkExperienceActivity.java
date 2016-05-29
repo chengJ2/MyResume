@@ -299,12 +299,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		}
 	}
 	
-	private void getValues(int array,View parent,int resId) {
-		String[] item_text = CommUtil.getArrayValue(self,array); 
-		mList = Arrays.asList(item_text);
-		DialogUtils.showPopWindow(self, parent, resId, mList, mHandler);
-	}
-	
 	/**
 	 * 
 	 * @Description: 执行同步操作

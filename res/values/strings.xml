@@ -110,6 +110,7 @@
     <string name="action_login_3pl">第三方登录</string>
     <string name="action_input_isnull">不能为空</string>
     <string name="action_input_up_isnull">用户名/手机号或密码</string>
+    <string name="action_input_usename_cn">用户名不能含中文</string>
     <string name="action_input_up_phone_email">手机号或邮箱用于找回密码,请选填</string>
     <string name="action_input_username_isnull">用户名/手机号</string>
     <string name="action_input_username_toolong">用户名太长!</string>
@@ -126,7 +127,7 @@
     <string name="action_login_error"> 用户名或密码不正确,请重试!</string>
     <string name="login_input_hint">请输入手机号/用户名</string>
     <string name="login_input1_hint">请输入用户名</string>
-    <string name="login_input2_hint">请输入手机号或邮箱</string>
+    <string name="login_input2_hint">请输入手机号(用于找回密码)</string>
     <string name="login_input_pwd_hint">请输入登录密码</string>
     <string name="login_input_old_pwd_hint">请输入原密码</string>
     <string name="login_input_new_pwd_hint">请输入新密码</string>
@@ -134,7 +135,7 @@
     <string name="login_input_updatepwd_success">密码修改成功,请记住您的新密码~</string>
     <string name="action_regist_fail">注册失败,请重试!</string>
     <string name="register_protocol">同意《我的简历服务协议》</string>
-    <string name="register_warn">提示:每个用户只能注册一次,请注意同步资料！ 若想重新注册,请到设置界面进行清除本地缓存操作</string>
+    <string name="register_warn">提示:每个用户只能注册一次,请注意同步资料！ 若想重新注册,请到设置界面进行清除本地缓存操作。</string>
     <string name="account_go_login">已有账号,登录>></string>
     <string name="action_logout">退出登录</string>
     <string name="action_logout_success">注销成功</string>
@@ -147,6 +148,19 @@
     <string name="m_failLoad">请求失败,请重试</string>
     <string name="file_failLoad">文件上传失败</string>
     <string name="file_successLoad">文件上传成功</string>
+    
+    <!-- 第三方登录 -->
+    <string name="errcode_success">发送成功</string>
+	<string name="errcode_cancel">发送取消</string>
+	<string name="errcode_deny">发送被拒绝</string>
+	<string name="errcode_unknown">发送返回</string>
+	
+	<string name="weibosdk_demo_token_to_string_format">Token：%1$s \nRefresh Token：%2$s \nexpires_in：%3$s</string>
+    <string name="weibosdk_demo_token_to_string_format_1">Token：%1$s \n有效期：%2$s</string>
+	<string name="weibosdk_demo_toast_auth_success">授权成功</string>
+    <string name="weibosdk_demo_toast_auth_failed">授权失败</string>
+    <string name="weibosdk_demo_toast_auth_canceled">取消授权</string>
+    <string name="weibosdk_demo_token_has_existed">Token 仍在有效期内，无需再次登录。</string>
     
      <!-- personal center -->
     <string name="personal_c_item1">我的收藏</string>

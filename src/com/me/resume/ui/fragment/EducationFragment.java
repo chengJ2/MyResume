@@ -262,7 +262,6 @@ public class EducationFragment extends BaseFragment implements OnClickListener {
 
 	@Override
 	public void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
 		if (educationReceiver != null) {
 			getActivity().unregisterReceiver(educationReceiver);

@@ -49,11 +49,11 @@ public class UserLoginActivity extends BaseActivity implements
 	
 	private boolean fflag = false;
 	
-	private String str_username,str_phoneoremial,str_password;
+	private String str_username,str_phone,str_password;
 	
 	private RelativeLayout user_login_layout,user_register_layout;
 	
-	private EditText usernameEt,regTxt_phoneoremial,passwordEt,password2Et;
+	private EditText usernameEt,regTxt_phone,passwordEt,password2Et;
 	
 	private Button registBtn;
 	
@@ -109,7 +109,7 @@ public class UserLoginActivity extends BaseActivity implements
 		btnLogin.setOnClickListener(this);
 		
 		usernameEt = findView(R.id.regTxt_username);
-		regTxt_phoneoremial = findView(R.id.regTxt_phoneoremial);
+		regTxt_phone = findView(R.id.regTxt_phone);
 		passwordEt = findView(R.id.regTxt_password);
 		password2Et = findView(R.id.regTxt2_password);
 		
@@ -121,7 +121,6 @@ public class UserLoginActivity extends BaseActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
 		edtTxt_username.setText(preferenceUtil.getPreferenceData(UserInfoCode.USERNAME, ""));
 		if (preferenceUtil.getPreferenceData(UserInfoCode.SAVEPWD)) {
 			edtTxt_password.setText(preferenceUtil.getPreferenceData(UserInfoCode.PASSWORD, ""));
@@ -158,7 +157,6 @@ public class UserLoginActivity extends BaseActivity implements
 				setRightIconVisible(View.VISIBLE);
 				
 				setAnimView(user_register_layout,0);
-				
 				setAnimView(user_login_layout,1);
 				
 				user_register_layout.setVisibility(View.GONE);
@@ -259,7 +257,7 @@ public class UserLoginActivity extends BaseActivity implements
 	private void getFeildValue(){
 		str_username = usernameEt.getText().toString();
 		str_password = passwordEt.getText().toString();
-		str_phoneoremial = regTxt_phoneoremial.getText().toString();
+		str_phone = regTxt_phone.getText().toString();
 	}
 	
 	private boolean  judgeFeild(){
@@ -268,21 +266,19 @@ public class UserLoginActivity extends BaseActivity implements
 			return false;
 		}
 		
-		if (!RegexUtil.checkNotNull(str_phoneoremial)) {
+		if (RegexUtil.checkChs(str_username)) {
+			set3Msg(R.string.action_input_usename_cn);
+			return false;
+		}
+		
+		if (!RegexUtil.checkNotNull(str_phone)) {
 			set3Msg(R.string.action_input_up_phone_email);
 			return false;
 		}
 		
-		if (str_phoneoremial.contains("@")) {
-			if(!RegexUtil.checkEmail(str_phoneoremial)){
-				set3Msg(R.string.reg_info_email);
-				return false;
-			}
-		}else{
-			if(!RegexUtil.isPhone(str_phoneoremial)){
-				set3Msg(R.string.reg_info_phone);
-				return false;
-			}
+		if(!RegexUtil.isPhone(str_phone)){
+			set3Msg(R.string.reg_info_phone);
+			return false;
 		}
 		
 		if(!RegexUtil.checkNotNull(str_password)){
@@ -319,11 +315,13 @@ public class UserLoginActivity extends BaseActivity implements
 			params.add("p_uid");
 			params.add("p_username");
 			params.add("p_userpwd");
+			params.add("p_phone");
 			params.add("p_deviceId");
 			params.add("p_patform");
 			
 			values.add(uTokenId);
 			values.add(str_username);
+			values.add(str_phone);
 			values.add(CommUtil.getMD5(str_password));
 			values.add(deviceID);
 			values.add("app");

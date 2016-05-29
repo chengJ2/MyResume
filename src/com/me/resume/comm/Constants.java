@@ -92,6 +92,15 @@ public class Constants {
     // 默认显示时间
     public static final int DEFAULTIME = 5000;
     
+    // 微信ID
+    public static final String APP_WX_ID = "";
+    
+    // QQ ID
+    public static final String APP_QQ_ID = "1105433372";
+    
+    // SINA ID
+    public static final String APP_SINA_ID = "1105433372";
+    
     // UI activity
     public static final String ADDRESS = "AddressActivity";
     public static final String BASEINFO = "BaseInfoActivity";

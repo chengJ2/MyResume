@@ -18,6 +18,7 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
+import com.me.resume.comm.ResponseCode;
 import com.me.resume.model.UUIDGenerator;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -36,9 +37,9 @@ import com.whjz.android.text.CommonText;
 public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	
 	// 自我评价;职业目标
-	private EditText info_self_evaluation,info_career_goal,info_c;
+	private EditText info_self_evaluation,info_career_goal;
 	
-	private String info_self_evaluationStr,info_career_goalStr,info_character_goalStr;
+	private String info_self_evaluationStr,info_career_goalStr,info_characterStr;
 	
 	private TextView info_character;
 	
@@ -61,7 +62,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				break;
 			case OnTopMenu.MSG_MENU2:
 				if (msg.obj != null) {
-					preferenceUtil.setPreferenceData("edit_mode",(boolean) msg.obj);
+					preferenceUtil.setPreferenceData(Constants.EDITMODE,(boolean) msg.obj);
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
@@ -160,8 +161,8 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				if (getEvData()) {
 					actionFlag = 2;
 					updResult = dbUtil.updateData(self, CommonText.EVALUATION,
-							new String[] { tokenId, "selfevaluation","careergoal","updatetime" }, 
-							new String[] { uTokenId,info_self_evaluationStr,info_career_goalStr,TimeUtils.getCurrentTimeInString() }, 3);
+							new String[] { tokenId, "selfevaluation","careergoal","character","updatetime" }, 
+							new String[] { uTokenId,info_self_evaluationStr,info_career_goalStr,info_characterStr,TimeUtils.getCurrentTimeInString() }, 3);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 						actionAync();
@@ -174,7 +175,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 					cValues.put("selfevaluation", info_self_evaluationStr);
 					cValues.put("bgcolor", getCheckColor(checkColor));
 					cValues.put("careergoal", info_career_goalStr);
-					cValues.put("character", info_career_goalStr);
+					cValues.put("character", info_characterStr);
 					cValues.put("createtime",TimeUtils.getCurrentTimeInString());
 					queryResult = dbUtil.insertData(self,CommonText.EVALUATION, cValues);
 					if (queryResult) {
@@ -187,7 +188,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.next:
-			startChildActivity("JobIntensionActivity",false);
+			startChildActivity(Constants.JOBINTENSION,false);
 			break;
 		case R.id.right_icon_more:
 			DialogUtils.showTopMenuDialog(self, topLayout,0, mHandler);
@@ -226,6 +227,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	private void getFeildValue(){
 		info_self_evaluationStr = CommUtil.getEditTextValue(info_self_evaluation);
 		info_career_goalStr = CommUtil.getEditTextValue(info_career_goal);
+		info_characterStr = CommUtil.getTextValue(info_character);
 	}
 	
 	/**
@@ -278,7 +280,6 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				}else{
 					runOnUiThread(R.string.action_sync_success);
 				}
-				
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -312,10 +313,11 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			info_self_evaluationStr = map.get("selfevaluation").get(0);;
 			info_career_goalStr = map.get("careergoal").get(0);
+			info_characterStr = map.get("character").get(0);
 			
 			updResult = dbUtil.updateData(self, CommonText.EVALUATION,
-					new String[] { tokenId, "selfevaluation","careergoal","updatetime" }, 
-					new String[] { uTokenId,info_self_evaluationStr,info_career_goalStr,TimeUtils.getCurrentTimeInString() }, 3);
+					new String[] { tokenId, "selfevaluation","careergoal","character","updatetime" }, 
+					new String[] { uTokenId,info_self_evaluationStr,info_career_goalStr,info_characterStr,TimeUtils.getCurrentTimeInString() }, 3);
 		}else{
 			int size = map.get("userId").size();
 			for (int i = 0; i < size; i++) {
@@ -324,6 +326,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				cValues.put("userId", map.get("userId").get(i));
 				cValues.put("selfevaluation", map.get("selfevaluation").get(i));
 				cValues.put("careergoal", map.get("careergoal").get(i));
+				cValues.put("character", map.get("character").get(i));
 				cValues.put("bgcolor", map.get("bgcolor").get(i));
 				cValues.put("createtime", map.get("createtime").get(i));
 				cValues.put("updatetime", map.get("updatetime").get(i));
@@ -342,7 +345,6 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	 * 
 	 * @Title:WorkExperienceActivity
 	 * @Description: 同步数据
-	 * @author Comsys-WH1510032
 	 */
 	private void syncRun(String tokenId,int style){ 
 		getFeildValue();
@@ -354,12 +356,14 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			params.add("p_userId");
 			params.add("p_selfevaluation");
 			params.add("p_careergoal");
+			params.add("p_character");
 			params.add("p_bgcolor");
 			
 			values.add(tokenId);
 			values.add(uTokenId);
 			values.add(info_self_evaluationStr);
 			values.add(info_career_goalStr);
+			values.add(info_characterStr);
 			values.add(getCheckColor(checkColor));
 			
 			requestData("pro_set_evaluation", style, params, values, new HandlerData() {
@@ -370,7 +374,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				
 				public void success(Map<String, List<String>> map) {
 					try {
-						if (map.get("msg").get(0).equals("200")) {
+						if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
 							runOnUiThread(R.string.action_sync_success);
 						}
 					} catch (Exception e) {

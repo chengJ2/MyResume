@@ -10,7 +10,7 @@
         style="@style/userinfo_item_style"
         android:layout_margin="@dimen/margin_10"
         android:background="@drawable/editbox"
-        android:drawableLeft="@drawable/usericon"
+        android:drawableLeft="@drawable/icon_username"
         android:hint="@string/login_input1_hint"
         android:imeOptions="actionDone"
         android:visibility="visible" />
@@ -30,7 +30,7 @@
         <EditText
 	        android:id="@+id/pwdTxt2_username"
 	        style="@style/userinfo_item_style"
-	        android:drawableLeft="@drawable/usericon"
+	        android:drawableLeft="@drawable/icon_username"
 	        android:hint="@string/login_input1_hint"
 	        android:visibility="gone" />
         
@@ -41,7 +41,7 @@
         <EditText
             android:id="@+id/new_Txt_password"
             style="@style/userinfo_item_style"
-            android:drawableLeft="@drawable/pwdicon"
+            android:drawableLeft="@drawable/icon_pwd"
             android:hint="@string/login_input_old_pwd_hint"
             android:inputType="textPassword" />
 
@@ -50,7 +50,7 @@
         <EditText
             android:id="@+id/new_Txt2_password"
             style="@style/userinfo_item_style"
-            android:drawableLeft="@drawable/pwdicon"
+            android:drawableLeft="@drawable/icon_pwd"
             android:hint="@string/login_input_snew_pwd_hint"
             android:inputType="textPassword" />
     </LinearLayout>

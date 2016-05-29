@@ -186,7 +186,9 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 		setMsgHide();
 		setRightIconVisible(View.VISIBLE);
 		setRight2IconVisible(View.VISIBLE);
-		setfabLayoutVisible(View.GONE);
+		setfabLayoutVisible(View.VISIBLE);
+		setEditBtnVisible(View.GONE);
+		setAddBtnSrc(R.drawable.icon_gohome_def);
 		
 		if (CommUtil.textIsNull(info_language)) {
 			info_literacyskills.setEnabled(false);
@@ -197,8 +199,6 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	
-	
 	private boolean getLanguagesData(){
 		queryWhere = "select * from " + CommonText.OTHERINFO + " where userId = '"+ uTokenId +"' order by id desc limit 1";
 		mapArray = dbUtil.queryData(self, queryWhere);
@@ -219,7 +219,6 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
     		info_listeningspeaking.setText(mapArray.get("listeningspeaking")[0]);
 		}
 	}
-	
 	
 	private boolean getcertificateData(){
 		queryWhere = "select * from " + CommonText.OTHERINFO1 + " where userId = '"+ uTokenId +"' order by id desc limit 1";
@@ -416,6 +415,12 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 		case R.id.right_icon_more:
 			DialogUtils.showTopMenuDialog(self, topLayout,1, mHandler);
 			break;
+		case R.id.save:
+			startChildActivity(Constants.HOME,true);
+			break;
+		case R.id.next:
+			startChildActivity(Constants.WORKEXPERIENCE,false);
+			break;
 		default:
 			break;
 		}
@@ -429,7 +434,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 	private void actionAync(OtherInfoMenu menu,int style){
 		if (!MyApplication.USERID.equals("0")) {
 			if (CommUtil.isNetworkAvailable(self)) {
-				set3Msg(R.string.action_syncing,5*1000);
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 				syncData(menu,style);
 			} else {
 				set3Msg(R.string.check_network);
@@ -447,7 +452,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 	private void actionAync(OtherInfoMenu menu,int style,int resId){
 		if (!MyApplication.USERID.equals("0")) {
 			if (CommUtil.isNetworkAvailable(self)) {
-				set3Msg(resId,5*1000);
+				set3Msg(resId,Constants.DEFAULTIME);
 				syncData(menu,style);
 			} else {
 				set3Msg(R.string.check_network);
@@ -614,9 +619,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 	}
 	
 	/**
-	 * 
 	 * @Description: 同步数据
-	 * @author Comsys-WH1510032
 	 */
 	private void syncRun(OtherInfoMenu menu,String tokenId,int style){ 
 		List<String> params = new ArrayList<String>();
@@ -682,9 +685,4 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 		});
 	}
 	
-	private void getValues(int array, View parent, int resId) {
-		String[] item_text = CommUtil.getArrayValue(self, array);
-		mList = Arrays.asList(item_text);
-		DialogUtils.showPopWindow(self, parent, resId, mList, mHandler);
-	}
 }

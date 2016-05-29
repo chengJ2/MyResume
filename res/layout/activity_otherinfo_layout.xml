@@ -5,8 +5,7 @@
     android:background="@color/white">
 
     <com.me.resume.views.CommScrollView
-         style="@style/comm_scrollview_style"
-         android:layout_marginBottom="0dip" >
+         style="@style/comm_scrollview_style" >
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -15,7 +15,6 @@ import com.whjz.android.util.interfa.DbLocalUtil;
  * 
 * @ClassName: BaseFragment 
 * @Description: Fragment基类
-* @author Comsys-WH1510032 
 * @date 2016/4/22 下午5:27:02 
 *
  */
@@ -30,4 +29,5 @@ public class BaseFragment extends Fragment {
 	protected String queryWhere;
 	
 	protected Map<String, String[]> commap = null;
+	
 }

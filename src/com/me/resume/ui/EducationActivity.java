@@ -20,7 +20,6 @@ import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.model.UUIDGenerator;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.ui.fragment.AllFragmentFactory;
 import com.me.resume.ui.fragment.EducationFragment;
 import com.me.resume.ui.fragment.TrainingFragment;
@@ -257,7 +256,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.next:
-			startChildActivity("OtherInfoActivity",false);
+			startChildActivity(Constants.OTHERINFO,false);
 			break;
 		case R.id.right_icon_more:
 			DialogUtils.showTopMenuDialog(self, topLayout,1, mHandler);
