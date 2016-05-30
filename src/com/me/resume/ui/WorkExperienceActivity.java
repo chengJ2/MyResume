@@ -1,7 +1,6 @@
 package com.me.resume.ui;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -19,10 +18,10 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
+import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.UserInfoCode;
-import com.me.resume.model.UUIDGenerator;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.L;
+import com.me.resume.tools.UUIDGenerator;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -32,11 +31,9 @@ import com.whjz.android.text.CommonText;
 
 /**
  * 
-* @ClassName: WorkExperienceActivity 
-* @Description: 工作经历 
-* @author Comsys-WH1510032 
-* @date 2016/3/29 下午3:39:01 
-*
+ * @Description: 工作经历 
+ * @date 2016/3/29 下午3:39:01 
+ *
  */
 public class WorkExperienceActivity extends BaseActivity implements OnClickListener{
 	
@@ -217,8 +214,8 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		switch (v.getId()) {
 		case R.id.save:
 			add_insert = true;
-			getFeildValue();
-			if(judgeFeild()){
+			getFieldValue();
+			if(judgeField()){
 				preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
 				ContentValues cValues = new ContentValues();
 				cValues.put("tokenId", UUIDGenerator.getKUUID());
@@ -248,8 +245,8 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			break;
 		case R.id.edit:
 			add_insert = true;
-			getFeildValue();
-			if(judgeFeild()){
+			getFieldValue();
+			if(judgeField()){
 				if(getWEData()){
 					preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
 					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
@@ -320,7 +317,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 * 
 	 * @Description: 获取界面字段值
 	 */
-	private void getFeildValue(){
+	private void getFieldValue(){
 		info_companynameStr = CommUtil.getEditTextValue(info_companyname);
 		info_jobtitleStr = CommUtil.getEditTextValue(info_jobtitle);
 		info_workdescdetailStr = CommUtil.getEditTextValue(info_workdescdetail);
@@ -335,7 +332,10 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		info_expectedsalaryStr = CommUtil.getTextValue(info_expectedsalary);
 	}
 	
-	private boolean judgeFeild(){
+	/**
+	 * 判断字段值
+	 */
+	private boolean judgeField(){
 		if (!RegexUtil.checkNotNull(info_companynameStr)) {
 			setMsg(R.string.we_info_companyname);
 			return false;
@@ -381,7 +381,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	/**
 	 * 
 	 * @Description: 同步数据(判断库是否有记录)
-	 * @author Comsys-WH1510032
 	 */
 	private void syncData(){ 
 		List<String> params = new ArrayList<String>();
@@ -391,6 +390,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		params.add("p_userId");
 		values.add(tokenId);
 		values.add(uTokenId);
+		
 		requestData("pro_get_workexpericnce", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
@@ -414,12 +414,11 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 * 
 	 * @Title:WorkExperienceActivity
 	 * @Description: 同步数据
-	 * @author Comsys-WH1510032
 	 */
 	private void syncRun(String tokenId,int style){ 
-		getFeildValue();
+		getFieldValue();
 		
-		if(judgeFeild()){
+		if(judgeField()){
 			List<String> params = new ArrayList<String>();
 			List<String> values = new ArrayList<String>();
 			params.add("p_tokenId");
@@ -456,7 +455,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				
 				public void success(Map<String, List<String>> map) {
 					try {
-						if (map.get("msg").get(0).equals("200")) {
+						if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
 							runOnUiThread(R.string.action_sync_success);
 						}
 					} catch (Exception e) {

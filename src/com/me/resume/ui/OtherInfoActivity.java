@@ -1,7 +1,6 @@
 package com.me.resume.ui;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +18,7 @@ import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ResponseCode;
-import com.me.resume.model.UUIDGenerator;
+import com.me.resume.tools.UUIDGenerator;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.TimeUtils;
@@ -188,7 +187,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 		setRight2IconVisible(View.VISIBLE);
 		setfabLayoutVisible(View.VISIBLE);
 		setEditBtnVisible(View.GONE);
-		setAddBtnSrc(R.drawable.icon_gohome_def);
+		setAddBtnSrc(R.drawable.ic_btn_home);
 		
 		if (CommUtil.textIsNull(info_language)) {
 			info_literacyskills.setEnabled(false);
@@ -419,7 +418,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			startChildActivity(Constants.HOME,true);
 			break;
 		case R.id.next:
-			startChildActivity(Constants.WORKEXPERIENCE,false);
+			startChildActivity(Constants.PROJECTEXPERIENCE,false);
 			break;
 		default:
 			break;

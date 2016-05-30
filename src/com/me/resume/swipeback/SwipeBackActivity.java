@@ -39,6 +39,8 @@ public class SwipeBackActivity extends FragmentActivity implements
 	
 	private SwipeBackActivityHelper mHelper;
 	
+	private volatile boolean running = true;
+	
 	// activity访问栈
 	protected static Stack<FragmentActivity> mLocalStack = new Stack<FragmentActivity>();
 
@@ -317,6 +319,7 @@ public class SwipeBackActivity extends FragmentActivity implements
 				handlerData.success(map);
 			} else if (result == ResponseCode.EXECUTE_TIMEOUT) {
 				toastMsg(R.string.timeout_network);
+				handlerData.error();
 			} else if (result == ResponseCode.EXECUTE_NETERROR) {
 				toastMsg(R.string.check_network);
 			}

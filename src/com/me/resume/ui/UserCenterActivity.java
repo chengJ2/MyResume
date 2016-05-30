@@ -42,7 +42,6 @@ import com.whjz.android.text.CommonText;
  * 
 * @ClassName: UserCenterActivity 
 * @Description: 用户中心 
-* @author Comsys-WH1510032 
 * @date 2016/4/27 下午12:06:31 
 *
  */
@@ -105,7 +104,6 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
             	break;
             case 101:
             	setAnimView(center_topbar,0);
-//            	mHandler.sendEmptyMessageDelayed(101,Constants.DEFAULTIME);
             	break;
 			default:
 				break;
@@ -197,7 +195,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	 * 显示用户头像
 	 */
 	private void initViews(){	
-		MyApplication.USERNAME = preferenceUtil.getPreferenceData("username", "");
+		MyApplication.USERNAME = preferenceUtil.getPreferenceData(UserInfoCode.USERNAME, "");
 		MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator 
 				+ MyApplication.USERNAME + File.separator + Constants.FILENAME;
 		
@@ -217,11 +215,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
-	 * 
-	 * @Title:UserCenterActivity
-	 * @Description: 获取基本资料
-	 * @author Comsys-WH1510032
-	 * @return 返回类型
+	 * 获取基本资料
 	 */
 	private void getBaseInfo(){
 		queryWhere = "select a.username,b.* from " + CommonText.USERINFO + " a,"
@@ -239,7 +233,12 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			if (RegexUtil.checkNotNull(workyear)) {
 				int year = CommUtil.parseInt(workyear.substring(0, 4));
 				int theYear = CommUtil.parseInt(TimeUtils.theYear());
-				center_workyear.setText("|"+ (theYear - year) + "年工作经验");
+				int work = (theYear - year);
+				if (work <= 0) {
+					center_workyear.setText("|应届生");
+				}else{
+					center_workyear.setText("|"+ work + "年工作经验");
+				}
 			}else{
 				center_workyear.setText("");
 			}
@@ -516,17 +515,17 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		case R.id.info_layout1:
 			startChildActivity(Constants.JOBINTENSION,false);
 			break;
-		case R.id.info_layout2:
+		case R.id.info_layout2: // 教育经历
 			ActivityUtils.startActivityPro(self, 
 					Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
 					Constants.TYPE,CommonText.EDUCATION);
 			break;
-		case R.id.info_layout3:
+		case R.id.info_layout3:// 工作经历
 			ActivityUtils.startActivityPro(self, 
 					Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
 					Constants.TYPE,CommonText.WORKEXPERIENCE);
 			break;
-		case R.id.info_layout4:
+		case R.id.info_layout4: // 项目经验
 			ActivityUtils.startActivityPro(self, 
 					Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
 					Constants.TYPE,CommonText.PROJECT_EXPERIENCE);

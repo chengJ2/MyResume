@@ -20,6 +20,7 @@ public class TimeUtils {
      * DEFAULT_FORMAT_STRING
      */
     public static final String DEFAULT_FORMAT_STRING = "yyyy-MM-dd HH:mm:ss";
+    
     /**
      * ThreadLocal<SimpleDateFormat> dateFormater
      */
@@ -337,53 +338,32 @@ public class TimeUtils {
      */
     public static Date toDate(String sDate) {
         try {
-            return dateFormater.get().parse(sDate);
+        	SimpleDateFormat dateFormat = new SimpleDateFormat(DEFAULT_FORMAT_STRING);
+            return dateFormat.parse(sDate);
         } catch (ParseException e) {
             return null;
         }
     }
-
+    
     /**
      * 以友好的方式显示时间
-     *
      * @param sDate
      * @return
      */
     public static String showTimeFriendly(String sDate) {
         Date time = toDate(sDate);
         if (time == null) {
-            return "Unknown";
+            return "unknown";
         }
         String ftime = "";
-        Calendar cal = Calendar.getInstance();
-
-        // 判断是否是同一天
-        String curDate = dateFormaterShort.get().format(cal.getTime());
-        String paramDate = dateFormaterShort.get().format(time);
-        if (curDate.equals(paramDate)) {
-            int hour = (int) ((getCurrentTimeInLong() - time.getTime()) / 3600000);
-            if (hour == 0)
-                ftime = Math.max(
-                        (getCurrentTimeInLong() - time.getTime()) / 60000, 1)
-                        + "分钟前";
-            else
-                ftime = hour + "小时前";
-            return ftime;
-        }
-
-        ftime = formateDate(time, ftime);
-        return ftime;
-    }
-
-	private static String formateDate(Date time, String ftime) {
-		long lt = time.getTime() / 86400000;
+        long lt = time.getTime() / 86400000;
         long ct = getCurrentTimeInLong() / 86400000;
+        
         int days = (int) (ct - lt);
         if (days == 0) {
             int hour = (int) ((getCurrentTimeInLong() - time.getTime()) / 3600000);
             if (hour == 0)
-                ftime = Math.max(
-                        (getCurrentTimeInLong() - time.getTime()) / 60000, 1)
+                ftime = Math.max((getCurrentTimeInLong() - time.getTime()) / 60000, 1)
                         + "分钟前";
             else
                 ftime = hour + "小时前";
@@ -394,37 +374,10 @@ public class TimeUtils {
         } else if (days > 2 && days <= 10) {
             ftime = days + "天前";
         } else if (days > 10) {
-            ftime = dateFormaterShort.get().format(time);
+            ftime = sDate;
         }
-		return ftime;
-	}
-
-//    /* 将Server传送的UTC时间转换为指定时区的时间 */
-//    public String converTime(String srcTime, TimeZone timezone) {
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-//        SimpleDateFormat dspFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-//        String convertTime;
-//        Date result_date;
-//        long result_time = 0; // 如果传入参数异常，使用本地时间
-//        if (null == srcTime) {
-//            result_time = System.currentTimeMillis();
-//        } else { // 将输入时间字串转换为UTC时间
-//            try {
-//                sdf.setTimeZone(TimeZone.getTimeZone("GMT00:00"));
-//                result_date = sdf.parse(srcTime);
-//                result_time = result_date.getTime();
-//            } catch (Exception e) { // 出现异常时，使用本地时间
-//                result_time = System.currentTimeMillis();
-//                dspFmt.setTimeZone(TimeZone.getDefault());
-//                convertTime = dspFmt.format(result_time);
-//                return convertTime;
-//            }
-//        } // 设定时区
-//        dspFmt.setTimeZone(timezone);
-//        convertTime = dspFmt.format(result_time);
-//        L.e("current zone:", "id=" + sdf.getTimeZone().getID() + " name=" + sdf.getTimeZone().getDisplayName());
-//        return convertTime;
-//    }
+        return ftime;
+    }
 
     /**
      * 判断给定字符串时间是否为今日

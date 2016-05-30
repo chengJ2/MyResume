@@ -32,7 +32,7 @@
                     android:visibility="visible" />
             </LinearLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
             <LinearLayout
                 style="@style/noraml_item" >
@@ -51,7 +51,7 @@
                     android:visibility="visible" />
             </LinearLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
             <LinearLayout
                 style="@style/noraml_item" >
@@ -70,7 +70,7 @@
                     android:visibility="visible" />
             </LinearLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
             <LinearLayout
                style="@style/noraml_item" >
@@ -89,7 +89,7 @@
                     android:visibility="visible" />
             </LinearLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
             <LinearLayout
                 style="@style/noraml_item" >
@@ -108,7 +108,7 @@
                     android:visibility="visible" />
             </LinearLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
             <LinearLayout
                 style="@style/noraml_item" 
@@ -129,7 +129,7 @@
                     android:visibility="visible" />
             </LinearLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
         </LinearLayout>
     </com.me.resume.views.CommScrollView>

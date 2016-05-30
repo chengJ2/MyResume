@@ -27,6 +27,7 @@
        <EditText
             android:id="@+id/regTxt_phone"
             style="@style/userinfo_item_style"
+            android:inputType="phone"
             android:drawableLeft="@drawable/icon_phone"
             android:hint="@string/login_input2_hint" />
 

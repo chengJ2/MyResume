@@ -172,7 +172,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 			inputshareLayout.setVisibility(View.VISIBLE);
 			break;
 		case R.id.submit_btn:
-			String content = input_share.getText().toString();
+			String content = input_share.getText().toString().trim();
 			if (RegexUtil.checkNotNull(content)) {
 				shareLayout.setVisibility(View.VISIBLE);
 				inputshareLayout.setVisibility(View.GONE);
@@ -246,6 +246,5 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 	public void finishLoading(){
 		reviewsharemoreListView.stopLoadMore();
 		reviewsharemoreListView.stopRefresh();
-//		reviewsharemoreListView.setRefreshTime(TimeUtils.getCurrentTimeInString());
 	}
 }

@@ -381,8 +381,11 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	private void actionAync(){
 		if (!MyApplication.USERID.equals("0")) {
 			if (CommUtil.isNetworkAvailable(self)) {
-				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-				syncData();
+				if (judgeField()) {
+					set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+					syncData();
+				}
+				
 			} else {
 				set3Msg(R.string.check_network);
 			}

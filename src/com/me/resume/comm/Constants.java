@@ -15,7 +15,7 @@ import com.whjz.android.text.CommonText;
 public class Constants {
 
 	/** 保存的总路径 */
-    public static final String DIR_PATH = "MyResume";
+    public static final String DIR_PATH = "resume";
     
     /**
 	 * app包名
@@ -134,10 +134,12 @@ public class Constants {
     public static final String FORGOTPWD = "forgotpwd";
     
     public static final String EDITMODE = "editmode";
+    public static final String NOTICESHOW = "noticeshow";
     public static final String CITY = "city";
     public static final String CHARACTER = "character";
     
     public static final String COVER = "cover";
+    public static final String ISLOCAL = "islocal";
     
     public static final String SET_AUTOSHOW= "autoShow";
     public static final String SET_STARTVERYTIME= "startVerytime";

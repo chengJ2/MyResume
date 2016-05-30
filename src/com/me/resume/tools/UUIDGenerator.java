@@ -1,4 +1,4 @@
-package com.me.resume.model;
+package com.me.resume.tools;
 
 import java.util.UUID;
 

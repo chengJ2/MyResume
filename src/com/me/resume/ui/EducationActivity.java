@@ -19,7 +19,7 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
-import com.me.resume.model.UUIDGenerator;
+import com.me.resume.tools.UUIDGenerator;
 import com.me.resume.ui.fragment.AllFragmentFactory;
 import com.me.resume.ui.fragment.EducationFragment;
 import com.me.resume.ui.fragment.TrainingFragment;

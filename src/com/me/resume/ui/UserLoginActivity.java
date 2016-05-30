@@ -200,8 +200,6 @@ public class UserLoginActivity extends BaseActivity implements
 			break;
 		case R.id.btn_register:
 			if (CommUtil.isNetworkAvailable(self)) {
-				registBtn.setText(CommUtil.getStrValue(self, R.string.action_wait_reging));
-				registBtn.setEnabled(false);
 				actionRegister();
 			}else{
 				set3Msg(R.string.check_network);
@@ -254,13 +252,16 @@ public class UserLoginActivity extends BaseActivity implements
 		btnLogin.setEnabled(true);
 	}
 	
-	private void getFeildValue(){
+	private void getFieldValue(){
 		str_username = usernameEt.getText().toString();
 		str_password = passwordEt.getText().toString();
 		str_phone = regTxt_phone.getText().toString();
 	}
 	
-	private boolean  judgeFeild(){
+	/**
+	 * 判断字段值
+	 */
+	private boolean  judgeField(){
 		if(!RegexUtil.checkNotNull(str_username)){
 			setMsg(R.string.action_input_up_isnull);
 			return false;
@@ -307,9 +308,12 @@ public class UserLoginActivity extends BaseActivity implements
 	 * 提交用户注册信息
 	 */
 	private void actionRegister() {
-		getFeildValue();
+		getFieldValue();
 		
-		if(judgeFeild()){
+		if(judgeField()){
+			registBtn.setText(CommUtil.getStrValue(self, R.string.action_wait_reging));
+			registBtn.setEnabled(false);
+			
 			List<String> params = new ArrayList<String>();
 			List<String> values = new ArrayList<String>();
 			params.add("p_uid");
@@ -321,8 +325,8 @@ public class UserLoginActivity extends BaseActivity implements
 			
 			values.add(uTokenId);
 			values.add(str_username);
-			values.add(str_phone);
 			values.add(CommUtil.getMD5(str_password));
+			values.add(str_phone);
 			values.add(deviceID);
 			values.add("app");
 		
@@ -519,7 +523,7 @@ public class UserLoginActivity extends BaseActivity implements
 	
 	/**
 	 * 判断用户名和密码
-	 * @return
+	 * @return 
 	 */
 	private boolean checkInfo(){
 		str_username = edtTxt_username.getText().toString();

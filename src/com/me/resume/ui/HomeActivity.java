@@ -23,15 +23,13 @@ import android.widget.TextView;
 import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
-import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
-import com.me.resume.comm.DownloadTask;
 import com.me.resume.comm.UserInfoCode;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
-import com.me.resume.model.UUIDGenerator;
 import com.me.resume.tools.L;
+import com.me.resume.tools.UUIDGenerator;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -92,7 +90,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         					setLeftIcon(ImageUtils.toRoundBitmap(bitmap));
         				}
         			} catch (Exception e) {
-        				e.printStackTrace();
+        				L.e(e.getMessage());
         			}
         		}
             	break;
@@ -100,12 +98,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				startChildActivity(Constants.BASEINFO,false);
 				break;
 			case 12:
-				preferenceUtil.setPreferenceData("noticeshow",0);
+				preferenceUtil.setPreferenceData(Constants.NOTICESHOW,true);
 				break;
 			case 100:
 				if (CommUtil.isNetworkAvailable(self)) {
 					getNoticeInfo();
 					getReCoverData();
+					mHandler.sendEmptyMessage(101); // 请求 分享心得数据
 				}else{
 					setShareView(false);
 					msgText.setText(CommUtil.getStrValue(self, R.string.item_text5));
@@ -141,16 +140,14 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		}
 		
 		findViews();
-		
 		setCoverView(true);
-		
 		setTopicData();
 		
 		mHandler.postDelayed(new Runnable() {
 			
 			@Override
 			public void run() {
-				
+				// 请求网络数据
 				mHandler.sendEmptyMessage(100);
 			}
 		},100);
@@ -280,7 +277,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					set2Msg(map.get("notice").get(0));
 				} catch (Exception e) {
 					setMsgVisibility(View.GONE);
-					e.printStackTrace();
+					L.e(e.getMessage());
 				}
 			}
 		});
@@ -315,7 +312,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	private void setTopicData(){
 		String[] item_text = CommUtil.getArrayValue(self,R.array.review_link); 
 		mList = Arrays.asList(item_text);
-		
 		commStrAdapter = new CommonBaseAdapter<String>(self, mList,
 				R.layout.home_xgln_grilview) {
 
@@ -347,7 +343,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	
 	
 	/**
-	 * @Description: 面试分享心得
+	 * 获取简历封面
 	 */
 	private void getReCoverData(){
 		List<String> params = new ArrayList<String>();
@@ -360,17 +356,16 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					mHandler.sendEmptyMessage(101);
 					setCoverData(reviewCovergridview,map,false);
 				} catch (Exception e) {
-					e.printStackTrace();
+					L.e(e.getMessage());
 				}
 			}
 		});
 	}
 	
 	/**
-	 * @Description: 面试分享心得
+	 * 获取 面试分享心得
 	 */
 	private void getShareData(){
 		List<String> params = new ArrayList<String>();
@@ -379,6 +374,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void error() {
 				setShareView(false);
+				msgText.setText(CommUtil.getStrValue(self, R.string.item_text42));
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -386,7 +382,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					setShareView(true);
 					setShareData(reviewsharingListView,map);
 				} catch (Exception e) {
-					e.printStackTrace();
+					L.e(e.getMessage());
 				}
 			}
 		});
@@ -445,7 +441,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.make_btn:
 			if (MyApplication.USERID.equals("0")) {
-				if(preferenceUtil.getPreferenceData("noticeshow",1) == 1){
+				if(!preferenceUtil.getPreferenceData(Constants.NOTICESHOW)){
 					DialogUtils.showAlertDialog(self, CommUtil.getStrValue(self,
 							R.string.dialog_action_alert),View.VISIBLE, mHandler);
 				}else{

@@ -19,7 +19,7 @@ import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ResponseCode;
-import com.me.resume.model.UUIDGenerator;
+import com.me.resume.tools.UUIDGenerator;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -157,7 +157,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		switch (v.getId()) {
 		case R.id.save:
 			getFeildValue();
-			if(judgeFeild()){
+			if(judgeField()){
 				if (getEvData()) {
 					actionFlag = 2;
 					updResult = dbUtil.updateData(self, CommonText.EVALUATION,
@@ -235,7 +235,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	 * @Title:EvaluationActivity
 	 * @Description: 字段输入限制
 	 */
-	private boolean judgeFeild(){
+	private boolean judgeField(){
 		if (!RegexUtil.checkNotNull(info_self_evaluationStr)) {
 			setMsg(R.string.ev_info_self_evaluation);
 			return false;
@@ -349,7 +349,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	private void syncRun(String tokenId,int style){ 
 		getFeildValue();
 		
-		if(judgeFeild()){
+		if(judgeField()){
 			List<String> params = new ArrayList<String>();
 			List<String> values = new ArrayList<String>();
 			params.add("p_tokenId");

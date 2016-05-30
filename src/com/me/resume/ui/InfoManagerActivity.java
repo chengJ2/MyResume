@@ -10,8 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,10 +28,9 @@ import com.me.resume.utils.RegexUtil;
 import com.whjz.android.text.CommonText;
 
 /**
- * 栏目管理界面;
  * 
- * @author Administrator
- * 
+* 栏目管理界面
+* 2016/5/30 下午5:27:36 
  */
 public class InfoManagerActivity extends BaseActivity implements OnClickListener{
 

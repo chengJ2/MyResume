@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/margin_30"
     android:orientation="vertical"
-    android:background="@color/white" >
+    android:background="@color/orange_50" >
 
     <TextView
         android:id="@+id/refresh_time"

@@ -34,7 +34,6 @@ import com.me.resume.comm.DownloadTask;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.swipeback.SwipeBackActivity;
-import com.me.resume.tools.L;
 import com.me.resume.tools.SystemBarTintManager;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -324,7 +323,29 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * @param resId
 	 */
 	protected void setAddBtnSrc(int resId){
+		saveButton.setVisibility(View.VISIBLE);
 		saveButton.setImageResource(resId);
+	}
+	
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 设置右边按钮图标
+	 * @param resId
+	 */
+	protected void seNextBtnSrc(int resId){
+		nextButton.setVisibility(View.VISIBLE);
+		nextButton.setImageResource(resId);
+	}
+	
+	/**
+	 * 
+	 * @Title:BaseActivity
+	 * @Description: 设置右边按钮隐藏
+	 * @param resId
+	 */
+	protected void setNextBtnHide(){
+		nextButton.setVisibility(View.GONE);
 	}
 	
 	/**
@@ -567,7 +588,13 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 						int year = CommUtil.parseInt(workyear.substring(0, 4));
 						int theYear = CommUtil.parseInt(TimeUtils.theYear());
 						holder.setTextVisibe(R.id.share_workyear, View.VISIBLE);
-						holder.setText(R.id.share_workyear,(theYear - year) + "年工作经验");
+						
+						int work = (theYear - year);
+						if (work <= 0) {
+							holder.setText(R.id.share_workyear,"应届生");
+						}else{
+							holder.setText(R.id.share_workyear, work + "年工作经验");
+						}
 					}else{
 						holder.setTextVisibe(R.id.share_workyear, View.GONE);
 					}
@@ -576,7 +603,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 				holder.setText(R.id.share_content, map.get("content").get(position));
 				
 				holder.setText(R.id.share_city, map.get("city").get(position));
-				holder.setText(R.id.share_datime, map.get("createtime").get(position));
+				holder.setText(R.id.share_datime, TimeUtils.showTimeFriendly(map.get("createtime").get(position)));
 				
 				final String cid = map.get("id").get(position);
 				
@@ -656,15 +683,19 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * @param map
 	 * @param isLocal
 	 */
+	private String localcover = "";
+	private CommForMapBaseAdapter coverAdapter = null;
 	protected void setCoverData(GridView gridView,final Map<String, List<String>> map,final boolean isLocal){
-		commapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.home_cover_gridview_item,"id") {
+		coverAdapter = new CommForMapBaseAdapter(self,map,R.layout.home_cover_gridview_item,"id") {
 			
 			@Override
 			public void convert(final ViewHolder holder, List<String> item, final int position) {
+				preferenceUtil.setPreferenceData(Constants.ISLOCAL, isLocal);
 				holder.setText(R.id.item2, map.get("note").get(position));
 				if (isLocal) {
 					holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_canuse));
-					holder.setImageResource(R.id.item1,CommUtil.parseInt(map.get("url").get(position)));
+					localcover = map.get("url").get(position);
+					holder.setImageResource(R.id.item1,CommUtil.parseInt(localcover));
 				}else{
 					String coverPath = CommUtil.getHttpLink(map.get("url").get(position));
 					holder.showImage(R.id.item1,coverPath,false);
@@ -692,11 +723,12 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 					}
 				}
 				
-				if (!isLocal) {
-					holder.setOnClickEvent(R.id.item3, new ClickEvent() {
-						
-						@Override
-						public void onClick(View view) {
+				
+				holder.setOnClickEvent(R.id.item3, new ClickEvent() {
+					
+					@Override
+					public void onClick(View view) {
+						if (!isLocal) {
 							String coverPath = CommUtil.getHttpLink(map.get("url").get(position));
 							String fileNameStr = FileUtils.getFileName(coverPath);
 							if (!isDownload) {
@@ -713,20 +745,21 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 										new DownloadTask(mHandler,1).execute(coverPath);
 									}else{
 										preferenceUtil.setPreferenceData(Constants.COVER,file);
-										commapBaseAdapter.notifyDataSetChanged();
+										coverAdapter.notifyDataSetChanged();
 									}
 								}
 							}else{
 								toastMsg(R.string.item_text100);
 							}
+						}else{
+							preferenceUtil.setPreferenceData(Constants.COVER,localcover);
 						}
-					});
-				}
-				
+					}
+				});
 			}
 		};
 		
-		gridView.setAdapter(commapBaseAdapter);
+		gridView.setAdapter(coverAdapter);
 	}
 	
 	/**
@@ -772,9 +805,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 			case DownloadTask.DOWNLOAD_COMPLETE:
 				isDownload = false;
 				String file = (String) msg.obj;
-				L.d("======file=====" + file);
 				String filename = FileUtils.getFileName(file);
-				
 				queryWhere = "select * from " + CommonText.COVER_FILE 
 						+ " where filename = '"+ filename +"' and isfinish = 1";
 				commMapArray = dbUtil.queryData(self, queryWhere);
@@ -785,12 +816,10 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 					queryResult = dbUtil.insertData(self, CommonText.COVER_FILE, cValues);
 					if (queryResult) {
 						preferenceUtil.setPreferenceData(Constants.COVER, filename);
-						commapBaseAdapter.notifyDataSetChanged();
+						coverAdapter.notifyDataSetChanged();
 					}
 				}
-				
 				break;
-
 			default:
 				break;
 			}

@@ -5,7 +5,7 @@
     android:background="@color/white">
 
     <com.me.resume.views.CommScrollView
-        style="@style/comm_scrollview_style" >
+        style="@style/comm_scrollview_style">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -79,11 +79,12 @@
                 <EditText
                     android:id="@+id/info_workduties"
                     style="@style/user_info_item_ed"
+                    android:singleLine="false"
                     android:hint="@string/pe_input_workduties" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
-                    android:visibility="visible" />
+                    android:visibility="invisible" />
             </LinearLayout>
 
             <View style="@style/line3" />
@@ -102,7 +103,7 @@
 
                 <ImageView
                     style="@style/user_info_item_iv"
-                    android:visibility="visible" />
+                    android:visibility="invisible" />
             </LinearLayout>
 
             <View style="@style/line3" />

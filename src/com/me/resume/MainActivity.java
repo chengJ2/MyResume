@@ -29,7 +29,6 @@ import android.widget.TextView;
 import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
-import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.FileUtils;
@@ -63,11 +62,6 @@ public class MainActivity extends Activity {
 	private List<View> mViewList = new ArrayList<>();// 页卡视图集合
 	
 	private static final int MSG_CHANGE_PHOTO = 1;
-	
-	/** view自动切换时间 */
-	private int view_change_time = 5000;
-	
-	private boolean showEffect = true;
 	
 	private CommForMapArrayBaseAdapter commMapAdapter = null;
 	
@@ -103,7 +97,6 @@ public class MainActivity extends Activity {
 	// View5
 	private LinearLayout index5layout;
 	
-	
 	// View6
 	private LinearLayout index6layout;
 	private CustomListView edListview,trListview;
@@ -114,9 +107,6 @@ public class MainActivity extends Activity {
 	private LinearLayout index7layout;
 	private LinearLayout index7_layout1,index7_layout2,index7_layout3;
 	private CustomListView listview1,listview2,listview3;
-	
-	// View8
-	private ImageView goHome;
 	
 	private Handler mHandler = new Handler() {
 
@@ -130,7 +120,7 @@ public class MainActivity extends Activity {
 					index = -1;
 				}
 				jazzyViewPager.setCurrentItem(index + 1);
-				mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO,view_change_time);
+				mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO,Constants.DEFAULTIME);
 				break;
 			case 2:
 				break;
@@ -184,11 +174,14 @@ public class MainActivity extends Activity {
 		mViewList.add(cover);
 		
 		String coverName = preferenceUtil.getPreferenceData(Constants.COVER,"");
-		L.d("====coverName====="+coverName);
 		if (RegexUtil.checkNotNull(coverName)) {
-			Bitmap bitmap = ImageUtils.getLoacalBitmap(FileUtils.COVER_DOWNLOAD_APKPATH + coverName);
-			if (bitmap != null) {
-				coverlayout.setImageBitmap(bitmap);
+			if(preferenceUtil.getPreferenceData(Constants.ISLOCAL)){
+				coverlayout.setImageResource(CommUtil.parseInt(coverName));
+			}else{
+				Bitmap bitmap = ImageUtils.getLoacalBitmap(FileUtils.COVER_DOWNLOAD_APKPATH + coverName);
+				if (bitmap != null) {
+					coverlayout.setImageBitmap(bitmap);
+				}
 			}
 		}
 		
@@ -210,26 +203,21 @@ public class MainActivity extends Activity {
 		
 	}
 	
+	/**
+	 * 
+	 * 显示预览界面
+	 */
 	private void showViews() {
-//		if (showEffect) {
-//			jazzyViewPager.setTransitionEffect(TransitionEffect.CubeIn);
-//		}
 		jazzyViewPager.setCurrentItem(0);
 		if (preferenceUtil.getPreferenceData(Constants.SET_AUTOSHOW)) {
-			view_change_time = preferenceUtil.getPreferenceData(Constants.SET_SWITCHEFFDURATION,view_change_time);
+			int switchDuration = preferenceUtil.getPreferenceData(Constants.SET_SWITCHEFFDURATION,Constants.DEFAULTIME);
 			TransitionEffect effect = TransitionEffect.valueOf(preferenceUtil.getPreferenceData(Constants.SET_SWITCHANIM, "Standard"));
-			
-			L.d("=view_change_time="+view_change_time + "=effect=" + effect);
-			
 			jazzyViewPager.setTransitionEffect(effect);
-			mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO, view_change_time);
+			mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO,switchDuration);
 		}
-
 		jazzyViewPager.setAdapter(new MyPagerAdapter(mViewList));
-		
 	}
 	
-
 	/**
 	 * 
 	 * @Title:MainActivity
@@ -662,7 +650,7 @@ public class MainActivity extends Activity {
 	private void initView8(View view){
 		mViewList.add(view8);
 		
-		goHome = (ImageView) view8.findViewById(R.id.gohome);
+		ImageView goHome = (ImageView) view8.findViewById(R.id.gohome);
 		goHome.setOnClickListener(new OnClickListener() {
 
 			@Override

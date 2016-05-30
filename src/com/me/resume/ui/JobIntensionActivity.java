@@ -18,8 +18,8 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
-import com.me.resume.model.UUIDGenerator;
 import com.me.resume.tools.L;
+import com.me.resume.tools.UUIDGenerator;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -116,7 +116,6 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		info_expworkindustry = findView(R.id.info_expworkindustry);
 		info_expmonthlysalary = findView(R.id.info_expmonthlysalary);
 		info_workingstate = findView(R.id.info_workingstate);
-		
 		info_expworkcareer = findView(R.id.info_expworkcareer);
 		
 		info_exp_workingproperty.setOnClickListener(this);
@@ -124,6 +123,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		info_expworkindustry.setOnClickListener(this);
 		info_expmonthlysalary.setOnClickListener(this);
 		info_workingstate.setOnClickListener(this);
+		info_expworkcareer.setOnClickListener(this);
 	}
 	
 	private void initViews() {
@@ -133,10 +133,13 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		
 		setfabLayoutVisible(View.VISIBLE);
 		setEditBtnVisible(View.GONE);
-		
-		setFeildValue();
 	}
 
+	@Override
+	protected void onResume() {
+		super.onResume();
+		setFeildValue();
+	}
 	
 	private boolean getJobIntensionData(){
 		 queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = '" + uTokenId + "' order by id desc limit 1";
@@ -164,15 +167,15 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	}
 	
 	/**
-	 * 
-	 * @Title:EvaluationActivity
-	 * @Description: 执行同步操作
+	 * 执行同步操作
 	 */
 	private void actionAync(){
 		if (!MyApplication.USERID.equals("0")) {
 			if (CommUtil.isNetworkAvailable(self)) {
-				set2Msg(R.string.action_syncing);
-				syncData(1);
+				if (judgeField()) {
+					set2Msg(R.string.action_syncing);
+					syncData(1);
+				}
 			} else {
 				set3Msg(R.string.check_network);
 			}
@@ -186,8 +189,8 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.save:
-			getFeildValue();
-			if(judgeFeild()){
+			getFieldValue();
+			if(judgeField()){
 				if(getJobIntensionData()){
 					actionFlag = 2;
 					updResult = dbUtil.updateData(self, CommonText.JOBINTENSION, 
@@ -244,6 +247,8 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			ActivityUtils.startActivityForResult(self, 
 					Constants.PACKAGENAMECHILD + Constants.INDUSTRYTYPE, false, Constants.JI_REQUEST_CODE);
 			break;
+		case R.id.info_expworkcareer:
+			break;
 		case R.id.info_expmonthlysalary:
 			whichTab = 4;
 			item_values = CommUtil.getArrayValue(self,R.array.we_qwyx_values); 
@@ -270,10 +275,9 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	
 	/**
 	 * 
-	 * @Description: 获取界面字段值
-	 * @author Comsys-WH1510032
+	 * 获取界面字段值
 	 */
-	private void getFeildValue(){
+	private void getFieldValue(){
 		 info_exp_workingpropertyStr = CommUtil.getTextValue(info_exp_workingproperty);
 		 info_expworkplaceStr = CommUtil.getTextValue(info_expworkplace);
 		 info_expworkcareerStr = CommUtil.getTextValue(info_expworkcareer);
@@ -282,7 +286,10 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		 info_workingstateStr = CommUtil.getTextValue(info_workingstate);
 	}
 	
-	private boolean judgeFeild(){
+	/**
+	 * 判断字段值
+	 */
+	private boolean judgeField(){
 		if (!RegexUtil.checkNotNull(info_exp_workingpropertyStr)) {
 			setMsg(R.string.ji_info_expectedworkingproperty);
 			return false;
@@ -410,9 +417,9 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	 * @author Comsys-WH1510032
 	 */
 	private void syncRun(String tokenId,int style){ 
-		getFeildValue();
+		getFieldValue();
 		
-		if(judgeFeild()){
+		if(judgeField()){
 			List<String> params = new ArrayList<String>();
 			List<String> values = new ArrayList<String>();
 			params.add("p_tokenId");

@@ -608,7 +608,7 @@ public class DialogUtils {
 				@Override
 				public void onClick(View v) {
 					dismissDialog();
-					sendMsg(1);
+					sendMsg(11);
 				}
 			});
 			dialog.show();
