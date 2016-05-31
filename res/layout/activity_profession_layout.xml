@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+    <include layout="@layout/comm_search_layout"/>
+    
+     <ExpandableListView 
+        android:id="@+id/exprefession_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:groupIndicator="@null"
+        android:cacheColorHint="#00000000"
+        android:listSelector="#00000000"
+        android:divider="@android:color/white"
+        android:dividerHeight="1px"
+        android:childDivider="#d0d0d0"
+        android:footerDividersEnabled="true"
+        android:background="#55eeeeee" 
+        android:layout_marginTop="0dip"
+        android:layout_marginLeft="0dip"
+	    android:layout_marginRight="0dip"
+	    android:visibility="visible"/>  
+
+</LinearLayout>

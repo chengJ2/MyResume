@@ -26,7 +26,6 @@ import com.me.resume.comm.ViewHolder.ClickEvent;
  * 
 * @ClassName: ProfessionalActivity 
 * @Description: 专业名称
-* @author Comsys-WH1510032 
 * @date 2016/4/21 下午2:04:45 
 *
  */
@@ -129,7 +128,6 @@ public class ProfessionalActivity extends BaseActivity implements OnClickListene
 	 * 
 	 * @Title:AddressActivity
 	 * @Description: 获取热门城市
-	 * @author Comsys-WH1510032
 	 * @return List<String> 
 	 */
 	private void getCategory(){

@@ -1,9 +1,10 @@
 package com.me.resume.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,50 +15,50 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
-import com.me.resume.comm.CommonBaseAdapter;
-import com.me.resume.comm.Constants;
-import com.me.resume.comm.ViewHolder;
-import com.me.resume.comm.ViewHolder.ClickEvent;
+import com.me.resume.comm.ProfessionListAdapter;
 import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 
 /**
  * 
-* @ClassName: IndustryTypeActivity 
-* @Description: 行业类别
-* @date 2016/4/18 上午10:58:05 
+* @ClassName: ProfessionActivity 
+* @Description: 职业类别
+* @date 2016/5/31 上午10:58:05 
 *
  */
-public class IndustryTypeActivity extends BaseActivity implements OnClickListener{
+public class ProfessionActivity extends BaseActivity implements OnClickListener{
 
 	private EditText index_search_edit;
 	private ImageView clearView;
 	private TextView search_cancle;
 	
-	private ListView industry_listview;
+	private ExpandableListView exprefession_listview;
+	private ProfessionListAdapter listAdapter;
 	
-	private CommonBaseAdapter<String> commAdapter;
+	private ArrayList<Map<String, String>> groupList = new ArrayList<Map<String,String>>();
+	private ArrayList<ArrayList<String>> childList; 
+	
+	private List<String> llistChild; // 职业类别子项数据
+	private List<Map<String, List<String>>> childrens;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-			case 10:
-				getAllIndustry("");
-				break;
 			case 11:
-				mList = (List<String>) msg.obj;
-				if (mList != null && mList.size() > 0) {
-					fillData(mList);
+				if (msg.obj != null) {
+					fillData((List<String>) msg.obj);
 				}
+				break;
+			case 12:
 				break;
 			default:
 				break;
@@ -67,13 +68,12 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		boayLayout.removeAllViews();
-		View v = View.inflate(self,R.layout.activity_industry_type_layout, null);
+		View v = View.inflate(self,R.layout.activity_profession_layout, null);
 		boayLayout.addView(v);
 		
-		setTopTitle(R.string.resume_industrytype);
+		setTopTitle(R.string.resume_profession);
 		setMsgHide();
 		setRightIconVisible(View.GONE);
 		setRight2IconVisible(View.GONE);
@@ -81,7 +81,7 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 		
 		findViews();
 		
-		mHandler.sendEmptyMessage(10);
+		getAllProfession("");
 		
 		searchEdit();
 	}
@@ -93,10 +93,8 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 		search_cancle = findView(R.id.search_cancle);
 		clearView = findView(R.id.clear);
 		
-		industry_listview = findView(R.id.industry_listview);
+		exprefession_listview = findView(R.id.exprefession_listview);
 		
-		
-		left_icon.setOnClickListener(this);
 		clearView.setOnClickListener(this);
 		search_cancle.setOnClickListener(this);
 	}
@@ -121,9 +119,9 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 				L.d("ss:"+s.toString());
 				if (s.toString() != null && !"".equals(s.toString())) {
 					clearView.setVisibility(View.VISIBLE);
-					getAllIndustry(s.toString());
+					getAllProfession(s.toString());
 				}else{
-					getAllIndustry("");
+					getAllProfession("");
 					clearView.setVisibility(View.GONE);
 				}
 			}
@@ -135,7 +133,7 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId ==EditorInfo.IME_ACTION_SEARCH) {
 					CommUtil.hideKeyboard(self);
-					searchIndustry();
+					searchProfession();
 					return true;
 				}else{
 					return false;
@@ -144,31 +142,46 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 		});
 	}
 	
-	
-	private void fillData(List<String> mList){
-		
-		commAdapter = new CommonBaseAdapter<String>(self,mList,R.layout.listview_item_text) {
+	/**
+	 * 显示数据
+	 * @param list
+	 */
+	private void fillData(List<String> list){
+		groupList.clear();
+		childrens = new ArrayList<Map<String, List<String>>>();
+		int count = list.size();
+		for (int i = 0; i < count; i++) {
+			Map<String, String> groupMap = new HashMap<String, String>();
 			
-			@Override
-			public void convert(ViewHolder holder, String item, final int position) {
-				// TODO Auto-generated method stub
-				holder.setText(R.id.item_textview, mList.get(position));
-				holder.setOnClickEvent(R.id.item_textview, new ClickEvent() {
-					
-					@Override
-					public void onClick(View view) {
-						Intent intent=new Intent();
-				        intent.putExtra("name", mList.get(position));
-				        setResult(Constants.RESULT_CODE, intent);
-						scrollToFinishActivity();
-					}
-				});
+			String[] values = list.get(i).toString().split(";");
+			
+			groupMap.put("pname", values[1]);
+			groupList.add(groupMap);
+			
+			getProfessionTypeName(values[0]);
+			
+			Map<String, List<String>> childMap = new HashMap<String, List<String>>();
+			childMap.put("childitem", llistChild);
+			childrens.add(childMap);
+		}
+		
+		childList = new ArrayList<ArrayList<String>>(); 
+		for (Map<String, List<String>> mapChildItem : childrens) {
+			List<String> lisItem = mapChildItem.get("childitem");
+			ArrayList<String> tmp = new ArrayList<String>(); 
+			for (String name : lisItem) {
+				tmp.add(name);
 			}
-
-		};
-		industry_listview.setAdapter(commAdapter);
-	}
-	
+			childList.add(tmp);
+		}
+		
+		if (listAdapter == null) {
+			listAdapter = new ProfessionListAdapter(self, groupList, childList);
+			exprefession_listview.setAdapter(listAdapter);
+		}else{
+			listAdapter.notifyDataSetChanged();
+		}
+	} 
 	
 	@Override
 	public void onClick(View v) {
@@ -178,7 +191,7 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 			whichTab = 0;
 			CommUtil.hideKeyboard(self);
 			index_search_edit.setText("");
-			getAllIndustry("");
+			getAllProfession("");
 			clearView.setVisibility(View.GONE);
 			break;
 		case R.id.clear:
@@ -191,32 +204,38 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 		}
 	}
 	
-	private void searchIndustry(){
+	/**
+	 * 查询按钮
+	 */
+	private void searchProfession(){
 		String keyword = CommUtil.getEditTextValue(index_search_edit);
 		if (RegexUtil.checkNotNull(keyword)) {
 			whichTab = 1;
 			clearView.setVisibility(View.VISIBLE);
-			getAllIndustry(keyword);
+			getAllProfession(keyword);
 		}
 	}
 	
-	private void getAllIndustry(final String keyword) {
+	/**
+	 * 获取所有职业分类
+	 * @param keyword
+	 */
+	private void getAllProfession(final String keyword) {
 		new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
-				List<String> mList = new ArrayList<String>();
+				List<String> llist = new ArrayList<String>();
 				Cursor cursor = null;
 				try {
-					String sql = "select chinaname,englishname from industry"
-								+ " where chinaname like '%"+ keyword +"%' or pinying like '%"+ keyword +"%'";
+					String sql = "select id,cname from profession"
+								+ " where cname like '%"+ keyword +"%' or pinying like '%"+ keyword +"%'";
 					cursor = MyApplication.database.rawQuery(sql, null);
 					if (cursor.getCount() > 0) {
 						while (cursor.moveToNext()) {
-							mList.add(cursor.getString(cursor.getColumnIndex("chinaname")));
+							llist.add(cursor.getString(cursor.getColumnIndex("id")) + ";"+ cursor.getString(cursor.getColumnIndex("cname")));
 						}
-						mHandler.sendMessage(mHandler.obtainMessage(11, mList));
+						mHandler.sendMessage(mHandler.obtainMessage(11, llist));
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -227,5 +246,32 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 		}).start();
 	}
 	
+	/**
+	 * 获得职业分类下的子类
+	 * @param type
+	 */
+	private void getProfessionTypeName(final String type) {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				llistChild = new ArrayList<String>();
+				Cursor cursor = null;
+				try {
+					String sql = "select cname from professioname"+ " where pid = '"+ type +"'";
+					cursor = MyApplication.database.rawQuery(sql, null);
+					if (cursor.getCount() > 0) {
+						while (cursor.moveToNext()) {
+							llistChild.add(cursor.getString(cursor.getColumnIndex("cname")));
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					cursor.close();
+				}
+			}
+		}).start();
+	}
 	
 }

@@ -34,7 +34,6 @@ import com.whjz.android.text.CommonText;
  * 
 * @ClassName: EducationActivity 
 * @Description: 教育培训经历
-* @author Comsys-WH1510032 
 * @date 2016/4/6 下午1:32:23 
 *
  */

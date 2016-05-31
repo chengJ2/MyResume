@@ -113,9 +113,10 @@ public class Constants {
     public static final String INDUSTRYTYPE = "IndustryTypeActivity";
     public static final String INFOMANAGER = "InfoManagerActivity";
     public static final String JOBINTENSION = "JobIntensionActivity";
+    public static final String PROFESSION = "ProfessionActivity";// 职业
     public static final String MYCOLLECTION = "MyCollectionActivity";
     public static final String OTHERINFO = "OtherInfoActivity";
-    public static final String PROFESSIONAL = "ProfessionalActivity";
+    public static final String PROFESSIONAL = "ProfessionalActivity";// 专业
     public static final String PROJECTEXPERIENCE = "ProjectExperienceActivity";
     public static final String RESUMECOVERMORE = "ResumeCoverMoreActivity";
     public static final String RESUMESHAREMORE = "ResumeShareMoreActivity";
