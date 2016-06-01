@@ -182,11 +182,11 @@ public class UserLoginActivity extends BaseActivity implements
 			break;
 		case R.id.resetPassWord:
 			ActivityUtils.startActivityPro(self,
-			Constants.PACKAGENAMECHILD +Constants.USERNEWPWD,Constants.TYPE,Constants.RESETPWD);
+			Constants.PACKAGENAMECHILD +Constants.USERNEWPWD,Constants.TYPE,UserInfoCode.RESETPWD);
 			break;
 		case R.id.forgotPassWord:
 			ActivityUtils.startActivityPro(self,
-					Constants.PACKAGENAMECHILD +Constants.USERNEWPWD,Constants.TYPE,Constants.FORGOTPWD);
+					Constants.PACKAGENAMECHILD +Constants.USERNEWPWD,Constants.TYPE,UserInfoCode.FORGOTPWD);
 			break;
 		case R.id.btn_login:
 			if (CommUtil.isNetworkAvailable(self)) {

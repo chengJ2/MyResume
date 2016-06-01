@@ -49,6 +49,8 @@ public class Constants {
 	
 	public static final int WE_REQUEST_CODE = 1000;
 	public static final int WE_MANAGER_REQUEST_CODE = 1100;
+	public static final int ED_MANAGER_REQUEST_CODE = 1200;
+	public static final int PE_MANAGER_REQUEST_CODE = 1300;
 	public static final int JI_REQUEST_CODE = 2000;
 	public static final int JI_REQUEST_CODE2 = 2002;
 	public static final int JI_REQUEST_CODE3 = 2003;
@@ -109,6 +111,7 @@ public class Constants {
     public static final String EVALUATION = "EvaluationActivity";
     public static final String EVALUATIONMORE = "EvaluationMoreActivity";
     public static final String FEEDBACK = "FeedBackActivity";
+    public static final String ABOUTAPP = "AboutAppActivity";
     public static final String HOME = "HomeActivity";
     public static final String IMAGEPAGER = "ImagePagerActivity";
     public static final String INDUSTRYTYPE = "IndustryTypeActivity";
@@ -132,8 +135,8 @@ public class Constants {
     public static final String WORKEXPERIENCE = "WorkExperienceActivity";
     
     public static final String TYPE = "type";
-    public static final String RESETPWD = "resetpwd";
-    public static final String FORGOTPWD = "forgotpwd";
+    public static final String TAB = "tab";
+    public static final String TOKENID = "tokenId";
     
     public static final String EDITMODE = "editmode";
     public static final String NOTICESHOW = "noticeshow";
@@ -147,7 +150,5 @@ public class Constants {
     public static final String SET_STARTVERYTIME= "startVerytime";
     public static final String SET_SWITCHANIM= "switchAnim";
     public static final String SET_SWITCHEFFDURATION= "switchEffDuration";
-    
-    
     
 }

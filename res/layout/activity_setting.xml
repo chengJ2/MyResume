@@ -220,6 +220,7 @@
             </LinearLayout>
              <View style="@style/line_padding10" />
             <LinearLayout
+                android:id="@+id/aboutusLayout"
                 style="@style/noraml_item">
 
                 <TextView

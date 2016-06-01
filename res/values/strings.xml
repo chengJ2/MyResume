@@ -25,6 +25,7 @@
     <string name="resume_excellentskills">擅长技能</string>
     <string name="resume_education">教育经历</string>
     <string name="resume_training">培训经历</string>
+    <string name="resume_educationtraining">教育/培训经历</string>
     <string name="resume_otherinfo">附加信息</string>
     <string name="resume_message">我的留言</string>
     

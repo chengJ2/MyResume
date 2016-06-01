@@ -19,7 +19,7 @@
                 android:paddingLeft="@dimen/margin_10"
                 android:layout_alignParentLeft="true"
                 android:text="我的简历"
-                android:textColor="@color/s"
+                android:textColor="@color/black"
                 android:textSize="@dimen/small_text_size" />
             
               <ImageView

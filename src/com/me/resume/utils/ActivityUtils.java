@@ -181,6 +181,17 @@ public class ActivityUtils {
 		}
 	}
 	
+	public static void startActivityForResult(Activity src, String obj, Bundle bundle, int requestCode) {
+		try {
+			Class className = Class.forName(obj);
+			Intent intent = new Intent(src, className);
+			intent.putExtras(bundle);
+			src.startActivityForResult(intent, requestCode);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * @描述：内部之间的跳转，没有返回值 <br>
 	 * @param src

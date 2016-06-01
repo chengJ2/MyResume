@@ -22,6 +22,7 @@ import com.me.resume.BaseActivity;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
+import com.me.resume.comm.UserInfoCode;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 
@@ -73,14 +74,14 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 		
 		type = getIntent().getStringExtra(Constants.TYPE);
 		
-		if (type.equals(Constants.RESETPWD)) {
+		if (type.equals(UserInfoCode.RESETPWD)) {
 			pwdTxt_username.setVisibility(View.GONE);
 			userpwdLayout.setVisibility(View.VISIBLE);
 			pwdTxt2_username.setVisibility(View.VISIBLE);
 			line.setVisibility(View.VISIBLE);
 			setTopTitle(R.string.action_loginresetpwd);
 			passwordEt.setHint(CommUtil.getStrValue(self, R.string.login_input_old_pwd_hint));
-		}else if(type.equals(Constants.FORGOTPWD)){
+		}else if(type.equals(UserInfoCode.FORGOTPWD)){
 			pwdTxt_username.setVisibility(View.VISIBLE);
 			userpwdLayout.setVisibility(View.GONE);
 			setTopTitle(R.string.action_login_findgotpwd);
@@ -175,7 +176,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 		passwordStr = passwordEt.getText().toString().trim(); 
 		password2Str= password2Et.getText().toString().trim(); 
 		
-		if (type.equals(Constants.RESETPWD)) {
+		if (type.equals(UserInfoCode.RESETPWD)) {
 			if(!RegexUtil.checkNotNull(username2Str)){
 				setMsg(R.string.action_input_username_isnull);
 				return false;
@@ -195,7 +196,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 				set3Msg(R.string.action_input_password_toolong);
 				return false;
 			}
-		}else if (type.equals(Constants.FORGOTPWD)){
+		}else if (type.equals(UserInfoCode.FORGOTPWD)){
 			if(!RegexUtil.checkNotNull(usernameStr)){
 				setMsg(R.string.action_input_username_isnull);
 				return false;
@@ -265,7 +266,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 			List<String> values = new ArrayList<String>();
 			params.add("p_username");
 			params.add("p_password");
-			if (type.equals(Constants.RESETPWD)) {
+			if (type.equals(UserInfoCode.RESETPWD)) {
 				params.add("p_newpassword");
 				
 				values.add(username2Str);
@@ -274,7 +275,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 				
 				procname = "pro_user_resetpwd";
 				
-			}else if (type.equals(Constants.FORGOTPWD)){
+			}else if (type.equals(UserInfoCode.FORGOTPWD)){
 				values.add(usernameStr);
 				values.add(CommUtil.getMD5(passwordStr)); // 新密码
 				
@@ -289,7 +290,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 				
 				public void success(Map<String, List<String>> map) {
 					try {
-						if (type.equals(Constants.RESETPWD)) {
+						if (type.equals(UserInfoCode.RESETPWD)) {
 							if(map.get("msg").get(0).equals(ResponseCode.INVALID_INFO)){
 								set3Msg(R.string.action_login_error);
 							}else{

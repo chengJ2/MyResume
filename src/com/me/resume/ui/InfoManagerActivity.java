@@ -35,13 +35,14 @@ import com.whjz.android.text.CommonText;
 public class InfoManagerActivity extends BaseActivity implements OnClickListener{
 
 	private ListView infoMoreListView;
-	private TextView nodata;
+	private TextView msgText;
 
 	private CommForMapArrayBaseAdapter commMapAdapter = null;
 	
 	private Map<String, String[]> commMapArray = null;
 	
 	private String type = "";
+	private int tab = 0;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -63,7 +64,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 					}
 				}
 				break;
-
+				
 			default:
 				break;
 			}
@@ -77,8 +78,6 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		View v = View.inflate(self, R.layout.info_manager_more_layout, null);
 		boayLayout.addView(v);
 
-		setTopTitle(R.string.resume_workexperience);
-
 		setMsgHide();
 		setRightIconVisible(View.VISIBLE);
 		setRightIcon(R.drawable.icon_sync);
@@ -86,9 +85,9 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		setfabLayoutVisible(View.GONE);
 
 		infoMoreListView = findView(R.id.infoMoreListView);
-		nodata = findView(R.id.nodata);
-		nodata.setText(CommUtil.getStrValue(self, R.string.item_text43));
-		nodata.setVisibility(View.VISIBLE);
+		msgText = findView(R.id.msgText);
+		msgText.setVisibility(View.VISIBLE);
+		msgText.setText(CommUtil.getStrValue(self, R.string.item_text43));
 
 		type = getIntent().getStringExtra(Constants.TYPE);
 		L.d("==type==" + type);
@@ -104,13 +103,23 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 	private void initData(final String type) {
 		int layoutID = 0;
 		if (type.equals(CommonText.EDUCATION)) {
-			
+			setTopTitle(R.string.resume_educationtraining);
+			tab = getIntent().getIntExtra(Constants.TAB, 0);
+			L.d("==tab=="+tab);
+			if (tab == 0) {
+				tableName = CommonText.EDUCATION;
+			}else{
+				tableName = CommonText.EDUCATION_TRAIN;
+			}
 		}else if(type.equals(CommonText.WORKEXPERIENCE)){
-			layoutID = R.layout.manage_info_list_item;
+			setTopTitle(R.string.resume_workexperience);
 			tableName = CommonText.WORKEXPERIENCE;
 		}else if (type.equals(CommonText.PROJECT_EXPERIENCE)) {
+			setTopTitle(R.string.resume_project_experience);
 			tableName = CommonText.PROJECT_EXPERIENCE;
 		}
+		layoutID = R.layout.manage_info_list_item;
+		
 		queryWhere = "select * from " + tableName + " where userId = '" + uTokenId + "' order by createtime desc";
 		commMapArray = dbUtil.queryData(self,queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length>0) {
@@ -121,23 +130,91 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 					public void convert(ViewHolder holder, String[] item,
 							int position) {
 						if (type.equals(CommonText.EDUCATION)) {
-							
+							setEDData(holder, commMapArray, position, tab);
 						}else if(type.equals(CommonText.WORKEXPERIENCE)){
 							setWEData(holder,commMapArray,position);
 						}else if (type.equals(CommonText.PROJECT_EXPERIENCE)) {
-							tableName = CommonText.PROJECT_EXPERIENCE;
+							setPEData(holder,commMapArray,position);
 						}
 					}
 				};
 
 				infoMoreListView.setAdapter(commMapAdapter);
-				nodata.setVisibility(View.GONE);
+				msgText.setVisibility(View.GONE);
 			}else{
-				nodata.setText(CommUtil.getStrValue(self, R.string.en_nodata));
-				nodata.setVisibility(View.VISIBLE);
+				msgText.setText(CommUtil.getStrValue(self, R.string.en_nodata));
+				msgText.setVisibility(View.VISIBLE);
 			}
 	}
 	
+	/**
+	 * 
+	 * @Title:InfoManagerActivity
+	 * @Description: 管理我的工作经验
+	 * @param holder
+	 * @param commMapArray
+	 * @param position
+	 */
+	private void setEDData(ViewHolder holder,Map<String, String[]> commMapArray,int position,final int tab){
+		if (tab == 0) {
+			holder.setText(R.id.item1,
+					commMapArray.get("educationtimestart")[position] + " — "
+							+ commMapArray.get("educationtimeend")[position]);
+			holder.setText(R.id.item11, commMapArray.get("school")[position]);
+			
+			StringBuffer sbStr = new StringBuffer();
+			String info = commMapArray.get("majorname")[position];
+			sbStr.append(info);
+			sbStr.append(" | ");
+			
+			info = commMapArray.get("degree")[position];
+			sbStr.append(info);
+			
+			holder.setText(R.id.item12, sbStr.toString());
+			
+		}else{
+			holder.setText(R.id.item1,
+					commMapArray.get("trainingtimestart")[position] + " — "
+							+ commMapArray.get("trainingtimeend")[position]);
+			
+			String info = commMapArray.get("trainingorganization")[position];
+			holder.setText(R.id.item11, info.toString());
+			
+			StringBuffer sbStr = new StringBuffer();
+			String info2 = commMapArray.get("trainingclass")[position];
+			sbStr.append("<strong>培训课程：</strong>"+ info2 + "<br/>");
+			info2 = commMapArray.get("certificate")[position];
+			if(RegexUtil.checkNotNull(info2)){
+				sbStr.append("<strong>所获证书：</strong>"+ info2 + "<br/>");
+			}
+			info2 = commMapArray.get("description")[position];
+			if(RegexUtil.checkNotNull(info2)){
+				sbStr.append("<strong>培训描述：</strong>"+ info2 );
+			}
+			holder.setText(R.id.item11, info2.toString());
+			
+		}
+		final String tokenId = commMapArray.get("tokenId")[position];
+		holder.setOnClickEvent(R.id.item21, new ClickEvent() {
+
+			@Override
+			public void onClick(View view) {
+				DialogUtils.showDeleteDialog(self, tokenId, mHandler);
+			}
+		});
+
+		holder.setOnClickEvent(R.id.item22, new ClickEvent() {
+
+			@Override
+			public void onClick(View view) {
+				Intent intent=new Intent();
+		        intent.putExtra(Constants.TOKENID, tokenId);
+		        intent.putExtra(Constants.TAB, tab);
+		        setResult(Constants.RESULT_CODE, intent);
+				scrollToFinishActivity();
+			}
+		});
+	}
 
 	
 	/**
@@ -213,6 +290,55 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			}
 		});
 	}
+	
+	/**
+	 * 
+	 * @Title:InfoManagerActivity
+	 * @Description: 管理我的项目经验
+	 * @param holder
+	 * @param commMapArray
+	 * @param position
+	 */
+	private void setPEData(ViewHolder holder,Map<String, String[]> commMapArray,int position){
+		holder.setText(R.id.item1,commMapArray.get("worktimestart")[position] + "--" + commMapArray.get("worktimeend")[position]);
+
+		String info_dutiesStr = commMapArray.get("duties")[position];
+		StringBuffer sbStr = new StringBuffer();
+		sbStr.append("<font color=\"black\">");
+		sbStr.append("责任描述：");
+		sbStr.append(info_dutiesStr);
+		sbStr.append("</font>");
+		holder.setText(R.id.item11, sbStr.toString());
+		
+		String info_prokectdescStr = commMapArray.get("prokectdesc")[position];
+		sbStr = new StringBuffer();
+		sbStr.append("<font color=\"black\">");
+		sbStr.append("项目简介：");
+		sbStr.append(info_prokectdescStr);
+		sbStr.append("</font>");
+		holder.setText(R.id.item12, sbStr.toString());
+		
+		final String tokenId = commMapArray.get("tokenId")[position];
+		holder.setOnClickEvent(R.id.item21, new ClickEvent() {
+
+			@Override
+			public void onClick(View view) {
+				DialogUtils.showDeleteDialog(self, tokenId, mHandler);
+			}
+		});
+
+		holder.setOnClickEvent(R.id.item22, new ClickEvent() {
+
+			@Override
+			public void onClick(View view) {
+				Intent intent=new Intent();
+		        intent.putExtra("tokenId", tokenId);
+		        setResult(Constants.RESULT_CODE, intent);
+				scrollToFinishActivity();
+			}
+		});
+	}
+	
 	
 	/**
 	 * 

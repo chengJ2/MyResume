@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <com.me.resume.views.CommScrollView
+        style="@style/comm_scrollview_style"
+        android:layout_marginBottom="0dip">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="140dip"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_launcher" />
+            
+           <TextView
+               style="@style/about_app_item_text"
+               android:text="特别声明" />
+       
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:padding="@dimen/margin_16"
+            android:text="特别声明特别声明特别声明特别声明特别声明特别声明特别声明特别声明特别声明特别声明特别声明"
+            android:textColor="@color/grey_10"
+            android:textSize="@dimen/small_middle_text_size" />
+     		
+
+           <TextView
+               style="@style/about_app_item_text"
+               android:text="联系我们" />
+           
+           <TextView
+               android:id="@+id/contactus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:padding="@dimen/margin_16"
+            android:text="联系我们联系我们联系我们联系我们联系我们联系我们联系我们联系我们联系我们"
+            android:textColor="@color/grey_10"
+            android:textSize="@dimen/small_middle_text_size" />
+            
+        </LinearLayout>
+    </com.me.resume.views.CommScrollView>
+
+</LinearLayout>

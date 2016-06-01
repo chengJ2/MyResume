@@ -19,10 +19,12 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
+import com.me.resume.tools.L;
 import com.me.resume.tools.UUIDGenerator;
 import com.me.resume.ui.fragment.AllFragmentFactory;
 import com.me.resume.ui.fragment.EducationFragment;
 import com.me.resume.ui.fragment.TrainingFragment;
+import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
@@ -82,6 +84,14 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				break;
 			case OnTopMenu.MSG_MENU31:
 				toastMsg(R.string.action_login_head);
+				break;
+			case OnTopMenu.MSG_MENU32:
+				Bundle b = new Bundle();
+				b.putInt(Constants.TAB, cposition);
+				b.putString(Constants.TYPE, CommonText.EDUCATION);
+				ActivityUtils.startActivityForResult(self, 
+						Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
+						b,Constants.ED_MANAGER_REQUEST_CODE);
 				break;
 			default:
 				break;
@@ -300,6 +310,25 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	 */
 	private boolean getData(String tablename){
 		queryWhere = "select * from " + tablename + " where userId = '"+ uTokenId +"' order by id desc limit 1";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+			tokenId = commMapArray.get("tokenId")[0];
+			setEditBtnVisible(View.VISIBLE);
+			return true;
+		}else{
+			setEditBtnVisible(View.GONE);
+			return false;
+		}
+	}
+	
+	/**
+	 * 
+	 * @Title:EducationActivity
+	 * @Description: 编辑按钮显示隐藏
+	 * @param tablename CommonText.EDUCATION  |  CommonText.EDUCATION_TRAIN
+	 */
+	private boolean getDataByToken(String tablename,String tokenId){
+		queryWhere = "select * from " + tablename + " where userId = '"+ uTokenId +"' and tokenId= '"+ tokenId +"' order by id desc limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			tokenId = commMapArray.get("tokenId")[0];
@@ -622,5 +651,18 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			return false;
 		}
 		return true;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode == Constants.ED_MANAGER_REQUEST_CODE){
+       	 if(resultCode == Constants.RESULT_CODE) {
+       		KID = data.getStringExtra(Constants.TOKENID);
+       		int cposition = data.getIntExtra(Constants.TAB, 0);
+       		L.d("==KID==" + KID + "==cposition=="+cposition);
+       		// TODO
+       	 }
+       }
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 }

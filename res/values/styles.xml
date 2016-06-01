@@ -56,6 +56,18 @@
         <item name="android:typeface">serif</item>
     </style>
     
+    <style name="about_app_item_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textColor">@color/grey_10</item>
+        <item name="android:layout_height">@dimen/home_item_height</item>
+        <item name="android:background">@color/grey_50</item>
+        <item name="android:textSize">@dimen/small_middle_text_size</item>
+        <item name="android:padding">5dip</item>
+        <item name="android:gravity">center|left</item>
+        <item name="android:typeface">serif</item>
+    </style>
+    
     <style name="address_item_text" parent="@style/home_item_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/home_item_height</item>
@@ -241,7 +253,7 @@
     <style name="line_h15">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/line_height_16</item>
-        <item name="android:background">@color/grey_80</item>
+        <item name="android:background">@color/grey_50</item>
     </style>
 
     <!-- 界面按钮 -->

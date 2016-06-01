@@ -38,7 +38,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 
 	private ToggleButton setting_start_cb,setting_auto_cb;
 	
-	private LinearLayout cacheLayout,versionLayout,feedbackLayout,logoutLayout,shareLayout;
+	private LinearLayout cacheLayout,versionLayout,feedbackLayout,logoutLayout,shareLayout,aboutusLayout;
 	
 	private TextView cachesize,version;
 	
@@ -113,6 +113,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		version = findView(R.id.viewsion);
 		logoutLayout = findView(R.id.logoutLayout);
 		shareLayout = findView(R.id.shareLayout);
+		aboutusLayout = findView(R.id.aboutusLayout);
 		
 		llout020 = findView(R.id.llout020);
 		effectsdurationfeild = findView(R.id.effectsdurationfeild);
@@ -145,6 +146,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		feedbackLayout.setOnClickListener(this);
 		logoutLayout.setOnClickListener(this);
 		shareLayout.setOnClickListener(this);
+		aboutusLayout.setOnClickListener(this);
 		llout020.setOnClickListener(this);
 		llout021.setOnClickListener(this);
 	}
@@ -240,6 +242,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
             share.setType("*/*");
             startActivity(Intent.createChooser(share, 
             		CommUtil.getStrValue(self, R.string.settings_item71)));
+			break;
+		case R.id.aboutusLayout:
+			startChildActivity(Constants.ABOUTAPP, false);
 			break;
 		case R.id.llout021:
 			whichTab = 2;
