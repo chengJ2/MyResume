@@ -248,6 +248,8 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 					Constants.PACKAGENAMECHILD + Constants.INDUSTRYTYPE, false, Constants.JI_REQUEST_CODE);
 			break;
 		case R.id.info_expworkcareer:
+			ActivityUtils.startActivityForResult(self, 
+					Constants.PACKAGENAMECHILD + Constants.PROFESSION, false, Constants.JI_REQUEST_CODE3);
 			break;
 		case R.id.info_expmonthlysalary:
 			whichTab = 4;
@@ -475,6 +477,11 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
         	if(resultCode == Constants.RESULT_CODE) {
                 String city = data.getStringExtra("city");
                 info_expworkplace.setText(city);
+            }
+        }else if(requestCode == Constants.JI_REQUEST_CODE3){
+        	if(resultCode == Constants.RESULT_CODE) {
+//                String city = data.getStringExtra("city");
+//                info_expworkplace.setText(city);
             }
         }
 		super.onActivityResult(requestCode, resultCode, data);

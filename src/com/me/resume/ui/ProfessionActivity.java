@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -24,6 +25,7 @@ import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.ProfessionListAdapter;
+import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
@@ -44,8 +46,10 @@ public class ProfessionActivity extends BaseActivity implements OnClickListener{
 	private ExpandableListView exprefession_listview;
 	private ProfessionListAdapter listAdapter;
 	
+	private TextView msgText;
+	
 	private ArrayList<Map<String, String>> groupList = new ArrayList<Map<String,String>>();
-	private ArrayList<ArrayList<String>> childList; 
+	private ArrayList<List<String>> childList; 
 	
 	private List<String> llistChild; // 职业类别子项数据
 	private List<Map<String, List<String>>> childrens;
@@ -53,12 +57,35 @@ public class ProfessionActivity extends BaseActivity implements OnClickListener{
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
+			case 10:
+				getAllProfession("");
+				break;
 			case 11:
 				if (msg.obj != null) {
 					fillData((List<String>) msg.obj);
 				}
 				break;
 			case 12:
+				msgText.setVisibility(View.GONE);
+				exprefession_listview.setVisibility(View.VISIBLE);
+				if (listAdapter == null) {
+					listAdapter = new ProfessionListAdapter(self, groupList, childList);
+					exprefession_listview.setAdapter(listAdapter);
+				}else{
+					listAdapter.notifyDataSetChanged();
+					exprefession_listview.invalidate();
+				}
+				
+				exprefession_listview.setOnChildClickListener(new OnChildClickListener() {
+					
+					@Override
+					public boolean onChildClick(ExpandableListView parent, View v,
+							int groupPosition, int childPosition, long id) {
+						CommUtil.ToastMsg(self,childList.get(groupPosition).get(childPosition).toString());
+						return false;
+					}
+				});
+				
 				break;
 			default:
 				break;
@@ -81,7 +108,13 @@ public class ProfessionActivity extends BaseActivity implements OnClickListener{
 		
 		findViews();
 		
-		getAllProfession("");
+		mHandler.postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				mHandler.sendEmptyMessage(10);
+			}
+		}, 200);
 		
 		searchEdit();
 	}
@@ -95,12 +128,17 @@ public class ProfessionActivity extends BaseActivity implements OnClickListener{
 		
 		exprefession_listview = findView(R.id.exprefession_listview);
 		
+		msgText = findView(R.id.msgText);
+		msgText.setVisibility(View.VISIBLE);
+		msgText.setText(CommUtil.getStrValue(self, R.string.item_text43));
+		
 		clearView.setOnClickListener(this);
 		search_cancle.setOnClickListener(this);
 	}
 	
 	private void searchEdit(){
-		index_search_edit.setHint(CommUtil.getStrValue(self, R.string.hint_industry_text));
+		index_search_edit.setHint(CommUtil.getStrValue(self, R.string.hint_profession_text));
+		index_search_edit.setHintTextColor(CommUtil.getColorValue(self, R.color.grey));
 		index_search_edit.requestFocus();
 		index_search_edit.addTextChangedListener(new TextWatcher() {
 			
@@ -117,10 +155,13 @@ public class ProfessionActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public void afterTextChanged(Editable s) {
 				L.d("ss:"+s.toString());
-				if (s.toString() != null && !"".equals(s.toString())) {
+				if (RegexUtil.checkNotNull(s.toString())) {
+					whichTab = 1;
 					clearView.setVisibility(View.VISIBLE);
+					search_cancle.setVisibility(View.VISIBLE);
 					getAllProfession(s.toString());
 				}else{
+					whichTab = 0;
 					getAllProfession("");
 					clearView.setVisibility(View.GONE);
 				}
@@ -131,7 +172,7 @@ public class ProfessionActivity extends BaseActivity implements OnClickListener{
 			
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				if (actionId ==EditorInfo.IME_ACTION_SEARCH) {
+				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 					CommUtil.hideKeyboard(self);
 					searchProfession();
 					return true;
@@ -146,41 +187,43 @@ public class ProfessionActivity extends BaseActivity implements OnClickListener{
 	 * 显示数据
 	 * @param list
 	 */
-	private void fillData(List<String> list){
-		groupList.clear();
-		childrens = new ArrayList<Map<String, List<String>>>();
-		int count = list.size();
-		for (int i = 0; i < count; i++) {
-			Map<String, String> groupMap = new HashMap<String, String>();
+	private void fillData(final List<String> list){
+		new Thread(new Runnable() {
 			
-			String[] values = list.get(i).toString().split(";");
-			
-			groupMap.put("pname", values[1]);
-			groupList.add(groupMap);
-			
-			getProfessionTypeName(values[0]);
-			
-			Map<String, List<String>> childMap = new HashMap<String, List<String>>();
-			childMap.put("childitem", llistChild);
-			childrens.add(childMap);
-		}
-		
-		childList = new ArrayList<ArrayList<String>>(); 
-		for (Map<String, List<String>> mapChildItem : childrens) {
-			List<String> lisItem = mapChildItem.get("childitem");
-			ArrayList<String> tmp = new ArrayList<String>(); 
-			for (String name : lisItem) {
-				tmp.add(name);
+			@Override
+			public void run() {
+				groupList.clear();
+				childrens = new ArrayList<Map<String, List<String>>>();
+				int count = list.size();
+				for (int i = 0; i < count; i++) {
+					Map<String, String> groupMap = new HashMap<String, String>();
+					
+					String[] values = list.get(i).toString().split(";");
+					
+					groupMap.put("pname", values[1]);
+					groupList.add(groupMap);
+					
+					getProfessionTypeName(values[0]);
+					
+					Map<String, List<String>> childMap = new HashMap<String, List<String>>();
+					childMap.put("childitem", llistChild);
+					childrens.add(childMap);
+				}
+				
+				childList = new ArrayList<List<String>>(); 
+				for (Map<String, List<String>> mapChildItem : childrens) {
+					List<String> lisItem = mapChildItem.get("childitem");
+//					List<String> tmp = new ArrayList<String>(); 
+//					for (String name : lisItem) {
+//						tmp.add(name);
+//					}
+					childList.add(lisItem);
+				}
+				
+				mHandler.sendEmptyMessage(12);
 			}
-			childList.add(tmp);
-		}
+		}).start();
 		
-		if (listAdapter == null) {
-			listAdapter = new ProfessionListAdapter(self, groupList, childList);
-			exprefession_listview.setAdapter(listAdapter);
-		}else{
-			listAdapter.notifyDataSetChanged();
-		}
 	} 
 	
 	@Override
@@ -240,7 +283,9 @@ public class ProfessionActivity extends BaseActivity implements OnClickListener{
 				} catch (Exception e) {
 					e.printStackTrace();
 				} finally {
-					cursor.close();
+					if (cursor != null) {
+						cursor.close();
+					}
 				}
 			}
 		}).start();
@@ -251,27 +296,23 @@ public class ProfessionActivity extends BaseActivity implements OnClickListener{
 	 * @param type
 	 */
 	private void getProfessionTypeName(final String type) {
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				llistChild = new ArrayList<String>();
-				Cursor cursor = null;
-				try {
-					String sql = "select cname from professioname"+ " where pid = '"+ type +"'";
-					cursor = MyApplication.database.rawQuery(sql, null);
-					if (cursor.getCount() > 0) {
-						while (cursor.moveToNext()) {
-							llistChild.add(cursor.getString(cursor.getColumnIndex("cname")));
-						}
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				} finally {
-					cursor.close();
+		llistChild = new ArrayList<String>();
+		Cursor cursor = null;
+		try {
+			String sql = "select cname from professioname"+ " where pid = '"+ type +"'";
+			cursor = MyApplication.database.rawQuery(sql, null);
+			if (cursor.getCount() > 0) {
+				while (cursor.moveToNext()) {
+					llistChild.add(cursor.getString(cursor.getColumnIndex("cname")));
 				}
 			}
-		}).start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+			}
+		}
 	}
 	
 }

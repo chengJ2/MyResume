@@ -24,12 +24,12 @@ import com.me.resume.comm.ViewHolder.ClickEvent;
 
 /**
  * 
-* @ClassName: ProfessionalActivity 
-* @Description: 专业名称
+* @ClassName: MajorActivity 
+* @Description: 大学里的专业名称
 * @date 2016/4/21 下午2:04:45 
 *
  */
-public class ProfessionalActivity extends BaseActivity implements OnClickListener{
+public class MajorActivity extends BaseActivity implements OnClickListener{
 	
 	private RelativeLayout catelayout;
 	private TextView category;
@@ -83,7 +83,7 @@ public class ProfessionalActivity extends BaseActivity implements OnClickListene
 		
 		backCate.setOnClickListener(this);
 		
-		getCategory();
+		getMajor();
 	}
 	
 	/**
@@ -127,10 +127,10 @@ public class ProfessionalActivity extends BaseActivity implements OnClickListene
 	/**
 	 * 
 	 * @Title:AddressActivity
-	 * @Description: 获取热门城市
+	 * @Description: 获取专业
 	 * @return List<String> 
 	 */
-	private void getCategory(){
+	private void getMajor(){
 		new Handler().postDelayed(new Runnable() {
 			
 			@Override
@@ -150,7 +150,9 @@ public class ProfessionalActivity extends BaseActivity implements OnClickListene
 				} catch (Exception e) {
 					e.printStackTrace();
 				} finally {
-					cursor.close();
+					if (cursor != null) {
+						cursor.close();
+					}
 				}
 			}
 		},500);
@@ -158,9 +160,7 @@ public class ProfessionalActivity extends BaseActivity implements OnClickListene
 	
 	/**
 	 * 
-	 * @Title:AddressActivity
-	 * @Description: 获取热门城市
-	 * @author Comsys-WH1510032
+	 * @Description: 获取专业类别下的子分类
 	 * @return List<String> 
 	 */
 	private void getCategoryName(final String cateId){
@@ -183,7 +183,9 @@ public class ProfessionalActivity extends BaseActivity implements OnClickListene
 				} catch (Exception e) {
 					e.printStackTrace();
 				} finally {
-					cursor.close();
+					if (cursor != null) {
+						cursor.close();
+					}
 				}
 			}
 		},500);
@@ -197,7 +199,7 @@ public class ProfessionalActivity extends BaseActivity implements OnClickListene
 			break;
 		case R.id.backCate_btn:
 			catelayout.setVisibility(View.GONE);
-			getCategory();
+			getMajor();
 			break;
 		default:
 			break;

@@ -188,12 +188,12 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 * @return
 	 */
 	private boolean getWEData(){
-		if (MyApplication.KID.equals("0")) {
+		if (KID.equals("0")) {
 			queryWhere = "select * from " + CommonText.WORKEXPERIENCE
 					+ " where userId = '" + uTokenId + "' order by id desc limit 1";
 		}else{
 			queryWhere = "select * from " + CommonText.WORKEXPERIENCE
-					+ " where userId = '" + uTokenId + "' and tokenId = "+ MyApplication.KID +" limit 1";
+					+ " where userId = '" + uTokenId + "' and tokenId = "+ KID +" limit 1";
 		}
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
@@ -492,13 +492,12 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
             }
         }else if(requestCode == Constants.WE_MANAGER_REQUEST_CODE){
         	 if(resultCode == Constants.RESULT_CODE) {
-        		 String weId = data.getStringExtra("weId");
-        		 MyApplication.KID = weId;
+        		 KID = data.getStringExtra("weId");
         		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE
-     					+ " where userId = '" + uTokenId + "' and tokenId = "+ weId +" limit 1";
+     					+ " where userId = '" + uTokenId + "' and tokenId = "+ KID +" limit 1";
         		 commMapArray = dbUtil.queryData(self, queryWhere);
           		 if (commMapArray != null && commMapArray.get("userId").length > 0) {
-          			weId = commMapArray.get("tokenId")[0];
+          			KID = commMapArray.get("tokenId")[0];
           			setFeildValue();
                  }
      		}

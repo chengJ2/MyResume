@@ -185,10 +185,16 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="com.me.resume.ui.ProfessionalActivity"
+            android:name="com.me.resume.ui.MajorActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.me.resume.ui.ProfessionActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        
         <activity
             android:name="com.me.resume.ui.FeedBackActivity"
             android:label="@string/app_name"

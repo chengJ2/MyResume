@@ -51,6 +51,7 @@ public class Constants {
 	public static final int WE_MANAGER_REQUEST_CODE = 1100;
 	public static final int JI_REQUEST_CODE = 2000;
 	public static final int JI_REQUEST_CODE2 = 2002;
+	public static final int JI_REQUEST_CODE3 = 2003;
 	public static final int BI_REQUEST_CODE = 3000;
 	public static final int BI_REQUEST_CODE2 = 3002;
 	public static final int ED_REQUEST_CODE = 4000;
@@ -116,7 +117,7 @@ public class Constants {
     public static final String PROFESSION = "ProfessionActivity";// 职业
     public static final String MYCOLLECTION = "MyCollectionActivity";
     public static final String OTHERINFO = "OtherInfoActivity";
-    public static final String PROFESSIONAL = "ProfessionalActivity";// 专业
+    public static final String MAJOR = "MajorActivity";// 专业
     public static final String PROJECTEXPERIENCE = "ProjectExperienceActivity";
     public static final String RESUMECOVERMORE = "ResumeCoverMoreActivity";
     public static final String RESUMESHAREMORE = "ResumeShareMoreActivity";

@@ -29,7 +29,7 @@
                     android:visibility="invisible" />
             </LinearLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
             <LinearLayout style="@style/noraml_item" >
 
@@ -47,7 +47,7 @@
                     android:visibility="visible" />
             </LinearLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
             <LinearLayout
                 android:id="@+id/llout02"
@@ -67,7 +67,7 @@
                     android:visibility="invisible" />
             </LinearLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
             <LinearLayout
                 android:id="@+id/llout03"
@@ -104,7 +104,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
             <LinearLayout style="@style/noraml_item" >
 
@@ -122,7 +122,7 @@
                     android:visibility="visible" />
             </LinearLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
             <LinearLayout style="@style/noraml_item_mul" >
 
@@ -141,7 +141,7 @@
                     android:visibility="invisible" />
             </LinearLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
 
             <LinearLayout style="@style/noraml_item" >
 
@@ -159,7 +159,7 @@
                     android:visibility="visible" />
             </LinearLayout>
 
-             <View style="@style/line3" />
+             <View style="@style/line_padding10" />
             <LinearLayout style="@style/noraml_item" >
 
                 <TextView
@@ -176,7 +176,7 @@
                     android:visibility="visible" />
             </LinearLayout>
 
-            <View style="@style/line3" />
+            <View style="@style/line_padding10" />
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
 </RelativeLayout>

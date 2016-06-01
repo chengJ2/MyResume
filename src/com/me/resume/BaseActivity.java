@@ -113,6 +113,11 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	private ViewHolder viewHolder;
 	
 	/**
+	 * 栏目多项id
+	 */
+	protected String KID = "0";
+	
+	/**
 	 * 操作类型 
 	 * 0:从服务器同步数据到本地
 	 * 1：add 2：update 3：delete

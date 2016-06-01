@@ -221,7 +221,9 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 				} catch (Exception e) {
 					e.printStackTrace();
 				} finally {
-					cursor.close();
+					if (cursor != null) {
+						cursor.close();
+					}
 				}
 			}
 		}).start();

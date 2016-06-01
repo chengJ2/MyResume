@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:fitsSystemWindows="true"
     android:orientation="vertical" >
 
-    <include layout="@layout/comm_search_layout"/>
+    <include 
+        android:id="@+id/search_layout"
+        layout="@layout/comm_search_layout"/>
     
      <ExpandableListView 
         android:id="@+id/exprefession_listview"
@@ -15,14 +17,22 @@
         android:groupIndicator="@null"
         android:cacheColorHint="#00000000"
         android:listSelector="#00000000"
-        android:divider="@android:color/white"
+        android:divider="@color/grey"
         android:dividerHeight="1px"
-        android:childDivider="#d0d0d0"
+        android:childDivider="@color/grey"
         android:footerDividersEnabled="true"
-        android:background="#55eeeeee" 
+        android:background="@color/white" 
         android:layout_marginTop="0dip"
         android:layout_marginLeft="0dip"
 	    android:layout_marginRight="0dip"
-	    android:visibility="visible"/>  
+	    android:layout_below="@id/search_layout"
+	    android:visibility="gone"/>  
+	    
+      <TextView
+        android:id="@+id/msgText"
+        android:layout_below="@id/search_layout"
+        style="@style/comm_nodata_style"
+        android:layout_centerInParent="true"
+        android:visibility="visible" />
 
-</LinearLayout>
+</RelativeLayout>

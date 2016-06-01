@@ -61,7 +61,7 @@ public class MyApplication extends Application {
    /**
     * 栏目id
     */
-   public static String KID = "0";
+//   public static String KID = "0";
    
 	@Override
 	public void onCreate() {

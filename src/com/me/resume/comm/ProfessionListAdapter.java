@@ -1,6 +1,7 @@
 package com.me.resume.comm;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
@@ -12,16 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.me.resume.R;
-import com.whjz.android.util.common.MyLog;
 
 public class ProfessionListAdapter extends BaseExpandableListAdapter {
 
 	private Context context;
 	
 	private ArrayList<Map<String, String>> groupList = null;   
-    private ArrayList<ArrayList<String>> childList = null;  
+    private ArrayList<List<String>> childList = null;  
     
-	public ProfessionListAdapter(Context context,ArrayList<Map<String, String>> groupList,ArrayList<ArrayList<String>> childList){
+	public ProfessionListAdapter(Context context,ArrayList<Map<String, String>> groupList,ArrayList<List<String>> childList){
 		this.context=context;
 		this.groupList=groupList;
 		this.childList=childList;
@@ -49,19 +49,16 @@ public class ProfessionListAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public long getGroupId(int groupPosition) {
-		// TODO Auto-generated method stub
 		return groupPosition;
 	}
 
 	@Override
 	public long getChildId(int groupPosition, int childPosition) {
-		// TODO Auto-generated method stub
 		return childPosition;
 	}
 
 	@Override
 	public boolean hasStableIds() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -88,7 +85,6 @@ public class ProfessionListAdapter extends BaseExpandableListAdapter {
 		if(convertView==null){
 			convertView=LayoutInflater.from(context).inflate(R.layout.expandlist_children_item, null);
 		}
-		MyLog.d("groupPosition:"+groupPosition + "-childPosition-->"+childPosition+"--name-->"+childList.get(groupPosition).get(childPosition).toString());
 		TextView txtView=(TextView) convertView.findViewById(R.id.child_item);
 		txtView.setText(childList.get(groupPosition).get(childPosition).toString());
 		return convertView;

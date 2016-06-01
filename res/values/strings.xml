@@ -214,8 +214,9 @@
     <string name="xlistview_footer_loadfinish">加载完毕</string>
 
     <!-- Search UI -->
-    <string name="hint_industry_text">请输入行业名称/拼音</string>
-    <string name="hint_address_text">请输入城市/行政区/拼音</string>
+    <string name="hint_industry_text">请输入行业名称/简拼</string>
+    <string name="hint_address_text">请输入城市/行政区/简拼</string>
+    <string name="hint_profession_text">请输入职业名称/简拼</string>
     <string name="search_button">查询</string>
     <string name="location">当前位置</string>
     <string name="hot_city">热门城市</string>

@@ -6,8 +6,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dip"
-        android:background="#eeeeee"
+        android:layout_height="40dip"
+        android:background="@color/grey_30"
         android:orientation="horizontal" >
 
             <TextView
@@ -19,8 +19,8 @@
                 android:paddingLeft="@dimen/margin_10"
                 android:layout_alignParentLeft="true"
                 android:text="我的简历"
-                android:textColor="@color/black"
-                android:textSize="@dimen/small_middle_text_size" />
+                android:textColor="@color/s"
+                android:textSize="@dimen/small_text_size" />
             
               <ImageView
 	            android:id="@+id/group_nav"
