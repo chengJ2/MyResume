@@ -6,6 +6,9 @@
     <string name="app_crash">App发生异常,请重启</string>
     <string name="app_exit">再按一次退出</string>
      <string name="app_download">正在下载 个人简历 ...</string>
+     <string name="app_declare">本App上的大部分内容来源网络,包括文字,图片等,提供的内容将服务使用者用于个人学习、研究或欣赏,以及其他非商业性或非盈利性用途.
+         	
+         	若内容侵犯了原作者的权利或原作者不愿意在本App刊登内容,请及时通知并联系我们,予以删除。</string>
     
     <!-- 网络相关 -->
     <string name="check_network">网络异常,请检查!</string>
