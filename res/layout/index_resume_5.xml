@@ -13,4 +13,10 @@
         android:layout_height="200dip"
         android:background="@drawable/main_index_icon5" />
 
+    <ListView
+        android:id="@+id/peListview"
+        style="@style/comm_listview_style"
+        android:layout_margin="5dp"
+        android:dividerHeight="0px"
+        android:visibility="visible" />
 </LinearLayout>

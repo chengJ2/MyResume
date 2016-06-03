@@ -48,23 +48,51 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 1:
-				String weId = (String)msg.obj;
-				queryWhere = "delete from " + CommonText.WORKEXPERIENCE
-						+ " where userId = '" + uTokenId +"' and tokenId = " + weId;
-				dbUtil.deleteData(self, queryWhere);
+				String kId = (String)msg.obj;
+				String procName = "";
+				if (type.equals(CommonText.EDUCATION)) {
+					tab = getIntent().getIntExtra(Constants.TAB, 0);
+					L.d("==tab=="+tab);
+					if (tab == 0) {
+						procName = "pro_get_education";
+						queryWhere = "delete from " + CommonText.EDUCATION
+								+ " where userId = '" + uTokenId +"' and tokenId = " + kId;
+					}else{
+						procName = "pro_get_training";
+						queryWhere = "delete from " + CommonText.EDUCATION_TRAIN
+								+ " where userId = '" + uTokenId +"' and tokenId = " + kId;
+					}
+					dbUtil.deleteData(self, queryWhere);
+					set3Msg(R.string.action_delete_success);
+					initData(CommonText.EDUCATION);
+					
+				}else if(type.equals(CommonText.WORKEXPERIENCE)){
+					procName = "pro_get_workexpericnce";
+					queryWhere = "delete from " + CommonText.WORKEXPERIENCE
+							+ " where userId = '" + uTokenId +"' and tokenId = " + kId;
+					dbUtil.deleteData(self, queryWhere);
+					
+					set3Msg(R.string.action_delete_success);
+					
+					initData(CommonText.WORKEXPERIENCE);
+					
+				}else if (type.equals(CommonText.PROJECT_EXPERIENCE)) {
+					procName = "pro_get_projectexpericnce";
+					queryWhere = "delete from " + CommonText.PROJECT_EXPERIENCE
+							+ " where userId = '" + uTokenId +"' and tokenId = " + kId;
+					dbUtil.deleteData(self, queryWhere);
+					
+					set3Msg(R.string.action_delete_success);
+					
+					initData(CommonText.PROJECT_EXPERIENCE);
+				}
 				
-				set3Msg(R.string.action_delete_success);
-				
-				initData(CommonText.WORKEXPERIENCE);
-				
-				// TODO
 				if (!MyApplication.USERID.equals("0")) {
 					if (CommUtil.isNetworkAvailable(self)) {
-						syncData(weId);
+						syncData(kId,procName);
 					}
 				}
 				break;
-				
 			default:
 				break;
 			}
@@ -79,11 +107,10 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		boayLayout.addView(v);
 
 		setMsgHide();
-		setRightIconVisible(View.VISIBLE);
-		setRightIcon(R.drawable.icon_sync);
+		setRightIconVisible(View.GONE);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
-
+		
 		infoMoreListView = findView(R.id.infoMoreListView);
 		msgText = findView(R.id.msgText);
 		msgText.setVisibility(View.VISIBLE);
@@ -122,29 +149,31 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		
 		queryWhere = "select * from " + tableName + " where userId = '" + uTokenId + "' order by createtime desc";
 		commMapArray = dbUtil.queryData(self,queryWhere);
-		if (commMapArray != null && commMapArray.get("userId").length>0) {
-				commMapAdapter = new CommForMapArrayBaseAdapter(self, commMapArray,
-						layoutID, "userId") {
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			infoMoreListView.setVisibility(View.VISIBLE);
+			setRightIconVisible(View.INVISIBLE);
+			commMapAdapter = new CommForMapArrayBaseAdapter(self, commMapArray,
+					layoutID, "userId") {
 
-					@Override
-					public void convert(ViewHolder holder, String[] item,
-							int position) {
-						if (type.equals(CommonText.EDUCATION)) {
-							setEDData(holder, commMapArray, position, tab);
-						}else if(type.equals(CommonText.WORKEXPERIENCE)){
-							setWEData(holder,commMapArray,position);
-						}else if (type.equals(CommonText.PROJECT_EXPERIENCE)) {
-							setPEData(holder,commMapArray,position);
-						}
+				@Override
+				public void convert(ViewHolder holder, String[] item,
+						int position) {
+					if (type.equals(CommonText.EDUCATION)) {
+						setEDData(holder, commMapArray, position, tab);
+					} else if (type.equals(CommonText.WORKEXPERIENCE)) {
+						setWEData(holder, commMapArray, position);
+					} else if (type.equals(CommonText.PROJECT_EXPERIENCE)) {
+						setPEData(holder, commMapArray, position);
 					}
-				};
-
-				infoMoreListView.setAdapter(commMapAdapter);
-				msgText.setVisibility(View.GONE);
-			}else{
-				msgText.setText(CommUtil.getStrValue(self, R.string.en_nodata));
-				msgText.setVisibility(View.VISIBLE);
-			}
+				}
+			};
+			infoMoreListView.setAdapter(commMapAdapter);
+			msgText.setVisibility(View.GONE);
+		} else {
+			setRightIcon(R.drawable.icon_sync);
+			msgText.setText(CommUtil.getStrValue(self, R.string.en_nodata));
+			msgText.setVisibility(View.VISIBLE);
+		}
 	}
 	
 	/**
@@ -308,7 +337,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		sbStr.append("责任描述：");
 		sbStr.append(info_dutiesStr);
 		sbStr.append("</font>");
-		holder.setText(R.id.item11, sbStr.toString());
+		holder.setTextForHtml(R.id.item11, sbStr.toString());
 		
 		String info_prokectdescStr = commMapArray.get("prokectdesc")[position];
 		sbStr = new StringBuffer();
@@ -316,7 +345,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		sbStr.append("项目简介：");
 		sbStr.append(info_prokectdescStr);
 		sbStr.append("</font>");
-		holder.setText(R.id.item12, sbStr.toString());
+		holder.setTextForHtml(R.id.item12, sbStr.toString());
 		
 		final String tokenId = commMapArray.get("tokenId")[position];
 		holder.setOnClickEvent(R.id.item21, new ClickEvent() {
@@ -343,9 +372,8 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 	/**
 	 * 
 	 * @Description: 删除远端数据
-	 * @author Comsys-WH1510032
 	 */
-	private void syncData(String weId){ 
+	private void syncData(String weId,String procName){ 
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
@@ -353,10 +381,10 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		params.add("p_userId");
 		values.add(weId);
 		values.add(uTokenId);
-		requestData("pro_get_workexpericnce", 2, params, values, new HandlerData() {
+		requestData(procName, 2, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				runOnUiThread(R.string.action_sync_fail);
+//				runOnUiThread(R.string.action_sync_fail);
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -371,7 +399,14 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		});
 	}
 	
+	/**
+	 * 
+	 * @Title:InfoManagerActivity
+	 * @Description: 从远端下载数据插入本地
+	 * @return 返回类型
+	 */
 	private void getServerData(){
+		String procName = "";
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
@@ -379,21 +414,44 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		params.add("p_userId");
 		values.add("0");
 		values.add(uTokenId);
-		requestData("pro_get_workexpericnce", 3, params, values, new HandlerData() {
+		
+		if (type.equals(CommonText.EDUCATION)) {
+			tab = getIntent().getIntExtra(Constants.TAB, 0);
+			L.d("==tab=="+tab);
+			if (tab == 0) {
+				procName = "pro_get_education";
+			}else{
+				procName = "pro_get_training";
+			}
+		}else if(type.equals(CommonText.WORKEXPERIENCE)){
+			procName = "pro_get_workexpericnce";
+		}else if (type.equals(CommonText.PROJECT_EXPERIENCE)) {
+			procName = "pro_get_projectexpericnce";
+		}
+		
+		requestData(procName, 3, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				set3Msg(R.string.action_sync_success);
+				setRightIcon(R.drawable.icon_sync);
+				msgText.setText(CommUtil.getStrValue(self, R.string.en_nodata));
+				msgText.setVisibility(View.VISIBLE);
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					// 删除本地数据
-//					queryWhere = "delete from " + CommonText.WORKEXPERIENCE;
-//					dbUtil.deleteData(self, queryWhere);
-					
-					// 更新本地数据
-					setDataFromServer(map);
-					
+					if (type.equals(CommonText.EDUCATION)) {
+						tab = getIntent().getIntExtra(Constants.TAB, 0);
+						L.d("==tab=="+tab);
+						if (tab == 0) {
+							setEDDataFromServer(map);
+						}else{
+							setTRDataFromServer(map);
+						}
+					}else if(type.equals(CommonText.WORKEXPERIENCE)){
+						setWEDataFromServer(map);
+					}else if (type.equals(CommonText.PROJECT_EXPERIENCE)) {
+						setPEDataFromServer(map);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -403,46 +461,117 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 	}
 	
 	/**
-	 * 更新本地数据
+	 * 更新工作经验
 	 * @param map
 	 */
-	private void setDataFromServer(Map<String, List<String>> map){
-		queryWhere = "select * from " + CommonText.WORKEXPERIENCE
-				+ " where userId = '" + uTokenId + "' order by id desc";
-		commMapArray = dbUtil.queryData(self,queryWhere);
-		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			// TODO
-		}else{
-			int size = map.get("userId").size();
-			for (int i = 0; i < size; i++) {
-				ContentValues cValues = new ContentValues();
-				cValues.put("tokenId", map.get("tokenId").get(i));
-				cValues.put("userId", map.get("userId").get(i));
-				cValues.put("companyname", map.get("companyname").get(i));
-				cValues.put("companynature", map.get("companynature").get(i));
-				cValues.put("companyscale", map.get("companyscale").get(i));
-				cValues.put("industryclassification", map.get("industryclassification").get(i));
-				cValues.put("jobtitle", map.get("jobtitle").get(i));
-				cValues.put("worktimeStart", map.get("worktimeStart").get(i));
-				cValues.put("worktimeEnd", map.get("worktimeEnd").get(i));
-				cValues.put("expectedsalary", map.get("expectedsalary").get(i));
-				cValues.put("workdesc", map.get("workdesc").get(i));
-				cValues.put("bgcolor", map.get("bgcolor").get(i));
-				cValues.put("createtime", map.get("createtime").get(i));
-				cValues.put("updatetime", map.get("updatetime").get(i));
-				queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);
-			}
-			
-			if (queryResult) {
-				set3Msg(R.string.action_sync_success);
-				initData(CommonText.WORKEXPERIENCE);
-			}
+	private void setWEDataFromServer(Map<String, List<String>> map){
+		int size = map.get("userId").size();
+		for (int i = 0; i < size; i++) {
+			ContentValues cValues = new ContentValues();
+			cValues.put("tokenId", map.get("tokenId").get(i));
+			cValues.put("userId", map.get("userId").get(i));
+			cValues.put("companyname", map.get("companyname").get(i));
+			cValues.put("companynature", map.get("companynature").get(i));
+			cValues.put("companyscale", map.get("companyscale").get(i));
+			cValues.put("industryclassification", map.get("industryclassification").get(i));
+			cValues.put("jobtitle", map.get("jobtitle").get(i));
+			cValues.put("worktimeStart", map.get("worktimeStart").get(i));
+			cValues.put("worktimeEnd", map.get("worktimeEnd").get(i));
+			cValues.put("expectedsalary", map.get("expectedsalary").get(i));
+			cValues.put("workdesc", map.get("workdesc").get(i));
+			cValues.put("bgcolor", map.get("bgcolor").get(i));
+			cValues.put("createtime", map.get("createtime").get(i));
+			cValues.put("updatetime", map.get("updatetime").get(i));
+			queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);
+		}
+		
+		if (queryResult) {
+			set3Msg(R.string.action_sync_success);
+			initData(CommonText.WORKEXPERIENCE);
+		}
+	}
+	
+	/**
+	 * 更新项目经验
+	 * @param map
+	 */
+	private void setPEDataFromServer(Map<String, List<String>> map){
+		int size = map.get("userId").size();
+		for (int i = 0; i < size; i++) {
+			ContentValues cValues = new ContentValues();
+			cValues.put("tokenId", map.get("tokenId").get(i));
+			cValues.put("userId", map.get("userId").get(i));
+			cValues.put("projectname", map.get("projectname").get(i));
+			cValues.put("worktimestart", map.get("worktimestart").get(i));
+			cValues.put("worktimeend", map.get("worktimeend").get(i));
+			cValues.put("duties", map.get("duties").get(i));
+			cValues.put("prokectdesc", map.get("prokectdesc").get(i));
+			cValues.put("createtime", map.get("createtime").get(i));
+			queryResult = dbUtil.insertData(self, CommonText.PROJECT_EXPERIENCE, cValues);
+		}
+		
+		if (queryResult) {
+			set3Msg(R.string.action_sync_success);
+			initData(CommonText.PROJECT_EXPERIENCE);
+		}
+	}
+	
+	/**
+	 * 更新项目经验
+	 * @param map
+	 */
+	private void setEDDataFromServer(Map<String, List<String>> map){
+		int size = map.get("userId").size();
+		for (int i = 0; i < size; i++) {
+			ContentValues cValues = new ContentValues();
+			cValues.put("tokenId", map.get("tokenId").get(i));
+			cValues.put("userId", map.get("userId").get(i));
+			cValues.put("projectname", map.get("projectname").get(i));
+			cValues.put("worktimestart", map.get("worktimestart").get(i));
+			cValues.put("worktimeend", map.get("worktimeend").get(i));
+			cValues.put("duties", map.get("duties").get(i));
+			cValues.put("prokectdesc", map.get("prokectdesc").get(i));
+			cValues.put("createtime", map.get("createtime").get(i));
+			queryResult = dbUtil.insertData(self, CommonText.EDUCATION, cValues);
+		}
+		
+		if (queryResult) {
+			set3Msg(R.string.action_sync_success);
+			tab = 0;
+			initData(CommonText.EDUCATION);
+		}
+	}
+	
+	/**
+	 * 更新项目经验
+	 * @param map
+	 */
+	private void setTRDataFromServer(Map<String, List<String>> map){
+		int size = map.get("userId").size();
+		for (int i = 0; i < size; i++) {
+			ContentValues cValues = new ContentValues();
+			cValues.put("tokenId", map.get("tokenId").get(i));
+			cValues.put("userId", map.get("userId").get(i));
+			cValues.put("trainingtimestart", map.get("trainingtimestart").get(i));
+			cValues.put("trainingtimeend", map.get("trainingtimeend").get(i));
+			cValues.put("trainingorganization", map.get("trainingorganization").get(i));
+			cValues.put("trainingclass", map.get("trainingclass").get(i));
+			cValues.put("certificate", map.get("certificate").get(i));
+			cValues.put("description", map.get("description").get(i));
+			cValues.put("bgcolor", map.get("bgcolor").get(i));
+			cValues.put("createtime", map.get("createtime").get(i));
+			queryResult = dbUtil.insertData(self, CommonText.EDUCATION_TRAIN, cValues);
+		}
+		
+		if (queryResult) {
+			set3Msg(R.string.action_sync_success);
+			tab = 1;
+			initData(CommonText.EDUCATION);
 		}
 	}
 	
 	@Override
 	public void onClick(View v) {
-//		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.left_lable:
 			scrollToFinishActivity();

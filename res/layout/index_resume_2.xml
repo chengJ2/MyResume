@@ -13,24 +13,11 @@
         android:layout_height="200dip"
         android:background="@drawable/main_index_icon2" />
 
-    <TextView
-        android:id="@+id/index_1_info"
-        style="@style/index1_text"
-        android:gravity="center"
-        android:paddingLeft="0dip"
-        android:text="bbbbbbbbbbbbb"
-        android:visibility="gone" />
-
     <ListView
         android:id="@+id/weListview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/comm_listview_style"
         android:layout_margin="5dp"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="@android:color/transparent"
         android:dividerHeight="0px"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="none"
         android:visibility="visible" />
 
 </LinearLayout>

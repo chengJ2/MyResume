@@ -96,6 +96,7 @@ public class MainActivity extends Activity {
 	
 	// View5
 	private LinearLayout index5layout;
+	private ListView peListview;
 	
 	// View6
 	private LinearLayout index6layout;
@@ -329,7 +330,9 @@ public class MainActivity extends Activity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + Constants.INFOMANAGER,false);
+					ActivityUtils.startActivityPro(self, 
+							Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
+							Constants.TYPE,CommonText.WORKEXPERIENCE);
 				}
 			});
 		}
@@ -433,7 +436,44 @@ public class MainActivity extends Activity {
 	 */
 	private void initView5(View view){
 		index5layout = (LinearLayout) view1.findViewById(R.id.index5layout);
-		
+		peListview = (ListView) view.findViewById(R.id.peListview);
+		initTopView(view,R.string.resume_project_experience,Constants.PROJECTEXPERIENCE);
+		queryWhere = "select * from " + CommonText.PROJECT_EXPERIENCE + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc";
+		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			initBgColor(index5layout,commMapArray);
+			if (!mViewList.contains(view)) {
+				mViewList.add(view);
+			}
+			commMapAdapter = new CommForMapArrayBaseAdapter(self, commMapArray,
+					R.layout.index_5_list_item, "userId") {
+
+				@Override
+				public void convert(ViewHolder holder, String[] item,
+						int position) {
+					holder.setText(R.id.item1,commMapArray.get("worktimestart")[position] + "--" + commMapArray.get("worktimeend")[position]);
+					holder.setTextColor(R.id.item1, CommUtil.getColorValue(self, R.color.white));
+					String info_dutiesStr = commMapArray.get("duties")[position];
+					holder.setText(R.id.item11,"责任描述："+ info_dutiesStr);
+					holder.setTextColor(R.id.item11, CommUtil.getColorValue(self, R.color.white));
+					String info_prokectdescStr = commMapArray.get("prokectdesc")[position];
+					holder.setText(R.id.item12, "项目简介：" + info_prokectdescStr);
+					holder.setTextColor(R.id.item12, CommUtil.getColorValue(self, R.color.white));
+				}
+			};
+			
+			peListview.setAdapter(commMapAdapter);
+			peListview.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					ActivityUtils.startActivityPro(self, 
+							Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
+							Constants.TYPE,CommonText.PROJECT_EXPERIENCE);
+				}
+			});
+		}
 	}
 	
 	/**
