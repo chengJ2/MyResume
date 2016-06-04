@@ -150,13 +150,12 @@ public class MainActivity extends Activity {
 			preferenceUtil = new PreferenceUtil(self);
 		
 		jazzyViewPager = (JazzyViewPager)findViewById(R.id.mainviewpager);
-//		jazzyViewPager.setPageMargin(100);//两个页面之间的间距
 		jazzyViewPager.setFadeEnabled(true);//有淡入淡出效果
-//		jazzyViewPager.setOutlineEnabled(true);//有边框
-//		jazzyViewPager.setOutlineColor(0xff0000ff);//边框颜色
 	}
 	
-
+	/**
+	 * 初始化UI
+	 */
 	private void initViews() {
 		mInflater = LayoutInflater.from(this);
 		
@@ -170,21 +169,7 @@ public class MainActivity extends Activity {
 		view7 = mInflater.inflate(R.layout.index_resume_7, null);
 		view8 = mInflater.inflate(R.layout.index_resume_8, null);
 		
-		// 添加封面
-		coverlayout = (ImageView)cover.findViewById(R.id.coverlayout);
-		mViewList.add(cover);
-		
-		String coverName = preferenceUtil.getPreferenceData(Constants.COVER,"");
-		if (RegexUtil.checkNotNull(coverName)) {
-			if(preferenceUtil.getPreferenceData(Constants.ISLOCAL)){
-				coverlayout.setImageResource(CommUtil.parseInt(coverName));
-			}else{
-				Bitmap bitmap = ImageUtils.getLoacalBitmap(FileUtils.COVER_DOWNLOAD_APKPATH + coverName);
-				if (bitmap != null) {
-					coverlayout.setImageBitmap(bitmap);
-				}
-			}
-		}
+		initCover(cover);
 		
 		initView1(view1);
 		
@@ -220,6 +205,27 @@ public class MainActivity extends Activity {
 	}
 	
 	/**
+	 * 显示封面
+	 * @param view
+	 */
+	private void initCover(View view){
+		coverlayout = (ImageView)view.findViewById(R.id.coverlayout);
+		mViewList.add(cover);
+		
+		String coverName = preferenceUtil.getPreferenceData(Constants.COVER,"");
+		if (RegexUtil.checkNotNull(coverName)) {
+			if(preferenceUtil.getPreferenceData(Constants.ISLOCAL)){
+				coverlayout.setImageResource(CommUtil.parseInt(coverName));
+			}else{
+				Bitmap bitmap = ImageUtils.getLoacalBitmap(FileUtils.COVER_DOWNLOAD_APKPATH + coverName);
+				if (bitmap != null) {
+					coverlayout.setImageBitmap(bitmap);
+				}
+			}
+		}
+	}
+	
+	/**
 	 * 
 	 * @Title:MainActivity
 	 * @Description: 基本信息
@@ -243,7 +249,7 @@ public class MainActivity extends Activity {
 				mViewList.add(view);
 			}
 			
-			initBgColor(index1layout,commMapArray);
+			initBgColor(index1layout,commMapArray.get("bgcolor")[0]);
 			
 			index_1_realname.setText(commMapArray.get("realname")[0]);
 			
@@ -287,7 +293,7 @@ public class MainActivity extends Activity {
 			
 			info = commMapArray.get("license")[0];
 			if(RegexUtil.checkNotNull(info)){
-				index_1_lisence.setText("身份证："+commMapArray.get("license")[0]);
+				index_1_lisence.setText("身份证："+ commMapArray.get("license")[0]);
 			}
 			index_1_phone.setText("手机号："+commMapArray.get("phone")[0]);
 			index_1_email.setText("E-mail："+commMapArray.get("email")[0]);
@@ -310,7 +316,7 @@ public class MainActivity extends Activity {
 			if (!mViewList.contains(view)) {
 				mViewList.add(view);
 			}
-			initBgColor(index2layout,commMapArray);
+			initBgColor(index2layout,commMapArray.get("bgcolor")[0]);
 			commMapAdapter = new CommForMapArrayBaseAdapter(
 					self, commMapArray, R.layout.index_2_list_item, "userId") {
 
@@ -354,7 +360,7 @@ public class MainActivity extends Activity {
 			if (!mViewList.contains(view)) {
 				mViewList.add(view);
 			}
-			initBgColor(index3layout,commMapArray);
+			initBgColor(index3layout,commMapArray.get("bgcolor")[0]);
 			self_evaluation.setText(commMapArray.get("selfevaluation")[0]);
 		}
 		
@@ -416,7 +422,7 @@ public class MainActivity extends Activity {
 		queryWhere = "select * from " + CommonText.JOBINTENSION + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			initBgColor(index4layout,commMapArray);
+			initBgColor(index4layout,commMapArray.get("bgcolor")[0]);
 			if (!mViewList.contains(view)) {
 				mViewList.add(view);
 			}
@@ -441,7 +447,7 @@ public class MainActivity extends Activity {
 		queryWhere = "select * from " + CommonText.PROJECT_EXPERIENCE + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			initBgColor(index5layout,commMapArray);
+			initBgColor(index5layout,commMapArray.get("bgcolor")[0]);
 			if (!mViewList.contains(view)) {
 				mViewList.add(view);
 			}
@@ -490,7 +496,7 @@ public class MainActivity extends Activity {
 		queryWhere = "select * from " + CommonText.EDUCATION + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			initBgColor(index6layout,commMapArray);
+			initBgColor(index6layout,commMapArray.get("bgcolor")[0]);
 			if (!mViewList.contains(view)) {
 				mViewList.add(view);
 			}
@@ -521,6 +527,20 @@ public class MainActivity extends Activity {
 			};
 
 			edListview.setAdapter(commMapAdapter);
+			
+			edListview.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					Bundle b = new Bundle();
+					b.putInt(Constants.TAB, 0);
+					b.putString(Constants.TYPE, CommonText.EDUCATION);
+					ActivityUtils.startActivity(self, 
+							Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
+							b,false);
+				}
+			});
 			
 			queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc";
 			final Map<String, String[]> comm2MapArray = dbUtil.queryData(self, queryWhere);
@@ -564,6 +584,20 @@ public class MainActivity extends Activity {
 			}else{
 				index6_trLayout.setVisibility(View.GONE);
 			}
+			
+			trListview.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					Bundle b = new Bundle();
+					b.putInt(Constants.TAB, 1);
+					b.putString(Constants.TYPE, CommonText.EDUCATION);
+					ActivityUtils.startActivity(self, 
+							Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
+							b,false);
+				}
+			});
 		}
 		
 	}
@@ -588,7 +622,7 @@ public class MainActivity extends Activity {
 		queryWhere = "select * from " + CommonText.OTHERINFO + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc";
 		final Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
         if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-        	initBgColor(index7layout,commMapArray);
+        	initBgColor(index7layout,commMapArray.get("bgcolor")[0]);
         	index7_layout1.setVisibility(View.VISIBLE);
         	if (!mViewList.contains(view)) {
         		mViewList.add(view);
@@ -736,9 +770,8 @@ public class MainActivity extends Activity {
 	 * @param ll
 	 * @param commMapArray
 	 */
-	private void initBgColor(LinearLayout ll,Map<String, String[]> map){
+	private void initBgColor(LinearLayout ll,String bgcolor){
 		try {
-			String bgcolor = map.get("bgcolor")[0];
 			if (RegexUtil.checkNotNull(bgcolor)) {
 				ll.setBackgroundColor(CommUtil.getColorValue(self,
 						CommUtil.parseInt(bgcolor)));

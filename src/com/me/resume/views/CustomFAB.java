@@ -16,6 +16,11 @@ import android.widget.ImageButton;
 
 import com.me.resume.R;
 
+/**
+ * 悬浮的ImageButton
+ * @author Administrator
+ *
+ */
 public class CustomFAB extends ImageButton {
 
 	private Context ctx;

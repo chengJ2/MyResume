@@ -94,6 +94,19 @@
         <item>保密</item>
     </string-array>
     
+    <string-array name="ji_qwyx_values">
+        <item>2000元/月</item>
+        <item>3000元/月</item>
+        <item>4000元/月</item>
+        <item>5000元/月</item>
+        <item>6000元/月</item>
+        <item>7000元/月</item>
+        <item>8000元/月</item>
+        <item>9000元/月</item>
+        <item>10000元/月</item>
+        <item>面议</item>
+    </string-array>
+    
     <string-array name="ji_jobstatue_values">
         <item>我目前在职,正考虑换个工作环境</item>
         <item>目前已离职,可立即上岗</item>

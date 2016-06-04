@@ -96,10 +96,8 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if (add_insert) { // 同步新的info
+				if (action_add_insert) { // 同步新的info
 					actionAync();
-				}else{
-					
 				}
 				break;
 			case OnTopMenu.MSG_MENU31:
@@ -125,12 +123,13 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		boayLayout.addView(v);
 		
 		findViews();
+		
+		initViews();
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		initViews();
 	}
 	
 	private void findViews(){
@@ -162,12 +161,16 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		info_workdescdetail.addTextChangedListener(this);
 	}
 	
-	
+	/**
+	 * 显示初始化数据
+	 */
 	private void initViews() {
 		if (getWEData()) {
 			setFeildValue();
 		}
 	}
+	
+	
 	private void setFeildValue(){
 		info_industryclassification.setText(commMapArray.get("industryclassification")[0]);
 		info_startworktime.setText(commMapArray.get("worktimestart")[0]);
@@ -184,17 +187,12 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	
 	
 	/**
-	 * 初始化UI数据
+	 * 获取UI数据
 	 * @return
 	 */
 	private boolean getWEData(){
-		if (KID.equals("0")) {
-			queryWhere = "select * from " + CommonText.WORKEXPERIENCE
-					+ " where userId = '" + uTokenId + "' order by id desc limit 1";
-		}else{
-			queryWhere = "select * from " + CommonText.WORKEXPERIENCE
-					+ " where userId = '" + uTokenId + "' and tokenId = "+ KID +" limit 1";
-		}
+		queryWhere = "select * from " + CommonText.WORKEXPERIENCE
+				+ " where userId = '" + uTokenId + "' order by id desc limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			setEditBtnVisible(View.VISIBLE);
@@ -206,19 +204,18 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		}
 	}
 	
-	private boolean add_insert = false;
-	
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.save:
-			add_insert = true;
+			action_add_insert = true;
 			getFieldValue();
 			if(judgeField()){
 				preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
 				ContentValues cValues = new ContentValues();
-				cValues.put("tokenId", UUIDGenerator.getKUUID());
+				tokenId = UUIDGenerator.getKUUID();
+				cValues.put("tokenId", tokenId);
 				cValues.put("userId", uTokenId);
 				cValues.put("companyname", info_companynameStr);
 				cValues.put("companynature", info_companynatureStr);
@@ -235,31 +232,26 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				if(queryResult){
 					toastMsg(R.string.action_add_success);
 					setEditBtnVisible(View.VISIBLE);
-					
-					if(getWEData()){
-						actionAync();
-					}
+					actionAync();
 				}
 			}
 			
 			break;
 		case R.id.edit:
-			add_insert = true;
+			action_add_insert = true;
 			getFieldValue();
 			if(judgeField()){
-				if(getWEData()){
-					preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
-					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
-							new String[]{tokenId,"companyname","companynature","companyscale","industryclassification",
-											  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc","updatetime"}, 
-							new String[]{uTokenId,info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
-										info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr,TimeUtils.getCurrentTimeInString()},3);
-					if (updResult == 1) {
-						toastMsg(R.string.action_update_success);
-						actionAync();
-					}else{
-						toastMsg(R.string.action_update_fail);
-					}
+				preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
+				updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
+						new String[]{tokenId,"companyname","companynature","companyscale","industryclassification",
+										  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc","updatetime"}, 
+						new String[]{uTokenId,info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
+									info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr,TimeUtils.getCurrentTimeInString()},3);
+				if (updResult == 1) {
+					toastMsg(R.string.action_update_success);
+					actionAync();
+				}else{
+					toastMsg(R.string.action_update_fail);
 				}
 			}
 			break;
@@ -268,11 +260,11 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			break;
 		case R.id.info_companynature:
 			whichTab = 4;
-			getValues(R.array.oi_companynature_values,info_companynature,R.string.we_info_companynature);
+			getValues(R.array.oi_companynature_values,info_companynature,R.string.we_info_companynature,mHandler);
 			break;
 		case R.id.info_companyscale:
 			whichTab = 3;
-			getValues(R.array.we_companyscale_values,info_industryclassification,R.string.we_info_companyscale);
+			getValues(R.array.we_companyscale_values,info_industryclassification,R.string.we_info_companyscale,mHandler);
 			break;
 		case R.id.info_industryclassification:
 			ActivityUtils.startActivityForResult(self, 
@@ -280,7 +272,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			break;
 		case R.id.info_expectedsalary:
 			whichTab = 2;
-			getValues(R.array.we_qwyx_values,info_expectedsalary,R.string.we_info_jobsalary);
+			getValues(R.array.we_qwyx_values,info_expectedsalary,R.string.we_info_jobsalary,mHandler);
 			break;
 		case R.id.info_startworktime:
 			DialogUtils.showTimeChooseDialog(self, info_startworktime,R.string.we_info_start_worktime, 11,mHandler);
@@ -318,18 +310,17 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 * @Description: 获取界面字段值
 	 */
 	private void getFieldValue(){
-		info_companynameStr = CommUtil.getEditTextValue(info_companyname);
-		info_jobtitleStr = CommUtil.getEditTextValue(info_jobtitle);
-		info_workdescdetailStr = CommUtil.getEditTextValue(info_workdescdetail);
+		info_companynameStr = getEditTextValue(info_companyname);
+		info_jobtitleStr = getEditTextValue(info_jobtitle);
+		info_workdescdetailStr = getEditTextValue(info_workdescdetail);
 
-		info_companynatureStr = CommUtil.getTextValue(info_companynature);
-		info_companyscaleStr = CommUtil.getTextValue(info_companyscale);
+		info_companynatureStr = getTextValue(info_companynature);
+		info_companyscaleStr = getTextValue(info_companyscale);
 
-		info_industryclassificationStr = CommUtil
-				.getTextValue(info_industryclassification);
-		info_startworktimeStr = CommUtil.getTextValue(info_startworktime);
-		info_endworktimeStr = CommUtil.getTextValue(info_endworktime);
-		info_expectedsalaryStr = CommUtil.getTextValue(info_expectedsalary);
+		info_industryclassificationStr = getTextValue(info_industryclassification);
+		info_startworktimeStr = getTextValue(info_startworktime);
+		info_endworktimeStr = getTextValue(info_endworktime);
+		info_expectedsalaryStr = getTextValue(info_expectedsalary);
 	}
 	
 	/**
@@ -450,15 +441,16 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			requestData("pro_set_workexpericnce", style, params, values, new HandlerData() {
 				@Override
 				public void error() {
-					runOnUiThread(R.string.action_sync_fail);
+					set3Msg(R.string.action_sync_fail);
 				}
 				
 				public void success(Map<String, List<String>> map) {
 					try {
 						if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
-							runOnUiThread(R.string.action_sync_success);
+							set3Msg(R.string.action_sync_success);
 						}
 					} catch (Exception e) {
+						set3Msg(R.string.action_sync_fail);
 						e.printStackTrace();
 					}
 				}
@@ -480,6 +472,9 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		if (mHandler != null) {
+			mHandler.removeCallbacksAndMessages(null);
+		}
 	}
 	
 	@Override
@@ -487,22 +482,29 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		L.d("onActivityResult"+"requestCode="+requestCode+" resultCode="+resultCode + " data:"+data);
         if(requestCode == Constants.WE_REQUEST_CODE) {
             if(resultCode == Constants.RESULT_CODE) {
-                String result = data.getStringExtra("name");
+                String result = data.getStringExtra(Constants.INDUSTRYTYPENAME);
                 info_industryclassification.setText(result);
             }
         }else if(requestCode == Constants.WE_MANAGER_REQUEST_CODE){
         	 if(resultCode == Constants.RESULT_CODE) {
-        		 KID = data.getStringExtra("weId");
-        		 queryWhere = "select * from " + CommonText.WORKEXPERIENCE
-     					+ " where userId = '" + uTokenId + "' and tokenId = "+ KID +" limit 1";
-        		 commMapArray = dbUtil.queryData(self, queryWhere);
-          		 if (commMapArray != null && commMapArray.get("userId").length > 0) {
-          			KID = commMapArray.get("tokenId")[0];
-          			setFeildValue();
-                 }
+        		 tokenId = data.getStringExtra(UserInfoCode.TOKENID);
+        		 refeshData(); 
      		}
         }
 		super.onActivityResult(requestCode, resultCode, data);
 		
+	}
+	
+	/**
+	 * 从管理界面返回刷新数据
+	 */
+	private void refeshData() {
+		queryWhere = "select * from " + CommonText.WORKEXPERIENCE
+				+ " where userId = '" + uTokenId + "' and tokenId ='" + tokenId
+				+ "' limit 1";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			setFeildValue();
+		}
 	}
 }

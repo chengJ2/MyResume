@@ -19,6 +19,7 @@ import com.me.resume.R;
 import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
+import com.me.resume.comm.UserInfoCode;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.tools.L;
@@ -56,11 +57,11 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 					if (tab == 0) {
 						procName = "pro_get_education";
 						queryWhere = "delete from " + CommonText.EDUCATION
-								+ " where userId = '" + uTokenId +"' and tokenId = " + kId;
+								+ " where userId = '" + uTokenId +"' and tokenId = '" + kId +"'";
 					}else{
 						procName = "pro_get_training";
 						queryWhere = "delete from " + CommonText.EDUCATION_TRAIN
-								+ " where userId = '" + uTokenId +"' and tokenId = " + kId;
+								+ " where userId = '" + uTokenId +"' and tokenId = '" + kId +"'";
 					}
 					dbUtil.deleteData(self, queryWhere);
 					set3Msg(R.string.action_delete_success);
@@ -69,7 +70,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 				}else if(type.equals(CommonText.WORKEXPERIENCE)){
 					procName = "pro_get_workexpericnce";
 					queryWhere = "delete from " + CommonText.WORKEXPERIENCE
-							+ " where userId = '" + uTokenId +"' and tokenId = " + kId;
+							+ " where userId = '" + uTokenId +"' and tokenId = '" + kId +"'";
 					dbUtil.deleteData(self, queryWhere);
 					
 					set3Msg(R.string.action_delete_success);
@@ -79,7 +80,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 				}else if (type.equals(CommonText.PROJECT_EXPERIENCE)) {
 					procName = "pro_get_projectexpericnce";
 					queryWhere = "delete from " + CommonText.PROJECT_EXPERIENCE
-							+ " where userId = '" + uTokenId +"' and tokenId = " + kId;
+							+ " where userId = '" + uTokenId +"' and tokenId = '" + kId +"'";
 					dbUtil.deleteData(self, queryWhere);
 					
 					set3Msg(R.string.action_delete_success);
@@ -89,6 +90,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 				
 				if (!MyApplication.USERID.equals("0")) {
 					if (CommUtil.isNetworkAvailable(self)) {
+						set3Msg(R.string.action_syncing, Constants.DEFAULTIME);
 						syncData(kId,procName);
 					}
 				}
@@ -179,7 +181,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 	/**
 	 * 
 	 * @Title:InfoManagerActivity
-	 * @Description: 管理我的工作经验
+	 * @Description: 管理我的教育培训经历
 	 * @param holder
 	 * @param commMapArray
 	 * @param position
@@ -313,7 +315,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			@Override
 			public void onClick(View view) {
 				Intent intent=new Intent();
-		        intent.putExtra("tokenId", tokenId);
+		        intent.putExtra(UserInfoCode.TOKENID, tokenId);
 		        setResult(Constants.RESULT_CODE, intent);
 				scrollToFinishActivity();
 			}
@@ -377,7 +379,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
-		params.add("p_weId");
+		params.add("p_tokenId");
 		params.add("p_userId");
 		values.add(weId);
 		values.add(uTokenId);
@@ -390,7 +392,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			public void success(Map<String, List<String>> map) {
 				try {
 					if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
-						runOnUiThread(R.string.action_sync_success);
+						set3Msg(R.string.action_sync_success);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

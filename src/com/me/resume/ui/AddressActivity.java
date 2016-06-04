@@ -331,7 +331,7 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void searchCity(){
-		String keyword = CommUtil.getEditTextValue(index_search_edit);
+		String keyword = getEditTextValue(index_search_edit);
 		if (RegexUtil.checkNotNull(keyword)) {
 			whichTab = 1;
 			clearView.setVisibility(View.VISIBLE);

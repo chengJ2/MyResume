@@ -12,6 +12,7 @@
         android:layout_height="50dp"  
         android:layout_alignParentLeft="true"
         android:gravity="left|center"  
+        android:paddingLeft="@dimen/margin_5"
         android:paddingRight="@dimen/margin_40"
         android:textColor="@color/black"  
         android:textSize="@dimen/small_text_size"/>  

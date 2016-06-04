@@ -95,7 +95,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         		}
             	break;
 			case 11:
-				startChildActivity(Constants.BASEINFO,false);
+				startChildActivity(Constants.EDUCATION,false);
 				break;
 			case 12:
 				preferenceUtil.setPreferenceData(Constants.NOTICESHOW,true);

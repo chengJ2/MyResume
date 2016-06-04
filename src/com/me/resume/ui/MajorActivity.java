@@ -107,7 +107,7 @@ public class MajorActivity extends BaseActivity implements OnClickListener{
 					public void onClick(View view) {
 						if (flag == 2) {
 							Intent intent=new Intent();
-							intent.putExtra("category", data[1]);
+							intent.putExtra(Constants.MAJORNAME, data[1]);
 							intent.setAction(Constants.EDUCATION_SEND);
 			           		sendBroadcast(intent);
 							scrollToFinishActivity();

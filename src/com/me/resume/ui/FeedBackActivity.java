@@ -99,8 +99,8 @@ public class FeedBackActivity extends BaseActivity {
 	}
 	
 	private void getFeildValue(){
-		feeddescStr = CommUtil.getEditTextValue(feeddesc);
-		feedcontactStr = CommUtil.getEditTextValue(feedcontact);
+		feeddescStr = getEditTextValue(feeddesc);
+		feedcontactStr = getEditTextValue(feedcontact);
 	}
 	
 	private boolean checkInfo(){

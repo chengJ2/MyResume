@@ -19,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -109,6 +110,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	protected String deviceID = "";// 设备标识码
 	
 	protected Boolean localHasData = false;// 本地是否有数据
+	
+	protected boolean action_add_insert = false;// 是否执行添加或编辑操作
 	
 	private ViewHolder viewHolder;
 	
@@ -503,22 +506,22 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		return (T) findViewById(viewID);
 	}
 
-	/**
-	 * 
-	 * @Title:BaseActivity
-	 * @Description: 更新UI
-	 * @param id
-	 */
-	protected void runOnUiThread(final int id) {
-		runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				set3Msg(id);
-			}
-		});
-	}
+//	/**
+//	 * 
+//	 * @Title:BaseActivity
+//	 * @Description: 更新UI
+//	 * @param id
+//	 */
+//	protected void runOnUiThread(final int id) {
+//		runOnUiThread(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				set3Msg(id);
+//			}
+//		});
+//	}
 	
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count,
@@ -546,10 +549,68 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * @param parent
 	 * @param resId
 	 */
-	protected void getValues(int array,View parent,int resId) {
+	protected void getValues(int array,View parent,int resId,Handler mHandler) {
 		String[] item_text = CommUtil.getArrayValue(self,array); 
 		mList = Arrays.asList(item_text);
 		DialogUtils.showPopWindow(self, parent, resId, mList, mHandler);
+	}
+	
+	/**
+	 * 获取输入框值
+	 * @param editText
+	 * @return
+	 */
+	protected  String getEditTextValue(EditText editText) {
+		String value = editText.getText().toString().trim();
+		if (RegexUtil.checkNotNull(value)) {
+			return value;
+		}
+		return "";
+	}
+	
+	/**
+	 * 获取文本值
+	 * @param editText
+	 * @return
+	 */
+	protected String getTextValue(TextView textView) {
+		String value = textView.getText().toString().trim();
+		if (RegexUtil.checkNotNull(value)) {
+			return value;
+		}
+		return "";
+	}
+	
+	/**
+	 * 
+	 * @Title:CommUtil
+	 * @Description: 判断编辑框是否为空
+	 * @param editText
+	 * @return
+	 */
+	protected boolean editTextIsNull(EditText editText) {
+		String value = editText.getText().toString().trim();
+		if (RegexUtil.checkNotNull(value)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
+	 * 
+	 * @Title:CommUtil
+	 * @Description: 判断文本是否为空
+	 * @param textView
+	 * @return boolean
+	 */
+	protected boolean textIsNull(TextView textView) {
+		String value = textView.getText().toString().trim();
+		if (RegexUtil.checkNotNull(value)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	/**

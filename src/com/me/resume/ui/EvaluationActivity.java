@@ -225,9 +225,9 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	 * @Description: 获取字段值
 	 */
 	private void getFeildValue(){
-		info_self_evaluationStr = CommUtil.getEditTextValue(info_self_evaluation);
-		info_career_goalStr = CommUtil.getEditTextValue(info_career_goal);
-		info_characterStr = CommUtil.getTextValue(info_character);
+		info_self_evaluationStr = getEditTextValue(info_self_evaluation);
+		info_career_goalStr = getEditTextValue(info_career_goal);
+		info_characterStr = getTextValue(info_character);
 	}
 	
 	/**
@@ -259,9 +259,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
-	 * 
 	 * @Description: 同步数据
-	 * @author Comsys-WH1510032
 	 */
 	private void syncData(final int style){ 
 		List<String> params = new ArrayList<String>();
@@ -278,7 +276,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				if (style == 1) {
 					syncRun(tokenId,2);
 				}else{
-					runOnUiThread(R.string.action_sync_success);
+					set3Msg(R.string.action_sync_success);
 				}
 			}
 			
@@ -369,17 +367,17 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			requestData("pro_set_evaluation", style, params, values, new HandlerData() {
 				@Override
 				public void error() {
-					runOnUiThread(R.string.action_sync_fail);
+					set3Msg(R.string.action_sync_fail);
 				}
 				
 				public void success(Map<String, List<String>> map) {
 					try {
 						if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
-							runOnUiThread(R.string.action_sync_success);
+							set3Msg(R.string.action_sync_success);
 						}
 					} catch (Exception e) {
+						set3Msg(R.string.action_sync_fail);
 						e.printStackTrace();
-						runOnUiThread(R.string.action_sync_fail);
 					}
 				}
 			});

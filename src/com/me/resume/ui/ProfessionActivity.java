@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +25,7 @@ import android.widget.TextView.OnEditorActionListener;
 import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
 import com.me.resume.comm.ProfessionListAdapter;
 import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.tools.L;
@@ -81,8 +83,11 @@ public class ProfessionActivity extends BaseActivity implements OnClickListener{
 					@Override
 					public boolean onChildClick(ExpandableListView parent, View v,
 							int groupPosition, int childPosition, long id) {
-						CommUtil.ToastMsg(self,childList.get(groupPosition).get(childPosition).toString());
-						return false;
+						Intent intent=new Intent();
+				        intent.putExtra(Constants.PROFESSIONNAME, childList.get(groupPosition).get(childPosition).toString());
+				        setResult(Constants.RESULT_CODE, intent);
+						scrollToFinishActivity();
+						return true;
 					}
 				});
 				
@@ -251,7 +256,7 @@ public class ProfessionActivity extends BaseActivity implements OnClickListener{
 	 * 查询按钮
 	 */
 	private void searchProfession(){
-		String keyword = CommUtil.getEditTextValue(index_search_edit);
+		String keyword = getEditTextValue(index_search_edit);
 		if (RegexUtil.checkNotNull(keyword)) {
 			whichTab = 1;
 			clearView.setVisibility(View.VISIBLE);

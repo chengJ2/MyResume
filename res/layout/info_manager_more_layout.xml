@@ -10,6 +10,7 @@
         style="@style/comm_listview_style"
         android:layout_marginLeft="@dimen/margin_8"
         android:layout_marginRight="@dimen/margin_8"
+        android:layout_marginBottom="@dimen/margin_10"
         android:divider="#00000000"
         android:dividerHeight="@dimen/margin_10"
         android:visibility="visible" />

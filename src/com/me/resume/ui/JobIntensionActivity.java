@@ -18,6 +18,7 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
+import com.me.resume.comm.ResponseCode;
 import com.me.resume.tools.L;
 import com.me.resume.tools.UUIDGenerator;
 import com.me.resume.utils.ActivityUtils;
@@ -233,11 +234,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			break;
 		case R.id.info_exp_workingproperty:
 			whichTab = 1;
-			item_values = CommUtil.getArrayValue(self,R.array.ji_workingproperty_values); 
-			mList = Arrays.asList(item_values);
-			DialogUtils.showPopWindow(self, info_exp_workingproperty, 
-					R.string.ji_info_expectedworkingproperty, mList, 
-					mHandler);
+			getValues(R.array.we_qwyx_values,info_exp_workingproperty,R.string.ji_info_expectedworkingproperty,mHandler);
 			break;
 		case R.id.info_expworkplace:
 			ActivityUtils.startActivityForResult(self, 
@@ -253,19 +250,11 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			break;
 		case R.id.info_expmonthlysalary:
 			whichTab = 4;
-			item_values = CommUtil.getArrayValue(self,R.array.we_qwyx_values); 
-			mList = Arrays.asList(item_values);
-			DialogUtils.showPopWindow(self, info_expmonthlysalary, 
-					R.string.ji_info_expectedmonthlysalary, mList, 
-					mHandler);
+			getValues(R.array.ji_qwyx_values,info_expmonthlysalary,R.string.ji_info_expectedmonthlysalary,mHandler);
 			break;
 		case R.id.info_workingstate:
 			whichTab = 5;
-			item_values = CommUtil.getArrayValue(self,R.array.ji_jobstatue_values); 
-			mList = Arrays.asList(item_values);
-			DialogUtils.showPopWindow(self, info_workingstate, 
-					R.string.ji_info_workingstate, mList, 
-					mHandler);
+			getValues(R.array.we_qwyx_values,info_workingstate,R.string.ji_info_workingstate,mHandler);
 			break;
 		case R.id.right_icon_more:
 			DialogUtils.showTopMenuDialog(self, topLayout,2, mHandler);
@@ -280,12 +269,12 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	 * 获取界面字段值
 	 */
 	private void getFieldValue(){
-		 info_exp_workingpropertyStr = CommUtil.getTextValue(info_exp_workingproperty);
-		 info_expworkplaceStr = CommUtil.getTextValue(info_expworkplace);
-		 info_expworkcareerStr = CommUtil.getTextValue(info_expworkcareer);
-		 info_expworkindustryStr = CommUtil.getTextValue(info_expworkindustry);
-		 info_expmonthlysalaryStr = CommUtil.getTextValue(info_expmonthlysalary);
-		 info_workingstateStr = CommUtil.getTextValue(info_workingstate);
+		 info_exp_workingpropertyStr = getTextValue(info_exp_workingproperty);
+		 info_expworkplaceStr = getTextValue(info_expworkplace);
+		 info_expworkcareerStr = getTextValue(info_expworkcareer);
+		 info_expworkindustryStr = getTextValue(info_expworkindustry);
+		 info_expmonthlysalaryStr = getTextValue(info_expmonthlysalary);
+		 info_workingstateStr = getTextValue(info_workingstate);
 	}
 	
 	/**
@@ -344,7 +333,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 				if (style == 1) {
 					syncRun(tokenId,2);
 				}else{
-					runOnUiThread(R.string.action_sync_success);
+					set3Msg(R.string.action_sync_success);
 				}
 			}
 			
@@ -447,16 +436,16 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			requestData("pro_set_jobintension", style, params, values, new HandlerData() {
 				@Override
 				public void error() {
-					runOnUiThread(R.string.action_sync_fail);
+					set3Msg(R.string.action_sync_fail);
 				}
 				
 				public void success(Map<String, List<String>> map) {
 					try {
-						if (map.get("msg").get(0).equals("200")) {
-							runOnUiThread(R.string.action_sync_success);
+						if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
+							set3Msg(R.string.action_sync_success);
 						}
 					} catch (Exception e) {
-						runOnUiThread(R.string.action_sync_fail);
+						set3Msg(R.string.action_sync_fail);
 					}
 				}
 			});
@@ -464,29 +453,25 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		
 	}
 	
-	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		L.d("onActivityResult"+"requestCode="+requestCode+" resultCode="+resultCode + " data:"+data);
         if(requestCode == Constants.JI_REQUEST_CODE) {
             if(resultCode == Constants.RESULT_CODE) {
-                String result = data.getStringExtra("name");
+                String result = data.getStringExtra(Constants.INDUSTRYTYPENAME);
                 info_expworkindustry.setText(result);
             }
         }else if(requestCode == Constants.JI_REQUEST_CODE2){
         	if(resultCode == Constants.RESULT_CODE) {
-                String city = data.getStringExtra("city");
+                String city = data.getStringExtra(Constants.CITY);
                 info_expworkplace.setText(city);
             }
         }else if(requestCode == Constants.JI_REQUEST_CODE3){
         	if(resultCode == Constants.RESULT_CODE) {
-//                String city = data.getStringExtra("city");
-//                info_expworkplace.setText(city);
+                String professionname = data.getStringExtra(Constants.PROFESSIONNAME);
+                info_expworkcareer.setText(professionname);
             }
         }
 		super.onActivityResult(requestCode, resultCode, data);
-		
 	}
-	
 	
 }

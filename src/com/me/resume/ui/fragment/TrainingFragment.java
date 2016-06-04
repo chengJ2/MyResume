@@ -168,26 +168,26 @@ public class TrainingFragment extends BaseFragment {
 	}
 	
 	public String getInfoStartTime(){
-		return CommUtil.getTextValue(info_startime);
+		return getTextValue(info_startime);
 	}
 	
 	public String getInfoEndTime(){
-		return CommUtil.getTextValue(info_endtime);
+		return getTextValue(info_endtime);
 	}
 	
 	public String getInfotrainingorganization(){
-		return CommUtil.getTextValue(info_trainingorganization);
+		return getTextValue(info_trainingorganization);
 	}
 	
 	public String getInfotrainingclass(){
-		return CommUtil.getTextValue(info_trainingclass);
+		return getTextValue(info_trainingclass);
 	}
 	
 	public String getInfocertificate(){
-		return CommUtil.getTextValue(info_certificate);
+		return getTextValue(info_certificate);
 	}
 	public String getInfodescription(){
-		return CommUtil.getTextValue(info_description);
+		return getTextValue(info_description);
 	}
 	
 	@Override

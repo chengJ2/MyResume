@@ -287,7 +287,7 @@ public class UserLoginActivity extends BaseActivity implements
 			return false;
 		}
 		
-		if(!CommUtil.getEditTextValue(passwordEt).equals(CommUtil.getEditTextValue(password2Et))){
+		if(!getEditTextValue(passwordEt).equals(getEditTextValue(password2Et))){
 			set3Msg(R.string.action_input_password_equal);
 			return false;
 		}

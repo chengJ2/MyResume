@@ -103,10 +103,9 @@ public class EducationFragment extends BaseFragment implements OnClickListener {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			if (intent.getAction().equals(Constants.EDUCATION_SEND)) {
-				String category = intent.getStringExtra("category");
+				String category = intent.getStringExtra(Constants.MAJORNAME);
 				setInfomajorname(category);
-			} else if (intent.getAction()
-					.equals(Constants.EDUCATION_RECEIVE_ED)) {
+			} else if (intent.getAction().equals(Constants.EDUCATION_RECEIVE_ED)) {
 				initData();
 			}
 
@@ -206,23 +205,23 @@ public class EducationFragment extends BaseFragment implements OnClickListener {
 	}
 
 	public String getInfoStartTime() {
-		return CommUtil.getTextValue(info_startime);
+		return getTextValue(info_startime);
 	}
 
 	public String getInfoEndTime() {
-		return CommUtil.getTextValue(info_endtime);
+		return getTextValue(info_endtime);
 	}
 
 	public String getInfoSchool() {
-		return CommUtil.getTextValue(info_school);
+		return getTextValue(info_school);
 	}
 
 	public String getInfomajorname() {
-		return CommUtil.getTextValue(info_majorname);
+		return getTextValue(info_majorname);
 	}
 
 	public String getInfodegree() {
-		return CommUtil.getTextValue(info_degree);
+		return getTextValue(info_degree);
 	}
 
 	public String getInfoexamination() {

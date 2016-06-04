@@ -2,9 +2,13 @@ package com.me.resume.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View.MeasureSpec;
 import android.widget.ListView;
 
+/**
+ * 控制ListView高度
+ * @author Administrator
+ *
+ */
 public class CustomListView extends ListView {
 
 	public CustomListView(Context context, AttributeSet attrs, int defStyle) {

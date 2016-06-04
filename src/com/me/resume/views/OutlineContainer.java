@@ -15,6 +15,11 @@ import android.widget.FrameLayout;
 
 import com.me.resume.R;
 
+/**
+ * 用于JazzyViewPager
+ * @author Administrator
+ *
+ */
 public class OutlineContainer extends FrameLayout implements Animatable {
 
 	private Paint mOutlinePaint;

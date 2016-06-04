@@ -19,6 +19,7 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
+import com.me.resume.comm.ResponseCode;
 import com.me.resume.tools.L;
 import com.me.resume.tools.UUIDGenerator;
 import com.me.resume.ui.fragment.AllFragmentFactory;
@@ -61,10 +62,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 							new String[]{uTokenId,getCheckColor(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						if(!MyApplication.USERID.equals("0")){
-							set2Msg(R.string.action_syncing);
-							syncData(cposition,1);
-						}
+						actionAync(0);
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -106,7 +104,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	private void actionAync(int position){
 		if (!MyApplication.USERID.equals("0")) {
 			if (CommUtil.isNetworkAvailable(self)) {
-				set3Msg(R.string.action_syncing,5*1000);
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 				syncData(position,1);
 			} else {
 				set3Msg(R.string.check_network);
@@ -183,7 +181,8 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			if(cposition == 0){ // 教育背景
 				if(judgeEduField()){
 					ContentValues cValues = new ContentValues();
-					cValues.put("tokenId", UUIDGenerator.getKUUID());
+					tokenId = UUIDGenerator.getKUUID();
+					cValues.put("tokenId", tokenId);
 					cValues.put("userId", uTokenId);
 					cValues.put("educationtimestart", info_starttimeStr);
 					cValues.put("educationtimeend", info_endtimeStr);
@@ -206,7 +205,8 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			}else{ // 培训经历
 				if(judgeTraField()){
 					ContentValues cValues = new ContentValues();
-					cValues.put("tokenId", UUIDGenerator.getKUUID());
+					tokenId = UUIDGenerator.getKUUID();
+					cValues.put("tokenId", tokenId);
 					cValues.put("userId", uTokenId);
 					cValues.put("trainingtimestart", info_starttimeStr);
 					cValues.put("trainingtimeend", info_endtimeStr);
@@ -363,7 +363,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				if (style == 1) {
 					syncRun(cposition,tokenId,2);
 				}else{
-					runOnUiThread(R.string.action_sync_success);
+					set3Msg(R.string.action_sync_success);
 				}
 			}
 			
@@ -530,16 +530,17 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				requestData("pro_set_education", style, params, values, new HandlerData() {
 					@Override
 					public void error() {
-						runOnUiThread(R.string.action_sync_fail);
+						set3Msg(R.string.action_sync_fail);
 					}
 					
 					public void success(Map<String, List<String>> map) {
 						try {
-							if (map.get("msg").get(0).equals("200")) {
-								runOnUiThread(R.string.action_sync_success);
+							if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
+								set3Msg(R.string.action_sync_success);
 								
 							}
 						} catch (Exception e) {
+							set3Msg(R.string.action_sync_fail);
 							e.printStackTrace();
 						}
 					}
@@ -567,15 +568,16 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				requestData("pro_set_training", style, params, values, new HandlerData() {
 					@Override
 					public void error() {
-						runOnUiThread(R.string.action_sync_fail);
+						set3Msg(R.string.action_sync_fail);
 					}
 					
 					public void success(Map<String, List<String>> map) {
 						try {
-							if (map.get("msg").get(0).equals("200")) {
-								runOnUiThread(R.string.action_sync_success);
+							if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
+								set3Msg(R.string.action_sync_success);
 							}
 						} catch (Exception e) {
+							set3Msg(R.string.action_sync_fail);
 							e.printStackTrace();
 						}
 					}
@@ -660,7 +662,11 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
        		KID = data.getStringExtra(Constants.TOKENID);
        		int cposition = data.getIntExtra(Constants.TAB, 0);
        		L.d("==KID==" + KID + "==cposition=="+cposition);
-       		// TODO
+       		if (cposition == 0) {
+       			getDataByToken(CommonText.EDUCATION,KID);
+			}else{
+				getDataByToken(CommonText.EDUCATION_TRAIN,KID);
+			}
        	 }
        }
 		super.onActivityResult(requestCode, resultCode, data);

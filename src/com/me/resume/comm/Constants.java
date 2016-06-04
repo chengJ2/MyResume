@@ -85,7 +85,7 @@ public class Constants {
     // 用户头像名 apk下载地址
     public static String FILENAME="avatar.jpg";
     
-    // apk下载路径
+    // apk下载本地路径
     public static String APKNAME="resume.apk";
     public static File APKPATH = new File(FileUtils.DOWNLOAD_APKPATH + File.separator + APKNAME); 
     
@@ -142,6 +142,9 @@ public class Constants {
     public static final String NOTICESHOW = "noticeshow";
     public static final String CITY = "city";
     public static final String CHARACTER = "character";
+    public static final String PROFESSIONNAME = "professionname";
+    public static final String INDUSTRYTYPENAME = "industrytypename";
+    public static final String MAJORNAME = "majorname";
     
     public static final String COVER = "cover";
     public static final String ISLOCAL = "islocal";

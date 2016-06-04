@@ -18,5 +18,7 @@ public class UserInfoCode {
     public static final String RESETPWD = "resetpwd";
     public static final String FORGOTPWD = "forgotpwd";
     
+    public static final String TOKENID = "tokenid"; // 多项数据的id
+    
     public static final String RESUMEUPDTIME = "resumeupdtime"; // 简历刷新时间
 }

@@ -189,7 +189,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 		setEditBtnVisible(View.GONE);
 		setAddBtnSrc(R.drawable.ic_btn_home);
 		
-		if (CommUtil.textIsNull(info_language)) {
+		if (textIsNull(info_language)) {
 			info_literacyskills.setEnabled(false);
 			info_listeningspeaking.setEnabled(false);
 		}else{
@@ -262,19 +262,19 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 	}
 	
 	private void getlangFeild(){
-		info_languageStr = CommUtil.getTextValue(info_language);
-		info_literacyskillsStr = CommUtil.getTextValue(info_literacyskills);
-		info_listeningspeakingStr = CommUtil.getTextValue(info_listeningspeaking);
+		info_languageStr = getTextValue(info_language);
+		info_literacyskillsStr = getTextValue(info_literacyskills);
+		info_listeningspeakingStr = getTextValue(info_listeningspeaking);
 	}
 	
 	private void getCertFeild(){
-		info_certificateStr = CommUtil.getTextValue(info_certificate);
-		info_certificatetimesStr = CommUtil.getTextValue(info_certificatetime);
+		info_certificateStr = getTextValue(info_certificate);
+		info_certificatetimesStr = getTextValue(info_certificatetime);
 	}
 
 	private void getOtherFeild(){
-		info_titleStr = CommUtil.getTextValue(info_title);
-		info_descriptionStr = CommUtil.getTextValue(info_description);
+		info_titleStr = getTextValue(info_title);
+		info_descriptionStr = getTextValue(info_description);
 	}
 	
 	@Override
@@ -284,17 +284,17 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 		case R.id.info_language:
 			whichTab = 1;
 			getValues(R.array.oi_wysp_values, info_language,
-					R.string.ot_info_language);
+					R.string.ot_info_language,mHandler);
 			break;
 		case R.id.info_literacyskills:
 			whichTab = 2;
 			getValues(R.array.oi_tsdx_values, info_literacyskills,
-					R.string.ot_info_literacyskills);
+					R.string.ot_info_literacyskills,mHandler);
 			break;
 		case R.id.info_listeningspeaking:
 			whichTab = 3;
 			getValues(R.array.oi_tsdx_values, info_listeningspeaking,
-					R.string.ot_info_listeningspeaking);
+					R.string.ot_info_listeningspeaking,mHandler);
 			break;
 		case R.id.ot_languages_add:
 			actionFlag = 1;
@@ -402,14 +402,14 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.info_certificate:
 			whichTab = 4;
-			getValues(R.array.oi_certificatetype_values,info_certificate,R.string.ot_info_certificate);
+			getValues(R.array.oi_certificatetype_values,info_certificate,R.string.ot_info_certificate,mHandler);
 			break;
 		case R.id.info_certificatetime:
 			DialogUtils.showTimeChooseDialog(self, info_certificatetime,R.string.ot_info_getcertificatetime,13,mHandler);
 			break;
 		case R.id.info_title:
 			whichTab = 5;
-			getValues(R.array.oi_topic_values,info_title,R.string.ot_info_choose_title);
+			getValues(R.array.oi_topic_values,info_title,R.string.ot_info_choose_title,mHandler);
 			break;
 		case R.id.right_icon_more:
 			DialogUtils.showTopMenuDialog(self, topLayout,1, mHandler);
@@ -494,7 +494,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 				if (style == 1) {
 					syncRun(menu,tokenId,2);
 				}else{
-					runOnUiThread(R.string.action_sync_success);
+					set3Msg(R.string.action_sync_success);
 				}
 			}
 			
@@ -669,15 +669,16 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 		requestData(procName, style, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				runOnUiThread(R.string.action_sync_fail);
+				set3Msg(R.string.action_sync_fail);
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
 					if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
-						runOnUiThread(R.string.action_sync_success);
+						set3Msg(R.string.action_sync_success);
 					}
 				} catch (Exception e) {
+					set3Msg(R.string.action_sync_fail);
 					e.printStackTrace();
 				}
 			}

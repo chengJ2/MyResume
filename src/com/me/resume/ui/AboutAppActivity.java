@@ -36,7 +36,7 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 		contactus = findView(R.id.contactus);
 		declare = findView(R.id.declare);
 		StringBuffer sbStr = new StringBuffer();
-		sbStr.append("微&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;信:");
+		sbStr.append("微&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;信:");
 		sbStr.append("<font color=\"red\">");
 		sbStr.append("&#160;&#160;ppp_cj_qqq");
 		sbStr.append("</font>");
@@ -46,7 +46,7 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 		sbStr.append("&#160;&#160;1042838789");
 		sbStr.append("</font>");
 		sbStr.append("<br/>");
-		sbStr.append("邮&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;箱:");
+		sbStr.append("邮&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;箱:");
 		sbStr.append("<font color=\"red\">");
 		sbStr.append("&#160;&#160;sandy_cj910@163.com");
 		sbStr.append("</font>");

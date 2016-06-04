@@ -346,11 +346,11 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.info_maritalstatus:
 			whichTab = 1;
-			getValues(R.array.ba_maritalstatus_values,info_maritalstatus,R.string.info_maritalstatus);
+			getValues(R.array.ba_maritalstatus_values,info_maritalstatus,R.string.info_maritalstatus,mHandler);
 			break;
 		case R.id.info_politicalstatus:
 			whichTab = 2;
-			getValues(R.array.ba_politicalstatus_values,info_politicalstatus,R.string.info_politicalstatus);
+			getValues(R.array.ba_politicalstatus_values,info_politicalstatus,R.string.info_politicalstatus,mHandler);
 			break;
 		case R.id.next:
 			goActivity(Constants.WORKEXPERIENCE);
@@ -499,16 +499,16 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	 * @Description: 获取界面字段值
 	 */
 	private void getFeildValue(){
-		info_realnameStr = CommUtil.getEditTextValue(info_realname);
-		info_phoneStr = CommUtil.getEditTextValue(info_phone);
-		info_emailStr = CommUtil.getEditTextValue(info_email);
-		info_nationalityStr = CommUtil.getEditTextValue(info_nationality);
-		info_licenseStr = CommUtil.getEditTextValue(info_license);
+		info_realnameStr = getEditTextValue(info_realname);
+		info_phoneStr = getEditTextValue(info_phone);
+		info_emailStr = getEditTextValue(info_email);
+		info_nationalityStr = getEditTextValue(info_nationality);
+		info_licenseStr = getEditTextValue(info_license);
 
-		info_brithdayStr = CommUtil.getTextValue(info_brithday);
-		info_workyearStr = CommUtil.getTextValue(info_workyear);
-		info_hometownStr = CommUtil.getTextValue(info_hometown);
-		info_cityStr = CommUtil.getTextValue(info_city);
+		info_brithdayStr = getTextValue(info_brithday);
+		info_workyearStr = getTextValue(info_workyear);
+		info_hometownStr = getTextValue(info_hometown);
+		info_cityStr = getTextValue(info_city);
 	}
 	
 	/**
@@ -587,15 +587,16 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			requestData("pro_set_baseinfo", style, params, values, new HandlerData() {
 				@Override
 				public void error() {
-					runOnUiThread(R.string.action_sync_fail);
+					set3Msg(R.string.action_sync_fail);
 				}
 				
 				public void success(Map<String, List<String>> map) {
 					try {
 						if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
-							runOnUiThread(R.string.action_sync_success);
+							set3Msg(R.string.action_sync_success);
 						}
 					} catch (Exception e) {
+						set3Msg(R.string.action_sync_fail);
 						e.printStackTrace();
 					}
 				}

@@ -55,7 +55,7 @@
                 <GridView
                     android:id="@+id/hotaddress_gridview"
                     style="@style/home_content_grilview"
-                    android:layout_marginTop="0dip"
+                    android:layout_marginTop="@dimen/margin_10"
                     android:layout_height="140dip"
                     android:background="#00000000"
                     android:numColumns="4" >

@@ -195,11 +195,11 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	 * 获得字段值
 	 */
 	private void getFieldValue(){
-		info_projectnameStr = CommUtil.getEditTextValue(info_projectname);
-		info_workdutiesStr = CommUtil.getEditTextValue(info_workduties);
-		input_workdescStr = CommUtil.getEditTextValue(input_workdesc);
-		info_startworktimeStr = CommUtil.getTextValue(info_startworktime);
-		info_endworktimeStr = CommUtil.getTextValue(info_endworktime);
+		info_projectnameStr = getEditTextValue(info_projectname);
+		info_workdutiesStr = getEditTextValue(info_workduties);
+		input_workdescStr = getEditTextValue(input_workdesc);
+		info_startworktimeStr = getTextValue(info_startworktime);
+		info_endworktimeStr = getTextValue(info_endworktime);
 	}
 	
 	/**
@@ -337,15 +337,16 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 			requestData("pro_set_projectexpericnce", style, params, values, new HandlerData() {
 				@Override
 				public void error() {
-					runOnUiThread(R.string.action_sync_fail);
+					set3Msg(R.string.action_sync_fail);
 				}
 				
 				public void success(Map<String, List<String>> map) {
 					try {
 						if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
-							runOnUiThread(R.string.action_sync_success);
+							set3Msg(R.string.action_sync_success);
 						}
 					} catch (Exception e) {
+						set3Msg(R.string.action_sync_fail);
 						e.printStackTrace();
 					}
 				}
