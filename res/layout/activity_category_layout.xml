@@ -18,13 +18,13 @@
         <TextView
             android:id="@+id/category"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:gravity="left|center"
             android:text="管理科学与工程类"
-            android:textColor="@color/grey_10"
-            android:textSize="@dimen/small_text_size"/>
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_middle_text_size"/>
 
         <Button
             android:id="@+id/backCate_btn"
@@ -38,10 +38,13 @@
             android:text="上一级"/>
     </RelativeLayout>
 
-    <View style="@style/line3" />
     
     <ListView
         android:id="@+id/category_Listview"
-        style="@style/comm_listview_style" />
+        style="@style/comm_listview_style"
+        android:layout_marginTop="0dip"
+        android:paddingLeft="@dimen/margin_10"
+        android:paddingRight="@dimen/margin_10"
+        android:background="@color/grey_30" />
 
 </LinearLayout>

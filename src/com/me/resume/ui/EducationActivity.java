@@ -659,14 +659,15 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if(requestCode == Constants.ED_MANAGER_REQUEST_CODE){
        	 if(resultCode == Constants.RESULT_CODE) {
-       		KID = data.getStringExtra(Constants.TOKENID);
-       		int cposition = data.getIntExtra(Constants.TAB, 0);
+       		tokenId = data.getStringExtra(Constants.TOKENID);
+       		/*int cposition = data.getIntExtra(Constants.TAB, 0);
        		L.d("==KID==" + KID + "==cposition=="+cposition);
        		if (cposition == 0) {
        			getDataByToken(CommonText.EDUCATION,KID);
-			}else{
-				getDataByToken(CommonText.EDUCATION_TRAIN,KID);
-			}
+       			
+//				getDataByToken(CommonText.EDUCATION_TRAIN,KID);
+				
+			}*/
        	 }
        }
 		super.onActivityResult(requestCode, resultCode, data);

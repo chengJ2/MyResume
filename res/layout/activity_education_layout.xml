@@ -12,7 +12,7 @@
 	    android:layout_centerHorizontal="true"
 	    android:layout_below="@id/msg"
 	    android:orientation="horizontal"
-	    android:layout_marginTop="5dip">
+	    android:layout_marginTop="@dimen/margin_10">
        
          <com.me.resume.views.SegmentButton
 	        android:id="@+id/segment_button"

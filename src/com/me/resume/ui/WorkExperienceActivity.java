@@ -488,7 +488,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
         }else if(requestCode == Constants.WE_MANAGER_REQUEST_CODE){
         	 if(resultCode == Constants.RESULT_CODE) {
         		 tokenId = data.getStringExtra(UserInfoCode.TOKENID);
-        		 refeshData(); 
+        		 refreshData(); 
      		}
         }
 		super.onActivityResult(requestCode, resultCode, data);
@@ -498,10 +498,9 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	/**
 	 * 从管理界面返回刷新数据
 	 */
-	private void refeshData() {
+	private void refreshData() {
 		queryWhere = "select * from " + CommonText.WORKEXPERIENCE
-				+ " where userId = '" + uTokenId + "' and tokenId ='" + tokenId
-				+ "' limit 1";
+				+ " where userId = '" + uTokenId + "' and tokenId ='" + tokenId + "' limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			setFeildValue();

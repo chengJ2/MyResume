@@ -31,7 +31,6 @@ import com.whjz.android.text.CommonText;
  * 
  * @ClassName: EducationFragment
  * @Description: 教育背景
- * @author Comsys-WH1510032
  * @date 2016/4/6 下午1:55:32
  * 
  */
@@ -107,6 +106,9 @@ public class EducationFragment extends BaseFragment implements OnClickListener {
 				setInfomajorname(category);
 			} else if (intent.getAction().equals(Constants.EDUCATION_RECEIVE_ED)) {
 				initData();
+			}else if (intent.getAction().equals(Constants.MANAGER_EDUCATION_RECEIVE_ED)) {
+				String tokenId = intent.getStringExtra(Constants.TOKENID);
+				refreshData(tokenId);
 			}
 
 		}
@@ -114,7 +116,27 @@ public class EducationFragment extends BaseFragment implements OnClickListener {
 
 	private void initData() {
 		queryWhere = "select * from " + CommonText.EDUCATION
-				+ " where userId  = '" + BaseActivity.uTokenId + "' order by id desc limit 1";
+				+ " where userId = '" + BaseActivity.uTokenId + "' order by id desc limit 1";
+		commap = dbUtil.queryData(getActivity(), queryWhere);
+		if (commap != null && commap.get("userId").length > 0) {
+			eduId = commap.get("tokenId")[0];
+			setInfoStartTime(commap.get("educationtimestart")[0]);
+			setInfoEndTime(commap.get("educationtimeend")[0]);
+			setInfoSchool(commap.get("school")[0]);
+			setInfomajorname(commap.get("majorname")[0]);
+			setInfodegree(commap.get("degree")[0]);
+			setInfoexamination(commap.get("examination")[0]);
+		}
+
+	}
+	
+	/**
+	 * 刷新UI
+	 * @param tokenId
+	 */
+	private void refreshData(String tokenId) {
+		queryWhere = "select * from " + CommonText.EDUCATION
+				+ " where userId = '" + BaseActivity.uTokenId + "' and tokenId ='" + tokenId + "' limit 1";
 		commap = dbUtil.queryData(getActivity(), queryWhere);
 		if (commap != null && commap.get("userId").length > 0) {
 			eduId = commap.get("tokenId")[0];
@@ -132,6 +154,7 @@ public class EducationFragment extends BaseFragment implements OnClickListener {
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Constants.EDUCATION_SEND);
 		filter.addAction(Constants.EDUCATION_RECEIVE_ED);
+		filter.addAction(Constants.MANAGER_EDUCATION_RECEIVE_ED);
 		getActivity().registerReceiver(educationReceiver, filter);
 	}
 
@@ -141,7 +164,6 @@ public class EducationFragment extends BaseFragment implements OnClickListener {
 	}
 
 	private void initview(View view) {
-		// TODO Auto-generated method stub
 		info_startime = (TextView) view.findViewById(R.id.info_startworktime);
 		info_endtime = (TextView) view.findViewById(R.id.info_endworktime);
 		info_school = (EditText) view.findViewById(R.id.info_school);
@@ -160,7 +182,6 @@ public class EducationFragment extends BaseFragment implements OnClickListener {
 
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				// TODO Auto-generated method stub
 				if (checkedId == rb_examination1.getId()) {
 					rg_examinationStr = "0";
 				} else if (checkedId == rb_examination2.getId()) {

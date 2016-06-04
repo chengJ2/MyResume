@@ -17,15 +17,13 @@ import android.widget.TextView;
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
-import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.whjz.android.text.CommonText;
 
 /**
  * 
 * @ClassName: EducationFragment 
-* @Description: 教育背景 
-* @author Comsys-WH1510032 
+* @Description: 培训经历 
 * @date 2016/4/6 下午1:55:32 
 *
  */
@@ -111,6 +109,7 @@ public class TrainingFragment extends BaseFragment {
 	private void registerReceiver(){
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Constants.EDUCATION_RECEIVE_TR);
+		filter.addAction(Constants.MANAGER_EDUCATION_RECEIVE_TR);
 		getActivity().registerReceiver(trainReceiver, filter);
 	}
 	
@@ -120,12 +119,29 @@ public class TrainingFragment extends BaseFragment {
 		public void onReceive(Context context, Intent intent) {
 			if(intent.getAction().equals(Constants.EDUCATION_RECEIVE_TR)){
 				initData();
+			}else if (intent.getAction().equals(Constants.MANAGER_EDUCATION_RECEIVE_TR)) {
+				String tokenId = intent.getStringExtra(Constants.TOKENID);
+				refreshData(tokenId);
 			}
 	}};
 	
 	
 	private void initData() {
 		queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc limit 1";
+		commap = dbUtil.queryData(getActivity(), queryWhere);
+		if (commap!= null && commap.get("userId").length > 0) {
+			trId = commap.get("tokenId")[0];
+			setInfoStartTime(commap.get("trainingtimestart")[0]);
+			setInfoEndTime(commap.get("trainingtimeend")[0]);
+			setInfotrainingorganization(commap.get("trainingorganization")[0]);
+			setInfotrainingclass(commap.get("trainingclass")[0]);
+			setInfocertificate(commap.get("certificate")[0]);
+			setInfodescription(commap.get("description")[0]);
+		}
+	}
+	
+	private void refreshData(String tokenId) {
+		queryWhere = "select * from " + CommonText.EDUCATION_TRAIN + " where userId = '"+ BaseActivity.uTokenId +"' and tokenId ='" + tokenId + "' limit 1";
 		commap = dbUtil.queryData(getActivity(), queryWhere);
 		if (commap!= null && commap.get("userId").length > 0) {
 			trId = commap.get("tokenId")[0];

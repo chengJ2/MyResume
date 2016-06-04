@@ -60,8 +60,10 @@ public class Constants {
 	public static final int EV_REQUEST_CODE = 5000;
 	
 	public static final String EDUCATION_SEND = "com.me.resume.education.send";
-	public static final String EDUCATION_RECEIVE_ED = "com.me.resume.education_receive_ed";
-	public static final String EDUCATION_RECEIVE_TR = "com.me.resume.education_receive_tr";
+	public static final String EDUCATION_RECEIVE_ED = "com.me.resume.education";
+	public static final String MANAGER_EDUCATION_RECEIVE_ED = "com.me.resume.education.manager";
+	public static final String EDUCATION_RECEIVE_TR = "com.me.resume.training";
+	public static final String MANAGER_EDUCATION_RECEIVE_TR = "com.me.resume.training.manager";
 	
 	// 本地db文件  
 	public static final String DATABASE_FILENAME = "resume.db"; // DB文件 

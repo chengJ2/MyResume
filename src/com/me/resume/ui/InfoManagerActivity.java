@@ -132,12 +132,14 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 	private void initData(final String type) {
 		int layoutID = 0;
 		if (type.equals(CommonText.EDUCATION)) {
-			setTopTitle(R.string.resume_educationtraining);
+			
 			tab = getIntent().getIntExtra(Constants.TAB, 0);
 			L.d("==tab=="+tab);
 			if (tab == 0) {
+				setTopTitle(R.string.resume_education);
 				tableName = CommonText.EDUCATION;
 			}else{
+				setTopTitle(R.string.resume_training);
 				tableName = CommonText.EDUCATION_TRAIN;
 			}
 		}else if(type.equals(CommonText.WORKEXPERIENCE)){
@@ -222,7 +224,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			if(RegexUtil.checkNotNull(info2)){
 				sbStr.append("<strong>培训描述：</strong>"+ info2 );
 			}
-			holder.setText(R.id.item11, info2.toString());
+			holder.setTextForHtml(R.id.item12, sbStr.toString());
 			
 		}
 		final String tokenId = commMapArray.get("tokenId")[position];
@@ -238,10 +240,15 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 
 			@Override
 			public void onClick(View view) {
-				Intent intent=new Intent();
-		        intent.putExtra(Constants.TOKENID, tokenId);
-		        intent.putExtra(Constants.TAB, tab);
-		        setResult(Constants.RESULT_CODE, intent);
+		        Intent intent=new Intent();
+				intent.putExtra(Constants.TOKENID, tokenId);
+				if (tab == 0) {
+					intent.setAction(Constants.MANAGER_EDUCATION_RECEIVE_ED);
+				}else{
+					intent.setAction(Constants.MANAGER_EDUCATION_RECEIVE_TR);
+				}
+				sendBroadcast(intent);
+		        
 				scrollToFinishActivity();
 			}
 		});

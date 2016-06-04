@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -79,7 +81,11 @@ public class MajorActivity extends BaseActivity implements OnClickListener{
 		catelayout = findView(R.id.catelayout);
 		category =  findView(R.id.category);
 		backCate = findView(R.id.backCate_btn);
+		
+		catelayout.setVisibility(View.GONE);
+		
 		category_Listview = findView(R.id.category_Listview);
+		category_Listview.setVisibility(View.VISIBLE);
 		
 		backCate.setOnClickListener(this);
 		
@@ -89,45 +95,51 @@ public class MajorActivity extends BaseActivity implements OnClickListener{
 	/**
 	 * 
 	 * @Title:AddressActivity
-	 * @Description: 显示热门城市
+	 * @Description: 显示专业类别
 	 */
-	private void fillCategory(List<String> mList,final int flag){
-		CommonBaseAdapter<String> commAdapter = new CommonBaseAdapter<String>(self, mList,
-				R.layout.home_xgln_listview) {
+	private void fillCategory(final List<String> mList,final int flag){
+//		if (commStrAdapter == null) {
+			commStrAdapter = new CommonBaseAdapter<String>(self, mList,
+					R.layout.home_xgln_listview) {
+				
+				@Override
+				public void convert(ViewHolder holder, String item,
+						final int position) {
+					String[] data = mList.get(position).split(";");
+					holder.setText(R.id.itemName, data[1]);
+				}
+			};
+			category_Listview.setAdapter(commStrAdapter);
+//		}else{
+//			commStrAdapter.notifyDataSetChanged();
+//			category_Listview.invalidate();
+//		}
+
+		category_Listview.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void convert(ViewHolder holder, String item,
-					final int position) {
-				final String[] data = mList.get(position).split("#");
-				holder.setText(R.id.itemName, data[1]);
-
-				holder.setOnClickEvent(R.id.itemName, new ClickEvent() {
-
-					@Override
-					public void onClick(View view) {
-						if (flag == 2) {
-							Intent intent=new Intent();
-							intent.putExtra(Constants.MAJORNAME, data[1]);
-							intent.setAction(Constants.EDUCATION_SEND);
-			           		sendBroadcast(intent);
-							scrollToFinishActivity();
-						}else{
-							catelayout.setVisibility(View.VISIBLE);
-							category.setText(data[1]);
-							mHandler.sendMessage(mHandler.obtainMessage(12, data[0]));
-						}
-					}
-				});
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
+				String[] data = mList.get(position).split(";");
+				if (flag == 2) {
+					Intent intent=new Intent();
+					intent.putExtra(Constants.MAJORNAME, data[1]);
+					intent.setAction(Constants.EDUCATION_SEND);
+					sendBroadcast(intent);
+					scrollToFinishActivity();
+				}else{
+					catelayout.setVisibility(View.VISIBLE);
+					category.setText(data[1]);
+					mHandler.sendMessage(mHandler.obtainMessage(12, data[0]));
+				}
 			}
-		};
-
-		category_Listview.setAdapter(commAdapter);
+		});
 	}
 	
 	/**
 	 * 
 	 * @Title:AddressActivity
-	 * @Description: 获取专业
+	 * @Description: 获取专业类别
 	 * @return List<String> 
 	 */
 	private void getMajor(){
@@ -143,7 +155,7 @@ public class MajorActivity extends BaseActivity implements OnClickListener{
 					if (cursor.getCount() > 0) {
 						while (cursor.moveToNext()) {
 							mList.add(cursor.getString(cursor.getColumnIndex("id")) 
-									+ "#" +cursor.getString(cursor.getColumnIndex("chinaname")));
+									+ ";" +cursor.getString(cursor.getColumnIndex("chinaname")));
 						}
 						mHandler.sendMessage(mHandler.obtainMessage(11, mList));
 					}
@@ -176,7 +188,7 @@ public class MajorActivity extends BaseActivity implements OnClickListener{
 					if (cursor.getCount() > 0) {
 						while (cursor.moveToNext()) {
 							mList.add(cursor.getString(cursor.getColumnIndex("cateId")) 
-									+ "#" +cursor.getString(cursor.getColumnIndex("cateChinaname")));
+									+ ";" +cursor.getString(cursor.getColumnIndex("cateChinaname")));
 						}
 						mHandler.sendMessage(mHandler.obtainMessage(13, mList));
 					}
@@ -188,7 +200,7 @@ public class MajorActivity extends BaseActivity implements OnClickListener{
 					}
 				}
 			}
-		},500);
+		},200);
 	}
 	
 	@Override
