@@ -212,8 +212,8 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		info_city = findView(R.id.info_city);
 		
 		radioman.setChecked(true);
-		info_maritalstatus.setText(CommUtil.getStrValue(self, R.string.info_maritalstatus_1));
-		info_politicalstatus.setText(CommUtil.getStrValue(self, R.string.info_politicalstatus_1));
+		info_maritalstatus.setText(getStrValue(R.string.info_maritalstatus_1));
+		info_politicalstatus.setText(getStrValue(R.string.info_politicalstatus_1));
 		
 		info_brithday.setOnClickListener(this);
 		info_workyear.setOnClickListener(this);

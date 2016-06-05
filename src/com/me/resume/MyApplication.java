@@ -8,16 +8,16 @@ import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.DisplayMetrics;
 
+import com.me.resume.comm.Constants;
 import com.me.resume.tools.CrashHandler;
 import com.me.resume.tools.DbManager;
-import com.me.resume.tools.FontsOverride;
 import com.me.resume.tools.L;
+import com.me.resume.utils.PreferenceUtil;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * 
-* @ClassName: MyApplication 
 * @Description: 全局Application
-* @author Comsys-WH1510032 
 * @date 2016/4/18 下午4:17:22 
 *
  */
@@ -58,10 +58,7 @@ public class MyApplication extends Application {
     */
    public static String USERAVATORPATH = "";
    
-   /**
-    * 栏目id
-    */
-//   public static String KID = "0";
+   private PreferenceUtil preferenceUtil = null;
    
 	@Override
 	public void onCreate() {
@@ -71,14 +68,17 @@ public class MyApplication extends Application {
 	}
 	
 	private void init() {
-//		LanguageSettings.getInstance().initLang(this);
-		
 		database = DbManager.openDatabase(this);
-		
 		Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(this));
 		
-//		CrashReport.initCrashReport(getApplicationContext(), "900025676", true);
+		if (preferenceUtil == null) {
+			preferenceUtil = new PreferenceUtil(application);
+		}
+		if (preferenceUtil.getPreferenceData(Constants.SET_FEEDBACK)) {
+			CrashReport.initCrashReport(getApplicationContext(), Constants.APP_CRASH_ID, true);
+		}
     	
+//		LanguageSettings.getInstance().initLang(this);
 //    	FontsOverride.setDefaultFont(this, "SERIF", "fonts/Roboto-Medium.ttf");
 	}
 

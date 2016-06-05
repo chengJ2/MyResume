@@ -171,11 +171,17 @@
     <string name="personal_c_item1">我的收藏</string>
     <string name="personal_c_item2">行事历</string>
     <string name="personal_c_item3">预览简历</string>
-    <string name="personal_c_item11">完整</string>
+    <string name="personal_c_item11">已完整</string>
     <string name="personal_c_item12">完整度</string>
+    <string name="personal_c_item13">未填写</string>
+    <string name="personal_c_item14">完整度:%d%%</string>
+    <string name="personal_c_item15">已有%d项经验</string>
+    <string name="personal_c_item16">上次更新:%tF%</string>
+    <string name="personal_c_item17">|应届生</string>
+    <string name="personal_c_item18">|%d年工作经验</string>
     
     <!-- UI button click msg -->
-    <string name="action_notice">提&#160;示</string>
+    <string name="action_notice">提&#160;&#160;示</string>
     <string name="action_add_success">新增成功</string>
     <string name="action_add_fail">新增失败</string>
     <string name="action_edit_success">编辑成功</string>
@@ -183,7 +189,7 @@
     <string name="action_update_success">更新成功</string>
     <string name="action_update_fail">更新失败,请重试</string>
     <string name="action_favorites">收藏</string>
-    <string name="action_submit">提&#160;交</string>
+    <string name="action_submit">提&#160;&#160;交</string>
     <string name="action_delete_success">删除成功</string>
     <string name="action_delete_fail">删除失败,请重试</string>
 	<string name="action_button_cancle">取&#160;&#160;消</string>
@@ -200,7 +206,7 @@
     <string name="show_button_sure">确&#160;&#160;定</string>
     <string name="button_use">使&#160;用</string>
     <string name="button_downloading">下载中</string>
-    <string name="button_canuse">启用</string>
+    <string name="button_canuse">启&#160;用</string>
     <string name="button_useing">已启用</string>
     <string name="button_delete">删&#160;除</string>
     <string name="button_update">更&#160;新</string>
@@ -377,9 +383,9 @@
     <string name="ot_info_input_certificate">请选择证书</string>
     <string name="ot_info_getcertificatetime">获得时间</string>
     <string name="ot_info_choose_getcertificatetime">请选择获得时间</string>
-    <string name="ot_info_title">标题</string>
+    <string name="ot_info_title">标&#160;&#160;题</string>
     <string name="ot_info_choose_title">请选择标题</string>
-    <string name="ot_info_description">描述</string>
+    <string name="ot_info_description">描&#160;&#160;述</string>
     <string name="ot_info_input_description">请输入描述信息</string>
     <!-- 其他信息 -->
 

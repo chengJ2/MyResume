@@ -183,9 +183,9 @@ public class EducationFragment extends BaseFragment implements OnClickListener {
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				if (checkedId == rb_examination1.getId()) {
-					rg_examinationStr = "0";
-				} else if (checkedId == rb_examination2.getId()) {
 					rg_examinationStr = "1";
+				} else if (checkedId == rb_examination2.getId()) {
+					rg_examinationStr = "0";
 				}
 			}
 		});

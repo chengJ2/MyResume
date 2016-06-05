@@ -28,6 +28,7 @@
 	        android:layout_height="fill_parent"
 	        android:layout_weight="5"
 	        android:src="@drawable/checkbox_nor"
-	        android:scaleType="centerInside" />
+	        android:scaleType="centerInside" 
+	        android:visibility="gone"/>
     </LinearLayout>
 </LinearLayout>

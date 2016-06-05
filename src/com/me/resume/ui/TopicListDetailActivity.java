@@ -96,7 +96,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		topicdetailListView.setXListViewListener(this);
 		
 		nodata = findView(R.id.nodata);
-		nodata.setText(CommUtil.getStrValue(self,R.string.item_text43));
+		nodata.setText(getStrValue(R.string.item_text43));
 		nodata.setVisibility(View.VISIBLE);
 		
 		commMapList = new HashMap<String, List<String>>();

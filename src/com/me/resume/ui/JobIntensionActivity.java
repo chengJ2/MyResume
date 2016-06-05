@@ -1,7 +1,6 @@
 package com.me.resume.ui;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +18,6 @@ import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ResponseCode;
-import com.me.resume.tools.L;
 import com.me.resume.tools.UUIDGenerator;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -131,15 +129,15 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		setTopTitle(R.string.resume_jobintension);
 		setMsgHide();
 		setRight2IconVisible(View.VISIBLE);
-		
 		setfabLayoutVisible(View.VISIBLE);
 		setEditBtnVisible(View.GONE);
+		
+		setFeildValue();
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		setFeildValue();
 	}
 	
 	private boolean getJobIntensionData(){
@@ -254,7 +252,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			break;
 		case R.id.info_workingstate:
 			whichTab = 5;
-			getValues(R.array.we_qwyx_values,info_workingstate,R.string.ji_info_workingstate,mHandler);
+			getValues(R.array.ji_jobstatue_values,info_workingstate,R.string.ji_info_workingstate,mHandler);
 			break;
 		case R.id.right_icon_more:
 			DialogUtils.showTopMenuDialog(self, topLayout,2, mHandler);
@@ -291,26 +289,25 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			return false;
 		}
 		
-//		if (!RegexUtil.checkNotNull(info_expworkcareerStr)) {
-//			msg.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedworkcareer) + fieldNull);
-//			msg.setVisibility(View.VISIBLE);
+		if (!RegexUtil.checkNotNull(info_expworkcareerStr)) {
+			setMsg(R.string.ji_info_expectedworkcareer);
+			return false;
+		}
+		
+//		if (!RegexUtil.checkNotNull(info_expworkindustryStr)) {
+//			setMsg(R.string.ji_info_expectedworkindustry);
 //			return false;
 //		}
 		
-		if (!RegexUtil.checkNotNull(info_expworkindustryStr)) {
-			setMsg(R.string.ji_info_expectedworkindustry);
-			return false;
-		}
+//		if (!RegexUtil.checkNotNull(info_expmonthlysalaryStr)) {
+//			setMsg(R.string.ji_info_expectedmonthlysalary);
+//			return false;
+//		}
 		
-		if (!RegexUtil.checkNotNull(info_expmonthlysalaryStr)) {
-			setMsg(R.string.ji_info_expectedmonthlysalary);
-			return false;
-		}
-		
-		if (!RegexUtil.checkNotNull(info_workingstateStr)) {
-			setMsg(R.string.ji_info_choose_workingstate);
-			return false;
-		}
+//		if (!RegexUtil.checkNotNull(info_workingstateStr)) {
+//			setMsg(R.string.ji_info_choose_workingstate);
+//			return false;
+//		}
 		return true;
 	}
 	

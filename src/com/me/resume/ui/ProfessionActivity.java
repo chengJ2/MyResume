@@ -135,15 +135,15 @@ public class ProfessionActivity extends BaseActivity implements OnClickListener{
 		
 		msgText = findView(R.id.msgText);
 		msgText.setVisibility(View.VISIBLE);
-		msgText.setText(CommUtil.getStrValue(self, R.string.item_text43));
+		msgText.setText(getStrValue(R.string.item_text43));
 		
 		clearView.setOnClickListener(this);
 		search_cancle.setOnClickListener(this);
 	}
 	
 	private void searchEdit(){
-		index_search_edit.setHint(CommUtil.getStrValue(self, R.string.hint_profession_text));
-		index_search_edit.setHintTextColor(CommUtil.getColorValue(self, R.color.grey));
+		index_search_edit.setHint(getStrValue(R.string.hint_profession_text));
+		index_search_edit.setHintTextColor(getColorValue(R.color.grey));
 		index_search_edit.requestFocus();
 		index_search_edit.addTextChangedListener(new TextWatcher() {
 			

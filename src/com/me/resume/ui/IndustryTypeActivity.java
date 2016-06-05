@@ -102,7 +102,7 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 	}
 	
 	private void searchEdit(){
-		index_search_edit.setHint(CommUtil.getStrValue(self, R.string.hint_industry_text));
+		index_search_edit.setHint(getStrValue(R.string.hint_industry_text));
 		index_search_edit.requestFocus();
 		index_search_edit.addTextChangedListener(new TextWatcher() {
 			

@@ -26,9 +26,7 @@ public class StartupActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.startup_layout);
 		MyApplication.getApplication().addActivity(this);
-		
 		startup = (LinearLayout)findViewById(R.id.startup);
-	    
         AlphaAnimation animation = new AlphaAnimation(0.2f, 1.0f);
         animation.setDuration(1800);
         startup.startAnimation(animation);

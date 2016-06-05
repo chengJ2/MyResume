@@ -106,6 +106,9 @@ public class Constants {
     // SINA ID
     public static final String APP_SINA_ID = "1105433372";
     
+    // tencent bugly
+    public static final String APP_CRASH_ID = "900025676";
+    
     // UI activity
     public static final String ADDRESS = "AddressActivity";
     public static final String BASEINFO = "BaseInfoActivity";
@@ -155,5 +158,7 @@ public class Constants {
     public static final String SET_STARTVERYTIME= "startVerytime";
     public static final String SET_SWITCHANIM= "switchAnim";
     public static final String SET_SWITCHEFFDURATION= "switchEffDuration";
+    
+    public static final String SET_FEEDBACK= "feedback";
     
 }

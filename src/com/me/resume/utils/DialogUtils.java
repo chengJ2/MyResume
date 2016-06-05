@@ -196,7 +196,6 @@ public class DialogUtils {
 	 * 
 	 * @Title:DialogUtils
 	 * @Description: TODO(这里用一句话描述这个方法的作用)
-	 * @author Comsys-WH1510032
 	 * @return 返回类型  
 	 * @param context
 	 * @param resource

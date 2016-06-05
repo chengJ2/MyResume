@@ -29,7 +29,6 @@ import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.UploadPhotoTask;
 import com.me.resume.comm.UserInfoCode;
 import com.me.resume.tools.L;
-import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.FileUtils;
@@ -143,7 +142,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		center_top_text = findView(R.id.center_top_text);
 		left_back = findView(R.id.left_back);
 		right_lable = findView(R.id.right_lable);
-		center_top_text.setText(CommUtil.getStrValue(self, R.string.personal_center));
+		center_top_text.setText(getStrValue(R.string.personal_center));
 		
 		mHandler.sendEmptyMessageDelayed(101,Constants.DEFAULTIME);
 		
@@ -235,9 +234,9 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 				int theYear = CommUtil.parseInt(TimeUtils.theYear());
 				int work = (theYear - year);
 				if (work <= 0) {
-					center_workyear.setText("|应届生");
+					center_workyear.setText(getStrValue(R.string.personal_c_item17));
 				}else{
-					center_workyear.setText("|"+ work + "年工作经验");
+					center_workyear.setText(String.format(getStrValue(R.string.personal_c_item18), work));
 				}
 			}else{
 				center_workyear.setText("");
@@ -254,11 +253,13 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	
 	/**
 	 * 
-	 * @Description:求职意向完整度
+	 * @Description:基本信息完整度
 	 */
 	private void getBaseInfoComplete(){
-		resume_updatime.setText("上次更新："
-				+ preferenceUtil.getPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString()));
+		resume_updatime.setText(
+				String.format(getStrValue(R.string.personal_c_item16),
+						preferenceUtil.getPreferenceData(UserInfoCode.RESUMEUPDTIME,
+								TimeUtils.getCurrentTimeString())));
 		queryWhere = "select (a1+a2+a3+a4+a5+a6+a7+a8+a9+a10+a11+a12) num"
 					+ " from ("
 					+ " select case when realname='' then 1 else 0 end a1,"
@@ -279,14 +280,14 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
 			int nPercent = 0;
 			nPercent = (int) (((12 - num) * 100 / 12));
-			if (nPercent >= 100){
-				resume_complete.setText("已完整");
-			}
 			if (nPercent <= 0)
 				nPercent = 0;
-			resume_complete.setText("完整度:"+nPercent +"%");
+			resume_complete.setText(String.format(getStrValue(R.string.personal_c_item14), nPercent));
+			if (nPercent >= 100){
+				resume_complete.setText(getStrValue(R.string.personal_c_item11));
+			}
 		}else{
-			resume_complete.setText("未填写");
+			resume_complete.setText(getStrValue(R.string.personal_c_item13));
 		}
 		
 	}
@@ -310,18 +311,17 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
 			int nPercent = 0;
 			nPercent = (int) (((6 - num) * 100 / 6));
-			if (nPercent >= 100){
-				info_item1.setText("已完整");
-			}
 			if (nPercent <= 0)
 				nPercent = 0;
-			info_item1.setText("完整度("+nPercent +"%)");
+			info_item1.setText(String.format(getStrValue(R.string.personal_c_item14), nPercent));
+			if (nPercent >= 100){
+				info_item1.setText(getStrValue(R.string.personal_c_item11));
+			}
 		}else{
-			info_item1.setText("未填写");
+			info_item1.setText(getStrValue(R.string.personal_c_item13));
 		}
 		
 	}
-	
 	
 	/**
 	 * 
@@ -342,14 +342,14 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
 			int nPercent = 0;
 			nPercent = (int) (((6 - num) * 100 / 6));
-			if (nPercent >= 100){
-				info_item2.setText("已完整");
-			}
 			if (nPercent <= 0)
 				nPercent = 0;
-			info_item2.setText("完整度("+nPercent +"%)");
+			info_item2.setText(String.format(getStrValue(R.string.personal_c_item14), nPercent));
+			if (nPercent >= 100){
+				info_item2.setText(getStrValue(R.string.personal_c_item11));
+			}
 		}else{
-			info_item2.setText("未填写");
+			info_item2.setText(getStrValue(R.string.personal_c_item13));
 		}
 	}
 	
@@ -376,14 +376,14 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
 			int nPercent = 0;
 			nPercent = (int) (((9 - num) * 100 / 9));
-			if (nPercent >= 100){
-				info_item3.setText("已完整");
-			}
 			if (nPercent <= 0)
 				nPercent = 0;
-			info_item3.setText("完整度("+nPercent +"%)");
+			info_item3.setText(String.format(getStrValue(R.string.personal_c_item14), nPercent));
+			if (nPercent >= 100){
+				info_item3.setText(getStrValue(R.string.personal_c_item11));
+			}
 		}else{
-			info_item3.setText("未填写");
+			info_item3.setText(getStrValue(R.string.personal_c_item13));
 		}
 	}
 	
@@ -398,33 +398,19 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		if (commMapArray!=null && commMapArray.get("num").length>0) {
 			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
 			if (num > 0) {
-				info_item4.setText("已有"+ num +"项经验");
+				info_item4.setText(String.format(getStrValue(R.string.personal_c_item15), num));
 			}else{
-				info_item4.setText("未填写");
+				info_item4.setText(getStrValue(R.string.personal_c_item13));
 			}
 		}else{
-			info_item4.setText("未填写");
+			info_item4.setText(getStrValue(R.string.personal_c_item13));
 		}
 	}
 	
-	
-	/*public void stopAudioThread() {
-		if (athread != null) {
-			athread.stopThread();
-			boolean retry = true;
-			while (retry) {
-				try {
-					athread.join();
-					retry = false;
-				} catch (InterruptedException e) {
-					L.e(e);
-				}
-			}
-			athread = null;
-		}
-	}*/
-	
-	
+	/**
+	 * 背景虚化
+	 * @param bkg
+	 */
 	private void blur(Bitmap bkg) {   
  	    long startMs = System.currentTimeMillis();   
  	    float radius = 20;   
@@ -516,19 +502,13 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			startChildActivity(Constants.JOBINTENSION,false);
 			break;
 		case R.id.info_layout2: // 教育经历
-			ActivityUtils.startActivityPro(self, 
-					Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
-					Constants.TYPE,CommonText.EDUCATION);
+			startChildActivity(Constants.EDUCATION,false);
 			break;
 		case R.id.info_layout3:// 工作经历
-			ActivityUtils.startActivityPro(self, 
-					Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
-					Constants.TYPE,CommonText.WORKEXPERIENCE);
+			startChildActivity(Constants.WORKEXPERIENCE,false);
 			break;
 		case R.id.info_layout4: // 项目经验
-			ActivityUtils.startActivityPro(self, 
-					Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
-					Constants.TYPE,CommonText.PROJECT_EXPERIENCE);
+			startChildActivity(Constants.PROJECTEXPERIENCE,false);
 			break;
 		default:
 			break;

@@ -196,12 +196,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					queryResult= dbUtil.insertData(self, CommonText.EDUCATION, cValues);
 					if (queryResult) {
 						toastMsg(R.string.action_add_success);
-						if (getData(CommonText.EDUCATION)) {
-							actionAync(0);
-						}
+						actionAync(0);
 					}
 				}
-				
 			}else{ // 培训经历
 				if(judgeTraField()){
 					ContentValues cValues = new ContentValues();
@@ -221,9 +218,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 							CommonText.EDUCATION_TRAIN, cValues);
 					if (queryResult) {
 						toastMsg(R.string.action_add_success);
-						if (getData(CommonText.EDUCATION_TRAIN)) {
-							actionAync(1);
-						}
+						actionAync(1);
 					}
 				}
 			}
@@ -232,34 +227,30 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			getFeild();
 			if(cposition == 0){ // 教育背景
 				if(judgeEduField()){
-					if (getData(CommonText.EDUCATION)) {
-						updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
-								new String[]{tokenId,"educationtimestart","educationtimeend","school","majorname",
-												  "degree","examination"}, 
-								new String[]{uTokenId,info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,
-								info_degressStr,info_examinationStr},3);
-						if (updResult == 1) {
-							toastMsg(R.string.action_update_success);
-							actionAync(0);
-						}else{
-							toastMsg(R.string.action_update_fail);
-						}
+					updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
+							new String[]{tokenId,"educationtimestart","educationtimeend","school","majorname",
+											  "degree","examination"}, 
+							new String[]{uTokenId,info_starttimeStr,info_endtimeStr,info_schoolStr,info_majornameStr,
+							info_degressStr,info_examinationStr},3);
+					if (updResult == 1) {
+						toastMsg(R.string.action_update_success);
+						actionAync(0);
+					}else{
+						toastMsg(R.string.action_update_fail);
 					}
 				}
 			}else{
 				if(judgeTraField()){
-					if (getData(CommonText.EDUCATION_TRAIN)) {
-						updResult = dbUtil.updateData(self, CommonText.EDUCATION_TRAIN, 
-								new String[]{tokenId,"trainingtimestart","trainingtimeend","trainingorganization","trainingclass",
-								"certificate","description"}, 
-								new String[]{uTokenId,info_starttimeStr,info_endtimeStr,info_trainingorganizationStr,info_trainingclassStr,
-								info_certificateStr,info_descriptionStr},3);
-						if (updResult == 1) {
-							toastMsg(R.string.action_update_success);
-							actionAync(1);
-						}else{
-							toastMsg(R.string.action_update_fail);
-						}
+					updResult = dbUtil.updateData(self, CommonText.EDUCATION_TRAIN, 
+							new String[]{tokenId,"trainingtimestart","trainingtimeend","trainingorganization","trainingclass",
+							"certificate","description"}, 
+							new String[]{uTokenId,info_starttimeStr,info_endtimeStr,info_trainingorganizationStr,info_trainingclassStr,
+							info_certificateStr,info_descriptionStr},3);
+					if (updResult == 1) {
+						toastMsg(R.string.action_update_success);
+						actionAync(1);
+					}else{
+						toastMsg(R.string.action_update_fail);
 					}
 				}
 			}
@@ -285,6 +276,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		Fragment f = AllFragmentFactory.getFragment(tab);
 		if(f != null){
 			if(cposition == 0){ // 教育背景
+				tokenId = ((EducationFragment)f).getEduId();
 				info_starttimeStr = ((EducationFragment)f).getInfoStartTime();
 				info_endtimeStr = ((EducationFragment)f).getInfoEndTime();
 				info_schoolStr = ((EducationFragment)f).getInfoSchool();
@@ -292,6 +284,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				info_degressStr = ((EducationFragment)f).getInfodegree();
 				info_examinationStr = ((EducationFragment)f).getInfoexamination();
 			}else{
+				tokenId = ((TrainingFragment)f).getTrId();
 				info_starttimeStr = ((TrainingFragment)f).getInfoStartTime();
 				info_endtimeStr = ((TrainingFragment)f).getInfoEndTime();
 				info_trainingorganizationStr = ((TrainingFragment)f).getInfotrainingorganization();
@@ -310,25 +303,6 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	 */
 	private boolean getData(String tablename){
 		queryWhere = "select * from " + tablename + " where userId = '"+ uTokenId +"' order by id desc limit 1";
-		commMapArray = dbUtil.queryData(self, queryWhere);
-		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
-			tokenId = commMapArray.get("tokenId")[0];
-			setEditBtnVisible(View.VISIBLE);
-			return true;
-		}else{
-			setEditBtnVisible(View.GONE);
-			return false;
-		}
-	}
-	
-	/**
-	 * 
-	 * @Title:EducationActivity
-	 * @Description: 编辑按钮显示隐藏
-	 * @param tablename CommonText.EDUCATION  |  CommonText.EDUCATION_TRAIN
-	 */
-	private boolean getDataByToken(String tablename,String tokenId){
-		queryWhere = "select * from " + tablename + " where userId = '"+ uTokenId +"' and tokenId= '"+ tokenId +"' order by id desc limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!= null && commMapArray.get("userId").length > 0) {
 			tokenId = commMapArray.get("tokenId")[0];
@@ -657,19 +631,6 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode == Constants.ED_MANAGER_REQUEST_CODE){
-       	 if(resultCode == Constants.RESULT_CODE) {
-       		tokenId = data.getStringExtra(Constants.TOKENID);
-       		/*int cposition = data.getIntExtra(Constants.TAB, 0);
-       		L.d("==KID==" + KID + "==cposition=="+cposition);
-       		if (cposition == 0) {
-       			getDataByToken(CommonText.EDUCATION,KID);
-       			
-//				getDataByToken(CommonText.EDUCATION_TRAIN,KID);
-				
-			}*/
-       	 }
-       }
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 }

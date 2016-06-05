@@ -95,7 +95,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         		}
             	break;
 			case 11:
-				startChildActivity(Constants.EDUCATION,false);
+				startChildActivity(Constants.BASEINFO,false);
 				break;
 			case 12:
 				preferenceUtil.setPreferenceData(Constants.NOTICESHOW,true);
@@ -107,7 +107,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					mHandler.sendEmptyMessage(101); // 请求 分享心得数据
 				}else{
 					setShareView(false);
-					msgText.setText(CommUtil.getStrValue(self, R.string.item_text5));
+					msgText.setText(getStrValue(R.string.item_text5));
 				}
 				break;
 			case 101:
@@ -151,6 +151,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				mHandler.sendEmptyMessage(100);
 			}
 		},100);
+		
+		DialogUtils.showProgress(self,"上传中");
 	}
 	
 	/**
@@ -177,7 +179,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		sharemore = findView(R.id.sharemore);
 		msgText = findView(R.id.msgText);
 		msgText.setVisibility(View.VISIBLE);
-		msgText.setText(CommUtil.getStrValue(self, R.string.item_text43));
+		msgText.setText(getStrValue(R.string.item_text43));
 		
 		makeResume = findView(R.id.make_btn);
 		reviewResume = findView(R.id.review_btn);
@@ -247,14 +249,14 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		if (commMapArray != null) {
 			String realname = commMapArray.get("realname")[0];
 			if (RegexUtil.checkNotNull(realname)) {
-				makeResume.setText(CommUtil.getStrValue(self, R.string.edit_resume));
+				makeResume.setText(getStrValue(R.string.edit_resume));
 				reviewResume.setVisibility(View.VISIBLE);
 			}else{
-				makeResume.setText(CommUtil.getStrValue(self, R.string.make_resume));
+				makeResume.setText(getStrValue(R.string.make_resume));
 				reviewResume.setVisibility(View.GONE);
 			}
 		}else{
-			makeResume.setText(CommUtil.getStrValue(self, R.string.make_resume));
+			makeResume.setText(getStrValue(R.string.make_resume));
 			reviewResume.setVisibility(View.GONE);
 		}
 	}
@@ -321,8 +323,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				final String[] title = mList.get(position).toString().split(";");
 				holder.setText(R.id.itemName, title[0]);
 				if (position == 5) {
-					holder.setTextColor(R.id.itemName,
-							CommUtil.getIntValue(self, R.color.red));
+					holder.setTextColor(R.id.itemName,getColorValue(R.color.red));
 				}
 
 				holder.setOnClickEvent(R.id.itemName, new ClickEvent() {
@@ -332,12 +333,10 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 						ActivityUtils.startActivityPro(self, 
 								Constants.PACKAGENAMECHILD + Constants.TOPICLISTDETAIL, "title",
 								title[0]+";"+title[1]);
-
 					}
 				});
 			}
 		};
-
 		resumeLinkgridview.setAdapter(commStrAdapter);
 	}
 	
@@ -374,7 +373,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void error() {
 				setShareView(false);
-				msgText.setText(CommUtil.getStrValue(self, R.string.item_text42));
+				msgText.setText(getStrValue(R.string.item_text42));
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -442,7 +441,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		case R.id.make_btn:
 			if (MyApplication.USERID.equals("0")) {
 				if(!preferenceUtil.getPreferenceData(Constants.NOTICESHOW)){
-					DialogUtils.showAlertDialog(self, CommUtil.getStrValue(self,
+					DialogUtils.showAlertDialog(self, getStrValue(
 							R.string.dialog_action_alert),View.VISIBLE, mHandler);
 				}else{
 					mHandler.sendEmptyMessage(11);

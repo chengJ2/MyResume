@@ -143,7 +143,7 @@ public class UserLoginActivity extends BaseActivity implements
 			right_icon.setImageResource(R.drawable.icon_user_register);
 			setRightIconVisible(View.VISIBLE);
 		}
-		btnLogin.setText(CommUtil.getStrValue(self, R.string.action_login));
+		btnLogin.setText(getStrValue(R.string.action_login));
 		btnLogin.setEnabled(true);
 	}
 	
@@ -191,7 +191,7 @@ public class UserLoginActivity extends BaseActivity implements
 		case R.id.btn_login:
 			if (CommUtil.isNetworkAvailable(self)) {
 				if(checkInfo()){
-					btnLogin.setText(CommUtil.getStrValue(self, R.string.action_wait_loging));
+					btnLogin.setText(getStrValue(R.string.action_wait_loging));
 					btnLogin.setEnabled(false);
 
 					actionLogin();
@@ -248,7 +248,7 @@ public class UserLoginActivity extends BaseActivity implements
 	
 	
 	private void errorLogin(){
-		btnLogin.setText(CommUtil.getStrValue(self, R.string.action_login));
+		btnLogin.setText(getStrValue(R.string.action_login));
 		btnLogin.setEnabled(true);
 	}
 	
@@ -311,7 +311,7 @@ public class UserLoginActivity extends BaseActivity implements
 		getFieldValue();
 		
 		if(judgeField()){
-			registBtn.setText(CommUtil.getStrValue(self, R.string.action_wait_reging));
+			registBtn.setText(getStrValue(R.string.action_wait_reging));
 			registBtn.setEnabled(false);
 			
 			List<String> params = new ArrayList<String>();
@@ -334,14 +334,14 @@ public class UserLoginActivity extends BaseActivity implements
 				@Override
 				public void error() {
 					set3Msg(R.string.action_regist_fail);
-					registBtn.setText(CommUtil.getStrValue(self, R.string.action_register));
+					registBtn.setText(getStrValue(R.string.action_register));
 					registBtn.setEnabled(true);
 				}
 				
 				public void success(Map<String, List<String>> map) {
 					try {
 						CommUtil.hideKeyboard(self);
-						registBtn.setText(CommUtil.getStrValue(self, R.string.action_wait_regsuccess));
+						registBtn.setText(getStrValue(R.string.action_wait_regsuccess));
 						registBtn.setEnabled(false);
 						preferenceUtil.setPreferenceData("isregister", true);
 						sendSuccess(map);

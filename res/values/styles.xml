@@ -315,7 +315,7 @@
     </style>
 
     <style name="CustomProgressDialog" parent="@style/CustomDialog">
-        <item name="android:windowBackground">@color/black</item>
+        <item name="android:windowBackground">@color/white</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 

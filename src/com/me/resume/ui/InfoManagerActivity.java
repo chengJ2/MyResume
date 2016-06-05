@@ -116,7 +116,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		infoMoreListView = findView(R.id.infoMoreListView);
 		msgText = findView(R.id.msgText);
 		msgText.setVisibility(View.VISIBLE);
-		msgText.setText(CommUtil.getStrValue(self, R.string.item_text43));
+		msgText.setText(getStrValue(R.string.item_text43));
 
 		type = getIntent().getStringExtra(Constants.TYPE);
 		L.d("==type==" + type);
@@ -148,8 +148,12 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		}else if (type.equals(CommonText.PROJECT_EXPERIENCE)) {
 			setTopTitle(R.string.resume_project_experience);
 			tableName = CommonText.PROJECT_EXPERIENCE;
+			
+		}else if(type.equals(CommonText.OTHERINFO)){
+			setTopTitle(R.string.resume_otherinfo);
+			
 		}
-		layoutID = R.layout.manage_info_list_item;
+		
 		
 		queryWhere = "select * from " + tableName + " where userId = '" + uTokenId + "' order by createtime desc";
 		commMapArray = dbUtil.queryData(self,queryWhere);
@@ -175,7 +179,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			msgText.setVisibility(View.GONE);
 		} else {
 			setRightIcon(R.drawable.icon_sync);
-			msgText.setText(CommUtil.getStrValue(self, R.string.en_nodata));
+			msgText.setText(getStrValue(R.string.en_nodata));
 			msgText.setVisibility(View.VISIBLE);
 		}
 	}
@@ -370,7 +374,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			@Override
 			public void onClick(View view) {
 				Intent intent=new Intent();
-		        intent.putExtra("tokenId", tokenId);
+		        intent.putExtra(UserInfoCode.TOKENID, tokenId);
 		        setResult(Constants.RESULT_CODE, intent);
 				scrollToFinishActivity();
 			}
@@ -442,7 +446,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			@Override
 			public void error() {
 				setRightIcon(R.drawable.icon_sync);
-				msgText.setText(CommUtil.getStrValue(self, R.string.en_nodata));
+				msgText.setText(getStrValue(R.string.en_nodata));
 				msgText.setVisibility(View.VISIBLE);
 			}
 			

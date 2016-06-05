@@ -63,7 +63,7 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 		viewlayout = findView(R.id.viewlayout);
 		msgText.setVisibility(View.VISIBLE);
 		viewlayout.setVisibility(View.GONE);
-		msgText.setText(CommUtil.getStrValue(self, R.string.item_text43));
+		msgText.setText(getStrValue(R.string.item_text43));
 		
 		topic_title = findView(R.id.topic_title);
 		topic_from = findView(R.id.topic_from);

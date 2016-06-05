@@ -19,6 +19,7 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.tools.UUIDGenerator;
+import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.TimeUtils;
@@ -117,6 +118,12 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 				break;
 			case OnTopMenu.MSG_MENU31:
 				toastMsg(R.string.action_login_head);
+				break;
+			case OnTopMenu.MSG_MENU32:
+				/*ActivityUtils.startActivityForResult(self, 
+						Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
+						Constants.TYPE,CommonText.OTHERINFO,
+						Constants.WE_MANAGER_REQUEST_CODE);*/
 				break;
 			default:
 				break;
@@ -234,7 +241,6 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 	
 	private void setCertificate(){
 		if (getcertificateData()) {
-			
 			info_certificate.setText(mapArray1.get("certificate")[0]);
 			info_certificatetime.setText(mapArray1.get("certificatetime")[0]);
 		}
@@ -300,7 +306,8 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			actionFlag = 1;
 			getlangFeild();
 			ContentValues cValues = new ContentValues();
-			cValues.put("tokenId", UUIDGenerator.getKUUID());
+			langTokenId = UUIDGenerator.getKUUID();
+			cValues.put("tokenId", langTokenId);
 			cValues.put("userId", uTokenId);
 			cValues.put("language", info_languageStr);
 			cValues.put("literacyskills", info_literacyskillsStr);
@@ -313,9 +320,9 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 				toastMsg(R.string.action_add_success);
 				ot_languages_edit.setVisibility(View.VISIBLE);
 				
-				if(getLanguagesData()){
+//				if(getLanguagesData()){
 					actionAync(OtherInfoMenu.language,1,R.string.action_syncing_lang);
-				}
+//				}
 			}
 			break;
 		case R.id.ot_languages_edit:
@@ -337,7 +344,8 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			actionFlag = 1;
 			getCertFeild();
 			cValues = new ContentValues();
-			cValues.put("tokenId", UUIDGenerator.getKUUID());
+			certTokenId = UUIDGenerator.getKUUID();
+			cValues.put("tokenId", certTokenId);
 			cValues.put("userId", uTokenId);
 			cValues.put("certificate", info_certificateStr);
 			cValues.put("certificatetime", info_certificatetimesStr);
@@ -347,9 +355,9 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			if (queryResult) {
 				toastMsg(R.string.action_add_success);
 				actionAync(OtherInfoMenu.certificate,1,R.string.action_syncing_cert);
-				if(getcertificateData()){
+//				if(getcertificateData()){
 					ot_certificate_edit.setVisibility(View.VISIBLE);
-				}
+//				}
 			}
 			break;
 		case R.id.ot_certificate_edit:
@@ -371,7 +379,8 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			actionFlag = 1;
 			getOtherFeild();
 			cValues = new ContentValues();
-			cValues.put("tokenId", UUIDGenerator.getKUUID());
+			otTokenId = UUIDGenerator.getKUUID();
+			cValues.put("tokenId", otTokenId);
 			cValues.put("userId", uTokenId);
 			cValues.put("title", info_titleStr);
 			cValues.put("description", info_descriptionStr);
@@ -380,9 +389,9 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			if (queryResult) {
 				toastMsg(R.string.action_add_success);
 				ot_otherinfo_edit.setVisibility(View.VISIBLE);
-				if (getotherinfoData()) {
+//				if (getotherinfoData()) {
 					actionAync(OtherInfoMenu.otherinfo,1,R.string.action_syncing_other);
-				}
+//				}
 			}
 			break;
 		case R.id.ot_otherinfo_edit:
@@ -412,7 +421,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			getValues(R.array.oi_topic_values,info_title,R.string.ot_info_choose_title,mHandler);
 			break;
 		case R.id.right_icon_more:
-			DialogUtils.showTopMenuDialog(self, topLayout,1, mHandler);
+			DialogUtils.showTopMenuDialog(self, topLayout,2,mHandler);
 			break;
 		case R.id.save:
 			startChildActivity(Constants.HOME,true);

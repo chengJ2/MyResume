@@ -45,7 +45,7 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 		covermoregridview = findView(R.id.covermoregridview);
 		msgText = findView(R.id.msgText);
 		msgText.setVisibility(View.VISIBLE);
-		msgText.setText(CommUtil.getStrValue(self, R.string.item_text43));
+		msgText.setText(getStrValue(R.string.item_text43));
 		
 		
 		getReCoverMoreData();
@@ -61,7 +61,7 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 			@Override
 			public void error() {
 				msgText.setVisibility(View.VISIBLE);
-				msgText.setText(CommUtil.getStrValue(self, R.string.en_nodata));	
+				msgText.setText(getStrValue(R.string.en_nodata));	
 			}
 			
 			public void success(Map<String, List<String>> map) {

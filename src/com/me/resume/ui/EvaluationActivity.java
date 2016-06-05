@@ -170,7 +170,8 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				} else {
 					actionFlag = 1;
 					ContentValues cValues = new ContentValues();
-					cValues.put("tokenId", UUIDGenerator.getKUUID());
+					tokenId = UUIDGenerator.getKUUID();
+					cValues.put("tokenId", tokenId);
 					cValues.put("userId", uTokenId);
 					cValues.put("selfevaluation", info_self_evaluationStr);
 					cValues.put("bgcolor", getCheckColor(checkColor));
@@ -180,9 +181,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 					queryResult = dbUtil.insertData(self,CommonText.EVALUATION, cValues);
 					if (queryResult) {
 						toastMsg(R.string.action_add_success);
-						if (getEvData()) {
-							actionAync();
-						}
+						actionAync();
 					}
 				}
 			}

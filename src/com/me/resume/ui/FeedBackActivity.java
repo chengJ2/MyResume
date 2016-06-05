@@ -13,10 +13,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.me.resume.BaseActivity;
-import com.me.resume.MyApplication;
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 
@@ -64,7 +63,7 @@ public class FeedBackActivity extends BaseActivity {
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
-		if(preferenceUtil.getPreferenceData("feedback")){
+		if(preferenceUtil.getPreferenceData(Constants.SET_FEEDBACK)){
 			feedback_cb.setChecked(true);
 		}else{
 			feedback_cb.setChecked(false);
@@ -88,11 +87,13 @@ public class FeedBackActivity extends BaseActivity {
 			
 			@Override
 			public void onClick(View arg0) {
-				preferenceUtil.setPreferenceData("feedback",true);
-				if(preferenceUtil.getPreferenceData("feedback")){
+				if(preferenceUtil.getPreferenceData(Constants.SET_FEEDBACK)){
 					feedback_cb.setChecked(true);
+					preferenceUtil.setPreferenceData(Constants.SET_FEEDBACK,true);
 				}else{
 					feedback_cb.setChecked(false);
+					preferenceUtil.setPreferenceData(Constants.SET_FEEDBACK,false);
+
 				}
 			}
 		});
@@ -124,7 +125,6 @@ public class FeedBackActivity extends BaseActivity {
 		params.add("p_contact");
 		params.add("p_userId");
 		params.add("p_version");
-		
 		
 		values.add(feeddescStr);
 		values.add(feedcontactStr);

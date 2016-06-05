@@ -81,7 +81,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 				if(!isLoadMore){
 					reviewsharemoreListView.setVisibility(View.GONE); 
 					msgtext.setVisibility(View.VISIBLE);
-					msgtext.setText(CommUtil.getStrValue(self, R.string.item_text72));
+					msgtext.setText(getStrValue(R.string.item_text72));
 				}
 				break;
 			case 100:
@@ -126,7 +126,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 			mHandler.sendEmptyMessageDelayed(100, 200);
 		}else{
 			msgtext.setVisibility(View.VISIBLE);
-			msgtext.setText(CommUtil.getStrValue(self, R.string.item_text5));
+			msgtext.setText(getStrValue(R.string.item_text5));
 		}
 		
 	}

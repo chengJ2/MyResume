@@ -38,8 +38,6 @@ public class EvaluationMoreActivity extends BaseActivity implements OnClickListe
 	
 	private ListView characterListView;
 	
-	private CommonBaseAdapter<String> commAdapter;
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -129,7 +127,7 @@ public class EvaluationMoreActivity extends BaseActivity implements OnClickListe
 	 * @Description: 显示数据
 	 */
 	private void showCharacterData(List<String> mList){
-		commAdapter = new CommonBaseAdapter<String>(self,mList,R.layout.character_simple_list_item) {
+		commStrAdapter = new CommonBaseAdapter<String>(self,mList,R.layout.character_simple_list_item) {
 		
 		@Override
 		public void convert(final ViewHolder holder, String item, final int position) {
@@ -166,7 +164,7 @@ public class EvaluationMoreActivity extends BaseActivity implements OnClickListe
 				
 			}
 		};
-		characterListView.setAdapter(commAdapter);
+		characterListView.setAdapter(commStrAdapter);
 		
 	}
 	
@@ -190,15 +188,14 @@ public class EvaluationMoreActivity extends BaseActivity implements OnClickListe
 				queryResult = dbUtil.insertData(self, CommonText.CHARACTER, cValues);
 				if (queryResult) {
 					setRightIcon(R.drawable.icon_done);
-					commAdapter.notifyDataSetChanged();
+					commStrAdapter.notifyDataSetChanged();
 				}
 			}
 		}else{
 			queryWhere = "delete from " + CommonText.CHARACTER 
 					+ " where character = '"+ s +"' and userId = '"+ uTokenId+"'";
 			dbUtil.deleteData(self, queryWhere);
-			commAdapter.notifyDataSetChanged();
-			
+			commStrAdapter.notifyDataSetChanged();
 		}
 	}
 	

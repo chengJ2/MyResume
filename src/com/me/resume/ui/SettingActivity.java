@@ -121,9 +121,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		llout021 = findView(R.id.llout021); 
 		animvaluefeild = findView(R.id.animvaluefeild);
 		animvalue = findView(R.id.animvalue);
-		
 	}
 	
+	/**
+	 * 初始化View
+	 */
 	private void initViews(){
 		setTopTitle(R.string.action_settings);
 		setMsgHide();
@@ -152,36 +154,39 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void switchBtnClick(){
-		setting_start_cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		setting_start_cb.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			public void onClick(View arg0) {
 				boolean onoff = false;
-				if(!preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME)){
+				if(preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME)){
 					onoff = true;
+					setting_start_cb.setChecked(false);
 				}else{
 					onoff = false;
+					setting_start_cb.setChecked(true);
 				}
 				preferenceUtil.setPreferenceData(Constants.SET_STARTVERYTIME, onoff); 
 			}
 		});
 		
-		setting_auto_cb.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+		setting_auto_cb.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			public void onClick(View arg0) {
 				boolean onoff = false;
-				if(!preferenceUtil.getPreferenceData(Constants.SET_AUTOSHOW)){
-					onoff = true;
-					setEffectDuration(true,R.color.black);
-				}else{
+				if(preferenceUtil.getPreferenceData(Constants.SET_AUTOSHOW)){
 					onoff = false;
+					setting_auto_cb.setChecked(false);
 					setEffectDuration(false,R.color.grey_70);
+				}else{
+					onoff = true;
+					setting_auto_cb.setChecked(true);
+					setEffectDuration(true,R.color.black);
 				}
 				preferenceUtil.setPreferenceData(Constants.SET_AUTOSHOW, onoff); 
 			}
 		});
-		
 	}
 	
 	/**
@@ -190,10 +195,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	private void setEffectDuration(boolean enabled,int color){
 		llout020.setEnabled(enabled);
 		llout021.setEnabled(enabled);
-		effectsdurationfeild.setTextColor(CommUtil.getColorValue(self, color));
-		effectsduration.setTextColor(CommUtil.getColorValue(self, color));
-		animvaluefeild.setTextColor(CommUtil.getColorValue(self, color));
-		animvalue.setTextColor(CommUtil.getColorValue(self, color));
+		effectsdurationfeild.setTextColor(getColorValue(color));
+		effectsduration.setTextColor(getColorValue(color));
+		animvaluefeild.setTextColor(getColorValue(color));
+		animvalue.setTextColor(getColorValue(color));
 	}
 	
 	@Override
@@ -233,7 +238,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.cacheLayout:
-			DialogUtils.showAlertDialog(self, CommUtil.getStrValue(self,
+			DialogUtils.showAlertDialog(self, getStrValue(
 					R.string.dialog_action_cache_alert),View.GONE, mHandler);
 			break;
 		case R.id.shareLayout:
@@ -241,7 +246,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
             share.putExtra(Intent.EXTRA_STREAM,Constants.APKURLPATH);
             share.setType("*/*");
             startActivity(Intent.createChooser(share, 
-            		CommUtil.getStrValue(self, R.string.settings_item71)));
+            		getStrValue(R.string.settings_item71)));
 			break;
 		case R.id.aboutusLayout:
 			startChildActivity(Constants.ABOUTAPP, false);

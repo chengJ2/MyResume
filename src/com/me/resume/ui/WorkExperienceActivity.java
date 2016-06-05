@@ -170,7 +170,9 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		}
 	}
 	
-	
+	/**
+	 * 设置字段值
+	 */
 	private void setFeildValue(){
 		info_industryclassification.setText(commMapArray.get("industryclassification")[0]);
 		info_startworktime.setText(commMapArray.get("worktimestart")[0]);
@@ -295,7 +297,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	private void actionAync(){
 		if (!MyApplication.USERID.equals("0")) {
 			if (CommUtil.isNetworkAvailable(self)) {
-				set3Msg(R.string.action_syncing,5*1000);
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 				syncData();
 			} else {
 				set3Msg(R.string.check_network);
@@ -479,7 +481,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		L.d("onActivityResult"+"requestCode="+requestCode+" resultCode="+resultCode + " data:"+data);
         if(requestCode == Constants.WE_REQUEST_CODE) {
             if(resultCode == Constants.RESULT_CODE) {
                 String result = data.getStringExtra(Constants.INDUSTRYTYPENAME);

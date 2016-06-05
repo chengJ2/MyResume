@@ -9,7 +9,6 @@ import com.me.resume.R;
 
 /**
  * 自定义Dialog
- * @author ChengJian
  *
  */
 public class CustomProgressDialog extends Dialog {

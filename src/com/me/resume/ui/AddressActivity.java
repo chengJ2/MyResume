@@ -114,13 +114,13 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 		search_cancle.setOnClickListener(this);
 		clearView.setOnClickListener(this);
 		
-		index_search_edit.setHint(CommUtil.getStrValue(self, R.string.hint_address_text));
-		index_search_edit.setHintTextColor(CommUtil.getColorValue(self, R.color.grey));
+		index_search_edit.setHint(getStrValue(R.string.hint_address_text));
+		index_search_edit.setHintTextColor(getColorValue(R.color.grey));
 		index_search_edit.requestFocus();
 		
 		msgText = findView(R.id.msgText);
 		msgText.setVisibility(View.VISIBLE);
-		msgText.setText(CommUtil.getStrValue(self, R.string.item_text43));
+		msgText.setText(getStrValue(R.string.item_text43));
 	}
 	
 	private void initViews(){
@@ -336,6 +336,14 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 			whichTab = 1;
 			clearView.setVisibility(View.VISIBLE);
 			getAllCity(keyword);
+		}
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mHandler != null) {
+			mHandler.removeCallbacksAndMessages(null);
 		}
 	}
 }

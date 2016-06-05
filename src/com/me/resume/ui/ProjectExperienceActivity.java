@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.UserInfoCode;
+import com.me.resume.tools.L;
 import com.me.resume.tools.UUIDGenerator;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -73,7 +75,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if (judgeField()) {
+				if (action_add_insert) {
 					actionAync();
 				}
 				break;
@@ -127,7 +129,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	 */
 	private void initViews(){
 		if (getPEData()) {
-			 setFieldValue();
+			 setFeildValue();
 		}
 	}
 	
@@ -194,7 +196,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	/**
 	 * 获得字段值
 	 */
-	private void getFieldValue(){
+	private void getFeildValue(){
 		info_projectnameStr = getEditTextValue(info_projectname);
 		info_workdutiesStr = getEditTextValue(info_workduties);
 		input_workdescStr = getEditTextValue(input_workdesc);
@@ -205,7 +207,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	/**
 	 * 设置字段值
 	 */
-	private void setFieldValue(){
+	private void setFeildValue(){
 		info_projectname.setText(commMapArray.get("projectname")[0]);
    	 	info_startworktime.setText(commMapArray.get("worktimestart")[0]);
    	 	info_endworktime.setText(commMapArray.get("worktimeend")[0]);
@@ -218,11 +220,13 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.save:
-			getFieldValue();
+			action_add_insert = true;
+			getFeildValue();
 			if (judgeField()) {
 				preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
 				ContentValues cValues = new ContentValues();
-				cValues.put("tokenId", UUIDGenerator.getKUUID());
+				tokenId = UUIDGenerator.getKUUID();
+				cValues.put("tokenId", tokenId);
 				cValues.put("userId", uTokenId);
 				cValues.put("projectname", info_projectnameStr);
 				cValues.put("worktimestart", info_startworktimeStr);
@@ -234,27 +238,24 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 				if(queryResult){
 					toastMsg(R.string.action_add_success);
 					seNextBtnSrc(R.drawable.ic_btn_edit);
-					if (getPEData()) {
-						actionAync();
-					}
+					actionAync();
 				}
 			}
 			break;
 		case R.id.edit:
 			break;
 		case R.id.next:
-			getFieldValue();
+			action_add_insert = true;
+			getFeildValue();
 			if (judgeField()) {
-				if (getPEData()) {
-					updResult = dbUtil.updateData(self, CommonText.PROJECT_EXPERIENCE, 
-							new String[]{tokenId,"projectname","worktimestart","worktimeend","duties","prokectdesc","updatetime"}, 
-							new String[]{uTokenId,info_projectnameStr,info_startworktimeStr,info_endworktimeStr,info_workdutiesStr,input_workdescStr,TimeUtils.getCurrentTimeInString()},3);
-					if (updResult == 1) {
-						toastMsg(R.string.action_update_success);
-						actionAync();
-					}else{
-						toastMsg(R.string.action_update_fail);
-					}
+				updResult = dbUtil.updateData(self, CommonText.PROJECT_EXPERIENCE, 
+						new String[]{tokenId,"projectname","worktimestart","worktimeend","duties","prokectdesc","updatetime"}, 
+						new String[]{uTokenId,info_projectnameStr,info_startworktimeStr,info_endworktimeStr,info_workdutiesStr,input_workdescStr,TimeUtils.getCurrentTimeInString()},3);
+				if (updResult == 1) {
+					toastMsg(R.string.action_update_success);
+					actionAync();
+				}else{
+					toastMsg(R.string.action_update_fail);
 				}
 			}
 			break;
@@ -311,7 +312,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	 * @Description: 同步数据
 	 */
 	private void syncRun(String tokenId,int style){ 
-		getFieldValue();
+		getFeildValue();
 		
 		if(judgeField()){
 			List<String> params = new ArrayList<String>();
@@ -351,7 +352,31 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 					}
 				}
 			});
-			
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		L.d("onActivityResult"+"requestCode="+requestCode+" resultCode="+resultCode + " data:"+data);
+        if(requestCode == Constants.WE_MANAGER_REQUEST_CODE){
+        	 if(resultCode == Constants.RESULT_CODE) {
+        		 tokenId = data.getStringExtra(UserInfoCode.TOKENID);
+        		 refreshData(); 
+     		}
+        }
+		super.onActivityResult(requestCode, resultCode, data);
+		
+	}
+	
+	/**
+	 * 从管理界面返回刷新数据
+	 */
+	private void refreshData() {
+		queryWhere = "select * from " + CommonText.PROJECT_EXPERIENCE
+				+ " where userId = '" + uTokenId + "' and tokenId ='" + tokenId + "' limit 1";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			setFeildValue();
 		}
 	}
 }

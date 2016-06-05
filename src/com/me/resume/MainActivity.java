@@ -393,7 +393,7 @@ public class MainActivity extends Activity {
 					TextView tview = new TextView(this);
 					tview.setText(ll.get(i).toString().trim());
 					tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.microd_text_size));
-					tview.setTextColor(CommUtil.getIntValue(self, R.color.red));
+					tview.setTextColor(CommUtil.getColorValue(self, R.color.red));
 					tview.setTypeface(Typeface.SERIF);
 					tview.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_tag_text_select));
 					tview.setPadding(6, 8, 6, 8);

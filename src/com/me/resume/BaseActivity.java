@@ -175,7 +175,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		self = BaseActivity.this;
 		if(preferenceUtil == null)
 			preferenceUtil = new PreferenceUtil(self);
-		fieldNull = CommUtil.getStrValue(self, R.string.action_input_isnull);
+		fieldNull = getStrValue(R.string.action_input_isnull);
 		
 		TelephonyManager telephonyMgr = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);
 		deviceID = telephonyMgr.getDeviceId();
@@ -228,7 +228,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * @param id
 	 */
 	protected void setTopTitle(int id) {
-		toptext.setText(CommUtil.getStrValue(self, id));
+		toptext.setText(getStrValue(id));
 	}
 	
 	/**
@@ -368,13 +368,31 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	}
 	
 	/**
+	 * 获得String值
+	 * @param resId
+	 * @return
+	 */
+	protected String getStrValue(int resId){
+		return self.getResources().getString(resId);
+	}
+	
+	/**
+	 * 获得Color值
+	 * @param resId
+	 * @return
+	 */
+	protected int getColorValue(int resId){
+		return self.getResources().getColor(resId);
+	}
+	
+	/**
 	 * 
 	 * @Title:BaseActivity
 	 * @Description: 设置界面消息
 	 * @param id
 	 */
 	protected void setMsg(int id) {
-		msg.setText(CommUtil.getStrValue(self, id) + fieldNull);
+		msg.setText(getStrValue(id) + fieldNull);
 		msg.setVisibility(View.VISIBLE);
 		msg.postDelayed(new Runnable() {
 			
@@ -392,7 +410,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * @param id
 	 */
 	protected void set2Msg(int id) {
-		msg.setText(CommUtil.getStrValue(self, id));
+		msg.setText(getStrValue(id));
 		msg.setVisibility(View.VISIBLE);
 	}
 	
@@ -414,7 +432,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * @param id
 	 */
 	protected void set3Msg(int id,long delayMillis) {
-		msg.setText(CommUtil.getStrValue(self, id));
+		msg.setText(getStrValue(id));
 		msg.setVisibility(View.VISIBLE);
 		msg.postDelayed(new Runnable() {
 			
@@ -432,7 +450,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * @param id
 	 */
 	protected void set3Msg(int id) {
-		msg.setText(CommUtil.getStrValue(self, id));
+		msg.setText(getStrValue(id));
 		msg.setVisibility(View.VISIBLE);
 		msg.postDelayed(new Runnable() {
 			
@@ -759,7 +777,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 				preferenceUtil.setPreferenceData(Constants.ISLOCAL, isLocal);
 				holder.setText(R.id.item2, map.get("note").get(position));
 				if (isLocal) {
-					holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_canuse));
+					holder.setText(R.id.item3, getStrValue(R.string.button_canuse));
 					localcover = map.get("url").get(position);
 					holder.setImageResource(R.id.item1,CommUtil.parseInt(localcover));
 				}else{
@@ -774,18 +792,18 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 							String lacalCoverName = preferenceUtil.getPreferenceData(Constants.COVER,"");
 							if (RegexUtil.checkNotNull(lacalCoverName)){
 								if (fileNameStr.toString().equals(lacalCoverName)) {
-									holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_useing));
+									holder.setText(R.id.item3, getStrValue(R.string.button_useing));
 								}else{
-									holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_canuse));
+									holder.setText(R.id.item3, getStrValue(R.string.button_canuse));
 								}
 							}else{
-								holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_canuse));
+								holder.setText(R.id.item3, getStrValue(R.string.button_canuse));
 							}
 						}else{
-							holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_canuse));
+							holder.setText(R.id.item3, getStrValue(R.string.button_canuse));
 						}
 					}else{
-						holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_use));
+						holder.setText(R.id.item3,getStrValue(R.string.button_use));
 					}
 				}
 				
@@ -802,12 +820,12 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 										+ " where filename = '"+ fileNameStr +"' and isfinish = 1";
 								commMapArray = dbUtil.queryData(self, queryWhere);
 								if (commMapArray == null) {
-									holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_downloading));
+									holder.setText(R.id.item3, getStrValue(R.string.button_downloading));
 									new DownloadTask(mHandler,1).execute(coverPath);
 								}else{
 									String file = FileUtils.COVER_DOWNLOAD_APKPATH + fileNameStr;
 									if (!FileUtils.existsFile(file)) {
-										holder.setText(R.id.item3, CommUtil.getStrValue(self, R.string.button_downloading));
+										holder.setText(R.id.item3, getStrValue(R.string.button_downloading));
 										new DownloadTask(mHandler,1).execute(coverPath);
 									}else{
 										preferenceUtil.setPreferenceData(Constants.COVER,file);

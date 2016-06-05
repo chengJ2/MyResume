@@ -83,7 +83,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 
 		collectionListView = findView(R.id.collectionListView);
 		nodata = findView(R.id.nodata);
-		nodata.setText(CommUtil.getStrValue(self, R.string.item_text43));
+		nodata.setText(getStrValue(R.string.item_text43));
 		nodata.setVisibility(View.VISIBLE);
 		
 	}
@@ -117,7 +117,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 				nodata.setVisibility(View.GONE);
 			}else{
 				localHasData = false;
-				nodata.setText(CommUtil.getStrValue(self, R.string.en_nodata));
+				nodata.setText(getStrValue(R.string.en_nodata));
 				nodata.setVisibility(View.VISIBLE);
 			}
 	}
@@ -223,7 +223,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		requestData("pro_get_collection", 2, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				nodata.setText(CommUtil.getStrValue(self, R.string.en_nodata));
+				nodata.setText(getStrValue(R.string.en_nodata));
 				nodata.setVisibility(View.VISIBLE);
 			}
 			

@@ -80,12 +80,12 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 			pwdTxt2_username.setVisibility(View.VISIBLE);
 			line.setVisibility(View.VISIBLE);
 			setTopTitle(R.string.action_loginresetpwd);
-			passwordEt.setHint(CommUtil.getStrValue(self, R.string.login_input_old_pwd_hint));
+			passwordEt.setHint(getStrValue(R.string.login_input_old_pwd_hint));
 		}else if(type.equals(UserInfoCode.FORGOTPWD)){
 			pwdTxt_username.setVisibility(View.VISIBLE);
 			userpwdLayout.setVisibility(View.GONE);
 			setTopTitle(R.string.action_login_findgotpwd);
-			passwordEt.setHint(CommUtil.getStrValue(self, R.string.login_input_new_pwd_hint));
+			passwordEt.setHint(getStrValue(R.string.login_input_new_pwd_hint));
 		}
 		
 		findPwdBtn.setOnClickListener(this);
