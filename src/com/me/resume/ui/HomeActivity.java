@@ -152,7 +152,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			}
 		},100);
 		
-		DialogUtils.showProgress(self,"上传中");
 	}
 	
 	/**

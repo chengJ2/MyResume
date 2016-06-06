@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<!-- app相关 -->
-    <string name="app_name">个人简历</string>
-    <string name="app_about">随时随地完善预览我的简历</string>
+    <string name="app_name">有云简历</string>
+    <string name="app_about">随时随地,完善预览,我的简历</string>
     <string name="app_crash">App发生异常,请重启</string>
     <string name="app_exit">再按一次退出</string>
-     <string name="app_download">正在下载 个人简历 ...</string>
-     <string name="app_declare">本App上的大部分内容来源网络,包括文字,图片等,提供的内容将服务使用者用于个人学习、研究或欣赏,以及其他非商业性或非盈利性用途.
-         	
-         	若内容侵犯了原作者的权利或原作者不愿意在本App刊登内容,请及时通知并联系我们,予以删除。</string>
+    <string name="app_download">正在下载 有云简历 ...</string>
+    <string name="app_declare1">特别声明</string>
+    <string name="app_declare2">联系我们</string>
+    <string name="app_declare3">本App上的大部分内容来源网络,包括文字,图片等,提供的内容将服务使用者用于个人学习、研究或欣赏,以及其他非商业性或非盈利性用途.</string>
+    <string name="app_declare4">若内容侵犯了原作者的权利或原作者不愿意在本App展示内容,请及时通知并联系我们,予以删除。</string>
     
     <!-- 网络相关 -->
     <string name="check_network">网络异常,请检查!</string>
@@ -176,7 +177,7 @@
     <string name="personal_c_item13">未填写</string>
     <string name="personal_c_item14">完整度:%d%%</string>
     <string name="personal_c_item15">已有%d项经验</string>
-    <string name="personal_c_item16">上次更新:%tF%</string>
+    <string name="personal_c_item16">上次更新:%s</string>
     <string name="personal_c_item17">|应届生</string>
     <string name="personal_c_item18">|%d年工作经验</string>
     
@@ -195,7 +196,7 @@
 	<string name="action_button_cancle">取&#160;&#160;消</string>
 	
     <!-- UI dialog msg -->
-    <string name="upload_loading">正在更新,请稍后...</string>
+    <string name="upload_loading">更新中</string>
     <string name="dialog_action_alert">您还没登录,创建的简历会保存到本地,若卸载APP或清除APP数据,将不会显示出您的简历信息,请先登录或继续操作！</string>
     <string name="dialog_action_cache_alert">该操作会清除您创建的简历信息,请确保数据已同步！</string>
     <string name="dialog_action_delete_alert">该操作会删除本地数据,确认删除吗？</string>

@@ -9,9 +9,8 @@
     <com.me.resume.views.XListView
         android:id="@+id/reviewsharemoreListView"
         style="@style/comm_listview_style"
-        android:layout_marginTop="0dip"
-        android:layout_marginLeft="0dip"
-        android:layout_marginRight="0dip"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
         android:layout_marginBottom="60dip"
         android:footerDividersEnabled="false"
         android:visibility="gone" />

@@ -675,9 +675,9 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 						
 						int work = (theYear - year);
 						if (work <= 0) {
-							holder.setText(R.id.share_workyear,"应届生");
+							holder.setText(R.id.share_workyear,getStrValue(R.string.personal_c_item17));
 						}else{
-							holder.setText(R.id.share_workyear, work + "年工作经验");
+							holder.setText(R.id.share_workyear, String.format(getStrValue(R.string.personal_c_item18), work));
 						}
 					}else{
 						holder.setTextVisibe(R.id.share_workyear, View.GONE);

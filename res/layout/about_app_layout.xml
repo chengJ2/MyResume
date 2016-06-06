@@ -22,7 +22,7 @@
 
             <TextView
                 style="@style/about_app_item_text"
-                android:text="特别声明" />
+                android:text="@string/app_declare1" />
 
             <TextView
                 android:id="@+id/declare"
@@ -31,13 +31,13 @@
                 android:gravity="center|left"
                 android:lineSpacingExtra="3dip"
                 android:padding="@dimen/margin_16"
-                android:text="@string/app_declare"
+                android:text="@string/app_declare3"
                 android:textColor="@color/grey_10"
                 android:textSize="@dimen/micro_text_size" />
 
             <TextView
                 style="@style/about_app_item_text"
-                android:text="联系我们" />
+                android:text="@string/app_declare2" />
 
             <TextView
                 android:id="@+id/contactus"
@@ -45,7 +45,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center|left"
                 android:padding="@dimen/margin_16"
-                android:text="联系我们联系我们联系我们联系我们联系我们联系我们联系我们联系我们联系我们"
                 android:textColor="@color/grey_10"
                 android:lineSpacingExtra="3dip"
                 android:textSize="@dimen/small_text_size" />

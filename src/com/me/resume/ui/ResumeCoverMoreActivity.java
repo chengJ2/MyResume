@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
-import com.me.resume.utils.CommUtil;
 
 /**
  * 更多简历封面
@@ -33,13 +32,9 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 		boayLayout.addView(v);
 		
 		setTopTitle(R.string.item_text61);
-		
 		setMsgHide();
-		
 		setRightIconVisible(View.INVISIBLE);
-		
 		setRight2IconVisible(View.GONE);
-		
 		setfabLayoutVisible(View.GONE);
 		
 		covermoregridview = findView(R.id.covermoregridview);
@@ -47,12 +42,11 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 		msgText.setVisibility(View.VISIBLE);
 		msgText.setText(getStrValue(R.string.item_text43));
 		
-		
 		getReCoverMoreData();
 	}
 	
 	/**
-	 * @Description: 面试分享心得
+	 * 面试分享心得
 	 */
 	private void getReCoverMoreData(){
 		List<String> params = new ArrayList<String>();

@@ -313,6 +313,9 @@ public class SwipeBackActivity extends FragmentActivity implements
 			if (progressDialog != null) {
 				progressDialog.dismiss();
 			}
+			if (dataSetlist != null) {
+				dataSetlist = null;
+			}
 			if (result == ResponseCode.LOAD_NO_DATA || result == ResponseCode.LOAD_DATA_ERROR) {
 				handlerData.error();
 			} else if (result == ResponseCode.LOAD_DATA_SUCCESS) {

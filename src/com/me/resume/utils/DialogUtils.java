@@ -45,6 +45,7 @@ import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.tools.L;
+import com.me.resume.views.CustomListView;
 import com.me.resume.views.CustomProgressDialog;
 import com.me.resume.views.GrapeGridview;
 
@@ -193,10 +194,6 @@ public class DialogUtils {
 	}
 	
 	/**
-	 * 
-	 * @Title:DialogUtils
-	 * @Description: TODO(这里用一句话描述这个方法的作用)
-	 * @return 返回类型  
 	 * @param context
 	 * @param resource
 	 * @param parent
@@ -206,35 +203,27 @@ public class DialogUtils {
 	private static HashMap<String,Boolean> states=new HashMap<String,Boolean>();//用于记录每个RadioButton的状态，并保证只可选一个 
 	public static void showPopWindow(Context context,View parent,int resourId,List<String> mList,Handler handler){
 		mHandler = handler;
-		View popView = View.inflate(context,R.layout.pop_simple_list_layout, null);
-		mPopupWindow = new PopupWindow(popView, LayoutParams.MATCH_PARENT,
-												LayoutParams.MATCH_PARENT,true);
-		mPopupWindow.setTouchable(true);
-		mPopupWindow.setOutsideTouchable(true);
-		mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-		mPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
-		
-		TextView popTitle = (TextView)popView.findViewById(R.id.top_text);
+		View layout = View.inflate(context,R.layout.pop_simple_list_layout, null);
+		showPopupView(layout,parent);
+		TextView popTitle = (TextView)layout.findViewById(R.id.top_text);
 		popTitle.setText(CommUtil.getStrValue(context, resourId));
 		
-		ImageView rightIcon = (ImageView)popView.findViewById(R.id.icon_cancle);
+		ImageView rightIcon = (ImageView)layout.findViewById(R.id.icon_cancle);
 		rightIcon.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				dismissPopwindow();
 			}
 		});
 		
-		ListView dataListView = (ListView)popView.findViewById(R.id.data_list);
+		ListView dataListView = (ListView)layout.findViewById(R.id.data_list);
 		CommonBaseAdapter<String> commAdapter = new CommonBaseAdapter<String>(context,
 					mList,
 					R.layout.pop_simple_list_item) {
 			
 			@Override
 			public void convert(ViewHolder holder, String item, final int position) {
-				// TODO Auto-generated method stub
 				holder.setText(R.id.item_text,mList.get(position));
 				final RadioButton radio = (RadioButton) holder.getRadioButton(R.id.item_radio_btn);
 
@@ -294,6 +283,7 @@ public class DialogUtils {
 			}
 		};
 		dataListView.setAdapter(commAdapter);
+		
 	}
 	
 	public static int years,months,days;
@@ -311,13 +301,7 @@ public class DialogUtils {
 	public static void showTimeChooseDialog(final Context context,View parent,final int resId,final int msgWhat,Handler handler){
 		mHandler = handler;
 		View layout = View.inflate(context,R.layout.date_layout, null);
-		mPopupWindow = new PopupWindow(layout, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-		mPopupWindow.setTouchable(true);
-		mPopupWindow.setFocusable(true);
-		mPopupWindow.setOutsideTouchable(true);
-		mPopupWindow.setAnimationStyle(R.style.popupAnim); 
-		
+		showPopupView(layout,parent);
 		final TextView msg = (TextView)layout.findViewById(R.id.title);
 		final DatePicker datePicker = (DatePicker)layout.findViewById(R.id.datePicker);
 		//获取当前的年、月、日、小时、分钟  
@@ -365,7 +349,22 @@ public class DialogUtils {
 				dismissPopwindow();
 			}
 		});
-		mPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+	}
+	
+	/**
+	 * 初始化PopupWindow
+	 * @param layout
+	 * @param parent
+	 */
+	private static void showPopupView(View layout,View parent){
+		mPopupWindow = new PopupWindow(layout, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,true);
+		mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+		mPopupWindow.setFocusable(true);
+		mPopupWindow.setOutsideTouchable(true);
+		mPopupWindow.setAnimationStyle(R.style.popupAnim); 
+		if (mPopupWindow != null && !mPopupWindow.isShowing()) {
+			mPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
+		}
 	}
 	
 	/**
@@ -378,12 +377,7 @@ public class DialogUtils {
 	public static void showTopMenuDialog(Activity context,View parent,int more,Handler handler){
 		mHandler = handler;
 		View layout = View.inflate(context,R.layout.topbar_menu_layout, null);
-		mPopupWindow = new PopupWindow(layout, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-		mPopupWindow.setFocusable(true);
-		mPopupWindow.setOutsideTouchable(true);
-		mPopupWindow.setAnimationStyle(R.style.popupAnim); 
-		
+		showPopupView(layout,parent);
 		GrapeGridview bgrid = (GrapeGridview)layout.findViewById(R.id.bgrid);
 		ToggleButton setting_editmode_cb = (ToggleButton)layout.findViewById(R.id.setting_editmode_cb);
 		LinearLayout setting_syn = (LinearLayout)layout.findViewById(R.id.llout_sync);
@@ -481,8 +475,6 @@ public class DialogUtils {
 				dismissPopwindow();
 			}
 		});
-		
-		mPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 	}
 	
 	/**
@@ -495,11 +487,7 @@ public class DialogUtils {
 	public static void showPhotoPathDialog(Activity context,View parent,Handler handler){
 		mHandler = handler;
 		View layout = View.inflate(context,R.layout.choose_photo_path_layout, null);
-		mPopupWindow = new PopupWindow(layout, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-		mPopupWindow.setFocusable(true);
-		mPopupWindow.setOutsideTouchable(true);
-		mPopupWindow.setAnimationStyle(R.style.popupAnim); 
+		showPopupView(layout,parent);
 		
 		TextView byfile = (TextView)layout.findViewById(R.id.byfile);
 		TextView bycamera = (TextView)layout.findViewById(R.id.bycamera);
@@ -530,7 +518,6 @@ public class DialogUtils {
 			}
 		});
 		
-		mPopupWindow.showAtLocation(parent, Gravity.CENTER, 0, 0);
 	}
 	
 	/**
@@ -553,10 +540,7 @@ public class DialogUtils {
 				
 				@Override
 				public void onClick(View v) {
-					if (dialog!=null || dialog.isShowing()) {
-						dialog.dismiss();
-						dialog = null;
-					}
+					dismissDialog();
 				}
 			});
 			dialog.show();

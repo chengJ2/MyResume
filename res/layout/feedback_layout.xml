@@ -3,15 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:layout_marginLeft="@dimen/margin_20"
+    android:layout_marginRight="@dimen/margin_20" >
     
      <EditText
        android:id="@+id/feeddesc"
        android:layout_width="match_parent"
        android:layout_height="200dip"
-       android:layout_margin="20dip"
        android:gravity="left"
-       android:padding="10dip"
+       android:layout_marginTop="@dimen/margin_20"
+       android:padding="@dimen/margin_10"
        android:hint="@string/feedback_ed_1" 
        android:singleLine="false"
        android:textSize="@dimen/small_text_size"
@@ -21,10 +23,8 @@
      <EditText
        android:id="@+id/feedcontact"
        android:layout_width="match_parent"
-       android:layout_height="50dip"
-       android:layout_marginLeft="20dip"
-       android:layout_marginRight="20dip"
-       android:layout_marginBottom="20dip"
+       android:layout_height="40dip"
+       android:layout_marginTop="@dimen/margin_20"
        android:hint="@string/feedback_ed_2" 
        android:singleLine="true"
        android:textSize="@dimen/small_text_size"
@@ -34,8 +34,7 @@
          android:id="@+id/feedback_layout"
          android:layout_width="wrap_content"
          android:layout_height="30dip"
-         android:layout_marginLeft="20dip"
-         android:layout_marginRight="20dip"
+         android:layout_marginTop="@dimen/margin_20"
          android:orientation="horizontal">
 
          <CheckBox
@@ -58,7 +57,11 @@
       <Button
          android:id="@+id/feedcommit"
          style="@style/button_menu"
-         android:layout_margin="20dip"
+         android:layout_weight="0"
+         android:layout_marginLeft="0dip"
+    	 android:layout_marginRight="0dip" 
+         android:layout_marginTop="@dimen/margin_20"
+         android:layout_height="40dip"
          android:text="@string/feedback_ed_3" />
      
      

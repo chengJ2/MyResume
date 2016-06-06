@@ -109,7 +109,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				break;
 			case 13:
 				if (msg.obj != null) {
-					info_workyear.setText(((String)msg.obj)/*.substring(0, 7)*/);
+					info_workyear.setText(((String)msg.obj).substring(0, 7));
 				}
 				break;
 			case 100:
@@ -325,8 +325,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		msg.setVisibility(View.GONE);
 		switch (v.getId()) {
 		case R.id.save:
-			getFeildValue();
-			if(judgeField()){
+			if(judgeFeild()){
 				syncLocalData();
 			}
 			break;
@@ -381,11 +380,10 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	private void actionAync(){
 		if (!MyApplication.USERID.equals("0")) {
 			if (CommUtil.isNetworkAvailable(self)) {
-				if (judgeField()) {
+				if (judgeFeild()) {
 					set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 					syncData();
 				}
-				
 			} else {
 				set3Msg(R.string.check_network);
 			}
@@ -421,7 +419,8 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	/**
 	 * 界面字段判断
 	 */
-	private boolean judgeField() {
+	private boolean judgeFeild() {
+		getFeildValue();
 		if (!RegexUtil.checkNotNull(info_realnameStr)) {
 			setMsg(R.string.info_name);
 			return false;
@@ -547,8 +546,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	 * @param style 2：add 3.update
 	 */
 	private void syncRun(int style){
-		getFeildValue();
-		if(judgeField()){
+		if(judgeFeild()){
 			List<String> params = new ArrayList<String>();
 			List<String> values = new ArrayList<String>();
 			

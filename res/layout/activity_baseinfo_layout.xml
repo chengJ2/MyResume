@@ -168,7 +168,7 @@
                 android:id="@+id/uselesstitleLayoyut"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/home_item_height"
-                android:background="@color/grey_80" >
+                android:background="@color/grey_30" >
 
                 <TextView
                     style="@style/home_item_text"

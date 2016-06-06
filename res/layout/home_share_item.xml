@@ -2,126 +2,119 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white" 
-    android:orientation="horizontal">
-    
-    <ImageView
-         android:id="@+id/share_usernameavator"
-         android:layout_width="40dip"
-         android:layout_height="40dip"
-         android:layout_marginLeft="10dip"
-         android:layout_marginTop="10dip"
-         android:layout_marginRight="15dip"
-         android:src="@drawable/user_default_avatar"
-         android:scaleType="centerInside" />
+    android:background="@color/white"
+    android:orientation="horizontal" >
 
-     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:background="@color/white"
-         android:gravity="center"
-         android:orientation="vertical"
-         android:layout_marginBottom="10dip" >
-                
-         <RelativeLayout 
-		    android:layout_width="match_parent"
-		    android:layout_height="35dip"
-		    android:background="@color/white" >
-			
+    <ImageView
+        android:id="@+id/share_usernameavator"
+        android:layout_width="40dip"
+        android:layout_height="40dip"
+        android:layout_marginRight="15dip"
+        android:layout_marginTop="10dip"
+        android:scaleType="centerInside"
+        android:src="@drawable/user_default_avatar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dip"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dip"
+            android:background="@color/white" >
+
             <TextView
-     			 android:id="@+id/share_username"
-      			 style="@style/user_center_text"
-      			 android:maxWidth="200dip"
-      			 android:text="sandy"
-      			 android:layout_alignParentLeft="true"
-      			 android:textSize="@dimen/small_middle_text_size" 
-      			 android:textColor="@color/black"/>
-             
+                android:id="@+id/share_username"
+                style="@style/user_center_text"
+                android:layout_alignParentLeft="true"
+                android:maxWidth="200dip"
+                android:text="sandy"
+                android:textColor="@color/black"
+                android:textSize="@dimen/small_middle_text_size" />
+
             <ImageView
-                 android:id="@+id/share_collection"
-		         android:layout_width="50dip"
-		         android:layout_height="25dip"
-		         android:layout_alignParentRight="true"
-		         android:layout_centerVertical="true"
-		         android:layout_gravity="center"
-		         android:scaleType="centerInside"
-		         android:src="@drawable/icon_collection"
-		         android:visibility="visible"/>
-             
-    	</RelativeLayout>
-    	
-         <RelativeLayout 
-             android:id="@+id/info2Layout"
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:background="@color/white">
-			
+                android:id="@+id/share_collection"
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_collection"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/info2Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white" >
+
             <TextView
-     			 android:id="@+id/share_jobtitle"
-      			 style="@style/user_center_text"
-      			 android:layout_height="20dip"
-      			 android:maxWidth="200dip"
-      			 android:text="Android开发工程师"
-      			 android:layout_alignParentLeft="true"
-      			 android:textSize="@dimen/microd_text_size" 
-      			 android:textColor="@color/grey_10"
-      			 android:visibility="gone"/>
-             
-             <TextView
-     			 android:id="@+id/share_workyear"
-      			 style="@style/user_center_text"
-      			 android:layout_height="20dip"
-      			 android:maxWidth="200dip"
-      			 android:text="2年工作经验"
-      			 android:layout_toRightOf="@id/share_jobtitle"
-      			 android:layout_marginLeft="10dip"
-      			 android:textSize="@dimen/microd_text_size" 
-      			 android:textColor="@color/grey_10"
-      			 android:visibility="gone"/>
-             
-    	</RelativeLayout>
-         
-    	
-          <TextView
-     			android:id="@+id/share_content"
-      			 style="@style/user_center_text"
-      			 android:maxHeight="120dip"
-      			 android:maxLines="3"
-      			 android:ellipsize="end"
-      			 android:singleLine="false"
-      			 android:lineSpacingExtra="3dip"
-      			 android:layout_marginTop="10dip"
-      			 android:paddingRight="8dip"
-      			 android:gravity="left"
-      			 android:layout_gravity="left"
-      			 android:text="测试测试测试测试测试测试测试测试测试测试测试测试"
-      			 android:textSize="@dimen/small_text_size"
-      			 android:textColor="@color/black" />
-         
-         <RelativeLayout
-              android:layout_width="match_parent"
-              android:layout_height="30dip"
-              android:layout_marginTop="10dip"
-              android:gravity="center|left" >
-                
-                <TextView
-       				 android:id="@+id/share_city"
-        			 style="@style/user_center_text"
-        			 android:layout_alignParentLeft="true"
-        			 android:text="武汉市"
-        			 android:textSize="@dimen/microd_text_size" 
-        			 android:textColor="@color/grey_10"/>
-                
-                 <TextView
-       				 android:id="@+id/share_datime"
-        			 style="@style/user_center_text"
-        			 android:layout_alignParentRight="true"
-        			 android:text="2016.5.10"
-        			 android:paddingRight="10dip"
-        			android:textSize="@dimen/microd_text_size"
-        			android:textColor="@color/grey_10" />
-   
-         </RelativeLayout>
-         
+                android:id="@+id/share_jobtitle"
+                style="@style/user_center_text"
+                android:layout_height="20dip"
+                android:layout_alignParentLeft="true"
+                android:maxWidth="200dip"
+                android:text="Android开发工程师"
+                android:textColor="@color/grey_10"
+                android:textSize="@dimen/microd_text_size"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/share_workyear"
+                style="@style/user_center_text"
+                android:layout_height="20dip"
+                android:layout_marginLeft="10dip"
+                android:layout_toRightOf="@id/share_jobtitle"
+                android:maxWidth="200dip"
+                android:text="2年工作经验"
+                android:textColor="@color/grey_10"
+                android:textSize="@dimen/microd_text_size"
+                android:visibility="visible" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/share_content"
+            style="@style/user_center_text"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dip"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:lineSpacingExtra="3dip"
+            android:maxHeight="120dip"
+            android:maxLines="3"
+            android:paddingRight="8dip"
+            android:singleLine="false"
+            android:text="测试测试测试测试测试测试测试测试测试测试测试测试"
+            android:textColor="@color/black"
+            android:textSize="@dimen/small_text_size" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dip" >
+
+            <TextView
+                android:id="@+id/share_city"
+                style="@style/user_center_text"
+                android:layout_alignParentLeft="true"
+                android:gravity="left|bottom"
+                android:text="武汉市"
+                android:textColor="@color/grey_10"
+                android:textSize="@dimen/microd_text_size" />
+
+            <TextView
+                android:id="@+id/share_datime"
+                style="@style/user_center_text"
+                android:layout_alignParentRight="true"
+                android:gravity="left|bottom"
+                android:text="2016.5.10"
+                android:textColor="@color/grey_10"
+                android:textSize="@dimen/microd_text_size" />
+        </RelativeLayout>
     </LinearLayout>
+
 </LinearLayout>

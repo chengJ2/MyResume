@@ -87,6 +87,8 @@
 
                 <com.me.resume.views.CustomListView
                     android:id="@+id/reviewshareListView"
+                    android:layout_marginLeft="@dimen/margin_10"
+                    android:layout_marginRight="@dimen/margin_10"
                     style="@style/comm_listview_style" />
 
                 <TextView

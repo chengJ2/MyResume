@@ -10,7 +10,7 @@
           android:id="@+id/covermoregridview"
           style="@style/home_content_grilview"
           android:layout_margin="0dip"
-          android:padding="@dimen/margin_8"
+          android:padding="@dimen/margin_10"
           android:visibility="visible"/>
     
      <TextView

@@ -2,15 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#b0000000"
+    android:background="#00000000"
     android:gravity="center" >
 
     <LinearLayout
         android:id="@+id/horizontalsv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dip"
-        android:layout_marginRight="20dip"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_marginRight="@dimen/margin_20"
         android:background="@drawable/dialog_corner"
         android:orientation="vertical" >
 
@@ -18,24 +18,15 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/topbar_pop_item_height"
             android:orientation="horizontal"
-            android:paddingLeft="10dip" >
+            android:paddingLeft="@dimen/margin_10" >
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center|left"
-                android:text="@string/item_text1"
-                android:textColor="@color/black"
-                android:textSize="@dimen/small_middle_text_size" />
+                style="@style/diglog_menu_item_text"
+                android:text="@string/item_text1"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center|left"
-                android:paddingLeft="5dip"
-                android:text="@string/item_text11"
-                android:textColor="@color/grey_10"
-                android:textSize="@dimen/small_text_size" />
+                style="@style/diglog_menu_item_text_small"
+                android:text="@string/item_text11" />
         </LinearLayout>
 
         <View style="@style/line_padding10" />
@@ -68,13 +59,13 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/topbar_pop_item_height"
             android:orientation="horizontal"
-            android:paddingLeft="10dip" >
+            android:paddingLeft="@dimen/margin_10" >
 
             <TextView
-                style="@style/user_info_item_tv"
                 android:layout_weight="5"
-                android:text="@string/settings_item21"
-                android:textColor="@color/black" />
+                android:layout_width="0dip"
+                style="@style/diglog_menu_item_text"
+                android:text="@string/settings_item21"/>
 
             <LinearLayout
                 android:layout_width="0dip"
@@ -104,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/topbar_pop_item_height"
             android:orientation="horizontal"
-            android:paddingLeft="10dip" >
+            android:paddingLeft="@dimen/margin_10" >
 
             <TextView
                 style="@style/user_info_item_tv"
@@ -122,14 +113,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/topbar_pop_item_height"
             android:orientation="horizontal"
-            android:paddingLeft="10dip"
-            android:visibility="gone" >
+            android:paddingLeft="@dimen/margin_10"
+            android:visibility="visible" >
 
             <TextView
-                style="@style/user_info_item_tv"
-                android:layout_weight="1"
-                android:text="@string/settings_item51"
-                android:textColor="@color/black" />
+                style="@style/diglog_menu_item_text"
+                android:text="@string/settings_item51"/>
         </LinearLayout>
     </LinearLayout>
 
