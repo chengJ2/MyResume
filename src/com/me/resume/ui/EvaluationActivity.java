@@ -245,10 +245,10 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			return false;
 		}
 		
-		if (!RegexUtil.checkNotNull(info_career_goalStr)) {
+		/*if (!RegexUtil.checkNotNull(info_career_goalStr)) {
 			setMsg(R.string.ev_info_career_goal);
 			return false;
-		}
+		}*/
 		
 		if (!RegexUtil.checkStringLength(info_career_goalStr, 1000)) {
 			set3Msg(R.string.ev_info_career_goal_length);

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white" >
+    android:background="@color/top_bar" >
 
     <LinearLayout
         android:id="@+id/useregisterLayout"
@@ -10,44 +10,46 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/margin_10"
-        android:background="@drawable/editbox"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="vertical" >
 
         <EditText
             android:id="@+id/regTxt_username"
-            style="@style/userinfo_item_style"
+            style="@style/userinfo_item_style_white"
             android:drawableLeft="@drawable/icon_username"
             android:hint="@string/login_input1_hint" />
 
-        <View style="@style/line_padding10" />
-        
-        
-       <EditText
-            android:id="@+id/regTxt_phone"
-            style="@style/userinfo_item_style"
-            android:inputType="phone"
-            android:drawableLeft="@drawable/icon_phone"
-            android:hint="@string/login_input2_hint" />
+        <View style="@style/line_padding10_white" />
 
-        <View style="@style/line_padding10" />
-        
+        <EditText
+            android:id="@+id/regTxt_phone"
+            style="@style/userinfo_item_style_white"
+            android:drawableLeft="@drawable/icon_phone"
+            android:hint="@string/login_input2_hint"
+            android:inputType="phone" />
+
+        <View style="@style/line_padding10_white" />
+
         <EditText
             android:id="@+id/regTxt_password"
-            style="@style/userinfo_item_style"
+            style="@style/userinfo_item_style_white"
             android:drawableLeft="@drawable/icon_pwd"
+            android:drawableRight="@drawable/icon_pwd_show"
             android:hint="@string/login_input_pwd_hint"
             android:inputType="textPassword" />
 
-        <View style="@style/line_padding10" />
+        <View style="@style/line_padding10_white" />
 
         <EditText
             android:id="@+id/regTxt2_password"
-            style="@style/userinfo_item_style"
+            style="@style/userinfo_item_style_white"
             android:drawableLeft="@drawable/icon_pwd"
+            android:drawableRight="@drawable/icon_pwd_show"
             android:hint="@string/login_input_snew_pwd_hint"
             android:inputType="textPassword" />
+
+        <View style="@style/line_padding10_white" />
     </LinearLayout>
 
     <LinearLayout
@@ -72,27 +74,28 @@
             android:layout_marginLeft="8dp"
             android:gravity="center|left"
             android:text="@string/register_protocol"
-            android:textColor="@color/grey_10"
-            android:textSize="@dimen/small_middle_text_size"
-            android:textStyle="bold" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/micro_text_size" />
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_register"
-        style="@style/button_menu"
+        style="@style/button_menu_white"
         android:layout_below="@id/savelayout"
         android:layout_marginTop="35dip"
         android:text="@string/action_register" />
-    
-     <TextView
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_register"
-        android:layout_margin="@dimen/margin_10"
-        android:textSize="@dimen/micro_text_size"
-        android:textColor="@color/red"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_16"
         android:lineSpacingExtra="3dip"
-        android:text="@string/register_warn"/>
+        android:text="@string/register_warn"
+        android:textColor="@color/register_warn"
+        android:textSize="@dimen/micro_text_size" />
 
     <TextView
         android:id="@+id/acclogin"
@@ -100,11 +103,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="10dip"
-        android:layout_marginRight="10dip"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
         android:gravity="center|left"
         android:text="@string/account_go_login"
-        android:textColor="@color/grey_10"
+        android:textColor="@color/white"
         android:textSize="@dimen/small_middle_text_size" />
 
 </RelativeLayout>

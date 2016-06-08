@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainRLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white" >
+     
+    <com.me.resume.views.ScrollLayoutView
+        android:id="@+id/scrollLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible" >
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/a001" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/a002" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/a003" />
+
+         <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/a004" >
+			 <Button
+		         android:id="@+id/startBtn"
+		         android:layout_width="30dip"
+		         android:layout_height="30dip"
+		         android:layout_alignParentBottom="true"
+		         android:layout_centerHorizontal="true"
+		         android:layout_marginBottom="@dimen/margin_16"
+		         android:background="@drawable/icon_go" />
+        </RelativeLayout>
+    </com.me.resume.views.ScrollLayoutView>
+    
+   <TextView
+        android:id="@+id/skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_5"
+        android:text="跳过"
+        android:textColor="@color/white"
+        android:textSize="@dimen/small_text_size"/>
+    
+     <LinearLayout
+        android:id="@+id/pointLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:visibility="visible" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:clickable="true"
+            android:padding="5.0dip"
+            android:src="@drawable/selector_page_point" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:clickable="true"
+            android:padding="5.0dip"
+            android:src="@drawable/selector_page_point" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:clickable="true"
+            android:padding="5.0dip"
+            android:src="@drawable/selector_page_point" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:clickable="true"
+            android:padding="5.0dip"
+            android:src="@drawable/selector_page_point" />
+    </LinearLayout>
+</RelativeLayout>

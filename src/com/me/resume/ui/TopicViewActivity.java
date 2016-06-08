@@ -36,9 +36,9 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 	
 	private MarqueeText topic_title;
 	private TextView topic_from,topic_datetime;
-	private ImageView topic_frompic;
+	private ImageView topic_frompic,topic_frompic2;
 	
-	private TextView topic_content;
+	private TextView topic_content,topic_content2;
 	
 	private String topicidType,title;
 	
@@ -69,7 +69,9 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 		topic_from = findView(R.id.topic_from);
 		topic_datetime = findView(R.id.topic_datetime);
 		topic_frompic = findView(R.id.topic_frompic);
+		topic_frompic2 = findView(R.id.topic_frompic2);
 		topic_content = findView(R.id.topic_content);
+		topic_content2 = findView(R.id.topic_content2);
 	}
 
 	private void initView(){
@@ -149,7 +151,7 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 					msgText.setVisibility(View.GONE);
 					topic_title.setText(map.get("title").get(0));
 					topic_from.setText(map.get("from").get(0));
-					topic_datetime.setText(map.get("createtime").get(0));
+					topic_datetime.setText(TimeUtils.showTimeFriendly(map.get("createtime").get(0)));
 					String frompicUrl = map.get("from_url").get(0);
 					if (RegexUtil.checkNotNull(frompicUrl)) {
 						topic_frompic.setVisibility(View.VISIBLE);
@@ -159,6 +161,22 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 					}
 					
 					topic_content.setText(Html.fromHtml(CommUtil.getHtml(map.get("detail").get(0))));
+					
+					String frompicUrl2 = map.get("from_url2").get(0);
+					if (RegexUtil.checkNotNull(frompicUrl2)) {
+						topic_frompic2.setVisibility(View.VISIBLE);
+						mImageLoader.displayImage(CommUtil.getHttpLink(frompicUrl), topic_frompic2, false, false);
+					}else{
+						topic_frompic2.setVisibility(View.GONE);
+					}
+					
+					/*String topiccontent2 = map.get("detail2").get(0);
+					if (RegexUtil.checkNotNull(topiccontent2)) {
+						topic_content2.setVisibility(View.VISIBLE);
+						topic_content2.setText(Html.fromHtml(CommUtil.getHtml(topiccontent2)));
+					}else{
+						topic_frompic2.setVisibility(View.GONE);
+					}*/
 					
 					String cid = map.get("id").get(0);
 					queryWhere = "select * from " + CommonText.MYCOLLECTION 

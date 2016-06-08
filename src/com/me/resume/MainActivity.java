@@ -293,7 +293,10 @@ public class MainActivity extends Activity {
 			
 			info = commMapArray.get("license")[0];
 			if(RegexUtil.checkNotNull(info)){
+				index_1_lisence.setVisibility(View.VISIBLE);
 				index_1_lisence.setText("身份证："+ commMapArray.get("license")[0]);
+			}else{
+				index_1_lisence.setVisibility(View.GONE);
 			}
 			index_1_phone.setText("手机号："+commMapArray.get("phone")[0]);
 			index_1_email.setText("E-mail："+commMapArray.get("email")[0]);
@@ -392,11 +395,11 @@ public class MainActivity extends Activity {
 				for (int i = 0,cun = ll.size(); i < cun; i++) {
 					TextView tview = new TextView(this);
 					tview.setText(ll.get(i).toString().trim());
-					tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.microd_text_size));
+					tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.tiny_text_size));
 					tview.setTextColor(CommUtil.getColorValue(self, R.color.red));
 					tview.setTypeface(Typeface.SERIF);
-					tview.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_tag_text_select));
-					tview.setPadding(6, 8, 6, 8);
+					tview.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_tag_text_corner));
+//					tview.setPadding(6, 8, 6, 8);
 					tagFlowLayout.addView(tview, lp);
 				}
 			}
@@ -426,12 +429,12 @@ public class MainActivity extends Activity {
 			if (!mViewList.contains(view)) {
 				mViewList.add(view);
 			}
-			index_4_info1.setText(Html.fromHtml("<strong>工作性质：</strong>"+commMapArray.get("expworkingproperty")[0]));
-			index_4_info2.setText(Html.fromHtml("<strong>期望职业：</strong>"+commMapArray.get("expworkcareer")[0]));
-			index_4_info3.setText(Html.fromHtml("<strong>期望行业：</strong>"+commMapArray.get("expworkindustry")[0]));
-			index_4_info4.setText(Html.fromHtml("<strong>工作地区：</strong>"+commMapArray.get("expdworkplace")[0]));
-			index_4_info5.setText(Html.fromHtml("<strong>期望月薪：</strong>"+commMapArray.get("expmonthlysalary")[0]));
-			index_4_info6.setText(Html.fromHtml("<strong>目前状况：</strong>"+commMapArray.get("workingstate")[0]));
+			index_4_info1.setText(Html.fromHtml("工作性质："+ commMapArray.get("expworkingproperty")[0]));
+			index_4_info2.setText(Html.fromHtml("期望职业："+commMapArray.get("expworkcareer")[0]));
+			index_4_info3.setText(Html.fromHtml("期望行业："+commMapArray.get("expworkindustry")[0]));
+			index_4_info4.setText(Html.fromHtml("工作地区："+commMapArray.get("expdworkplace")[0]));
+			index_4_info5.setText(Html.fromHtml("期望月薪："+commMapArray.get("expmonthlysalary")[0]));
+			index_4_info6.setText(Html.fromHtml("目前工作状况：<br/>"+commMapArray.get("workingstate")[0]));
 		}
 	}
 	
@@ -457,13 +460,13 @@ public class MainActivity extends Activity {
 				@Override
 				public void convert(ViewHolder holder, String[] item,
 						int position) {
-					holder.setText(R.id.item1,commMapArray.get("worktimestart")[position] + "--" + commMapArray.get("worktimeend")[position]);
+					holder.setText(R.id.item1,commMapArray.get("worktimestart")[position] + " 至 " + commMapArray.get("worktimeend")[position]);
 					holder.setTextColor(R.id.item1, CommUtil.getColorValue(self, R.color.white));
 					String info_dutiesStr = commMapArray.get("duties")[position];
-					holder.setText(R.id.item11,"责任描述："+ info_dutiesStr);
+					holder.setTextForHtml(R.id.item11,"责任描述：<br/>"+ info_dutiesStr);
 					holder.setTextColor(R.id.item11, CommUtil.getColorValue(self, R.color.white));
 					String info_prokectdescStr = commMapArray.get("prokectdesc")[position];
-					holder.setText(R.id.item12, "项目简介：" + info_prokectdescStr);
+					holder.setTextForHtml(R.id.item12,"项目简介：<br/>" + info_prokectdescStr);
 					holder.setTextColor(R.id.item12, CommUtil.getColorValue(self, R.color.white));
 				}
 			};

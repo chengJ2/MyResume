@@ -16,7 +16,8 @@
     <ListView
         android:id="@+id/peListview"
         style="@style/comm_listview_style"
-        android:layout_margin="5dp"
-        android:dividerHeight="0px"
+        android:layout_margin="@dimen/margin_8"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="@dimen/margin_10"
         android:visibility="visible" />
 </LinearLayout>

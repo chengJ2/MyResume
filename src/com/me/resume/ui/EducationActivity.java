@@ -196,6 +196,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					queryResult= dbUtil.insertData(self, CommonText.EDUCATION, cValues);
 					if (queryResult) {
 						toastMsg(R.string.action_add_success);
+						setEditBtnVisible(View.VISIBLE);
 						actionAync(0);
 					}
 				}
@@ -217,6 +218,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					queryResult = dbUtil.insertData(self, 
 							CommonText.EDUCATION_TRAIN, cValues);
 					if (queryResult) {
+						setEditBtnVisible(View.VISIBLE);
 						toastMsg(R.string.action_add_success);
 						actionAync(1);
 					}

@@ -104,7 +104,8 @@ public class Constants {
     public static final String APP_QQ_ID = "1105433372";
     
     // SINA ID
-    public static final String APP_SINA_ID = "1105433372";
+    public static final String APP_SINA_ID = "3466604642";
+    public static final String APP_SINA_SECRET = "4a9d24bd6e2d961e0195e488b014dec8";
     
     // tencent bugly
     public static final String APP_CRASH_ID = "900025676";
@@ -116,6 +117,7 @@ public class Constants {
     public static final String EVALUATION = "EvaluationActivity";
     public static final String EVALUATIONMORE = "EvaluationMoreActivity";
     public static final String FEEDBACK = "FeedBackActivity";
+    public static final String GUIDE = "GuideActivity";
     public static final String ABOUTAPP = "AboutAppActivity";
     public static final String HOME = "HomeActivity";
     public static final String IMAGEPAGER = "ImagePagerActivity";
@@ -158,6 +160,8 @@ public class Constants {
     public static final String SET_STARTVERYTIME= "startVerytime";
     public static final String SET_SWITCHANIM= "switchAnim";
     public static final String SET_SWITCHEFFDURATION= "switchEffDuration";
+    
+    public static final String FIRSTINSTALL= "firstInstall";
     
     public static final String SET_FEEDBACK= "feedback";
     

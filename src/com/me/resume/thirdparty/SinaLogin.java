@@ -23,7 +23,6 @@ import com.sina.weibo.sdk.auth.WeiboAuthListener;
 import com.sina.weibo.sdk.auth.sso.SsoHandler;
 import com.sina.weibo.sdk.exception.WeiboException;
 import com.sina.weibo.sdk.net.RequestListener;
-import com.sina.weibo.sdk.utils.LogUtil;
 
 /**
  * sina 登录
@@ -56,7 +55,7 @@ public class SinaLogin {
     }
     
     /**
-	 * qq登录授权
+	 * sina登录授权
 	 */
 	public void sinaRegistor() {
 		sina = new SinaInfo();

@@ -120,13 +120,11 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		if (RegexUtil.checkNotNull(title)) {
 			titleArr = title.split(";");
 			setTopTitle(titleArr[0]);
-			typeStr = titleArr[1];
-			
-			mHandler.sendEmptyMessageDelayed(100, 200);
+			typeStr = "="+titleArr[1];
 		}else{
-			return;
+			typeStr = "!=0";
 		}
-		
+		mHandler.sendEmptyMessageDelayed(100, 200);
 	}
 	
 	private void getTopciListData(int position){
@@ -174,7 +172,8 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 				holder.setText(R.id.topic_title, map.get("title").get(position));
 				holder.setText(R.id.topic_content, map.get("detail").get(position));
 				holder.setText(R.id.topic_from, map.get("from").get(position));
-				holder.setText(R.id.topic_datime, map.get("createtime").get(position));
+				
+				holder.setText(R.id.topic_datime, TimeUtils.showTimeFriendly(map.get("createtime").get(position)));
 				
 				viewHolder = holder;
 				

@@ -49,7 +49,6 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
 	
 	@Override
 	protected void onPostExecute(String result) {
-		L.d("====filePath===" + result);
 		if (RegexUtil.checkNotNull(result)) {
 			handler.sendMessage(handler.obtainMessage(DOWNLOAD_COMPLETE, result));
 		}

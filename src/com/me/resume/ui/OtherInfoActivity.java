@@ -89,8 +89,8 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 				if (msg.obj != null) {
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.OTHERINFO, 
-							new String[]{uTokenId,"background"}, 
-							new String[]{"1",getCheckColor(checkColor)},2);
+							new String[]{"userId=?","bgcolor"}, 
+							new String[]{uTokenId,getCheckColor(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 						actionAync(OtherInfoMenu.language,1);

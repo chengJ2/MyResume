@@ -2,9 +2,6 @@ package com.me.resume.comm;
 
 /**
  * 响应码
- * 
- * @author Administrator
- * 
  */
 public class ResponseCode {
 

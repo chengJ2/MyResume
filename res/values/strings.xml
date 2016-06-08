@@ -2,10 +2,11 @@
 <resources>
 	<!-- app相关 -->
     <string name="app_name">有云简历</string>
-    <string name="app_about">随时随地,完善预览,我的简历</string>
+    <string name="app_about">随时随地  完善预览</string>
+    <string name="app_about2">实时同步  我的简历</string>
     <string name="app_crash">App发生异常,请重启</string>
     <string name="app_exit">再按一次退出</string>
-    <string name="app_download">正在下载 有云简历 ...</string>
+    <string name="app_download">正在下载 有云简历 \u2026</string>
     <string name="app_declare1">特别声明</string>
     <string name="app_declare2">联系我们</string>
     <string name="app_declare3">本App上的大部分内容来源网络,包括文字,图片等,提供的内容将服务使用者用于个人学习、研究或欣赏,以及其他非商业性或非盈利性用途.</string>
@@ -47,19 +48,19 @@
     <string name="item_text4">说说面试心得</string>
     <string name="item_text41">我来说</string>
     <string name="item_text42">暂无面试心得分享</string>
-    <string name="item_text43">正在加载,请稍后...</string>
-    <string name="item_text44">正在更新,请稍后...</string>
+    <string name="item_text43">正在加载,请稍后\u2026</string>
+    <string name="item_text44">正在更新,请稍后\u2026</string>
     <string name="item_text5">抱歉!该模块需求联网查看~</string>
     <string name="item_text6">简历预览封面</string>
     <string name="item_text61">简历封面</string>
     <string name="item_text7">提交成功,感谢您的分享~</string>
     <string name="item_text71">更多分享</string>
     <string name="item_text72">暂无分享,快去分享你的面试心得~</string>
-    <string name="item_text8">我也来分享...</string>
+    <string name="item_text8">我也来分享\u2026</string>
     <string name="item_text81">优质的分享将会置顶哦~</string>
     <string name="item_text9">收藏成功</string>
     <string name="item_text91">取消收藏</string>
-    <string name="item_text100">正在下载,请稍后...</string>
+    <string name="item_text100">正在下载,请稍后\u2026</string>
     
     <!-- 设置界面 -->
     <string name="action_settings">设置</string>
@@ -86,14 +87,14 @@
     <string name="settings_item71">分享</string>
     <string name="settings_item8">清除本地缓存</string>
     <string name="action_login_head">请先登录</string>
-    <string name="action_syncing">正在同步,请稍后...</string>
+    <string name="action_syncing">正在同步,请稍后\u2026</string>
     <string name="action_sync_success">同步成功</string>
     <string name="action_sync_fail">同步失败,请重试</string>
     <string name="completion_info_frist">请先完善资料</string>
     <string name="action_clearcache_success">已成功清除缓存</string>
-    <string name="action_syncing_lang">正在同步语言能力,请稍后...</string>
-    <string name="action_syncing_cert">正在同步证书信息,请稍后...</string>
-    <string name="action_syncing_other">正在同步其他信息,请稍后...</string>
+    <string name="action_syncing_lang">正在同步语言能力,请稍后\u2026</string>
+    <string name="action_syncing_cert">正在同步证书信息,请稍后\u2026</string>
+    <string name="action_syncing_other">正在同步其他信息,请稍后\u2026</string>
     <string name="viewpager_indicator">%1$d/%2$d</string>
     <string name="feedback_ed_1">请尽详细地描述您的反馈问题或用户体验不足之处,以帮助我们改善产品体验,我们将尽快处理你的意见,谢谢~</string>
     <string name="feedback_info_1">意见描述</string>
@@ -108,7 +109,7 @@
     <string name="action_user_regist">快速注册</string>
     <string name="action_login">登&#160;&#160;录</string>
     <string name="action_register">注&#160;&#160;册</string>
-    <string name="action_loging">登录中...</string>
+    <string name="action_loging">登录中\u2026</string>
     <string name="action_login_savepwd">保存密码</string>
     <string name="action_loginresetpwd">重置密码</string>
     <string name="action_login_findgotpwd">找回密码</string>
@@ -127,9 +128,9 @@
     <string name="register_repeatedusername">用户名已存在</string>
     <string name="register_username_noexist">该用户名或手机号未注册,请重试!</string>
     <string name="new_password">请记住您的新密码:</string>
-    <string name="action_wait_loging">正在登录,请稍后...</string>
-    <string name="action_wait_reging">正在注册,请稍后...</string>
-    <string name="action_wait_regsuccess">注册成功,正在跳转...</string>
+    <string name="action_wait_loging">正在登录,请稍后\u2026</string>
+    <string name="action_wait_reging">正在注册,请稍后\u2026</string>
+    <string name="action_wait_regsuccess">注册成功,正在跳转\u2026</string>
     <string name="action_login_error"> 用户名或密码不正确,请重试!</string>
     <string name="login_input_hint">请输入手机号/用户名</string>
     <string name="login_input1_hint">请输入用户名</string>
@@ -141,7 +142,7 @@
     <string name="login_input_updatepwd_success">密码修改成功,请记住您的新密码~</string>
     <string name="action_regist_fail">注册失败,请重试!</string>
     <string name="register_protocol">同意《我的简历服务协议》</string>
-    <string name="register_warn">提示:每个用户只能注册一次,请注意同步资料！ 若想重新注册,请到设置界面进行清除本地缓存操作。</string>
+    <string name="register_warn">提示:每个用户只能注册一次,请注意同步资料！ 若想重新注册,请清除App缓存或者到设置界面进行清除本地缓存操作。</string>
     <string name="account_go_login">已有账号,登录>></string>
     <string name="action_logout">退出登录</string>
     <string name="action_logout_success">注销成功</string>
@@ -170,7 +171,7 @@
     
      <!-- personal center -->
     <string name="personal_c_item1">我的收藏</string>
-    <string name="personal_c_item2">行事历</string>
+    <string name="personal_c_item2">10分钟</string>
     <string name="personal_c_item3">预览简历</string>
     <string name="personal_c_item11">已完整</string>
     <string name="personal_c_item12">完整度</string>
@@ -178,8 +179,8 @@
     <string name="personal_c_item14">完整度:%d%%</string>
     <string name="personal_c_item15">已有%d项经验</string>
     <string name="personal_c_item16">上次更新:%s</string>
-    <string name="personal_c_item17">|应届生</string>
-    <string name="personal_c_item18">|%d年工作经验</string>
+    <string name="personal_c_item17">应届生</string>
+    <string name="personal_c_item18">%d年工作经验</string>
     
     <!-- UI button click msg -->
     <string name="action_notice">提&#160;&#160;示</string>
@@ -218,7 +219,7 @@
     <string name="refresh_release_loading">正在刷新</string>
     <string name="xlistview_header_hint_normal">下拉刷新</string>
     <string name="xlistview_header_hint_ready">释放可刷新</string>
-    <string name="xlistview_header_hint_loading">正在加载...</string>
+    <string name="xlistview_header_hint_loading">正在加载\u2026</string>
     <string name="xlistview_header_last_time">上次更新时间：</string>
     <string name="xlistview_footer_hint_normal">查看更多</string>
     <string name="xlistview_footer_hint_ready">松开载入更多</string>

@@ -7,11 +7,13 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.utils.ActivityUtils;
+import com.me.resume.utils.CommUtil;
 
 /**
  * 启动界面
@@ -21,12 +23,15 @@ import com.me.resume.utils.ActivityUtils;
 public class StartupActivity extends Activity {
 
 	private LinearLayout startup;
+	private TextView version;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.startup_layout);
 		MyApplication.getApplication().addActivity(this);
 		startup = (LinearLayout)findViewById(R.id.startup);
+		version = (TextView)findViewById(R.id.version);
+		version.setText(CommUtil.getVersionName(this));
         AlphaAnimation animation = new AlphaAnimation(0.2f, 1.0f);
         animation.setDuration(1800);
         startup.startAnimation(animation);

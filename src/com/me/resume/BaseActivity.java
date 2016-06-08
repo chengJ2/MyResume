@@ -807,7 +807,6 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 					}
 				}
 				
-				
 				holder.setOnClickEvent(R.id.item3, new ClickEvent() {
 					
 					@Override
@@ -828,7 +827,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 										holder.setText(R.id.item3, getStrValue(R.string.button_downloading));
 										new DownloadTask(mHandler,1).execute(coverPath);
 									}else{
-										preferenceUtil.setPreferenceData(Constants.COVER,file);
+										preferenceUtil.setPreferenceData(Constants.COVER,fileNameStr);
 										coverAdapter.notifyDataSetChanged();
 									}
 								}

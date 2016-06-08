@@ -17,7 +17,8 @@
      <color name="orange_10">#FFAA00</color>
      <color name="orange_50">#FFFADD</color>
      
-    
+    <color name="register_warn">#CAFF70</color>
+     
     <color name="line">#DFDFDF</color>
     <!-- 个人基本信息 -->
     <color name="user_edit_text">#787777</color>

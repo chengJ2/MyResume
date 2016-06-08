@@ -102,8 +102,8 @@
                 <TextView
                     android:id="@+id/viewmode"
                      style="@style/user_center_content_func"
-                    android:drawableTop="@drawable/icon_sun_mode"
-                    android:text="Keep On"/>
+                    android:drawableTop="@drawable/icon_calendar"
+                    android:text="@string/personal_c_item2"/>
 
                 <View style="@style/line2" 
                     android:layout_height="40dip" 

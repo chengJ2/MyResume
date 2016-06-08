@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +13,8 @@ import android.widget.Filter;
 import android.widget.Filterable;
 
 /**
- * 适配器的抽象基类   数据形式为List
- * @author Administrator
- * @param <T>
+ * 适配器的抽象基类  
+ * 数据形式为List
  */
 public  abstract class CommonBaseAdapter<T> extends BaseAdapter implements Filterable{
 	protected LayoutInflater inflater;
@@ -25,7 +23,6 @@ public  abstract class CommonBaseAdapter<T> extends BaseAdapter implements Filte
 	protected int LayoutID;
 	
 	private CommFilter mNameFilter;
-//	private List<String> mArrayList;
 	protected List<T> mFilteredArrayList;
 	
 	public CommonBaseAdapter(Context context,List<T> mList,int LayoutID){
@@ -42,13 +39,11 @@ public  abstract class CommonBaseAdapter<T> extends BaseAdapter implements Filte
 
 	@Override
 	public T getItem(int position) {
-		
 		return mList.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		
 		return position;
 	}
 	
@@ -73,7 +68,6 @@ public  abstract class CommonBaseAdapter<T> extends BaseAdapter implements Filte
 	 * 
 	* @ClassName: CommFilter 
 	* @Description: 过滤数据 
-	* @author Comsys-WH1510032 
 	* @date 2016/4/18 下午1:23:16 
 	*
 	 */
@@ -104,15 +98,5 @@ public  abstract class CommonBaseAdapter<T> extends BaseAdapter implements Filte
 		}
 		
 	};
-	
-	public static List<String> getarray(Activity activity, int r_array_id){
-		String[] arraytexts = activity.getResources().getStringArray(r_array_id);
-		final List<String> list = new ArrayList<String>();
-		for (int i = 0; i < arraytexts.length; i++) {
-			list.add(arraytexts[i]);
-		}
-		return list;
-		
-	}
 	
 }

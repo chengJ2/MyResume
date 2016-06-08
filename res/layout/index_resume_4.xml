@@ -15,26 +15,26 @@
     
     <TextView
         android:id="@+id/index_4_info1"
-        style="@style/index1_text" />
+        style="@style/index4_text" />
    
     <TextView
         android:id="@+id/index_4_info2"
-        style="@style/index1_text"/>
+        style="@style/index4_text"/>
     
      <TextView
         android:id="@+id/index_4_info3"
-        style="@style/index1_text"/>
+        style="@style/index4_text"/>
     
     <TextView
         android:id="@+id/index_4_info4"
-        style="@style/index1_text"/>
+        style="@style/index4_text"/>
     
      <TextView
         android:id="@+id/index_4_info5"
-        style="@style/index1_text"/>
+        style="@style/index4_text"/>
      
       <TextView
         android:id="@+id/index_4_info6"
-        style="@style/index1_text"/>
+        style="@style/index4_text"/>
 
 </LinearLayout>

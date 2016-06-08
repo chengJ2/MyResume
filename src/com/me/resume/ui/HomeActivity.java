@@ -134,9 +134,14 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		View v = View.inflate(self,R.layout.activity_home, null);
 		boayLayout.addView(v);
 		
-		if (preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME)) {
-			startActivity(Constants.MAINACTIVITY, true);
+		if (!preferenceUtil.getPreferenceData(Constants.FIRSTINSTALL)) {
+			startChildActivity(Constants.GUIDE, true);
 			return;
+		}else{
+			if (preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME)) {
+				startActivity(Constants.MAINACTIVITY, true);
+				return;
+			}
 		}
 		
 		findViews();
@@ -206,8 +211,47 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			}
 		});
 	}
-
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		initData();
+		
+		MyApplication.USERID = preferenceUtil.getPreferenceData(UserInfoCode.USEID, "0");
+		MyApplication.USERNAME = preferenceUtil.getPreferenceData(UserInfoCode.USERNAME,"");
+		L.d("======onResume======userId:" + MyApplication.USERID + "## uuid:"+ uTokenId);
+
+		if (!MyApplication.USERID.equals(0)) { // 登录用户显示头像
+			MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator
+					+ MyApplication.USERNAME + File.separator
+					+ Constants.FILENAME; // 创建用户名文件夹
+			Bitmap bitmap = ImageUtils
+					.getLoacalBitmap(MyApplication.USERAVATORPATH);
+			String avatorStr = preferenceUtil.getPreferenceData(UserInfoCode.AVATOR, "");
+			if (bitmap != null && RegexUtil.checkNotNull(avatorStr)) {
+				setLeftIcon(ImageUtils.toRoundBitmap(bitmap));
+			} else {
+				setLeftIcon(R.drawable.icon_person_avtar);
+				if (CommUtil.isNetworkAvailable(self)) {
+					if (RegexUtil.checkNotNull(avatorStr)) {
+						mHandler.sendMessage(mHandler.obtainMessage(1,avatorStr));
+					}
+				}
+			}
+		}
+		
+		if (preferenceUtil.getPreferenceData(UserInfoCode.CHANGEAVATOR)) {
+			preferenceUtil.setPreferenceData(UserInfoCode.CHANGEAVATOR, false);
+			if(CommUtil.isNetworkAvailable(self)){
+				mHandler.sendEmptyMessage(101);
+			}
+		}
+		commscrollview.scrollTo(0, 0);
+	}
+	
+	/**
+	 * 初始化用户信息
+	 */
 	private void initData(){
 		String uid = preferenceUtil.getPreferenceData(UserInfoCode.UTOKENID, "0");
 		queryWhere = "select * from " + CommonText.USERINFO +" where uid = '"+ uid +"' order by id desc limit 1";
@@ -262,7 +306,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	
 	
 	/**
-	 * @Description: app通知
+	 * app通知
 	 */
 	private void getNoticeInfo(){
 		List<String> params = new ArrayList<String>();
@@ -403,37 +447,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		initData();
-		
-		MyApplication.USERID = preferenceUtil.getPreferenceData(UserInfoCode.USEID, "0");
-		MyApplication.USERNAME = preferenceUtil.getPreferenceData(UserInfoCode.USERNAME,"");
-		L.d("======onResume======userId:" + MyApplication.USERID + "## uuid:"+ uTokenId);
-
-		if (!MyApplication.USERID.equals(0)) { // 登录用户显示头像
-			MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator
-					+ MyApplication.USERNAME + File.separator
-					+ Constants.FILENAME; // 创建用户名文件夹
-			Bitmap bitmap = ImageUtils
-					.getLoacalBitmap(MyApplication.USERAVATORPATH);
-			String avatorStr = preferenceUtil.getPreferenceData(UserInfoCode.AVATOR, "");
-			if (bitmap != null && RegexUtil.checkNotNull(avatorStr)) {
-				setLeftIcon(ImageUtils.toRoundBitmap(bitmap));
-			} else {
-				setLeftIcon(R.drawable.icon_person_avtar);
-				if (CommUtil.isNetworkAvailable(self)) {
-					if (RegexUtil.checkNotNull(avatorStr)) {
-						mHandler.sendMessage(mHandler.obtainMessage(1,avatorStr));
-					}
-				}
-			}
-		}
-		
-		commscrollview.scrollTo(0, 0);
-	}
-	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {

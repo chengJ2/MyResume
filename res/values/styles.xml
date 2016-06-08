@@ -243,6 +243,12 @@
         <item name="android:layout_marginRight">@dimen/line_margin_10</item>
     </style>
     
+    <style name="line_padding10_white" parent="@style/line3">
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginLeft">35dip</item>
+        <item name="android:layout_marginRight">@dimen/line_margin_10</item>
+    </style>
+    
     <style name="line_padding10_grey" parent="@style/line3">
         <item name="android:layout_marginLeft">@dimen/line_margin_10</item>
         <item name="android:layout_marginRight">@dimen/line_margin_10</item>
@@ -266,6 +272,11 @@
         <item name="android:layout_marginRight">@dimen/btn_text_margin</item>
         <item name="android:textSize">@dimen/button_text_size</item>
         <item name="android:typeface">serif</item>
+    </style>
+    
+     <style name="button_menu_white" parent="@style/button_menu">
+        <item name="android:background">@drawable/button_select_white</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <!-- diglog -->
@@ -301,6 +312,19 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">48dip</item>
         <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/small_middle_text_size</item>
+        <item name="android:textColorHint">#c4c4c4</item>
+        <item name="android:padding">5dip</item>
+        <item name="android:background">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:drawablePadding">@dimen/margin_8</item>
+        <item name="android:typeface">serif</item>
+    </style>
+    
+    <style name="userinfo_item_style_white">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dip</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/small_middle_text_size</item>
         <item name="android:textColorHint">#c4c4c4</item>
         <item name="android:padding">5dip</item>
@@ -371,6 +395,10 @@
         <item name="android:background">@android:color/transparent</item>
         <item name="android:typeface">serif</item>
     </style>
+    
+    <style name="index4_text" parent="@style/index1_text">
+        <item name="android:textSize">@dimen/small_text_size</item>
+    </style>
 
     <style name="user_center_text">
         <item name="android:layout_width">wrap_content</item>
@@ -408,7 +436,12 @@
         <item name="android:src">@drawable/ic_btn_next</item>
     </style>
 
-    <style name="comm_scrollview_style">
+    <style name="comm_scrollview_style" parent="@style/main_scrollview_style">
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginBottom">52dip</item>
+    </style>
+    
+    <style name="main_scrollview_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:fadingEdge">none</item>
@@ -416,8 +449,6 @@
         <item name="android:overScrollMode">never</item>
         <item name="android:scrollbars">none</item>
         <item name="android:fillViewport">true</item>
-        <item name="android:background">@color/white</item>
-        <item name="android:layout_marginBottom">52dip</item>
     </style>
 
     <!-- 暂无数据 -->

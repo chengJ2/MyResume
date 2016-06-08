@@ -1,39 +1,33 @@
 package com.me.resume.comm;
 
-import com.me.resume.tools.ImageLoader;
-import com.me.resume.tools.L;
-import com.me.resume.utils.RegexUtil;
-import com.me.resume.views.CustomListView;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.text.Html;
-import android.text.InputType;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.RadioButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.me.resume.tools.ImageLoader;
+import com.me.resume.tools.L;
+import com.me.resume.utils.RegexUtil;
+import com.me.resume.views.CustomListView;
+
 /**
  * 适配器优化辅助类
- * 
- * @author Administrator
- * 
  */
 public class ViewHolder {
 	private final SparseArray<View> mViews;
@@ -45,7 +39,11 @@ public class ViewHolder {
 	private ViewHolder(Context context, int position, int LayoutId,
 			ViewGroup parent) {
 		mViews = new SparseArray<View>();
-		convertview = LayoutInflater.from(context).inflate(LayoutId, null);
+		try {
+			convertview = LayoutInflater.from(context).inflate(LayoutId, null);
+		} catch (Exception e) {
+			L.e(e.getMessage());
+		}
 		convertview.setTag(this);
 		mImageLoader = new ImageLoader(context);
 	}

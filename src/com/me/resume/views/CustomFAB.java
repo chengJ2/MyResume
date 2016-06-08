@@ -50,7 +50,7 @@ public class CustomFAB extends ImageButton {
 	    TypedArray arr = theme.obtainStyledAttributes(attrSet, R.styleable.FAB, 0, 0);
 	    try {
 	        setBgColor(arr.getColor(R.styleable.FAB_bg_color, Color.RED));
-	        setBgColorPressed(arr.getColor(R.styleable.FAB_bg_color_pressed, Color.BLUE));
+	        setBgColorPressed(arr.getColor(R.styleable.FAB_bg_color_pressed, Color.rgb(102,153,255)));
 	        StateListDrawable sld = new StateListDrawable();
 	        sld.addState(new int[] {android.R.attr.state_pressed}, createButton(bgColorPressed));
 	        sld.addState(new int[] {}, createButton(bgColor));

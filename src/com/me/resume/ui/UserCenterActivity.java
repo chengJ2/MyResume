@@ -71,14 +71,16 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
             case 2:
             	if(msg.obj!= null){
         			try {
-        				MyApplication.USERNAME = preferenceUtil.getPreferenceData("username", "");
+        				MyApplication.USERNAME = preferenceUtil.getPreferenceData(UserInfoCode.USERNAME, "");
         				MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator + MyApplication.USERNAME + File.separator + Constants.FILENAME;
         				ImageUtils.saveImage(self,(Bitmap)msg.obj,Constants.FILENAME);
         				Bitmap bitmap = ImageUtils.getLoacalBitmap(MyApplication.USERAVATORPATH.toString());
         				if (bitmap != null) {
         					blur(bitmap);
         					user_info_avatar.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
+        					preferenceUtil.setPreferenceData(UserInfoCode.CHANGEAVATOR, true);
         				}
+        				
         			} catch (Exception e) {
         				e.printStackTrace();
         			}
@@ -234,9 +236,9 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 				int theYear = CommUtil.parseInt(TimeUtils.theYear());
 				int work = (theYear - year);
 				if (work <= 0) {
-					center_workyear.setText(getStrValue(R.string.personal_c_item17));
+					center_workyear.setText("|"+ getStrValue(R.string.personal_c_item17));
 				}else{
-					center_workyear.setText(String.format(getStrValue(R.string.personal_c_item18), work));
+					center_workyear.setText("|"+ String.format(getStrValue(R.string.personal_c_item18), work));
 				}
 			}else{
 				center_workyear.setText("");

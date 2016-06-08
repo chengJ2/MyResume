@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.ContentValues;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
@@ -21,6 +24,7 @@ import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.UserInfoCode;
+import com.me.resume.thirdparty.SinaLogin;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -56,6 +60,8 @@ public class UserLoginActivity extends BaseActivity implements
 	private EditText usernameEt,regTxt_phone,passwordEt,password2Et;
 	
 	private Button registBtn;
+	
+	private ImageView weixinlogin,qqlogin,sinalogin;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -101,12 +107,20 @@ public class UserLoginActivity extends BaseActivity implements
 		
 		btnLogin = findView(R.id.btn_login);
 		
+		weixinlogin = findView(R.id.weixinlogin);
+		qqlogin = findView(R.id.qqlogin);
+		sinalogin = findView(R.id.sinalogin);
+		
+		edtTxt_password.setOnClickListener(this);
 		save_checkbox.setOnClickListener(this);
 		savePassWord.setOnClickListener(this);
 		resetPassWord.setOnClickListener(this);
 		forgotPassWord.setOnClickListener(this);
 		acclogin.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
+		weixinlogin.setOnClickListener(this);
+		qqlogin.setOnClickListener(this);
+		sinalogin.setOnClickListener(this);
 		
 		usernameEt = findView(R.id.regTxt_username);
 		regTxt_phone = findView(R.id.regTxt_phone);
@@ -115,6 +129,8 @@ public class UserLoginActivity extends BaseActivity implements
 		
 		registBtn = findView(R.id.btn_register);
 		registBtn.setOnClickListener(this);
+		passwordEt.setOnClickListener(this);
+		password2Et.setOnClickListener(this);
 		
 	}
 	
@@ -147,6 +163,8 @@ public class UserLoginActivity extends BaseActivity implements
 		btnLogin.setEnabled(true);
 	}
 	
+	private boolean showPwdType = false;
+	
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
@@ -176,6 +194,24 @@ public class UserLoginActivity extends BaseActivity implements
 			user_login_layout.setVisibility(View.GONE);
 			user_register_layout.setVisibility(View.VISIBLE);
 			break;
+		case R.id.edtTxt_password:
+		case R.id.regTxt_password:
+		case R.id.regTxt2_password:
+			showPwdType = !showPwdType;
+			Resources res = getResources();
+			Drawable img_left = res.getDrawable(R.drawable.icon_pwd);;
+			Drawable img_right = null;
+			if (showPwdType) {
+				img_right = res.getDrawable(R.drawable.icon_pwd_show);
+				edtTxt_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+			}else{
+				img_right = res.getDrawable(R.drawable.icon_pwd_hide);
+				edtTxt_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+			}
+			img_left.setBounds(0, 0, img_left.getMinimumWidth(), img_left.getMinimumHeight());
+			img_right.setBounds(0, 0, img_right.getMinimumWidth(), img_right.getMinimumHeight());
+			edtTxt_password.setCompoundDrawables(img_left, null, img_right, null); //设置右图标
+			break;
 		case R.id.save_checkbox:
 		case R.id.savePassWord:
 			setState();
@@ -204,6 +240,14 @@ public class UserLoginActivity extends BaseActivity implements
 			}else{
 				set3Msg(R.string.check_network);
 			}
+			break;
+		case R.id.weixinlogin:
+			break;
+		case R.id.qqlogin:
+			break;
+		case R.id.sinalogin:
+			SinaLogin sinaLogin = new SinaLogin(self);
+			sinaLogin.sinaRegistor();
 			break;
 		default:
 			break;

@@ -3,8 +3,6 @@ package com.me.resume.comm;
 import java.util.List;
 import java.util.Map;
 
-import com.me.resume.tools.L;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +10,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 /**
- * 适配器的抽象基类 数据形式为List
- * 
- * @author Administrator
- * 
- * @param <T>
+ * 适配器的抽象基类 
+ * 数据形式为Map<String, List<String>>
  */
 public abstract class CommForMapBaseAdapter extends BaseAdapter {
 	protected LayoutInflater inflater;

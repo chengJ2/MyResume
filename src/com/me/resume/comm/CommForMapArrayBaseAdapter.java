@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 /**
- * 适配器的抽象基类   数据形式为List
- * @author Administrator
- *
- * @param <T>
+ * 适配器的抽象基类   
+ * 数据形式为Map<String,String[]>
  */
 public  abstract class CommForMapArrayBaseAdapter extends BaseAdapter {
 	protected LayoutInflater inflater;
