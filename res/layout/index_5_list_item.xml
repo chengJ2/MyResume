@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_10"
     android:orientation="vertical"
     android:background="@color/red" >
 
@@ -14,27 +13,40 @@
        android:text="@string/resume_workexperience"
        android:textColor="@color/black"
        android:textSize="@dimen/small_text_size" />
-          
-    <TextView
-        android:id="@+id/item11"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center|left"
-        android:layout_marginTop="@dimen/margin_5"
-        android:text="@string/resume_workexperience"
-        android:textColor="@color/grey_10"
-        android:textSize="@dimen/micro_text_size"
-        android:lineSpacingExtra="3dip" />
     
-    <TextView
-        android:id="@+id/item12"
+     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center|left"
-        android:layout_marginTop="@dimen/margin_5"
-        android:text="@string/resume_workexperience"
-        android:textColor="@color/grey_10"
-        android:textSize="@dimen/micro_text_size"
-        android:lineSpacingExtra="3dip" />
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/index4_text"
+            android:layout_width="wrap_content"
+            android:paddingLeft="@dimen/margin_5"
+            android:text="责任描述：" />
+
+        <TextView
+            android:id="@+id/item11"
+            android:paddingLeft="0dip"
+            style="@style/index4_text" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/index4_text"
+            android:layout_width="wrap_content"
+            android:paddingLeft="@dimen/margin_5"
+            android:text="项目简介：" />
+
+        <TextView
+            android:id="@+id/item12"
+            android:paddingLeft="0dip"
+            style="@style/index4_text" />
+    </LinearLayout>
+    
 
 </LinearLayout>

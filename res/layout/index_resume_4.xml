@@ -1,40 +1,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/index4layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/red"
-    android:orientation="vertical"
-    android:id="@+id/index4layout" >
+    android:orientation="vertical" >
 
-     <include layout="@layout/top_title_layout"/>
+    <include layout="@layout/top_title_layout" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dip"
         android:background="@drawable/main_index_icon4" />
-    
+
     <TextView
         android:id="@+id/index_4_info1"
         style="@style/index4_text" />
-   
+
     <TextView
         android:id="@+id/index_4_info2"
-        style="@style/index4_text"/>
-    
-     <TextView
+        style="@style/index4_text" />
+
+    <TextView
         android:id="@+id/index_4_info3"
-        style="@style/index4_text"/>
-    
+        style="@style/index4_text" />
+
     <TextView
         android:id="@+id/index_4_info4"
-        style="@style/index4_text"/>
-    
-     <TextView
+        style="@style/index4_text" />
+
+    <TextView
         android:id="@+id/index_4_info5"
-        style="@style/index4_text"/>
-     
-      <TextView
-        android:id="@+id/index_4_info6"
-        style="@style/index4_text"/>
+        style="@style/index4_text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/index4_text"
+            android:layout_width="wrap_content"
+            android:text="目前工作状况：" />
+
+        <TextView
+            android:id="@+id/index_4_info6"
+            android:paddingLeft="0dip"
+            style="@style/index4_text" />
+    </LinearLayout>
 
 </LinearLayout>

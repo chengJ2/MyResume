@@ -35,6 +35,7 @@ import com.me.resume.utils.FileUtils;
 import com.me.resume.utils.ImageUtils;
 import com.me.resume.utils.PreferenceUtil;
 import com.me.resume.utils.RegexUtil;
+import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.CustomListView;
 import com.me.resume.views.JazzyViewPager;
 import com.me.resume.views.JazzyViewPager.TransitionEffect;
@@ -54,6 +55,7 @@ public class MainActivity extends Activity {
 
 	private MainActivity self;
 	
+	private MyPagerAdapter pagerAdapter = null;
 	private JazzyViewPager jazzyViewPager;
 
 	private LayoutInflater mInflater;
@@ -109,6 +111,8 @@ public class MainActivity extends Activity {
 	private LinearLayout index7_layout1,index7_layout2,index7_layout3;
 	private CustomListView listview1,listview2,listview3;
 	
+	private boolean goFlag = true;
+	
 	private Handler mHandler = new Handler() {
 
 		@Override
@@ -134,31 +138,49 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		findViews();
+		self = MainActivity.this;
+		if(preferenceUtil == null)
+			preferenceUtil = new PreferenceUtil(self);
+		jazzyViewPager = (JazzyViewPager)findViewById(R.id.mainviewpager);
+		jazzyViewPager.setFadeEnabled(true);//有淡入淡出效果
+		jazzyViewPager.setCurrentItem(0);
 		initViews();
-		showViews();
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if (goFlag) {
+			goFlag = false;
+			
+			initCover(cover);
+			
+			initView1(view1);
+			
+			initView2(view2);
+			
+			initView3(view3);
+			
+			initView4(view4);
+			
+			initView5(view5);
+			
+			initView6(view6);
+			
+			initView7(view7);
+			
+			initView8(view8);
+			
+			showViews();
+		}
 	}
 
-	private void findViews() {
-		self = MainActivity.this;
-		if(preferenceUtil == null)
-			preferenceUtil = new PreferenceUtil(self);
-		
-		jazzyViewPager = (JazzyViewPager)findViewById(R.id.mainviewpager);
-		jazzyViewPager.setFadeEnabled(true);//有淡入淡出效果
-	}
 	
 	/**
 	 * 初始化UI
 	 */
 	private void initViews() {
 		mInflater = LayoutInflater.from(this);
-		
 		cover = mInflater.inflate(R.layout.index_resume_cover, null);
 		view1 = mInflater.inflate(R.layout.index_resume_1, null);
 		view2 = mInflater.inflate(R.layout.index_resume_2, null);
@@ -169,39 +191,27 @@ public class MainActivity extends Activity {
 		view7 = mInflater.inflate(R.layout.index_resume_7, null);
 		view8 = mInflater.inflate(R.layout.index_resume_8, null);
 		
-		initCover(cover);
-		
-		initView1(view1);
-		
-		initView2(view2);
-		
-		initView3(view3);
-		
-		initView4(view4);
-		
-		initView5(view5);
-		
-		initView6(view6);
-		
-		initView7(view7);
-		
-		initView8(view8);
-		
-	}
-	
-	/**
-	 * 
-	 * 显示预览界面
-	 */
-	private void showViews() {
-		jazzyViewPager.setCurrentItem(0);
 		if (preferenceUtil.getPreferenceData(Constants.SET_AUTOSHOW)) {
 			int switchDuration = preferenceUtil.getPreferenceData(Constants.SET_SWITCHEFFDURATION,Constants.DEFAULTIME);
 			TransitionEffect effect = TransitionEffect.valueOf(preferenceUtil.getPreferenceData(Constants.SET_SWITCHANIM, "Standard"));
 			jazzyViewPager.setTransitionEffect(effect);
 			mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO,switchDuration);
 		}
-		jazzyViewPager.setAdapter(new MyPagerAdapter(mViewList));
+	}
+	
+	
+	/**
+	 * 
+	 * 显示预览界面
+	 */
+	private void showViews() {
+		if (pagerAdapter == null) {
+			pagerAdapter = new MyPagerAdapter(mViewList);
+		}else{
+			pagerAdapter.notifyDataSetChanged();
+		}
+		jazzyViewPager.setAdapter(pagerAdapter);
+		
 	}
 	
 	/**
@@ -260,7 +270,7 @@ public class MainActivity extends Activity {
 			}else{
 				sbStr.append(CommUtil.getStrValue(self, R.string.info_sex_2));
 			}
-			sbStr.append("|");
+			sbStr.append("&nbsp;|&nbsp;");
 			
 			info = commMapArray.get("ismarry")[0];
 			if(info.equals("1")){
@@ -270,18 +280,20 @@ public class MainActivity extends Activity {
 			}else{
 				sbStr.append(CommUtil.getStrValue(self, R.string.info_maritalstatus_1));
 			}
-			sbStr.append(" | ");
+			sbStr.append("&nbsp;|&nbsp;");
 			info = commMapArray.get("brithday")[0];
+			int theYear = CommUtil.parseInt(TimeUtils.theYear());
 			if(RegexUtil.checkNotNull(info)){
-				sbStr.append(info);
+				int age = theYear - CommUtil.parseInt(info.substring(0, 4));
+				sbStr.append(age+"岁");
 			}
-			index_1_info.setText(sbStr);
+			index_1_info.setText(Html.fromHtml(sbStr.toString()));
 			
 			sbStr = new StringBuffer();
 			info = commMapArray.get("hometown")[0];
 			if(RegexUtil.checkNotNull(info)){
 				sbStr.append("家乡："+info);
-				sbStr.append(" | ");
+				sbStr.append("&nbsp;|&nbsp;");
 			}
 			
 			info = commMapArray.get("city")[0];
@@ -289,7 +301,7 @@ public class MainActivity extends Activity {
 				sbStr.append("现居地："+info);
 			}
 			
-			index_1_where.setText(sbStr);
+			index_1_where.setText(Html.fromHtml(sbStr.toString()));
 			
 			info = commMapArray.get("license")[0];
 			if(RegexUtil.checkNotNull(info)){
@@ -326,10 +338,9 @@ public class MainActivity extends Activity {
 				@Override
 				public void convert(ViewHolder holder, String[] item,
 						int position) {
-					holder.setText(R.id.item1, commMapArray.get("companyname")[position]);
-					holder.setText(R.id.item2,
-							commMapArray.get("worktimestart")[position] + " — "
-									+ commMapArray.get("worktimeend")[position]);
+					holder.setText(R.id.item2, commMapArray.get("companyname")[position]);
+					holder.setText(R.id.starttime, TimeUtils.toStrDate(commMapArray.get("worktimestart")[position]));
+					holder.setText(R.id.duetime, TimeUtils.toStrDate(commMapArray.get("worktimeend")[position]));
 				}
 			};
 
@@ -399,7 +410,6 @@ public class MainActivity extends Activity {
 					tview.setTextColor(CommUtil.getColorValue(self, R.color.red));
 					tview.setTypeface(Typeface.SERIF);
 					tview.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_tag_text_corner));
-//					tview.setPadding(6, 8, 6, 8);
 					tagFlowLayout.addView(tview, lp);
 				}
 			}
@@ -429,12 +439,12 @@ public class MainActivity extends Activity {
 			if (!mViewList.contains(view)) {
 				mViewList.add(view);
 			}
-			index_4_info1.setText(Html.fromHtml("工作性质："+ commMapArray.get("expworkingproperty")[0]));
-			index_4_info2.setText(Html.fromHtml("期望职业："+commMapArray.get("expworkcareer")[0]));
-			index_4_info3.setText(Html.fromHtml("期望行业："+commMapArray.get("expworkindustry")[0]));
-			index_4_info4.setText(Html.fromHtml("工作地区："+commMapArray.get("expdworkplace")[0]));
-			index_4_info5.setText(Html.fromHtml("期望月薪："+commMapArray.get("expmonthlysalary")[0]));
-			index_4_info6.setText(Html.fromHtml("目前工作状况：<br/>"+commMapArray.get("workingstate")[0]));
+			index_4_info1.setText("工作性质："+ commMapArray.get("expworkingproperty")[0]);
+			index_4_info2.setText("期望职业："+commMapArray.get("expworkcareer")[0]);
+			index_4_info3.setText("期望行业："+commMapArray.get("expworkindustry")[0]);
+			index_4_info4.setText("工作地点："+commMapArray.get("expdworkplace")[0]);
+			index_4_info5.setText("期望月薪："+commMapArray.get("expmonthlysalary")[0]);
+			index_4_info6.setText(commMapArray.get("workingstate")[0]);
 		}
 	}
 	
@@ -460,13 +470,13 @@ public class MainActivity extends Activity {
 				@Override
 				public void convert(ViewHolder holder, String[] item,
 						int position) {
-					holder.setText(R.id.item1,commMapArray.get("worktimestart")[position] + " 至 " + commMapArray.get("worktimeend")[position]);
+					holder.setText(R.id.item1,commMapArray.get("worktimestart")[position] + " — " + commMapArray.get("worktimeend")[position]);
 					holder.setTextColor(R.id.item1, CommUtil.getColorValue(self, R.color.white));
 					String info_dutiesStr = commMapArray.get("duties")[position];
-					holder.setTextForHtml(R.id.item11,"责任描述：<br/>"+ info_dutiesStr);
+					holder.setText(R.id.item11, info_dutiesStr);
 					holder.setTextColor(R.id.item11, CommUtil.getColorValue(self, R.color.white));
 					String info_prokectdescStr = commMapArray.get("prokectdesc")[position];
-					holder.setTextForHtml(R.id.item12,"项目简介：<br/>" + info_prokectdescStr);
+					holder.setText(R.id.item12,info_prokectdescStr);
 					holder.setTextColor(R.id.item12, CommUtil.getColorValue(self, R.color.white));
 				}
 			};
@@ -516,16 +526,16 @@ public class MainActivity extends Activity {
 					StringBuffer sbStr = new StringBuffer();
 					String info = commMapArray.get("school")[position];
 					sbStr.append(info);
-					sbStr.append(" | ");
+					sbStr.append("&nbsp;|&nbsp;");
 					
 					info = commMapArray.get("majorname")[position];
 					sbStr.append(info);
-					sbStr.append(" | ");
+					sbStr.append("&nbsp;|&nbsp;");
 					
 					info = commMapArray.get("degree")[position];
 					sbStr.append(info);
 					
-					holder.setText(R.id.item2, sbStr.toString());
+					holder.setTextForHtml(R.id.item2, sbStr.toString());
 				}
 			};
 
@@ -640,16 +650,16 @@ public class MainActivity extends Activity {
 					StringBuffer sbStr = new StringBuffer();
 					String info = commMapArray.get("language")[position];
 					sbStr.append(info);
-					sbStr.append(" :");
+					sbStr.append("&nbsp;:&nbsp;");
 					
 					info = commMapArray.get("literacyskills")[position];
 					sbStr.append(CommUtil.getStrValue(self, R.string.ot_info_literacyskills)+info);
-					sbStr.append(" | ");
+					sbStr.append("&nbsp;|&nbsp;");
 					
 					info = commMapArray.get("listeningspeaking")[position];
 					sbStr.append(CommUtil.getStrValue(self, R.string.ot_info_listeningspeaking)+info);
 					
-					holder.setText(R.id.item1, sbStr.toString());
+					holder.setTextForHtml(R.id.item1, sbStr.toString());
 				}
 			};
 
@@ -675,10 +685,10 @@ public class MainActivity extends Activity {
 					StringBuffer sbStr = new StringBuffer();
 					String info = commMapArray2.get("certificate")[position];
 					sbStr.append(info);
-					sbStr.append(" | ");
+					sbStr.append("&nbsp;|&nbsp;");
 					info = commMapArray2.get("certificatetime")[position];
 					sbStr.append(info);
-					holder.setText(R.id.item1, sbStr.toString());
+					holder.setTextForHtml(R.id.item1, sbStr.toString());
 				}
 			};
 
@@ -719,14 +729,30 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * 
-	 * @Title:MainActivity
-	 * @Description: 备注信息
+	 * 备注信息
 	 * @param view
 	 */
 	private void initView8(View view){
 		mViewList.add(view8);
 		
+		TextView words = (TextView) view8.findViewById(R.id.item2);
+		String wordStr = preferenceUtil.getPreferenceData(Constants.MYWORDS,"");
+		if (RegexUtil.checkNotNull(wordStr)) {
+			words.setText(Html.fromHtml("&nbsp;&nbsp;"+wordStr));
+		}else{
+			words.setText(getResources().getString(R.string.resume_mywords));
+		}
+		
+		words.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+//				if (preferenceUtil.getPreferenceData(Constants.EDITMODE)) {
+					goFlag = true;
+					ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + Constants.WORDS,false);
+//				}
+			}
+		});
 		ImageView goHome = (ImageView) view8.findViewById(R.id.gohome);
 		goHome.setOnClickListener(new OnClickListener() {
 
@@ -737,6 +763,7 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
+	
 	
 	/**
 	 * 
@@ -751,7 +778,7 @@ public class MainActivity extends Activity {
 		main_top_title.setText(CommUtil.getStrValue(self, redId));
 		main_top_edit = (ImageView) view.findViewById(R.id.main_top_edit);
 		
-		if (preferenceUtil.getPreferenceData(Constants.EDITMODE) == true) {
+		if (preferenceUtil.getPreferenceData(Constants.EDITMODE)) {
 			main_top_edit.setVisibility(View.VISIBLE);
 		}else{
 			main_top_edit.setVisibility(View.GONE);
@@ -761,6 +788,7 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View arg0) {
+				goFlag = true;
 				ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + src);
 			}
 		});

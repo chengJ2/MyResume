@@ -32,6 +32,12 @@ public class TimeUtils {
             return simpleDateFormat;
         }
     };
+    
+    /**
+     * Month Minute
+     */
+    public static final String YEAR_MONTH_DAY_FORMAT_STRING = "yyyy-MM-dd";
+    public static final String YEAR_MONTH_FORMAT_STRING = "yyyy/MM";
 
     /**
      * Month Minute
@@ -343,6 +349,25 @@ public class TimeUtils {
         } catch (ParseException e) {
             return null;
         }
+    }
+    
+    /**
+     * 将字符串转位日期类型
+     *
+     * @param sDate
+     * @return
+     */
+    public static String toStrDate(String sDate) {
+    	Date d = null ; 
+    	SimpleDateFormat dateFormat1 = new SimpleDateFormat(YEAR_MONTH_DAY_FORMAT_STRING);
+    	SimpleDateFormat dateFormat2 = new SimpleDateFormat(YEAR_MONTH_FORMAT_STRING);
+        try {
+        	d = dateFormat1.parse(sDate); 
+            return dateFormat2.format(d);
+        } catch (ParseException e) {
+        	e.printStackTrace() ;    
+        }
+        return null;
     }
     
     /**

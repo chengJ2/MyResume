@@ -34,7 +34,7 @@ import com.me.resume.utils.DialogUtils;
  */
 public class SettingActivity extends BaseActivity implements OnClickListener{
 
-	private ToggleButton setting_start_cb,setting_auto_cb;
+	private ToggleButton setting_start_cb,setting_auto_cb,setting_mode_cb;
 	
 	private LinearLayout cacheLayout,versionLayout,feedbackLayout,logoutLayout,shareLayout,aboutusLayout;
 	
@@ -103,6 +103,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	private void findViews(){
 		setting_start_cb = findView(R.id.setting_start_cb);
 		setting_auto_cb = findView(R.id.setting_auto_cb);
+		setting_mode_cb = findView(R.id.setting_mode_cb);
 		
 		cacheLayout = findView(R.id.cacheLayout);
 		cachesize = findView(R.id.cachesize);
@@ -158,10 +159,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			public void onClick(View arg0) {
 				boolean onoff = false;
 				if(preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME)){
-					onoff = true;
+					onoff = false;
 					setting_start_cb.setChecked(false);
 				}else{
-					onoff = false;
+					onoff = true;
 					setting_start_cb.setChecked(true);
 				}
 				preferenceUtil.setPreferenceData(Constants.SET_STARTVERYTIME, onoff); 
@@ -185,6 +186,22 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 				preferenceUtil.setPreferenceData(Constants.SET_AUTOSHOW, onoff); 
 			}
 		});
+		setting_mode_cb.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				boolean onoff = false;
+				if(preferenceUtil.getPreferenceData(Constants.EDITMODE)){
+					onoff = false;
+					setting_mode_cb.setChecked(false);
+				}else{
+					onoff = true;
+					setting_mode_cb.setChecked(true);
+				}
+				preferenceUtil.setPreferenceData(Constants.EDITMODE, onoff); 
+			}
+		});
+		
 	}
 	
 	/**
@@ -204,6 +221,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		super.onResume();
 		boolean startVerytime = preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME);
 		boolean autoShow = preferenceUtil.getPreferenceData(Constants.SET_AUTOSHOW);
+		boolean editmode = preferenceUtil.getPreferenceData(Constants.EDITMODE);
 		if (startVerytime) {
 			setting_start_cb.setChecked(true);
 		}else{
@@ -215,6 +233,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		}else{
 			setEffectDuration(false,R.color.grey_70);
 			setting_auto_cb.setChecked(false);
+		}
+		if (editmode) {
+			setting_mode_cb.setChecked(true);
+		}else{
+			setting_mode_cb.setChecked(false);
 		}
 	}
 	

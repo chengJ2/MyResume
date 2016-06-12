@@ -134,6 +134,41 @@
                     style="@style/user_info_item_iv"
                     android:visibility="visible" />
             </LinearLayout>
+            
+             <View style="@style/line_padding10" />
+
+             <LinearLayout
+                android:id="@+id/llout03"
+                style="@style/noraml_item">
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:layout_weight="5"
+                    android:textColor="@color/black"
+                    android:text="@string/settings_item21" />
+                
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1.2"
+                    android:gravity="center">
+                    
+                <ToggleButton
+                    android:id="@+id/setting_mode_cb"
+		            android:layout_width="wrap_content"  
+			        android:layout_height="50dip"  
+			        android:layout_gravity="center_horizontal"  
+			        android:background="@android:color/transparent"  
+			        android:button="@drawable/switch_btn"  
+			        android:checked="false"  
+			        android:text=""  
+			        android:textOff=""  
+			        android:textOn="" 
+            		android:layout_marginRight="0dip"/>
+                </LinearLayout>
+                
+            </LinearLayout>
              
             <View style="@style/line_h15" />
             

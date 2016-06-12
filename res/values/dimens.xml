@@ -12,6 +12,8 @@
     <dimen name="medium_text_size">18sp</dimen>
     <dimen name="large_text_size">22sp</dimen>
     
+    <dimen name="main_time_text">13dip</dimen>
+    
     <dimen name="blarge_text_size">60dip</dimen>
     
     <dimen name="home_item_height">33dip</dimen>

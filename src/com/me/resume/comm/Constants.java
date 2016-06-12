@@ -140,6 +140,7 @@ public class Constants {
     public static final String USERLOGIN = "UserLoginActivity";
     public static final String USERNEWPWD = "UserNewPwdActivity";
     public static final String WORKEXPERIENCE = "WorkExperienceActivity";
+    public static final String WORDS = "WordsActivity";
     
     public static final String TYPE = "type";
     public static final String TAB = "tab";
@@ -164,5 +165,6 @@ public class Constants {
     public static final String FIRSTINSTALL= "firstInstall";
     
     public static final String SET_FEEDBACK= "feedback";
+    public static final String MYWORDS= "mywords";
     
 }

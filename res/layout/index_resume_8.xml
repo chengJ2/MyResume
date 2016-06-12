@@ -20,7 +20,7 @@
         android:lineSpacingExtra="3dip"
         android:textSize="@dimen/small_middle_text_size"
         android:textColor="@color/white"
-        android:text="我坚信在贵公司,我将学到更多知识,发挥出个人的最大效益." />
+        android:text="@string/resume_mywords" />
     
     <ImageView 
         android:id="@+id/gohome"
@@ -38,6 +38,6 @@
         android:textSize="@dimen/blarge_text_size"
         android:textColor="@color/white"
         android:text="谢谢"
-        android:layout_marginBottom="50dip"
+        android:layout_marginBottom="20dip"
         android:layout_above="@id/gohome" />
 </RelativeLayout>

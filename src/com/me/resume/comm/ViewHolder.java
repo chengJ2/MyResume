@@ -41,10 +41,10 @@ public class ViewHolder {
 		mViews = new SparseArray<View>();
 		try {
 			convertview = LayoutInflater.from(context).inflate(LayoutId, null);
+			convertview.setTag(this);
 		} catch (Exception e) {
 			L.e(e.getMessage());
 		}
-		convertview.setTag(this);
 		mImageLoader = new ImageLoader(context);
 	}
 

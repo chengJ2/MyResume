@@ -3,7 +3,7 @@
 	<!-- app相关 -->
     <string name="app_name">有云简历</string>
     <string name="app_about">随时随地  完善预览</string>
-    <string name="app_about2">实时同步  我的简历</string>
+    <string name="app_about2">实时同步  有云简历</string>
     <string name="app_crash">App发生异常,请重启</string>
     <string name="app_exit">再按一次退出</string>
     <string name="app_download">正在下载 有云简历 \u2026</string>
@@ -33,6 +33,8 @@
     <string name="resume_educationtraining">教育/培训经历</string>
     <string name="resume_otherinfo">附加信息</string>
     <string name="resume_message">我的留言</string>
+    <string name="resume_makemywords">自定义留言信息</string>
+    <string name="resume_mywords">&#160;&#160;&#160;&#160;我坚信在贵公司,我将学到更多知识,发挥出个人的最大效益.</string>
     
      <!-- Home -->
     <string name="resume_center">简历中心</string>
@@ -114,7 +116,7 @@
     <string name="action_loginresetpwd">重置密码</string>
     <string name="action_login_findgotpwd">找回密码</string>
     <string name="action_login_forgotpwd">忘记密码</string>
-    <string name="action_login_3pl">第三方登录</string>
+    <string name="action_login_3pl">其他登录方式</string>
     <string name="action_input_isnull">不能为空</string>
     <string name="action_input_up_isnull">用户名/手机号或密码</string>
     <string name="action_input_usename_cn">用户名不能含中文</string>

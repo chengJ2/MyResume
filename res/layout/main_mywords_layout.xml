@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical" >
+
+     <EditText
+         android:id="@+id/input_mywords"
+         android:layout_width="match_parent"
+      	 android:layout_height="@dimen/mul_item_height"
+         android:layout_margin="10dip"
+         android:background="@drawable/editbox"
+         android:gravity="left"
+         android:singleLine="false"
+         android:hint="@string/resume_makemywords"
+         android:lineSpacingExtra="3dip"
+         android:textColor="@color/black"
+         android:textSize="@dimen/small_text_size"
+         android:imeOptions="actionDone"
+         android:visibility="visible" />
+    
+    
+    <ListView
+        android:id="@+id/words_Listview"
+        style="@style/comm_listview_style"
+        android:layout_marginTop="0dip"
+        android:paddingLeft="@dimen/margin_10"
+        android:paddingRight="@dimen/margin_10"/>
+
+</LinearLayout>

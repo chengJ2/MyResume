@@ -130,9 +130,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 	}
 
 	private void initData(final String type) {
-		int layoutID = 0;
 		if (type.equals(CommonText.EDUCATION)) {
-			
 			tab = getIntent().getIntExtra(Constants.TAB, 0);
 			L.d("==tab=="+tab);
 			if (tab == 0) {
@@ -148,12 +146,9 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		}else if (type.equals(CommonText.PROJECT_EXPERIENCE)) {
 			setTopTitle(R.string.resume_project_experience);
 			tableName = CommonText.PROJECT_EXPERIENCE;
-			
 		}else if(type.equals(CommonText.OTHERINFO)){
 			setTopTitle(R.string.resume_otherinfo);
-			
 		}
-		
 		
 		queryWhere = "select * from " + tableName + " where userId = '" + uTokenId + "' order by createtime desc";
 		commMapArray = dbUtil.queryData(self,queryWhere);
@@ -161,7 +156,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			infoMoreListView.setVisibility(View.VISIBLE);
 			setRightIconVisible(View.INVISIBLE);
 			commMapAdapter = new CommForMapArrayBaseAdapter(self, commMapArray,
-					layoutID, "userId") {
+					R.layout.manage_info_list_item, "userId") {
 
 				@Override
 				public void convert(ViewHolder holder, String[] item,

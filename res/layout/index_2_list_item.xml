@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/red"
-    android:baselineAligned="true" >
+    android:baselineAligned="true"
+    android:orientation="horizontal"
+    android:padding="@dimen/margin_5" >
 
     <RelativeLayout
         android:id="@+id/timeshow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true" >
+        android:layout_width="65dip"
+        android:layout_height="50dip"
+        android:orientation="vertical" >
 
         <View
             style="@style/line2"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/margin_10" />
+            android:layout_height="38dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="@dimen/margin_5" />
 
-        <ImageView
-            android:layout_width="12dip"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginLeft="4dip"
-            android:src="@drawable/icon_circle" />
+        <TextView
+            android:id="@+id/duetime"
+            android:layout_width="65dip"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:drawablePadding="2dip"
+            android:drawableRight="@drawable/icon_circle"
+            android:gravity="center|left"
+            android:text="2015/07"
+            android:textColor="@color/white"
+            android:textSize="@dimen/main_time_text" />
+
+        <TextView
+            android:id="@+id/starttime"
+            android:layout_width="65dip"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:drawableRight="@drawable/icon_circle"
+            android:gravity="center|left"
+            android:text="2015/06"
+            android:textColor="@color/white"
+            android:textSize="@dimen/main_time_text" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+    <TextView
+        android:id="@+id/item2"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/margin_10"
-        
-        android:layout_toRightOf="@id/timeshow"
-        android:orientation="vertical" >
+        android:gravity="center|left"
+        android:text="@string/resume_workexperience"
+        android:textColor="@color/white"
+        android:textSize="@dimen/small_text_size" />
 
-        <TextView
-            android:id="@+id/item1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:text="@string/resume_workexperience"
-            android:textColor="@color/white"
-            android:textSize="@dimen/small_middle_text_size" />
-
-        <TextView
-            android:id="@+id/item2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center|left"
-            android:paddingBottom="@dimen/margin_10"
-            android:paddingTop="@dimen/margin_8"
-            android:text="@string/resume_workexperience"
-            android:textColor="@color/white"
-            android:textSize="@dimen/small_middle_text_size" />
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>
