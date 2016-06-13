@@ -15,7 +15,7 @@ import com.whjz.android.text.CommonText;
 public class Constants {
 
 	/** 保存的总路径 */
-    public static final String DIR_PATH = "resume";
+    public static final String DIR_PATH = "YunResume";
     
     /**
 	 * app包名
@@ -69,7 +69,7 @@ public class Constants {
 	public static final String DATABASE_FILENAME = "resume.db"; // DB文件 
 	
 	// 下载总路径
-	public static final String DOWNLOAD =  "download";
+	public static final String DOWNLOAD =  "files";
 	
 	public static final String TEMP_PATH =  "temp"; // 临时文件
 	public static final String APK_PATH =  "apk"; // apk

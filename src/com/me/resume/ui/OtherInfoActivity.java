@@ -19,7 +19,6 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.tools.UUIDGenerator;
-import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.TimeUtils;
@@ -563,6 +562,10 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 				cValues.put("updatetime", map.get("updatetime").get(i));
 				queryResult = dbUtil.insertData(self, CommonText.OTHERINFO, cValues);
 			}
+			
+			if (updResult == 1 ||queryResult) {
+				setLanguages();
+			}
         }
 	}
 	
@@ -592,6 +595,9 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 				cValues.put("createtime", map.get("createtime").get(i));
 				cValues.put("updatetime", map.get("updatetime").get(i));
 				queryResult = dbUtil.insertData(self, CommonText.OTHERINFO1, cValues);
+			}
+			if (updResult == 1 || queryResult) {
+				setCertificate();
 			}
         }
 	}
@@ -624,6 +630,10 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 				queryResult = dbUtil.insertData(self, CommonText.OTHERINFO2, cValues);
 			}
         }
+        
+        if (updResult == 1 ||queryResult) {
+			setOtherinfoData();
+		}
 	}
 	
 	/**

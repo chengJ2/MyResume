@@ -63,7 +63,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 							new String[]{uTokenId,getCheckColor(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						actionAync();
+						actionAync(1);
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -75,8 +75,10 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if (action_add_insert) {
-					actionAync();
+				if (actionFlag == 1 || actionFlag == 2) {
+					actionAync(1);
+				}else{
+					actionAync(3);
 				}
 				break;
 			case OnTopMenu.MSG_MENU31:
@@ -97,12 +99,16 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		boayLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_projectexperience_layout, null);
 		boayLayout.addView(v);
 		
 		findViews();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
 		initViews();
 	}
 	
@@ -154,11 +160,11 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	 * 
 	 * @Description: 执行同步操作
 	 */
-	private void actionAync(){
+	private void actionAync(int style){
 		if (!MyApplication.USERID.equals("0")) {
 			if (CommUtil.isNetworkAvailable(self)) {
 				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-				syncData();
+				syncData(style);
 			} else {
 				set3Msg(R.string.check_network);
 			}
@@ -220,7 +226,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.save:
-			action_add_insert = true;
+			actionFlag = 1;
 			getFeildValue();
 			if (judgeField()) {
 				preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
@@ -238,14 +244,14 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 				if(queryResult){
 					toastMsg(R.string.action_add_success);
 					seNextBtnSrc(R.drawable.ic_btn_edit);
-					actionAync();
+					actionAync(1);
 				}
 			}
 			break;
 		case R.id.edit:
 			break;
 		case R.id.next:
-			action_add_insert = true;
+			actionFlag = 2;
 			getFeildValue();
 			if (judgeField()) {
 				updResult = dbUtil.updateData(self, CommonText.PROJECT_EXPERIENCE, 
@@ -253,7 +259,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 						new String[]{uTokenId,info_projectnameStr,info_startworktimeStr,info_endworktimeStr,info_workdutiesStr,input_workdescStr,TimeUtils.getCurrentTimeInString()},3);
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
-					actionAync();
+					actionAync(1);
 				}else{
 					toastMsg(R.string.action_update_fail);
 				}
@@ -278,7 +284,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	 * @Title:WorkExperienceActivity
 	 * @Description: 同步数据
 	 */
-	private void syncData(){ 
+	private void syncData(final int style){ 
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
@@ -287,17 +293,26 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 		values.add(tokenId);
 		values.add(uTokenId);
 		
-		requestData("pro_get_projectexpericnce", 1, params, values, new HandlerData() {
+		requestData("pro_get_projectexpericnce", style, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				syncRun(tokenId,2);
+				if (style == 1) {
+					syncRun(tokenId,2);
+				}else{
+					set3Msg(R.string.action_sync_success);
+				}
+				
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					String p_tokenId = map.get("tokenId").get(0);
-					if (map.get("userId").get(0).equals(uTokenId)) {
-						syncRun(p_tokenId,3);
+					if (style == 1) {
+						String p_tokenId = map.get("tokenId").get(0);
+						if (map.get("userId").get(0).equals(uTokenId)) {
+							syncRun(p_tokenId,3);
+						}
+					}else{
+						setPEDataFromServer(map);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -352,6 +367,54 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 					}
 				}
 			});
+		}
+	}
+	
+	/**
+	 * 更新工作经验
+	 * @param map
+	 */
+	private void setPEDataFromServer(Map<String, List<String>> map){
+//		queryWhere = "select * from " + CommonText.PROJECT_EXPERIENCE
+//			+ " where userId = '" + uTokenId + "' order by id desc limit 1";
+//		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray == null) {
+			int size = map.get("userId").size();
+			for (int i = 0; i < size; i++) {
+				ContentValues cValues = new ContentValues();
+				cValues.put("tokenId", map.get("tokenId").get(i));
+				cValues.put("userId", map.get("userId").get(i));
+				cValues.put("projectname", getServerKeyValue(map,"projectname",i));
+				cValues.put("worktimestart", getServerKeyValue(map,"worktimestart",i));
+				cValues.put("worktimeend", getServerKeyValue(map,"worktimeend",i));
+				cValues.put("duties", getServerKeyValue(map,"duties",i));
+				cValues.put("prokectdesc", getServerKeyValue(map,"prokectdesc",i));
+				cValues.put("createtime", getServerKeyValue(map,"createtime",i));
+				queryResult = dbUtil.insertData(self, CommonText.PROJECT_EXPERIENCE, cValues);
+			}
+			
+			if (queryResult) {
+				set3Msg(R.string.action_sync_success);
+				initViews();
+			}
+		}
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mHandler != null) {
+			mHandler.removeCallbacksAndMessages(null);
 		}
 	}
 	

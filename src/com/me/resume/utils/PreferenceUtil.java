@@ -47,6 +47,10 @@ public class PreferenceUtil {
 		return sp.getBoolean(str, false);
 	}
 	
+	public boolean getPreferenceFData(String str) {
+		return sp.getBoolean(str, true);
+	}
+	
 	public void clearPreferenceData() {
 		editor.clear().apply();
 	}

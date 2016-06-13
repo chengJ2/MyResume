@@ -111,7 +111,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	
 	protected Boolean localHasData = false;// 本地是否有数据
 	
-	protected boolean action_add_insert = false;// 是否执行添加或编辑操作
+//	protected boolean action_add_insert = false;// 是否执行添加或编辑操作
 	
 	private ViewHolder viewHolder;
 	
@@ -632,6 +632,40 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	}
 	
 	/**
+	 * 通过远程的key获取values插入到本地
+	 * @param mapArray
+	 * @param map
+	 * @param key
+	 * @param position
+	 * @return
+	 */
+	protected String getServerKeyValue(Map<String, List<String>> map,String key,int position){
+		String value = "";
+		List<String> listStr = map.get(key);
+		if(listStr != null && listStr.size()>0){
+			value = listStr.get(position);
+		}
+		return value;
+	}
+	
+	/**
+	 * 通过远程的key获取values插入到本地
+	 * @param mapArray
+	 * @param map
+	 * @param key
+	 * @return
+	 */
+	protected String getServerKeyValue(Map<String, List<String>> map,String key){
+		String value = "";
+		List<String> listStr = map.get(key);
+		if(listStr != null && listStr.size()>0){
+			value = listStr.get(0);
+		}
+		return value;
+	}
+	
+	
+	/**
 	 * @Description: 面试分享心得
 	 */
 	protected void setShareData(ListView listview,final Map<String, List<String>> map){
@@ -923,4 +957,11 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		}
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mHandler != null) {
+			mHandler.removeCallbacksAndMessages(null);
+		}
+	}
 }

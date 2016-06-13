@@ -20,7 +20,6 @@ import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ResponseCode;
-import com.me.resume.tools.L;
 import com.me.resume.tools.UUIDGenerator;
 import com.me.resume.ui.fragment.AllFragmentFactory;
 import com.me.resume.ui.fragment.EducationFragment;
@@ -178,6 +177,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		switch (v.getId()) {
 		case R.id.save:
 			getFeild();
+			actionFlag = 1;
 			if(cposition == 0){ // 教育背景
 				if(judgeEduField()){
 					ContentValues cValues = new ContentValues();
@@ -227,6 +227,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.edit:
 			getFeild();
+			actionFlag = 2;
 			if(cposition == 0){ // 教育背景
 				if(judgeEduField()){
 					updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
@@ -469,11 +470,8 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 	
-	
 	/**
-	 * 
-	 * @Description: 同步数据
-	 * @author Comsys-WH1510032
+	 * 同步数据
 	 */
 	private void syncRun(int cposition,String edId,int style){ 
 		List<String> params = new ArrayList<String>();
@@ -521,7 +519,6 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 						}
 					}
 				});
-				
 			}
 		}else{
 			if (judgeTraField()) {
@@ -629,6 +626,24 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			return false;
 		}
 		return true;
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mHandler != null) {
+			mHandler.removeCallbacksAndMessages(null);
+		}
 	}
 	
 	@Override

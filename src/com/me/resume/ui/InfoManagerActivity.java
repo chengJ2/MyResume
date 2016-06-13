@@ -29,19 +29,14 @@ import com.me.resume.utils.RegexUtil;
 import com.whjz.android.text.CommonText;
 
 /**
- * 
-* 栏目管理界面
-* 2016/5/30 下午5:27:36 
+ * 栏目管理界面
+ * 2016/5/30 下午5:27:36 
  */
 public class InfoManagerActivity extends BaseActivity implements OnClickListener{
 
 	private ListView infoMoreListView;
 	private TextView msgText;
 
-	private CommForMapArrayBaseAdapter commMapAdapter = null;
-	
-	private Map<String, String[]> commMapArray = null;
-	
 	private String type = "";
 	private int tab = 0;
 	
@@ -151,11 +146,11 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		}
 		
 		queryWhere = "select * from " + tableName + " where userId = '" + uTokenId + "' order by createtime desc";
-		commMapArray = dbUtil.queryData(self,queryWhere);
+		final Map<String, String[]> commMapArray = dbUtil.queryData(self,queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			infoMoreListView.setVisibility(View.VISIBLE);
 			setRightIconVisible(View.INVISIBLE);
-			commMapAdapter = new CommForMapArrayBaseAdapter(self, commMapArray,
+			commMapArrayAdapter = new CommForMapArrayBaseAdapter(self, commMapArray,
 					R.layout.manage_info_list_item, "userId") {
 
 				@Override
@@ -170,7 +165,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 					}
 				}
 			};
-			infoMoreListView.setAdapter(commMapAdapter);
+			infoMoreListView.setAdapter(commMapArrayAdapter);
 			msgText.setVisibility(View.GONE);
 		} else {
 			setRightIcon(R.drawable.icon_sync);
@@ -197,31 +192,32 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			StringBuffer sbStr = new StringBuffer();
 			String info = commMapArray.get("majorname")[position];
 			sbStr.append(info);
-			sbStr.append(" | ");
+			sbStr.append("&nbsp;|&nbsp;");
 			
 			info = commMapArray.get("degree")[position];
 			sbStr.append(info);
 			
-			holder.setText(R.id.item12, sbStr.toString());
+			holder.setTextForHtml(R.id.item12, sbStr.toString());
 			
 		}else{
 			holder.setText(R.id.item1,
 					commMapArray.get("trainingtimestart")[position] + " — "
 							+ commMapArray.get("trainingtimeend")[position]);
+			holder.setTextColor(R.id.item1, getColorValue(R.color.black));
 			
 			String info = commMapArray.get("trainingorganization")[position];
 			holder.setText(R.id.item11, info.toString());
 			
 			StringBuffer sbStr = new StringBuffer();
 			String info2 = commMapArray.get("trainingclass")[position];
-			sbStr.append("<strong>培训课程：</strong>"+ info2 + "<br/>");
+			sbStr.append("培训课程：&nbsp;"+ info2 + "<br/>");
 			info2 = commMapArray.get("certificate")[position];
 			if(RegexUtil.checkNotNull(info2)){
-				sbStr.append("<strong>所获证书：</strong>"+ info2 + "<br/>");
+				sbStr.append("所获证书：&nbsp;"+ info2 + "<br/>");
 			}
 			info2 = commMapArray.get("description")[position];
 			if(RegexUtil.checkNotNull(info2)){
-				sbStr.append("<strong>培训描述：</strong>"+ info2 );
+				sbStr.append("培训描述：&nbsp;"+ info2 );
 			}
 			holder.setTextForHtml(R.id.item12, sbStr.toString());
 			
@@ -266,12 +262,9 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		holder.setText(R.id.item1,commMapArray.get("companyname")[position]);
 
 		String info_jobtitleStr = commMapArray.get("jobtitle")[position];
-
 		String info_companynatureStr = commMapArray.get("companynature")[position];
 		String info_companyscaleStr = commMapArray.get("companyscale")[position];
-
 		String info_industryclassificationStr = commMapArray.get("industryclassification")[position];
-
 		String info_startworktimeStr = commMapArray.get("worktimestart")[position];
 		String info_endworktimeStr = commMapArray.get("worktimeend")[position];
 		String info_expectedsalaryStr = commMapArray.get("expectedsalary")[position];
@@ -337,7 +330,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 	 * @param position
 	 */
 	private void setPEData(ViewHolder holder,Map<String, String[]> commMapArray,int position){
-		holder.setText(R.id.item1,commMapArray.get("worktimestart")[position] + "--" + commMapArray.get("worktimeend")[position]);
+		holder.setText(R.id.item1,commMapArray.get("worktimestart")[position] + " — " + commMapArray.get("worktimeend")[position]);
 
 		String info_dutiesStr = commMapArray.get("duties")[position];
 		StringBuffer sbStr = new StringBuffer();
@@ -478,18 +471,18 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			ContentValues cValues = new ContentValues();
 			cValues.put("tokenId", map.get("tokenId").get(i));
 			cValues.put("userId", map.get("userId").get(i));
-			cValues.put("companyname", map.get("companyname").get(i));
-			cValues.put("companynature", map.get("companynature").get(i));
-			cValues.put("companyscale", map.get("companyscale").get(i));
-			cValues.put("industryclassification", map.get("industryclassification").get(i));
-			cValues.put("jobtitle", map.get("jobtitle").get(i));
-			cValues.put("worktimeStart", map.get("worktimeStart").get(i));
-			cValues.put("worktimeEnd", map.get("worktimeEnd").get(i));
-			cValues.put("expectedsalary", map.get("expectedsalary").get(i));
-			cValues.put("workdesc", map.get("workdesc").get(i));
-			cValues.put("bgcolor", map.get("bgcolor").get(i));
-			cValues.put("createtime", map.get("createtime").get(i));
-			cValues.put("updatetime", map.get("updatetime").get(i));
+			cValues.put("companyname", getServerKeyValue(map,"companyname",i));
+			cValues.put("companynature", getServerKeyValue(map,"companynature",i));
+			cValues.put("companyscale", getServerKeyValue(map,"companyscale",i));
+			cValues.put("industryclassification", getServerKeyValue(map,"industryclassification",i));
+			cValues.put("jobtitle", getServerKeyValue(map,"jobtitle",i));
+			cValues.put("worktimeStart", getServerKeyValue(map,"worktimeStart",i));
+			cValues.put("worktimeEnd", getServerKeyValue(map,"worktimeEnd",i));
+			cValues.put("expectedsalary", getServerKeyValue(map,"expectedsalary",i));
+			cValues.put("workdesc", getServerKeyValue(map,"workdesc",i));
+			cValues.put("bgcolor", getServerKeyValue(map,"bgcolor",i));
+			cValues.put("createtime", getServerKeyValue(map,"createtime",i));
+			cValues.put("updatetime", getServerKeyValue(map,"updatetime",i));
 			queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);
 		}
 		
@@ -509,12 +502,12 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			ContentValues cValues = new ContentValues();
 			cValues.put("tokenId", map.get("tokenId").get(i));
 			cValues.put("userId", map.get("userId").get(i));
-			cValues.put("projectname", map.get("projectname").get(i));
-			cValues.put("worktimestart", map.get("worktimestart").get(i));
-			cValues.put("worktimeend", map.get("worktimeend").get(i));
-			cValues.put("duties", map.get("duties").get(i));
-			cValues.put("prokectdesc", map.get("prokectdesc").get(i));
-			cValues.put("createtime", map.get("createtime").get(i));
+			cValues.put("projectname", getServerKeyValue(map,"projectname",i));
+			cValues.put("worktimestart", getServerKeyValue(map,"worktimestart",i));
+			cValues.put("worktimeend", getServerKeyValue(map,"worktimeend",i));
+			cValues.put("duties", getServerKeyValue(map,"duties",i));
+			cValues.put("prokectdesc", getServerKeyValue(map,"prokectdesc",i));
+			cValues.put("createtime", getServerKeyValue(map,"createtime",i));
 			queryResult = dbUtil.insertData(self, CommonText.PROJECT_EXPERIENCE, cValues);
 		}
 		
@@ -525,7 +518,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 	}
 	
 	/**
-	 * 更新项目经验
+	 * 更新教育背景
 	 * @param map
 	 */
 	private void setEDDataFromServer(Map<String, List<String>> map){
@@ -534,12 +527,12 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			ContentValues cValues = new ContentValues();
 			cValues.put("tokenId", map.get("tokenId").get(i));
 			cValues.put("userId", map.get("userId").get(i));
-			cValues.put("projectname", map.get("projectname").get(i));
-			cValues.put("worktimestart", map.get("worktimestart").get(i));
-			cValues.put("worktimeend", map.get("worktimeend").get(i));
-			cValues.put("duties", map.get("duties").get(i));
-			cValues.put("prokectdesc", map.get("prokectdesc").get(i));
-			cValues.put("createtime", map.get("createtime").get(i));
+			cValues.put("projectname", getServerKeyValue(map,"projectname",i));
+			cValues.put("worktimestart", getServerKeyValue(map,"worktimestart",i));
+			cValues.put("worktimeend", getServerKeyValue(map,"worktimeend",i));
+			cValues.put("duties", getServerKeyValue(map,"duties",i));
+			cValues.put("prokectdesc", getServerKeyValue(map,"prokectdesc",i));
+			cValues.put("createtime", getServerKeyValue(map,"createtime",i));
 			queryResult = dbUtil.insertData(self, CommonText.EDUCATION, cValues);
 		}
 		
@@ -551,7 +544,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 	}
 	
 	/**
-	 * 更新项目经验
+	 * 更新培训经历
 	 * @param map
 	 */
 	private void setTRDataFromServer(Map<String, List<String>> map){
@@ -560,14 +553,14 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			ContentValues cValues = new ContentValues();
 			cValues.put("tokenId", map.get("tokenId").get(i));
 			cValues.put("userId", map.get("userId").get(i));
-			cValues.put("trainingtimestart", map.get("trainingtimestart").get(i));
-			cValues.put("trainingtimeend", map.get("trainingtimeend").get(i));
-			cValues.put("trainingorganization", map.get("trainingorganization").get(i));
-			cValues.put("trainingclass", map.get("trainingclass").get(i));
-			cValues.put("certificate", map.get("certificate").get(i));
-			cValues.put("description", map.get("description").get(i));
-			cValues.put("bgcolor", map.get("bgcolor").get(i));
-			cValues.put("createtime", map.get("createtime").get(i));
+			cValues.put("trainingtimestart", getServerKeyValue(map,"trainingtimestart",i));
+			cValues.put("trainingtimeend", getServerKeyValue(map,"trainingtimeend",i));
+			cValues.put("trainingorganization", getServerKeyValue(map,"trainingorganization",i));
+			cValues.put("trainingclass", getServerKeyValue(map,"trainingclass",i));
+			cValues.put("certificate", getServerKeyValue(map,"certificate",i));
+			cValues.put("description", getServerKeyValue(map,"description",i));
+			cValues.put("bgcolor", getServerKeyValue(map,"bgcolor",i));
+			cValues.put("createtime", getServerKeyValue(map,"createtime",i));
 			queryResult = dbUtil.insertData(self, CommonText.EDUCATION_TRAIN, cValues);
 		}
 		
@@ -601,4 +594,21 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		}
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mHandler != null) {
+			mHandler.removeCallbacksAndMessages(null);
+		}
+	}
 }

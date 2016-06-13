@@ -1,6 +1,8 @@
 package com.me.resume.ui;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import android.content.Intent;
@@ -26,8 +28,10 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
+import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.UploadPhotoTask;
 import com.me.resume.comm.UserInfoCode;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -58,7 +62,8 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	protected ImageView user_info_avatar;
 	private TextView center_username,center_workyear,center_city;
 	
-	private TextView mycollection,viewmode,review_resume;
+	private RelativeLayout viewcalendar;
+	private TextView mycollection,review_resume,view_day;
 	
 	private LinearLayout info_layout1,info_layout2,info_layout3,info_layout4;
 	private TextView info_item1,info_item2,info_item3,info_item4;
@@ -68,6 +73,9 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
+			case 1:
+				ImageUtils.getURLImage(mHandler, CommUtil.getHttpLink((String)msg.obj), 2);
+				break;
             case 2:
             	if(msg.obj!= null){
         			try {
@@ -80,7 +88,6 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
         					user_info_avatar.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
         					preferenceUtil.setPreferenceData(UserInfoCode.CHANGEAVATOR, true);
         				}
-        				
         			} catch (Exception e) {
         				e.printStackTrace();
         			}
@@ -121,11 +128,8 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		boayLayout.addView(v);
 		findViews();
 		
-		setTopBarVisibility(View.GONE);
 		setMsgHide();
-		setRightIconVisible(View.VISIBLE);
-		setRightIcon(R.drawable.icon_setting);
-		setRight2IconVisible(View.GONE);
+		setTopBarVisibility(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
 		mHandler.postDelayed(new Runnable() {
@@ -159,7 +163,9 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		center_city = findView(R.id.center_city);
 		
 		mycollection = findView(R.id.mycollection);
-		viewmode = findView(R.id.viewmode);
+		viewcalendar = findView(R.id.viewcalendar);
+		view_day = findView(R.id.day);
+		view_day.setText(TimeUtils.theToday());
 		review_resume = findView(R.id.review_resume);
 		
 		center_topbar.setOnClickListener(this);
@@ -183,7 +189,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		info_item4 = findView(R.id.info_item4);
 		
 		mycollection.setOnClickListener(this);
-		viewmode.setOnClickListener(this);
+		viewcalendar.setOnClickListener(this);
 		review_resume.setOnClickListener(this);
 		
 		info_layout1.setOnClickListener(this);
@@ -262,26 +268,25 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 				String.format(getStrValue(R.string.personal_c_item16),
 						preferenceUtil.getPreferenceData(UserInfoCode.RESUMEUPDTIME,
 								TimeUtils.getCurrentTimeString())));
-		queryWhere = "select (a1+a2+a3+a4+a5+a6+a7+a8+a9+a10+a11+a12) num"
+		queryWhere = "select (a1+a2+a3+a4+a5+a6+a7+a8+a9+a10+a11) num"
 					+ " from ("
 					+ " select case when realname='' then 1 else 0 end a1,"
 					+ " case when gender='' then 1 else 0 end a2,"
 					+ " case when brithday='' then 1 else 0 end a3,"
 					+ " case when joinworktime='' then 1 else 0 end a4,"
-					+ " case when phone='' then 1 else 0 end a5,"
-					+ " case when city='' then 1 else 0 end a6,"
-					+ " case when email='' then 1 else 0 end a7,"
-					+ " case when ismarry='' then 1 else 0 end a8,"
-					+ " case when nationality='' then 1 else 0 end a9,"
-					+ " case when license='' then 1 else 0 end a10,"
-					+ " case when workingabroad='' then 1 else 0 end a11,"
-					+ " case when politicalstatus='' then 1 else 0 end a12"
+					+ " case when city='' then 1 else 0 end a5,"
+					+ " case when email='' then 1 else 0 end a6,"
+					+ " case when ismarry='' then 1 else 0 end a7,"
+					+ " case when nationality='' then 1 else 0 end a8,"
+					+ " case when license='' then 1 else 0 end a9,"
+					+ " case when workingabroad='' then 1 else 0 end a10,"
+					+ " case when politicalstatus='' then 1 else 0 end a11"
 					+ " from "+ CommonText.BASEINFO +" where userId = '"+ uTokenId +"') a";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!=null && commMapArray.get("num").length>0) {
 			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
 			int nPercent = 0;
-			nPercent = (int) (((12 - num) * 100 / 12));
+			nPercent = (int) (((11 - num) * 100 / 11));
 			if (nPercent <= 0)
 				nPercent = 0;
 			resume_complete.setText(String.format(getStrValue(R.string.personal_c_item14), nPercent));
@@ -482,7 +487,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			scrollToFinishActivity();
 			break;
 		case R.id.right_lable:
-			startChildActivity(Constants.SETTING, false);
+			actionLogout();
 			break;
 		case R.id.user_info_avatar:
 			DialogUtils.showPhotoPathDialog(self, user_info_avatar, mHandler);
@@ -494,7 +499,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		case R.id.mycollection:
 			startChildActivity(Constants.MYCOLLECTION,false);
 			break;
-		case R.id.viewmode:
+		case R.id.viewcalendar:
 			// TODO
 			break;
 		case R.id.review_resume:
@@ -515,6 +520,44 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		default:
 			break;
 		}
+	}
+	
+	/**
+	 * 
+	 * @Description: 注销用户
+	 * @author Comsys-WH1510032
+	 */
+	private void actionLogout(){ 
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		
+		params.add("p_userId");
+		values.add(uTokenId);
+		
+		requestData("pro_user_loginout", 1, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				toastMsg(R.string.action_logout_fail);
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+					if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
+						preferenceUtil.setPreferenceData(UserInfoCode.AVATOR, "");
+						preferenceUtil.setPreferenceData(UserInfoCode.USEID,"0");
+						preferenceUtil.setPreferenceData(UserInfoCode.ISREGISTER, false);
+						MyApplication.USERID = "0";
+//						if(FileUtils.existsFile(MyApplication.USERAVATORPATH)){
+//							new File(MyApplication.USERAVATORPATH).delete();
+//			        	}
+						toastMsg(R.string.action_logout_success);
+						scrollToFinishActivity();
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	@Override

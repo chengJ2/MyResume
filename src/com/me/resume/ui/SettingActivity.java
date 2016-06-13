@@ -36,7 +36,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 
 	private ToggleButton setting_start_cb,setting_auto_cb,setting_mode_cb;
 	
-	private LinearLayout cacheLayout,versionLayout,feedbackLayout,logoutLayout,shareLayout,aboutusLayout;
+	private LinearLayout cacheLayout,versionLayout,feedbackLayout,shareLayout,aboutusLayout;
 	
 	private TextView cachesize,version;
 	
@@ -53,13 +53,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 					DataCleanManager.cleanDatabases(self);
 					preferenceUtil.clearPreferenceData();
 					cachesize.setText("0KB");
-					
-					if (!preferenceUtil.getPreferenceData(UserInfoCode.USEID,"0").equals("0")) {
-						preferenceUtil.setPreferenceData(UserInfoCode.USEID,"0");
-						if(CommUtil.isNetworkAvailable(self)){
-							actionLogout();
-						}
-					}
 					toastMsg(R.string.action_clearcache_success);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -110,7 +103,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		versionLayout = findView(R.id.versionLayout);
 		feedbackLayout = findView(R.id.feedbackLayout);
 		version = findView(R.id.viewsion);
-		logoutLayout = findView(R.id.logoutLayout);
 		shareLayout = findView(R.id.shareLayout);
 		aboutusLayout = findView(R.id.aboutusLayout);
 		
@@ -145,7 +137,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		cacheLayout.setOnClickListener(this);
 		versionLayout.setOnClickListener(this);
 		feedbackLayout.setOnClickListener(this);
-		logoutLayout.setOnClickListener(this);
 		shareLayout.setOnClickListener(this);
 		aboutusLayout.setOnClickListener(this);
 		llout020.setOnClickListener(this);
@@ -251,13 +242,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		case R.id.feedbackLayout:
 			startChildActivity(Constants.FEEDBACK, false);
 			break;
-		case R.id.logoutLayout:
-			if (!MyApplication.USERID.equals("0")) {
-				actionLogout();
-			}else{
-				toastMsg(R.string.action_no_login);
-			}
-			break;
 		case R.id.cacheLayout:
 			DialogUtils.showAlertDialog(self, getStrValue(
 					R.string.dialog_action_cache_alert),View.GONE, mHandler);
@@ -319,42 +303,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		});
 	} 
 	
-	/**
-	 * 
-	 * @Description: 注销用户
-	 * @author Comsys-WH1510032
-	 */
-	private void actionLogout(){ 
-		List<String> params = new ArrayList<String>();
-		List<String> values = new ArrayList<String>();
-		
-		params.add("p_userId");
-		values.add(uTokenId);
-		
-		requestData("pro_user_loginout", 1, params, values, new HandlerData() {
-			@Override
-			public void error() {
-				toastMsg(R.string.action_logout_fail);
-			}
-			
-			public void success(Map<String, List<String>> map) {
-				try {
-					if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
-						preferenceUtil.setPreferenceData(UserInfoCode.AVATOR, "");
-						preferenceUtil.setPreferenceData(UserInfoCode.USEID,"0");
-						preferenceUtil.setPreferenceData(UserInfoCode.ISREGISTER, false);
-						MyApplication.USERID = "0";
-//						if(FileUtils.existsFile(MyApplication.USERAVATORPATH)){
-//							new File(MyApplication.USERAVATORPATH).delete();
-//			        	}
-						toastMsg(R.string.action_logout_success);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 	
 	/**
 	 * 设置动画切换时段

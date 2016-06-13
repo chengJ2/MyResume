@@ -103,6 +103,7 @@ public class TimeUtils {
      * Year
      */
     public static final String YEAR_FORMAT_STRING = "yyyy";
+    public static final String DAY_FORMAT_STRING = "dd";
     /**
      * ThreadLocal<SimpleDateFormat> dateFormaterShort
      */
@@ -456,6 +457,18 @@ public class TimeUtils {
         Date today = new Date();
         String year = dateFormaterYear.get().format(today);
         return year;
+    }
+    
+    /**
+     * 
+     * @Title:TimeUtils
+     * @Description: 获取今天
+     */
+    public static String theToday() {
+        Date today = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DAY_FORMAT_STRING);
+        String day = simpleDateFormat.format(today);
+        return day;
     }
     
     

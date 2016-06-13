@@ -15,31 +15,29 @@
         android:background="@drawable/startup" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="3.6"
         android:gravity="center"
+        android:layout_gravity="center"
         android:orientation="horizontal" >
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:padding="@dimen/margin_20"
+            android:layout_width="72dip"
+            android:layout_height="72dip"
             android:scaleType="centerInside"
             android:src="@drawable/ic_launcher" />
 
          <LinearLayout
-	        android:layout_width="match_parent"
-	        android:layout_height="match_parent"
-	        android:layout_weight="1"
-	        android:paddingLeft="@dimen/margin_8"
-	         android:gravity="center|left"
+	        android:layout_width="130dip"
+	        android:layout_height="wrap_content"
+	        android:paddingLeft="@dimen/margin_10"
+	        android:gravity="center"
 	        android:orientation="vertical" >
         
               <TextView
 	            android:layout_width="match_parent"
-	            android:layout_height="25dip"
+	            android:layout_height="20dip"
 	            android:gravity="center|left"
 	            android:text="@string/app_about"
 	            android:textColor="@color/grey_10"
@@ -47,7 +45,7 @@
               
               <TextView
 	            android:layout_width="match_parent"
-	            android:layout_height="25dip"
+	            android:layout_height="20dip"
 	            android:gravity="center|left"
 	            android:text="@string/app_about2"
 	            android:textColor="@color/grey_10"
@@ -56,8 +54,8 @@
                <TextView
 	            android:id="@+id/version"
 	            android:layout_width="wrap_content"
-	            android:layout_height="20dip"
-	            android:gravity="center|right"
+	            android:layout_height="25dip"
+	            android:gravity="center|left"
 	            android:text="V1.0.2"
 	            android:layout_marginTop="@dimen/margin_10"
 	            android:background="@drawable/home_tag_text_corner_sel"

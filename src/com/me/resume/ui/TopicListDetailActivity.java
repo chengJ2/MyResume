@@ -60,9 +60,8 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 					}else{//加载更多
 						commMapList.putAll(getNewMap(commMapList, newMap));
 						commapBaseAdapter.notifyDataSetChanged(pos);
-						finishLoading();
 					}
-					
+					finishLoading();
 				}
 				break;
 			case 12:
@@ -84,7 +83,6 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
 		boayLayout.removeAllViews();
@@ -157,7 +155,6 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 	private ViewHolder viewHolder;
 	
 	private void setTopicListData(final Map<String, List<String>> map){
-		finishLoading();
 		commapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.topic_list_detail_item,"id") {
 			
 			@Override
@@ -227,7 +224,6 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		});
 	}
 	
-	
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
@@ -258,10 +254,12 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		}
 	}
 	
+	/**
+	 * 停止刷新
+	 */
 	public void finishLoading(){
 		topicdetailListView.stopLoadMore();
 		topicdetailListView.stopRefresh();
-		topicdetailListView.setRefreshTime(TimeUtils.getCurrentTimeInString());
 	}
 	
 	/**
@@ -279,5 +277,23 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 			map.put(entry.getKey(), entry.getValue());
 		}
 		return map;
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mHandler != null) {
+			mHandler.removeCallbacksAndMessages(null);
+		}
 	}
 }

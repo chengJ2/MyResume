@@ -271,33 +271,6 @@
                     android:visibility="visible" />
 
             </LinearLayout>
-          
-            <View style="@style/line_h15" />
-            
-            <LinearLayout
-                android:id="@+id/logoutLayout"
-                style="@style/noraml_item">
-
-                <TextView
-                    style="@style/user_info_item_tv"
-                    android:layout_weight="5"
-                    android:textColor="@color/red"
-                    android:text="@string/action_logout"
-                     />
-
-                <TextView
-                    style="@style/user_info_item_tv"
-                    android:textColor="@color/black"
-                    android:layout_weight="4"
-                    android:gravity="right|center"
-                    android:text="" 
-                    android:visibility="gone"/>
-                
-                <ImageView
-                    style="@style/user_info_item_iv"
-                    android:visibility="gone" />
-
-            </LinearLayout>
               <View style="@style/line_padding10" />
         </LinearLayout>
     </com.me.resume.views.CommScrollView>

@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
+import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
@@ -52,6 +53,7 @@ public class UserLoginActivity extends BaseActivity implements
 	private Button btnLogin;
 	
 	private boolean fflag = false;
+	private boolean showPwdType = false;
 	
 	private String str_username,str_phone,str_password;
 	
@@ -163,8 +165,6 @@ public class UserLoginActivity extends BaseActivity implements
 		btnLogin.setEnabled(true);
 	}
 	
-	private boolean showPwdType = false;
-	
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
@@ -246,8 +246,8 @@ public class UserLoginActivity extends BaseActivity implements
 		case R.id.qqlogin:
 			break;
 		case R.id.sinalogin:
-			SinaLogin sinaLogin = new SinaLogin(self);
-			sinaLogin.sinaRegistor();
+//			SinaLogin sinaLogin = new SinaLogin(self);
+//			sinaLogin.sinaRegistor();
 			break;
 		default:
 			break;
@@ -290,12 +290,17 @@ public class UserLoginActivity extends BaseActivity implements
 		});
 	}
 	
-	
+	/**
+	 * 登录异常
+	 */
 	private void errorLogin(){
 		btnLogin.setText(getStrValue(R.string.action_login));
 		btnLogin.setEnabled(true);
 	}
 	
+	/**
+	 * 获取字段值
+	 */
 	private void getFieldValue(){
 		str_username = usernameEt.getText().toString();
 		str_password = passwordEt.getText().toString();
@@ -407,6 +412,7 @@ public class UserLoginActivity extends BaseActivity implements
 	 */
 	private void sendSuccess(final Map<String, List<String>> map){
 		uTokenId = map.get("uid").get(0);
+		MyApplication.USERID = uTokenId;
 		preferenceUtil.setPreferenceData(UserInfoCode.UTOKENID, uTokenId);
 		String feildStr1 = map.get("username").get(0);
 		String feildStr2 = map.get("password").get(0);
@@ -415,23 +421,26 @@ public class UserLoginActivity extends BaseActivity implements
 		String feildStr5 = map.get("createtime").get(0);
 		String feildStr6 = map.get("lastlogintime").get(0);
 		String feildStr7 = map.get("userstatus").get(0);
+		String feildStr8 = map.get("phone").get(0);
 		
 		preferenceUtil.setPreferenceData(UserInfoCode.USERNAME,feildStr1);
 		preferenceUtil.setPreferenceData(UserInfoCode.PASSWORD,str_password);
+		preferenceUtil.setPreferenceData(UserInfoCode.PHONE,feildStr8);
 		
 		queryWhere = "select * from " + CommonText.USERINFO + " where uid = '" + uTokenId + "'";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("id").length > 0) {
 			updResult = dbUtil.updateData(self, CommonText.USERINFO,
-					new String[]{"uid=?","username","userpassword","patform",
+					new String[]{"uid=?","username","userpassword","phone","patform",
 										 "createtime","updatetime","lastlogintime","userstatus"}, 
-					new String[]{uTokenId,feildStr1,feildStr2,feildStr4,
+					new String[]{uTokenId,feildStr1,feildStr2,feildStr8,feildStr4,
 										feildStr5,TimeUtils.getCurrentTimeInString(),feildStr6,feildStr7},1);
 		}else{
 			ContentValues cValues = new ContentValues();
 			cValues.put("uid", uTokenId);
 			cValues.put("username", feildStr1);
 			cValues.put("userpassword", feildStr2);
+			cValues.put("phone", feildStr8);
 			cValues.put("deviceId", feildStr3);
 			cValues.put("patform", feildStr4);
 			cValues.put("createtime", feildStr5);
@@ -468,22 +477,6 @@ public class UserLoginActivity extends BaseActivity implements
 	}
 	
 	/**
-	 * 通过远程的key获取values插入到本地
-	 * @param mapArray
-	 * @param map
-	 * @param key
-	 * @return
-	 */
-	private String getServerKeyValue(Map<String, List<String>> map,String key){
-		String value = "";
-		List<String> listStr = map.get(key);
-		if(listStr != null && listStr.size()>0){
-			value = listStr.get(0);
-		}
-		return value;
-	}
-	
-	/**
 	 * 获取用户基本信息
 	 * @param map
 	 */
@@ -500,7 +493,6 @@ public class UserLoginActivity extends BaseActivity implements
 				String feildStr12 = getLocalKeyValue(commMapArray,map,"gender");
 				String feildStr13 = getLocalKeyValue(commMapArray,map,"brithday");
 				String feildStr14 = getLocalKeyValue(commMapArray,map,"joinworktime");
-				String feildStr15 = getLocalKeyValue(commMapArray,map,"phone");
 				String feildStr16 = getLocalKeyValue(commMapArray,map,"hometown");
 				String feildStr17 = getLocalKeyValue(commMapArray,map,"city");
 				String feildStr18 = getLocalKeyValue(commMapArray,map,"email");
@@ -517,10 +509,10 @@ public class UserLoginActivity extends BaseActivity implements
 				String baid = commMapArray.get("id")[0];
 				updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
 						new String[]{baid,"realname","gender","brithday","joinworktime",
-						"phone","hometown","city","email","ismarry",
+						"hometown","city","email","ismarry",
 						"nationality","license","workingabroad","politicalstatus","bgcolor","avator","updatetime"}, 
 						new String[]{uTokenId,feildStr11,feildStr12,feildStr13,feildStr14,
-						feildStr15,feildStr16,feildStr17,feildStr18,feildStr19,
+						feildStr16,feildStr17,feildStr18,feildStr19,
 						feildStr20,feildStr21,feildStr22,feildStr23,feildStr24,feildStr25,feildStr26},2);
 			}else{
 				insertBaseInfo(map);
@@ -545,7 +537,6 @@ public class UserLoginActivity extends BaseActivity implements
 		cValues.put("gender",getServerKeyValue(map,"gender"));
 		cValues.put("brithday",getServerKeyValue(map,"brithday"));
 		cValues.put("joinworktime",getServerKeyValue(map,"joinworktime"));
-		cValues.put("phone",getServerKeyValue(map,"phone"));
 		cValues.put("hometown",getServerKeyValue(map,"hometown"));
 		cValues.put("city",getServerKeyValue(map,"city"));
 		cValues.put("email",getServerKeyValue(map,"email"));

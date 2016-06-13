@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.UserInfoCode;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -310,7 +311,7 @@ public class MainActivity extends Activity {
 			}else{
 				index_1_lisence.setVisibility(View.GONE);
 			}
-			index_1_phone.setText("手机号："+commMapArray.get("phone")[0]);
+			index_1_phone.setText("手机号："+preferenceUtil.getPreferenceData(UserInfoCode.PHONE, ""));
 			index_1_email.setText("E-mail："+commMapArray.get("email")[0]);
 		}
 	}
@@ -376,6 +377,11 @@ public class MainActivity extends Activity {
 			}
 			initBgColor(index3layout,commMapArray.get("bgcolor")[0]);
 			self_evaluation.setText(commMapArray.get("selfevaluation")[0]);
+			
+			String tag = commMapArray.get("character")[0];
+			if (RegexUtil.checkNotNull(tag)) {
+				fillTagFlowView(tag);
+			}
 		}
 		
 		queryWhere = "select * from " + CommonText.CHARACTER + " where userId = '"+ BaseActivity.uTokenId+"'";
@@ -393,29 +399,31 @@ public class MainActivity extends Activity {
 			}
 			
 			String tag = CommUtil.getStringLable(sb.toString());
-			String[] tags = tag.split(";");
-			
-			List<String> ll = Arrays.asList(tags);
-			if (ll != null && ll.size() > 0) {
-				MarginLayoutParams lp = new MarginLayoutParams(
-						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-				lp.leftMargin = 5;
-				lp.rightMargin = 5;
-				lp.topMargin = 5;
-				lp.bottomMargin = 5;
-				for (int i = 0,cun = ll.size(); i < cun; i++) {
-					TextView tview = new TextView(this);
-					tview.setText(ll.get(i).toString().trim());
-					tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.tiny_text_size));
-					tview.setTextColor(CommUtil.getColorValue(self, R.color.red));
-					tview.setTypeface(Typeface.SERIF);
-					tview.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_tag_text_corner));
-					tagFlowLayout.addView(tview, lp);
-				}
-			}
-			
+			fillTagFlowView(tag);
 		}
 		
+	}
+	
+	private void fillTagFlowView(String tag){
+		String[] tags = tag.split(";");
+		List<String> ll = Arrays.asList(tags);
+		if (ll != null && ll.size() > 0) {
+			MarginLayoutParams lp = new MarginLayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			lp.leftMargin = 5;
+			lp.rightMargin = 5;
+			lp.topMargin = 5;
+			lp.bottomMargin = 5;
+			for (int i = 0,cun = ll.size(); i < cun; i++) {
+				TextView tview = new TextView(this);
+				tview.setText(ll.get(i).toString().trim());
+				tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.tiny_text_size));
+				tview.setTextColor(CommUtil.getColorValue(self, R.color.red));
+				tview.setTypeface(Typeface.SERIF);
+				tview.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_tag_text_corner));
+				tagFlowLayout.addView(tview, lp);
+			}
+		}
 	}
 	
 	/**

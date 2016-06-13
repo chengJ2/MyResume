@@ -99,7 +99,6 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		getEvData();
 		getCharacter();
 		setFeildValue();
-		
 	}
 	
 	private void findViews(){
@@ -112,6 +111,9 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		info_character.setOnClickListener(this);
 	}
 	
+	/**
+	 * 获得自我简评数据
+	 */
 	private boolean getEvData(){
 		queryWhere = "select * from " + CommonText.EVALUATION + " where userId = '" + uTokenId + "' order by id desc limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
@@ -126,9 +128,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
-	 * 
-	 * @Title:EvaluationActivity
-	 * @Description: 获得性格标签
+	 * 获得性格标签数据
 	 */
 	private void getCharacter() {
 		queryWhere = "select * from " + CommonText.CHARACTER + " where userId = '"+ uTokenId+"'";
@@ -148,6 +148,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		if(getEvData()){
 			info_self_evaluation.setText(commMapArray.get("selfevaluation")[0]);
 			info_career_goal.setText(commMapArray.get("careergoal")[0]);
+			info_character.setText(commMapArray.get("character")[0]);
 		}
 	}
 	
@@ -308,9 +309,9 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		queryWhere = "select * from " + CommonText.EVALUATION + " where userId = '" + uTokenId + "' limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			info_self_evaluationStr = map.get("selfevaluation").get(0);;
-			info_career_goalStr = map.get("careergoal").get(0);
-			info_characterStr = map.get("character").get(0);
+			info_self_evaluationStr = getServerKeyValue(map,"selfevaluation",0);
+			info_career_goalStr = getServerKeyValue(map,"careergoal",0);
+			info_characterStr = getServerKeyValue(map,"character",0);
 			
 			updResult = dbUtil.updateData(self, CommonText.EVALUATION,
 					new String[] { tokenId, "selfevaluation","careergoal","character","updatetime" }, 
@@ -321,12 +322,12 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				ContentValues cValues = new ContentValues();
 				cValues.put("tokenId", map.get("tokenId").get(i));
 				cValues.put("userId", map.get("userId").get(i));
-				cValues.put("selfevaluation", map.get("selfevaluation").get(i));
-				cValues.put("careergoal", map.get("careergoal").get(i));
-				cValues.put("character", map.get("character").get(i));
-				cValues.put("bgcolor", map.get("bgcolor").get(i));
-				cValues.put("createtime", map.get("createtime").get(i));
-				cValues.put("updatetime", map.get("updatetime").get(i));
+				cValues.put("selfevaluation", getServerKeyValue(map,"selfevaluation",i));
+				cValues.put("careergoal", getServerKeyValue(map,"careergoal",i));
+				cValues.put("character",getServerKeyValue(map,"character",i));
+				cValues.put("bgcolor", getServerKeyValue(map,"bgcolor",i));
+				cValues.put("createtime",getServerKeyValue(map,"createtime",i));
+				cValues.put("updatetime", getServerKeyValue(map,"updatetime",i));
 				queryResult = dbUtil.insertData(self, CommonText.EVALUATION, cValues);
 			}
 		}

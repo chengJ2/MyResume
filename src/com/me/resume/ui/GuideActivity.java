@@ -72,7 +72,7 @@ public class GuideActivity extends Activity implements
 		switch (v.getId()) {
 		case R.id.skip:
 		case R.id.startBtn:
-			preferenceUtil.setPreferenceData(Constants.FIRSTINSTALL,true);
+			preferenceUtil.setPreferenceData(Constants.FIRSTINSTALL,false);
 			ActivityUtils.startActivity(GuideActivity.this, Constants.PACKAGENAMECHILD + Constants.HOME,true);
 			break;
 		default:

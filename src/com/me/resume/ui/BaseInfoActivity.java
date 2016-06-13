@@ -255,7 +255,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	private void initData() {
 		if (localHasData) {
 			info_realname.setText(commMapArray.get("realname")[0]);
-			info_phone.setText(commMapArray.get("phone")[0]);
+			info_phone.setText(preferenceUtil.getPreferenceData(UserInfoCode.PHONE, ""));
 			info_email.setText(commMapArray.get("email")[0]);
 			info_nationality.setText(commMapArray.get("nationality")[0]);
 			info_license.setText(commMapArray.get("license")[0]);

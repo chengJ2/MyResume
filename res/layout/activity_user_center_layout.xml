@@ -99,13 +99,31 @@
                     android:layout_height="40dip" 
                     android:layout_gravity="center"/>
                 
-                <TextView
-                    android:id="@+id/viewmode"
-                     style="@style/user_center_content_func"
-                    android:drawableTop="@drawable/icon_calendar"
-                    android:text="@string/personal_c_item2"/>
+                <RelativeLayout
+                    android:id="@+id/viewcalendar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
 
-                <View style="@style/line2" 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:drawableTop="@drawable/icon_calendar"
+                        android:gravity="center"
+                        android:text="@string/personal_c_item2" />
+
+                    <TextView
+                        android:id="@+id/day"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/margin_16"
+                        android:gravity="center"
+                        android:text="31"
+                        android:textStyle="bold"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/main_time_text" />
+                </RelativeLayout>
+				<View style="@style/line2" 
                     android:layout_height="40dip" 
                     android:layout_gravity="center"/>
                 

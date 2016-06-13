@@ -30,6 +30,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:scaleType="centerInside"
-        android:src="@drawable/icon_setting" />
+        android:src="@drawable/icon_logout" />
 
 </RelativeLayout>

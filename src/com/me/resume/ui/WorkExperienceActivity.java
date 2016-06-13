@@ -20,7 +20,6 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.UserInfoCode;
-import com.me.resume.tools.L;
 import com.me.resume.tools.UUIDGenerator;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -84,7 +83,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 							new String[]{uTokenId,getCheckColor(checkColor)},1);
 					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
-						actionAync();
+						actionAync(1);
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -96,8 +95,10 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if (action_add_insert) { // 同步新的info
-					actionAync();
+				if (actionFlag == 1 || actionFlag == 2) { // 同步新的info
+					actionAync(1);
+				}else{
+					actionAync(3);
 				}
 				break;
 			case OnTopMenu.MSG_MENU31:
@@ -211,7 +212,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.save:
-			action_add_insert = true;
+			actionFlag = 1;
 			getFieldValue();
 			if(judgeField()){
 				preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
@@ -234,13 +235,13 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				if(queryResult){
 					toastMsg(R.string.action_add_success);
 					setEditBtnVisible(View.VISIBLE);
-					actionAync();
+					actionAync(1);
 				}
 			}
 			
 			break;
 		case R.id.edit:
-			action_add_insert = true;
+			actionFlag = 2;
 			getFieldValue();
 			if(judgeField()){
 				preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
@@ -251,7 +252,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 									info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr,TimeUtils.getCurrentTimeInString()},3);
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
-					actionAync();
+					actionAync(1);
 				}else{
 					toastMsg(R.string.action_update_fail);
 				}
@@ -294,11 +295,11 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 * 
 	 * @Description: 执行同步操作
 	 */
-	private void actionAync(){
+	private void actionAync(int style){
 		if (!MyApplication.USERID.equals("0")) {
 			if (CommUtil.isNetworkAvailable(self)) {
 				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-				syncData();
+				syncData(style);
 			} else {
 				set3Msg(R.string.check_network);
 			}
@@ -375,7 +376,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 * 
 	 * @Description: 同步数据(判断库是否有记录)
 	 */
-	private void syncData(){ 
+	private void syncData(final int style){ 
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
@@ -384,17 +385,25 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		values.add(tokenId);
 		values.add(uTokenId);
 		
-		requestData("pro_get_workexpericnce", 1, params, values, new HandlerData() {
+		requestData("pro_get_workexpericnce", style, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				syncRun(tokenId,2);
+				if (style == 1) {
+					syncRun(tokenId,2);
+				}else{
+					set3Msg(R.string.action_sync_success);
+				}
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					String p_tokenId = map.get("tokenId").get(0);
-					if (map.get("userId").get(0).equals(uTokenId)) {
-						syncRun(p_tokenId,3);
+					if (style == 1) {
+						String p_tokenId = map.get("tokenId").get(0);
+						if (map.get("userId").get(0).equals(uTokenId)) {
+							syncRun(p_tokenId,3);
+						}
+					}else{
+						setWEDataFromServer(map);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -404,9 +413,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	}
 	
 	/**
-	 * 
-	 * @Title:WorkExperienceActivity
-	 * @Description: 同步数据
+	 * 同步数据
 	 */
 	private void syncRun(String tokenId,int style){ 
 		getFieldValue();
@@ -457,7 +464,58 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 					}
 				}
 			});
+		}
+	}
+	
+	/**
+	 * 更新工作经验
+	 * @param map
+	 */
+	private void setWEDataFromServer(Map<String, List<String>> map){
+//		queryWhere = "select * from " + CommonText.WORKEXPERIENCE
+//				+ " where userId = '" + uTokenId + "' order by id desc limit 1";
+//		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
+			/*info_companynameStr = getServerKeyValue(map,"companyname");
+			info_companynatureStr =  getServerKeyValue(map,"companynature");
+			info_companyscaleStr =  getServerKeyValue(map,"companyscale");
+			info_industryclassificationStr =  getServerKeyValue(map,"industryclassification");
+			info_jobtitleStr =  getServerKeyValue(map,"jobtitle");
+			info_startworktimeStr =  getServerKeyValue(map,"worktimeStart");
+			info_endworktimeStr =  getServerKeyValue(map,"worktimeEnd");
+			info_expectedsalaryStr =  getServerKeyValue(map,"expectedsalary");
+			info_workdescdetailStr =  getServerKeyValue(map,"workdesc");
+				
+			updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
+					new String[]{tokenId,"companyname","companynature","companyscale","industryclassification",
+									  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc","updatetime"}, 
+					new String[]{uTokenId,info_companynameStr,info_companynatureStr,info_companyscaleStr,info_industryclassificationStr,
+								info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr,TimeUtils.getCurrentTimeInString()},3);*/
+		}else{
+			int size = map.get("userId").size();
+			for (int i = 0; i < size; i++) {
+				ContentValues cValues = new ContentValues();
+				cValues.put("tokenId", map.get("tokenId").get(i));
+				cValues.put("userId", map.get("userId").get(i));
+				cValues.put("companyname", getServerKeyValue(map,"companyname",i));
+				cValues.put("companynature", getServerKeyValue(map,"companynature",i));
+				cValues.put("companyscale", getServerKeyValue(map,"companyscale",i));
+				cValues.put("industryclassification", getServerKeyValue(map,"industryclassification",i));
+				cValues.put("jobtitle", getServerKeyValue(map,"jobtitle",i));
+				cValues.put("worktimeStart", getServerKeyValue(map,"worktimeStart",i));
+				cValues.put("worktimeEnd", getServerKeyValue(map,"worktimeEnd",i));
+				cValues.put("expectedsalary", getServerKeyValue(map,"expectedsalary",i));
+				cValues.put("workdesc", getServerKeyValue(map,"workdesc",i));
+				cValues.put("bgcolor", getServerKeyValue(map,"bgcolor",i));
+				cValues.put("createtime", getServerKeyValue(map,"createtime",i));
+				cValues.put("updatetime", getServerKeyValue(map,"updatetime",i));
+				queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);
+			}
+		}
 			
+		if (queryResult) {
+			set3Msg(R.string.action_sync_success);
+			initViews();
 		}
 	}
 	

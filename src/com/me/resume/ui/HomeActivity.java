@@ -134,7 +134,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		View v = View.inflate(self,R.layout.activity_home, null);
 		boayLayout.addView(v);
 		
-		if (!preferenceUtil.getPreferenceData(Constants.FIRSTINSTALL)) {
+		if (preferenceUtil.getPreferenceFData(Constants.FIRSTINSTALL)) {
 			startChildActivity(Constants.GUIDE, true);
 			return;
 		}else{
