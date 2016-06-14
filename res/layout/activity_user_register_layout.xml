@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/top_bar" >
+    android:background="@drawable/user_bg_shape" >
 
     <LinearLayout
         android:id="@+id/useregisterLayout"
@@ -21,11 +21,11 @@
         <View style="@style/line_padding10_white" />
 
         <EditText
-            android:id="@+id/regTxt_phone"
+            android:id="@+id/regTxt_phone_email"
             style="@style/userinfo_item_style_white"
             android:drawableLeft="@drawable/icon_phone"
-            android:hint="@string/login_input2_hint"
-            android:inputType="phone" />
+            android:drawableRight="@drawable/icon_reg_switch"
+            android:hint="@string/register_input2_hint" />
 
         <View style="@style/line_padding10_white" />
 
@@ -37,7 +37,7 @@
             android:hint="@string/login_input_pwd_hint"
             android:inputType="textPassword" />
 
-        <View style="@style/line_padding10_white" />
+<!--         <View style="@style/line_padding10_white" /> 
 
         <EditText
             android:id="@+id/regTxt2_password"
@@ -45,42 +45,28 @@
             android:drawableLeft="@drawable/icon_pwd"
             android:drawableRight="@drawable/icon_pwd_show"
             android:hint="@string/login_input_snew_pwd_hint"
-            android:inputType="textPassword" />
+            android:inputType="textPassword" 
+            android:visibility="gone"/>-->
 
         <View style="@style/line_padding10_white" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/savelayout"
-        android:layout_width="wrap_content"
-        android:layout_height="30dip"
-        android:layout_below="@id/useregisterLayout"
-        android:layout_marginLeft="@dimen/margin_10"
-        android:layout_marginTop="@dimen/margin_10"
-        android:orientation="horizontal" >
-
-        <CheckBox
-            android:id="@+id/protocol_cb"
-            android:layout_width="25dip"
-            android:layout_height="25dip"
-            android:background="@drawable/checkbox_sel"
-            android:button="@null" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
-            android:gravity="center|left"
-            android:text="@string/register_protocol"
-            android:textColor="@color/white"
-            android:textSize="@dimen/micro_text_size" />
-    </LinearLayout>
+      <TextView
+          android:id="@+id/protocol"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center|left"
+          android:layout_marginTop="@dimen/margin_20"
+          android:padding="@dimen/margin_16"
+          android:layout_below="@id/useregisterLayout"
+          android:text="@string/register_protocol"
+          android:textColor="@color/white"
+          android:textSize="@dimen/micro_text_size" />
 
     <Button
         android:id="@+id/btn_register"
         style="@style/button_menu_white"
-        android:layout_below="@id/savelayout"
-        android:layout_marginTop="35dip"
+        android:layout_below="@id/protocol"
         android:text="@string/action_register" />
 
     <TextView
@@ -89,7 +75,7 @@
         android:layout_below="@id/btn_register"
         android:layout_marginLeft="@dimen/margin_10"
         android:layout_marginRight="@dimen/margin_10"
-        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_20"
         android:lineSpacingExtra="3dip"
         android:text="@string/register_warn"
         android:textColor="@color/register_warn"

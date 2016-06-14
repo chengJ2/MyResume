@@ -25,7 +25,6 @@ import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.UserInfoCode;
-import com.me.resume.thirdparty.SinaLogin;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -54,12 +53,13 @@ public class UserLoginActivity extends BaseActivity implements
 	
 	private boolean fflag = false;
 	private boolean showPwdType = false;
+	private boolean showRegType = false;
 	
-	private String str_username,str_phone,str_password;
+	private String str_username,str_phone_email,str_password;
 	
 	private RelativeLayout user_login_layout,user_register_layout;
 	
-	private EditText usernameEt,regTxt_phone,passwordEt,password2Et;
+	private EditText usernameEt,regTxt_phone_email,passwordEt;
 	
 	private Button registBtn;
 	
@@ -125,14 +125,15 @@ public class UserLoginActivity extends BaseActivity implements
 		sinalogin.setOnClickListener(this);
 		
 		usernameEt = findView(R.id.regTxt_username);
-		regTxt_phone = findView(R.id.regTxt_phone);
+		regTxt_phone_email = findView(R.id.regTxt_phone_email);
 		passwordEt = findView(R.id.regTxt_password);
-		password2Et = findView(R.id.regTxt2_password);
+//		password2Et = findView(R.id.regTxt2_password);
 		
 		registBtn = findView(R.id.btn_register);
 		registBtn.setOnClickListener(this);
 		passwordEt.setOnClickListener(this);
-		password2Et.setOnClickListener(this);
+		regTxt_phone_email.setOnClickListener(this);
+//		password2Et.setOnClickListener(this);
 		
 	}
 	
@@ -194,12 +195,29 @@ public class UserLoginActivity extends BaseActivity implements
 			user_login_layout.setVisibility(View.GONE);
 			user_register_layout.setVisibility(View.VISIBLE);
 			break;
+		case R.id.regTxt_phone_email:
+			showRegType = !showRegType;
+			Resources regType = getResources();
+			Drawable img_regtype_left = null;
+			Drawable img_regtype_right = regType.getDrawable(R.drawable.icon_reg_switch);
+			if (showRegType) {
+				regTxt_phone_email.setHint(getStrValue(R.string.register_input3_hint));
+				img_regtype_left = regType.getDrawable(R.drawable.icon_email);
+				regTxt_phone_email.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+			}else{
+				regTxt_phone_email.setHint(getStrValue(R.string.register_input2_hint));
+				img_regtype_left = regType.getDrawable(R.drawable.icon_phone);
+				regTxt_phone_email.setInputType(InputType.TYPE_CLASS_PHONE);
+			}
+			img_regtype_left.setBounds(0, 0, img_regtype_left.getMinimumWidth(), img_regtype_left.getMinimumHeight());
+			img_regtype_right.setBounds(0, 0, img_regtype_left.getMinimumWidth(), img_regtype_left.getMinimumHeight());
+			regTxt_phone_email.setCompoundDrawables(img_regtype_left, null, img_regtype_right, null); //设置左图标
+			break;
 		case R.id.edtTxt_password:
 		case R.id.regTxt_password:
-		case R.id.regTxt2_password:
 			showPwdType = !showPwdType;
 			Resources res = getResources();
-			Drawable img_left = res.getDrawable(R.drawable.icon_pwd);;
+			Drawable img_left = res.getDrawable(R.drawable.icon_pwd);
 			Drawable img_right = null;
 			if (showPwdType) {
 				img_right = res.getDrawable(R.drawable.icon_pwd_show);
@@ -236,7 +254,11 @@ public class UserLoginActivity extends BaseActivity implements
 			break;
 		case R.id.btn_register:
 			if (CommUtil.isNetworkAvailable(self)) {
-				actionRegister();
+				if (showRegType) {
+					actionRegister(2);
+				}else{
+					actionRegister(1);
+				}
 			}else{
 				set3Msg(R.string.check_network);
 			}
@@ -273,6 +295,8 @@ public class UserLoginActivity extends BaseActivity implements
 			public void success(Map<String, List<String>> map) {
 				try {
 					CommUtil.hideKeyboard(self);
+					btnLogin.setText(getStrValue(R.string.action_wait_loginsuccess));
+					btnLogin.setEnabled(false);
 					sendSuccess(map);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -304,7 +328,7 @@ public class UserLoginActivity extends BaseActivity implements
 	private void getFieldValue(){
 		str_username = usernameEt.getText().toString();
 		str_password = passwordEt.getText().toString();
-		str_phone = regTxt_phone.getText().toString();
+		str_phone_email = regTxt_phone_email.getText().toString();
 	}
 	
 	/**
@@ -321,14 +345,21 @@ public class UserLoginActivity extends BaseActivity implements
 			return false;
 		}
 		
-		if (!RegexUtil.checkNotNull(str_phone)) {
+		if (!RegexUtil.checkNotNull(str_phone_email)) {
 			set3Msg(R.string.action_input_up_phone_email);
 			return false;
 		}
 		
-		if(!RegexUtil.isPhone(str_phone)){
-			set3Msg(R.string.reg_info_phone);
-			return false;
+		if (showRegType) {
+			if(!RegexUtil.checkEmail(str_phone_email)){
+				set3Msg(R.string.reg_info_email);
+				return false;
+			}
+		}else{
+			if(!RegexUtil.isPhone(str_phone_email)){
+				set3Msg(R.string.reg_info_phone);
+				return false;
+			}
 		}
 		
 		if(!RegexUtil.checkNotNull(str_password)){
@@ -336,10 +367,10 @@ public class UserLoginActivity extends BaseActivity implements
 			return false;
 		}
 		
-		if(!getEditTextValue(passwordEt).equals(getEditTextValue(password2Et))){
-			set3Msg(R.string.action_input_password_equal);
-			return false;
-		}
+//		if(!getEditTextValue(passwordEt).equals(getEditTextValue(password2Et))){
+//			set3Msg(R.string.action_input_password_equal);
+//			return false;
+//		}
 		
 		if (str_username.length() > 120) {
 			set3Msg(R.string.action_input_username_toolong);
@@ -356,10 +387,10 @@ public class UserLoginActivity extends BaseActivity implements
 	/**
 	 * 提交用户注册信息
 	 */
-	private void actionRegister() {
+	private void actionRegister(int type) {
 		getFieldValue();
-		
 		if(judgeField()){
+			String proc = "";
 			registBtn.setText(getStrValue(R.string.action_wait_reging));
 			registBtn.setEnabled(false);
 			
@@ -368,18 +399,25 @@ public class UserLoginActivity extends BaseActivity implements
 			params.add("p_uid");
 			params.add("p_username");
 			params.add("p_userpwd");
-			params.add("p_phone");
+			if (type == 1) {
+				params.add("p_phone");
+				proc = "pro_user_register_byphone";
+			}else if (type == 2){
+				params.add("p_email");
+				proc = "pro_user_register_byemail";
+			}
+			
 			params.add("p_deviceId");
 			params.add("p_patform");
 			
 			values.add(uTokenId);
 			values.add(str_username);
 			values.add(CommUtil.getMD5(str_password));
-			values.add(str_phone);
+			values.add(str_phone_email);
 			values.add(deviceID);
 			values.add("app");
 		
-			requestData("pro_user_register", 1, params, values, new HandlerData() {
+			requestData(proc, 1, params, values, new HandlerData() {
 				@Override
 				public void error() {
 					set3Msg(R.string.action_regist_fail);
@@ -421,26 +459,23 @@ public class UserLoginActivity extends BaseActivity implements
 		String feildStr5 = map.get("createtime").get(0);
 		String feildStr6 = map.get("lastlogintime").get(0);
 		String feildStr7 = map.get("userstatus").get(0);
-		String feildStr8 = map.get("phone").get(0);
 		
 		preferenceUtil.setPreferenceData(UserInfoCode.USERNAME,feildStr1);
 		preferenceUtil.setPreferenceData(UserInfoCode.PASSWORD,str_password);
-		preferenceUtil.setPreferenceData(UserInfoCode.PHONE,feildStr8);
 		
 		queryWhere = "select * from " + CommonText.USERINFO + " where uid = '" + uTokenId + "'";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("id").length > 0) {
 			updResult = dbUtil.updateData(self, CommonText.USERINFO,
-					new String[]{"uid=?","username","userpassword","phone","patform",
+					new String[]{"uid=?","username","userpassword","deviceId","patform",
 										 "createtime","updatetime","lastlogintime","userstatus"}, 
-					new String[]{uTokenId,feildStr1,feildStr2,feildStr8,feildStr4,
+					new String[]{uTokenId,feildStr1,feildStr2,feildStr3,feildStr4,
 										feildStr5,TimeUtils.getCurrentTimeInString(),feildStr6,feildStr7},1);
 		}else{
 			ContentValues cValues = new ContentValues();
 			cValues.put("uid", uTokenId);
 			cValues.put("username", feildStr1);
 			cValues.put("userpassword", feildStr2);
-			cValues.put("phone", feildStr8);
 			cValues.put("deviceId", feildStr3);
 			cValues.put("patform", feildStr4);
 			cValues.put("createtime", feildStr5);
@@ -493,6 +528,7 @@ public class UserLoginActivity extends BaseActivity implements
 				String feildStr12 = getLocalKeyValue(commMapArray,map,"gender");
 				String feildStr13 = getLocalKeyValue(commMapArray,map,"brithday");
 				String feildStr14 = getLocalKeyValue(commMapArray,map,"joinworktime");
+				String feildStr15 = getLocalKeyValue(commMapArray,map,"phone");
 				String feildStr16 = getLocalKeyValue(commMapArray,map,"hometown");
 				String feildStr17 = getLocalKeyValue(commMapArray,map,"city");
 				String feildStr18 = getLocalKeyValue(commMapArray,map,"email");
@@ -504,15 +540,16 @@ public class UserLoginActivity extends BaseActivity implements
 				String feildStr24 = getLocalKeyValue(commMapArray,map,"bgcolor");
 				String feildStr25 = getLocalKeyValue(commMapArray,map,"avator");
 				String feildStr26 = getLocalKeyValue(commMapArray,map,"updatetime");
-				preferenceUtil.setPreferenceData("avator",feildStr25);
+				preferenceUtil.setPreferenceData(UserInfoCode.REALNAME,feildStr11);
+				preferenceUtil.setPreferenceData(UserInfoCode.AVATOR,feildStr25);
 				
 				String baid = commMapArray.get("id")[0];
 				updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
 						new String[]{baid,"realname","gender","brithday","joinworktime",
-						"hometown","city","email","ismarry",
+						"phone","hometown","city","email","ismarry",
 						"nationality","license","workingabroad","politicalstatus","bgcolor","avator","updatetime"}, 
 						new String[]{uTokenId,feildStr11,feildStr12,feildStr13,feildStr14,
-						feildStr16,feildStr17,feildStr18,feildStr19,
+						feildStr15,feildStr16,feildStr17,feildStr18,feildStr19,
 						feildStr20,feildStr21,feildStr22,feildStr23,feildStr24,feildStr25,feildStr26},2);
 			}else{
 				insertBaseInfo(map);
@@ -537,6 +574,7 @@ public class UserLoginActivity extends BaseActivity implements
 		cValues.put("gender",getServerKeyValue(map,"gender"));
 		cValues.put("brithday",getServerKeyValue(map,"brithday"));
 		cValues.put("joinworktime",getServerKeyValue(map,"joinworktime"));
+		cValues.put("phone",getServerKeyValue(map,"phone"));
 		cValues.put("hometown",getServerKeyValue(map,"hometown"));
 		cValues.put("city",getServerKeyValue(map,"city"));
 		cValues.put("email",getServerKeyValue(map,"email"));

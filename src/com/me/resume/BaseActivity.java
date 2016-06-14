@@ -32,6 +32,7 @@ import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.DownloadTask;
+import com.me.resume.comm.UserInfoCode;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.swipeback.SwipeBackActivity;
@@ -673,6 +674,12 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 			
 			@Override
 			public void convert(final ViewHolder holder, List<String> item, final int position) {
+				String userIsOnline =  map.get("userstatus").get(position);
+				if (userIsOnline.equals("1")) {
+					holder.setImageVisibe(R.id.user_online, View.VISIBLE);
+				}else{
+					holder.setImageVisibe(R.id.user_online, View.GONE);
+				}
 				String avatorStr = map.get("avator").get(position);
 				if (RegexUtil.checkNotNull(avatorStr)) {
 					holder.showImage(R.id.share_usernameavator,
@@ -950,7 +957,11 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 			scrollToFinishActivity();
 			break;
 		case R.id.right_icon:
-			startActivity(Constants.MAINACTIVITY,false);
+			if (RegexUtil.checkNotNull(preferenceUtil.getPreferenceData(UserInfoCode.REALNAME,""))) {
+				startActivity(Constants.MAINACTIVITY,false);
+			}else{
+				set3Msg(R.string.action_baseinfo_null);
+			}
 			break;
 		default:
 			break;

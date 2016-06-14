@@ -17,7 +17,6 @@
          <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/dialog_corner"
          android:layout_marginTop="3dip" >
 
         <TextView
@@ -62,7 +61,6 @@
             android:layout_marginLeft="30dip"
             android:layout_marginRight="30dip"
             android:layout_marginTop="20dip"
-            android:background="@drawable/dialog_corner"
             android:orientation="horizontal"
             android:paddingBottom="5dip" >
 

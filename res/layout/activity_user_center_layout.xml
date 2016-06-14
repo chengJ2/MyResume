@@ -2,103 +2,128 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white" >
+    android:background="@drawable/person_bg"
+    android:id="@+id/userc_layout" >
 
-    <com.me.resume.views.CommScrollView 
-        style="@style/comm_scrollview_style" 
-        android:layout_marginBottom="0dip">
+    <com.me.resume.views.CommScrollView
+        style="@style/comm_scrollview_style"
+        android:layout_marginBottom="0dip"
+        android:background="@android:color/transparent" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
 
-            <LinearLayout
-                android:id="@+id/llout01"
+            <include
+                android:id="@+id/center_topbar"
+                layout="@layout/top_back_layout" />
+
+            <RelativeLayout
+                android:id="@+id/rlout01"
                 android:layout_width="match_parent"
-                android:layout_height="200dip"
+                android:layout_height="150dip"
                 android:layout_gravity="center"
-                android:background="@color/color_green"
+                android:layout_margin="@dimen/margin_10"
                 android:orientation="vertical" >
-                
-                <include
-                    android:id="@+id/center_topbar"
-			        layout="@layout/top_back_layout"/>
-                
+
+                <LinearLayout
+                    android:id="@+id/llout01"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dip"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="40dip"
+                    android:background="@drawable/user_center_corner_bg"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:id="@+id/llout02"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dip"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="50dip"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/center_username"
+                            style="@style/user_center_text"
+                            android:text="程健" />
+
+                        <TextView
+                            android:id="@+id/center_workyear"
+                            style="@style/user_center_text"
+                            android:text="|2年工作经验" />
+
+                        <TextView
+                            android:id="@+id/center_city"
+                            style="@style/user_center_text"
+                            android:text="|武汉" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llout03"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dip"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/resume_complete"
+                            style="@style/user_center_small_text"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="简历完整度:70%" />
+
+                        <TextView
+                            android:id="@+id/resume_updatime"
+                            style="@style/user_center_small_text"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="上次更新：2016-05-22" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="80dip"
+                    android:layout_height="80dip"
+                    android:layout_gravity="center"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/user_default_avatar_bg" />
+
                 <ImageView
                     android:id="@+id/user_info_avatar"
                     android:layout_width="80dip"
                     android:layout_height="80dip"
-                    android:layout_gravity="center"
-                    android:scaleType="fitXY"
+                    android:layout_centerHorizontal="true"
+                    android:padding="3dip"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/user_default_avatar" />
+            </RelativeLayout>
 
-                <LinearLayout
-                    android:id="@+id/llout02"
-                    android:layout_width="match_parent"
-                    android:layout_height="32dip"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:id="@+id/center_username"
-                        style="@style/user_center_text"
-                        android:text="程健"/>
-
-                    <TextView
-                        android:id="@+id/center_workyear"
-                        style="@style/user_center_text"
-                        android:text="|2年工作经验" />
-                    <TextView
-                        android:id="@+id/center_city"
-                        style="@style/user_center_text"
-                        android:text="|武汉"/>
-                </LinearLayout>
-                
-                <LinearLayout
-                    android:id="@+id/llout03"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dip"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:id="@+id/resume_complete"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        style="@style/user_center_small_text"
-                        android:text="简历完整度:70%"/>
-
-                    <TextView
-                        android:id="@+id/resume_updatime"
-                         android:layout_weight="1"
-                         android:gravity="center"
-                        style="@style/user_center_small_text"
-                        android:text="上次更新：2016-05-22"/>
-                </LinearLayout>
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dip"
                 android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_10"
-                android:layout_marginBottom="@dimen/margin_5"
-                android:background="@color/white"
-                android:orientation="horizontal" >
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+                android:background="@drawable/user_center_corner_bg"
+                android:orientation="horizontal"
+                android:padding="3dip" >
 
                 <TextView
                     android:id="@+id/mycollection"
-                     style="@style/user_center_content_func"
+                    style="@style/user_center_content_func"
                     android:drawableTop="@drawable/icon_collection_middle"
-                    android:text="@string/personal_c_item1"/>
-                
-                <View style="@style/line2" 
-                    android:layout_height="40dip" 
-                    android:layout_gravity="center"/>
-                
+                    android:text="@string/personal_c_item1" />
+
+                <View
+                    style="@style/line2"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center" />
+
                 <RelativeLayout
                     android:id="@+id/viewcalendar"
                     android:layout_width="match_parent"
@@ -109,39 +134,39 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:drawableTop="@drawable/icon_calendar"
-                        android:gravity="center"
-                        android:text="@string/personal_c_item2" />
+                        android:text="@string/personal_c_item2"
+                        style="@style/user_center_content_func"/>
 
                     <TextView
                         android:id="@+id/day"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="@dimen/margin_16"
+                        android:layout_marginBottom="@dimen/margin_10"
                         android:gravity="center"
                         android:text="31"
-                        android:textStyle="bold"
                         android:textColor="@color/red"
-                        android:textSize="@dimen/main_time_text" />
+                        android:textSize="@dimen/main_time_text"
+                        android:textStyle="bold" />
                 </RelativeLayout>
-				<View style="@style/line2" 
-                    android:layout_height="40dip" 
-                    android:layout_gravity="center"/>
-                
+
+                <View
+                    style="@style/line2"
+                    android:layout_height="40dip"
+                    android:layout_gravity="center" />
+
                 <TextView
                     android:id="@+id/review_resume"
-                     style="@style/user_center_content_func"
+                    style="@style/user_center_content_func"
                     android:drawableTop="@drawable/icon_review_small"
                     android:text="@string/personal_c_item3" />
             </LinearLayout>
 
-            <View style="@style/line_h15" />
-            
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="@dimen/margin_8"
-                android:orientation="vertical"
-                android:background="@color/white" >
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_10"
+                android:background="@drawable/user_center_corner_bg"
+                android:orientation="vertical" >
 
                 <LinearLayout
                     android:id="@+id/info_layout1"
@@ -149,7 +174,7 @@
 
                     <TextView
                         style="@style/user_center_item_left"
-                        android:text="@string/resume_jobintension"/>
+                        android:text="@string/resume_jobintension" />
 
                     <TextView
                         android:id="@+id/info_item1"
@@ -165,12 +190,12 @@
 
                     <TextView
                         style="@style/user_center_item_left"
-                        android:text="@string/resume_education"/>
+                        android:text="@string/resume_education" />
 
-                   <TextView
-                       android:id="@+id/info_item2"
-                       style="@style/user_center_item_right"
-                       android:text="完整度：70%" />
+                    <TextView
+                        android:id="@+id/info_item2"
+                        style="@style/user_center_item_right"
+                        android:text="完整度：70%" />
                 </LinearLayout>
 
                 <View style="@style/line_padding10" />
@@ -181,14 +206,14 @@
 
                     <TextView
                         style="@style/user_center_item_left"
-                        android:text="@string/resume_workexperience2"/>
+                        android:text="@string/resume_workexperience2" />
 
                     <TextView
                         android:id="@+id/info_item3"
                         style="@style/user_center_item_right"
                         android:text="完整度(90%)" />
                 </LinearLayout>
-                
+
                 <View style="@style/line_padding10" />
 
                 <LinearLayout
@@ -198,13 +223,16 @@
                     <TextView
                         style="@style/user_center_item_left"
                         android:text="@string/resume_project_experience" />
+
                     <TextView
                         android:id="@+id/info_item4"
                         style="@style/user_center_item_right"
-                        android:text="已有1项目经验"/>
+                        android:text="已有1项目经验" />
                 </LinearLayout>
+
                 <View style="@style/line_padding10" />
             </LinearLayout>
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
+
 </RelativeLayout>

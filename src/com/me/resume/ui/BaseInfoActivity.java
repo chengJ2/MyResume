@@ -1,7 +1,6 @@
 package com.me.resume.ui;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -109,7 +108,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				break;
 			case 13:
 				if (msg.obj != null) {
-					info_workyear.setText(((String)msg.obj).substring(0, 7));
+					info_workyear.setText(((String)msg.obj)/*.substring(0, 7)*/);
 				}
 				break;
 			case 100:
@@ -255,7 +254,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	private void initData() {
 		if (localHasData) {
 			info_realname.setText(commMapArray.get("realname")[0]);
-			info_phone.setText(preferenceUtil.getPreferenceData(UserInfoCode.PHONE, ""));
+			info_phone.setText(commMapArray.get("phone")[0]);
 			info_email.setText(commMapArray.get("email")[0]);
 			info_nationality.setText(commMapArray.get("nationality")[0]);
 			info_license.setText(commMapArray.get("license")[0]);
@@ -352,7 +351,11 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			getValues(R.array.ba_politicalstatus_values,info_politicalstatus,R.string.info_politicalstatus,mHandler);
 			break;
 		case R.id.next:
-			goActivity(Constants.WORKEXPERIENCE);
+			if (RegexUtil.checkNotNull(preferenceUtil.getPreferenceData(UserInfoCode.REALNAME,""))) {
+				goActivity(Constants.WORKEXPERIENCE);
+			}else{
+				set3Msg(R.string.action_baseinfo_null);
+			}
 			break;
 		case R.id.right_icon_more:
 			DialogUtils.showTopMenuDialog(self, topLayout,0,mHandler);
@@ -409,6 +412,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				info_nationalityStr,info_licenseStr,rg_workingabroadStr,rg_politicalstatusStr,
 				TimeUtils.getCurrentTimeInString()},1);
 		if (updResult == 1) {
+			preferenceUtil.setPreferenceData(UserInfoCode.REALNAME,info_realnameStr.trim().toString());
 			toastMsg(R.string.action_update_success);
 			actionAync();
 		}else{
@@ -436,10 +440,10 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			return false;
 		}
 		
-		if (!RegexUtil.checkNotNull(info_phoneStr)) {
+		/*if (!RegexUtil.checkNotNull(info_phoneStr)) {
 			setMsg(R.string.info_contack);
 			return false;
-		}
+		}*/
 		
 		if (RegexUtil.checkNotNull(info_phoneStr) && !RegexUtil.isPhone(info_phoneStr)) {
 			set3Msg(R.string.reg_info_phone);
@@ -451,12 +455,12 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			return false;
 		}
 		
-		if (!RegexUtil.checkNotNull(info_emailStr)) {
+		/*if (!RegexUtil.checkNotNull(info_emailStr)) {
 			setMsg(R.string.info_email);
 			return false;
-		}
+		}*/
 		
-		if (!RegexUtil.checkEmail(info_emailStr)) {
+		if (RegexUtil.checkNotNull(info_emailStr) && !RegexUtil.checkEmail(info_emailStr)) {
 			set3Msg(R.string.reg_info_email);
 			return false;
 		}

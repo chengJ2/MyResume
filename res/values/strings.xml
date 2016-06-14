@@ -17,6 +17,7 @@
     <string name="en_nodata">暂无数据</string>
     <string name="timeout_network">网络请求数据超时</string>
     <string name="request_error">请求异常,请检查!</string>
+    <string name="app_server_error">因服务器升级维护,请稍后重试,敬请大家谅解！</string>
     
   	 <!-- Main -->
     <string name="resume_baseinfo">基本资料</string>
@@ -110,7 +111,7 @@
     <string name="action_user_login">用户登录</string>
     <string name="action_user_regist">快速注册</string>
     <string name="action_login">登&#160;&#160;录</string>
-    <string name="action_register">注&#160;&#160;册</string>
+    <string name="action_register">立即加入</string>
     <string name="action_loging">登录中\u2026</string>
     <string name="action_login_savepwd">保存密码</string>
     <string name="action_loginresetpwd">重置密码</string>
@@ -121,7 +122,7 @@
     <string name="action_input_up_isnull">用户名/手机号或密码</string>
     <string name="action_input_usename_cn">用户名不能含中文</string>
     <string name="action_input_up_phone_email">手机号或邮箱用于找回密码,请选填</string>
-    <string name="action_input_username_isnull">用户名/手机号</string>
+    <string name="action_input_username_isnull">手机号/邮箱</string>
     <string name="action_input_username_toolong">用户名太长!</string>
     <string name="action_input_password_isnull">密码</string>
     <string name="action_input_newpassword_isnull">新密码</string>
@@ -131,19 +132,21 @@
     <string name="register_username_noexist">该用户名或手机号未注册,请重试!</string>
     <string name="new_password">请记住您的新密码:</string>
     <string name="action_wait_loging">正在登录,请稍后\u2026</string>
+    <string name="action_wait_loginsuccess">登录成功,正在跳转\u2026</string>
     <string name="action_wait_reging">正在注册,请稍后\u2026</string>
     <string name="action_wait_regsuccess">注册成功,正在跳转\u2026</string>
     <string name="action_login_error"> 用户名或密码不正确,请重试!</string>
-    <string name="login_input_hint">请输入手机号/用户名</string>
-    <string name="login_input1_hint">请输入用户名</string>
-    <string name="login_input2_hint">请输入手机号(用于找回密码)</string>
+    <string name="login_input_hint">请输入用户名/手机号</string>
+    <string name="login_input1_hint">请输入手机号/邮箱</string>
+    <string name="register_input2_hint">请输入手机号(用于找回密码)</string>
+    <string name="register_input3_hint">请输入邮箱(用于找回密码)</string>
     <string name="login_input_pwd_hint">请输入登录密码</string>
     <string name="login_input_old_pwd_hint">请输入原密码</string>
     <string name="login_input_new_pwd_hint">请输入新密码</string>
     <string name="login_input_snew_pwd_hint">请确认新密码</string>
     <string name="login_input_updatepwd_success">密码修改成功,请记住您的新密码~</string>
     <string name="action_regist_fail">注册失败,请重试!</string>
-    <string name="register_protocol">同意《我的简历服务协议》</string>
+    <string name="register_protocol">点击“立即加入”,即表示您同意遵守有云简历的《用户服务协议》及《隐私政策》。</string>
     <string name="register_warn">提示:每个用户只能注册一次,请注意同步资料！ 若想重新注册,请清除App缓存或者到设置界面进行清除本地缓存操作。</string>
     <string name="account_go_login">已有账号,登录>></string>
     <string name="action_logout">退出登录</string>

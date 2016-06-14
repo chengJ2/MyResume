@@ -315,6 +315,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void error() {
 				setMsgVisibility(View.GONE);
+//				set2Msg(getStrValue(R.string.app_server_error));
 			}
 			
 			public void success(Map<String, List<String>> map) {

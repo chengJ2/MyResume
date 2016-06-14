@@ -48,10 +48,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-			case 1:
+			case 11:
 				try {
 					DataCleanManager.cleanDatabases(self);
 					preferenceUtil.clearPreferenceData();
+					preferenceUtil.setPreferenceData(Constants.FIRSTINSTALL,false);
 					cachesize.setText("0KB");
 					toastMsg(R.string.action_clearcache_success);
 				} catch (Exception e) {

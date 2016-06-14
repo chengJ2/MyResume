@@ -31,7 +31,6 @@ import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.UploadPhotoTask;
 import com.me.resume.comm.UserInfoCode;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -52,7 +51,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 
 	protected File pictureFile = null;
 	
-	private RelativeLayout center_topbar;
+	private RelativeLayout userc_layout,center_topbar;
 	private TextView center_top_text;
 	private ImageView left_back;
 	private ImageView right_lable;
@@ -60,6 +59,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	private LinearLayout llout01,llout02,llout03;
 	
 	protected ImageView user_info_avatar;
+	private RelativeLayout rlout01;
 	private TextView center_username,center_workyear,center_city;
 	
 	private RelativeLayout viewcalendar;
@@ -143,11 +143,13 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void findViews() {
+		userc_layout = findView(R.id.userc_layout);
 		center_topbar = findView(R.id.center_topbar);
 		setAnimView(center_topbar,1);
 		center_top_text = findView(R.id.center_top_text);
 		left_back = findView(R.id.left_back);
 		right_lable = findView(R.id.right_lable);
+		rlout01 = findView(R.id.rlout01);
 		center_top_text.setText(getStrValue(R.string.personal_center));
 		
 		mHandler.sendEmptyMessageDelayed(101,Constants.DEFAULTIME);
@@ -169,6 +171,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		review_resume = findView(R.id.review_resume);
 		
 		center_topbar.setOnClickListener(this);
+		rlout01.setOnClickListener(this);
 		left_back.setOnClickListener(this);
 		right_lable.setOnClickListener(this);
 		llout01.setOnClickListener(this);
@@ -437,7 +440,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
  	  
  	    bitmap = ImageUtils.big(bitmap);  
  	    
- 	    llout01.setBackgroundDrawable(new BitmapDrawable(getResources(), bitmap));
+ 	    userc_layout.setBackgroundDrawable(new BitmapDrawable(getResources(), bitmap));
  	    
  	    rs.destroy();   
  	    L.d("blur take away:" + (System.currentTimeMillis() - startMs )+ "ms");   
@@ -475,6 +478,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.llout01:
+		case R.id.rlout01:
 		case R.id.center_topbar:
 			topbarView = !topbarView;
 			if(topbarView){
@@ -543,14 +547,12 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			public void success(Map<String, List<String>> map) {
 				try {
 					if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
+						toastMsg(R.string.action_logout_success);
+						MyApplication.USERID = "0";
 						preferenceUtil.setPreferenceData(UserInfoCode.AVATOR, "");
 						preferenceUtil.setPreferenceData(UserInfoCode.USEID,"0");
+						preferenceUtil.setPreferenceData(UserInfoCode.REALNAME,"");
 						preferenceUtil.setPreferenceData(UserInfoCode.ISREGISTER, false);
-						MyApplication.USERID = "0";
-//						if(FileUtils.existsFile(MyApplication.USERAVATORPATH)){
-//							new File(MyApplication.USERAVATORPATH).delete();
-//			        	}
-						toastMsg(R.string.action_logout_success);
 						scrollToFinishActivity();
 					}
 				} catch (Exception e) {

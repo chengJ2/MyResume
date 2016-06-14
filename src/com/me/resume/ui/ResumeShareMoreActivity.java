@@ -12,16 +12,15 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
 import com.me.resume.comm.ResponseCode;
+import com.me.resume.comm.UserInfoCode;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
-import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.XListView;
 import com.me.resume.views.XListView.IXListViewListener;
 
@@ -213,6 +212,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 					if(map.get("msg").get(0).equals(ResponseCode.RESULT_OK)){
 						toastMsg(R.string.item_text7);
 						input_share.setText("");
+						preferenceUtil.setPreferenceData(UserInfoCode.CHANGEAVATOR, true);// home refresh
 						getShareMoreData(0);
 					}
 				} catch (Exception e) {

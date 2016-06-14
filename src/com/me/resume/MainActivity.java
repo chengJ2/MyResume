@@ -262,7 +262,7 @@ public class MainActivity extends Activity {
 			
 			initBgColor(index1layout,commMapArray.get("bgcolor")[0]);
 			
-			index_1_realname.setText(commMapArray.get("realname")[0]);
+			index_1_realname.setText(preferenceUtil.getPreferenceData(UserInfoCode.REALNAME, ""));
 			
 			StringBuffer sbStr = new StringBuffer();
 			String info = commMapArray.get("gender")[0];
@@ -311,7 +311,7 @@ public class MainActivity extends Activity {
 			}else{
 				index_1_lisence.setVisibility(View.GONE);
 			}
-			index_1_phone.setText("手机号："+preferenceUtil.getPreferenceData(UserInfoCode.PHONE, ""));
+			index_1_phone.setText("手机号："+commMapArray.get("phone")[0]);
 			index_1_email.setText("E-mail："+commMapArray.get("email")[0]);
 		}
 	}

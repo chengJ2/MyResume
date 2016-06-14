@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,17 +36,14 @@ import com.me.resume.utils.RegexUtil;
  */
 public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 
-	private EditText pwdTxt_username,pwdTxt2_username,passwordEt,password2Et;
-	
+	private EditText pwdTxt_phone_email,passwordEt,password2Et;
 	private View line;
-	
 	private LinearLayout userpwdLayout;
-	
-	private Button findPwdBtn;
-	
+	private Button btn_check,btn_newPwd;
 	private String type;
+	private String phoneemailStr,username2Str,passwordStr,password2Str;
 	
-	private String usernameStr,username2Str,passwordStr,password2Str;
+	private boolean showRegType = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +51,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 		boayLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_user_find_upd_pwd_layout, null);
 		boayLayout.addView(v);
+		boayLayout.setBackgroundResource(R.drawable.user_bg_shape);
 		findViews();
 		
 		setMsgHide();
@@ -62,71 +61,34 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 	}
 
 	private void findViews() {
-		pwdTxt_username = findView(R.id.pwdTxt_username);
-		pwdTxt2_username = findView(R.id.pwdTxt2_username);
+		pwdTxt_phone_email = findView(R.id.pwdTxt_phone_email);
 		line = findView(R.id.line);
 		passwordEt = findView(R.id.new_Txt_password);
 		password2Et = findView(R.id.new_Txt2_password);
-		
 		userpwdLayout = findView(R.id.userpwdLayout);
+		btn_check = findView(R.id.btn_check);
+		btn_newPwd = findView(R.id.btn_newPwd);
 		
-		findPwdBtn = findView(R.id.btn_pwd);
+		pwdTxt_phone_email.setOnClickListener(this);
+		btn_check.setOnClickListener(this);
+		btn_newPwd.setOnClickListener(this);
 		
 		type = getIntent().getStringExtra(Constants.TYPE);
-		
 		if (type.equals(UserInfoCode.RESETPWD)) {
-			pwdTxt_username.setVisibility(View.GONE);
-			userpwdLayout.setVisibility(View.VISIBLE);
-			pwdTxt2_username.setVisibility(View.VISIBLE);
 			line.setVisibility(View.VISIBLE);
 			setTopTitle(R.string.action_loginresetpwd);
 			passwordEt.setHint(getStrValue(R.string.login_input_old_pwd_hint));
 		}else if(type.equals(UserInfoCode.FORGOTPWD)){
-			pwdTxt_username.setVisibility(View.VISIBLE);
-			userpwdLayout.setVisibility(View.GONE);
 			setTopTitle(R.string.action_login_findgotpwd);
 			passwordEt.setHint(getStrValue(R.string.login_input_new_pwd_hint));
 		}
 		
-		findPwdBtn.setOnClickListener(this);
-		
-		pwdTxt_username.addTextChangedListener(new TextWatcher() {
-			
-			@Override
-			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-			}
-			
-			@Override
-			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-					int arg3) {
-				
-			}
-			
-			@Override
-			public void afterTextChanged(Editable s) {
-				/*final String uname = s.toString().trim();
-				if (RegexUtil.checkNotNull(uname)) {
-					new Handler().postDelayed(new Runnable() {
-						
-						@Override
-						public void run() {
-							getNewPwd(uname);
-						}
-					}, 1000);
-				}*/
-			}
-		});
-		
-		pwdTxt_username.setOnEditorActionListener(new OnEditorActionListener() {
+		pwdTxt_phone_email.setOnEditorActionListener(new OnEditorActionListener() {
 			
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE) {
-					CommUtil.hideKeyboard(self);
-					final String uname = pwdTxt_username.getText().toString().trim();
-					if (RegexUtil.checkNotNull(uname)) {
-						judgeUserExist(uname);
-					}
+					check();
 					return true;
 				}else{
 					return false;
@@ -135,18 +97,53 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 		});
 	}
 	
+	private void check(){
+		CommUtil.hideKeyboard(self);
+		final String uname = pwdTxt_phone_email.getText().toString().trim();
+		if (RegexUtil.checkNotNull(uname)) {
+			judgeUserExist(uname);
+		}
+	}
+	
 	@Override
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.left_lable:
 			self.scrollToFinishActivity();
 			break;
-		case R.id.btn_pwd:
+		case R.id.btn_check:
+			if (judge()) {
+				if (CommUtil.isNetworkAvailable(self)) {
+					check();
+				}else{
+					set3Msg(R.string.check_network);
+				}
+			}
+			break;
+		case R.id.btn_newPwd:
 			if (CommUtil.isNetworkAvailable(self)) {
 				syncNewPwd();
 			}else{
 				set3Msg(R.string.check_network);
 			}
+			break;
+		case R.id.pwdTxt_phone_email:
+			showRegType = !showRegType;
+			Resources regType = getResources();
+			Drawable img_regtype_left = null;
+			Drawable img_regtype_right = regType.getDrawable(R.drawable.icon_reg_switch);
+			if (showRegType) {
+				pwdTxt_phone_email.setHint(getStrValue(R.string.register_input3_hint));
+				img_regtype_left = regType.getDrawable(R.drawable.icon_email);
+				pwdTxt_phone_email.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+			}else{
+				pwdTxt_phone_email.setHint(getStrValue(R.string.register_input2_hint));
+				img_regtype_left = regType.getDrawable(R.drawable.icon_phone);
+				pwdTxt_phone_email.setInputType(InputType.TYPE_CLASS_PHONE);
+			}
+			img_regtype_left.setBounds(0, 0, img_regtype_left.getMinimumWidth(), img_regtype_left.getMinimumHeight());
+			img_regtype_right.setBounds(0, 0, img_regtype_left.getMinimumWidth(), img_regtype_left.getMinimumHeight());
+			pwdTxt_phone_email.setCompoundDrawables(img_regtype_left, null, img_regtype_right, null); //设置左图标
 			break;
 		default:
 			break;
@@ -167,23 +164,42 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
+	 * 
+	 * 校验 手机号 或 邮箱
+	 * @return
+	 */
+	private boolean judge(){
+		phoneemailStr = pwdTxt_phone_email.getText().toString().trim();
+		if(!RegexUtil.checkNotNull(phoneemailStr)){
+			setMsg(R.string.action_input_username_isnull);
+			return false;
+		}
+		
+		if (showRegType) {
+			if(!RegexUtil.checkEmail(phoneemailStr)){
+				set3Msg(R.string.reg_info_email);
+				return false;
+			}
+		}else{
+			if(!RegexUtil.isPhone(phoneemailStr)){
+				set3Msg(R.string.reg_info_phone);
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
 	 * 校验字段
 	 * @return
 	 */
 	private boolean judgeFeild() {
-		usernameStr = pwdTxt_username.getText().toString().trim();
-		username2Str = pwdTxt2_username.getText().toString().trim();
 		passwordStr = passwordEt.getText().toString().trim(); 
 		password2Str= password2Et.getText().toString().trim(); 
 		
 		if (type.equals(UserInfoCode.RESETPWD)) {
-			if(!RegexUtil.checkNotNull(username2Str)){
-				setMsg(R.string.action_input_username_isnull);
-				return false;
-			}
-			
 			if(!RegexUtil.checkNotNull(passwordStr)){
-				setMsg(R.string.action_input_password_isnull);
+				setMsg(R.string.action_input_newpassword_isnull);
 				return false;
 			}
 			
@@ -197,13 +213,8 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 				return false;
 			}
 		}else if (type.equals(UserInfoCode.FORGOTPWD)){
-			if(!RegexUtil.checkNotNull(usernameStr)){
-				setMsg(R.string.action_input_username_isnull);
-				return false;
-			}
-			
 			if(!RegexUtil.checkNotNull(passwordStr)){
-				setMsg(R.string.action_input_password_isnull);
+				setMsg(R.string.action_input_newpassword_isnull);
 				return false;
 			}
 			
@@ -228,7 +239,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 	private void judgeUserExist(String str){
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
-		params.add("p_username");
+		params.add("p_userinfo");
 		values.add(str);
 	
 		requestData("pro_user_exist", 1, params, values, new HandlerData() {
@@ -241,9 +252,14 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 				try {
 					if(map.get("msg").get(0).equals(ResponseCode.USERNAME_NOEXIST)){
 						set3Msg(R.string.register_username_noexist);
+						userpwdLayout.setVisibility(View.GONE);
+						btn_check.setVisibility(View.VISIBLE);
+						btn_newPwd.setVisibility(View.GONE);
 					}else if(map.get("msg").get(0).equals(ResponseCode.RESULT_OK)){
 						setMsgHide();
-						pwdTxt2_username.setVisibility(View.GONE);
+						userpwdLayout.setVisibility(View.VISIBLE);
+						btn_check.setVisibility(View.GONE);
+						btn_newPwd.setVisibility(View.VISIBLE);
 						line.setVisibility(View.GONE);
 						setAnimView(userpwdLayout);
 					}
@@ -264,7 +280,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 			String procname = "";
 			List<String> params = new ArrayList<String>();
 			List<String> values = new ArrayList<String>();
-			params.add("p_username");
+			params.add("p_userinfo");
 			params.add("p_password");
 			if (type.equals(UserInfoCode.RESETPWD)) {
 				params.add("p_newpassword");
@@ -276,7 +292,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 				procname = "pro_user_resetpwd";
 				
 			}else if (type.equals(UserInfoCode.FORGOTPWD)){
-				values.add(usernameStr);
+				values.add(phoneemailStr);
 				values.add(CommUtil.getMD5(passwordStr)); // 新密码
 				
 				procname = "pro_user_newpwd";
@@ -303,7 +319,6 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 								scrollToFinishActivity();
 							}
 						}
-						
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
