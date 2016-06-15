@@ -11,6 +11,7 @@
     <string name="app_declare2">联系我们</string>
     <string name="app_declare3">本App上的大部分内容来源网络,包括文字,图片等,提供的内容将服务使用者用于个人学习、研究或欣赏,以及其他非商业性或非盈利性用途.</string>
     <string name="app_declare4">若内容侵犯了原作者的权利或原作者不愿意在本App展示内容,请及时通知并联系我们,予以删除。</string>
+    <string name="app_declare5">我们郑重承诺：严格保密用户同步的数据,保证用户数据隐私安全。</string>
     
     <!-- 网络相关 -->
     <string name="check_network">网络异常,请检查!</string>
@@ -33,7 +34,7 @@
     <string name="resume_training">培训经历</string>
     <string name="resume_educationtraining">教育/培训经历</string>
     <string name="resume_otherinfo">附加信息</string>
-    <string name="resume_message">我的留言</string>
+    <string name="resume_message">留言板</string>
     <string name="resume_makemywords">自定义留言信息</string>
     <string name="resume_mywords">&#160;&#160;&#160;&#160;我坚信在贵公司,我将学到更多知识,发挥出个人的最大效益.</string>
     
@@ -69,7 +70,7 @@
     <string name="action_settings">设置</string>
     <string name="settings_item0">简历预览界面</string>
     <string name="settings_item1">每次启动显示预览模式</string>
-    <string name="settings_item11">选择切换效果</string>
+    <string name="settings_item11">简历预览切换效果</string>
     <string name="settings_item2">自动切换简历预览</string>
     <string name="settings_item20">自动切换预览间隔</string>
     <string name="settings_item201">5秒</string>
@@ -116,7 +117,7 @@
     <string name="action_login_savepwd">保存密码</string>
     <string name="action_loginresetpwd">重置密码</string>
     <string name="action_login_findgotpwd">找回密码</string>
-    <string name="action_login_forgotpwd">忘记密码</string>
+    <string name="action_login_forgotpwd">忘记密码?</string>
     <string name="action_login_3pl">其他登录方式</string>
     <string name="action_input_isnull">不能为空</string>
     <string name="action_input_up_isnull">用户名/手机号或密码</string>
@@ -128,7 +129,7 @@
     <string name="action_input_newpassword_isnull">新密码</string>
     <string name="action_input_password_equal">两次密码不一致!</string>
     <string name="action_input_password_toolong">密码不能超过30位</string>
-    <string name="register_repeatedusername">用户名已存在</string>
+    <string name="register_repeatedusername">用户名,手机号或邮箱已存在</string>
     <string name="register_username_noexist">该用户名或手机号未注册,请重试!</string>
     <string name="new_password">请记住您的新密码:</string>
     <string name="action_wait_loging">正在登录,请稍后\u2026</string>
@@ -136,7 +137,8 @@
     <string name="action_wait_reging">正在注册,请稍后\u2026</string>
     <string name="action_wait_regsuccess">注册成功,正在跳转\u2026</string>
     <string name="action_login_error"> 用户名或密码不正确,请重试!</string>
-    <string name="login_input_hint">请输入用户名/手机号</string>
+    <string name="login_input_hint">请输入用户名/手机号/邮箱</string>
+    <string name="register_input_hint">请输入用户名</string>
     <string name="login_input1_hint">请输入手机号/邮箱</string>
     <string name="register_input2_hint">请输入手机号(用于找回密码)</string>
     <string name="register_input3_hint">请输入邮箱(用于找回密码)</string>
@@ -210,7 +212,11 @@
 
     <!-- UI button text -->
     <string name="show_button_cancle">取&#160;&#160;消</string>
-    <string name="show_button_sure">确&#160;&#160;定</string>
+    <string name="show_button_sure">确&#160;&#160;认</string>
+    <string name="show_button_check">正在校验用户,请稍后\u2026</string>
+    <string name="show_button_getpwd">重置密码</string>
+    <string name="show_button_updatepwd">正在更新,请稍后\u2026</string>
+    <string name="show_button_goto">正在跳转\u2026</string>
     <string name="button_use">使&#160;用</string>
     <string name="button_downloading">下载中</string>
     <string name="button_canuse">启&#160;用</string>

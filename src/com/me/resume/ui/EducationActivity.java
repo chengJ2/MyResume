@@ -509,7 +509,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					
 					public void success(Map<String, List<String>> map) {
 						try {
-							if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
+							if (map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)) {
 								set3Msg(R.string.action_sync_success);
 								
 							}
@@ -546,7 +546,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					
 					public void success(Map<String, List<String>> map) {
 						try {
-							if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
+							if (map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)) {
 								set3Msg(R.string.action_sync_success);
 							}
 						} catch (Exception e) {

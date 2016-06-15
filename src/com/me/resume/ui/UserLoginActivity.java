@@ -42,28 +42,24 @@ public class UserLoginActivity extends BaseActivity implements
 	
 	private EditText edtTxt_username;
 	private EditText edtTxt_password;
-	
 	private ImageView save_checkbox;
 	private TextView savePassWord;
 	private TextView resetPassWord,forgotPassWord;
-	
+	private ImageView pwdshow;
 	private TextView acclogin;
 	
 	private Button btnLogin;
 	
-	private boolean fflag = false;
-	private boolean showPwdType = false;
-	private boolean showRegType = false;
+	private ImageView weixinlogin,qqlogin,sinalogin;
 	
 	private String str_username,str_phone_email,str_password;
 	
 	private RelativeLayout user_login_layout,user_register_layout;
-	
 	private EditText usernameEt,regTxt_phone_email,passwordEt;
-	
+	private ImageView regswitch,regpwdshow;
 	private Button registBtn;
 	
-	private ImageView weixinlogin,qqlogin,sinalogin;
+	private boolean fflag = false;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -105,6 +101,7 @@ public class UserLoginActivity extends BaseActivity implements
 		savePassWord = findView(R.id.savePassWord);
 		resetPassWord = findView(R.id.resetPassWord);
 		forgotPassWord = findView(R.id.forgotPassWord);
+		pwdshow = findView(R.id.pwdshow);
 		acclogin = findView(R.id.acclogin);
 		
 		btnLogin = findView(R.id.btn_login);
@@ -113,7 +110,7 @@ public class UserLoginActivity extends BaseActivity implements
 		qqlogin = findView(R.id.qqlogin);
 		sinalogin = findView(R.id.sinalogin);
 		
-		edtTxt_password.setOnClickListener(this);
+		pwdshow.setOnClickListener(this);
 		save_checkbox.setOnClickListener(this);
 		savePassWord.setOnClickListener(this);
 		resetPassWord.setOnClickListener(this);
@@ -127,13 +124,14 @@ public class UserLoginActivity extends BaseActivity implements
 		usernameEt = findView(R.id.regTxt_username);
 		regTxt_phone_email = findView(R.id.regTxt_phone_email);
 		passwordEt = findView(R.id.regTxt_password);
-//		password2Et = findView(R.id.regTxt2_password);
+		regswitch = findView(R.id.regswitch);
+		regpwdshow = findView(R.id.regpwdshow);
 		
 		registBtn = findView(R.id.btn_register);
+		
 		registBtn.setOnClickListener(this);
-		passwordEt.setOnClickListener(this);
-		regTxt_phone_email.setOnClickListener(this);
-//		password2Et.setOnClickListener(this);
+		regswitch.setOnClickListener(this);
+		regpwdshow.setOnClickListener(this);
 		
 	}
 	
@@ -195,40 +193,14 @@ public class UserLoginActivity extends BaseActivity implements
 			user_login_layout.setVisibility(View.GONE);
 			user_register_layout.setVisibility(View.VISIBLE);
 			break;
-		case R.id.regTxt_phone_email:
-			showRegType = !showRegType;
-			Resources regType = getResources();
-			Drawable img_regtype_left = null;
-			Drawable img_regtype_right = regType.getDrawable(R.drawable.icon_reg_switch);
-			if (showRegType) {
-				regTxt_phone_email.setHint(getStrValue(R.string.register_input3_hint));
-				img_regtype_left = regType.getDrawable(R.drawable.icon_email);
-				regTxt_phone_email.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-			}else{
-				regTxt_phone_email.setHint(getStrValue(R.string.register_input2_hint));
-				img_regtype_left = regType.getDrawable(R.drawable.icon_phone);
-				regTxt_phone_email.setInputType(InputType.TYPE_CLASS_PHONE);
-			}
-			img_regtype_left.setBounds(0, 0, img_regtype_left.getMinimumWidth(), img_regtype_left.getMinimumHeight());
-			img_regtype_right.setBounds(0, 0, img_regtype_left.getMinimumWidth(), img_regtype_left.getMinimumHeight());
-			regTxt_phone_email.setCompoundDrawables(img_regtype_left, null, img_regtype_right, null); //设置左图标
+		case R.id.regswitch:
+			userRegisterType(regTxt_phone_email);
 			break;
-		case R.id.edtTxt_password:
-		case R.id.regTxt_password:
-			showPwdType = !showPwdType;
-			Resources res = getResources();
-			Drawable img_left = res.getDrawable(R.drawable.icon_pwd);
-			Drawable img_right = null;
-			if (showPwdType) {
-				img_right = res.getDrawable(R.drawable.icon_pwd_show);
-				edtTxt_password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-			}else{
-				img_right = res.getDrawable(R.drawable.icon_pwd_hide);
-				edtTxt_password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-			}
-			img_left.setBounds(0, 0, img_left.getMinimumWidth(), img_left.getMinimumHeight());
-			img_right.setBounds(0, 0, img_right.getMinimumWidth(), img_right.getMinimumHeight());
-			edtTxt_password.setCompoundDrawables(img_left, null, img_right, null); //设置右图标
+		case R.id.pwdshow:
+			showOrHidePwd(edtTxt_password,pwdshow);
+			break;
+		case R.id.regpwdshow:
+			showOrHidePwd(edtTxt_password,regpwdshow);
 			break;
 		case R.id.save_checkbox:
 		case R.id.savePassWord:
@@ -300,7 +272,7 @@ public class UserLoginActivity extends BaseActivity implements
 					sendSuccess(map);
 				} catch (Exception e) {
 					e.printStackTrace();
-					if(map.get("msg").get(0).equals(ResponseCode.INVALID_INFO)){
+					if(map.get(ResponseCode.MSG).get(0).equals(ResponseCode.INVALID_INFO)){
 						errorLogin();
 						set3Msg(R.string.action_login_error);
 					}
@@ -325,7 +297,7 @@ public class UserLoginActivity extends BaseActivity implements
 	/**
 	 * 获取字段值
 	 */
-	private void getFieldValue(){
+	private void getFeildValue(){
 		str_username = usernameEt.getText().toString();
 		str_password = passwordEt.getText().toString();
 		str_phone_email = regTxt_phone_email.getText().toString();
@@ -367,11 +339,6 @@ public class UserLoginActivity extends BaseActivity implements
 			return false;
 		}
 		
-//		if(!getEditTextValue(passwordEt).equals(getEditTextValue(password2Et))){
-//			set3Msg(R.string.action_input_password_equal);
-//			return false;
-//		}
-		
 		if (str_username.length() > 120) {
 			set3Msg(R.string.action_input_username_toolong);
 			return false;
@@ -388,7 +355,7 @@ public class UserLoginActivity extends BaseActivity implements
 	 * 提交用户注册信息
 	 */
 	private void actionRegister(int type) {
-		getFieldValue();
+		getFeildValue();
 		if(judgeField()){
 			String proc = "";
 			registBtn.setText(getStrValue(R.string.action_wait_reging));
@@ -430,11 +397,13 @@ public class UserLoginActivity extends BaseActivity implements
 						CommUtil.hideKeyboard(self);
 						registBtn.setText(getStrValue(R.string.action_wait_regsuccess));
 						registBtn.setEnabled(false);
-						preferenceUtil.setPreferenceData("isregister", true);
+						preferenceUtil.setPreferenceData(UserInfoCode.ISREGISTER, true);
 						sendSuccess(map);
 					} catch (Exception e) {
 						e.printStackTrace();
-						if(map.get("msg").get(0).equals(ResponseCode.USERNAME_REPEAT)){
+						if(map.get(ResponseCode.MSG).get(0).equals(ResponseCode.USERNAME_REPEAT)){
+							registBtn.setText(getStrValue(R.string.action_register));
+							registBtn.setEnabled(true);
 							set3Msg(R.string.register_repeatedusername);
 						}
 					}
@@ -445,13 +414,14 @@ public class UserLoginActivity extends BaseActivity implements
 	}
 	
 	/**
-	 * 登录成功
+	 * 登录/注册成功
 	 * @param map
 	 */
 	private void sendSuccess(final Map<String, List<String>> map){
 		uTokenId = map.get("uid").get(0);
 		MyApplication.USERID = uTokenId;
 		preferenceUtil.setPreferenceData(UserInfoCode.UTOKENID, uTokenId);
+		preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true); // refresh home data
 		String feildStr1 = map.get("username").get(0);
 		String feildStr2 = map.get("password").get(0);
 		String feildStr3 = map.get("deviceId").get(0);
@@ -523,7 +493,6 @@ public class UserLoginActivity extends BaseActivity implements
 		if (commMapArray != null) {
 			String userId = commMapArray.get("userId")[0];
 			if (RegexUtil.checkNotNull(userId)) {
-//				String feildStr10 = getLocalKeyValue(commMapArray,map,"userId");
 				String feildStr11 = getLocalKeyValue(commMapArray,map,"realname");
 				String feildStr12 = getLocalKeyValue(commMapArray,map,"gender");
 				String feildStr13 = getLocalKeyValue(commMapArray,map,"brithday");
@@ -540,6 +509,7 @@ public class UserLoginActivity extends BaseActivity implements
 				String feildStr24 = getLocalKeyValue(commMapArray,map,"bgcolor");
 				String feildStr25 = getLocalKeyValue(commMapArray,map,"avator");
 				String feildStr26 = getLocalKeyValue(commMapArray,map,"updatetime");
+				
 				preferenceUtil.setPreferenceData(UserInfoCode.REALNAME,feildStr11);
 				preferenceUtil.setPreferenceData(UserInfoCode.AVATOR,feildStr25);
 				
@@ -584,6 +554,7 @@ public class UserLoginActivity extends BaseActivity implements
 		cValues.put("workingabroad",getServerKeyValue(map,"workingabroad"));
 		cValues.put("politicalstatus",getServerKeyValue(map,"politicalstatus"));
 		cValues.put("bgcolor",getServerKeyValue(map,"bgcolor"));
+		
 		String avatorStr = getServerKeyValue(map,"avator");
 		cValues.put("avator",avatorStr);
 		preferenceUtil.setPreferenceData(UserInfoCode.AVATOR,avatorStr);

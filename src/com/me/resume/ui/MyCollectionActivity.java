@@ -199,7 +199,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
+					if (map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)) {
 						
 					}
 				} catch (Exception e) {

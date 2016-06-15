@@ -86,7 +86,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
         				if (bitmap != null) {
         					blur(bitmap);
         					user_info_avatar.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
-        					preferenceUtil.setPreferenceData(UserInfoCode.CHANGEAVATOR, true);
+        					preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true);
         				}
         			} catch (Exception e) {
         				e.printStackTrace();
@@ -546,13 +546,14 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
+					if (map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)) {
 						toastMsg(R.string.action_logout_success);
 						MyApplication.USERID = "0";
 						preferenceUtil.setPreferenceData(UserInfoCode.AVATOR, "");
 						preferenceUtil.setPreferenceData(UserInfoCode.USEID,"0");
 						preferenceUtil.setPreferenceData(UserInfoCode.REALNAME,"");
-						preferenceUtil.setPreferenceData(UserInfoCode.ISREGISTER, false);
+						preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true); // refresh home data
+//						preferenceUtil.setPreferenceData(UserInfoCode.ISREGISTER, false);
 						scrollToFinishActivity();
 					}
 				} catch (Exception e) {

@@ -240,8 +240,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			}
 		}
 		
-		if (preferenceUtil.getPreferenceData(UserInfoCode.CHANGEAVATOR)) {
-			preferenceUtil.setPreferenceData(UserInfoCode.CHANGEAVATOR, false);
+		if (preferenceUtil.getPreferenceData(UserInfoCode.USERSTATUS)) {
+			preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, false);
 			if(CommUtil.isNetworkAvailable(self)){
 				mHandler.sendEmptyMessage(101);
 			}

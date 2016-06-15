@@ -14,12 +14,11 @@
         <item>RotateDown</item>
         <item>Accordion</item>
     </string-array>
-    
-     <string-array name="jazzy_effects_cn">
+    <string-array name="jazzy_effects_cn">
         <item>一般</item>
         <item>Tablet</item>
-        <item>CubeIn</item>
-        <item>CubeOut</item>
+        <item>方盒</item>
+        <item>方盒</item>
         <item>垂直翻转</item>
         <item>水平翻转</item>
         <item>Stack</item>
@@ -27,10 +26,9 @@
         <item>ZoomOut</item>
         <item>RotateUp</item>
         <item>RotateDown</item>
-        <item>Accordion</item>
+        <item>风车</item>
     </string-array>
-    
-      <string-array name="auto_show_effects_duration">
+    <string-array name="auto_show_effects_duration">
         <item>@string/settings_item201</item>
         <item>@string/settings_item202</item>
         <item>@string/settings_item203</item>
@@ -38,7 +36,6 @@
         <item>@string/settings_item205</item>
         <item>@string/settings_item206</item>
     </string-array>
-    
     <string-array name="review_link">
         <item>@string/re_link1</item>
         <item>@string/re_link2</item>
@@ -47,7 +44,6 @@
         <item>@string/re_link7</item>
         <item>@string/re_link8</item>
     </string-array>
-    
     <string-array name="review_bgcolor">
         <item>@color/color_1</item>
         <item>@color/color_2</item>
@@ -60,27 +56,23 @@
         <item>@color/color_9</item>
         <item>@color/color_10</item>
     </string-array>
-    
-     <string-array name="ba_maritalstatus_values">
-       <item>@string/info_maritalstatus_1</item>
-       <item>@string/info_maritalstatus_2</item>
-       <item>@string/info_maritalstatus_3</item>
+    <string-array name="ba_maritalstatus_values">
+        <item>@string/info_maritalstatus_1</item>
+        <item>@string/info_maritalstatus_2</item>
+        <item>@string/info_maritalstatus_3</item>
     </string-array>
-    
-     <string-array name="ba_politicalstatus_values">
-       <item>@string/info_politicalstatus_1</item>
-       <item>@string/info_politicalstatus_2</item>
-       <item>@string/info_politicalstatus_3</item>
-       <item>@string/info_politicalstatus_4</item>
-       <item>@string/info_politicalstatus_5</item>
+    <string-array name="ba_politicalstatus_values">
+        <item>@string/info_politicalstatus_1</item>
+        <item>@string/info_politicalstatus_2</item>
+        <item>@string/info_politicalstatus_3</item>
+        <item>@string/info_politicalstatus_4</item>
+        <item>@string/info_politicalstatus_5</item>
     </string-array>
-    
-     <string-array name="ba_expectedworkingproperty_values">
-       <item>@string/ji_info_expectedworkingproperty_1</item>
-       <item>@string/ji_info_expectedworkingproperty_2</item>
-       <item>@string/ji_info_expectedworkingproperty_2</item>
+    <string-array name="ba_expectedworkingproperty_values">
+        <item>@string/ji_info_expectedworkingproperty_1</item>
+        <item>@string/ji_info_expectedworkingproperty_2</item>
+        <item>@string/ji_info_expectedworkingproperty_2</item>
     </string-array>
-     
     <string-array name="we_qwyx_values">
         <item>1000元/月以下</item>
         <item>1000-2000元/月</item>
@@ -93,7 +85,6 @@
         <item>25000元/月以上</item>
         <item>保密</item>
     </string-array>
-    
     <string-array name="ji_qwyx_values">
         <item>2000元/月</item>
         <item>3000元/月</item>
@@ -106,7 +97,6 @@
         <item>10000元/月</item>
         <item>面议</item>
     </string-array>
-    
     <string-array name="ji_jobstatue_values">
         <item>我目前在职,正考虑换个工作环境</item>
         <item>目前已离职,可立即上岗</item>
@@ -114,13 +104,11 @@
         <item>目前暂无跳槽的打算</item>
         <item>应届毕业生</item>
     </string-array>
-    
     <string-array name="ji_workingproperty_values">
         <item>全职</item>
         <item>兼职</item>
         <item>实习</item>
     </string-array>
-    
     <string-array name="oi_wysp_values">
         <item>无</item>
         <item>英语</item>
@@ -135,7 +123,6 @@
         <item>意大利语</item>
         <item>其他</item>
     </string-array>
-    
     <string-array name="ed_degress_values">
         <item>初中</item>
         <item>中技</item>
@@ -149,24 +136,21 @@
         <item>博士</item>
         <item>其他</item>
     </string-array>
-    
     <string-array name="oi_tsdx_values">
         <item>一般</item>
         <item>良好</item>
         <item>熟练</item>
         <item>精通</item>
     </string-array>
-    
-     <string-array name="we_companyscale_values">
-         <item>20人以下</item>
+    <string-array name="we_companyscale_values">
+        <item>20人以下</item>
         <item>20~99人</item>
         <item>100~499人</item>
         <item>500~999人</item>
         <item>1000~9999人</item>
         <item>10000人以上</item>
-	</string-array>
-    
-      <string-array name="oi_companynature_values">
+    </string-array>
+    <string-array name="oi_companynature_values">
         <item>国家机关</item>
         <item>事业单位</item>
         <item>国企</item>
@@ -178,16 +162,14 @@
         <item>上市公司</item>
         <item>其他</item>
     </string-array>
-    
-      <string-array name="oi_certificatetype_values">
+    <string-array name="oi_certificatetype_values">
         <item>外语证书</item>
         <item>计算机证书</item>
         <item>会计证书</item>
         <item>职称证书</item>
         <item>其他证书</item>
     </string-array>
-    
-      <string-array name="oi_topic_values">
+    <string-array name="oi_topic_values">
         <item>兴趣爱好</item>
         <item>获得荣誉</item>
         <item>特殊技能</item>
@@ -195,5 +177,4 @@
         <item>推荐信</item>
         <item>其他</item>
     </string-array>
-    
 </resources>

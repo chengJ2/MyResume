@@ -139,7 +139,7 @@ public class FeedBackActivity extends BaseActivity {
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
+					if (map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)) {
 						set3Msg(R.string.feedback_info_3,2000);
 					}
 				} catch (Exception e) {

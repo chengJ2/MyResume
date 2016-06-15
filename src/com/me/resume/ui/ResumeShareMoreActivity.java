@@ -212,7 +212,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 					if(map.get("msg").get(0).equals(ResponseCode.RESULT_OK)){
 						toastMsg(R.string.item_text7);
 						input_share.setText("");
-						preferenceUtil.setPreferenceData(UserInfoCode.CHANGEAVATOR, true);// home refresh
+						preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true);// home refresh
 						getShareMoreData(0);
 					}
 				} catch (Exception e) {

@@ -97,6 +97,9 @@ public class Constants {
     // 默认显示时间
     public static final int DEFAULTIME = 5000;
     
+    // 预览默认切换效果
+    public static final String DEFAULEFFECT = "Standard";
+    
     // 微信ID
     public static final String APP_WX_ID = "";
     

@@ -6,12 +6,15 @@ import java.util.Map;
 
 import android.annotation.TargetApi;
 import android.content.ContentValues;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -127,6 +130,16 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * 1：add 2：update 3：delete
 	 */
 	protected int actionFlag = 0; 
+	
+	/**
+	 * 注册类型 （手机号或者游戏）
+	 */
+	protected boolean showRegType = false;
+	
+	/**
+	 * 密码框显示密码或者文本
+	 */
+	private boolean showPwdType = false;
 	
 	private static BaseActivity mInstance;
 	
@@ -562,6 +575,42 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		}
 	}
 
+	/**
+	 * 显示与隐藏密码框
+	 * @param pwdEditText
+	 */
+	protected void showOrHidePwd(EditText editText,ImageView imageView){
+		showPwdType = !showPwdType;
+		if (showPwdType) {
+			imageView.setImageResource(R.drawable.icon_pwd_show);
+			editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+		}else{
+			imageView.setImageResource(R.drawable.icon_pwd_hide);
+			editText.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+		}
+	}
+	
+	/**
+	 * 注册类型 （手机号或者游戏）
+	 * @param editText
+	 */
+	protected void userRegisterType(EditText editText){
+		showRegType = !showRegType;
+		Resources regType = getResources();
+		Drawable img_regtype_left = null;
+		if (showRegType) {
+			editText.setHint(getStrValue(R.string.register_input3_hint));
+			img_regtype_left = regType.getDrawable(R.drawable.icon_email);
+			editText.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+		}else{
+			editText.setHint(getStrValue(R.string.register_input2_hint));
+			img_regtype_left = regType.getDrawable(R.drawable.icon_phone);
+			editText.setInputType(InputType.TYPE_CLASS_PHONE);
+		}
+		img_regtype_left.setBounds(0, 0, img_regtype_left.getMinimumWidth(), img_regtype_left.getMinimumHeight());
+		editText.setCompoundDrawables(img_regtype_left, null, null, null); //设置左图标
+	}
+	
 	/**
 	 * 获取弹出窗数据
 	 * @param array

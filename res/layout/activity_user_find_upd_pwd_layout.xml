@@ -2,42 +2,87 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/user_login_bg_shape"
     android:orientation="vertical"
     android:padding="@dimen/margin_10" >
 
-    <EditText
-        android:id="@+id/pwdTxt_phone_email"
-        style="@style/userinfo_item_style_white"
-        android:drawableLeft="@drawable/icon_phone"
-        android:drawableRight="@drawable/icon_reg_switch"
-        android:hint="@string/login_input1_hint" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal" >
 
-    <View
-        style="@style/line_padding10_white" />
+        <EditText
+            android:id="@+id/pwdTxt_phone_email"
+            style="@style/userinfo_item_style_white"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/icon_phone"
+            android:hint="@string/login_input1_hint" />
+
+        <ImageView
+            android:id="@+id/regswitch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:scaleType="centerInside"
+            android:src="@drawable/icon_reg_switch" />
+    </LinearLayout>
+
+    <View style="@style/line_padding10_white" />
 
     <LinearLayout
         android:id="@+id/userpwdLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" 
+        android:orientation="vertical"
         android:visibility="gone" >
 
-        <EditText
-            android:id="@+id/new_Txt_password"
-            style="@style/userinfo_item_style_white"
-            android:drawableLeft="@drawable/icon_pwd"
-            android:hint="@string/login_input_old_pwd_hint"
-            android:inputType="textPassword" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/new_Txt_password"
+                style="@style/userinfo_item_style_white"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/icon_pwd"
+                android:hint="@string/login_input_old_pwd_hint"
+                android:inputType="textPassword" />
+
+            <ImageView
+                android:id="@+id/regpwdshow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_pwd_show" />
+        </LinearLayout>
 
         <View style="@style/line_padding10_white" />
 
-        <EditText
-            android:id="@+id/new_Txt2_password"
-            style="@style/userinfo_item_style_white"
-            android:drawableLeft="@drawable/icon_pwd"
-            android:hint="@string/login_input_snew_pwd_hint"
-            android:inputType="textPassword" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/new_Txt2_password"
+                style="@style/userinfo_item_style_white"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/icon_pwd"
+                android:hint="@string/login_input_snew_pwd_hint"
+                android:inputType="textPassword" />
+
+            <ImageView
+                android:id="@+id/regpwd2show"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_pwd_show" />
+        </LinearLayout>
 
         <View style="@style/line_padding10_white" />
     </LinearLayout>
@@ -55,7 +100,7 @@
         style="@style/button_menu_white"
         android:layout_marginTop="@dimen/margin_30"
         android:layout_weight="0"
-        android:text="@string/show_button_sure"
+        android:text="@string/show_button_getpwd"
         android:visibility="gone" />
 
 </LinearLayout>

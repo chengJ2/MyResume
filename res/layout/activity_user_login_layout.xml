@@ -16,18 +16,32 @@
             android:id="@+id/edtTxt_username"
             style="@style/userinfo_item_style_white"
             android:drawableLeft="@drawable/icon_username"
-            android:hint="@string/login_input_hint" />
+            android:hint="@string/login_input_hint"/>
 
         <View style="@style/line_padding10_white" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
+        
         <EditText
             android:id="@+id/edtTxt_password"
+            android:layout_weight="1"
             style="@style/userinfo_item_style_white"
             android:drawableLeft="@drawable/icon_pwd"
-            android:drawableRight="@drawable/icon_pwd_show"
             android:hint="@string/login_input_pwd_hint"
             android:inputType="textPassword" />
-
+		<ImageView
+                android:id="@+id/pwdshow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_pwd_show" />
+        </LinearLayout>
+        
         <View style="@style/line_padding10_white" />
     </LinearLayout>
 

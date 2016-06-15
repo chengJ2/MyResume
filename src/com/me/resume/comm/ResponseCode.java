@@ -5,6 +5,8 @@ package com.me.resume.comm;
  */
 public class ResponseCode {
 
+	public static final String MSG = "msg";
+	
 	/**
 	 * 正常返回结果
 	 */

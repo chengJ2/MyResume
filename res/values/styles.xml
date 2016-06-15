@@ -330,6 +330,7 @@
         <item name="android:padding">5dip</item>
         <item name="android:background">@null</item>
         <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">#60FFFFFF</item>
         <item name="android:drawablePadding">@dimen/margin_8</item>
         <item name="android:typeface">serif</item>
     </style>

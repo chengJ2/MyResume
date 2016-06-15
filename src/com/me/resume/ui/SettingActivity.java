@@ -15,11 +15,8 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.me.resume.BaseActivity;
-import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
-import com.me.resume.comm.ResponseCode;
-import com.me.resume.comm.UserInfoCode;
 import com.me.resume.service.DownloadService;
 import com.me.resume.tools.DataCleanManager;
 import com.me.resume.utils.CommUtil;
@@ -133,7 +130,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		version.setText(CommUtil.getVersionName(self));
 		
 		effectsduration.setText(getEffectdDuration(preferenceUtil.getPreferenceData(Constants.SET_SWITCHEFFDURATION,Constants.DEFAULTIME)));
-		animvalue.setText(preferenceUtil.getPreferenceData(Constants.SET_SWITCHANIM, "Standard"));
+		animvalue.setText(preferenceUtil.getPreferenceData(Constants.SET_SWITCHANIM, Constants.DEFAULEFFECT));
 		
 		cacheLayout.setOnClickListener(this);
 		versionLayout.setOnClickListener(this);

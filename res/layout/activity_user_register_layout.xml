@@ -16,37 +16,54 @@
             android:id="@+id/regTxt_username"
             style="@style/userinfo_item_style_white"
             android:drawableLeft="@drawable/icon_username"
-            android:hint="@string/login_input1_hint" />
+            android:hint="@string/register_input_hint" />
+
+        <View style="@style/line_padding10_white" />
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/regTxt_phone_email"
+                style="@style/userinfo_item_style_white"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/icon_phone"
+                android:hint="@string/register_input2_hint" />
+
+            <ImageView
+                android:id="@+id/regswitch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_reg_switch" />
+        </LinearLayout>
 
         <View style="@style/line_padding10_white" />
 
-        <EditText
-            android:id="@+id/regTxt_phone_email"
-            style="@style/userinfo_item_style_white"
-            android:drawableLeft="@drawable/icon_phone"
-            android:drawableRight="@drawable/icon_reg_switch"
-            android:hint="@string/register_input2_hint" />
-
-        <View style="@style/line_padding10_white" />
-
+         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
         <EditText
             android:id="@+id/regTxt_password"
             style="@style/userinfo_item_style_white"
+            android:layout_weight="1"
             android:drawableLeft="@drawable/icon_pwd"
-            android:drawableRight="@drawable/icon_pwd_show"
             android:hint="@string/login_input_pwd_hint"
             android:inputType="textPassword" />
-
-<!--         <View style="@style/line_padding10_white" /> 
-
-        <EditText
-            android:id="@+id/regTxt2_password"
-            style="@style/userinfo_item_style_white"
-            android:drawableLeft="@drawable/icon_pwd"
-            android:drawableRight="@drawable/icon_pwd_show"
-            android:hint="@string/login_input_snew_pwd_hint"
-            android:inputType="textPassword" 
-            android:visibility="gone"/>-->
+        <ImageView
+                android:id="@+id/regpwdshow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_pwd_show" />
+        </LinearLayout>
 
         <View style="@style/line_padding10_white" />
     </LinearLayout>

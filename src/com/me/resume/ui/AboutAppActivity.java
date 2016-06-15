@@ -58,6 +58,11 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 		sbStr.append("<br/>");
 		sbStr.append("<br/>");
 		sbStr.append(getStrValue(R.string.app_declare4));
+		sbStr.append("<br/>");
+		sbStr.append("<br/>");
+		sbStr.append("<font color=\"red\">");
+		sbStr.append(getStrValue(R.string.app_declare5));
+		sbStr.append("</font>");
 		declare.setText(Html.fromHtml(sbStr.toString()));
 	}
 	

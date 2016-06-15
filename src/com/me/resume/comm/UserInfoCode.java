@@ -24,5 +24,5 @@ public class UserInfoCode {
     
     public static final String RESUMEUPDTIME = "resumeupdtime"; // 简历刷新时间
     
-    public static final String CHANGEAVATOR = "changeavator"; // 是否换头像
+    public static final String USERSTATUS = "userstatus"; // 是否换头像
 }
