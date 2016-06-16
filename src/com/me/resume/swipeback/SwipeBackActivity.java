@@ -317,11 +317,10 @@ public class SwipeBackActivity extends FragmentActivity implements
 				dataSetlist = null;
 			}
 			if (result == ResponseCode.LOAD_NO_DATA || result == ResponseCode.LOAD_DATA_ERROR) {
-				handlerData.error();
+				handlerData.nodata();
 			} else if (result == ResponseCode.LOAD_DATA_SUCCESS) {
 				handlerData.success(map);
 			} else if (result == ResponseCode.EXECUTE_TIMEOUT) {
-				toastMsg(R.string.timeout_network);
 				handlerData.error();
 			} else if (result == ResponseCode.EXECUTE_NETERROR) {
 				toastMsg(R.string.check_network);
@@ -352,6 +351,8 @@ public class SwipeBackActivity extends FragmentActivity implements
 	public  abstract interface HandlerData {
 		public abstract void success(Map<String, List<String>> map);
 
+		public abstract void nodata();
+		
 		public abstract void error();
 	}
 	

@@ -269,6 +269,12 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 					e.printStackTrace();
 				}
 			}
+
+			@Override
+			public void nodata() {
+				// TODO Auto-generated method stub
+				
+			}
 		});
 	}
 	
@@ -305,12 +311,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 			requestData(procname, 1, params, values, new HandlerData() {
 				@Override
 				public void error() {
-					if (type.equals(UserInfoCode.RESETPWD)) {
-						
-					}else{
-						btn_check.setText(getStrValue(R.string.show_button_getpwd));
-						btn_check.setEnabled(true);
-					}
+					
 				}
 				
 				public void success(Map<String, List<String>> map) {
@@ -332,6 +333,16 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
+					}
+				}
+
+				@Override
+				public void nodata() {
+					if (type.equals(UserInfoCode.RESETPWD)) {
+						
+					}else{
+						btn_check.setText(getStrValue(R.string.show_button_getpwd));
+						btn_check.setEnabled(true);
 					}
 				}
 			});

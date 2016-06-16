@@ -527,9 +527,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
-	 * 
-	 * @Description: 注销用户
-	 * @author Comsys-WH1510032
+	 * 注销用户
 	 */
 	private void actionLogout(){ 
 		List<String> params = new ArrayList<String>();
@@ -541,7 +539,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		requestData("pro_user_loginout", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				toastMsg(R.string.action_logout_fail);
+				
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -552,13 +550,18 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 						preferenceUtil.setPreferenceData(UserInfoCode.AVATOR, "");
 						preferenceUtil.setPreferenceData(UserInfoCode.USEID,"0");
 						preferenceUtil.setPreferenceData(UserInfoCode.REALNAME,"");
-						preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true); // refresh home data
+//						preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true); // refresh home data
 //						preferenceUtil.setPreferenceData(UserInfoCode.ISREGISTER, false);
 						scrollToFinishActivity();
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+
+			@Override
+			public void nodata() {
+				toastMsg(R.string.action_logout_fail);
 			}
 		});
 	}

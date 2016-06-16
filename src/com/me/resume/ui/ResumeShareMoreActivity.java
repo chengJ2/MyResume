@@ -143,7 +143,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		requestData("pro_getshareinfo_bypage", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				mHandler.sendEmptyMessage(12);
+				
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -157,6 +157,11 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+
+			@Override
+			public void nodata() {
+				mHandler.sendEmptyMessage(12);
 			}
 		});
 	}
@@ -209,15 +214,21 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					if(map.get("msg").get(0).equals(ResponseCode.RESULT_OK)){
+					if(map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)){
 						toastMsg(R.string.item_text7);
 						input_share.setText("");
-						preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true);// home refresh
+						preferenceUtil.setPreferenceData(UserInfoCode.USERSHARE, true);// home data refresh
 						getShareMoreData(0);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+
+			@Override
+			public void nodata() {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 	}

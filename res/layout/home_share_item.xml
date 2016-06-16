@@ -32,7 +32,8 @@
         android:scaleType="centerInside"
         android:src="@drawable/icon_online" 
         android:layout_marginTop="45dip"
-        android:layout_marginLeft="30dip"/>
+        android:layout_marginLeft="30dip"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="match_parent"

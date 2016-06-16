@@ -98,7 +98,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				startChildActivity(Constants.BASEINFO,false);
 				break;
 			case 12:
-				preferenceUtil.setPreferenceData(Constants.NOTICESHOW,true);
+				preferenceUtil.setPreferenceData(Constants.NOTICESHOW,false);
 				break;
 			case 100:
 				if (CommUtil.isNetworkAvailable(self)) {
@@ -216,37 +216,50 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	protected void onResume() {
 		super.onResume();
 		initData();
-		
+		initUserInfo();
+		commscrollview.scrollTo(0, 0);
+	}
+	
+	/**
+	 * 初始化用户信息
+	 */
+	private void initUserInfo(){
 		MyApplication.USERID = preferenceUtil.getPreferenceData(UserInfoCode.USEID, "0");
 		MyApplication.USERNAME = preferenceUtil.getPreferenceData(UserInfoCode.USERNAME,"");
 		L.d("======onResume======userId:" + MyApplication.USERID + "## uuid:"+ uTokenId);
-
-		if (!MyApplication.USERID.equals(0)) { // 登录用户显示头像
-			MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator
-					+ MyApplication.USERNAME + File.separator
-					+ Constants.FILENAME; // 创建用户名文件夹
-			Bitmap bitmap = ImageUtils
-					.getLoacalBitmap(MyApplication.USERAVATORPATH);
-			String avatorStr = preferenceUtil.getPreferenceData(UserInfoCode.AVATOR, "");
-			if (bitmap != null && RegexUtil.checkNotNull(avatorStr)) {
-				setLeftIcon(ImageUtils.toRoundBitmap(bitmap));
-			} else {
-				setLeftIcon(R.drawable.icon_person_avtar);
-				if (CommUtil.isNetworkAvailable(self)) {
-					if (RegexUtil.checkNotNull(avatorStr)) {
-						mHandler.sendMessage(mHandler.obtainMessage(1,avatorStr));
+		
+		if (preferenceUtil.getPreferenceFData(UserInfoCode.USERSTATUS)) {
+			preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, false);
+			
+			if (!MyApplication.USERID.equals(0)) { // 登录用户显示头像
+				MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator
+						+ MyApplication.USERNAME + File.separator
+						+ Constants.FILENAME; // 创建用户名文件夹
+				Bitmap bitmap = ImageUtils.getLoacalBitmap(MyApplication.USERAVATORPATH);
+				String avatorStr = preferenceUtil.getPreferenceData(UserInfoCode.AVATOR, "");
+				if (bitmap != null && RegexUtil.checkNotNull(avatorStr)) {
+					setLeftIcon(ImageUtils.toRoundBitmap(bitmap));
+				} else {
+					setLeftIcon(R.drawable.icon_person_avtar);
+					if (CommUtil.isNetworkAvailable(self)) {
+						if (RegexUtil.checkNotNull(avatorStr)) {
+							mHandler.sendMessage(mHandler.obtainMessage(1,avatorStr));
+						}
 					}
 				}
 			}
-		}
-		
-		if (preferenceUtil.getPreferenceData(UserInfoCode.USERSTATUS)) {
-			preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, false);
+			
 			if(CommUtil.isNetworkAvailable(self)){
 				mHandler.sendEmptyMessage(101);
 			}
 		}
-		commscrollview.scrollTo(0, 0);
+		
+		if (preferenceUtil.getPreferenceData(UserInfoCode.USERSHARE)) {
+			preferenceUtil.setPreferenceData(UserInfoCode.USERSHARE, false);
+			if(CommUtil.isNetworkAvailable(self)){
+				mHandler.sendEmptyMessage(101);
+			}
+		}
 	}
 	
 	/**
@@ -314,8 +327,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		requestData("pro_get_noticeinfo", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				setMsgVisibility(View.GONE);
-//				set2Msg(getStrValue(R.string.app_server_error));
+				set2Msg(getStrValue(R.string.app_server_error));
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -325,6 +337,11 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					setMsgVisibility(View.GONE);
 					L.e(e.getMessage());
 				}
+			}
+
+			@Override
+			public void nodata() {
+				setMsgVisibility(View.GONE);
 			}
 		});
 	}
@@ -404,6 +421,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					L.e(e.getMessage());
 				}
 			}
+
+			@Override
+			public void nodata() {
+				// TODO Auto-generated method stub
+				
+			}
 		});
 	}
 	
@@ -416,8 +439,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		requestData("pro_getshareinfo", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				setShareView(false);
-				msgText.setText(getStrValue(R.string.item_text42));
+				
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -427,6 +449,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				} catch (Exception e) {
 					L.e(e.getMessage());
 				}
+			}
+
+			@Override
+			public void nodata() {
+				setShareView(false);
+				msgText.setText(getStrValue(R.string.item_text42));
 			}
 		});
 	}
@@ -453,7 +481,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.make_btn:
 			if (MyApplication.USERID.equals("0")) {
-				if(!preferenceUtil.getPreferenceData(Constants.NOTICESHOW)){
+				if(preferenceUtil.getPreferenceFData(Constants.NOTICESHOW)){
 					DialogUtils.showAlertDialog(self, getStrValue(
 							R.string.dialog_action_alert),View.VISIBLE, mHandler);
 				}else{
@@ -514,6 +542,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         if (!isExit) {  
             isExit = true;  
             toastMsg(R.string.app_exit);
+            preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true);
             mHandler.sendEmptyMessageDelayed(0, 2000);  
         } else {  
             Intent intent = new Intent(Intent.ACTION_MAIN);  

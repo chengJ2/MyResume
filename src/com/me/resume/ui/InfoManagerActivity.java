@@ -397,6 +397,12 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 					e.printStackTrace();
 				}
 			}
+
+			@Override
+			public void nodata() {
+				// TODO Auto-generated method stub
+				
+			}
 		});
 	}
 	
@@ -433,9 +439,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		requestData(procName, 3, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				setRightIcon(R.drawable.icon_sync);
-				msgText.setText(getStrValue(R.string.en_nodata));
-				msgText.setVisibility(View.VISIBLE);
+				
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -456,6 +460,13 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+
+			@Override
+			public void nodata() {
+				setRightIcon(R.drawable.icon_sync);
+				msgText.setText(getStrValue(R.string.en_nodata));
+				msgText.setVisibility(View.VISIBLE);
 			}
 		});
 		

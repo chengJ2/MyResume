@@ -11,7 +11,7 @@
     <string name="app_declare2">联系我们</string>
     <string name="app_declare3">本App上的大部分内容来源网络,包括文字,图片等,提供的内容将服务使用者用于个人学习、研究或欣赏,以及其他非商业性或非盈利性用途.</string>
     <string name="app_declare4">若内容侵犯了原作者的权利或原作者不愿意在本App展示内容,请及时通知并联系我们,予以删除。</string>
-    <string name="app_declare5">我们郑重承诺：严格保密用户同步的数据,保证用户数据隐私安全。</string>
+    <string name="app_declare5">我们郑重承诺:严格保密用户同步的数据,保证用户数据隐私安全。</string>
     
     <!-- 网络相关 -->
     <string name="check_network">网络异常,请检查!</string>
@@ -89,6 +89,7 @@
     <string name="settings_item6">关于我们</string>
     <string name="settings_item7">向好友分享</string>
     <string name="settings_item71">分享</string>
+    <string name="settings_item72">有云简历已上线App市场,请前往搜索 “有云简历”即可下载安装使用</string>
     <string name="settings_item8">清除本地缓存</string>
     <string name="action_login_head">请先登录</string>
     <string name="action_syncing">正在同步,请稍后\u2026</string>
@@ -155,13 +156,6 @@
     <string name="action_logout_success">注销成功</string>
     <string name="action_logout_fail">注销失败,请重试</string>
     <string name="action_no_login">未登录</string>
-    <string name="personal_center">个人中心</string>
-    <string name="action_upload_file">通过本地图库</string>
-    <string name="action_upload_camera">通过照相机</string>
-    <string name="max_photo_size">抱歉!上传的图片不能超过1M!</string>
-    <string name="m_failLoad">请求失败,请重试</string>
-    <string name="file_failLoad">文件上传失败</string>
-    <string name="file_successLoad">文件上传成功</string>
     
     <!-- 第三方登录 -->
     <string name="errcode_success">发送成功</string>
@@ -177,6 +171,13 @@
     <string name="weibosdk_demo_token_has_existed">Token 仍在有效期内，无需再次登录。</string>
     
      <!-- personal center -->
+    <string name="personal_center">个人中心</string>
+    <string name="action_upload_file">通过本地图库</string>
+    <string name="action_upload_camera">通过照相机</string>
+    <string name="max_photo_size">抱歉!上传的图片不能超过1M!</string>
+    <string name="m_failLoad">请求失败,请重试</string>
+    <string name="file_failLoad">更新失败,请重试</string>
+    <string name="file_successLoad">文件上传成功</string>
     <string name="personal_c_item1">我的收藏</string>
     <string name="personal_c_item2">行事历</string>
     <string name="personal_c_item3">预览简历</string>

@@ -75,6 +75,9 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			case OnTopMenu.MSG_MENU31:
 				toastMsg(R.string.action_login_head);
 				break;
+			case OnTopMenu.MSG_MENU33:
+				set3Msg(R.string.check_network);
+				break;
 			default:
 				break;
 			}
@@ -206,16 +209,8 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	 * @Description: 执行同步操作
 	 */
 	private void actionAync(){
-		if (!MyApplication.USERID.equals("0")) {
-			if (CommUtil.isNetworkAvailable(self)) {
-				set3Msg(R.string.action_syncing,5*1000);
-				syncData(1);
-			} else {
-				set3Msg(R.string.check_network);
-			}
-		} else {
-			set3Msg(R.string.action_login_head);
-		}
+		set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+		syncData(1);
 	}
 	
 	
@@ -273,11 +268,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 		requestData("pro_get_evaluation", style, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				if (style == 1) {
-					syncRun(tokenId,2);
-				}else{
-					set3Msg(R.string.action_sync_success);
-				}
+				
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -295,6 +286,15 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void nodata() {
+				if (style == 1) {
+					syncRun(tokenId,2);
+				}else{
+					set3Msg(R.string.action_sync_success);
 				}
 			}
 		});
@@ -367,7 +367,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			requestData("pro_set_evaluation", style, params, values, new HandlerData() {
 				@Override
 				public void error() {
-					set3Msg(R.string.action_sync_fail);
+					
 				}
 				
 				public void success(Map<String, List<String>> map) {
@@ -379,6 +379,11 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 						set3Msg(R.string.action_sync_fail);
 						e.printStackTrace();
 					}
+				}
+
+				@Override
+				public void nodata() {
+					set3Msg(R.string.action_sync_fail);
 				}
 			});
 		}

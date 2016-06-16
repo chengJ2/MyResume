@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
+import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.Constants;
@@ -192,10 +193,6 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		values.add(uTokenId);
 		
 		requestData("pro_get_collection", 4, params, values, new HandlerData() {
-			@Override
-			public void error() {
-				
-			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
@@ -205,6 +202,17 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+
+			@Override
+			public void nodata() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void error() {
+				
 			}
 		});
 	}
@@ -223,8 +231,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		requestData("pro_get_collection", 2, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				nodata.setText(getStrValue(R.string.en_nodata));
-				nodata.setVisibility(View.VISIBLE);
+				
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -233,6 +240,12 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+
+			@Override
+			public void nodata() {
+				nodata.setText(getStrValue(R.string.en_nodata));
+				nodata.setVisibility(View.VISIBLE);
 			}
 		});
 		
@@ -243,35 +256,29 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 	 * @param map
 	 */
 	private void setDataFromServer(Map<String, List<String>> map){
-/*		queryWhere = "select * from " + CommonText.MYCOLLECTION
-				+ " where userId = '" + uTokenId + "' order by id desc";
-		commMapArray = dbUtil.queryData(self,queryWhere);
-		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			// TODO
-		}else{*/
-			int size = map.get("userId").size();
-			for (int i = 0; i < size; i++) {
-				ContentValues cValues = new ContentValues();
-				cValues.put("cId", map.get("cId").get(i));
-				cValues.put("userId", map.get("userId").get(i));
-				cValues.put("topicId", map.get("topicId").get(i));
-				cValues.put("title", map.get("title").get(i));
-				cValues.put("content", map.get("content").get(i));
-				cValues.put("from_url", map.get("from_url").get(i));
-				cValues.put("topic_from", map.get("topic_from").get(i));
-				cValues.put("shareUserId", map.get("shareUserId").get(i));
-				cValues.put("sharename", map.get("sharename").get(i));
-				cValues.put("sharenamecity", map.get("sharenamecity").get(i));
-				cValues.put("createtime", map.get("createtime").get(i));
-				cValues.put("type", map.get("type").get(i));
-				
-				queryResult = dbUtil.insertData(self, CommonText.MYCOLLECTION, cValues);
-			}
+		int size = map.get("userId").size();
+		for (int i = 0; i < size; i++) {
+			ContentValues cValues = new ContentValues();
+			cValues.put("cId", map.get("cId").get(i));
+			cValues.put("userId", map.get("userId").get(i));
+			cValues.put("topicId", map.get("topicId").get(i));
+			cValues.put("title", map.get("title").get(i));
+			cValues.put("content", map.get("content").get(i));
+			cValues.put("from_url", map.get("from_url").get(i));
+			cValues.put("topic_from", map.get("topic_from").get(i));
+			cValues.put("shareUserId", map.get("shareUserId").get(i));
+			cValues.put("sharename", map.get("sharename").get(i));
+			cValues.put("sharenamecity", map.get("sharenamecity").get(i));
+			cValues.put("createtime", map.get("createtime").get(i));
+			cValues.put("type", map.get("type").get(i));
 			
-			if (queryResult) {
-				set3Msg(R.string.action_sync_success);
-				initData();
-			}
+			queryResult = dbUtil.insertData(self, CommonText.MYCOLLECTION, cValues);
+		}
+		
+		if (queryResult) {
+			set3Msg(R.string.action_sync_success);
+			initData();
+		}
 	}
 	
 	@Override
@@ -281,21 +288,18 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 			scrollToFinishActivity();
 			break;
 		case R.id.right_icon:
-			if (!localHasData) {
-				if (CommUtil.isNetworkAvailable(self)) {
-					set2Msg(R.string.action_syncing);
-					getServerData();
-				}else{
-					set3Msg(R.string.check_network);
+			if (!MyApplication.USERID.equals("0")) {
+				if (!localHasData) {
+					if (CommUtil.isNetworkAvailable(self)) {
+						set2Msg(R.string.action_syncing);
+						getServerData();
+					}else{
+						set3Msg(R.string.check_network);
+					}
 				}
-			}/*else{
-				set2Msg(R.string.action_syncing);
-				int count = commMapArray.get("userId").length;
-				
-				for (int i = 0; i < count; i++) {
-					
-				}
-			}*/
+			}else{
+				set3Msg(R.string.action_login_head);
+			}
 			break;
 		default:
 			break;

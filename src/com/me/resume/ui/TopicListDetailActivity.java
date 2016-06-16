@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -137,7 +139,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		requestData("pro_gettopic_bypage", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				mHandler.sendEmptyMessage(12);
+				
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -148,6 +150,11 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 				}
 				mHandler.sendMessage(mHandler.obtainMessage(11, map));
 				
+			}
+
+			@Override
+			public void nodata() {
+				mHandler.sendEmptyMessage(12);
 			}
 		});
 	}
@@ -170,6 +177,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 				holder.setText(R.id.topic_content, map.get("detail").get(position));
 				holder.setText(R.id.topic_from, map.get("from").get(position));
 				
+				
 				holder.setText(R.id.topic_datime, TimeUtils.showTimeFriendly(map.get("createtime").get(position)));
 				
 				viewHolder = holder;
@@ -183,6 +191,21 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 						ActivityUtils.startActivityPro(self, 
 								Constants.PACKAGENAMECHILD + Constants.TOPICVIEW, "tidtype",
 								topicId + ";" +type);
+					}
+				});
+				
+				holder.setOnClickEvent(R.id.topic_from, new ClickEvent() {
+					
+					@Override
+					public void onClick(View view) {
+						String fromLink = map.get("from_link").get(position);
+						if (RegexUtil.checkNotNull(fromLink)) {
+							Intent intent = new Intent();
+							intent.setAction(Intent.ACTION_VIEW);
+							Uri content_url = Uri.parse(fromLink);
+							intent.setData(content_url);
+							startActivity(intent);
+						}
 					}
 				});
 			}

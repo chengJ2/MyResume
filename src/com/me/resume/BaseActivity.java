@@ -115,8 +115,6 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	
 	protected Boolean localHasData = false;// 本地是否有数据
 	
-//	protected boolean action_add_insert = false;// 是否执行添加或编辑操作
-	
 	private ViewHolder viewHolder;
 	
 	/**
@@ -723,12 +721,12 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 			
 			@Override
 			public void convert(final ViewHolder holder, List<String> item, final int position) {
-				String userIsOnline =  map.get("userstatus").get(position);
+				/*String userIsOnline =  map.get("userstatus").get(position);
 				if (userIsOnline.equals("1")) {
 					holder.setImageVisibe(R.id.user_online, View.VISIBLE);
 				}else{
 					holder.setImageVisibe(R.id.user_online, View.GONE);
-				}
+				}*/
 				String avatorStr = map.get("avator").get(position);
 				if (RegexUtil.checkNotNull(avatorStr)) {
 					holder.showImage(R.id.share_usernameavator,
@@ -738,10 +736,14 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 				}
 				
 				String realname = map.get("realname").get(position);
-				if (!realname.equals("") && realname != null) {
+				if (RegexUtil.checkNotNull(realname)) {
 					holder.setText(R.id.share_username, realname);
 				}else{
-					holder.setText(R.id.share_username, map.get("username").get(position));
+					if (preferenceUtil.getPreferenceData(UserInfoCode.LOGINPATFORM, "app").equals("app")) {
+						holder.setText(R.id.share_username, map.get("username").get(position));
+					}else{
+						holder.setText(R.id.share_username, map.get("nickname").get(position));
+					}
 				}
 				
 				String jobtitleStr = map.get("expworkindustry").get(position);

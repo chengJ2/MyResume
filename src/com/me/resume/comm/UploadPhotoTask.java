@@ -109,8 +109,8 @@ public class UploadPhotoTask extends AsyncTask<String, Integer, Integer>{
 		DialogUtils.dismissDialog();
 		if (result == -1) {// 未联网
 			CommUtil.ToastMsg(context, R.string.check_network);
-		} else if (result == -2) {// 读取服务器失败
-//			CommUtil.ToastMsg(context, R.string.m_failLoad);
+		} else if (result == -2 || result == -3) {// 读取服务器失败
+			CommUtil.ToastMsg(context, R.string.file_failLoad);
 		} else if(result == -3){
 //			CommUtil.ToastMsg(context, R.string.file_failLoad);
 		}else if (result == 1) {

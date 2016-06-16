@@ -24,5 +24,9 @@ public class UserInfoCode {
     
     public static final String RESUMEUPDTIME = "resumeupdtime"; // 简历刷新时间
     
-    public static final String USERSTATUS = "userstatus"; // 是否换头像
+    public static final String USERSTATUS = "userstatus"; // 是否更新用户状态
+    
+    public static final String USERSHARE = "usershare"; // 是否分享心得
+    
+    public static final String LOGINPATFORM = "loginpatform"; // 登录平台
 }

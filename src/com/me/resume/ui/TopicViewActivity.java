@@ -141,7 +141,7 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 		requestData(procName, 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				msgText.setVisibility(View.VISIBLE);
+				
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -190,6 +190,11 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+
+			@Override
+			public void nodata() {
+				msgText.setVisibility(View.VISIBLE);
 			}
 		});
 	}
@@ -255,6 +260,8 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 		if (queryResult) {
 			toastMsg(R.string.item_text9);
 			setRightIcon(R.drawable.icon_collection_small_sel);
+			
+			// TODO 同步到远端
 		}
 	}
 	

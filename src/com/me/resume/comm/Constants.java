@@ -15,7 +15,7 @@ import com.whjz.android.text.CommonText;
 public class Constants {
 
 	/** 保存的总路径 */
-    public static final String DIR_PATH = "YunResume";
+    public static final String DIR_PATH = "IResume";
     
     /**
 	 * app包名

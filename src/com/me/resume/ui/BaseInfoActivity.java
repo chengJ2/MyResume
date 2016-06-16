@@ -142,7 +142,10 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				actionAync();
 				break;
 			case OnTopMenu.MSG_MENU31:
-				toastMsg(R.string.action_baseinfo_null);
+				set3Msg(R.string.action_login_head);
+				break;
+			case OnTopMenu.MSG_MENU33:
+				set3Msg(R.string.check_network);
 				break;
 			default:
 				break;
@@ -378,20 +381,12 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
-	 * @Description: 执行同步操作
+	 * 执行同步操作
 	 */
 	private void actionAync(){
-		if (!MyApplication.USERID.equals("0")) {
-			if (CommUtil.isNetworkAvailable(self)) {
-				if (judgeFeild()) {
-					set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-					syncData();
-				}
-			} else {
-				set3Msg(R.string.check_network);
-			}
-		} else {
-			set3Msg(R.string.action_login_head);
+		if (judgeFeild()) {
+			set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+			syncData();
 		}
 	}
 	
@@ -528,7 +523,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		requestData("pro_get_baseinfo", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				syncRun(2);
+				
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -541,6 +536,11 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+
+			@Override
+			public void nodata() {
+				syncRun(2);
 			}
 		});
 	}
@@ -589,7 +589,6 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			requestData("pro_set_baseinfo", style, params, values, new HandlerData() {
 				@Override
 				public void error() {
-					set3Msg(R.string.action_sync_fail);
 				}
 				
 				public void success(Map<String, List<String>> map) {
@@ -601,6 +600,11 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 						set3Msg(R.string.action_sync_fail);
 						e.printStackTrace();
 					}
+				}
+
+				@Override
+				public void nodata() {
+					set3Msg(R.string.action_sync_fail);
 				}
 			});
 		}

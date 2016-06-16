@@ -281,6 +281,11 @@ public class UserLoginActivity extends BaseActivity implements
 			
 			@Override
 			public void error() {
+				
+			}
+
+			@Override
+			public void nodata() {
 				errorLogin();
 			}
 		});
@@ -387,9 +392,7 @@ public class UserLoginActivity extends BaseActivity implements
 			requestData(proc, 1, params, values, new HandlerData() {
 				@Override
 				public void error() {
-					set3Msg(R.string.action_regist_fail);
-					registBtn.setText(getStrValue(R.string.action_register));
-					registBtn.setEnabled(true);
+					
 				}
 				
 				public void success(Map<String, List<String>> map) {
@@ -407,6 +410,13 @@ public class UserLoginActivity extends BaseActivity implements
 							set3Msg(R.string.register_repeatedusername);
 						}
 					}
+				}
+
+				@Override
+				public void nodata() {
+					set3Msg(R.string.action_regist_fail);
+					registBtn.setText(getStrValue(R.string.action_register));
+					registBtn.setEnabled(true);
 				}
 			});
 		}

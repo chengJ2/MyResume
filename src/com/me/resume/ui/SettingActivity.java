@@ -24,8 +24,7 @@ import com.me.resume.utils.DialogUtils;
 
 /**
  * 
-* @ClassName: SettingActivity 
-* @Description: App设置界面 
+* 设置界面 
 * @date 2016/3/29 下午5:04:43 
 *
  */
@@ -246,8 +245,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.shareLayout:
 			Intent share = new Intent(Intent.ACTION_SEND);
-            share.putExtra(Intent.EXTRA_STREAM,Constants.APKURLPATH);
             share.setType("*/*");
+            share.putExtra(Intent.EXTRA_SUBJECT, getStrValue(R.string.settings_item72));  
+            share.putExtra(Intent.EXTRA_TEXT, getStrValue(R.string.settings_item72));  
+            share.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
             startActivity(Intent.createChooser(share, 
             		getStrValue(R.string.settings_item71)));
 			break;
@@ -296,6 +297,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			}
 			
 			public void error() {
+				
+			}
+
+			@Override
+			public void nodata() {
 				toastMsg(R.string.settings_item31);
 			}
 		});

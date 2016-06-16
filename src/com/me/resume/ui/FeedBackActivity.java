@@ -146,6 +146,11 @@ public class FeedBackActivity extends BaseActivity {
 					e.printStackTrace();
 				}
 			}
+
+			@Override
+			public void nodata() {
+				
+			}
 		});
 		
 	}

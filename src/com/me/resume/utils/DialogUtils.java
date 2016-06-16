@@ -38,6 +38,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
@@ -374,7 +375,7 @@ public class DialogUtils {
 	 * @param more 是否显示管理栏目
 	 * @param handler
 	 */
-	public static void showTopMenuDialog(Activity context,View parent,int more,Handler handler){
+	public static void showTopMenuDialog(final Activity context,View parent,int more,Handler handler){
 		mHandler = handler;
 		View layout = View.inflate(context,R.layout.topbar_menu_layout, null);
 		showPopupView(layout,parent);
@@ -462,7 +463,16 @@ public class DialogUtils {
 			
 			@Override
 			public void onClick(View v) {
-				sendMsg(OnTopMenu.MSG_MENU3);
+				if (!MyApplication.USERID.equals("0")) {
+					if (CommUtil.isNetworkAvailable(context)) {
+						sendMsg(OnTopMenu.MSG_MENU3);
+					}else{
+						sendMsg(OnTopMenu.MSG_MENU33);
+					}
+				}else{
+					sendMsg(OnTopMenu.MSG_MENU31);
+				}
+				
 				dismissPopwindow();
 			}
 		});

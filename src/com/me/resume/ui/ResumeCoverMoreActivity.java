@@ -54,8 +54,7 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 		requestData("pro_getcover_info", 2, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				msgText.setVisibility(View.VISIBLE);
-				msgText.setText(getStrValue(R.string.en_nodata));	
+				
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -65,6 +64,12 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+
+			@Override
+			public void nodata() {
+				msgText.setVisibility(View.VISIBLE);
+				msgText.setText(getStrValue(R.string.en_nodata));	
 			}
 		});
 	}

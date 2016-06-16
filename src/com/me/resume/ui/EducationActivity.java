@@ -80,7 +80,10 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				}
 				break;
 			case OnTopMenu.MSG_MENU31:
-				toastMsg(R.string.action_login_head);
+				set3Msg(R.string.action_login_head);
+				break;
+			case OnTopMenu.MSG_MENU33:
+				set3Msg(R.string.check_network);
 				break;
 			case OnTopMenu.MSG_MENU32:
 				Bundle b = new Bundle();
@@ -101,16 +104,8 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	 * position 0 教育 1 培训
 	 */
 	private void actionAync(int position){
-		if (!MyApplication.USERID.equals("0")) {
-			if (CommUtil.isNetworkAvailable(self)) {
-				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-				syncData(position,1);
-			} else {
-				set3Msg(R.string.check_network);
-			}
-		} else {
-			set3Msg(R.string.action_login_head);
-		}
+		set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+		syncData(position,1);
 	}
 	
 	@Override
@@ -337,11 +332,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		requestData(procname, style, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				if (style == 1) {
-					syncRun(cposition,tokenId,2);
-				}else{
-					set3Msg(R.string.action_sync_success);
-				}
+				
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -364,6 +355,15 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					
 				} catch (Exception e) {
 					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void nodata() {
+				if (style == 1) {
+					syncRun(cposition,tokenId,2);
+				}else{
+					set3Msg(R.string.action_sync_success);
 				}
 			}
 		});
@@ -504,19 +504,23 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				requestData("pro_set_education", style, params, values, new HandlerData() {
 					@Override
 					public void error() {
-						set3Msg(R.string.action_sync_fail);
+						
 					}
 					
 					public void success(Map<String, List<String>> map) {
 						try {
 							if (map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)) {
 								set3Msg(R.string.action_sync_success);
-								
 							}
 						} catch (Exception e) {
 							set3Msg(R.string.action_sync_fail);
 							e.printStackTrace();
 						}
+					}
+
+					@Override
+					public void nodata() {
+						set3Msg(R.string.action_sync_fail);
 					}
 				});
 			}
@@ -541,7 +545,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				requestData("pro_set_training", style, params, values, new HandlerData() {
 					@Override
 					public void error() {
-						set3Msg(R.string.action_sync_fail);
+						
 					}
 					
 					public void success(Map<String, List<String>> map) {
@@ -553,6 +557,11 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 							set3Msg(R.string.action_sync_fail);
 							e.printStackTrace();
 						}
+					}
+
+					@Override
+					public void nodata() {
+						set3Msg(R.string.action_sync_fail);
 					}
 				});
 			}
