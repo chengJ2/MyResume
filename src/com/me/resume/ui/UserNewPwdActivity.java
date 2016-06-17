@@ -244,7 +244,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 		requestData("pro_user_exist", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				
+				set3Msg(R.string.timeout_network);
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -271,7 +271,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				// TODO Auto-generated method stub
 				
 			}
@@ -311,7 +311,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 			requestData(procname, 1, params, values, new HandlerData() {
 				@Override
 				public void error() {
-					
+					set3Msg(R.string.timeout_network);
 				}
 				
 				public void success(Map<String, List<String>> map) {
@@ -337,7 +337,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 				}
 
 				@Override
-				public void nodata() {
+				public void noData() {
 					if (type.equals(UserInfoCode.RESETPWD)) {
 						
 					}else{

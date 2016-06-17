@@ -297,11 +297,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			}
 			
 			public void error() {
-				
+				set3Msg(R.string.timeout_network);
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				toastMsg(R.string.settings_item31);
 			}
 		});

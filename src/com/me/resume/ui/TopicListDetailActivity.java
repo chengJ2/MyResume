@@ -139,7 +139,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		requestData("pro_gettopic_bypage", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				
+				set3Msg(R.string.timeout_network);
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -153,7 +153,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				mHandler.sendEmptyMessage(12);
 			}
 		});

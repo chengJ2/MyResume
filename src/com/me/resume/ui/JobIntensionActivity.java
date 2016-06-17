@@ -326,7 +326,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		requestData("pro_get_jobintension", style, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				
+				set3Msg(R.string.timeout_network);
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -348,7 +348,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				if (style == 1) {
 					syncRun(tokenId,2);
 				}else{
@@ -466,7 +466,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 				}
 
 				@Override
-				public void nodata() {
+				public void noData() {
 					set3Msg(R.string.action_sync_fail);
 				}
 			});

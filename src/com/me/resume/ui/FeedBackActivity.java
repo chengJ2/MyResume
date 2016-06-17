@@ -134,13 +134,13 @@ public class FeedBackActivity extends BaseActivity {
 		requestData("pro_set_feedback", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				
+				set3Msg(R.string.timeout_network);
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
 					if (map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)) {
-						set3Msg(R.string.feedback_info_3,2000);
+						set3Msg(R.string.feedback_info_3);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -148,7 +148,7 @@ public class FeedBackActivity extends BaseActivity {
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				
 			}
 		});

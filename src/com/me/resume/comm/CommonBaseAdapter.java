@@ -3,6 +3,7 @@ package com.me.resume.comm;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -45,6 +46,10 @@ public  abstract class CommonBaseAdapter<T> extends BaseAdapter implements Filte
 	@Override
 	public long getItemId(int position) {
 		return position;
+	}
+	
+	public void setItemList(List<T> list) {
+		mList = list;
 	}
 	
 	@Override

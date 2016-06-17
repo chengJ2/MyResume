@@ -12,8 +12,10 @@ import android.widget.TextView;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.UserInfoCode;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.PreferenceUtil;
 
 /**
  * 启动界面
@@ -25,10 +27,15 @@ public class StartupActivity extends Activity {
 	private LinearLayout startup;
 	private TextView version;
 	
+	protected PreferenceUtil preferenceUtil;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.startup_layout);
 		MyApplication.getApplication().addActivity(this);
+		if(preferenceUtil == null)
+			preferenceUtil = new PreferenceUtil(this);
+		preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true);
 		startup = (LinearLayout)findViewById(R.id.startup);
 		version = (TextView)findViewById(R.id.version);
 		version.setText(CommUtil.getVersionName(this));

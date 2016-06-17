@@ -205,14 +205,14 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
 			public void error() {
-				
+				set3Msg(R.string.timeout_network);
 			}
 		});
 	}
@@ -243,7 +243,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				nodata.setText(getStrValue(R.string.en_nodata));
 				nodata.setVisibility(View.VISIBLE);
 			}

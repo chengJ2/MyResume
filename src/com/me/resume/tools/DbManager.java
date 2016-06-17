@@ -39,7 +39,7 @@ public class DbManager {
             return SQLiteDatabase.openOrCreateDatabase(databaseFilename, null);  
         } catch (Exception e) {  
             e.printStackTrace();  
-        }  
+        } 
         return null;  
     }  
 }

@@ -223,8 +223,6 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * 
 	 * @Title:BaseActivity
 	 * @Description: 设置顶部标题 及 图标
-	 * @author Comsys-WH1510032
-	 * @return 返回类型
 	 * @param id
 	 */
 	protected void setTopBarVisibility(int visibility) {
@@ -235,8 +233,6 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * 
 	 * @Title:BaseActivity
 	 * @Description: 设置顶部标题 及 图标
-	 * @author Comsys-WH1510032
-	 * @return 返回类型
 	 * @param id
 	 */
 	protected void setTopTitle(int id) {
@@ -247,8 +243,6 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * 
 	 * @Title:BaseActivity
 	 * @Description: 设置顶部标题 及 图标
-	 * @author Comsys-WH1510032
-	 * @return 返回类型
 	 * @param id
 	 */
 	protected void setTopTitle(String str) {

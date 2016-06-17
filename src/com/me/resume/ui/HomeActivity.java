@@ -103,18 +103,21 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			case 100:
 				if (CommUtil.isNetworkAvailable(self)) {
 					getNoticeInfo();
-					getReCoverData();
-					mHandler.sendEmptyMessage(101); // 请求 分享心得数据
+				}else{
+					set2Msg(getStrValue(R.string.check_network));
+				}
+				break;
+			case 101:
+				if (CommUtil.isNetworkAvailable(self)) {
+					getShareData();
 				}else{
 					setShareView(false);
 					msgText.setText(getStrValue(R.string.item_text5));
 				}
 				break;
-			case 101:
-				getShareData();
-				break;
 			case -1:
-				refreshview.finishRefresh();
+				if (refreshview != null)
+					refreshview.finishRefresh();
 				break;
 			case 0:
 				isExit = false;
@@ -152,7 +155,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			
 			@Override
 			public void run() {
-				// 请求网络数据
 				mHandler.sendEmptyMessage(100);
 			}
 		},100);
@@ -201,10 +203,15 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				if(CommUtil.isNetworkAvailable(self)){
 					if (!view.isRefreshing()) {
 //						view.setRefreshText("刷新时间: " + TimeUtils.getCurrentTimeInString());
-						mHandler.sendEmptyMessage(101);
-					} else {
-						L.d("刷新中。。。");
-					}
+						mHandler.sendEmptyMessage(100);
+						mHandler.postDelayed(new Runnable() {
+							
+							@Override
+							public void run() {
+								mHandler.sendEmptyMessage(101);
+							}
+						},100);
+					} 
 				} else {
 					mHandler.sendEmptyMessageDelayed(-1, 1000);
 				}
@@ -249,16 +256,18 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				}
 			}
 			
-			if(CommUtil.isNetworkAvailable(self)){
-				mHandler.sendEmptyMessage(101);
-			}
+			mHandler.postDelayed(new Runnable() {
+				
+				@Override
+				public void run() {
+					mHandler.sendEmptyMessage(101);
+				}
+			},200);
 		}
 		
 		if (preferenceUtil.getPreferenceData(UserInfoCode.USERSHARE)) {
 			preferenceUtil.setPreferenceData(UserInfoCode.USERSHARE, false);
-			if(CommUtil.isNetworkAvailable(self)){
-				mHandler.sendEmptyMessage(101);
-			}
+			mHandler.sendEmptyMessage(101);
 		}
 	}
 	
@@ -333,6 +342,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			public void success(Map<String, List<String>> map) {
 				try {
 					set2Msg(map.get("notice").get(0));
+					
+					getReCoverData();  // 请求 简历封面
+					
 				} catch (Exception e) {
 					setMsgVisibility(View.GONE);
 					L.e(e.getMessage());
@@ -340,8 +352,10 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				setMsgVisibility(View.GONE);
+				
+				getReCoverData();  // 请求 简历封面
 			}
 		});
 	}
@@ -423,7 +437,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				// TODO Auto-generated method stub
 				
 			}
@@ -439,7 +453,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		requestData("pro_getshareinfo", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				
+				setShareView(false);
+				msgText.setText(getStrValue(R.string.item_text42));
+				mHandler.sendEmptyMessageDelayed(-1, Constants.DEFAULTIME);
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -452,7 +468,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				setShareView(false);
 				msgText.setText(getStrValue(R.string.item_text42));
 			}
@@ -542,7 +558,6 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
         if (!isExit) {  
             isExit = true;  
             toastMsg(R.string.app_exit);
-            preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true);
             mHandler.sendEmptyMessageDelayed(0, 2000);  
         } else {  
             Intent intent = new Intent(Intent.ACTION_MAIN);  

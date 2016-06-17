@@ -147,12 +147,10 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 			
 			@Override
 			public void afterTextChanged(Editable s) {
-				if (s.toString() != null && !"".equals(s.toString())) {
+				if (RegexUtil.checkNotNull(s.toString())) {
 					whichTab = 1;
 					clearView.setVisibility(View.VISIBLE);
-					
 					search_cancle.setVisibility(View.VISIBLE);
-					
 					getAllCity(s.toString());
 				}else{
 					whichTab = 0;
@@ -166,7 +164,7 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 			
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				if (actionId ==EditorInfo.IME_ACTION_SEARCH) {
+				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 					CommUtil.hideKeyboard(self);
 					searchCity();
 					return true;
@@ -178,9 +176,7 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
-	 * 
-	 * @Title:AddressActivity
-	 * @Description: 显示热门城市
+	 * 显示热门城市
 	 */
 	private void initHotCity(final List<String> list){
 		CommonBaseAdapter<String> commAdapter = new CommonBaseAdapter<String>(self, list,
@@ -212,37 +208,39 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
-	 * 
-	 * @Title:AddressActivity
-	 * @Description: 显示全国城市
+	 * 显示全国城市
 	 * @param mList
 	 */
 	private void fillAllCity(List<String> mList){
 		msgText.setVisibility(View.GONE);
-		CommonBaseAdapter<String> commAdapter = new CommonBaseAdapter<String>(self, mList,
-				R.layout.home_xgln_listview) {
-
-			@Override
-			public void convert(ViewHolder holder, String item,
-					final int position) {
-				holder.setText(R.id.itemName, mList.get(position));
-				holder.setOnClickEvent(R.id.itemName, new ClickEvent() {
-
-					@Override
-					public void onClick(View view) {
-						setKeyResult(mList.get(position));
-					}
-				});
-			}
-		};
 		
-		alladdrListview.setAdapter(commAdapter);
+		if (commStrAdapter == null) {
+			commStrAdapter = new CommonBaseAdapter<String>(self, mList,
+					R.layout.home_xgln_listview) {
+
+				@Override
+				public void convert(ViewHolder holder, String item,
+						final int position) {
+					holder.setText(R.id.itemName, mList.get(position));
+					holder.setOnClickEvent(R.id.itemName, new ClickEvent() {
+
+						@Override
+						public void onClick(View view) {
+							setKeyResult(mList.get(position));
+						}
+					});
+				}
+			};
+			alladdrListview.setAdapter(commStrAdapter);
+		}else{
+			commStrAdapter.setItemList(mList);
+			commStrAdapter.notifyDataSetChanged();
+			alladdrListview.invalidate();
+		}
 	}
 	
 	/**
-	 * 
-	 * @Title:AddressActivity
-	 * @Description: 获取全国城市
+	 * 获取全国城市
 	 * @param keyword
 	 */
 	private void getAllCity(final String keyword) {
@@ -253,13 +251,19 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 				mList = new ArrayList<String>();
 				Cursor cursor = null;
 				try {
-					String sql = "select * from (select c.code as code ,c.[cname] as cname from city c " + 
-								" union  select p.code,p.name from province p where p.type = 1 and p.code!=110000)"
-								+ " where cname like '%"+ keyword +"%'";
+					String sql = "";
+					if (RegexUtil.checkNotNull(keyword)) {
+						sql = "select * from (select c.[code] as code ,c.[cnname] as cnname,c.[egname] as egname,c.[pyname] as pyname from city c " + 
+								" union  select p.code,p.cnname,p.[egname],p.[pyname] from province p where p.type = 1 and p.code!=110000)"
+								+ " where cnname = '"+ keyword +"' or pyname = '"+ keyword +"' or egname = '"+ keyword +"'";
+					}else{
+						sql = "select * from (select c.[code] as code ,c.[cnname] as cnname,c.[egname] as egname,c.[pyname] as pyname from city c " + 
+								" union  select p.code,p.cnname,p.[egname],p.[pyname] from province p where p.type = 1 and p.code!=110000)";
+					}
 					cursor = MyApplication.database.rawQuery(sql, null);
 					if (cursor.getCount() > 0) {
 						while (cursor.moveToNext()) {
-							mList.add(cursor.getString(cursor.getColumnIndex("cname")));
+							mList.add(cursor.getString(cursor.getColumnIndex("cnname")));
 						}
 						mHandler.sendMessage(mHandler.obtainMessage(11, mList));
 					}
@@ -276,9 +280,7 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
-	 * 
-	 * @Title:AddressActivity
-	 * @Description: 获取热门城市
+	 * 获取热门城市
 	 * @return List<String> 
 	 */
 	private void getHotCity(){
@@ -289,12 +291,12 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 				mList = new ArrayList<String>();
 				Cursor cursor = null;
 				try {
-					String sql = "select c.code as code ,c.[cname] as cname from city c where c.type = 1"
-								+ " union  select p.code,p.name from province p where p.type = 1";
+					String sql = "select c.code as code ,c.[cnname] as cnname from city c where c.type = 1"
+								+ " union  select p.code,p.cnname from province p where p.type = 1";
 					cursor = MyApplication.database.rawQuery(sql, null);
 					if (cursor.getCount() > 0) {
 						while (cursor.moveToNext()) {
-							mList.add(cursor.getString(cursor.getColumnIndex("cname")));
+							mList.add(cursor.getString(cursor.getColumnIndex("cnname")));
 						}
 					}
 					mHandler.sendMessage(mHandler.obtainMessage(9, mList));
@@ -320,6 +322,7 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 			index_search_edit.setText("");
 			getAllCity("");
 			clearView.setVisibility(View.GONE);
+			search_cancle.setVisibility(View.GONE);
 		case R.id.clear:
 			whichTab = 0;
 			index_search_edit.setText("");

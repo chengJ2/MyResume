@@ -539,7 +539,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		requestData("pro_user_loginout", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				
+				set3Msg(R.string.timeout_network);
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -550,7 +550,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 						preferenceUtil.setPreferenceData(UserInfoCode.AVATOR, "");
 						preferenceUtil.setPreferenceData(UserInfoCode.USEID,"0");
 						preferenceUtil.setPreferenceData(UserInfoCode.REALNAME,"");
-//						preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true); // refresh home data
+						preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true); // refresh home data
 //						preferenceUtil.setPreferenceData(UserInfoCode.ISREGISTER, false);
 						scrollToFinishActivity();
 					}
@@ -560,7 +560,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				toastMsg(R.string.action_logout_fail);
 			}
 		});

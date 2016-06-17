@@ -9,7 +9,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
@@ -120,20 +119,6 @@ public class SwipeBackActivity extends FragmentActivity implements
 		return false;
 	}
 
-	private HandlerData handlerData;
-	
-	private Handler handler = new Handler() {
-		public void handleMessage(android.os.Message msg) {
-
-			Map<String, List<String>> map = (Map<String, List<String>>) msg.obj;
-			if (map == null || map.size() == 0) {
-				handlerData.error();
-			} else {
-				handlerData.success(map);
-			}
-		};
-	};
-
 	/**
 	 * 请求数据
 	 * 
@@ -183,8 +168,10 @@ public class SwipeBackActivity extends FragmentActivity implements
 		task = (MyAsyncTask) new MyAsyncTask(str, style, params, values,true,tablename,where,handlerData).execute();
 	}
 	
-
-	class MyAsyncTask extends AsyncTask<String, Integer, Integer> {
+	/**
+	 * 异步请求数据 
+	 */
+	private class MyAsyncTask extends AsyncTask<String, Integer, Integer> {
 
 		String procname;// 接口名
 		int style;
@@ -317,7 +304,7 @@ public class SwipeBackActivity extends FragmentActivity implements
 				dataSetlist = null;
 			}
 			if (result == ResponseCode.LOAD_NO_DATA || result == ResponseCode.LOAD_DATA_ERROR) {
-				handlerData.nodata();
+				handlerData.noData();
 			} else if (result == ResponseCode.LOAD_DATA_SUCCESS) {
 				handlerData.success(map);
 			} else if (result == ResponseCode.EXECUTE_TIMEOUT) {
@@ -351,7 +338,7 @@ public class SwipeBackActivity extends FragmentActivity implements
 	public  abstract interface HandlerData {
 		public abstract void success(Map<String, List<String>> map);
 
-		public abstract void nodata();
+		public abstract void noData();
 		
 		public abstract void error();
 	}

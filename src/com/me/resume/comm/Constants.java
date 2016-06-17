@@ -66,7 +66,7 @@ public class Constants {
 	public static final String MANAGER_EDUCATION_RECEIVE_TR = "com.me.resume.training.manager";
 	
 	// 本地db文件  
-	public static final String DATABASE_FILENAME = "resume.db"; // DB文件 
+	public static final String DATABASE_FILENAME = "JResume.db"; // DB文件 
 	
 	// 下载总路径
 	public static final String DOWNLOAD =  "files";
@@ -82,7 +82,8 @@ public class Constants {
 	
 	// 获取存储位置地址
     public static final String DATABASE_PATH = File.separator + "data"  
-            + Environment.getDataDirectory().getAbsolutePath() + File.separator  + PACKAGENAME;   
+            + Environment.getDataDirectory().getAbsolutePath() 
+            + File.separator  + PACKAGENAME + File.separator + "databases";   
     
     // 用户头像名 apk下载地址
     public static String FILENAME="avatar.jpg";

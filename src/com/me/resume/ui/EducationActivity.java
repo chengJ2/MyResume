@@ -332,7 +332,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		requestData(procname, style, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				
+				set3Msg(R.string.timeout_network);
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -359,7 +359,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				if (style == 1) {
 					syncRun(cposition,tokenId,2);
 				}else{
@@ -504,7 +504,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				requestData("pro_set_education", style, params, values, new HandlerData() {
 					@Override
 					public void error() {
-						
+						set3Msg(R.string.timeout_network);
 					}
 					
 					public void success(Map<String, List<String>> map) {
@@ -519,7 +519,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					}
 
 					@Override
-					public void nodata() {
+					public void noData() {
 						set3Msg(R.string.action_sync_fail);
 					}
 				});
@@ -560,7 +560,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					}
 
 					@Override
-					public void nodata() {
+					public void noData() {
 						set3Msg(R.string.action_sync_fail);
 					}
 				});

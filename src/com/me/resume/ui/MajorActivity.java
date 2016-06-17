@@ -154,7 +154,7 @@ public class MajorActivity extends BaseActivity implements OnClickListener{
 					if (cursor.getCount() > 0) {
 						while (cursor.moveToNext()) {
 							mList.add(cursor.getString(cursor.getColumnIndex("id")) 
-									+ ";" +cursor.getString(cursor.getColumnIndex("chinaname")));
+									+ ";" +cursor.getString(cursor.getColumnIndex("cnname")));
 						}
 						mHandler.sendMessage(mHandler.obtainMessage(11, mList));
 					}

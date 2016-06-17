@@ -141,7 +141,7 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 		requestData(procName, 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				
+				set3Msg(R.string.timeout_network);
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -193,7 +193,7 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				msgText.setVisibility(View.VISIBLE);
 			}
 		});

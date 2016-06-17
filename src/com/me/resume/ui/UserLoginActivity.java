@@ -281,11 +281,11 @@ public class UserLoginActivity extends BaseActivity implements
 			
 			@Override
 			public void error() {
-				
+				set3Msg(R.string.timeout_network);
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				errorLogin();
 			}
 		});
@@ -392,7 +392,7 @@ public class UserLoginActivity extends BaseActivity implements
 			requestData(proc, 1, params, values, new HandlerData() {
 				@Override
 				public void error() {
-					
+					set3Msg(R.string.timeout_network);
 				}
 				
 				public void success(Map<String, List<String>> map) {
@@ -413,7 +413,7 @@ public class UserLoginActivity extends BaseActivity implements
 				}
 
 				@Override
-				public void nodata() {
+				public void noData() {
 					set3Msg(R.string.action_regist_fail);
 					registBtn.setText(getStrValue(R.string.action_register));
 					registBtn.setEnabled(true);
@@ -548,9 +548,11 @@ public class UserLoginActivity extends BaseActivity implements
 	 */
 	private void insertBaseInfo(Map<String, List<String>> map){
 		L.d("========insertBaseInfo==========="+uTokenId);
+		String realnameStr = getServerKeyValue(map,"realname");
+		String avatorStr = getServerKeyValue(map,"avator");
 		ContentValues cValues = new ContentValues();
 		cValues.put("userId",uTokenId);
-		cValues.put("realname",getServerKeyValue(map,"realname"));
+		cValues.put("realname",realnameStr);
 		cValues.put("gender",getServerKeyValue(map,"gender"));
 		cValues.put("brithday",getServerKeyValue(map,"brithday"));
 		cValues.put("joinworktime",getServerKeyValue(map,"joinworktime"));
@@ -564,13 +566,13 @@ public class UserLoginActivity extends BaseActivity implements
 		cValues.put("workingabroad",getServerKeyValue(map,"workingabroad"));
 		cValues.put("politicalstatus",getServerKeyValue(map,"politicalstatus"));
 		cValues.put("bgcolor",getServerKeyValue(map,"bgcolor"));
-		
-		String avatorStr = getServerKeyValue(map,"avator");
 		cValues.put("avator",avatorStr);
-		preferenceUtil.setPreferenceData(UserInfoCode.AVATOR,avatorStr);
 		
 		queryResult = dbUtil.insertData(self, CommonText.BASEINFO, cValues);
 		if (queryResult) {
+			preferenceUtil.setPreferenceData(UserInfoCode.REALNAME,realnameStr);
+			preferenceUtil.setPreferenceData(UserInfoCode.AVATOR,avatorStr);
+			
 			startChildActivity(Constants.USERCENTER,true);
 		}
 	}

@@ -19,7 +19,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
-import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
@@ -523,7 +522,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		requestData("pro_get_baseinfo", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				
+				set3Msg(R.string.timeout_network);
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -539,7 +538,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				syncRun(2);
 			}
 		});
@@ -589,6 +588,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			requestData("pro_set_baseinfo", style, params, values, new HandlerData() {
 				@Override
 				public void error() {
+					set3Msg(R.string.timeout_network);
 				}
 				
 				public void success(Map<String, List<String>> map) {
@@ -603,7 +603,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				}
 
 				@Override
-				public void nodata() {
+				public void noData() {
 					set3Msg(R.string.action_sync_fail);
 				}
 			});

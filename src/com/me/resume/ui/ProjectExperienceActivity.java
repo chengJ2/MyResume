@@ -291,7 +291,9 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 		requestData("pro_get_projectexpericnce", style, params, values, new HandlerData() {
 			@Override
 			public void error() {
+				set3Msg(R.string.timeout_network);
 			}
+			
 			
 			public void success(Map<String, List<String>> map) {
 				try {
@@ -309,7 +311,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				if (style == 1) {
 					syncRun(tokenId,2);
 				}else{
@@ -366,7 +368,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 				}
 
 				@Override
-				public void nodata() {
+				public void noData() {
 					set3Msg(R.string.action_sync_fail);
 				}
 			});

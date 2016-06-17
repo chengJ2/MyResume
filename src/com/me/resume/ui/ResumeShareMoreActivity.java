@@ -143,7 +143,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		requestData("pro_getshareinfo_bypage", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				
+				set3Msg(R.string.timeout_network);
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -160,7 +160,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				mHandler.sendEmptyMessage(12);
 			}
 		});
@@ -226,7 +226,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				// TODO Auto-generated method stub
 				
 			}

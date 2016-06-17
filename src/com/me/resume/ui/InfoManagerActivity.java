@@ -385,8 +385,9 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		requestData(procName, 2, params, values, new HandlerData() {
 			@Override
 			public void error() {
-//				runOnUiThread(R.string.action_sync_fail);
+				set3Msg(R.string.timeout_network);
 			}
+			
 			
 			public void success(Map<String, List<String>> map) {
 				try {
@@ -399,7 +400,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				// TODO Auto-generated method stub
 				
 			}
@@ -463,7 +464,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			}
 
 			@Override
-			public void nodata() {
+			public void noData() {
 				setRightIcon(R.drawable.icon_sync);
 				msgText.setText(getStrValue(R.string.en_nodata));
 				msgText.setVisibility(View.VISIBLE);
