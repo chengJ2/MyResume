@@ -453,6 +453,15 @@
         <item name="android:scrollbars">none</item>
         <item name="android:fillViewport">true</item>
     </style>
+    
+      <style name="weekDay">
+          <item name="android:layout_width">match_parent</item>
+	      <item name="android:layout_height">match_parent</item>
+	      <item name="android:layout_weight">1</item>
+           <item name="android:gravity">center</item>
+	      <item name="android:textColor">@android:color/black</item>
+	      <item name="android:textSize">@dimen/microd_text_size</item>
+     </style>
 
     <!-- 暂无数据 -->
     <style name="comm_nodata_style">

@@ -191,7 +191,12 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
-        
+        <activity
+            android:name="com.me.resume.ui.TodoActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" >
+        </activity>
         <activity
             android:name="com.me.resume.ui.FeedBackActivity"
             android:label="@string/app_name"

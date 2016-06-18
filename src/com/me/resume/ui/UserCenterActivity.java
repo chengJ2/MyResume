@@ -504,7 +504,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			startChildActivity(Constants.MYCOLLECTION,false);
 			break;
 		case R.id.viewcalendar:
-			// TODO
+			startChildActivity(Constants.TODOSOME,false);
 			break;
 		case R.id.review_resume:
 			startActivity(Constants.MAINACTIVITY,false);

@@ -138,6 +138,7 @@ public class Constants {
     public static final String RESUMETEMPLMORE = "ResumeTemplMoreActivity";
     public static final String SETTING = "SettingActivity";
     public static final String STARTUP = "StartupActivity";
+    public static final String TODOSOME = "TodoActivity";
     public static final String TOPICVIEW = "TopicViewActivity";
     public static final String TOPICLISTDETAIL = "TopicListDetailActivity";
     public static final String USERCENTER = "UserCenterActivity";
