@@ -90,7 +90,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 					updResult = dbUtil.updateData(self, CommonText.OTHERINFO, 
 							new String[]{"userId=?","bgcolor"}, 
 							new String[]{uTokenId,getCheckColor(checkColor)},1);
-					if (updResult == 1) {
+					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
 						actionAync(OtherInfoMenu.language,1);
 					}else{

@@ -106,6 +106,11 @@ public class EducationFragment extends BaseFragment implements OnClickListener {
 				setInfomajorname(category);
 			} else if (intent.getAction().equals(Constants.EDUCATION_RECEIVE_ED)) {
 				initData();
+				
+				Intent i=new Intent();
+				i.setAction(Constants.EDUCATION_GET);
+	       		getActivity().sendBroadcast(i);
+				
 			}else if (intent.getAction().equals(Constants.MANAGER_EDUCATION_RECEIVE_ED)) {
 				String tokenId = intent.getStringExtra(Constants.TOKENID);
 				refreshData(tokenId);

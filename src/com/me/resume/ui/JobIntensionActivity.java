@@ -78,6 +78,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 				if (actionFlag == 0) {
 					syncData(3);
 				}else{
@@ -178,7 +179,6 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	 * 执行同步操作
 	 */
 	private void actionAync(){
-		set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 		syncData(1);
 	}
 	
@@ -339,7 +339,6 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 							syncRun(tokenId,2);
 						}
 					}else{
-						set3Msg(R.string.action_syncing);
 						setDataFromServer(map);
 					}
 				} catch (Exception e) {
@@ -417,6 +416,8 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
    	 	info_expmonthlysalary.setText( getServerKeyValue(map,"expmonthlysalary"));
    	 	info_workingstate.setText(getServerKeyValue(map,"workingstate"));
    	 	info_expworkcareer.setText(getServerKeyValue(map,"expworkcareer"));
+   	 	
+   	 	getJobIntensionData();
 	}
 	
 	/**

@@ -58,7 +58,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	
 	private LinearLayout llout01,llout02,llout03;
 	
-	protected ImageView user_info_avatar;
+	private ImageView user_info_avatar;
 	private RelativeLayout rlout01;
 	private TextView center_username,center_workyear,center_city;
 	
@@ -165,9 +165,9 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		center_city = findView(R.id.center_city);
 		
 		mycollection = findView(R.id.mycollection);
-		viewcalendar = findView(R.id.viewcalendar);
-		view_day = findView(R.id.day);
-		view_day.setText(TimeUtils.theToday());
+//		viewcalendar = findView(R.id.viewcalendar);
+//		view_day = findView(R.id.day);
+//		view_day.setText(TimeUtils.theToday());
 		review_resume = findView(R.id.review_resume);
 		
 		center_topbar.setOnClickListener(this);
@@ -192,7 +192,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		info_item4 = findView(R.id.info_item4);
 		
 		mycollection.setOnClickListener(this);
-		viewcalendar.setOnClickListener(this);
+//		viewcalendar.setOnClickListener(this);
 		review_resume.setOnClickListener(this);
 		
 		info_layout1.setOnClickListener(this);
@@ -503,9 +503,9 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		case R.id.mycollection:
 			startChildActivity(Constants.MYCOLLECTION,false);
 			break;
-		case R.id.viewcalendar:
-			startChildActivity(Constants.TODOSOME,false);
-			break;
+//		case R.id.viewcalendar:
+//			startChildActivity(Constants.TODOSOME,false);
+//			break;
 		case R.id.review_resume:
 			startActivity(Constants.MAINACTIVITY,false);
 			break;

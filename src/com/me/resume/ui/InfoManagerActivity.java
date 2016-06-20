@@ -440,7 +440,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		requestData(procName, 3, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				
+				set3Msg(R.string.timeout_network);
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -465,6 +465,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 
 			@Override
 			public void noData() {
+				setMsgHide();
 				setRightIcon(R.drawable.icon_sync);
 				msgText.setText(getStrValue(R.string.en_nodata));
 				msgText.setVisibility(View.VISIBLE);

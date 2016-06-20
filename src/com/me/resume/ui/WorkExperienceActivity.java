@@ -95,6 +95,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 				if (actionFlag == 1 || actionFlag == 2) { // 同步新的info
 					actionAync(1);
 				}else{
@@ -299,7 +300,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 * @Description: 执行同步操作
 	 */
 	private void actionAync(int style){
-		set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 		syncData(style);
 	}
 	

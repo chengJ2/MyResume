@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
-import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
@@ -50,7 +49,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				if (msg.obj != null) {
 					checkColor = (Integer) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
-							new String[]{"userId=?","background"}, 
+							new String[]{"userId=?","bgcolor"}, 
 							new String[]{uTokenId,getCheckColor(checkColor)},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
@@ -66,6 +65,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 				if (actionFlag == 0) {
 					syncData(3);
 				}else{
@@ -209,7 +209,6 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	 * @Description: 执行同步操作
 	 */
 	private void actionAync(){
-		set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 		syncData(1);
 	}
 	

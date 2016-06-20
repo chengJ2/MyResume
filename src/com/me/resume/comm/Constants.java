@@ -65,6 +65,11 @@ public class Constants {
 	public static final String EDUCATION_RECEIVE_TR = "com.me.resume.training";
 	public static final String MANAGER_EDUCATION_RECEIVE_TR = "com.me.resume.training.manager";
 	
+	public static final String EDUCATION_GET = "com.me.resume.fragement.education";
+	public static final String TRAIN_GET = "com.me.resume.fragement.training";
+	
+	
+	
 	// 本地db文件  
 	public static final String DATABASE_FILENAME = "JResume.db"; // DB文件 
 	

@@ -61,7 +61,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 					updResult = dbUtil.updateData(self, CommonText.PROJECT_EXPERIENCE, 
 							new String[]{"userId=?","bgcolor"}, 
 							new String[]{uTokenId,getCheckColor(checkColor)},1);
-					if (updResult == 1) {
+					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
 						actionAync(1);
 					}else{
@@ -75,6 +75,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 				if (actionFlag == 1 || actionFlag == 2) {
 					actionAync(1);
 				}else{
@@ -164,7 +165,6 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	 * @Description: 执行同步操作
 	 */
 	private void actionAync(int style){
-		set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 		syncData(style);
 	}
 	

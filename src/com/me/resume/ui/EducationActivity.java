@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -59,7 +62,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
 							new String[]{"userId=?","bgcolor"}, 
 							new String[]{uTokenId,getCheckColor(checkColor)},1);
-					if (updResult == 1) {
+					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
 						actionAync(0);
 					}else{
@@ -124,8 +127,17 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		segment_button = findView(R.id.segment_button);
 		
 		initData();
+		
+		registerReceiver();
 	}
 	
+	private void registerReceiver() {
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(Constants.EDUCATION_GET);
+		filter.addAction(Constants.TRAIN_GET);
+		registerReceiver(educationArcReceiver, filter);
+		
+	}
 	private void initData() {
 		String tab = segment_button.getSegmentButton(0).getText().toString();
 		switchContent(cposition,tab);
@@ -171,7 +183,6 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.save:
-			getFeild();
 			actionFlag = 1;
 			if(cposition == 0){ // 教育背景
 				if(judgeEduField()){
@@ -221,7 +232,6 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.edit:
-			getFeild();
 			actionFlag = 2;
 			if(cposition == 0){ // 教育背景
 				if(judgeEduField()){
@@ -345,7 +355,6 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 							syncRun(cposition,tokenId,2);
 						}	
 					}else{
-						// TODO
 						if(cposition == 0){
 							setEdDataFromServer(map);
 						}else{
@@ -421,6 +430,17 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 	
+	private BroadcastReceiver educationArcReceiver = new BroadcastReceiver() {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			if (intent.getAction().equals(Constants.EDUCATION_GET)) {
+				
+			} else if (intent.getAction().equals(Constants.TRAIN_GET)) {
+				
+			}
+		}
+	};
 	
 	/**
 	 * 更新本地数据
@@ -573,6 +593,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	 * @return boolean
 	 */
 	private boolean judgeEduField(){
+		getFeild();
 		if (!RegexUtil.checkNotNull(info_starttimeStr)) {
 			setMsg(R.string.we_info_start_worktime);
 			return false;
@@ -610,6 +631,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	 * @return boolean
 	 */
 	private boolean judgeTraField(){
+		getFeild();
 		if (!RegexUtil.checkNotNull(info_starttimeStr)) {
 			setMsg(R.string.we_info_start_worktime);
 			return false;
@@ -652,6 +674,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		super.onDestroy();
 		if (mHandler != null) {
 			mHandler.removeCallbacksAndMessages(null);
+		}
+		if (educationArcReceiver != null) {
+			unregisterReceiver(educationArcReceiver);
 		}
 	}
 	

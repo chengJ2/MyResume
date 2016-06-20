@@ -124,7 +124,7 @@
                     android:layout_height="40dip"
                     android:layout_gravity="center" />
 
-                <RelativeLayout
+                <!-- <RelativeLayout
                     android:id="@+id/viewcalendar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -152,7 +152,7 @@
                 <View
                     style="@style/line2"
                     android:layout_height="40dip"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center" /> -->
 
                 <TextView
                     android:id="@+id/review_resume"

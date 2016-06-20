@@ -431,14 +431,14 @@ public class UserLoginActivity extends BaseActivity implements
 		uTokenId = map.get("uid").get(0);
 		MyApplication.USERID = uTokenId;
 		preferenceUtil.setPreferenceData(UserInfoCode.UTOKENID, uTokenId);
-		preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true); // refresh home data
+		//preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true); // refresh home data
 		String feildStr1 = map.get("username").get(0);
 		String feildStr2 = map.get("password").get(0);
 		String feildStr3 = map.get("deviceId").get(0);
 		String feildStr4 = map.get("patform").get(0);
 		String feildStr5 = map.get("createtime").get(0);
 		String feildStr6 = map.get("lastlogintime").get(0);
-		String feildStr7 = map.get("userstatus").get(0);
+		String feildStr7 = map.get("active").get(0);
 		
 		preferenceUtil.setPreferenceData(UserInfoCode.USERNAME,feildStr1);
 		preferenceUtil.setPreferenceData(UserInfoCode.PASSWORD,str_password);

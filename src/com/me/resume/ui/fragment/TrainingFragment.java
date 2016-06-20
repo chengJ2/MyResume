@@ -119,6 +119,11 @@ public class TrainingFragment extends BaseFragment {
 		public void onReceive(Context context, Intent intent) {
 			if(intent.getAction().equals(Constants.EDUCATION_RECEIVE_TR)){
 				initData();
+				
+				Intent i=new Intent();
+				i.setAction(Constants.TRAIN_GET);
+	       		getActivity().sendBroadcast(i);
+				
 			}else if (intent.getAction().equals(Constants.MANAGER_EDUCATION_RECEIVE_TR)) {
 				String tokenId = intent.getStringExtra(Constants.TOKENID);
 				refreshData(tokenId);
