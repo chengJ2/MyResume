@@ -449,8 +449,6 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			} else {
 				set3Msg(R.string.check_network);
 			}
-		} else {
-			set3Msg(R.string.action_login_head);
 		}
 	}
 	
@@ -460,8 +458,12 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 	 * @Description: 执行同步操作
 	 */
 	private void actionAync(OtherInfoMenu menu,int style,int resId){
-		set3Msg(resId,Constants.DEFAULTIME);
-		syncData(menu,style);
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				set3Msg(resId,Constants.DEFAULTIME);
+				syncData(menu,style);
+			}
+		}
 	}
 	
 	/**
@@ -524,8 +526,8 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			public void noData() {
 				if (style == 1) {
 					syncRun(menu,tokenId,2);
-				}else{
-					set3Msg(R.string.action_sync_success);
+				}else if(style == 3 && (mapArray!= null || mapArray1!= null || mapArray2!= null)){
+					syncRun(menu,tokenId,2);
 				}
 			}
 		});

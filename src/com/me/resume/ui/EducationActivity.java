@@ -107,8 +107,14 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	 * position 0 教育 1 培训
 	 */
 	private void actionAync(int position){
-		set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-		syncData(position,1);
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+				syncData(position,1);
+			}else{
+				set3Msg(R.string.check_network);
+			}
+		}
 	}
 	
 	@Override
@@ -371,8 +377,8 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			public void noData() {
 				if (style == 1) {
 					syncRun(cposition,tokenId,2);
-				}else{
-					set3Msg(R.string.action_sync_success);
+				}else if(style == 3 && (judgeEduField() || judgeTraField())){
+					syncRun(cposition,tokenId,2);
 				}
 			}
 		});

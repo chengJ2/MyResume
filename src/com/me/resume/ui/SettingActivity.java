@@ -240,8 +240,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			startChildActivity(Constants.FEEDBACK, false);
 			break;
 		case R.id.cacheLayout:
-			DialogUtils.showAlertDialog(self, getStrValue(
-					R.string.dialog_action_cache_alert),View.GONE, mHandler);
+			DialogUtils.showAlertDialog(self, 
+					getStrValue(R.string.dialog_action_cache_alert),View.GONE,
+					getStrValue(R.string.show_button_sure),mHandler);
 			break;
 		case R.id.shareLayout:
 			Intent share = new Intent(Intent.ACTION_SEND);

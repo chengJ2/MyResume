@@ -311,8 +311,21 @@ public class MainActivity extends Activity {
 			}else{
 				index_1_lisence.setVisibility(View.GONE);
 			}
-			index_1_phone.setText("手机号："+commMapArray.get("phone")[0]);
-			index_1_email.setText("E-mail："+commMapArray.get("email")[0]);
+			
+			info = commMapArray.get("phone")[0];
+			if(RegexUtil.checkNotNull(info)){
+				index_1_phone.setVisibility(View.VISIBLE);
+				index_1_phone.setText("手机号："+info);
+			}else{
+				index_1_phone.setVisibility(View.GONE);
+			}
+			info = commMapArray.get("email")[0];
+			if(RegexUtil.checkNotNull(info)){
+				index_1_email.setVisibility(View.VISIBLE);
+				index_1_email.setText("E-mail："+info);
+			}else{
+				index_1_email.setVisibility(View.GONE);
+			}
 		}
 	}
 	

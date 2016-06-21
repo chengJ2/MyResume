@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center" 
-    android:background="@android:color/transparent">
+    android:background="@android:color/transparent"
+    android:gravity="center" >
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -12,81 +12,69 @@
         android:layout_marginRight="@dimen/margin_20"
         android:background="@drawable/dialog_corner"
         android:orientation="vertical"
-        android:paddingBottom="10dip" >
-        
-         <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-         android:layout_marginTop="3dip" >
+        android:paddingBottom="@dimen/margin_8" >
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:padding="6dip"
-            android:text="@string/action_notice"
-            android:textColor="@color/grey_10"
-            android:textSize="@dimen/small_middle_text_size" />
-        
-        <TextView
-            android:id="@+id/noshow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:padding="6dip"
-            android:text="不再显示"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/small_middle_text_size" />
-        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:paddingLeft="@dimen/margin_5"
+                android:drawableLeft="@drawable/alert"
+                android:drawablePadding="3dip"
+                android:text="@string/action_notice"
+                android:textColor="@color/grey_10"
+                android:textSize="@dimen/small_text_size" />
+
+            <TextView
+                android:id="@+id/noshow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center|right"
+                android:paddingRight="@dimen/margin_5"
+                android:text="@string/show_nolonger"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/small_text_size" />
+        </LinearLayout>
 
         <View
-            style="@style/line3"
-            android:layout_marginTop="4dip" />
+            style="@style/line3"/>
 
         <TextView
             android:id="@+id/msg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="3dip"
-            android:padding="10dip"
-            android:paddingBottom="5dip"
-            android:text=""
+            android:padding="@dimen/margin_10"
+            android:text="@string/dialog_action_alert"
             android:textColor="@color/black"
-            android:textSize="@dimen/small_middle_text_size" />
+            android:textSize="@dimen/small_text_size" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:layout_marginRight="30dip"
-            android:layout_marginTop="20dip"
-            android:orientation="horizontal"
-            android:paddingBottom="5dip" >
+            android:layout_height="36dip"
+            android:orientation="horizontal" >
 
             <Button
                 android:id="@+id/btn_cancle"
-                android:layout_width="50dip"
-                android:layout_height="35dip"
-                android:layout_marginRight="20dip"
-                android:layout_weight="1"
-                android:background="@drawable/dialog_btn2_corner"
-                android:gravity="center"
-                android:text="@string/show_button_cancle"
-                android:textColor="@color/white"
-                android:textSize="@dimen/small_middle_text_size"
-                android:visibility="visible" />
+                style="@style/button_menu_cancle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/show_button_cancle" />
 
             <Button
                 android:id="@+id/btn_sure"
-                android:layout_width="50dip"
-                android:layout_height="35dip"
-                android:layout_weight="1"
-                android:background="@drawable/dialog_btn_corner"
-                android:gravity="center"
-                android:text="@string/show_button_sure"
-                android:textColor="@color/white"
-                android:textSize="@dimen/small_middle_text_size" />
+                style="@style/button_menu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/show_button_sure" />
         </LinearLayout>
     </LinearLayout>
 

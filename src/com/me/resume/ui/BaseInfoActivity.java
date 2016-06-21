@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
+import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.OnTopMenu;
@@ -384,8 +385,14 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void actionAync(){
 		if (judgeFeild()) {
-			set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-			syncData();
+			if (!MyApplication.USERID.equals("0")) {
+				if (CommUtil.isNetworkAvailable(self)) {
+					set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+					syncData();
+				}else{
+					set3Msg(R.string.check_network);
+				}
+			}
 		}
 	}
 	
@@ -408,7 +415,14 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		if (updResult == 1) {
 			preferenceUtil.setPreferenceData(UserInfoCode.REALNAME,info_realnameStr.trim().toString());
 			toastMsg(R.string.action_update_success);
-			actionAync();
+			if (!MyApplication.USERID.equals("0")) {
+				if (CommUtil.isNetworkAvailable(self)) {
+					set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+					syncData();
+				}else{
+					set3Msg(R.string.check_network);
+				}
+			}
 		}else{
 			set3Msg(R.string.action_update_fail);
 		}
@@ -444,10 +458,10 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			return false;
 		}
 		
-		if (!RegexUtil.checkNotNull(info_cityStr)) {
+		/*if (!RegexUtil.checkNotNull(info_cityStr)) {
 			setMsg(R.string.info_city);
 			return false;
-		}
+		}*/
 		
 		/*if (!RegexUtil.checkNotNull(info_emailStr)) {
 			setMsg(R.string.info_email);

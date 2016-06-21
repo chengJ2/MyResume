@@ -498,8 +498,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		case R.id.make_btn:
 			if (MyApplication.USERID.equals("0")) {
 				if(preferenceUtil.getPreferenceFData(Constants.NOTICESHOW)){
-					DialogUtils.showAlertDialog(self, getStrValue(
-							R.string.dialog_action_alert),View.VISIBLE, mHandler);
+					DialogUtils.showAlertDialog(self, 
+							getStrValue(R.string.dialog_action_alert),View.VISIBLE,
+							getStrValue(R.string.show_button_continue), mHandler);
 				}else{
 					mHandler.sendEmptyMessage(11);
 				}

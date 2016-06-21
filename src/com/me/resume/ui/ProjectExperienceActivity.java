@@ -75,7 +75,6 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 				if (actionFlag == 1 || actionFlag == 2) {
 					actionAync(1);
 				}else{
@@ -165,7 +164,14 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	 * @Description: 执行同步操作
 	 */
 	private void actionAync(int style){
-		syncData(style);
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+				syncData(style);
+			}else{
+				set3Msg(R.string.check_network);
+			}
+		}
 	}
 	
 	/**
@@ -314,8 +320,8 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 			public void noData() {
 				if (style == 1) {
 					syncRun(tokenId,2);
-				}else{
-					set3Msg(R.string.action_sync_success);
+				}else if(style == 3 && judgeField()){
+					syncRun(tokenId,2);
 				}
 			}
 		});

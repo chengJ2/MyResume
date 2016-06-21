@@ -39,6 +39,7 @@ import com.me.resume.views.XListView.IXListViewListener;
  */
 public class TopicListDetailActivity extends BaseActivity implements OnClickListener,IXListViewListener{
 
+	private ViewHolder viewHolder;
 	private XListView topicdetailListView;
 	private TextView nodata;
 	
@@ -46,6 +47,8 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 	private int pos=0;
 	private boolean isLoadMore=false;
 	private boolean isRequest=false;
+	
+	private String typeStr = "";
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -104,16 +107,12 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		initView();
 	}
 	
-	String typeStr = "";
-	
 	private void initView(){
-		
 		setTopTitle(R.string.item_text31);
 		setMsgHide();
 		setRightIconVisible(View.GONE);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
-		
 		
 		String title = getIntent().getStringExtra("title");
 		String[] titleArr = null;
@@ -159,8 +158,6 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		});
 	}
 	
-	private ViewHolder viewHolder;
-	
 	private void setTopicListData(final Map<String, List<String>> map){
 		commapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.topic_list_detail_item,"id") {
 			
@@ -176,8 +173,6 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 				holder.setText(R.id.topic_title, map.get("title").get(position));
 				holder.setText(R.id.topic_content, map.get("detail").get(position));
 				holder.setText(R.id.topic_from, map.get("from").get(position));
-				
-				
 				holder.setText(R.id.topic_datime, TimeUtils.showTimeFriendly(map.get("createtime").get(position)));
 				
 				viewHolder = holder;

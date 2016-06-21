@@ -276,7 +276,10 @@
     
      <style name="button_menu_white" parent="@style/button_menu">
         <item name="android:background">@drawable/button_select_white</item>
-        <item name="android:textColor">@color/white</item>
+    </style>
+    
+     <style name="button_menu_cancle" parent="@style/button_menu">
+        <item name="android:background">@drawable/dialog_btn2_corner</item>
     </style>
 
     <!-- diglog -->
@@ -367,7 +370,7 @@
         <item name="android:padding">8dip</item>
         <item name="android:gravity">center|left</item>
         <item name="android:background">@color/orange_50</item>
-        <item name="android:drawableLeft">@drawable/nodata</item>
+        <item name="android:drawableLeft">@drawable/icon_warn</item>
         <item name="android:drawablePadding">5dip</item>
         <item name="android:ellipsize">marquee</item>
         <item name="android:focusable">true</item>
@@ -473,7 +476,7 @@
         <item name="android:textColor">@color/grey_10</item>
         <item name="android:drawablePadding">5dip</item>
         <item name="android:textSize">@dimen/small_middle_text_size</item>
-        <item name="android:drawableLeft">@drawable/nodata</item>
+        <item name="android:drawableLeft">@drawable/icon_warn</item>
         <item name="android:visibility">gone</item>
     </style>
 

@@ -563,7 +563,7 @@ public class DialogUtils {
 	 * 
 	 * @param context 上下文
 	 */
-	public static void showAlertDialog(Context context,String msgstr,int visibility,Handler handler){
+	public static void showAlertDialog(Context context,String msgstr,int visibility,String btn2Str,Handler handler){
 		try {
 			mHandler = handler;
 			dialog = new Dialog(context);
@@ -586,7 +586,7 @@ public class DialogUtils {
 			});
 			
 			TextView msg = (TextView)dialog.findViewById(R.id.msg);
-			msg.setText(msgstr);
+			msg.setText(Html.fromHtml(msgstr));
 			Button btnCancle = (Button)dialog.findViewById(R.id.btn_cancle);
 			btnCancle.setOnClickListener(new OnClickListener() {
 				
@@ -596,6 +596,7 @@ public class DialogUtils {
 				}
 			});
 			Button btnSure = (Button)dialog.findViewById(R.id.btn_sure);
+			btnSure.setText(btn2Str);
 			btnSure.setOnClickListener(new OnClickListener() {
 				
 				@Override

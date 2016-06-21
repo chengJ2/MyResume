@@ -44,9 +44,6 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-			case 1:
-				DialogUtils.dismissPopwindow();
-				break;
 			case 2:
 				int position = (int) msg.obj;
 				if(whichTab == 1){
@@ -56,7 +53,6 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 				}else if(whichTab == 4){
 					info_expmonthlysalary.setText(mList.get(position));
 				}
-				DialogUtils.dismissPopwindow();
 				break;
 			case OnTopMenu.MSG_MENU1:
 				if (msg.obj != null) {
@@ -78,7 +74,6 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 				if (actionFlag == 0) {
 					syncData(3);
 				}else{
@@ -179,7 +174,14 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	 * 执行同步操作
 	 */
 	private void actionAync(){
-		syncData(1);
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+				syncData(1);
+			}else{
+				set3Msg(R.string.check_network);
+			}
+		}
 	}
 	
 	@Override
@@ -187,7 +189,6 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		super.onClick(v);
 		switch (v.getId()) {
 		case R.id.save:
-			getFieldValue();
 			if(judgeField()){
 				if(getJobIntensionData()){
 					actionFlag = 2;
@@ -231,7 +232,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			break;
 		case R.id.info_exp_workingproperty:
 			whichTab = 1;
-			getValues(R.array.we_qwyx_values,info_exp_workingproperty,R.string.ji_info_expectedworkingproperty,mHandler);
+			getValues(R.array.ba_expectedworkingproperty_values,info_exp_workingproperty,R.string.ji_info_expectedworkingproperty,mHandler);
 			break;
 		case R.id.info_expworkplace:
 			ActivityUtils.startActivityForResult(self, 
@@ -278,6 +279,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	 * 判断字段值
 	 */
 	private boolean judgeField(){
+		getFieldValue();
 		if (!RegexUtil.checkNotNull(info_exp_workingpropertyStr)) {
 			setMsg(R.string.ji_info_expectedworkingproperty);
 			return false;
@@ -351,7 +353,9 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 				if (style == 1) {
 					syncRun(tokenId,2);
 				}else{
-					set3Msg(R.string.action_sync_success);
+					if (style == 3 && judgeField()) {
+						syncRun(tokenId,2);
+					}
 				}
 			}
 		});
@@ -425,8 +429,6 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	 * @Description: 同步数据
 	 */
 	private void syncRun(String tokenId,int style){ 
-		getFieldValue();
-		
 		if(judgeField()){
 			List<String> params = new ArrayList<String>();
 			List<String> values = new ArrayList<String>();

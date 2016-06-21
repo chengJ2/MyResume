@@ -95,7 +95,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
 				if (actionFlag == 1 || actionFlag == 2) { // 同步新的info
 					actionAync(1);
 				}else{
@@ -217,7 +216,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		switch (v.getId()) {
 		case R.id.save:
 			actionFlag = 1;
-			getFieldValue();
 			if(judgeField()){
 				preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
 				ContentValues cValues = new ContentValues();
@@ -242,11 +240,9 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 					actionAync(1);
 				}
 			}
-			
 			break;
 		case R.id.edit:
 			actionFlag = 2;
-			getFieldValue();
 			if(judgeField()){
 				preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
 				updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
@@ -300,7 +296,14 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 * @Description: 执行同步操作
 	 */
 	private void actionAync(int style){
-		syncData(style);
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+				syncData(style);
+			}else{
+				set3Msg(R.string.check_network);
+			}
+		}
 	}
 	
 	/**
@@ -325,6 +328,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 * 判断字段值
 	 */
 	private boolean judgeField(){
+		getFieldValue();
 		if (!RegexUtil.checkNotNull(info_companynameStr)) {
 			setMsg(R.string.we_info_companyname);
 			return false;
@@ -355,15 +359,15 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			return false;
 		}
 		
-		if (!RegexUtil.checkNotNull(info_expectedsalaryStr)) {
+		/*if (!RegexUtil.checkNotNull(info_expectedsalaryStr)) {
 			setMsg(R.string.we_info_jobsalary);
 			return false;
-		}
+		}*/
 		
-		if (!RegexUtil.checkNotNull(info_workdescdetailStr)) {
+		/*if (!RegexUtil.checkNotNull(info_workdescdetailStr)) {
 			setMsg(R.string.we_info_workdesc);
 			return false;
-		}
+		}*/
 		return true;
 	}
 	
@@ -405,8 +409,8 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			public void noData() {
 				if (style == 1) {
 					syncRun(tokenId,2);
-				}else{
-					set3Msg(R.string.action_sync_success);
+				}else if(style == 3 && judgeField()){
+					syncRun(tokenId,2);
 				}
 			}
 		});
@@ -416,8 +420,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 * 同步数据
 	 */
 	private void syncRun(String tokenId,int style){ 
-		getFieldValue();
-		
 		if(judgeField()){
 			List<String> params = new ArrayList<String>();
 			List<String> values = new ArrayList<String>();
