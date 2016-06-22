@@ -41,7 +41,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 
 	private ViewHolder viewHolder;
 	private XListView topicdetailListView;
-	private TextView nodata;
+	private TextView flag;
 	
 	private boolean isAll=false;//是否加载完毕
 	private int pos=0;
@@ -74,7 +74,8 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 				finishLoading();
 				if(!isLoadMore){
 					topicdetailListView.setVisibility(View.GONE); 
-					nodata.setVisibility(View.VISIBLE);
+					flag.setText(getString(R.string.en_nodata));
+					flag.setVisibility(View.VISIBLE);
 				}
 				break;
 			case 100:
@@ -98,9 +99,9 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		topicdetailListView.setPullLoadEnable(true);
 		topicdetailListView.setXListViewListener(this);
 		
-		nodata = findView(R.id.nodata);
-		nodata.setText(getStrValue(R.string.item_text43));
-		nodata.setVisibility(View.VISIBLE);
+		flag = findView(R.id.flag);
+		flag.setText(getStrValue(R.string.item_text43));
+		flag.setVisibility(View.VISIBLE);
 		
 		commMapList = new HashMap<String, List<String>>();
 		
@@ -114,16 +115,24 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
-		String title = getIntent().getStringExtra("title");
-		String[] titleArr = null;
-		if (RegexUtil.checkNotNull(title)) {
-			titleArr = title.split(";");
-			setTopTitle(titleArr[0]);
-			typeStr = "="+titleArr[1];
+		String topicId = getIntent().getStringExtra(Constants.TOPICID);
+		if (RegexUtil.checkNotNull(topicId)) {
+			setTopTitle(getTitle(CommUtil.parseInt(topicId)));
+			typeStr = "="+topicId;
 		}else{
 			typeStr = "!=0";
 		}
 		mHandler.sendEmptyMessageDelayed(100, 200);
+	}
+	
+	/**
+	 * 
+	 * 获取 title
+	 * @return title 
+	 */
+	private String getTitle(int topicId){
+		String[] item_text = CommUtil.getArrayValue(self,R.array.review_link_topics); 
+		return item_text[topicId];
 	}
 	
 	private void getTopciListData(int position){
@@ -163,17 +172,23 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 			
 			@Override
 			public void convert(ViewHolder holder, List<String> item, final int position) {
-				String fromUrl = map.get("from_url").get(position);
+				final String title = map.get("title").get(position);
+				final String detail = map.get("detail").get(position);
+				final String fromUrl = map.get("from_url").get(position);
+				final String createtime = map.get("createtime").get(position);
+				final String sitename = map.get("site_name").get(position);
+				final String linksite = map.get("link_site").get(position);
+				
 				if (!RegexUtil.checkNotNull(fromUrl)) {
 					holder.setImageVisibe(R.id.topic_icon, View.GONE);
 				}else{
 					holder.setImageVisibe(R.id.topic_icon, View.VISIBLE);
 					holder.showImage(R.id.topic_icon,CommUtil.getHttpLink(fromUrl),false);
 				}
-				holder.setText(R.id.topic_title, map.get("title").get(position));
-				holder.setText(R.id.topic_content, map.get("detail").get(position));
-				holder.setText(R.id.topic_from, map.get("from").get(position));
-				holder.setText(R.id.topic_datime, TimeUtils.showTimeFriendly(map.get("createtime").get(position)));
+				holder.setText(R.id.topic_title, title);
+				holder.setText(R.id.topic_content, detail);
+				holder.setText(R.id.topic_from, sitename);
+				holder.setText(R.id.topic_datetime, TimeUtils.showTimeFriendly(createtime));
 				
 				viewHolder = holder;
 				
@@ -181,11 +196,34 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 					
 					@Override
 					public void onClick(View view) {
-						String topicId = map.get("id").get(position);
+						String id = map.get("id").get(position);
 						String type = map.get("type").get(position);
+						String detail2 = map.get("detail_part2").get(position);
+						String fromUrl2 = map.get("from_url2").get(position);
+						/*String detail3 = map.get("detail_part3").get(position);
+						String fromUrl3 = map.get("from_url3").get(position);
+						String fromUrl4 = map.get("from_url4").get(position);
+						String fromUrl5 = map.get("from_url5").get(position);*/
+						
+						Bundle bundle = new Bundle();
+						bundle.putString("id", id);
+						bundle.putString("title", title);
+						bundle.putString("type", type);
+						bundle.putString("detail", detail);
+						bundle.putString("from_url", fromUrl);
+						bundle.putString("detail2", detail2);
+						bundle.putString("from_url2", fromUrl2);
+						/*bundle.putString("detail3", detail3);
+						bundle.putString("from_url3", fromUrl3);
+						bundle.putString("from_url4", fromUrl4);
+						bundle.putString("from_url5", fromUrl5);*/
+						bundle.putString("createtime", createtime);
+						bundle.putString("sitename", sitename);
+						bundle.putString("link_site", linksite);
+						
 						ActivityUtils.startActivityPro(self, 
-								Constants.PACKAGENAMECHILD + Constants.TOPICVIEW, "tidtype",
-								topicId + ";" +type);
+								Constants.PACKAGENAMECHILD + Constants.TOPICVIEW, 
+								Constants.TOPICINFO,bundle);
 					}
 				});
 				
@@ -193,11 +231,10 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 					
 					@Override
 					public void onClick(View view) {
-						String fromLink = map.get("from_link").get(position);
-						if (RegexUtil.checkNotNull(fromLink)) {
+						if (RegexUtil.checkNotNull(linksite)) {
 							Intent intent = new Intent();
 							intent.setAction(Intent.ACTION_VIEW);
-							Uri content_url = Uri.parse(fromLink);
+							Uri content_url = Uri.parse(linksite);
 							intent.setData(content_url);
 							startActivity(intent);
 						}
@@ -208,7 +245,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		
 		topicdetailListView.setAdapter(commapBaseAdapter);
 		topicdetailListView.setVisibility(View.VISIBLE); 
-		nodata.setVisibility(View.GONE);
+		flag.setVisibility(View.GONE);
 		
 		topicdetailListView.setOnScrollListener(new OnScrollListener() {
 			@Override

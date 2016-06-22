@@ -5,11 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.ContentValues;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.InputType;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
@@ -56,10 +53,13 @@ public class UserLoginActivity extends BaseActivity implements
 	
 	private RelativeLayout user_login_layout,user_register_layout;
 	private EditText usernameEt,regTxt_phone_email,passwordEt;
+	private ImageView proto_checkbox;
+	private TextView protocol;
 	private ImageView regswitch,regpwdshow;
 	private Button registBtn;
 	
 	private boolean fflag = false;
+	private boolean agreeProtocol = true;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -127,11 +127,16 @@ public class UserLoginActivity extends BaseActivity implements
 		regswitch = findView(R.id.regswitch);
 		regpwdshow = findView(R.id.regpwdshow);
 		
+		proto_checkbox = findView(R.id.proto_checkbox);
+		protocol = findView(R.id.protocol);
+		
 		registBtn = findView(R.id.btn_register);
 		
 		registBtn.setOnClickListener(this);
 		regswitch.setOnClickListener(this);
 		regpwdshow.setOnClickListener(this);
+		proto_checkbox.setOnClickListener(this);
+		protocol.setOnClickListener(this);
 		
 	}
 	
@@ -226,14 +231,29 @@ public class UserLoginActivity extends BaseActivity implements
 			break;
 		case R.id.btn_register:
 			if (CommUtil.isNetworkAvailable(self)) {
-				if (showRegType) {
-					actionRegister(2);
+				if (agreeProtocol) {
+					if (showRegType) {
+						actionRegister(2);
+					}else{
+						actionRegister(1);
+					}
 				}else{
-					actionRegister(1);
+					set3Msg(R.string.register_agress_protocol);
 				}
 			}else{
 				set3Msg(R.string.check_network);
 			}
+			break;
+		case R.id.proto_checkbox:
+			agreeProtocol = !agreeProtocol;
+			if (agreeProtocol) {
+				proto_checkbox.setBackgroundResource(R.drawable.checkbox_sel);
+			} else {
+				proto_checkbox.setBackgroundResource(R.drawable.checkbox_nor);
+			}
+			break;
+		case R.id.protocol:
+			startChildActivity(Constants.USERREGPROTOCAL, false);
 			break;
 		case R.id.weixinlogin:
 			break;
@@ -313,7 +333,7 @@ public class UserLoginActivity extends BaseActivity implements
 	 */
 	private boolean  judgeField(){
 		if(!RegexUtil.checkNotNull(str_username)){
-			setMsg(R.string.action_input_up_isnull);
+			setMsg(R.string.action_input_username_null);
 			return false;
 		}
 		
@@ -344,12 +364,12 @@ public class UserLoginActivity extends BaseActivity implements
 			return false;
 		}
 		
-		if (str_username.length() > 120) {
+		if (!RegexUtil.checkStringLength(str_username,120)) {
 			set3Msg(R.string.action_input_username_toolong);
 			return false;
 		}
 		
-		if (str_password.length() > 30) {
+		if (!RegexUtil.checkStringLength(str_password,16)) {
 			set3Msg(R.string.action_input_password_toolong);
 			return false;
 		}

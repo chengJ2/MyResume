@@ -122,6 +122,7 @@
     <string name="action_login_3pl">其他登录方式</string>
     <string name="action_input_isnull">不能为空</string>
     <string name="action_input_up_isnull">用户名/手机号或密码</string>
+    <string name="action_input_username_null">用户名</string>
     <string name="action_input_usename_cn">用户名不能含中文</string>
     <string name="action_input_up_phone_email">手机号或邮箱用于找回密码,请选填</string>
     <string name="action_input_username_isnull">手机号/邮箱</string>
@@ -149,13 +150,16 @@
     <string name="login_input_snew_pwd_hint">请确认新密码</string>
     <string name="login_input_updatepwd_success">密码修改成功,请记住您的新密码~</string>
     <string name="action_regist_fail">注册失败,请重试!</string>
-    <string name="register_protocol">点击“立即加入”,即表示您同意遵守有云简历的《用户服务协议》及《隐私政策》。</string>
+    <string name="register_protocol">同意《用户注册服务协议》</string>
+    <string name="register_agress_protocol">请先同意《用户注册服务协议》</string>
+    <string name="protocol_title">《用户注册服务协议》</string>
     <string name="register_warn">提示:每个用户只能注册一次,请注意同步资料！ 若想重新注册,请清除App缓存或者到设置界面进行清除本地缓存操作。</string>
     <string name="account_go_login">已有账号,登录>></string>
     <string name="action_logout">退出登录</string>
     <string name="action_logout_success">注销成功</string>
     <string name="action_logout_fail">注销失败,请重试</string>
     <string name="action_no_login">未登录</string>
+    
     
     <!-- 第三方登录 -->
     <string name="errcode_success">发送成功</string>
@@ -252,12 +256,12 @@
     <string name="date_today">今天是:</string>
 
     <!-- review link item -->
-    <string name="re_link1">面试经验;1</string>
-    <string name="re_link2">求职简历;2</string>
-    <string name="re_link3">职场攻略;3</string>
-    <string name="re_link5">求职指南;4</string>
-    <string name="re_link7">面试问题;5</string>
-    <string name="re_link8">每日推荐;6</string>
+    <string name="re_link1">面试经验</string>
+    <string name="re_link2">求职简历</string>
+    <string name="re_link3">职场攻略</string>
+    <string name="re_link4">求职指南</string>
+    <string name="re_link5">面试问题</string>
+    <string name="re_link6">每日推荐</string>
 
     <!-- 基本资料 -->
     <string name="reg_info_email">电子邮箱不合法！</string>
@@ -416,4 +420,16 @@
     <string name="pe_input_workdesc">请输入项目描述(限2000字)</string>
     <!-- 人才附加内容 -->
 
+	<string name="protocol_content">
+	    	在此特别提醒您（用户）在注册成为用户之前，请认真阅读本《用户协议》（以下简称“协议”），
+	    	确保您充分理解本协议中各条款。请您审慎阅读并选择接受或不接受本协议。<![CDATA[<br/><br/>]]>
+	    	除非您接受本协议所有条款，否则您无权注册、登录或使用本协议所涉服务。
+	    	您的注册、登录、使用等行为将视为对本协议的接受，并同意接受本协议各项条款的约束。
+	    	“用户”是指注册、登录、使用本服务的个人。<![CDATA[<br/><br/>]]>
+	    	本协议可由《有云简历》开发中心随时更新，更新后的协议条款一旦公布即代替原来的协议条款，恕不再另行通知，用户可在本APP中查阅最新版协议条款。
+	    	在修改协议条款后，如果用户不接受修改后的条款，请立即停止使用提供的服务，用户继续使用提供的服务将被视为接受修改后的协议。 <![CDATA[<br/><br/>]]>
+	    	请用户仔细阅读，自主考虑风险。未成年人应在法定监护人的陪同下阅读本协议。
+	    	若用户和开发中心之间发生任何纠纷或争议，首先应友好协商解决，协商不成的，用户同意将纠纷或争议提交住所地有管辖权的人民法院管辖。 <![CDATA[<br/><br/>]]>
+	    	本协议的任何条款无论因何种原因无效或不具可执行性，其余条款仍有效，对双方具有约束力。
+	</string>
 </resources>

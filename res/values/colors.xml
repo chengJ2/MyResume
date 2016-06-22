@@ -3,6 +3,7 @@
     <color name="top_bar">#6699FF</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
     <color name="green">#00CC00</color>
     <color name="red">#CC0000</color>
     <color name="red_50">#50CC0000</color>
@@ -27,6 +28,11 @@
     
     <color name="color_green">#6699FF</color>
     
+    <!-- topic text color -->
+    <color name="t_primary">#212121</color>
+    <color name="t_secondary">#727272</color>
+    <color name="t_divider">#B6B6B6</color>
+    
     <!-- review bgcolor -->
     <color name="color_1">#FF69B4</color>
     <color name="color_2">#9F79EE</color>
@@ -38,4 +44,10 @@
     <color name="color_8">#32CD32</color>
     <color name="color_9">#B23AEE</color>
     <color name="color_10">#6699FF</color>
+    
+    <!-- character bgcolor -->
+    <color name="color_c1">#FF69B4</color>
+    <color name="color_c2">#9F79EE</color>
+    <color name="color_c3">#8470FF</color>
+    <color name="color_c4">#FFA500</color>
 </resources>

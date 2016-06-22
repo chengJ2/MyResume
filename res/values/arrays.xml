@@ -36,13 +36,13 @@
         <item>@string/settings_item205</item>
         <item>@string/settings_item206</item>
     </string-array>
-    <string-array name="review_link">
+    <string-array name="review_link_topics">
         <item>@string/re_link1</item>
         <item>@string/re_link2</item>
         <item>@string/re_link3</item>
+        <item>@string/re_link4</item>
         <item>@string/re_link5</item>
-        <item>@string/re_link7</item>
-        <item>@string/re_link8</item>
+        <item>@string/re_link6</item>
     </string-array>
     <string-array name="review_bgcolor">
         <item>@color/color_1</item>

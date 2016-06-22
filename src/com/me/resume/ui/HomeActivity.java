@@ -151,14 +151,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		setCoverView(true);
 		setTopicData();
 		
-		mHandler.postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-				mHandler.sendEmptyMessage(100);
-			}
-		},100);
-		
+		mHandler.sendEmptyMessageDelayed(100, 200);
 	}
 	
 	/**
@@ -262,7 +255,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				public void run() {
 					mHandler.sendEmptyMessage(101);
 				}
-			},200);
+			},1000);
 		}
 		
 		if (preferenceUtil.getPreferenceData(UserInfoCode.USERSHARE)) {
@@ -387,7 +380,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	 * 设置简历面试相关话题数据
 	 */
 	private void setTopicData(){
-		String[] item_text = CommUtil.getArrayValue(self,R.array.review_link); 
+		String[] item_text = CommUtil.getArrayValue(self,R.array.review_link_topics); 
 		mList = Arrays.asList(item_text);
 		commStrAdapter = new CommonBaseAdapter<String>(self, mList,
 				R.layout.home_xgln_grilview) {
@@ -395,8 +388,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void convert(ViewHolder holder, String item,
 					final int position) {
-				final String[] title = mList.get(position).toString().split(";");
-				holder.setText(R.id.itemName, title[0]);
+				holder.setText(R.id.itemName, mList.get(position).toString());
 				if (position == 5) {
 					holder.setTextColor(R.id.itemName,getColorValue(R.color.red));
 				}
@@ -406,8 +398,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					@Override
 					public void onClick(View view) {
 						ActivityUtils.startActivityPro(self, 
-								Constants.PACKAGENAMECHILD + Constants.TOPICLISTDETAIL, "title",
-								title[0]+";"+title[1]);
+								Constants.PACKAGENAMECHILD + Constants.TOPICLISTDETAIL, 
+								Constants.TOPICID,String.valueOf(position));
 					}
 				});
 			}

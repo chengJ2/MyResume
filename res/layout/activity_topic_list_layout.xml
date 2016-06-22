@@ -3,21 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
    <com.me.resume.views.XListView
         android:id="@+id/topicdetailListView"
         style="@style/comm_listview_style"
-        android:layout_marginTop="-1px"
-        android:layout_marginLeft="0dip"
-        android:layout_marginRight="0dip"
-        android:footerDividersEnabled="false" />
+        android:footerDividersEnabled="false"
+        android:visibility="visible" />
 
-    <ImageView
-        android:id="@+id/nodata"
-        android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:background="@drawable/icon_nodate"
-        android:layout_centerInParent="true" />
+    <TextView
+        android:id="@+id/flag"
+        style="@style/comm_nodata_style"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
 </RelativeLayout>

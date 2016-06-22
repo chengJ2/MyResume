@@ -100,6 +100,29 @@ public class ActivityUtils {
 	}
 	
 	/**
+	 * @描述：内部之间的跳转 <br>
+	 * @param src
+	 *            当前activity
+	 * @param obj
+	 *            目标activity字符串
+	 * @param key 
+	 * 			  key
+	 * @param data
+	 *            value
+	 */
+	public static void startActivityPro(Activity src, String obj,String name,Bundle bundle) {
+		try {
+			Class className = Class.forName(obj);
+			Intent intent = new Intent(src, className);
+			intent.putExtra(name, bundle);
+			src.startActivity(intent);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
 	 * @描述：内部之间的跳转，有返回值 <br>
 	 * @param src
 	 *            当前activity

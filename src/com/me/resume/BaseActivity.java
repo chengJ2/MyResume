@@ -778,7 +778,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 				final String cid = map.get("id").get(position);
 				
 				queryWhere = "select * from " + CommonText.MYCOLLECTION 
-						+ " where cid = "+ cid +" and userId = '"+ uTokenId+"' and type=0";
+						+ " where cid = "+ cid +" and userId = '"+ uTokenId+"' and type < 0";
 				commMapArray = dbUtil.queryData(self, queryWhere);
 				if (commMapArray == null) {
 					holder.setImageResource(R.id.share_collection, R.drawable.icon_collection_nor);
@@ -792,13 +792,13 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 					public void onClick(View view) {
 						if (!MyApplication.USERID.equals("0")) {
 							queryWhere = "select * from " + CommonText.MYCOLLECTION 
-									+ " where cid = "+ cid +" and userId = '"+ uTokenId+"' and type=0";
+									+ " where cid = "+ cid +" and userId = '"+ uTokenId+"' and type < 0";
 							commMapArray = dbUtil.queryData(self, queryWhere);
 							if (commMapArray == null) {
 								addCollection(map,position);
 							}else{
 								queryWhere = "delete from " + CommonText.MYCOLLECTION 
-										+ " where cid = "+ cid +" and userId = '"+ uTokenId+"' and type=0";
+										+ " where cid = "+ cid +" and userId = '"+ uTokenId+"' and type < 0";
 								dbUtil.deleteData(self, queryWhere);
 								commapBaseAdapter.notifyDataSetChanged();
 								toastMsg(R.string.item_text91);
@@ -953,7 +953,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		cValues.put("sharename", sharename);
 		cValues.put("sharenamecity", map.get("city").get(position));
 		cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-		cValues.put("type", "0");// 0:面试分享心得; !0:话题
+		cValues.put("type", "-1");// <0:面试分享心得; >0:话题
 
 		queryResult = dbUtil.insertData(self, CommonText.MYCOLLECTION, cValues);
 		if (queryResult) {

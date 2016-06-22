@@ -149,10 +149,14 @@ public class Constants {
     public static final String USERCENTER = "UserCenterActivity";
     public static final String USERLOGIN = "UserLoginActivity";
     public static final String USERNEWPWD = "UserNewPwdActivity";
+    public static final String USERREGPROTOCAL = "UserRegProtocalActivity";
     public static final String WORKEXPERIENCE = "WorkExperienceActivity";
     public static final String WORDS = "WordsActivity";
     
     public static final String TYPE = "type";
+    public static final String TOPICID = "topicId";
+    public static final String TOPICIDTYPE = "topicidtype";
+    public static final String TOPICINFO = "topicinfo";
     public static final String TAB = "tab";
     public static final String TOKENID = "tokenId";
     

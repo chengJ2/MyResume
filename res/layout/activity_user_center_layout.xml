@@ -48,7 +48,7 @@
                         <TextView
                             android:id="@+id/center_username"
                             style="@style/user_center_text"
-                            android:text="程健" />
+                            android:maxWidth="80dip" />
 
                         <TextView
                             android:id="@+id/center_workyear"

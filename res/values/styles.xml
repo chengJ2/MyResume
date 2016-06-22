@@ -162,10 +162,10 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:cacheColorHint">#00000000</item>
-        <item name="android:divider">@color/grey</item>
+        <item name="android:divider">@color/t_divider</item>
         <item name="android:dividerHeight">1px</item>
         <item name="android:footerDividersEnabled">true</item>
-        <item name="android:listSelector">@android:color/transparent</item>
+        <item name="android:listSelector">@color/transparent</item>
         <item name="android:scrollbars">none</item>
         <item name="android:visibility">visible</item>
     </style>
@@ -396,7 +396,7 @@
         <item name="android:paddingLeft">@dimen/margin_16</item>
         <item name="android:gravity">center|left</item>
         <item name="android:layout_marginTop">8dip</item>
-        <item name="android:background">@android:color/transparent</item>
+        <item name="android:background">@color/transparent</item>
         <item name="android:typeface">serif</item>
         <item name="android:lineSpacingExtra">3dip</item>
     </style>
@@ -410,7 +410,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="android:background">@android:color/transparent</item>
+        <item name="android:background">@color/transparent</item>
         <item name="android:gravity">center|left</item>
         <item name="android:singleLine">true</item>
         <item name="android:typeface">serif</item>
@@ -419,6 +419,15 @@
     <style name="user_center_small_text" parent="@style/user_center_text">
         <item name="android:textSize">@dimen/micro_text_size</item>
          <item name="android:textColor">@color/grey_10</item>
+    </style>
+    
+    <style name="topic_item_bottom_text" parent="@style/user_center_text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/t_secondary</item>
+        <item name="android:textSize">@dimen/microd_text_size</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:typeface">serif</item>
     </style>
     
     <style name="fab_button_style">

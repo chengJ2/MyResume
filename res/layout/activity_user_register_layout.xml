@@ -68,22 +68,38 @@
         <View style="@style/line_padding10_white" />
     </LinearLayout>
 
-      <TextView
-          android:id="@+id/protocol"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:gravity="center|left"
-          android:layout_marginTop="@dimen/margin_20"
-          android:padding="@dimen/margin_16"
-          android:layout_below="@id/useregisterLayout"
-          android:text="@string/register_protocol"
-          android:textColor="@color/white"
-          android:textSize="@dimen/micro_text_size" />
+    <RelativeLayout
+        android:id="@+id/protocollayout"
+        android:layout_width="wrap_content"
+        android:layout_height="35dip"
+        android:layout_below="@id/useregisterLayout"
+        android:layout_margin="@dimen/margin_20" >
+
+        <ImageView
+            android:id="@+id/proto_checkbox"
+            android:layout_width="20dip"
+            android:layout_height="20dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/checkbox_sel" />
+
+        <TextView
+            android:id="@+id/protocol"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="6dp"
+            android:layout_toRightOf="@id/proto_checkbox"
+            android:gravity="center"
+            android:text="@string/register_protocol"
+            android:textColor="@color/white"
+            android:textSize="@dimen/micro_text_size" />
+        </RelativeLayout>
+    
 
     <Button
         android:id="@+id/btn_register"
         style="@style/button_menu_white"
-        android:layout_below="@id/protocol"
+        android:layout_below="@id/protocollayout"
         android:text="@string/action_register" />
 
     <TextView

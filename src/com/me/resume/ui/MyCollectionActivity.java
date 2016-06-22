@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.ContentValues;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -21,6 +23,8 @@ import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.ViewHolder;
+import com.me.resume.comm.ViewHolder.CheckEvent;
+import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
@@ -129,9 +133,9 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 	 * @param commMapArray
 	 * @param position
 	 */
-	private void setCollectionData(ViewHolder holder,final Map<String, String[]> commMapArray,int position){
-		String type = commMapArray.get("type")[position];//  0:面试分享心得;  !0:话题
-		if ("0".equals(type)) {
+	private void setCollectionData(ViewHolder holder,final Map<String, String[]> commMapArray,final int position){
+		final int type = CommUtil.parseInt(commMapArray.get("type")[position]);//  <0:面试分享心得;  >0:话题
+		if (type < 0) {
 			holder.setImageVisibe(R.id.topic_icon, View.GONE);
 			holder.setText(R.id.topic_content, commMapArray.get("content")[position]);
 			
@@ -145,7 +149,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 			holder.setTextForHtml(R.id.topic_title, sbStr.toString());
 			
 			holder.setText(R.id.topic_from, "面试心得"); // TODO 
-			holder.setText(R.id.topic_datime, commMapArray.get("createtime")[position]);
+			holder.setText(R.id.topic_datetime, commMapArray.get("createtime")[position]);
 		}else{
 			String fromUrl = commMapArray.get("from_url")[position];
 			if (!RegexUtil.checkNotNull(fromUrl)) {
@@ -157,8 +161,23 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 			
 			holder.setText(R.id.topic_title, commMapArray.get("title")[position]);
 			holder.setText(R.id.topic_content, commMapArray.get("content")[position]);
-			holder.setText(R.id.topic_from, commMapArray.get("topic_from")[position]);
-			holder.setText(R.id.topic_datime, commMapArray.get("createtime")[position]);
+			holder.setText(R.id.topic_from, commMapArray.get("site_name")[position]);
+			holder.setText(R.id.topic_datetime, commMapArray.get("createtime")[position]);
+			
+			holder.setOnClickEvent(R.id.topic_from, new ClickEvent() {
+				
+				@Override
+				public void onClick(View view) {
+					String linksite = commMapArray.get("link_site")[position];
+					if (RegexUtil.checkNotNull(linksite)) {
+						Intent intent = new Intent();
+						intent.setAction(Intent.ACTION_VIEW);
+						Uri content_url = Uri.parse(linksite);
+						intent.setData(content_url);
+						startActivity(intent);
+					}
+				}
+			});
 		}
 		
 		collectionListView.setOnItemClickListener(new OnItemClickListener() {
@@ -166,18 +185,19 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				String type = commMapArray.get("type")[position];
-				if ("0".equals(type)) {
+				if (type < 0) {
 					// TODO 取消关注
 				}else{
 					// 跳转到详情
 					String topicId = commMapArray.get("topicId")[position];
 					ActivityUtils.startActivityPro(self, 
-							Constants.PACKAGENAMECHILD + Constants.TOPICVIEW, "tidtype",
-							topicId + ";" +type);
+							Constants.PACKAGENAMECHILD + Constants.TOPICVIEW,
+							Constants.TOPICIDTYPE, topicId + ";" + type );
 				}
 			}
 		});
+		
+		
 	}
 	
 	/**
