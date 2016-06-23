@@ -23,7 +23,6 @@ import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.ViewHolder;
-import com.me.resume.comm.ViewHolder.CheckEvent;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
@@ -42,7 +41,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 	private ListView collectionListView;
 	private TextView nodata;
 
-	private boolean loadFlag = true;
+	public static boolean loadFlag = true;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -164,10 +163,12 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 			holder.setText(R.id.topic_from, commMapArray.get("site_name")[position]);
 			holder.setText(R.id.topic_datetime, commMapArray.get("createtime")[position]);
 			
-			holder.setOnClickEvent(R.id.topic_from, new ClickEvent() {
-				
-				@Override
-				public void onClick(View view) {
+		}
+		holder.setOnClickEvent(R.id.topic_from, new ClickEvent() {
+			
+			@Override
+			public void onClick(View view) {
+				if (type >= 0) {
 					String linksite = commMapArray.get("link_site")[position];
 					if (RegexUtil.checkNotNull(linksite)) {
 						Intent intent = new Intent();
@@ -177,14 +178,15 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 						startActivity(intent);
 					}
 				}
-			});
-		}
+			}
+		});
 		
 		collectionListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
+				int type = CommUtil.parseInt(commMapArray.get("type")[position]);
 				if (type < 0) {
 					// TODO 取消关注
 				}else{
@@ -196,8 +198,6 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 				}
 			}
 		});
-		
-		
 	}
 	
 	/**

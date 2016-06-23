@@ -218,7 +218,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 						bundle.putString("from_url4", fromUrl4);
 						bundle.putString("from_url5", fromUrl5);*/
 						bundle.putString("createtime", createtime);
-						bundle.putString("sitename", sitename);
+						bundle.putString("site_name", sitename);
 						bundle.putString("link_site", linksite);
 						
 						ActivityUtils.startActivityPro(self, 

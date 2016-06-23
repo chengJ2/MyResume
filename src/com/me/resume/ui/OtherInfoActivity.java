@@ -426,6 +426,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			DialogUtils.showTopMenuDialog(self, topLayout,2,mHandler);
 			break;
 		case R.id.save:
+			HomeActivity.userstatus = true;
 			startChildActivity(Constants.HOME,true);
 			break;
 		case R.id.next:
@@ -565,7 +566,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 				queryResult = dbUtil.insertData(self, CommonText.OTHERINFO, cValues);
 			}
 			
-			if (updResult == 1 ||queryResult) {
+			if (updResult == 1 || queryResult) {
 				setLanguages();
 			}
         }

@@ -71,6 +71,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	
 	private boolean isExit = false;
 	
+	public static boolean userstatus = true;
+	
 	private Handler mHandler = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -226,11 +228,10 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	private void initUserInfo(){
 		MyApplication.USERID = preferenceUtil.getPreferenceData(UserInfoCode.USEID, "0");
 		MyApplication.USERNAME = preferenceUtil.getPreferenceData(UserInfoCode.USERNAME,"");
-		L.d("======onResume======userId:" + MyApplication.USERID + "## uuid:"+ uTokenId);
+		L.d("======onResume======userId:" + MyApplication.USERID + "## uuid:"+ uTokenId + " --userstatus:"+userstatus);
 		
-		if (preferenceUtil.getPreferenceFData(UserInfoCode.USERSTATUS)) {
-			preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, false);
-			
+		if (userstatus) {
+			userstatus = false;
 			if (!MyApplication.USERID.equals(0)) { // 登录用户显示头像
 				MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator
 						+ MyApplication.USERNAME + File.separator
@@ -248,14 +249,11 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					}
 				}
 			}
-			
-			mHandler.postDelayed(new Runnable() {
-				
-				@Override
-				public void run() {
-					mHandler.sendEmptyMessage(101);
-				}
-			},1000);
+		}
+		
+		if (preferenceUtil.getPreferenceData(UserInfoCode.USERNEWAVATOR)) {
+			preferenceUtil.setPreferenceData(UserInfoCode.USERNEWAVATOR, false);
+			mHandler.sendEmptyMessageDelayed(101, 200);
 		}
 		
 		if (preferenceUtil.getPreferenceData(UserInfoCode.USERSHARE)) {
@@ -338,6 +336,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					
 					getReCoverData();  // 请求 简历封面
 					
+					mHandler.sendEmptyMessageDelayed(101, 100);
+					
 				} catch (Exception e) {
 					setMsgVisibility(View.GONE);
 					L.e(e.getMessage());
@@ -349,6 +349,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				setMsgVisibility(View.GONE);
 				
 				getReCoverData();  // 请求 简历封面
+				
+				mHandler.sendEmptyMessageDelayed(101, 100);
 			}
 		});
 	}

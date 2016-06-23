@@ -783,7 +783,9 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 				if (commMapArray == null) {
 					holder.setImageResource(R.id.share_collection, R.drawable.icon_collection_nor);
 				}else{
-					holder.setImageResource(R.id.share_collection, R.drawable.icon_collection_sel);
+					if (!MyApplication.USERID.equals("0")) {
+						holder.setImageResource(R.id.share_collection, R.drawable.icon_collection_sel);
+					}
 				}
 				
 				holder.setOnClickEvent(R.id.share_collection, new ClickEvent() {
@@ -866,6 +868,15 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 					holder.setText(R.id.item3, getStrValue(R.string.button_canuse));
 					localcover = map.get("url").get(position);
 					holder.setImageResource(R.id.item1,CommUtil.parseInt(localcover));
+					
+					String lacalCoverName = preferenceUtil.getPreferenceData(Constants.COVER,"");
+					if (RegexUtil.checkNotNull(lacalCoverName)){
+						if (lacalCoverName.equals(localcover)) {
+							holder.setText(R.id.item3, getStrValue(R.string.button_useing));
+						}else{
+							holder.setText(R.id.item3, getStrValue(R.string.button_canuse));
+						}
+					}
 				}else{
 					String coverPath = CommUtil.getHttpLink(map.get("url").get(position));
 					holder.showImage(R.id.item1,coverPath,false);
@@ -921,7 +932,9 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 								toastMsg(R.string.item_text100);
 							}
 						}else{
+							localcover = map.get("url").get(position);
 							preferenceUtil.setPreferenceData(Constants.COVER,localcover);
+							coverAdapter.notifyDataSetChanged();
 						}
 					}
 				});

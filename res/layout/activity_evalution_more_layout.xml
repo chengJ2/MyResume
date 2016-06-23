@@ -17,52 +17,56 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dip"
-                android:orientation="vertical" >
+                android:layout_height="110dip"
+                android:orientation="vertical"
+                android:gravity="center" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dip"
-                    android:background="@drawable/charachar_corner"
                     android:orientation="horizontal" >
 
                     <TextView
                         android:id="@+id/item1"
                         style="@style/character_content_text"
-                        android:background="@color/red"
+                        android:background="@drawable/character_bg_1"
+                        android:layout_marginRight="2dip"
                         android:text="多血质" />
 
                     <TextView
                         android:id="@+id/item2"
                         style="@style/character_content_text"
-                        android:background="@color/color_green"
-                        android:text="胆汁质" />
+                        android:background="@drawable/character_bg_2"
+                        android:text="胆汁质" 
+                        android:layout_marginLeft="2dip"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dip"
-                    android:background="@color/grey_50"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal" 
+                    android:layout_marginTop="4dip">
 
                     <TextView
                         android:id="@+id/item3"
                         style="@style/character_content_text"
-                        android:background="@color/color_2"
+                        android:background="@drawable/character_bg_3"
+                        android:layout_marginRight="2dip"
                         android:text="粘液质" />
 
                     <TextView
                         android:id="@+id/item4"
                         style="@style/character_content_text"
-                        android:background="@color/green"
-                        android:text="抑郁质" />
+                        android:background="@drawable/character_bg_4"
+                        android:text="抑郁质" 
+                        android:layout_marginLeft="2dip"/>
                 </LinearLayout>
             </LinearLayout>
 			
             <ListView
                 android:id="@+id/characterListView"
                 style="@style/comm_listview_style"
-                android:background="@color/grey_50"
+                android:background="@drawable/edit_normal"
                 android:layout_marginTop="@dimen/margin_10"
                 android:visibility="visible" />
         </LinearLayout>

@@ -3,66 +3,71 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    android:layout_marginLeft="@dimen/margin_20"
-    android:layout_marginRight="@dimen/margin_20" >
-    
-     <EditText
-       android:id="@+id/feeddesc"
-       android:layout_width="match_parent"
-       android:layout_height="200dip"
-       android:gravity="left"
-       android:layout_marginTop="@dimen/margin_20"
-       android:padding="@dimen/margin_10"
-       android:hint="@string/feedback_ed_1" 
-       android:singleLine="false"
-       android:textSize="@dimen/small_text_size"
-       android:lineSpacingExtra="5dip"
-       android:background="@drawable/feedback_ed_corner"/>
-    
-     <EditText
-       android:id="@+id/feedcontact"
-       android:layout_width="match_parent"
-       android:layout_height="40dip"
-       android:layout_marginTop="@dimen/margin_20"
-       android:hint="@string/feedback_ed_2" 
-       android:singleLine="true"
-       android:textSize="@dimen/small_text_size"
-       android:background="@drawable/feedback_ed_corner"/>
-    
-     <LinearLayout
-         android:id="@+id/feedback_layout"
-         android:layout_width="wrap_content"
-         android:layout_height="30dip"
-         android:layout_marginTop="@dimen/margin_20"
-         android:orientation="horizontal">
+    android:orientation="vertical" >
 
-         <CheckBox
-             android:id="@+id/feedback_cb"
-             android:layout_width="25dip"
-             android:layout_height="25dip"
-             android:button="@null"
-             android:background="@drawable/send_crash_bg" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/margin_20"
+        android:layout_marginRight="@dimen/margin_20"
+        android:orientation="vertical" >
 
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="match_parent"
-             android:layout_marginLeft="8dp"
-             android:gravity="center|left"
-             android:text="@string/feedback_info_4"
-             android:textColor="@color/orange_10"
-             android:textSize="@dimen/small_text_size" />
-     </LinearLayout>
-     
-      <Button
-         android:id="@+id/feedcommit"
-         style="@style/button_menu"
-         android:layout_weight="0"
-         android:layout_marginLeft="0dip"
-    	 android:layout_marginRight="0dip" 
-         android:layout_marginTop="@dimen/margin_20"
-         android:layout_height="40dip"
-         android:text="@string/feedback_ed_3" />
-     
-     
+        <EditText
+            android:id="@+id/feeddesc"
+            android:layout_width="match_parent"
+            android:layout_height="200dip"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@drawable/feedback_ed_corner"
+            android:gravity="left"
+            android:hint="@string/feedback_ed_1"
+            android:lineSpacingExtra="5dip"
+            android:padding="@dimen/margin_10"
+            android:singleLine="false"
+            android:textSize="@dimen/small_text_size" />
+
+        <EditText
+            android:id="@+id/feedcontact"
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@drawable/feedback_ed_corner"
+            android:hint="@string/feedback_ed_2"
+            android:singleLine="true"
+            android:textSize="@dimen/small_text_size" />
+
+        <LinearLayout
+            android:id="@+id/feedback_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="30dip"
+            android:layout_marginTop="@dimen/margin_20"
+            android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/feedback_cb"
+                android:layout_width="25dip"
+                android:layout_height="25dip"
+                android:background="@drawable/send_crash_bg"
+                android:button="@null" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="8dp"
+                android:gravity="center|left"
+                android:text="@string/feedback_info_4"
+                android:textColor="@color/orange_10"
+                android:textSize="@dimen/small_text_size" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/feedcommit"
+            style="@style/button_menu"
+            android:layout_height="40dip"
+            android:layout_marginLeft="0dip"
+            android:layout_marginRight="0dip"
+            android:layout_marginTop="@dimen/margin_20"
+            android:layout_weight="0"
+            android:text="@string/feedback_ed_3" />
+    </LinearLayout>
+
 </LinearLayout>

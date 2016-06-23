@@ -184,6 +184,13 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		setEditBtnVisible(View.GONE);
 		
 		info_realname = findView(R.id.info_realname);
+		
+		if (RegexUtil.checkNotNull(preferenceUtil.getPreferenceData(UserInfoCode.REALNAME, ""))) {
+			info_realname.setEnabled(false);
+		}else{
+			info_realname.setEnabled(true);
+		}
+		
 		info_phone = findView(R.id.info_phone);
 		info_email = findView(R.id.info_email);
 		info_nationality = findView(R.id.info_nationality);

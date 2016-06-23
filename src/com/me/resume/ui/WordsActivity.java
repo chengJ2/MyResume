@@ -46,7 +46,7 @@ public class WordsActivity extends BaseActivity {
 		View v = View.inflate(self,R.layout.main_mywords_layout, null);
 		boayLayout.addView(v);
 		
-		setTopTitle(R.string.settings_item6);
+		setTopTitle(R.string.resume_message);
 		setMsgHide();
 		setRightIconVisible(View.INVISIBLE);
 		setRight2IconVisible(View.GONE);

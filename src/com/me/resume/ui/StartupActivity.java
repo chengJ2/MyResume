@@ -33,9 +33,6 @@ public class StartupActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.startup_layout);
 		MyApplication.getApplication().addActivity(this);
-		if(preferenceUtil == null)
-			preferenceUtil = new PreferenceUtil(this);
-		preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true);
 		startup = (LinearLayout)findViewById(R.id.startup);
 		version = (TextView)findViewById(R.id.version);
 		version.setText(CommUtil.getVersionName(this));

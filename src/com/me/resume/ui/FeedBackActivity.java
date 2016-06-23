@@ -37,9 +37,7 @@ public class FeedBackActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		boayLayout.removeAllViews();
-		
 		View v = View.inflate(self,R.layout.feedback_layout, null);
 		boayLayout.addView(v);
 	

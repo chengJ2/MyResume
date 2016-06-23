@@ -2,18 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@android:color/transparent" >
+    android:orientation="vertical" >
     <TextView
         android:id="@+id/item1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center|left"
-        android:paddingLeft="10dip"
-        android:layout_marginTop="5dip"
-        android:text="简历模板"
+        android:paddingLeft="@dimen/margin_10"
+        android:layout_marginTop="2dip"
         android:textSize="@dimen/small_text_size"
         android:textColor="@color/white" >
     </TextView>
-
 </LinearLayout>

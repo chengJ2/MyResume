@@ -86,7 +86,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
         				if (bitmap != null) {
         					blur(bitmap);
         					user_info_avatar.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
-        					preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true);
+        					preferenceUtil.setPreferenceData(UserInfoCode.USERNEWAVATOR, true);
         				}
         			} catch (Exception e) {
         				e.printStackTrace();
@@ -210,7 +210,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 				+ MyApplication.USERNAME + File.separator + Constants.FILENAME;
 		
 		Bitmap bitmap = ImageUtils.getLoacalBitmap(MyApplication.USERAVATORPATH);
-		String avatorStr= preferenceUtil.getPreferenceData("avator", "");
+		String avatorStr= preferenceUtil.getPreferenceData(UserInfoCode.AVATOR, "");
 		if (bitmap != null && RegexUtil.checkNotNull(avatorStr)) {
 			blur(bitmap);
 			user_info_avatar.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
@@ -263,7 +263,6 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
-	 * 
 	 * @Description:基本信息完整度
 	 */
 	private void getBaseInfoComplete(){
@@ -550,7 +549,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 						preferenceUtil.setPreferenceData(UserInfoCode.AVATOR, "");
 						preferenceUtil.setPreferenceData(UserInfoCode.USEID,"0");
 						preferenceUtil.setPreferenceData(UserInfoCode.REALNAME,"");
-						preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true); // refresh home data
+//						preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true); // refresh home data
 //						preferenceUtil.setPreferenceData(UserInfoCode.ISREGISTER, false);
 						scrollToFinishActivity();
 					}

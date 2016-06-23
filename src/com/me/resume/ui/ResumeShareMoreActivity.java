@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
+import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.UserInfoCode;
@@ -176,11 +177,15 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 			inputshareLayout.setVisibility(View.VISIBLE);
 			break;
 		case R.id.submit_btn:
-			String content = input_share.getText().toString().trim();
-			if (RegexUtil.checkNotNull(content)) {
-				shareLayout.setVisibility(View.VISIBLE);
-				inputshareLayout.setVisibility(View.GONE);
-				postShareData(content);
+			if (!MyApplication.USERID.equals("0")) {
+				String content = input_share.getText().toString().trim();
+				if (RegexUtil.checkNotNull(content)) {
+					shareLayout.setVisibility(View.VISIBLE);
+					inputshareLayout.setVisibility(View.GONE);
+					postShareData(content);
+				}
+			}else{
+				toastMsg(R.string.action_login_head);
 			}
 			break;
 		case R.id.sharemore_layout:

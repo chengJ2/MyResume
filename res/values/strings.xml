@@ -195,7 +195,9 @@
     <string name="personal_c_item18">%d年工作经验</string>
     
     <!-- UI button click msg -->
-    <string name="action_notice">提示</string>
+    <string name="action_notice">提&#160;&#160;示</string>
+    <string name="action_app_version">新版本</string>
+    <string name="action_app_upd">更&#160;&#160;新</string>
     <string name="action_add_success">新增成功</string>
     <string name="action_add_fail">新增失败</string>
     <string name="action_edit_success">编辑成功</string>
@@ -211,7 +213,7 @@
     <!-- UI dialog msg -->
     <string name="upload_loading">更新中</string>
     <string name="dialog_action_alert">您还没登录,创建的简历会保存到本地,<![CDATA[ <font color=red>若卸载或清除APP数据,将不会显示您创建的简历信息</font> ]]>,建议先登录或继续操作！</string>
-    <string name="dialog_action_cache_alert">该操作会清除您创建的简历信息,请确保数据已同步！</string>
+    <string name="dialog_action_cache_alert">该操作会清除您创建的简历信息,请确保你的简历数据已同步！</string>
     <string name="dialog_action_delete_alert">该操作会删除本地数据,确认删除吗？</string>
     <string name="dialog_action_delete_sure_alert">若联网中,本次操作也会删除远程这条记录</string>
 
@@ -274,7 +276,7 @@
     <string name="info_name">姓名</string>
     <string name="info_name_key">姓&#160;&#160;&#160;名</string>
     <string name="info_hometown_key">家乡所在地</string>
-    <string name="info_name_hint">请输入姓名</string>
+    <string name="info_name_hint">请输入姓名(只能改一次)</string>
     <string name="info_sex">称&#160;&#160;&#160;呼</string>
     <string name="info_sex_1">先生</string>
     <string name="info_sex_2">女士</string>

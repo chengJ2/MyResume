@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import android.app.Activity;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -53,7 +55,6 @@ import com.whjz.android.util.interfa.DbLocalUtil;
  * 
  */
 public class MainActivity extends Activity {
-
 	private MainActivity self;
 	
 	private MyPagerAdapter pagerAdapter = null;
@@ -130,6 +131,8 @@ public class MainActivity extends Activity {
 				break;
 			case 2:
 				break;
+			default:
+				break;
 			}
 		}
 
@@ -153,26 +156,36 @@ public class MainActivity extends Activity {
 		super.onResume();
 		if (goFlag) {
 			goFlag = false;
-			
-			initCover(cover);
-			
-			initView1(view1);
-			
-			initView2(view2);
-			
-			initView3(view3);
-			
-			initView4(view4);
-			
-			initView5(view5);
-			
-			initView6(view6);
-			
-			initView7(view7);
-			
-			initView8(view8);
-			
-			showViews();
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					runOnUiThread(new  Runnable() {
+						public void run() {
+							initCover(cover);
+							
+							initView1(view1);
+							
+							initView2(view2);
+							
+							initView3(view3);
+							
+							initView4(view4);
+							
+							initView5(view5);
+							
+							initView6(view6);
+							
+							initView7(view7);
+							
+							initView8(view8);
+							
+							showViews();
+						}
+					});
+					
+				}
+			}).start();
 		}
 	}
 
@@ -206,13 +219,16 @@ public class MainActivity extends Activity {
 	 * 显示预览界面
 	 */
 	private void showViews() {
-		if (pagerAdapter == null) {
-			pagerAdapter = new MyPagerAdapter(mViewList);
-		}else{
-			pagerAdapter.notifyDataSetChanged();
+		try {
+			if (pagerAdapter == null) {
+				pagerAdapter = new MyPagerAdapter(mViewList);
+			}else{
+				pagerAdapter.notifyDataSetChanged();
+			}
+			jazzyViewPager.setAdapter(pagerAdapter);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		jazzyViewPager.setAdapter(pagerAdapter);
-		
 	}
 	
 	/**
@@ -414,9 +430,12 @@ public class MainActivity extends Activity {
 			String tag = CommUtil.getStringLable(sb.toString());
 			fillTagFlowView(tag);
 		}
-		
 	}
 	
+	/**
+	 * 显示性格标签
+	 * @param tag
+	 */
 	private void fillTagFlowView(String tag){
 		String[] tags = tag.split(";");
 		List<String> ll = Arrays.asList(tags);
@@ -431,12 +450,25 @@ public class MainActivity extends Activity {
 				TextView tview = new TextView(this);
 				tview.setText(ll.get(i).toString().trim());
 				tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.tiny_text_size));
-				tview.setTextColor(CommUtil.getColorValue(self, R.color.red));
+				tview.setTextColor(CommUtil.getColorValue(self, getRanColor().get(new Random().nextInt(10))));
 				tview.setTypeface(Typeface.SERIF);
-				tview.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_tag_text_corner));
+//				tview.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_tag_text_corner));
+				tview.setBackgroundResource(R.drawable.home_tag_text_corner);
 				tagFlowLayout.addView(tview, lp);
 			}
 		}
+	}
+	
+	/**
+	 * 显示性格标签颜色
+	 */
+	private List<Integer> getRanColor(){
+		final TypedArray typedArray = getResources().obtainTypedArray(R.array.review_bgcolor);
+		List<Integer> nList = new ArrayList<Integer>();
+		for (int i = 0; i < typedArray.length(); i++) {
+			nList.add(typedArray.getResourceId(i, 0));
+		}
+		return nList;
 	}
 	
 	/**
@@ -491,7 +523,7 @@ public class MainActivity extends Activity {
 				@Override
 				public void convert(ViewHolder holder, String[] item,
 						int position) {
-					holder.setText(R.id.item1,commMapArray.get("worktimestart")[position] + " — " + commMapArray.get("worktimeend")[position]);
+					holder.setText(R.id.item1,"● " +commMapArray.get("worktimestart")[position] + " — " + commMapArray.get("worktimeend")[position]);
 					holder.setTextColor(R.id.item1, CommUtil.getColorValue(self, R.color.white));
 					String info_dutiesStr = commMapArray.get("duties")[position];
 					holder.setText(R.id.item11, info_dutiesStr);

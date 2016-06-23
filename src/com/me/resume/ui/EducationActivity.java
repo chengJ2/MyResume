@@ -436,15 +436,20 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 	
+	/**
+	 * 注册从远程同步到本地数据的广播
+	 */
 	private BroadcastReceiver educationArcReceiver = new BroadcastReceiver() {
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
+			String tablename = "";
 			if (intent.getAction().equals(Constants.EDUCATION_GET)) {
-				
+				tablename = CommonText.EDUCATION;
 			} else if (intent.getAction().equals(Constants.TRAIN_GET)) {
-				
+				tablename = CommonText.EDUCATION_TRAIN;
 			}
+			getData(tablename);
 		}
 	};
 	

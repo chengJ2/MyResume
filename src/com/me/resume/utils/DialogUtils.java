@@ -94,6 +94,7 @@ public class DialogUtils {
 			});
 			
 			Button btnSure = (Button)dialog.findViewById(R.id.btn_sure);
+			btnSure.setText(context.getResources().getString(R.string.action_app_upd));
 			btnSure.setOnClickListener(new OnClickListener() {
 				
 				@Override

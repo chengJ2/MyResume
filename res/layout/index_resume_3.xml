@@ -8,26 +8,26 @@
 
    <include layout="@layout/top_title_layout"/>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="100dip"
-        android:background="@drawable/main_index_icon3" />
-
     <com.me.resume.views.CommScrollView
         style="@style/main_scrollview_style">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:background="@color/transparent"
             android:orientation="vertical" >
-
+            
+		    <ImageView
+		        android:layout_width="match_parent"
+		        android:layout_height="100dip"
+		        android:background="@drawable/main_index_icon3" />
+            
             <LinearLayout
                 android:id="@+id/llout01"
                 android:layout_width="match_parent"
             	android:layout_height="wrap_content"
             	android:orientation="vertical"
-            	android:padding="5dip" >
+            	android:padding="@dimen/margin_10" >
                 
                 <TextView
                     android:id="@+id/self_evaluation"
@@ -39,14 +39,12 @@
                     android:lineSpacingExtra="3dip"
                     android:text="" />
                 
-                
                 <com.me.resume.views.TagFlowLayout 
                     android:id="@+id/flowlayout"
                     android:layout_width="match_parent"
             		android:layout_height="wrap_content"
             		android:layout_gravity="center"
             		android:layout_marginTop="50dip"/>
-                
             </LinearLayout>
         </LinearLayout>
     </com.me.resume.views.CommScrollView>

@@ -22,7 +22,7 @@
         <TextView
             style="@style/index4_text"
             android:layout_width="wrap_content"
-            android:paddingLeft="@dimen/margin_5"
+            android:paddingLeft="@dimen/margin_8"
             android:text="责任描述：" />
 
         <TextView
@@ -39,7 +39,7 @@
         <TextView
             style="@style/index4_text"
             android:layout_width="wrap_content"
-            android:paddingLeft="@dimen/margin_5"
+            android:paddingLeft="@dimen/margin_8"
             android:text="项目简介：" />
 
         <TextView

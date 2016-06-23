@@ -2,24 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
     android:orientation="horizontal" >
 
     <View
-        android:layout_width="6dip"
+        android:layout_width="5dip"
         android:layout_height="18dip"
-        android:background="@color/top_bar" />
+        android:layout_gravity="top|left"
+        android:background="@color/white" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dip"
+        android:layout_gravity="top|left"
+        android:layout_marginLeft="@dimen/margin_10"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/item1"
             android:layout_width="match_parent"
-            android:layout_height="20dip"
+            android:layout_height="18dip"
             android:gravity="center|left"
             android:text="@string/ot_get_certificate"
             android:textColor="@color/white"
@@ -31,7 +32,7 @@
             android:layout_height="wrap_content"
             android:gravity="center|left"
             android:layout_marginTop="5dip"
-            android:paddingLeft="10dip"
+            android:paddingLeft="@dimen/margin_10"
             android:text="@string/ot_get_certificate"
             android:textColor="@color/white"
             android:lineSpacingExtra="3dip"

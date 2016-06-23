@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00000000"
+    android:background="@color/transparent"
     android:gravity="center" >
 
     <LinearLayout
@@ -29,29 +29,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/margin_5" />
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginBottom="@dimen/margin_10" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/topbar_pop_item_height"
-            android:layout_marginTop="@dimen/margin_20"
-            android:orientation="horizontal"
-            android:paddingBottom="0dip" 
-            android:gravity="center_vertical">
-
-            <Button
-                android:id="@+id/btn_cancle"
-                android:layout_marginRight="@dimen/margin_20"
-                style="@style/button_menu"
-            	android:layout_weight="1"
-                android:background="@drawable/dialog_btn2_corner"
-                android:text="@string/show_button_cancle" />
-
-            <Button
-                android:id="@+id/btn_sure"
-                style="@style/button_menu"
-            	android:layout_weight="1"
-                android:text="@string/show_button_sure" />
-        </LinearLayout>
+        <include 
+            layout="@layout/dailog_bottom_action"/>
+        
     </LinearLayout>
 </RelativeLayout>

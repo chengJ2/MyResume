@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="36dip"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/btn_cancle"
+        style="@style/button_menu_cancle"
+        android:layout_height="match_parent"
+        android:text="@string/show_button_cancle" />
+
+    <Button
+        android:id="@+id/btn_sure"
+        style="@style/button_menu"
+        android:layout_height="match_parent"
+        android:background="@drawable/dialog_btn_corner"
+        android:text="@string/show_button_sure" />
+</LinearLayout>

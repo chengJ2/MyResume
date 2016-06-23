@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical" >
+    android:fitsSystemWindows="true">
 
      <EditText
          android:id="@+id/input_mywords"
          android:layout_width="match_parent"
       	 android:layout_height="@dimen/mul_item_height"
-         android:layout_margin="10dip"
+         android:layout_margin="@dimen/margin_10"
          android:background="@drawable/editbox"
          android:gravity="left"
          android:singleLine="false"
@@ -25,8 +24,9 @@
     <ListView
         android:id="@+id/words_Listview"
         style="@style/comm_listview_style"
+        android:layout_below="@id/input_mywords"
         android:layout_marginTop="0dip"
         android:paddingLeft="@dimen/margin_10"
         android:paddingRight="@dimen/margin_10"/>
 
-</LinearLayout>
+</RelativeLayout>

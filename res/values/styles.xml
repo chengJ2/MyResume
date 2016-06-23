@@ -62,7 +62,7 @@
         <item name="android:textColor">@color/grey_10</item>
         <item name="android:layout_height">@dimen/home_item_height</item>
         <item name="android:background">@color/grey_50</item>
-        <item name="android:textSize">@dimen/small_middle_text_size</item>
+        <item name="android:textSize">@dimen/small_text_size</item>
         <item name="android:padding">5dip</item>
         <item name="android:gravity">center|left</item>
         <item name="android:typeface">serif</item>
@@ -168,6 +168,12 @@
         <item name="android:listSelector">@color/transparent</item>
         <item name="android:scrollbars">none</item>
         <item name="android:visibility">visible</item>
+    </style>
+    
+    <style name="main_listview_style" parent="@style/comm_listview_style">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:divider">@color/transparent</item>
+        <item name="android:dividerHeight">@dimen/margin_10</item>
     </style>
     
     
