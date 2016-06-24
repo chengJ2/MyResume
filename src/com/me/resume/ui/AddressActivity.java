@@ -89,16 +89,9 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 		initViews();
 		
 		searchAction();
-		
 		getHotCity();
 		
-		mHandler.postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-				mHandler.sendEmptyMessage(10); // 全国城市
-			}
-		}, 200);
+		mHandler.sendEmptyMessageDelayed(10, 200);
 		
 	}
 	

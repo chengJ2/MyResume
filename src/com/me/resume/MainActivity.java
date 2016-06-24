@@ -524,13 +524,10 @@ public class MainActivity extends Activity {
 				public void convert(ViewHolder holder, String[] item,
 						int position) {
 					holder.setText(R.id.item1,"● " +commMapArray.get("worktimestart")[position] + " — " + commMapArray.get("worktimeend")[position]);
-					holder.setTextColor(R.id.item1, CommUtil.getColorValue(self, R.color.white));
 					String info_dutiesStr = commMapArray.get("duties")[position];
 					holder.setText(R.id.item11, info_dutiesStr);
-					holder.setTextColor(R.id.item11, CommUtil.getColorValue(self, R.color.white));
 					String info_prokectdescStr = commMapArray.get("prokectdesc")[position];
 					holder.setText(R.id.item12,info_prokectdescStr);
-					holder.setTextColor(R.id.item12, CommUtil.getColorValue(self, R.color.white));
 				}
 			};
 			

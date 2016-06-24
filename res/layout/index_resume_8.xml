@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,14 +13,11 @@
 	<TextView
         android:id="@+id/item2"
         android:layout_below="@id/item1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/main_common_text"
         android:layout_marginTop="@dimen/margin_20"
         android:padding="@dimen/margin_8"
-        android:gravity="left"
         android:lineSpacingExtra="3dip"
         android:textSize="@dimen/small_middle_text_size"
-        android:textColor="@color/white"
         android:text="@string/resume_mywords" />
     
     <ImageView 
@@ -32,11 +30,9 @@
         android:layout_alignParentBottom="true"/>
     
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:gravity="center"
+        style="@style/main_common_text"
         android:textSize="@dimen/blarge_text_size"
-        android:textColor="@color/white"
         android:text="谢谢"
         android:layout_marginBottom="20dip"
         android:layout_above="@id/gohome" />

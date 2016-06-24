@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -11,33 +10,33 @@
     
      <ImageView 
         android:layout_width="match_parent"
-        android:layout_height="200dip"
+        android:layout_height="180dip"
         android:background="@drawable/main_index_icon1"/>
     
     <TextView
         android:id="@+id/index_1_realname"
-        style="@style/index1_text"
+        style="@style/main_common_padding_text"
         android:textSize="@dimen/large_text_size" />
    
     <TextView
         android:id="@+id/index_1_info"
         android:layout_marginTop="@dimen/margin_10"
-        style="@style/index1_text"/>
+        style="@style/main_common_padding_text"/>
     
      <TextView
         android:id="@+id/index_1_where"
-        style="@style/index1_text"/>
+        style="@style/main_common_padding_text"/>
     
     <TextView
         android:id="@+id/index_1_lisence"
-        style="@style/index1_text"/>
+        style="@style/main_common_padding_text"/>
     
      <TextView
         android:id="@+id/index_1_phone"
-        style="@style/index1_text"/>
+        style="@style/main_common_padding_text"/>
      
       <TextView
         android:id="@+id/index_1_email"
-        style="@style/index1_text"/>
+        style="@style/main_common_padding_text"/>
 
 </LinearLayout>

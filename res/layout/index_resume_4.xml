@@ -15,23 +15,23 @@
 
     <TextView
         android:id="@+id/index_4_info1"
-        style="@style/index4_text" />
+        style="@style/main_common_padding_text" />
 
     <TextView
         android:id="@+id/index_4_info2"
-        style="@style/index4_text" />
+        style="@style/main_common_padding_text" />
 
     <TextView
         android:id="@+id/index_4_info3"
-        style="@style/index4_text" />
+        style="@style/main_common_padding_text" />
 
     <TextView
         android:id="@+id/index_4_info4"
-        style="@style/index4_text" />
+        style="@style/main_common_padding_text" />
 
     <TextView
         android:id="@+id/index_4_info5"
-        style="@style/index4_text" />
+        style="@style/main_common_padding_text" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,14 +39,14 @@
         android:orientation="horizontal" >
 
         <TextView
-            style="@style/index4_text"
+            style="@style/main_common_padding_text"
             android:layout_width="wrap_content"
             android:text="目前工作状况：" />
 
         <TextView
             android:id="@+id/index_4_info6"
             android:paddingLeft="0dip"
-            style="@style/index4_text" />
+            style="@style/main_common_padding_text" />
     </LinearLayout>
 
 </LinearLayout>

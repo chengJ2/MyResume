@@ -17,13 +17,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="110dip"
+                android:layout_height="90dip"
                 android:orientation="vertical"
                 android:gravity="center" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dip"
+                    android:layout_height="34dip"
                     android:orientation="horizontal" >
 
                     <TextView
@@ -43,7 +43,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dip"
+                    android:layout_height="34dip"
                     android:orientation="horizontal" 
                     android:layout_marginTop="4dip">
 

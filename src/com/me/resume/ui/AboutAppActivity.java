@@ -21,9 +21,7 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		boayLayout.removeAllViews();
-		
 		View v = View.inflate(self,R.layout.about_app_layout, null);
 		boayLayout.addView(v);
 		
@@ -35,6 +33,7 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 		
 		contactus = findView(R.id.contactus);
 		declare = findView(R.id.declare);
+		
 		StringBuffer sbStr = new StringBuffer();
 		sbStr.append("微&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;信:");
 		sbStr.append("<font color=\"red\">");

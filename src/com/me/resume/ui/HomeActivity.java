@@ -133,8 +133,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		MyApplication.getApplication().initDisplay(self);
-		
+		CommUtil.initDisplay(self);
 		boayLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_home, null);
 		boayLayout.addView(v);

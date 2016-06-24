@@ -391,8 +391,10 @@ public class TimeUtils {
             if (hour == 0)
                 ftime = Math.max((getCurrentTimeInLong() - time.getTime()) / 60000, 1)
                         + "分钟前";
-            else
+            else if (hour > 0)
                 ftime = hour + "小时前";
+            else
+            	 ftime = "--";
         } else if (days == 1) {
             ftime = "昨天";
         } else if (days == 2) {

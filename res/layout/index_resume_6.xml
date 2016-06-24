@@ -42,12 +42,9 @@
                     android:orientation="vertical" >
 
                     <TextView
-                        android:layout_width="match_parent"
                         android:layout_height="18dip"
-                        android:gravity="center|left"
-                        android:text="@string/resume_education"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/small_text_size" />
+                        style="@style/main_common_text"
+                        android:text="@string/resume_education" />
 
                     <com.me.resume.views.CustomListView
                         android:id="@+id/edListview"
@@ -78,12 +75,9 @@
                     android:orientation="vertical" >
 
                     <TextView
-                        android:layout_width="match_parent"
                         android:layout_height="18dip"
-                        android:gravity="center|left"
-                        android:text="@string/resume_training"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/small_text_size" />
+                        style="@style/main_common_text"
+                        android:text="@string/resume_training" />
 
                     <com.me.resume.views.CustomListView
                         android:id="@+id/trListview"

@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:baselineAligned="true"
-    android:background="@android:color/transparent"
     android:orientation="horizontal"
     android:padding="@dimen/margin_5" >
 
@@ -24,35 +23,28 @@
         <TextView
             android:id="@+id/duetime"
             android:layout_width="65dip"
-            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:drawablePadding="2dip"
             android:drawableRight="@drawable/icon_circle"
-            android:gravity="center|left"
             android:text="2015/07"
-            android:textColor="@color/white"
+            style="@style/main_common_text"
             android:textSize="@dimen/main_time_text" />
 
         <TextView
             android:id="@+id/starttime"
             android:layout_width="65dip"
-            android:layout_height="wrap_content"
+            style="@style/main_common_text"
             android:layout_alignParentBottom="true"
             android:drawableRight="@drawable/icon_circle"
-            android:gravity="center|left"
             android:text="2015/06"
-            android:textColor="@color/white"
             android:textSize="@dimen/main_time_text" />
     </RelativeLayout>
 
     <TextView
         android:id="@+id/item2"
-        android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        style="@style/main_common_text"
         android:layout_marginLeft="@dimen/margin_10"
-        android:gravity="center|left"
-        android:text="@string/resume_workexperience"
-        android:textColor="@color/white"
-        android:textSize="@dimen/small_text_size" />
+        android:text="@string/resume_workexperience" />
 
 </LinearLayout>

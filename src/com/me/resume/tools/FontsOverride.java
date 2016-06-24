@@ -7,11 +7,10 @@ import android.graphics.Typeface;
 
 /**
  * 
-* @ClassName: FontsOverride 
-* @Description: 更改字体样式 
-* @author Comsys-WH1510032 
-* @date 2016/5/6 下午5:17:15 
-*
+ * @ClassName: FontsOverride 
+ * @Description: 更改字体样式 
+ * @date 2016/5/6 下午5:17:15 
+ *
  */
 public class FontsOverride {
 

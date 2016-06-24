@@ -31,11 +31,9 @@
                 
                 <TextView
                     android:id="@+id/self_evaluation"
-                    android:layout_width="match_parent"
-            		android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/small_text_size"
-                    android:layout_marginTop="10dip"
+            		style="@style/main_common_text"
+            		android:textSize="@dimen/small_middle_text_size"
+                    android:layout_marginTop="@dimen/margin_10"
                     android:lineSpacingExtra="3dip"
                     android:text="" />
                 

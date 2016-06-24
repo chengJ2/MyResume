@@ -5,12 +5,8 @@
     android:orientation="vertical" >
     <TextView
         android:id="@+id/item1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center|left"
+        style="@style/main_common_text"
         android:paddingLeft="@dimen/margin_10"
-        android:layout_marginTop="2dip"
-        android:textSize="@dimen/small_text_size"
-        android:textColor="@color/white" >
+        android:layout_marginTop="2dip">
     </TextView>
 </LinearLayout>

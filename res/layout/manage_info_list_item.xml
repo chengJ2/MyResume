@@ -9,18 +9,19 @@
      <TextView
        android:id="@+id/item1"
        android:layout_width="wrap_content"
-       android:layout_height="45dip"
+       android:layout_height="wrap_content"
        android:gravity="center|left"
-       android:paddingLeft="10dip"
-       android:text="@string/resume_workexperience"
+       android:padding="@dimen/margin_8"
+       android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
        android:textColor="@color/black"
-       android:textSize="@dimen/small_middle_text_size" />
+       android:textSize="@dimen/small_text_size" />
           
     <TextView
         android:id="@+id/item11"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center|left"
+        android:paddingTop="@dimen/margin_5"
         android:paddingLeft="@dimen/margin_10"
         android:paddingRight="@dimen/margin_10"
         android:text="@string/resume_workexperience"
@@ -33,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center|left"
-        android:paddingTop="4dip"
+        android:paddingTop="@dimen/margin_5"
         android:paddingLeft="@dimen/margin_10"
         android:paddingRight="@dimen/margin_10"
         android:paddingBottom="@dimen/margin_8"

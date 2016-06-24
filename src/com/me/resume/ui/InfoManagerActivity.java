@@ -330,22 +330,21 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 	 * @param position
 	 */
 	private void setPEData(ViewHolder holder,Map<String, String[]> commMapArray,int position){
-		holder.setText(R.id.item1,commMapArray.get("worktimestart")[position] + " — " + commMapArray.get("worktimeend")[position]);
+		holder.setText(R.id.item1,
+				commMapArray.get("projectname")[position] + " (" +
+				commMapArray.get("worktimestart")[position] + " — " + 
+			    commMapArray.get("worktimeend")[position] + " )");
 
 		String info_dutiesStr = commMapArray.get("duties")[position];
 		StringBuffer sbStr = new StringBuffer();
-		sbStr.append("<font color=\"black\">");
-		sbStr.append("责任描述：");
+		sbStr.append("责任描述：<br/>");
 		sbStr.append(info_dutiesStr);
-		sbStr.append("</font>");
 		holder.setTextForHtml(R.id.item11, sbStr.toString());
 		
 		String info_prokectdescStr = commMapArray.get("prokectdesc")[position];
 		sbStr = new StringBuffer();
-		sbStr.append("<font color=\"black\">");
-		sbStr.append("项目简介：");
+		sbStr.append("项目简介：<br/>");
 		sbStr.append(info_prokectdescStr);
-		sbStr.append("</font>");
 		holder.setTextForHtml(R.id.item12, sbStr.toString());
 		
 		final String tokenId = commMapArray.get("tokenId")[position];

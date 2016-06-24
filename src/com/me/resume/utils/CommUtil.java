@@ -21,7 +21,6 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.me.resume.tools.L;
@@ -321,6 +320,20 @@ public class CommUtil {
 	    }
 	    
 	}
+	
+	 /**
+	  * 屏幕分辨率
+     * @param Context
+     */
+    public static void initDisplay(Activity mContext) {
+        DisplayMetrics dm = new DisplayMetrics();
+        mContext.getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int displayWitdh = dm.widthPixels;
+        int displayHeight = dm.heightPixels;
+        float displayDensity = dm.density;
+        int densityDpi = dm.densityDpi;
+        L.d("宽度（PX）:"+displayWitdh +" 高度（PX）:"+displayHeight + " 密度:" + displayDensity + " 密度DPI:" + densityDpi);
+    }
 	
 	/**
 	 * 

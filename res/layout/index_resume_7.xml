@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/index7layout"
@@ -43,12 +44,9 @@
                     android:orientation="vertical" >
 
                     <TextView
-                        android:layout_width="match_parent"
                         android:layout_height="18dip"
-                        android:gravity="center|left"
-                        android:text="@string/ot_languages"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/small_text_size" />
+                        style="@style/main_common_text"
+                        android:text="@string/ot_languages" />
 
                     <com.me.resume.views.CustomListView
                         android:id="@+id/listview1"
@@ -79,12 +77,9 @@
                     android:orientation="vertical" >
 
                     <TextView
-                        android:layout_width="match_parent"
                         android:layout_height="18dip"
-                        android:gravity="center|left"
-                        android:text="@string/ot_get_certificate"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/small_text_size" />
+                        style="@style/main_common_text"
+                        android:text="@string/ot_get_certificate"/>
 
                     <com.me.resume.views.CustomListView
                         android:id="@+id/listview2"
