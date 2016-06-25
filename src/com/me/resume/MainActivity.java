@@ -156,12 +156,12 @@ public class MainActivity extends Activity {
 		super.onResume();
 		if (goFlag) {
 			goFlag = false;
-			new Thread(new Runnable() {
-				
-				@Override
-				public void run() {
-					runOnUiThread(new  Runnable() {
-						public void run() {
+//			new Thread(new Runnable() {
+//				
+//				@Override
+//				public void run() {
+//					runOnUiThread(new  Runnable() {
+//						public void run() {
 							initCover(cover);
 							
 							initView1(view1);
@@ -181,11 +181,10 @@ public class MainActivity extends Activity {
 							initView8(view8);
 							
 							showViews();
-						}
-					});
-					
-				}
-			}).start();
+//						}
+//					});
+//				}
+//			}).start();
 		}
 	}
 
@@ -449,7 +448,7 @@ public class MainActivity extends Activity {
 			for (int i = 0,cun = ll.size(); i < cun; i++) {
 				TextView tview = new TextView(this);
 				tview.setText(ll.get(i).toString().trim());
-				tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.tiny_text_size));
+				tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.main_tiny_text));
 				tview.setTextColor(CommUtil.getColorValue(self, getRanColor().get(new Random().nextInt(10))));
 				tview.setTypeface(Typeface.SERIF);
 //				tview.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_tag_text_corner));

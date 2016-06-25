@@ -12,6 +12,7 @@
     <dimen name="medium_text_size">18sp</dimen>
     <dimen name="large_text_size">22sp</dimen>
     
+    <dimen name="main_tiny_text">8dip</dimen>
     <dimen name="main_time_text">13dip</dimen>
     
     <dimen name="blarge_text_size">60dip</dimen>
@@ -20,6 +21,9 @@
     <dimen name="address_item_height">48dip</dimen>
     <dimen name="home_bottombar_height">48dip</dimen>
     <dimen name="home_content_gridview_columnWidth">80dip</dimen>
+    <dimen name="home_cover_image_height">118dp</dimen>
+    <dimen name="home_refresh_height">30dp</dimen>
+    <dimen name="home_topic_item_bg_line">1px</dimen>
     
     <!-- 元素之间的 间距-->
     <dimen name="margin_5">5dip</dimen>

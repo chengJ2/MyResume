@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Home -->
+    <dimen name="home_cover_image_height">118dp</dimen>
+    <dimen name="home_refresh_height">30dp</dimen>
+    <dimen name="home_topic_item_bg_line">1px</dimen>
+    
+    
+    
+</resources>

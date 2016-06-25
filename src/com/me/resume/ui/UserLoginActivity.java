@@ -587,6 +587,8 @@ public class UserLoginActivity extends BaseActivity implements
 		cValues.put("politicalstatus",getServerKeyValue(map,"politicalstatus"));
 		cValues.put("bgcolor",getServerKeyValue(map,"bgcolor"));
 		cValues.put("avator",avatorStr);
+		cValues.put("createtime",getServerKeyValue(map,"createtime"));
+		cValues.put("updatetime",getServerKeyValue(map,"updatetime"));
 		
 		queryResult = dbUtil.insertData(self, CommonText.BASEINFO, cValues);
 		if (queryResult) {
