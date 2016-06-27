@@ -56,10 +56,10 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 				break;
 			case OnTopMenu.MSG_MENU1:
 				if (msg.obj != null) {
-					checkColor = (Integer) msg.obj;
+					checkColor = (String) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.JOBINTENSION, 
 							new String[]{"userId=?","bgcolor"}, 
-							new String[]{uTokenId,getCheckColor(checkColor)},1);
+							new String[]{uTokenId,checkColor},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 						actionAync();
@@ -74,11 +74,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if (actionFlag == 0) {
-					syncData(3);
-				}else{
-					actionAync();
-				}
+				actionAync();
 				break;
 			case OnTopMenu.MSG_MENU31:
 				toastMsg(R.string.action_login_head);
@@ -177,7 +173,11 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		if (!MyApplication.USERID.equals("0")) {
 			if (CommUtil.isNetworkAvailable(self)) {
 				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-				syncData(1);
+				if (actionFlag == 0) {
+					syncData(3);
+				}else{
+					syncData(1);
+				}
 			}else{
 				set3Msg(R.string.check_network);
 			}
@@ -214,7 +214,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		 			cValues.put("expworkcareer", info_expworkcareerStr);
 		 			cValues.put("expmonthlysalary", info_expmonthlysalaryStr);
 		 			cValues.put("workingstate", info_workingstateStr);
-		 			cValues.put("bgcolor", getCheckColor(checkColor));
+		 			cValues.put("bgcolor", checkColor);
 		 			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 		 			
 		 			queryResult = dbUtil.insertData(self, CommonText.JOBINTENSION, cValues);
@@ -450,7 +450,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 			values.add(info_expworkcareerStr);
 			values.add(info_expmonthlysalaryStr);
 			values.add(info_workingstateStr);
-			values.add(getCheckColor(checkColor));
+			values.add(checkColor);
 			
 			requestData("pro_set_jobintension", style, params, values, new HandlerData() {
 				@Override

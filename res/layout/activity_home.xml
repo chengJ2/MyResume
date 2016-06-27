@@ -40,7 +40,7 @@
 
                 <GridView
                     android:id="@+id/covergridview"
-                    android:layout_height="180dip"
+                    android:layout_height="@dimen/home_cover_item_height"
                     style="@style/home_content_grilview" />
 
                 <RelativeLayout

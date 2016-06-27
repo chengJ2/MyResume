@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Home -->
+    <dimen name="home_cover_item_height">320.25px</dimen>
+    <dimen name="home_cover_image_height">209.94px</dimen>
+    <dimen name="home_refresh_height">53.37px</dimen>
+    <dimen name="home_topic_item_bg_line">1.77px</dimen>
+    
+    <dimen name="main_tiny_text">21.35px</dimen>
+    
+     <dimen name="home_bottombar_height">85.4px</dimen>
+    <dimen name="btn_height">71.16px</dimen>
+</resources>

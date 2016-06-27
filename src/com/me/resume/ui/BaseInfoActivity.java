@@ -117,10 +117,10 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			case OnTopMenu.MSG_MENU1:
 				if (commMapArray != null) {
 					if (msg.obj != null) {
-						checkColor = (Integer) msg.obj;
+						checkColor = (String) msg.obj;
 						updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
 								new String[]{"userId=?","bgcolor"}, 
-								new String[]{uTokenId,getCheckColor(checkColor)},1);
+								new String[]{uTokenId,checkColor},1);
 						if (updResult == 1) {
 							toastMsg(R.string.action_update_success);
 							actionAync();
@@ -604,7 +604,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 			values.add(info_licenseStr);
 			values.add(rg_workingabroadStr);
 			values.add(rg_politicalstatusStr);
-			values.add(getCheckColor(checkColor));
+			values.add(checkColor);
 			
 			requestData("pro_set_baseinfo", style, params, values, new HandlerData() {
 				@Override

@@ -17,7 +17,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="90dip"
+                android:layout_height="72dip"
                 android:orientation="vertical"
                 android:gravity="center" >
 
@@ -66,7 +66,7 @@
             <ListView
                 android:id="@+id/characterListView"
                 style="@style/comm_listview_style"
-                android:background="@drawable/edit_normal"
+                android:background="@drawable/charachar_corner"
                 android:layout_marginTop="@dimen/margin_10"
                 android:visibility="visible" />
         </LinearLayout>

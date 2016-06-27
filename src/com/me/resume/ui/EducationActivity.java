@@ -58,10 +58,10 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			switch (msg.what) {
 			case OnTopMenu.MSG_MENU1:
 				if (msg.obj != null) {
-					checkColor = (Integer) msg.obj;
+					checkColor = (String) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.EDUCATION, 
 							new String[]{"userId=?","bgcolor"}, 
-							new String[]{uTokenId,getCheckColor(checkColor)},1);
+							new String[]{uTokenId,checkColor},1);
 					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
 						actionAync(0);
@@ -76,11 +76,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if (actionFlag == 0) {
-					syncData(cposition,3);
-				}else{
-					actionAync(cposition);
-				}
+				actionAync(cposition);
 				break;
 			case OnTopMenu.MSG_MENU31:
 				set3Msg(R.string.action_login_head);
@@ -110,7 +106,11 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 		if (!MyApplication.USERID.equals("0")) {
 			if (CommUtil.isNetworkAvailable(self)) {
 				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-				syncData(position,1);
+				if (actionFlag == 0) {
+					syncData(position,3);
+				}else{
+					syncData(position,1);
+				}
 			}else{
 				set3Msg(R.string.check_network);
 			}
@@ -202,7 +202,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					cValues.put("majorname", info_majornameStr);
 					cValues.put("degree", info_degressStr);
 					cValues.put("examination", info_examinationStr);
-					cValues.put("bgcolor", getCheckColor(checkColor));
+					cValues.put("bgcolor", checkColor);
 					cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 					
 					queryResult= dbUtil.insertData(self, CommonText.EDUCATION, cValues);
@@ -224,7 +224,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					cValues.put("trainingclass", info_trainingclassStr);
 					cValues.put("certificate", info_certificateStr);
 					cValues.put("description", info_descriptionStr);
-					cValues.put("bgcolor", getCheckColor(checkColor));
+					cValues.put("bgcolor", checkColor);
 					cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 					
 					queryResult = dbUtil.insertData(self, 
@@ -530,7 +530,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				values.add(info_majornameStr);
 				values.add(info_degressStr);
 				values.add(info_examinationStr);
-				values.add(getCheckColor(checkColor));
+				values.add(checkColor);
 				
 				requestData("pro_set_education", style, params, values, new HandlerData() {
 					@Override
@@ -571,7 +571,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 				values.add(info_trainingclassStr);
 				values.add(info_certificateStr);
 				values.add(info_descriptionStr);
-				values.add(getCheckColor(checkColor));
+				values.add(checkColor);
 				
 				requestData("pro_set_training", style, params, values, new HandlerData() {
 					@Override

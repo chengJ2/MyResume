@@ -288,7 +288,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				 // 同时将userId插入BASEINFO表
 				 cValues = new ContentValues();
 				 cValues.put("userId", uTokenId);
-				 cValues.put("bgcolor", getCheckColor(checkColor));
+				 cValues.put("bgcolor", checkColor);
 				 cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 				 queryResult = dbUtil.insertData(self,CommonText.BASEINFO, cValues);
 			 }

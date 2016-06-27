@@ -48,10 +48,10 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			switch (msg.what) {
 			case OnTopMenu.MSG_MENU1:
 				if (msg.obj != null) {
-					checkColor = (Integer) msg.obj;
+					checkColor = (String) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.EVALUATION, 
 							new String[]{"userId=?","bgcolor"}, 
-							new String[]{uTokenId,getCheckColor(checkColor)},1);
+							new String[]{uTokenId,checkColor},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
 						actionAync();
@@ -178,7 +178,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 					cValues.put("tokenId", tokenId);
 					cValues.put("userId", uTokenId);
 					cValues.put("selfevaluation", info_self_evaluationStr);
-					cValues.put("bgcolor", getCheckColor(checkColor));
+					cValues.put("bgcolor", checkColor);
 					cValues.put("careergoal", info_career_goalStr);
 					cValues.put("character", info_characterStr);
 					cValues.put("createtime",TimeUtils.getCurrentTimeInString());
@@ -368,7 +368,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			values.add(info_self_evaluationStr);
 			values.add(info_career_goalStr);
 			values.add(info_characterStr);
-			values.add(getCheckColor(checkColor));
+			values.add(checkColor);
 			
 			requestData("pro_set_evaluation", style, params, values, new HandlerData() {
 				@Override

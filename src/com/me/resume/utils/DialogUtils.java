@@ -1,6 +1,7 @@
 package com.me.resume.utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,6 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.text.Html;
 import android.view.Gravity;
@@ -46,7 +46,6 @@ import com.me.resume.comm.OnTopMenu;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.tools.L;
-import com.me.resume.views.CustomListView;
 import com.me.resume.views.CustomProgressDialog;
 import com.me.resume.views.GrapeGridview;
 
@@ -393,18 +392,21 @@ public class DialogUtils {
 			setting_manage.setVisibility(View.GONE);
 		}
 		
-		final TypedArray typedArray = context.getResources().obtainTypedArray(R.array.review_bgcolor);
-		List<Integer> nList = new ArrayList<Integer>();
-		for (int i = 0; i < typedArray.length(); i++) {
-			nList.add(typedArray.getResourceId(i, 0));
-		}
-        CommonBaseAdapter<Integer> commIntAdapter = new CommonBaseAdapter<Integer>(context, nList,
+//		final TypedArray typedArray = context.getResources().obtainTypedArray(R.array.review_bgcolor);
+//		List<Integer> nList = new ArrayList<Integer>();
+//		for (int i = 0; i < typedArray.length(); i++) {
+//			nList.add(typedArray.getResourceId(i, 0));
+//		}
+		
+		String[] item_text = CommUtil.getArrayValue(context,R.array.review_bgcolor); 
+		List<String> nList = Arrays.asList(item_text);
+        CommonBaseAdapter<String> commIntAdapter = new CommonBaseAdapter<String>(context, nList,
 				R.layout.base_grilview_item) {
 
 			@Override
-			public void convert(final ViewHolder holder, final Integer item,
+			public void convert(final ViewHolder holder, final String item,
 					final int position) {
-				holder.setViewBgColor(R.id.itemName, context.getResources().getColor(item));
+				holder.setViewBgColor(R.id.itemName, Color.parseColor(item));
 				holder.setViewVisible(R.id.check, View.GONE);
 				
 				if (!states.isEmpty()) {

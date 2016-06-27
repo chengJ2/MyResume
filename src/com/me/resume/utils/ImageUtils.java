@@ -265,9 +265,11 @@ public class ImageUtils {
 		FileInputStream fis = null;
 		Bitmap bitmap = null;
 		try {
-			if (new File(url).exists()) {
+			File f = new File(url);
+			if (f.exists()) {
 				fis = new FileInputStream(url);
 				bitmap = BitmapFactory.decodeStream(fis);
+//				bitmap = ImageUtils.decodeFile(f);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

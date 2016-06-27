@@ -84,8 +84,8 @@ public class CustomFAB extends ImageButton {
 	        }
 	    });
 	    LayerDrawable ld = new LayerDrawable(new Drawable[] { sd1, sd });
-	    ld.setLayerInset(0, 5, 5, 0, 0);
-	    ld.setLayerInset(1, 0, 0, 5, 5);
+	    ld.setLayerInset(0, 5, 5, 5, 5);
+	    ld.setLayerInset(1, 5, 5, 5, 5);
 	    return ld;
 	}
 

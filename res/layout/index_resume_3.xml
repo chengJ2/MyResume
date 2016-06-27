@@ -6,7 +6,8 @@
     android:orientation="vertical" 
     android:id="@+id/index3layout">
 
-   <include layout="@layout/top_title_layout"/>
+   <include layout="@layout/top_title_layout"
+       android:visibility="invisible"/>
 
     <com.me.resume.views.CommScrollView
         style="@style/main_scrollview_style">
@@ -19,15 +20,15 @@
             
 		    <ImageView
 		        android:layout_width="match_parent"
-		        android:layout_height="100dip"
-		        android:background="@drawable/main_index_icon3" />
+		        android:layout_height="150dip"
+		        android:src="@drawable/main_index_icon3" />
             
             <LinearLayout
                 android:id="@+id/llout01"
                 android:layout_width="match_parent"
             	android:layout_height="wrap_content"
             	android:orientation="vertical"
-            	android:padding="@dimen/margin_10" >
+            	android:layout_margin="@dimen/margin_10" >
                 
                 <TextView
                     android:id="@+id/self_evaluation"
@@ -40,7 +41,7 @@
                 <com.me.resume.views.TagFlowLayout 
                     android:id="@+id/flowlayout"
                     android:layout_width="match_parent"
-            		android:layout_height="wrap_content"
+            		android:layout_height="300dip"
             		android:layout_gravity="center"
             		android:layout_marginTop="50dip"/>
             </LinearLayout>

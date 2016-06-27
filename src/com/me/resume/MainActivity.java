@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.Random;
 
 import android.app.Activity;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -237,7 +237,6 @@ public class MainActivity extends Activity {
 	private void initCover(View view){
 		coverlayout = (ImageView)view.findViewById(R.id.coverlayout);
 		mViewList.add(cover);
-		
 		String coverName = preferenceUtil.getPreferenceData(Constants.COVER,"");
 		if (RegexUtil.checkNotNull(coverName)) {
 			if(preferenceUtil.getPreferenceData(Constants.ISLOCAL)){
@@ -448,10 +447,9 @@ public class MainActivity extends Activity {
 			for (int i = 0,cun = ll.size(); i < cun; i++) {
 				TextView tview = new TextView(this);
 				tview.setText(ll.get(i).toString().trim());
-				tview.setTextSize(CommUtil.getFloatValue(self, R.dimen.main_tiny_text));
-				tview.setTextColor(CommUtil.getColorValue(self, getRanColor().get(new Random().nextInt(10))));
+				tview.setTextSize(CommUtil.px2sp(self, CommUtil.getFloatValue(self, R.dimen.main_tiny_text)));
+				tview.setTextColor(Color.parseColor(getRanColor().get(new Random().nextInt(10))));
 				tview.setTypeface(Typeface.SERIF);
-//				tview.setBackgroundDrawable(getResources().getDrawable(R.drawable.home_tag_text_corner));
 				tview.setBackgroundResource(R.drawable.home_tag_text_corner);
 				tagFlowLayout.addView(tview, lp);
 			}
@@ -461,12 +459,9 @@ public class MainActivity extends Activity {
 	/**
 	 * 显示性格标签颜色
 	 */
-	private List<Integer> getRanColor(){
-		final TypedArray typedArray = getResources().obtainTypedArray(R.array.review_bgcolor);
-		List<Integer> nList = new ArrayList<Integer>();
-		for (int i = 0; i < typedArray.length(); i++) {
-			nList.add(typedArray.getResourceId(i, 0));
-		}
+	private List<String> getRanColor(){
+		String[] item_text = CommUtil.getArrayValue(self,R.array.review_bgcolor); 
+		List<String> nList = Arrays.asList(item_text);
 		return nList;
 	}
 	
@@ -506,7 +501,7 @@ public class MainActivity extends Activity {
 	 * @Description: 项目经验
 	 */
 	private void initView5(View view){
-		index5layout = (LinearLayout) view1.findViewById(R.id.index5layout);
+		index5layout = (LinearLayout) view.findViewById(R.id.index5layout);
 		peListview = (ListView) view.findViewById(R.id.peListview);
 		initTopView(view,R.string.resume_project_experience,Constants.PROJECTEXPERIENCE);
 		queryWhere = "select * from " + CommonText.PROJECT_EXPERIENCE + " where userId = '"+ BaseActivity.uTokenId +"' order by id desc";
@@ -844,21 +839,18 @@ public class MainActivity extends Activity {
 	}
 	
 	/**
-	 * 
-	 * @Title:MainActivity
-	 * @Description: 设置View bgcolor
+	 * 设置View bgcolor
 	 * @param ll
-	 * @param commMapArray
+	 * @param bgcolor
 	 */
 	private void initBgColor(LinearLayout ll,String bgcolor){
 		try {
 			if (RegexUtil.checkNotNull(bgcolor)) {
-				ll.setBackgroundColor(CommUtil.getColorValue(self,
-						CommUtil.parseInt(bgcolor)));
+				ll.setBackgroundColor(Color.parseColor(bgcolor));
 			}
 		} catch (Exception e) {
-			ll.setBackgroundColor(CommUtil.getColorValue(self,R.color.red));
 			e.printStackTrace();
+			ll.setBackgroundColor(Color.parseColor("#CC0000"));
 		}
 	}
 	

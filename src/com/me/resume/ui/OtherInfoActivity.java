@@ -86,10 +86,10 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 				break;
 			case OnTopMenu.MSG_MENU1:
 				if (msg.obj != null) {
-					checkColor = (Integer) msg.obj;
+					checkColor = (String) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.OTHERINFO, 
 							new String[]{"userId=?","bgcolor"}, 
-							new String[]{uTokenId,getCheckColor(checkColor)},1);
+							new String[]{uTokenId,checkColor},1);
 					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
 						actionAync(OtherInfoMenu.language,1);
@@ -314,7 +314,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			cValues.put("language", info_languageStr);
 			cValues.put("literacyskills", info_literacyskillsStr);
 			cValues.put("listeningspeaking", info_listeningspeakingStr);
-			cValues.put("bgcolor", getCheckColor(checkColor));
+			cValues.put("bgcolor", checkColor);
 			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 
 			queryResult = dbUtil.insertData(self, CommonText.OTHERINFO, cValues);
@@ -663,7 +663,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			values.add(info_languageStr);
 			values.add(info_literacyskillsStr);
 			values.add(info_listeningspeakingStr);
-			values.add(getCheckColor(checkColor));
+			values.add(checkColor);
 		}else if(menu == OtherInfoMenu.certificate){
 			procName = "pro_set_other1";
 			

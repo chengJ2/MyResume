@@ -109,7 +109,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 
 	protected String fieldNull = null;
 	
-	protected Integer checkColor = 0;
+	// resume review bg color
+	protected String checkColor = "#CC0000";
 	
 	protected String deviceID = "";// 设备标识码
 	
@@ -366,12 +367,9 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	 * 预览界面的背景色
 	 * @return checkColor
 	 */
-	protected String getCheckColor(int checkColor){
-		if (checkColor == 0) {
-			return String.valueOf(R.color.red);
-		}
-		return String.valueOf(checkColor);
-	}
+//	protected String getCheckColor(String checkColor){
+//		return String.valueOf(checkColor);
+//	}
 	
 	/**
 	 * 获得String值

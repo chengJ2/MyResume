@@ -2,10 +2,13 @@
 <resources>
     
     <!-- Home -->
-    <dimen name="home_cover_image_height">118dp</dimen>
-    <dimen name="home_refresh_height">30dp</dimen>
-    <dimen name="home_topic_item_bg_line">1px</dimen>
+    <dimen name="home_cover_item_height">720.0px</dimen>
+    <dimen name="home_cover_image_height">472.0px</dimen>
+    <dimen name="home_refresh_height">120.0px</dimen>
+    <dimen name="home_topic_item_bg_line">4.0px</dimen>
     
+    <dimen name="main_tiny_text">48.0px</dimen>
     
-    
+     <dimen name="home_bottombar_height">192.0px</dimen>
+    <dimen name="btn_height">160.0px</dimen>
 </resources>

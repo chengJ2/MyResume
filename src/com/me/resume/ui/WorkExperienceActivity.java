@@ -77,10 +77,10 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				break;
 			case OnTopMenu.MSG_MENU1:
 				if (msg.obj != null) {
-					checkColor = (Integer) msg.obj;
+					checkColor = (String) msg.obj;
 					updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 							new String[]{"userId=?","bgcolor"}, 
-							new String[]{uTokenId,getCheckColor(checkColor)},1);
+							new String[]{uTokenId,checkColor},1);
 					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
 						actionAync(1);
@@ -95,10 +95,10 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if (actionFlag == 1 || actionFlag == 2) { // 同步新的info
-					actionAync(1);
-				}else{
+				if (actionFlag == 0 ) { // 同步新的info
 					actionAync(3);
+				}else{
+					actionAync(1);
 				}
 				break;
 			case OnTopMenu.MSG_MENU31:
@@ -230,7 +230,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				cValues.put("worktimeStart", info_startworktimeStr);
 				cValues.put("worktimeEnd", info_endworktimeStr);
 				cValues.put("expectedsalary", info_expectedsalaryStr);
-				cValues.put("bgcolor", getCheckColor(checkColor));
+				cValues.put("bgcolor", checkColor);
 				cValues.put("workdesc", info_workdescdetailStr);
 				cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 				queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);
@@ -447,7 +447,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 			values.add(info_workdescdetailStr);
 			values.add(info_companynatureStr);
 			values.add(info_companyscaleStr);
-			values.add(getCheckColor(checkColor));
+			values.add(checkColor);
 			
 			requestData("pro_set_workexpericnce", style, params, values, new HandlerData() {
 				@Override
