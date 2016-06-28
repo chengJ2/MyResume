@@ -69,7 +69,6 @@ public class Constants {
 	public static final String TRAIN_GET = "com.me.resume.fragement.training";
 	
 	
-	
 	// 本地db文件  
 	public static final String DATABASE_FILENAME = "JResume.db"; // DB文件 
 	
@@ -106,6 +105,9 @@ public class Constants {
     // 预览默认切换效果
     public static final String DEFAULEFFECT = "Standard";
     
+    // 腾讯bugly app_id  
+ 	public static final String APP_CRASH_ID = "900025676";
+    
     // 微信ID
     public static final String APP_WX_ID = "";
     
@@ -115,9 +117,6 @@ public class Constants {
     // SINA ID
     public static final String APP_SINA_ID = "3466604642";
     public static final String APP_SINA_SECRET = "4a9d24bd6e2d961e0195e488b014dec8";
-    
-    // tencent bugly
-    public static final String APP_CRASH_ID = "900025676";
     
     // UI activity
     public static final String ADDRESS = "AddressActivity";

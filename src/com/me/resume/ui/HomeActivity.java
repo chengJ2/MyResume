@@ -133,21 +133,19 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		CommUtil.initDisplay(self);
-		boayLayout.removeAllViews();
-		View v = View.inflate(self,R.layout.activity_home, null);
-		boayLayout.addView(v);
-		
 		if (preferenceUtil.getPreferenceFData(Constants.FIRSTINSTALL)) {
 			startChildActivity(Constants.GUIDE, true);
 			return;
 		}else{
+			CommUtil.getDisplay(self);
+			boayLayout.removeAllViews();
+			View v = View.inflate(self,R.layout.activity_home, null);
+			boayLayout.addView(v);
 			if (preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME)) {
 				startActivity(Constants.MAINACTIVITY, true);
 				return;
 			}
 		}
-		
 		findViews();
 		setCoverView(true);
 		setTopicData();

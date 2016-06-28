@@ -8,7 +8,7 @@
     <com.me.resume.views.CommScrollView
         style="@style/comm_scrollview_style"
         android:layout_marginBottom="0dip"
-        android:background="@android:color/transparent" >
+        android:background="@color/transparent" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,17 +48,18 @@
                         <TextView
                             android:id="@+id/center_username"
                             style="@style/user_center_text"
-                            android:maxWidth="80dip" />
+                            android:maxWidth="80dip"
+                            android:text="-" />
 
                         <TextView
                             android:id="@+id/center_workyear"
                             style="@style/user_center_text"
-                            android:text="|2年工作经验" />
+                            android:text="|-" />
 
                         <TextView
                             android:id="@+id/center_city"
                             style="@style/user_center_text"
-                            android:text="|武汉" />
+                            android:text="|-" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -74,14 +75,14 @@
                             style="@style/user_center_small_text"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="简历完整度:70%" />
+                            android:text="--" />
 
                         <TextView
                             android:id="@+id/resume_updatime"
                             style="@style/user_center_small_text"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="上次更新：2016-05-22" />
+                            android:text="--" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -158,7 +159,7 @@
                     android:id="@+id/review_resume"
                     style="@style/user_center_content_func"
                     android:drawableTop="@drawable/icon_review_small"
-                    android:text="@string/personal_c_item3" />
+                    android:text="@string/personal_c_item31" />
             </LinearLayout>
 
             <LinearLayout
@@ -168,6 +169,20 @@
                 android:background="@drawable/user_center_corner_bg"
                 android:orientation="vertical" >
 
+                <LinearLayout
+                    android:id="@+id/info_layout0"
+                    style="@style/noraml_item" >
+
+                    <TextView
+                        style="@style/user_center_item_left"
+                        android:text="@string/resume_evaluation" />
+
+                    <TextView
+                        android:id="@+id/info_item0"
+                        style="@style/user_center_item_right"
+                        android:text="-" />
+                </LinearLayout>
+                <View style="@style/line_padding10" />
                 <LinearLayout
                     android:id="@+id/info_layout1"
                     style="@style/noraml_item" >
@@ -179,7 +194,7 @@
                     <TextView
                         android:id="@+id/info_item1"
                         style="@style/user_center_item_right"
-                        android:text="未填写" />
+                        android:text="-" />
                 </LinearLayout>
 
                 <View style="@style/line_padding10" />
@@ -195,7 +210,7 @@
                     <TextView
                         android:id="@+id/info_item2"
                         style="@style/user_center_item_right"
-                        android:text="完整度：70%" />
+                        android:text="-" />
                 </LinearLayout>
 
                 <View style="@style/line_padding10" />
@@ -211,7 +226,7 @@
                     <TextView
                         android:id="@+id/info_item3"
                         style="@style/user_center_item_right"
-                        android:text="完整度(90%)" />
+                        android:text="-" />
                 </LinearLayout>
 
                 <View style="@style/line_padding10" />
@@ -227,7 +242,7 @@
                     <TextView
                         android:id="@+id/info_item4"
                         style="@style/user_center_item_right"
-                        android:text="已有1项目经验" />
+                        android:text="-" />
                 </LinearLayout>
 
                 <View style="@style/line_padding10" />

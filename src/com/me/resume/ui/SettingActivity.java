@@ -50,6 +50,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 					preferenceUtil.clearPreferenceData();
 					preferenceUtil.setPreferenceData(Constants.FIRSTINSTALL,false);
 					cachesize.setText("0KB");
+					HomeActivity.userstatus = true;
 					toastMsg(R.string.action_clearcache_success);
 				} catch (Exception e) {
 					e.printStackTrace();

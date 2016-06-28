@@ -11,8 +11,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,7 +28,9 @@ import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
+import com.me.resume.utils.TimeUtils;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -43,27 +47,22 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 
 	public static boolean loadFlag = true;
 	
+	private String cid;
+	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
-			case 1:
-				/*String weId = (String)msg.obj;
+			case 11:
 				queryWhere = "delete from " + CommonText.MYCOLLECTION
-						+ " where userId = '" + uTokenId +"' and tokenId = " + weId;
+						+ " where userId = '" + uTokenId +"' and cId = " + cid;
 				dbUtil.deleteData(self, queryWhere);
 				
 				set3Msg(R.string.action_delete_success);
 				
 				initData();
 				
-				// TODO
-				if (!MyApplication.USERID.equals("0")) {
-					if (CommUtil.isNetworkAvailable(self)) {
-						syncData(weId);
-					}
-				}*/
+				syncDelData(cid);
 				break;
-
 			default:
 				break;
 			}
@@ -80,8 +79,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		setTopTitle(R.string.personal_c_item1);
 
 		setMsgHide();
-		setRightIconVisible(View.VISIBLE);
-		setRightIcon(R.drawable.icon_sync);
+		
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 
@@ -102,28 +100,30 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 	}
 
 	private void initData() {
-		queryWhere = "select * from " + CommonText.MYCOLLECTION + " where userId = '" 
-						+ uTokenId + "' order by createtime desc";
-		commMapArray = dbUtil.queryData(self,queryWhere);
-		if (commMapArray != null && commMapArray.get("userId").length>0) {
+		queryWhere = "select * from " + CommonText.MYCOLLECTION
+				+ " where userId = '" + uTokenId + "' order by createtime desc";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			localHasData = true;
-			commMapArrayAdapter = new CommForMapArrayBaseAdapter(self, commMapArray,
-						R.layout.topic_list_detail_item, "userId") {
+			setRightIconVisible(View.GONE);
+			commMapArrayAdapter = new CommForMapArrayBaseAdapter(self,
+					commMapArray, R.layout.topic_list_detail_item, "userId") {
 
-					@Override
-					public void convert(ViewHolder holder, String[] item,
-							int position) {
-						setCollectionData(holder,commMapArray,position);
-					}
-				};
-				collectionListView.setVisibility(View.VISIBLE);
-				collectionListView.setAdapter(commMapArrayAdapter);
-				nodata.setVisibility(View.GONE);
-			}else{
-				localHasData = false;
-				nodata.setText(getStrValue(R.string.en_nodata));
-				nodata.setVisibility(View.VISIBLE);
-			}
+				@Override
+				public void convert(ViewHolder holder, String[] item,
+						int position) {
+					setCollectionData(holder, commMapArray, position);
+				}
+			};
+			collectionListView.setVisibility(View.VISIBLE);
+			collectionListView.setAdapter(commMapArrayAdapter);
+			nodata.setVisibility(View.GONE);
+		} else {
+			localHasData = false;
+			setRightIcon(R.drawable.icon_sync);
+			nodata.setText(getStrValue(R.string.en_nodata));
+			nodata.setVisibility(View.VISIBLE);
+		}
 	}
 	
 	/**
@@ -148,7 +148,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 			holder.setTextForHtml(R.id.topic_title, sbStr.toString());
 			
 			holder.setText(R.id.topic_from, "面试心得"); // TODO 
-			holder.setText(R.id.topic_datetime, commMapArray.get("createtime")[position]);
+			holder.setText(R.id.topic_datetime, TimeUtils.showTimeFriendly(commMapArray.get("createtime")[position]));
 		}else{
 			String fromUrl = commMapArray.get("from_url")[position];
 			if (!RegexUtil.checkNotNull(fromUrl)) {
@@ -161,7 +161,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 			holder.setText(R.id.topic_title, commMapArray.get("title")[position]);
 			holder.setText(R.id.topic_content, commMapArray.get("content")[position]);
 			holder.setText(R.id.topic_from, commMapArray.get("site_name")[position]);
-			holder.setText(R.id.topic_datetime, commMapArray.get("createtime")[position]);
+			holder.setText(R.id.topic_datetime, TimeUtils.showTimeFriendly(commMapArray.get("createtime")[position]));
 			
 		}
 		holder.setOnClickEvent(R.id.topic_from, new ClickEvent() {
@@ -188,7 +188,10 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 					int position, long id) {
 				int type = CommUtil.parseInt(commMapArray.get("type")[position]);
 				if (type < 0) {
-					// TODO 取消关注
+					/*cid = commMapArray.get("cId")[position];
+					DialogUtils.showAlertDialog(self, 
+							getStrValue(R.string.dialog_action_topic_delete_sure_alert),View.GONE,
+							getStrValue(R.string.show_button_sure),mHandler);*/
 				}else{
 					// 跳转到详情
 					String topicId = commMapArray.get("topicId")[position];
@@ -198,41 +201,21 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 				}
 			}
 		});
-	}
-	
-	/**
-	 * 删除远端数据
-	 */
-	private void syncData(){ 
-		List<String> params = new ArrayList<String>();
-		List<String> values = new ArrayList<String>();
 		
-		params.add("p_weId");
-		params.add("p_userId");
-		values.add("0");
-		values.add(uTokenId);
-		
-		requestData("pro_get_collection", 4, params, values, new HandlerData() {
-			
-			public void success(Map<String, List<String>> map) {
-				try {
-					if (map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)) {
-						
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+		collectionListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
-			public void noData() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void error() {
-				set3Msg(R.string.timeout_network);
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				int type = CommUtil.parseInt(commMapArray.get("type")[position]);
+				if (type < 0) {
+					cid = commMapArray.get("cId")[position];
+					DialogUtils.showAlertDialog(self, 
+							getStrValue(R.string.dialog_action_topic_delete_sure_alert),View.GONE,
+							getStrValue(R.string.show_button_sure),mHandler);
+					return true;
+				}
+				return false;
 			}
 		});
 	}
@@ -244,7 +227,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		List<String> params = new ArrayList<String>();
 		List<String> values = new ArrayList<String>();
 		
-		params.add("p_tokenId");
+		params.add("p_cId");
 		params.add("p_userId");
 		values.add("0");
 		values.add(uTokenId);
@@ -264,6 +247,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 
 			@Override
 			public void noData() {
+				setMsgHide();
 				nodata.setText(getStrValue(R.string.en_nodata));
 				nodata.setVisibility(View.VISIBLE);
 			}
@@ -279,18 +263,19 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		int size = map.get("userId").size();
 		for (int i = 0; i < size; i++) {
 			ContentValues cValues = new ContentValues();
-			cValues.put("cId", map.get("cId").get(i));
-			cValues.put("userId", map.get("userId").get(i));
-			cValues.put("topicId", map.get("topicId").get(i));
-			cValues.put("title", map.get("title").get(i));
-			cValues.put("content", map.get("content").get(i));
-			cValues.put("from_url", map.get("from_url").get(i));
-			cValues.put("topic_from", map.get("topic_from").get(i));
-			cValues.put("shareUserId", map.get("shareUserId").get(i));
-			cValues.put("sharename", map.get("sharename").get(i));
-			cValues.put("sharenamecity", map.get("sharenamecity").get(i));
-			cValues.put("createtime", map.get("createtime").get(i));
-			cValues.put("type", map.get("type").get(i));
+			cValues.put("cId", getServerKeyValue(map, "cId",i));
+			cValues.put("userId", getServerKeyValue(map,"userId",i));
+			cValues.put("topicId", getServerKeyValue(map,"topicId",i));
+			cValues.put("title", getServerKeyValue(map,"title",i));
+			cValues.put("content", getServerKeyValue(map,"content",i));
+			cValues.put("site_name", getServerKeyValue(map,"site_name",i));
+			cValues.put("from_url", getServerKeyValue(map,"from_url",i));
+			cValues.put("link_site", getServerKeyValue(map,"link_site",i));
+			cValues.put("shareUserId", getServerKeyValue(map,"shareUserId",i));
+			cValues.put("sharename", getServerKeyValue(map,"sharename",i));
+			cValues.put("sharenamecity", getServerKeyValue(map,"sharenamecity",i));
+			cValues.put("createtime", getServerKeyValue(map,"createtime",i));
+			cValues.put("type", getServerKeyValue(map,"type",i));
 			
 			queryResult = dbUtil.insertData(self, CommonText.MYCOLLECTION, cValues);
 		}

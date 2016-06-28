@@ -83,10 +83,11 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             }
         }.start();
         // 保存错误报告文件
-        saveCrashInfoToFile(ex);
+//        saveCrashInfoToFile(ex);
         return true;
     }
 
+    
     /**
      * @param ex 异常
      * @brief 保存错误信息到文件中

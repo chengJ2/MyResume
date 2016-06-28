@@ -1,5 +1,6 @@
 package com.me.resume;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +36,7 @@ import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.DownloadTask;
+import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.UserInfoCode;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
@@ -956,13 +958,16 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 			sharename = map.get("username").get(position);
 		}
 
+		String shareuserId = map.get("userId").get(position);
+		String shareuserCity = map.get("userId").get(position);
+		
 		ContentValues cValues = new ContentValues();
 		cValues.put("cId", cid);
 		cValues.put("userId", uTokenId);
-		cValues.put("shareUserId", map.get("userId").get(position));
+		cValues.put("shareUserId", shareuserId);
 		cValues.put("content", content);
 		cValues.put("sharename", sharename);
-		cValues.put("sharenamecity", map.get("city").get(position));
+		cValues.put("sharenamecity", shareuserCity);
 		cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 		cValues.put("type", "-1");// <0:面试分享心得; >0:话题
 
@@ -972,7 +977,145 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 			commapBaseAdapter.notifyDataSetChanged();
 			
 			//TODO 同步到远程
+			setSyncData(new String[]{cid,uTokenId,"0","",content,"","","",shareuserId,sharename,shareuserCity,"-1"});
+		}
+	}
+	
+	/**
+	 * 同步我的收藏
+	 */
+	protected void setSyncData(String[] data){
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+//				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+				syncData(data);
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @Description: 同步数据(判断库是否存在记录)
+	 */
+	private void syncData(final String[] data){ 
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		
+		params.add("p_cId");
+		params.add("p_userId");
+		values.add(data[0]);
+		values.add(data[1]);
+		
+		requestData("pro_get_collection", 1, params, values, new HandlerData() {
+			@Override
+			public void error() {
+//				set3Msg(R.string.timeout_network);
+			}
 			
+			public void success(Map<String, List<String>> map) {
+			}
+
+			@Override
+			public void noData() {
+				syncRun(data,2);
+			}
+		});
+	}
+	
+	/**
+	 * 执行同步数据请求
+	 * @param style 2：add 3.update
+	 */
+	private void syncRun(String[] data,int style){
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		
+		params.add("p_cId");
+		params.add("p_userId");
+		params.add("p_topicId");
+		params.add("p_title");
+		params.add("p_content");
+		params.add("p_from_url");
+		params.add("p_site_name");
+		params.add("p_link_site");
+		params.add("p_shareUserId");
+		params.add("p_sharename");
+		params.add("p_sharenamecity");
+		params.add("p_type");
+		
+		values.add(data[0]);
+		values.add(data[1]);
+		values.add(data[2]);
+		values.add(data[3]);
+		values.add(data[4]);
+		values.add(data[5]);
+		values.add(data[6]);
+		values.add(data[7]);
+		values.add(data[8]);
+		values.add(data[9]);
+		values.add(data[10]);
+		values.add(data[11]);
+		
+		requestData("pro_set_collection", style, params, values, new HandlerData() {
+			@Override
+			public void error() {
+//				set3Msg(R.string.timeout_network);
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+//					if (map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)) {
+//						set3Msg(R.string.action_sync_success);
+//					}
+				} catch (Exception e) {
+//					set3Msg(R.string.action_sync_fail);
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void noData() {
+//				set3Msg(R.string.action_sync_fail);
+			}
+		});
+	}
+	
+	/**
+	 * 删除远端数据(我的收藏)
+	 */
+	protected void syncDelData(String cId){ 
+		if (CommUtil.isNetworkAvailable(self)) {
+			List<String> params = new ArrayList<String>();
+			List<String> values = new ArrayList<String>();
+			
+			params.add("p_cId");
+			params.add("p_userId");
+			values.add(cId);
+			values.add(uTokenId);
+			
+			requestData("pro_get_collection", 3, params, values, new HandlerData() {
+				
+				public void success(Map<String, List<String>> map) {
+					try {
+						if (map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)) {
+							
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				
+				@Override
+				public void noData() {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void error() {
+//					set3Msg(R.string.timeout_network);
+				}
+			});
 		}
 	}
 	

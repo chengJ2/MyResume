@@ -65,8 +65,8 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	private RelativeLayout viewcalendar;
 	private TextView mycollection,review_resume,view_day;
 	
-	private LinearLayout info_layout1,info_layout2,info_layout3,info_layout4;
-	private TextView info_item1,info_item2,info_item3,info_item4;
+	private LinearLayout info_layout0,info_layout1,info_layout2,info_layout3,info_layout4;
+	private TextView info_item0,info_item1,info_item2,info_item3,info_item4;
 	
 	private TextView resume_complete,resume_updatime;
 	
@@ -181,11 +181,13 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		resume_complete = findView(R.id.resume_complete);
 		resume_updatime = findView(R.id.resume_updatime);
 		
+		info_layout0 = findView(R.id.info_layout0);
 		info_layout1 = findView(R.id.info_layout1);
 		info_layout2 = findView(R.id.info_layout2);
 		info_layout3 = findView(R.id.info_layout3);
 		info_layout4 = findView(R.id.info_layout4);
 		
+		info_item0 = findView(R.id.info_item0);
 		info_item1 = findView(R.id.info_item1);
 		info_item2 = findView(R.id.info_item2);
 		info_item3 = findView(R.id.info_item3);
@@ -195,6 +197,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 //		viewcalendar.setOnClickListener(this);
 		review_resume.setOnClickListener(this);
 		
+		info_layout0.setOnClickListener(this);
 		info_layout1.setOnClickListener(this);
 		info_layout2.setOnClickListener(this);
 		info_layout3.setOnClickListener(this);
@@ -299,6 +302,32 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			resume_complete.setText(getStrValue(R.string.personal_c_item13));
 		}
 		
+	}
+	/**
+	 * 
+	 * @Description:求职意向完整度
+	 */
+	private void getEvaluationComplete(){
+		queryWhere = "select (a1+a2+a3) num"
+				+ " from ("
+				+ " select case when selfevaluation='' then 1 else 0 end a1,"
+				+ " case when careergoal='' then 1 else 0 end a2,"
+				+ " case when character='' then 1 else 0 end a3"
+				+ " from "+ CommonText.EVALUATION +" where userId = '"+ uTokenId +"') a";
+		commMapArray = dbUtil.queryData(self, queryWhere);
+		if (commMapArray!=null && commMapArray.get("num").length>0) {
+			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
+			int nPercent = 0;
+			nPercent = (int) (((3 - num) * 100 / 3));
+			if (nPercent <= 0)
+				nPercent = 0;
+			info_item0.setText(String.format(getStrValue(R.string.personal_c_item14), nPercent));
+			if (nPercent >= 100){
+				info_item0.setText(getStrValue(R.string.personal_c_item11));
+			}
+		}else{
+			info_item0.setText(getStrValue(R.string.personal_c_item13));
+		}
 	}
 	
 	/**
@@ -450,6 +479,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		super.onResume();
 		getBaseInfo();
 		getBaseInfoComplete();
+		getEvaluationComplete();
 		getJobIntensionComplete();
 		getEducationComplete();
 		getWorkExperienceComplete();
@@ -507,6 +537,9 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 //			break;
 		case R.id.review_resume:
 			startActivity(Constants.MAINACTIVITY,false);
+			break;
+		case R.id.info_layout0:
+			startChildActivity(Constants.EVALUATION,false);
 			break;
 		case R.id.info_layout1:
 			startChildActivity(Constants.JOBINTENSION,false);

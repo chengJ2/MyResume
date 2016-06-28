@@ -6,11 +6,12 @@ import java.util.List;
 import android.app.Activity;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.DisplayMetrics;
 
 import com.me.resume.comm.Constants;
 import com.me.resume.tools.CrashHandler;
 import com.me.resume.tools.DbManager;
-import com.me.resume.tools.FontsOverride;
+import com.me.resume.tools.L;
 import com.me.resume.utils.PreferenceUtil;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -35,8 +36,8 @@ public class MyApplication extends Application {
 	public static String USERID = "0";
 	public static String USERNAME = "";
 	public static String USERAVATORPATH = "";
-
-	private PreferenceUtil preferenceUtil = null;
+	
+	private PreferenceUtil preferenceUtil;
 
 	@Override
 	public void onCreate() {
@@ -48,15 +49,14 @@ public class MyApplication extends Application {
 	private void init() {
 		database = DbManager.openDatabase(this);
 		Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(this));
-
-		if (preferenceUtil == null) {
-			preferenceUtil = new PreferenceUtil(application);
-		}
+		
+		if(preferenceUtil == null)
+			preferenceUtil = new PreferenceUtil(this);
+		
 		if (preferenceUtil.getPreferenceData(Constants.SET_FEEDBACK)) {
-			CrashReport.initCrashReport(getApplicationContext(),
-					Constants.APP_CRASH_ID, true);
+			CrashReport.initCrashReport(getApplicationContext(), Constants.APP_CRASH_ID, true);
 		}
-
+		
 		// LanguageSettings.getInstance().initLang(this);
 		// FontsOverride.setDefaultFont(this, "serif", "fonts/FZLT.TTF");
 	}
@@ -97,5 +97,4 @@ public class MyApplication extends Application {
 		}
 		System.exit(0);
 	}
-
 }

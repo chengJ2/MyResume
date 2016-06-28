@@ -23,6 +23,8 @@ import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.ResponseCode;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
 import com.me.resume.tools.ImageLoader;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
@@ -311,6 +313,8 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 					toastMsg(R.string.item_text91);
 					setRightIcon(R.drawable.icon_collection_small_nor);
 					MyCollectionActivity.loadFlag = true;
+					
+					syncDelData(topicId);
 				}
 			}else{
 				toastMsg(R.string.action_login_head);
@@ -345,17 +349,16 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 	 * @param position
 	 */
 	private void addCollection(){
-		String content = detail;
-		if (RegexUtil.checkNotNull(content) && content.length() > 56) {
-			content = content.substring(0, 56);
+		if (RegexUtil.checkNotNull(detail) && detail.length() > 56) {
+			detail = detail.substring(0, 56);
 		}
 		ContentValues cValues = new ContentValues();
-		cValues.put("cId", topicId);
+		cValues.put("cId", topicId); // 收藏的标示
 		cValues.put("userId", uTokenId);
 		cValues.put("topicId", topicId);
 		cValues.put("title", title);
-		cValues.put("content", content);
-		cValues.put("from_url", fromUrl);
+		cValues.put("content", detail);
+		cValues.put("from_url", fromUrl);// 第一张图
 		cValues.put("site_name", sitename); // 网站名
 		cValues.put("link_site", linksite); // 对应的网站地址
 		cValues.put("createtime", TimeUtils.getCurrentTimeInString());
@@ -367,6 +370,7 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 			setRightIcon(R.drawable.icon_collection_small_sel);
 			
 			// TODO 同步到远端
+			setSyncData(new String[]{topicId,uTokenId,topicId,title,detail,fromUrl,sitename,linksite,"","","",type});
 		}
 	}
 	
@@ -398,6 +402,91 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 			top.setVisibility(View.VISIBLE);
 		}
 
+	}
+	
+	/**
+	 * 
+	 * @Description: 同步数据(判断库是否存在记录)
+	 */
+	private void syncData(){ 
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		
+		params.add("p_cId");
+		params.add("p_userId");
+		values.add(topicId);
+		values.add(uTokenId);
+		
+		requestData("pro_get_collection", 1, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				set3Msg(R.string.timeout_network);
+			}
+			
+			public void success(Map<String, List<String>> map) {
+			}
+
+			@Override
+			public void noData() {
+				syncRun(2);
+			}
+		});
+	}
+	
+	/**
+	 * 执行同步数据请求
+	 * @param style 2：add 3.update
+	 */
+	private void syncRun(int style){
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		
+		params.add("p_cId");
+		params.add("p_userId");
+		params.add("p_topicId");
+		params.add("p_title");
+		params.add("p_content");
+		params.add("p_from_url");
+		params.add("p_topic_from");
+		params.add("p_shareUserId");
+		params.add("p_sharename");
+		params.add("p_sharenamecity");
+		params.add("p_type");
+		
+		values.add(topicId);
+		values.add(uTokenId);
+		values.add(topicId);
+		values.add(title);
+		values.add(detail);
+		values.add(fromUrl);
+		values.add(sitename);
+		values.add("");
+		values.add("");
+		values.add("");
+		values.add(type);
+		
+		requestData("pro_set_collection", style, params, values, new HandlerData() {
+			@Override
+			public void error() {
+				set3Msg(R.string.timeout_network);
+			}
+			
+			public void success(Map<String, List<String>> map) {
+				try {
+					if (map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)) {
+						set3Msg(R.string.action_sync_success);
+					}
+				} catch (Exception e) {
+					set3Msg(R.string.action_sync_fail);
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void noData() {
+				set3Msg(R.string.action_sync_fail);
+			}
+		});
 	}
 	
 }
