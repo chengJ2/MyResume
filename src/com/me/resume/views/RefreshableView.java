@@ -15,6 +15,7 @@ import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.me.resume.R;
+import com.me.resume.utils.CommUtil;
 
 /**
  * 下拉刷新
@@ -28,7 +29,7 @@ public class RefreshableView extends LinearLayout {
 	private Scroller scroller;
 	private View refreshView;
 	// private ImageView refreshIndicatorView;
-	private int refreshTargetTop = -50;
+	private int refreshTargetTop = 0;
 	private ProgressBar bar;
 	private TextView downTextView;
 	private TextView timeTextView;
@@ -90,6 +91,8 @@ public class RefreshableView extends LinearLayout {
 		// 下来显示时间
 		timeTextView = (TextView) refreshView.findViewById(R.id.refresh_time);
 
+		refreshTargetTop = CommUtil.dip2px(mContext, -50);
+		
 		LayoutParams lp = new LinearLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, -refreshTargetTop);
 		lp.topMargin = refreshTargetTop;
