@@ -6,9 +6,5 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="libs/BaiduLBS_Android.jar"/>
-	<classpathentry kind="lib" path="libs/libammsdk.jar"/>
-	<classpathentry kind="lib" path="libs/mta-sdk-1.6.2.jar"/>
-	<classpathentry kind="lib" path="libs/open_sdk_r5756.jar"/>
-	<classpathentry kind="lib" path="libs/weibosdkcore_release.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

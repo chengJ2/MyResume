@@ -194,6 +194,7 @@
     <string name="personal_c_item16">上次更新:%s</string>
     <string name="personal_c_item17">应届生</string>
     <string name="personal_c_item18">%d年工作经验</string>
+    <string name="personal_c_item19">已有%d项经历</string>
     
     <!-- UI button click msg -->
     <string name="action_notice">提&#160;&#160;示</string>

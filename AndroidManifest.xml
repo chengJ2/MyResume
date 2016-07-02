@@ -227,7 +227,6 @@
             android:screenOrientation="portrait" >
         </activity>
         
-        
         <!-- 微信 -->
         <activity
             android:name="com.me.resume.wxapi.WXEntryActivity"
@@ -235,7 +234,6 @@
             android:screenOrientation="portrait"
             android:exported="true" >
         </activity>
-        
         <!-- QQ -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -248,7 +246,6 @@
                 <data android:scheme="tencent1105433372" />
             </intent-filter>
         </activity>
-        
         <!-- sina -->
         <activity 
 		     android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser" 
@@ -256,7 +253,6 @@
 		     android:windowSoftInputMode="adjustResize"
 		     android:exported="false" >
 		</activity>
-        
         
          <service android:name="com.me.resume.service.DownloadService"
 			android:process=".updateService" />

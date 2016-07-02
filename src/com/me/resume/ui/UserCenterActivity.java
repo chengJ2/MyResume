@@ -87,6 +87,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
         					blur(bitmap);
         					user_info_avatar.setImageBitmap(ImageUtils.toRoundBitmap(bitmap));
         					preferenceUtil.setPreferenceData(UserInfoCode.USERNEWAVATOR, true);
+        					HomeActivity.userstatus = true;
         				}
         			} catch (Exception e) {
         				e.printStackTrace();
@@ -430,18 +431,22 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	 * 
 	 * @Description:项目经验
 	 */
-	private void getProjectExperienceComplete(){
-		queryWhere = "select count(*) as num from "+ CommonText.PROJECT_EXPERIENCE +" where userId = '"+ uTokenId +"'";
+	private void getWEandPEComplete(String table,TextView text){
+		queryWhere = "select count(*) as num from "+ table +" where userId = '"+ uTokenId +"'";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!=null && commMapArray.get("num").length>0) {
 			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
 			if (num > 0) {
-				info_item4.setText(String.format(getStrValue(R.string.personal_c_item15), num));
+				if (table.equals(CommonText.WORKEXPERIENCE)) {
+					text.setText(String.format(getStrValue(R.string.personal_c_item19), num));
+				}else if (table.equals(CommonText.PROJECT_EXPERIENCE)){
+					text.setText(String.format(getStrValue(R.string.personal_c_item15), num));
+				}
 			}else{
-				info_item4.setText(getStrValue(R.string.personal_c_item13));
+				text.setText(getStrValue(R.string.personal_c_item13));
 			}
 		}else{
-			info_item4.setText(getStrValue(R.string.personal_c_item13));
+			text.setText(getStrValue(R.string.personal_c_item13));
 		}
 	}
 	
@@ -482,8 +487,8 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		getEvaluationComplete();
 		getJobIntensionComplete();
 		getEducationComplete();
-		getWorkExperienceComplete();
-		getProjectExperienceComplete();
+		getWEandPEComplete(CommonText.WORKEXPERIENCE,info_item3);
+		getWEandPEComplete(CommonText.PROJECT_EXPERIENCE,info_item4);
 	}
 	
 	private boolean topbarView = false;
@@ -579,11 +584,12 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 					if (map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)) {
 						toastMsg(R.string.action_logout_success);
 						MyApplication.USERID = "0";
+						HomeActivity.userstatus = true;
 						preferenceUtil.setPreferenceData(UserInfoCode.AVATOR, "");
 						preferenceUtil.setPreferenceData(UserInfoCode.USEID,"0");
 						preferenceUtil.setPreferenceData(UserInfoCode.REALNAME,"");
-//						preferenceUtil.setPreferenceData(UserInfoCode.USERSTATUS, true); // refresh home data
-//						preferenceUtil.setPreferenceData(UserInfoCode.ISREGISTER, false);
+						preferenceUtil.setPreferenceData(UserInfoCode.UTOKENID,"0");
+						preferenceUtil.setPreferenceData(UserInfoCode.ISREGISTER, false);// 注销仍不能再注册
 						scrollToFinishActivity();
 					}
 				} catch (Exception e) {

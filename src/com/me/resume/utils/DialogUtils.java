@@ -358,7 +358,7 @@ public class DialogUtils {
 	 * @param parent
 	 */
 	private static void showPopupView(View layout,View parent){
-		mPopupWindow = new PopupWindow(layout, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT,true);
+		mPopupWindow = new PopupWindow(layout, LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT,true);
 		mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
 		mPopupWindow.setFocusable(true);
 		mPopupWindow.setOutsideTouchable(true);
@@ -384,6 +384,7 @@ public class DialogUtils {
 		LinearLayout setting_syn = (LinearLayout)layout.findViewById(R.id.llout_sync);
 		LinearLayout setting_manage = (LinearLayout)layout.findViewById(R.id.llout_manage);
 		View line_manage = (View)layout.findViewById(R.id.line_manage);
+		ImageView icon_cancle = (ImageView)layout.findViewById(R.id.icon_cancle);
 		if (more == 1) {
 			line_manage.setVisibility(View.VISIBLE);
 			setting_manage.setVisibility(View.VISIBLE);
@@ -391,12 +392,6 @@ public class DialogUtils {
 			line_manage.setVisibility(View.GONE);
 			setting_manage.setVisibility(View.GONE);
 		}
-		
-//		final TypedArray typedArray = context.getResources().obtainTypedArray(R.array.review_bgcolor);
-//		List<Integer> nList = new ArrayList<Integer>();
-//		for (int i = 0; i < typedArray.length(); i++) {
-//			nList.add(typedArray.getResourceId(i, 0));
-//		}
 		
 		String[] item_text = CommUtil.getArrayValue(context,R.array.review_bgcolor); 
 		List<String> nList = Arrays.asList(item_text);
@@ -485,6 +480,14 @@ public class DialogUtils {
 			@Override
 			public void onClick(View v) {
 				sendMsg(OnTopMenu.MSG_MENU32);
+				dismissPopwindow();
+			}
+		});
+		
+		icon_cancle.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
 				dismissPopwindow();
 			}
 		});

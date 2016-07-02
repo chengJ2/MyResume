@@ -91,7 +91,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 				ActivityUtils.startActivityForResult(self, 
 						Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
 						Constants.TYPE,CommonText.PROJECT_EXPERIENCE,
-						Constants.WE_MANAGER_REQUEST_CODE);
+						Constants.PE_MANAGER_REQUEST_CODE);
 				break;
 			default:
 				break;
@@ -107,12 +107,12 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 		boayLayout.addView(v);
 		
 		findViews();
+		initViews();
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		initViews();
 	}
 	
 	private void findViews(){
@@ -138,7 +138,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	 */
 	private void initViews(){
 		if (getPEData()) {
-			 setFeildValue();
+			 setFeildValue(commMapArray);
 		}
 	}
 	
@@ -150,9 +150,11 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 		 queryWhere = "select * from " + CommonText.PROJECT_EXPERIENCE + " where userId = '"+ uTokenId +"' order by id desc limit 1";
 		 commMapArray = dbUtil.queryData(self, queryWhere);
          if (commMapArray!= null && commMapArray.get("userId").length > 0) {
+        	 setEditBtnVisible(View.VISIBLE);
         	 tokenId = commMapArray.get("tokenId")[0];
         	 return true;
          }else{
+        	 setEditBtnVisible(View.GONE);
         	 return false;
          }
 	}
@@ -213,12 +215,12 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	/**
 	 * 设置字段值
 	 */
-	private void setFeildValue(){
-		info_projectname.setText(commMapArray.get("projectname")[0]);
-   	 	info_startworktime.setText(commMapArray.get("worktimestart")[0]);
-   	 	info_endworktime.setText(commMapArray.get("worktimeend")[0]);
-   	 	info_workduties.setText(commMapArray.get("duties")[0]);
-   	 	input_workdesc.setText(commMapArray.get("prokectdesc")[0]);
+	private void setFeildValue(Map<String, String[]> map){
+		info_projectname.setText(map.get("projectname")[0]);
+   	 	info_startworktime.setText(map.get("worktimestart")[0]);
+   	 	info_endworktime.setText(map.get("worktimeend")[0]);
+   	 	info_workduties.setText(map.get("duties")[0]);
+   	 	input_workdesc.setText(map.get("prokectdesc")[0]);
 	}
 	
 	@Override
@@ -428,10 +430,10 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		L.d("onActivityResult"+"requestCode="+requestCode+" resultCode="+resultCode + " data:"+data);
-        if(requestCode == Constants.WE_MANAGER_REQUEST_CODE){
+        if(requestCode == Constants.PE_MANAGER_REQUEST_CODE){
         	 if(resultCode == Constants.RESULT_CODE) {
         		 tokenId = data.getStringExtra(UserInfoCode.TOKENID);
-        		 refreshData(); 
+        		 refreshData(tokenId); 
      		}
         }
 		super.onActivityResult(requestCode, resultCode, data);
@@ -441,12 +443,12 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	/**
 	 * 从管理界面返回刷新数据
 	 */
-	private void refreshData() {
+	private void refreshData(String tokenId) {
 		queryWhere = "select * from " + CommonText.PROJECT_EXPERIENCE
 				+ " where userId = '" + uTokenId + "' and tokenId ='" + tokenId + "' limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			setFeildValue();
+			setFeildValue(commMapArray);
 		}
 	}
 }

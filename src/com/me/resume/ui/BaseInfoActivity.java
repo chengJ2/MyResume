@@ -108,7 +108,9 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 				break;
 			case 13:
 				if (msg.obj != null) {
-					info_workyear.setText(((String)msg.obj)/*.substring(0, 7)*/);
+					String year = (String)msg.obj;
+					year = year.substring(0, year.lastIndexOf("-"));
+					info_workyear.setText(year);
 				}
 				break;
 			case 100:

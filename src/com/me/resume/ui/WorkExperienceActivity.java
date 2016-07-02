@@ -127,7 +127,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		boayLayout.addView(v);
 		
 		findViews();
-		
 		initViews();
 	}
 	
@@ -170,25 +169,25 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 */
 	private void initViews() {
 		if (getWEData()) {
-			setFeildValue();
+			setFeildValue(commMapArray);
 		}
 	}
 	
 	/**
 	 * 设置字段值
 	 */
-	private void setFeildValue(){
-		info_industryclassification.setText(commMapArray.get("industryclassification")[0]);
-		info_startworktime.setText(commMapArray.get("worktimestart")[0]);
-		info_endworktime.setText(commMapArray.get("worktimeend")[0]);
-		info_expectedsalary.setText(commMapArray.get("expectedsalary")[0]);
+	private void setFeildValue(Map<String, String[]> map){
+		info_industryclassification.setText(map.get("industryclassification")[0]);
+		info_startworktime.setText(map.get("worktimestart")[0]);
+		info_endworktime.setText(map.get("worktimeend")[0]);
+		info_expectedsalary.setText(map.get("expectedsalary")[0]);
 
-		info_companyname.setText(commMapArray.get("companyname")[0]);
-		info_jobtitle.setText(commMapArray.get("jobtitle")[0]);
-		info_workdescdetail.setText(commMapArray.get("workdesc")[0]);
+		info_companyname.setText(map.get("companyname")[0]);
+		info_jobtitle.setText(map.get("jobtitle")[0]);
+		info_workdescdetail.setText(map.get("workdesc")[0]);
 
-		info_companynature.setText(commMapArray.get("companynature")[0]);
-		info_companyscale.setText(commMapArray.get("companyscale")[0]);
+		info_companynature.setText(map.get("companynature")[0]);
+		info_companyscale.setText(map.get("companyscale")[0]);
 	}
 	
 	
@@ -554,7 +553,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
         }else if(requestCode == Constants.WE_MANAGER_REQUEST_CODE){
         	 if(resultCode == Constants.RESULT_CODE) {
         		 tokenId = data.getStringExtra(UserInfoCode.TOKENID);
-        		 refreshData(); 
+        		 refreshData(tokenId); 
      		}
         }
 		super.onActivityResult(requestCode, resultCode, data);
@@ -564,12 +563,12 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	/**
 	 * 从管理界面返回刷新数据
 	 */
-	private void refreshData() {
+	private void refreshData(String tokenId) {
 		queryWhere = "select * from " + CommonText.WORKEXPERIENCE
 				+ " where userId = '" + uTokenId + "' and tokenId ='" + tokenId + "' limit 1";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
-			setFeildValue();
+			setFeildValue(commMapArray);
 		}
 	}
 }

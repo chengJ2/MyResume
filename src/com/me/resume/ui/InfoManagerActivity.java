@@ -297,7 +297,6 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		}
 		
 		holder.setText(R.id.item11, sbStr.toString());
-		
 		holder.setText(R.id.item12, sbStr2.toString());
 		
 		final String tokenId = commMapArray.get("tokenId")[position];
@@ -319,6 +318,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 				scrollToFinishActivity();
 			}
 		});
+		
 	}
 	
 	/**
@@ -361,6 +361,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 			@Override
 			public void onClick(View view) {
 				Intent intent=new Intent();
+				L.d("=PE==tokenId===="+tokenId);
 		        intent.putExtra(UserInfoCode.TOKENID, tokenId);
 		        setResult(Constants.RESULT_CODE, intent);
 				scrollToFinishActivity();

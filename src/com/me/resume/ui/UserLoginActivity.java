@@ -159,11 +159,11 @@ public class UserLoginActivity extends BaseActivity implements
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
-		if (preferenceUtil.getPreferenceData(UserInfoCode.ISREGISTER)) {
-			setRightIconVisible(View.GONE);
-		}else{
+		if (preferenceUtil.getPreferenceFData(UserInfoCode.ISREGISTER)) {
 			right_icon.setImageResource(R.drawable.icon_user_register);
 			setRightIconVisible(View.VISIBLE);
+		}else{
+			setRightIconVisible(View.GONE);
 		}
 		btnLogin.setText(getStrValue(R.string.action_login));
 		btnLogin.setEnabled(true);
