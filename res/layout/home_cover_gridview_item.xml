@@ -1,46 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/itemlayout"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white" >
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/home_cover_image_height"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/grey_80">
+    </View>
     
     <ImageView
         android:id="@+id/item1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/home_cover_image_height"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/default_cover1"
-        android:scaleType="fitXY">
+        android:src="@drawable/default_cover"
+        android:scaleType="fitXY"
+        android:padding="@dimen/home_topic_item_bg_line">
     </ImageView>
  
     <TextView
         android:id="@+id/item2"
-        android:layout_width="80dp"
+        android:layout_width="match_parent"
         android:layout_height="34dip"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center|left"
+        android:gravity="left|top"
         android:singleLine="false"
         android:maxLines="2"
         android:padding="2dip"
-        android:text="该操作会清除您创建的简历信息"
+        android:text="@string/item_text101"
         android:textSize="@dimen/micro_text_size"
-        android:textColor="@color/grey_10" >
+        android:textColor="@color/black"
+        android:layout_below="@id/item1" >
     </TextView>
     
     <Button
         android:id="@+id/item3"
-        android:layout_width="50dip"
+        android:layout_width="match_parent"
         android:layout_height="26dip"
         android:layout_marginTop="2dip"
+        android:layout_marginRight="@dimen/margin_16"
+        android:layout_marginLeft="@dimen/margin_16"
         android:layout_gravity="center_horizontal"
         android:singleLine="true"
         android:background="@drawable/button_use"
         android:text="@string/button_use"
         android:textSize="@dimen/button_use_textsize"
         android:textColor="@color/white"
-        android:visibility="visible" >
+        android:visibility="visible"
+        android:layout_below="@id/item2" >
     </Button>
 
-</LinearLayout>
+</RelativeLayout>

@@ -65,6 +65,7 @@
     <string name="item_text9">收藏成功</string>
     <string name="item_text91">取消收藏</string>
     <string name="item_text100">正在下载,请稍后\u2026</string>
+    <string name="item_text101">简历预览封面说明</string>
     
     <!-- 设置界面 -->
     <string name="action_settings">设置</string>
