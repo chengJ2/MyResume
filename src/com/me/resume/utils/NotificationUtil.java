@@ -45,7 +45,7 @@ public class NotificationUtil {
 			mNotification = new Notification();
 			
 			mNotification.when = System.currentTimeMillis();
-			mNotification.icon = R.drawable.ic_launcher;
+			mNotification.icon = R.drawable.notify_icon;
 			mNotification.flags = Notification.FLAG_AUTO_CANCEL;
 
 			Intent mIntent = new Intent(mContext, HomeActivity.class);

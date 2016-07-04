@@ -102,8 +102,12 @@ public class Constants {
     // 默认显示时间
     public static final int DEFAULTIME = 5000;
     
+    public static final int DEFAULTEFFECTTIME = 3000;
+    
     // 预览默认切换效果
-    public static final String DEFAULEFFECT = "Standard";
+    public static final String DEFAULEFFECT = "无";
+    public static final String EFFECT_STANDARD = "Standard";
+    public static final String EFFECT_RANDOM = "Random";
     
     // 腾讯bugly app_id  
  	public static final String APP_CRASH_ID = "900025676";

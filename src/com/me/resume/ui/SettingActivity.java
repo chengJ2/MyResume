@@ -64,6 +64,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 					int position = (int) msg.obj;
 					String animValueStr = mList.get(position);
 					animvalue.setText(animValueStr);
+					
+					item_values = CommUtil.getArrayValue(self,R.array.jazzy_effects); 
+					mList = Arrays.asList(item_values);
+					animValueStr = mList.get(position);
 					preferenceUtil.setPreferenceData(Constants.SET_SWITCHANIM, animValueStr);
 				}
 				break;
@@ -129,8 +133,17 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		}
 		version.setText(CommUtil.getVersionName(self));
 		
-		effectsduration.setText(getEffectdDuration(preferenceUtil.getPreferenceData(Constants.SET_SWITCHEFFDURATION,Constants.DEFAULTIME)));
-		animvalue.setText(preferenceUtil.getPreferenceData(Constants.SET_SWITCHANIM, Constants.DEFAULEFFECT));
+		effectsduration.setText(getEffectdDuration(preferenceUtil.getPreferenceData(Constants.SET_SWITCHEFFDURATION,Constants.DEFAULTEFFECTTIME)));
+		
+		String animValueStr = preferenceUtil.getPreferenceData(Constants.SET_SWITCHANIM, Constants.EFFECT_STANDARD);
+		item_values = CommUtil.getArrayValue(self,R.array.jazzy_effects); 
+		int length = item_values.length;
+		for (int i = 0; i < length; i++) {
+			if (animValueStr.equals(item_values[i])) {
+				item_values = CommUtil.getArrayValue(self,R.array.jazzy_effects_zh); 
+				animvalue.setText(item_values[i]);
+			}
+		}
 		
 		cacheLayout.setOnClickListener(this);
 		versionLayout.setOnClickListener(this);
@@ -259,7 +272,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.llout021:
 			whichTab = 2;
-			item_values = CommUtil.getArrayValue(self,R.array.jazzy_effects); 
+			item_values = CommUtil.getArrayValue(self,R.array.jazzy_effects_zh); 
 			mList = Arrays.asList(item_values);
 			DialogUtils.showPopWindow(self, llout021, R.string.settings_item11, mList, mHandler);
 			break;
@@ -317,20 +330,20 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	 * @param position
 	 */
 	private void setEffectsDuration(TextView tv,int position){
-		int duration = 5 * 1000;
+		int duration = 3 * 1000;
 		item_values = CommUtil.getArrayValue(self,R.array.auto_show_effects_duration); 
 		if(position == 0){
+			duration = 3 * 1000;
+		}else if(position == 1){
 			duration = 5 * 1000;
 		}else if(position == 1){
-			duration = 10 * 1000;
+			duration = 7 * 1000;
+		}else if(position == 1){
+			duration = 9 * 1000;
+		}else if(position == 1){
+			duration = 11 * 1000;
 		}else if(position == 1){
 			duration = 15 * 1000;
-		}else if(position == 1){
-			duration = 30 * 1000;
-		}else if(position == 1){
-			duration = 45 * 1000;
-		}else if(position == 1){
-			duration = 60 * 1000;
 		}
 		tv.setText(item_values[position]);
 		preferenceUtil.setPreferenceData(Constants.SET_SWITCHEFFDURATION, duration);
@@ -344,17 +357,17 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	private String getEffectdDuration(int duration){
 		int position = 0;
 		item_values = CommUtil.getArrayValue(self,R.array.auto_show_effects_duration);
-		if(duration == 5 * 1000){
+		if(duration == 3 * 1000){
 			position = 0;
-		}else if(duration == 10 * 1000){
+		}else if(duration == 5 * 1000){
 			position = 1;
-		}else if(duration == 15 * 1000){
+		}else if(duration == 7 * 1000){
 			position = 2;
-		}else if(duration == 30 * 1000){
+		}else if(duration == 9 * 1000){
 			position = 3;
-		}else if(duration == 45 * 1000){
+		}else if(duration == 11 * 1000){
 			position = 4;
-		}else if(duration == 06 * 1000){
+		}else if(duration == 15 * 1000){
 			position = 5;
 		}
 		return item_values[position];

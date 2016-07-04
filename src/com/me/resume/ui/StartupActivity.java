@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
-import com.me.resume.comm.UserInfoCode;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.PreferenceUtil;

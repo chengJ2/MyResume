@@ -127,6 +127,14 @@ public class MainActivity extends Activity {
 					index = -1;
 				}
 				jazzyViewPager.setCurrentItem(index + 1);
+				
+				String effectStr = preferenceUtil.getPreferenceData(Constants.SET_SWITCHANIM, Constants.DEFAULEFFECT);
+				if (effectStr.equals(Constants.EFFECT_RANDOM)) {
+					List<String> mList = Arrays.asList(CommUtil.getArrayValue(self,R.array.jazzy_effects_random));
+					TransitionEffect effect = TransitionEffect.valueOf(mList.get(new Random().nextInt(mList.size())));
+					jazzyViewPager.setTransitionEffect(effect);
+				}
+				
 				mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO,Constants.DEFAULTIME);
 				break;
 			case 2:
@@ -146,7 +154,7 @@ public class MainActivity extends Activity {
 		if(preferenceUtil == null)
 			preferenceUtil = new PreferenceUtil(self);
 		jazzyViewPager = (JazzyViewPager)findViewById(R.id.mainviewpager);
-		jazzyViewPager.setFadeEnabled(true);//有淡入淡出效果
+//		jazzyViewPager.setFadeEnabled(true);//有淡入淡出效果
 		jazzyViewPager.setCurrentItem(0);
 		initViews();
 	}
@@ -205,8 +213,17 @@ public class MainActivity extends Activity {
 		view8 = mInflater.inflate(R.layout.index_resume_8, null);
 		
 		if (preferenceUtil.getPreferenceData(Constants.SET_AUTOSHOW)) {
-			int switchDuration = preferenceUtil.getPreferenceData(Constants.SET_SWITCHEFFDURATION,Constants.DEFAULTIME);
-			TransitionEffect effect = TransitionEffect.valueOf(preferenceUtil.getPreferenceData(Constants.SET_SWITCHANIM, "Standard"));
+			int switchDuration = preferenceUtil.getPreferenceData(Constants.SET_SWITCHEFFDURATION,Constants.DEFAULTEFFECTTIME);
+			String effectStr = preferenceUtil.getPreferenceData(Constants.SET_SWITCHANIM, Constants.DEFAULEFFECT);
+			TransitionEffect effect = null;
+			if (effectStr.equals(Constants.DEFAULEFFECT)) {
+				effect = TransitionEffect.valueOf(Constants.EFFECT_STANDARD);
+			}else if (effectStr.equals(Constants.EFFECT_RANDOM)) {
+				List<String> mList = Arrays.asList(CommUtil.getArrayValue(self,R.array.jazzy_effects_random));
+				effect = TransitionEffect.valueOf(mList.get(new Random().nextInt(mList.size())));
+			}else{
+				effect = TransitionEffect.valueOf(effectStr);
+			}
 			jazzyViewPager.setTransitionEffect(effect);
 			mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO,switchDuration);
 		}

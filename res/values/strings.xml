@@ -9,8 +9,8 @@
     <string name="app_download">正在下载 有云简历 \u2026</string>
     <string name="app_declare1">特别声明</string>
     <string name="app_declare2">联系我们</string>
-    <string name="app_declare3">本App上的大部分内容来源网络,包括文字,图片等,提供的内容将服务使用者用于个人学习、研究或欣赏,以及其他非商业性或非盈利性用途.</string>
-    <string name="app_declare4">若内容侵犯了原作者的权利或原作者不愿意在本App展示内容,请及时通知并联系我们,予以删除。</string>
+    <string name="app_declare3">本软件平台上的大部分内容来源于网络,包括文字,图片等,我们提供的内容将服务使用者用于个人学习、参考或欣赏,以及其他非商业性或非盈利性用途.</string>
+    <string name="app_declare4">若有内容侵犯了原作者的权利或原作者不愿意在本软件平台上展示内容,请及时通知并联系我们,将予以删除。</string>
     <string name="app_declare5">我们郑重承诺:严格保密用户同步的数据,保证用户数据隐私安全。</string>
     
     <!-- 网络相关 -->
@@ -37,6 +37,7 @@
     <string name="resume_message">留言板</string>
     <string name="resume_makemywords">自定义留言信息</string>
     <string name="resume_mywords">&#160;&#160;&#160;&#160;我坚信在贵公司,我将学到更多知识,发挥出个人的最大效益.</string>
+    <string name="resume_thinks">谢谢</string>
     
      <!-- Home -->
     <string name="resume_center">简历中心</string>
@@ -74,12 +75,12 @@
     <string name="settings_item11">简历预览切换效果</string>
     <string name="settings_item2">自动切换简历预览</string>
     <string name="settings_item20">自动切换预览间隔</string>
-    <string name="settings_item201">5秒</string>
-    <string name="settings_item202">10秒</string>
-    <string name="settings_item203">15秒</string>
-    <string name="settings_item204">30秒</string>
-    <string name="settings_item205">45秒</string>
-    <string name="settings_item206">60秒</string>
+    <string name="settings_item201">3秒</string>
+    <string name="settings_item202">5秒</string>
+    <string name="settings_item203">7秒</string>
+    <string name="settings_item204">9秒</string>
+    <string name="settings_item205">11秒</string>
+    <string name="settings_item206">15秒</string>
     <string name="settings_item22">简历预览切换动画</string>
     <string name="settings_item21">预览界面编辑模式</string>
     <string name="settings_item3">检测新版本</string>
