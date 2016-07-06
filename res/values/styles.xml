@@ -405,8 +405,13 @@
     
     <style name="main_common_padding_text" parent="@style/main_common_text">
         <item name="android:paddingLeft">@dimen/margin_16</item>
-        <item name="android:layout_marginTop">@dimen/margin_5</item>
+        <item name="android:layout_marginTop">@dimen/margin_10</item>
         <item name="android:lineSpacingExtra">3dip</item>
+    </style>
+    
+     <style name="main_common_center_text" parent="@style/main_common_text">
+        <item name="android:paddingLeft">80dip</item>
+         <item name="android:layout_marginTop">@dimen/margin_10</item>
     </style>
 
     <style name="user_center_text">

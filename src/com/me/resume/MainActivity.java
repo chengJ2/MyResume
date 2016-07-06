@@ -83,7 +83,8 @@ public class MainActivity extends Activity {
 	
 	// View1
 	private LinearLayout index1layout;
-	private TextView index_1_realname, index_1_info,index_1_where,index_1_lisence,index_1_phone,index_1_email;
+	private ImageView index_1_sexicon;
+	private TextView index_1_realname,index_1_info,index_2_info,index_1_job,index_1_phone,index_1_email;
 	
 	// View2
 	private LinearLayout index2layout;
@@ -276,15 +277,19 @@ public class MainActivity extends Activity {
 	private void initView1(View view){
 		index1layout = (LinearLayout) view.findViewById(R.id.index1layout);
 		index_1_realname = ((TextView) view.findViewById(R.id.index_1_realname));
+		index_1_sexicon = ((ImageView) view.findViewById(R.id.index_1_sexicon));
 		index_1_info = ((TextView) view.findViewById(R.id.index_1_info));
-		index_1_where = ((TextView) view.findViewById(R.id.index_1_where));
-		index_1_lisence = ((TextView) view.findViewById(R.id.index_1_lisence));
+		index_2_info = ((TextView) view.findViewById(R.id.index_2_info));
+		index_1_job = ((TextView) view.findViewById(R.id.index_1_job));
 		index_1_phone = ((TextView) view.findViewById(R.id.index_1_phone));
 		index_1_email = ((TextView) view.findViewById(R.id.index_1_email));
 		
 		initTopView(view,R.string.resume_baseinfo,Constants.BASEINFO);
 		
-		queryWhere = "select * from " + CommonText.BASEINFO + " where userId = '"+ BaseActivity.uTokenId +"' limit 1";
+		queryWhere = "select b.*,j.expworkcareer from " 
+				+ CommonText.BASEINFO + " b join "
+				+ CommonText.JOBINTENSION +" j on b.userId = j.userId where b.userId = '"
+				+ BaseActivity.uTokenId +"' limit 1";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			if (!mViewList.contains(view)) {
@@ -296,13 +301,20 @@ public class MainActivity extends Activity {
 			index_1_realname.setText(preferenceUtil.getPreferenceData(UserInfoCode.REALNAME, ""));
 			
 			StringBuffer sbStr = new StringBuffer();
+			
 			String info = commMapArray.get("gender")[0];
-			if(info.equals("0")){
-				sbStr.append(CommUtil.getStrValue(self, R.string.info_sex_1));
+			if (info.equals("1")) {
+				index_1_sexicon.setImageResource(R.drawable.main_index_icon_woman);
 			}else{
-				sbStr.append(CommUtil.getStrValue(self, R.string.info_sex_2));
+				index_1_sexicon.setImageResource(R.drawable.main_index_icon_man);
 			}
-			sbStr.append("&nbsp;|&nbsp;");
+			info = commMapArray.get("brithday")[0];
+			int theYear = CommUtil.parseInt(TimeUtils.theYear());
+			if(RegexUtil.checkNotNull(info)){
+				int age = theYear - CommUtil.parseInt(info.substring(0, 4));
+				sbStr.append(age+"岁");
+				sbStr.append("&nbsp;|&nbsp;");
+			}
 			
 			info = commMapArray.get("ismarry")[0];
 			if(info.equals("1")){
@@ -312,48 +324,42 @@ public class MainActivity extends Activity {
 			}else{
 				sbStr.append(CommUtil.getStrValue(self, R.string.info_maritalstatus_1));
 			}
-			sbStr.append("&nbsp;|&nbsp;");
-			info = commMapArray.get("brithday")[0];
-			int theYear = CommUtil.parseInt(TimeUtils.theYear());
-			if(RegexUtil.checkNotNull(info)){
-				int age = theYear - CommUtil.parseInt(info.substring(0, 4));
-				sbStr.append(age+"岁");
-			}
+		
 			index_1_info.setText(Html.fromHtml(sbStr.toString()));
 			
 			sbStr = new StringBuffer();
 			info = commMapArray.get("hometown")[0];
 			if(RegexUtil.checkNotNull(info)){
-				sbStr.append("家乡："+info);
+				sbStr.append("家&nbsp;乡:&nbsp;"+info);
 				sbStr.append("&nbsp;|&nbsp;");
 			}
 			
 			info = commMapArray.get("city")[0];
 			if(RegexUtil.checkNotNull(info)){
-				sbStr.append("现居地："+info);
+				sbStr.append("现居地:&nbsp;"+info);
 			}
 			
-			index_1_where.setText(Html.fromHtml(sbStr.toString()));
+			index_2_info.setText(Html.fromHtml(sbStr.toString()));
 			
-			info = commMapArray.get("license")[0];
+			info = commMapArray.get("expworkcareer")[0];
 			if(RegexUtil.checkNotNull(info)){
-				index_1_lisence.setVisibility(View.VISIBLE);
-				index_1_lisence.setText("身份证："+ commMapArray.get("license")[0]);
+				index_1_job.setVisibility(View.VISIBLE);
+				index_1_job.setText(Html.fromHtml("职位:&nbsp;"+info));
 			}else{
-				index_1_lisence.setVisibility(View.GONE);
+				index_1_job.setVisibility(View.GONE);
 			}
 			
 			info = commMapArray.get("phone")[0];
 			if(RegexUtil.checkNotNull(info)){
 				index_1_phone.setVisibility(View.VISIBLE);
-				index_1_phone.setText("手机号："+info);
+				index_1_phone.setText(Html.fromHtml("手机号:&nbsp;"+info));
 			}else{
 				index_1_phone.setVisibility(View.GONE);
 			}
 			info = commMapArray.get("email")[0];
 			if(RegexUtil.checkNotNull(info)){
 				index_1_email.setVisibility(View.VISIBLE);
-				index_1_email.setText("E-mail："+info);
+				index_1_email.setText(Html.fromHtml("E-mail:&nbsp;"+info));
 			}else{
 				index_1_email.setVisibility(View.GONE);
 			}

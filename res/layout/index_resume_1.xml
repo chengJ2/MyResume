@@ -9,34 +9,47 @@
    <include layout="@layout/top_title_layout"/>
     
      <ImageView 
+        android:id="@+id/index_1_sexicon"
         android:layout_width="match_parent"
         android:layout_height="180dip"
-        android:background="@drawable/main_index_icon1"/>
+        android:src="@drawable/main_index_icon_woman"/>
     
     <TextView
         android:id="@+id/index_1_realname"
-        style="@style/main_common_padding_text"
-        android:textSize="@dimen/large_text_size" />
+        style="@style/main_common_center_text"
+        android:textSize="@dimen/large_text_size"
+        android:gravity="center"
+        android:paddingLeft="0dip"
+        android:text="张三" />
    
     <TextView
         android:id="@+id/index_1_info"
         android:layout_marginTop="@dimen/margin_10"
-        style="@style/main_common_padding_text"/>
+        style="@style/main_common_center_text"
+        android:textSize="@dimen/micro_text_size"
+        android:gravity="center"
+        android:paddingLeft="0dip"
+        android:text="26岁 | 未婚"/>
     
      <TextView
-        android:id="@+id/index_1_where"
-        style="@style/main_common_padding_text"/>
+        android:id="@+id/index_2_info"
+        style="@style/main_common_center_text"
+        android:layout_marginTop="@dimen/margin_20"
+        android:text="家乡：黄石|现居地：武汉"/>
     
-    <TextView
-        android:id="@+id/index_1_lisence"
-        style="@style/main_common_padding_text"/>
+     <TextView
+        android:id="@+id/index_1_job"
+        style="@style/main_common_center_text"
+        android:text="职位：移动开发工程师"/>
     
      <TextView
         android:id="@+id/index_1_phone"
-        style="@style/main_common_padding_text"/>
+        style="@style/main_common_center_text"
+        android:text="手机号：13611111111"/>
      
       <TextView
         android:id="@+id/index_1_email"
-        style="@style/main_common_padding_text"/>
+        style="@style/main_common_center_text"
+        android:text="E-mail：123456@qq.com"/>
 
 </LinearLayout>
