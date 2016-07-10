@@ -9,8 +9,7 @@
    <include layout="@layout/top_title_layout"/>
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dip"
+        style="@style/main_icon_style"
         android:background="@drawable/main_index_icon2" />
 
     <ListView

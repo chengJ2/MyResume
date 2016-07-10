@@ -10,8 +10,8 @@
     
      <ImageView 
         android:id="@+id/index_1_sexicon"
-        android:layout_width="match_parent"
         android:layout_height="180dip"
+        style="@style/main_icon_style"
         android:src="@drawable/main_index_icon_woman"/>
     
     <TextView
@@ -35,12 +35,12 @@
         android:id="@+id/index_2_info"
         style="@style/main_common_center_text"
         android:layout_marginTop="@dimen/margin_20"
-        android:text="家乡：黄石|现居地：武汉"/>
+        android:text="家   乡：黄石"/>
     
      <TextView
         android:id="@+id/index_1_job"
         style="@style/main_common_center_text"
-        android:text="职位：移动开发工程师"/>
+        android:text="职   位：移动开发工程师"/>
     
      <TextView
         android:id="@+id/index_1_phone"

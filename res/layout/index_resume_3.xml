@@ -19,9 +19,8 @@
             android:orientation="vertical" >
             
 		    <ImageView
-		        android:layout_width="match_parent"
-		        android:layout_height="150dip"
-		        android:src="@drawable/main_index_icon3" />
+		        android:src="@drawable/main_index_icon3"
+		        style="@style/main_icon_style" />
             
             <LinearLayout
                 android:id="@+id/llout01"

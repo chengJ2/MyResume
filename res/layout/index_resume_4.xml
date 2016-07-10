@@ -9,8 +9,7 @@
     <include layout="@layout/top_title_layout" />
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dip"
+        style="@style/main_icon_style"
         android:src="@drawable/main_index_icon4" />
 
     <TextView
@@ -41,7 +40,7 @@
         <TextView
             style="@style/main_common_padding_text"
             android:layout_width="wrap_content"
-            android:text="目前工作状况：" />
+            android:text="@string/ji_info_curworkingstate" />
 
         <TextView
             android:id="@+id/index_4_info6"

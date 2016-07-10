@@ -14,6 +14,12 @@
             android:background="@color/white"
             android:orientation="vertical" >
         
+		     <TextView
+                style="@style/comm_resume_guide_style"
+                android:text="@string/ji_info_default_1"/>
+		     
+		     <View style="@style/line_padding10" />
+		     
             <LinearLayout
                 style="@style/noraml_item"
                 android:layout_height="wrap_content" >

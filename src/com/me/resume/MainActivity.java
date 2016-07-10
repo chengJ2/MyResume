@@ -330,21 +330,20 @@ public class MainActivity extends Activity {
 			sbStr = new StringBuffer();
 			info = commMapArray.get("hometown")[0];
 			if(RegexUtil.checkNotNull(info)){
-				sbStr.append("家&nbsp;乡:&nbsp;"+info);
-				sbStr.append("&nbsp;|&nbsp;");
+				sbStr.append("家&nbsp;&nbsp;乡:&nbsp;"+info);
 			}
 			
-			info = commMapArray.get("city")[0];
+			/*info = commMapArray.get("city")[0];
 			if(RegexUtil.checkNotNull(info)){
 				sbStr.append("现居地:&nbsp;"+info);
-			}
+			}*/
 			
 			index_2_info.setText(Html.fromHtml(sbStr.toString()));
 			
 			info = commMapArray.get("expworkcareer")[0];
 			if(RegexUtil.checkNotNull(info)){
 				index_1_job.setVisibility(View.VISIBLE);
-				index_1_job.setText(Html.fromHtml("职位:&nbsp;"+info));
+				index_1_job.setText(Html.fromHtml("职&nbsp;&nbsp;位:&nbsp;"+info));
 			}else{
 				index_1_job.setVisibility(View.GONE);
 			}
@@ -384,14 +383,16 @@ public class MainActivity extends Activity {
 			}
 			initBgColor(index2layout,commMapArray.get("bgcolor")[0]);
 			commMapAdapter = new CommForMapArrayBaseAdapter(
-					self, commMapArray, R.layout.index_2_list_item, "userId") {
+					self, commMapArray, R.layout.index_21_list_item, "userId") {
 
 				@Override
 				public void convert(ViewHolder holder, String[] item,
 						int position) {
 					holder.setText(R.id.item2, commMapArray.get("companyname")[position]);
-					holder.setText(R.id.starttime, TimeUtils.toStrDate(commMapArray.get("worktimestart")[position]));
-					holder.setText(R.id.duetime, TimeUtils.toStrDate(commMapArray.get("worktimeend")[position]));
+					holder.setText(R.id.wetime, 
+							TimeUtils.toStrDate(commMapArray.get("worktimestart")[position])
+							+ " — " + 
+							TimeUtils.toStrDate(commMapArray.get("worktimeend")[position]));
 				}
 			};
 
@@ -509,11 +510,16 @@ public class MainActivity extends Activity {
 			if (!mViewList.contains(view)) {
 				mViewList.add(view);
 			}
-			index_4_info1.setText("工作性质："+ commMapArray.get("expworkingproperty")[0]);
-			index_4_info2.setText("期望职业："+commMapArray.get("expworkcareer")[0]);
-			index_4_info3.setText("期望行业："+commMapArray.get("expworkindustry")[0]);
-			index_4_info4.setText("工作地点："+commMapArray.get("expdworkplace")[0]);
-			index_4_info5.setText("期望月薪："+commMapArray.get("expmonthlysalary")[0]);
+			index_4_info1.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedworkingproperty) 
+					+ ":" + commMapArray.get("expworkingproperty")[0]);
+			index_4_info2.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedworkcareer) 
+					+ ":" + commMapArray.get("expworkcareer")[0]);
+			index_4_info3.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedworkindustry) 
+					+ ":" + commMapArray.get("expworkindustry")[0]);
+			index_4_info4.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedworkplace) 
+					+ ":" + commMapArray.get("expdworkplace")[0]);
+			index_4_info5.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedmonthlysalary2) 
+					+ ":" + commMapArray.get("expmonthlysalary")[0]);
 			index_4_info6.setText(commMapArray.get("workingstate")[0]);
 		}
 	}

@@ -176,6 +176,12 @@
         <item name="android:dividerHeight">@dimen/margin_10</item>
     </style>
     
+    <style name="main_icon_style">
+         <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/main_icon_height</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+    
     
     <style name="user_info_item_tv">
         <item name="android:layout_width">0dip</item>
@@ -492,10 +498,22 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:text">@string/en_nodata</item>
         <item name="android:textColor">@color/grey_10</item>
-        <item name="android:drawablePadding">5dip</item>
+        <item name="android:drawablePadding">@dimen/margin_5</item>
         <item name="android:textSize">@dimen/small_middle_text_size</item>
         <item name="android:drawableLeft">@drawable/icon_warn</item>
         <item name="android:visibility">gone</item>
+    </style>
+    
+      <style name="comm_resume_guide_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">left</item>
+        <item name="android:padding">@dimen/margin_5</item>
+        <item name="android:background">@color/orange_50</item>
+        <item name="android:textColor">@color/grey_10</item>
+        <item name="android:textSize">@dimen/micro_text_size</item>
+        <item name="android:drawableLeft">@drawable/icon_warn</item>
+        <item name="android:drawablePadding">@dimen/margin_5</item>
     </style>
 
     <style name="popupAnim" parent="@android:style/Animation.Activity">

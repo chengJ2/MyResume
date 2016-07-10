@@ -14,19 +14,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/margin_10" >
+            android:orientation="vertical">
 
              <ImageView
-		        android:layout_width="match_parent"
-		        android:layout_height="180dip"
+		        style="@style/main_icon_style"
 		        android:src="@drawable/main_index_icon6" />
             
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/margin_10">
+                android:layout_margin="@dimen/margin_10">
 
                 <View
                     android:layout_width="5dip"

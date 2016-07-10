@@ -15,13 +15,8 @@
             android:orientation="vertical" >
 
             <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="45dip"
-                android:gravity="center|left"
-                android:padding="5dip"
-                android:text="@string/ev_info_default_1"
-                android:textColor="@color/black"
-                android:textSize="@dimen/small_text_size" />
+                style="@style/comm_resume_guide_style"
+                android:text="@string/ev_info_default_1"/>
 
             <View style="@style/line_padding10" />
 

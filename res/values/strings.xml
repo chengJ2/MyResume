@@ -375,6 +375,7 @@
     <!-- 教育培训经历 -->
 
     <!-- 求职意向 -->
+    <string name="ji_info_default_1">建议简明扼要，另外，不要将几个不相关的职位堆砌在一起，否则，这样会让HR认为您的职业方向不清晰。</string>
     <string name="ji_info_expectedworkingproperty">期望工作性质</string>
     <string name="ji_info_choose_expectedworkingproperty">请选择期望工作性质</string>
     <string name="ji_info_expectedworkingproperty_1">全职</string>
@@ -387,9 +388,12 @@
     <string name="ji_info_expectedworkcareer">期望从事职业</string>
     <string name="ji_info_choose_expectedworkcareer">请选择期望从事职业</string>
     <string name="ji_info_expectedmonthlysalary">期望月薪（税前）</string>
+    <string name="ji_info_expectedmonthlysalary2">期望月薪</string>
     <string name="ji_info_choose_expectedmonthlysalary">请选择期望月薪（税前）</string>
     <string name="ji_info_workingstate">工作状态</string>
     <string name="ji_info_choose_workingstate">请选择工作状态</string>
+    <string name="ji_info_curworkingstate">目前工作状况：</string>
+    
     <!-- 求职意向 -->
 
     <!-- 其他信息 -->

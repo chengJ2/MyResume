@@ -9,12 +9,11 @@
    <include layout="@layout/top_title_layout"/>
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dip"
+        style="@style/main_icon_style"
         android:background="@drawable/main_index_icon5" />
 
     <ListView
         android:id="@+id/peListview"
         style="@style/main_listview_style"
-        android:layout_margin="@dimen/margin_8"/>
+        android:layout_margin="@dimen/margin_10"/>
 </LinearLayout>
