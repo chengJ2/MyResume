@@ -2,8 +2,8 @@
 <resources>
 	<!-- app相关 -->
     <string name="app_name">有云简历</string>
-    <string name="app_about">随时随地  完善预览</string>
-    <string name="app_about2">实时同步  有云简历</string>
+    <string name="app_about">随时随地&#160;&#160;完善预览</string>
+    <string name="app_about2">即时同步&#160;&#160;有云简历</string>
     <string name="app_crash">App发生异常,请重启</string>
     <string name="app_exit">再按一次退出</string>
     <string name="app_download">正在下载 有云简历 \u2026</string>
@@ -392,7 +392,7 @@
     <string name="ji_info_choose_expectedmonthlysalary">请选择期望月薪（税前）</string>
     <string name="ji_info_workingstate">工作状态</string>
     <string name="ji_info_choose_workingstate">请选择工作状态</string>
-    <string name="ji_info_curworkingstate">目前工作状况：</string>
+    <string name="ji_info_curworkingstate">目前工作状况:&#160;</string>
     
     <!-- 求职意向 -->
 

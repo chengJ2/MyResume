@@ -66,7 +66,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	
 	// 构建cover本地数据
 	private String[] id = {"1","2","3"};
-	private String[] note = {"简历预览封面1","简历预览封面2","简历预览封面3"};
+	private String[] note = {"只为心中淡淡的梦想","天行健以自强不息","阅历以存储更多的书香气质"};
 	private String[] url = {R.drawable.default_cover1+"",R.drawable.default_cover2+"",R.drawable.default_cover3+""};
 	
 	private boolean isExit = false;

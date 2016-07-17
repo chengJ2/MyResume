@@ -26,7 +26,7 @@
         style="@style/main_common_text"
         android:paddingLeft="50dip"
         android:paddingRight="50dip"
-        android:layout_marginTop="90dip"
+        android:layout_marginTop="94dip"
         android:lineSpacingExtra="3dip"
         android:textSize="@dimen/small_text_size"
         android:text="@string/resume_mywords"

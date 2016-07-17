@@ -327,23 +327,24 @@ public class MainActivity extends Activity {
 		
 			index_1_info.setText(Html.fromHtml(sbStr.toString()));
 			
-			sbStr = new StringBuffer();
 			info = commMapArray.get("hometown")[0];
 			if(RegexUtil.checkNotNull(info)){
-				sbStr.append("家&nbsp;&nbsp;乡:&nbsp;"+info);
+				index_2_info.setVisibility(View.VISIBLE);
+				index_2_info.setText(Html.fromHtml("家&nbsp;&nbsp;乡:&nbsp;"+info));
+			}else{
+				info = commMapArray.get("city")[0];
+				if(RegexUtil.checkNotNull(info)){
+					index_2_info.setVisibility(View.VISIBLE);
+					index_2_info.setText(Html.fromHtml("现居地:&nbsp;"+info));
+				}else{
+					index_2_info.setVisibility(View.GONE);
+				}
 			}
-			
-			/*info = commMapArray.get("city")[0];
-			if(RegexUtil.checkNotNull(info)){
-				sbStr.append("现居地:&nbsp;"+info);
-			}*/
-			
-			index_2_info.setText(Html.fromHtml(sbStr.toString()));
 			
 			info = commMapArray.get("expworkcareer")[0];
 			if(RegexUtil.checkNotNull(info)){
 				index_1_job.setVisibility(View.VISIBLE);
-				index_1_job.setText(Html.fromHtml("职&nbsp;&nbsp;位:&nbsp;"+info));
+				index_1_job.setText(Html.fromHtml("职&nbsp;&nbsp;&nbsp;位:&nbsp;"+info));
 			}else{
 				index_1_job.setVisibility(View.GONE);
 			}
@@ -389,9 +390,9 @@ public class MainActivity extends Activity {
 				public void convert(ViewHolder holder, String[] item,
 						int position) {
 					holder.setText(R.id.item2, commMapArray.get("companyname")[position]);
-					holder.setText(R.id.wetime, 
+					holder.setTextForHtml(R.id.wetime, 
 							TimeUtils.toStrDate(commMapArray.get("worktimestart")[position])
-							+ " — " + 
+							+ "&nbsp;—&nbsp;" + 
 							TimeUtils.toStrDate(commMapArray.get("worktimeend")[position]));
 				}
 			};
@@ -511,15 +512,15 @@ public class MainActivity extends Activity {
 				mViewList.add(view);
 			}
 			index_4_info1.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedworkingproperty) 
-					+ ":" + commMapArray.get("expworkingproperty")[0]);
+					+ ": " + commMapArray.get("expworkingproperty")[0]);
 			index_4_info2.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedworkcareer) 
-					+ ":" + commMapArray.get("expworkcareer")[0]);
+					+ ": " + commMapArray.get("expworkcareer")[0]);
 			index_4_info3.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedworkindustry) 
-					+ ":" + commMapArray.get("expworkindustry")[0]);
+					+ ": " + commMapArray.get("expworkindustry")[0]);
 			index_4_info4.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedworkplace) 
-					+ ":" + commMapArray.get("expdworkplace")[0]);
+					+ ": " + commMapArray.get("expdworkplace")[0]);
 			index_4_info5.setText(CommUtil.getStrValue(self, R.string.ji_info_expectedmonthlysalary2) 
-					+ ":" + commMapArray.get("expmonthlysalary")[0]);
+					+ ": " + commMapArray.get("expmonthlysalary")[0]);
 			index_4_info6.setText(commMapArray.get("workingstate")[0]);
 		}
 	}
@@ -593,8 +594,8 @@ public class MainActivity extends Activity {
 				@Override
 				public void convert(ViewHolder holder, String[] item,
 						int position) {
-					holder.setText(R.id.item1,
-							commMapArray.get("educationtimestart")[position] + " — "
+					holder.setTextForHtml(R.id.item1,
+							commMapArray.get("educationtimestart")[position] + "&nbsp;—&nbsp;"
 									+ commMapArray.get("educationtimeend")[position]);
 					StringBuffer sbStr = new StringBuffer();
 					String info = commMapArray.get("school")[position];
@@ -643,8 +644,8 @@ public class MainActivity extends Activity {
 					@Override
 					public void convert(ViewHolder holder, String[] item,
 							int position) {
-						holder.setText(R.id.item1,
-								comm2MapArray.get("trainingtimestart")[position] + " — "
+						holder.setTextForHtml(R.id.item1,
+								comm2MapArray.get("trainingtimestart")[position] + "&nbsp;—&nbsp;"
 										+ comm2MapArray.get("trainingtimeend")[position]);
 						
 						String info = comm2MapArray.get("trainingorganization")[position];
@@ -652,14 +653,14 @@ public class MainActivity extends Activity {
 						
 						StringBuffer sbStr = new StringBuffer();
 						info = comm2MapArray.get("trainingclass")[position];
-						sbStr.append("<strong>培训课程：</strong>"+ info + "<br/>");
+						sbStr.append("培训课程:&nbsp;"+ info + "<br/>");
 						info = comm2MapArray.get("certificate")[position];
 						if(RegexUtil.checkNotNull(info)){
-							sbStr.append("<strong>所获证书：</strong>"+ info + "<br/>");
+							sbStr.append("所获证书:&nbsp;"+ info + "<br/>");
 						}
 						info = comm2MapArray.get("description")[position];
 						if(RegexUtil.checkNotNull(info)){
-							sbStr.append("<strong>培训描述：</strong>"+ info );
+							sbStr.append("培训描述:&nbsp;"+ info );
 						}
 						
 						holder.setTextForHtml(R.id.item3, sbStr.toString());

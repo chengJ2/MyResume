@@ -31,10 +31,15 @@
         android:paddingLeft="0dip"
         android:text="26岁 | 未婚"/>
     
+    <LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:layout_marginTop="@dimen/margin_20">
+    
      <TextView
         android:id="@+id/index_2_info"
         style="@style/main_common_center_text"
-        android:layout_marginTop="@dimen/margin_20"
         android:text="家   乡：黄石"/>
     
      <TextView
@@ -51,5 +56,5 @@
         android:id="@+id/index_1_email"
         style="@style/main_common_center_text"
         android:text="E-mail：123456@qq.com"/>
-
+	</LinearLayout>
 </LinearLayout>

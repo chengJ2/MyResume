@@ -10,7 +10,7 @@
 
     <ImageView
         style="@style/main_icon_style"
-        android:background="@drawable/main_index_icon5" />
+        android:src="@drawable/main_index_icon5" />
 
     <ListView
         android:id="@+id/peListview"

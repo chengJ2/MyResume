@@ -6,8 +6,7 @@
     android:orientation="vertical" 
     android:id="@+id/index3layout">
 
-   <include layout="@layout/top_title_layout"
-       android:visibility="invisible"/>
+   <include layout="@layout/top_title_layout"/>
 
     <com.me.resume.views.CommScrollView
         style="@style/main_scrollview_style">
@@ -31,11 +30,8 @@
                 
                 <TextView
                     android:id="@+id/self_evaluation"
-            		style="@style/main_common_text"
-            		android:textSize="@dimen/small_middle_text_size"
-                    android:layout_marginTop="@dimen/margin_10"
-                    android:lineSpacingExtra="3dip"
-                    android:text="" />
+            		style="@style/main_common_padding_text"
+            		android:textSize="@dimen/small_middle_text_size" />
                 
                 <com.me.resume.views.TagFlowLayout 
                     android:id="@+id/flowlayout"

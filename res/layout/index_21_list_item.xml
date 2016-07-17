@@ -18,10 +18,7 @@
             android:orientation="horizontal" >
 
             <View
-                android:layout_width="5dip"
-                android:layout_height="14dip"
-                android:layout_gravity="center|left"
-                android:background="#80FFFFFF" />
+                style="@style/main_common_left_bar" />
 
             <TextView
                 android:id="@+id/wetime"

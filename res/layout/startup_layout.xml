@@ -25,7 +25,7 @@
         <ImageView
             android:layout_width="72dip"
             android:layout_height="72dip"
-            android:scaleType="centerInside"
+            android:scaleType="fitCenter"
             android:src="@drawable/ic_launcher" />
 
          <LinearLayout
@@ -56,7 +56,7 @@
 	            android:layout_width="wrap_content"
 	            android:layout_height="25dip"
 	            android:gravity="center|left"
-	            android:text="V1.0.2"
+	            android:text="V3.14"
 	            android:layout_marginTop="@dimen/margin_10"
 	            android:background="@drawable/home_tag_text_corner_sel"
 	            android:paddingRight="@dimen/margin_8"
