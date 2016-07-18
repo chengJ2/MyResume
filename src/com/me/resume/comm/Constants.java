@@ -163,6 +163,7 @@ public class Constants {
     public static final String TAB = "tab";
     public static final String TOKENID = "tokenId";
     
+    public static final String AUTOSYNC = "autosync";
     public static final String EDITMODE = "editmode";
     public static final String NOTICESHOW = "noticeshow";
     public static final String CITY = "city";

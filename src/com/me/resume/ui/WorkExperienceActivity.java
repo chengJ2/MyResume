@@ -236,7 +236,9 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				if(queryResult){
 					toastMsg(R.string.action_add_success);
 					setEditBtnVisible(View.VISIBLE);
-					actionAync(1);
+					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+						actionAync(1);
+					}
 				}
 			}
 			break;
@@ -251,7 +253,9 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 									info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr,TimeUtils.getCurrentTimeInString()},3);
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
-					actionAync(1);
+					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+						actionAync(1);
+					}
 				}else{
 					toastMsg(R.string.action_update_fail);
 				}

@@ -2,8 +2,8 @@
 <resources>
 	<!-- app相关 -->
     <string name="app_name">有云简历</string>
-    <string name="app_about">随时随地&#160;&#160;完善预览</string>
-    <string name="app_about2">即时同步&#160;&#160;有云简历</string>
+    <string name="app_about">无需联网&#160;&#160;完善预览</string>
+    <string name="app_about2">可选同步&#160;&#160;有云简历</string>
     <string name="app_crash">App发生异常,请重启</string>
     <string name="app_exit">再按一次退出</string>
     <string name="app_download">正在下载 有云简历 \u2026</string>
@@ -93,6 +93,7 @@
     <string name="settings_item71">分享</string>
     <string name="settings_item72">有云简历已上线App市场,请前往搜索 “有云简历”即可下载安装使用</string>
     <string name="settings_item8">清除本地缓存</string>
+    <string name="settings_item9">联网操作同步更新</string>
     <string name="action_login_head">请先登录</string>
     <string name="action_syncing">正在同步,请稍后\u2026</string>
     <string name="action_sync_success">同步成功</string>

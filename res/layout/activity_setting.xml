@@ -5,273 +5,279 @@
     android:background="@color/white" >
 
     <com.me.resume.views.CommScrollView
-         style="@style/comm_scrollview_style"
-         android:layout_marginBottom="0dip" >
+        style="@style/comm_scrollview_style"
+        android:layout_marginBottom="0dip" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" 
-            android:background="@color/white">
+            android:background="@color/white"
+            android:orientation="vertical" >
 
             <View style="@style/line_h15" />
+
             <LinearLayout
                 android:id="@+id/llout01"
-                style="@style/noraml_item">
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
                     android:layout_weight="5"
-                    android:textColor="@color/black"
-                    android:text="@string/settings_item1" />
+                    android:text="@string/settings_item1"
+                    android:textColor="@color/black" />
 
                 <LinearLayout
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:layout_weight="1.2"
-                    android:gravity="center">
-                    
-                <ToggleButton
-                    android:id="@+id/setting_start_cb"
-		            android:layout_width="wrap_content"  
-			        android:layout_height="50dip"  
-			        android:layout_gravity="center_horizontal"  
-			        android:background="@android:color/transparent"  
-			        android:button="@drawable/switch_btn"  
-			        android:checked="false"  
-			        android:text=""  
-			        android:textOff=""  
-			        android:textOn="" 
-            		android:layout_marginRight="0dip"/>
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ToggleButton
+                        android:id="@+id/setting_start_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dip"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginRight="0dip"
+                        android:background="@android:color/transparent"
+                        android:button="@drawable/switch_btn"
+                        android:checked="false"
+                        android:text=""
+                        android:textOff=""
+                        android:textOn="" />
                 </LinearLayout>
             </LinearLayout>
 
             <View style="@style/line_padding10" />
 
-             <LinearLayout
+            <LinearLayout
                 android:id="@+id/llout02"
-                style="@style/noraml_item">
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
                     android:layout_weight="5"
-                    android:textColor="@color/black"
-                    android:text="@string/settings_item2" />
-                
+                    android:text="@string/settings_item2"
+                    android:textColor="@color/black" />
+
                 <LinearLayout
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:layout_weight="1.2"
-                    android:gravity="center">
-                    
-                <ToggleButton
-                    android:id="@+id/setting_auto_cb"
-		            android:layout_width="wrap_content"  
-			        android:layout_height="50dip"  
-			        android:layout_gravity="center_horizontal"  
-			        android:background="@android:color/transparent"  
-			        android:button="@drawable/switch_btn"  
-			        android:checked="false"  
-			        android:text=""  
-			        android:textOff=""  
-			        android:textOn="" 
-            		android:layout_marginRight="0dip"/>
-                </LinearLayout>
-                
-            </LinearLayout>
-            
-             <View style="@style/line_padding10" />
+                    android:gravity="center"
+                    android:orientation="vertical" >
 
-             <LinearLayout
+                    <ToggleButton
+                        android:id="@+id/setting_auto_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dip"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginRight="0dip"
+                        android:background="@android:color/transparent"
+                        android:button="@drawable/switch_btn"
+                        android:checked="false"
+                        android:text=""
+                        android:textOff=""
+                        android:textOn="" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/line_padding10" />
+
+            <LinearLayout
                 android:id="@+id/llout020"
-                style="@style/noraml_item">
+                style="@style/noraml_item" >
 
                 <TextView
                     android:id="@+id/effectsdurationfeild"
                     style="@style/user_info_item_tv"
                     android:layout_weight="5"
-                    android:textColor="@color/black"
-                    android:text="@string/settings_item20" />
+                    android:text="@string/settings_item20"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/effectsduration"
                     style="@style/user_info_item_tv"
-                    android:textColor="@color/black"
                     android:layout_weight="4"
                     android:gravity="right|center"
-                    android:text="@string/settings_item201" />
-                
+                    android:text="@string/settings_item201"
+                    android:textColor="@color/black" />
+
                 <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="visible" />
             </LinearLayout>
-             
-             
-              <View style="@style/line_padding10" />
 
-             <LinearLayout
+            <View style="@style/line_padding10" />
+
+            <LinearLayout
                 android:id="@+id/llout021"
-                style="@style/noraml_item">
+                style="@style/noraml_item" >
 
                 <TextView
                     android:id="@+id/animvaluefeild"
                     style="@style/user_info_item_tv"
                     android:layout_weight="5"
-                    android:textColor="@color/black"
-                    android:text="@string/settings_item22" />
+                    android:text="@string/settings_item22"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/animvalue"
                     style="@style/user_info_item_tv"
-                    android:textColor="@color/black"
                     android:layout_weight="4"
                     android:gravity="right|center"
-                    android:text="一般" />
-                
+                    android:text="一般"
+                    android:textColor="@color/black" />
+
                 <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="visible" />
             </LinearLayout>
-            
-             <View style="@style/line_padding10" />
 
-             <LinearLayout
+            <View style="@style/line_padding10" />
+
+            <LinearLayout
                 android:id="@+id/llout03"
-                style="@style/noraml_item">
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
                     android:layout_weight="5"
-                    android:textColor="@color/black"
-                    android:text="@string/settings_item21" />
-                
+                    android:text="@string/settings_item21"
+                    android:textColor="@color/black" />
+
                 <LinearLayout
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:layout_weight="1.2"
-                    android:gravity="center">
-                    
-                <ToggleButton
-                    android:id="@+id/setting_mode_cb"
-		            android:layout_width="wrap_content"  
-			        android:layout_height="50dip"  
-			        android:layout_gravity="center_horizontal"  
-			        android:background="@android:color/transparent"  
-			        android:button="@drawable/switch_btn"  
-			        android:checked="false"  
-			        android:text=""  
-			        android:textOff=""  
-			        android:textOn="" 
-            		android:layout_marginRight="0dip"/>
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ToggleButton
+                        android:id="@+id/setting_mode_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dip"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginRight="0dip"
+                        android:background="@android:color/transparent"
+                        android:button="@drawable/switch_btn"
+                        android:checked="false"
+                        android:text=""
+                        android:textOff=""
+                        android:textOn="" />
                 </LinearLayout>
-                
             </LinearLayout>
-             
+
             <View style="@style/line_h15" />
-            
-             <LinearLayout
-                android:id="@+id/cacheLayout"
-                style="@style/noraml_item">
+
+            <LinearLayout style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
                     android:layout_weight="5"
-                    android:textColor="@color/black"
-                    android:text="@string/settings_item8" />
+                    android:text="@string/settings_item9"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.2"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ToggleButton
+                        android:id="@+id/setting_sync_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dip"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginRight="0dip"
+                        android:background="@android:color/transparent"
+                        android:button="@drawable/switch_btn"
+                        android:checked="false"
+                        android:text=""
+                        android:textOff=""
+                        android:textOn="" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/line_h15" />
+
+            <LinearLayout
+                android:id="@+id/cacheLayout"
+                style="@style/noraml_item" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:layout_weight="5"
+                    android:text="@string/settings_item8"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/cachesize"
                     style="@style/user_info_item_tv"
-                    android:textColor="@color/black"
                     android:layout_weight="4"
-                    android:paddingRight="@dimen/margin_10"
                     android:gravity="right|center"
-                    android:text="0kB" />
-                
+                    android:paddingRight="@dimen/margin_10"
+                    android:text="0kB"
+                    android:textColor="@color/black" />
+
                 <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="gone" />
-
             </LinearLayout>
+
             <View style="@style/line_h15" />
-            
-            <LinearLayout
-                android:id="@+id/versionLayout"
-                style="@style/noraml_item">
 
-                <TextView
-                    style="@style/user_info_item_tv"
-                    android:layout_weight="5"
-                    android:textColor="@color/black"
-                    android:text="@string/settings_item3" />
-
-                <TextView
-                    android:id="@+id/viewsion"
-                    style="@style/user_info_item_tv"
-                    android:textColor="@color/black"
-                    android:layout_weight="4"
-                    android:paddingRight="@dimen/margin_10"
-                    android:gravity="right|center"
-                    android:text="V1.0" />
-                
-                <ImageView
-                    style="@style/user_info_item_iv"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-            <View style="@style/line_padding10" />
-            
-            <LinearLayout
-                android:id="@+id/feedbackLayout"
-                style="@style/noraml_item">
-
-                <TextView
-                    style="@style/user_info_item_tv"
-                    android:layout_weight="5"
-                    android:textColor="@color/black"
-                    android:text="@string/settings_item4" />
-
-                <ImageView
-                    style="@style/user_info_item_iv"
-                    android:visibility="visible" />
-
-            </LinearLayout>
-            <View style="@style/line_padding10" />
-             <LinearLayout
-                 android:id="@+id/shareLayout"
-                style="@style/noraml_item">
-
-                <TextView
-                    style="@style/user_info_item_tv"
-                    android:layout_weight="5"
-                    android:textColor="@color/black"
-                    android:text="@string/settings_item7" />
-
-                <ImageView
-                    style="@style/user_info_item_iv"
-                    android:visibility="visible" />
-
-            </LinearLayout>
-             <View style="@style/line_padding10" />
             <LinearLayout
                 android:id="@+id/aboutusLayout"
-                style="@style/noraml_item">
+                style="@style/noraml_item" >
 
                 <TextView
                     style="@style/user_info_item_tv"
                     android:layout_weight="5"
-                    android:textColor="@color/black"
-                    android:text="@string/settings_item6" />
+                    android:text="@string/settings_item6"
+                    android:textColor="@color/black" />
 
                 <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="visible" />
-
             </LinearLayout>
-              <View style="@style/line_padding10" />
+
+            <View style="@style/line_padding10" />
+
+            <LinearLayout
+                android:id="@+id/feedbackLayout"
+                style="@style/noraml_item" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:layout_weight="5"
+                    android:text="@string/settings_item4"
+                    android:textColor="@color/black" />
+
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <View style="@style/line_padding10" />
+
+            <LinearLayout
+                android:id="@+id/shareLayout"
+                style="@style/noraml_item" >
+
+                <TextView
+                    style="@style/user_info_item_tv"
+                    android:layout_weight="5"
+                    android:text="@string/settings_item7"
+                    android:textColor="@color/black" />
+
+                <ImageView
+                    style="@style/user_info_item_iv"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <View style="@style/line_padding10" />
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
 

@@ -1,6 +1,13 @@
 package com.me.resume.ui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -8,6 +15,12 @@ import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
+import com.me.resume.comm.Constants;
+import com.me.resume.service.DownloadService;
+import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
+import com.me.resume.tools.DataCleanManager;
+import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.DialogUtils;
 
 /**
  * APP申明条款
@@ -16,7 +29,23 @@ import com.me.resume.R;
  */
 public class AboutAppActivity extends BaseActivity implements OnClickListener{
 
-	private TextView contactus,declare;
+	private TextView version,contactus,declare;
+	
+	private boolean isupdate = false;
+	
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case 100:
+				Intent intentService = new Intent(self,DownloadService.class);
+				intentService.putExtra("url", Constants.APKURLPATH);
+				startService(intentService);
+				break;
+			default:
+				break;
+			}
+		};
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +53,10 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 		boayLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.about_app_layout, null);
 		boayLayout.addView(v);
+		
+		version = findView(R.id.version);
+		version.setText(getStrValue(R.string.app_name) + "   " +CommUtil.getVersionName(this));
+		version.setOnClickListener(this);
 		
 		setTopTitle(R.string.settings_item6);
 		setMsgHide();
@@ -68,5 +101,57 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
+		switch (v.getId()) {
+		case R.id.version:
+			checkNewVersin();
+			break;
+		default:
+			break;
+		}
+		
+	}
+	
+	
+	/**
+	 * 监测新版本
+	 */
+	private void checkNewVersin(){
+		List<String> params = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
+		
+		requestData("pro_get_apkinfo", 1, params, values, new HandlerData() {		
+			@Override
+			public void success(Map<String, List<String>> map) {
+				try {
+					String apk_version = map.get("version").get(0); // 版本号
+					String upd_content = map.get("updcontent").get(0); // 更新内容 
+					isupdate = CommUtil.checkVersionIsUpdate(self,Integer.valueOf(apk_version));
+					if (isupdate) {
+						DialogUtils.showDialog(self, upd_content, mHandler);
+					}else{
+						toastMsg(R.string.settings_item31);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				} 
+			}
+			
+			public void error() {
+				set3Msg(R.string.timeout_network);
+			}
+
+			@Override
+			public void noData() {
+				toastMsg(R.string.settings_item31);
+			}
+		});
+	} 
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mHandler != null) {
+			mHandler.removeCallbacksAndMessages(null);
+		}
 	}
 }

@@ -169,7 +169,9 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 							new String[] { uTokenId,info_self_evaluationStr,info_career_goalStr,info_characterStr,TimeUtils.getCurrentTimeInString() }, 3);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						actionAync();
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync();
+						}
 					}
 				} else {
 					actionFlag = 1;
@@ -185,7 +187,9 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 					queryResult = dbUtil.insertData(self,CommonText.EVALUATION, cValues);
 					if (queryResult) {
 						toastMsg(R.string.action_add_success);
-						actionAync();
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync();
+						}
 					}
 				}
 			}

@@ -323,7 +323,9 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 				ot_languages_edit.setVisibility(View.VISIBLE);
 				
 //				if(getLanguagesData()){
-					actionAync(OtherInfoMenu.language,1,R.string.action_syncing_lang);
+					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+						actionAync(OtherInfoMenu.language,1,R.string.action_syncing_lang);
+					}
 //				}
 			}
 			break;
@@ -336,7 +338,9 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 						new String[]{uTokenId,info_languageStr,info_literacyskillsStr,info_listeningspeakingStr,TimeUtils.getCurrentTimeInString()},3);
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
-					actionAync(OtherInfoMenu.language,1,R.string.action_syncing_lang);
+					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+						actionAync(OtherInfoMenu.language,1,R.string.action_syncing_lang);
+					}
 				}else{
 					toastMsg(R.string.action_update_fail);
 				}
@@ -358,7 +362,9 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 				toastMsg(R.string.action_add_success);
 				actionAync(OtherInfoMenu.certificate,1,R.string.action_syncing_cert);
 //				if(getcertificateData()){
-					ot_certificate_edit.setVisibility(View.VISIBLE);
+					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+						ot_certificate_edit.setVisibility(View.VISIBLE);
+					}
 //				}
 			}
 			break;
@@ -370,8 +376,10 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 						new String[]{certTokenId,"certificate","certificatetime"}, 
 						new String[]{uTokenId,info_certificateStr,info_certificatetimesStr},3);
 				if (updResult == 1) {
-					actionAync(OtherInfoMenu.certificate,1,R.string.action_syncing_cert);
 					toastMsg(R.string.action_update_success);
+					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+						actionAync(OtherInfoMenu.certificate,1,R.string.action_syncing_cert);
+					}
 				}else{
 					toastMsg(R.string.action_update_fail);
 				}

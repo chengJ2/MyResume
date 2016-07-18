@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.me.resume"
     android:versionCode="2"
-    android:versionName="v3.14" >
+    android:versionName="v2.7.18" >
 
     <uses-sdk
         android:minSdkVersion="17"

@@ -1,9 +1,6 @@
 package com.me.resume.ui;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,16 +27,14 @@ import com.me.resume.utils.DialogUtils;
  */
 public class SettingActivity extends BaseActivity implements OnClickListener{
 
-	private ToggleButton setting_start_cb,setting_auto_cb,setting_mode_cb;
+	private ToggleButton setting_start_cb,setting_auto_cb,setting_mode_cb,setting_sync_cb;
 	
-	private LinearLayout cacheLayout,versionLayout,feedbackLayout,shareLayout,aboutusLayout;
+	private LinearLayout cacheLayout,feedbackLayout,shareLayout,aboutusLayout;
 	
-	private TextView cachesize,version;
+	private TextView cachesize;
 	
 	private LinearLayout llout020,llout021;
 	private TextView effectsdurationfeild,effectsduration,animvaluefeild,animvalue;
-	
-	private boolean isupdate = false;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -99,12 +94,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		setting_start_cb = findView(R.id.setting_start_cb);
 		setting_auto_cb = findView(R.id.setting_auto_cb);
 		setting_mode_cb = findView(R.id.setting_mode_cb);
+		setting_sync_cb = findView(R.id.setting_sync_cb);
 		
 		cacheLayout = findView(R.id.cacheLayout);
 		cachesize = findView(R.id.cachesize);
-		versionLayout = findView(R.id.versionLayout);
 		feedbackLayout = findView(R.id.feedbackLayout);
-		version = findView(R.id.viewsion);
 		shareLayout = findView(R.id.shareLayout);
 		aboutusLayout = findView(R.id.aboutusLayout);
 		
@@ -131,7 +125,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		version.setText(CommUtil.getVersionName(self));
 		
 		effectsduration.setText(getEffectdDuration(preferenceUtil.getPreferenceData(Constants.SET_SWITCHEFFDURATION,Constants.DEFAULTEFFECTTIME)));
 		
@@ -146,7 +139,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		}
 		
 		cacheLayout.setOnClickListener(this);
-		versionLayout.setOnClickListener(this);
 		feedbackLayout.setOnClickListener(this);
 		shareLayout.setOnClickListener(this);
 		aboutusLayout.setOnClickListener(this);
@@ -204,6 +196,22 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			}
 		});
 		
+		setting_sync_cb.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				boolean onoff = false;
+				if(preferenceUtil.getPreferenceData(Constants.AUTOSYNC)){
+					onoff = false;
+					setting_sync_cb.setChecked(false);
+				}else{
+					onoff = true;
+					setting_sync_cb.setChecked(true);
+				}
+				preferenceUtil.setPreferenceData(Constants.AUTOSYNC, onoff); 
+			}
+		});
+		
 	}
 	
 	/**
@@ -224,6 +232,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		boolean startVerytime = preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME);
 		boolean autoShow = preferenceUtil.getPreferenceData(Constants.SET_AUTOSHOW);
 		boolean editmode = preferenceUtil.getPreferenceData(Constants.EDITMODE);
+		boolean autosync = preferenceUtil.getPreferenceData(Constants.AUTOSYNC);
 		if (startVerytime) {
 			setting_start_cb.setChecked(true);
 		}else{
@@ -241,15 +250,17 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		}else{
 			setting_mode_cb.setChecked(false);
 		}
+		if (autosync) {
+			setting_sync_cb.setChecked(true);
+		}else{
+			setting_sync_cb.setChecked(false);
+		}
 	}
 	
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
 		switch (v.getId()) {
-		case R.id.versionLayout:
-			checkNewVersin();
-			break;
 		case R.id.feedbackLayout:
 			startChildActivity(Constants.FEEDBACK, false);
 			break;
@@ -286,43 +297,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			break;
 		}
 	}
-	
-	/**
-	 * 监测新版本
-	 */
-	private void checkNewVersin(){
-		List<String> params = new ArrayList<String>();
-		List<String> values = new ArrayList<String>();
-		
-		requestData("pro_get_apkinfo", 1, params, values, new HandlerData() {		
-			@Override
-			public void success(Map<String, List<String>> map) {
-				try {
-					String apk_version = map.get("version").get(0); // 版本号
-					String upd_content = map.get("updcontent").get(0); // 更新内容 
-					isupdate = CommUtil.checkVersionIsUpdate(self,Integer.valueOf(apk_version));
-					if (isupdate) {
-						DialogUtils.showDialog(self, upd_content, mHandler);
-					}else{
-						toastMsg(R.string.settings_item31);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				} 
-			}
-			
-			public void error() {
-				set3Msg(R.string.timeout_network);
-			}
-
-			@Override
-			public void noData() {
-				toastMsg(R.string.settings_item31);
-			}
-		});
-	} 
-	
-	
 	
 	/**
 	 * 设置动画切换时段
@@ -371,5 +345,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			position = 5;
 		}
 		return item_values[position];
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mHandler != null) {
+			mHandler.removeCallbacksAndMessages(null);
+		}
 	}
 }

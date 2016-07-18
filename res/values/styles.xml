@@ -58,14 +58,28 @@
     
     <style name="about_app_item_text">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
         <item name="android:textColor">@color/grey_10</item>
         <item name="android:layout_height">@dimen/home_item_height</item>
         <item name="android:background">@color/grey_50</item>
         <item name="android:textSize">@dimen/small_text_size</item>
-        <item name="android:padding">5dip</item>
+        <item name="android:padding">@dimen/margin_5</item>
         <item name="android:gravity">center|left</item>
         <item name="android:typeface">serif</item>
+    </style>
+    
+      <style name="startup_item_text" parent="@style/about_app_item_text">
+        <item name="android:layout_height">20dip</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:padding">0dip</item>
+    </style>
+    
+    
+     <style name="about_app_item_content_text" parent="@style/about_app_item_text">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:background">@color/transparent</item>
+        <item name="android:textSize">@dimen/micro_text_size</item>
+        <item name="android:padding">@dimen/margin_10</item>
     </style>
     
     <style name="address_item_text" parent="@style/home_item_text">

@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Home -->
+   	<!-- Home cover 180dp 118dp-->
     <dimen name="home_cover_item_height">300.0px</dimen>
     <dimen name="home_cover_image_height">196.66px</dimen>
+    
+     <!-- Home refresh 30dp-->
     <dimen name="home_refresh_height">50.0px</dimen>
+    
+    <!-- Home topic 1dp-->
     <dimen name="home_topic_item_bg_line">1.66px</dimen>
     
+     <!-- main tiny 12dp-->
     <dimen name="main_tiny_text">20.0px</dimen>
     
+    <!-- Home bottombar 48dp-->
     <dimen name="home_bottombar_height">80.0px</dimen>
+    
+    <!-- button 40dp-->
     <dimen name="btn_height">66.66px</dimen>
 </resources>

@@ -209,7 +209,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					if (queryResult) {
 						toastMsg(R.string.action_add_success);
 						setEditBtnVisible(View.VISIBLE);
-						actionAync(0);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(0);
+						}
 					}
 				}
 			}else{ // 培训经历
@@ -232,7 +234,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					if (queryResult) {
 						setEditBtnVisible(View.VISIBLE);
 						toastMsg(R.string.action_add_success);
-						actionAync(1);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(1);
+						}
 					}
 				}
 			}
@@ -248,7 +252,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 							info_degressStr,info_examinationStr},3);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						actionAync(0);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(0);
+						}
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -262,7 +268,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 							info_certificateStr,info_descriptionStr},3);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						actionAync(1);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(1);
+						}
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}

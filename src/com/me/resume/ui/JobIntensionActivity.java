@@ -199,7 +199,9 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 											info_expworkcareerStr,info_expmonthlysalaryStr,info_workingstateStr,TimeUtils.getCurrentTimeInString()},3);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						actionAync();
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync();
+						}
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -221,7 +223,9 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		 			if(queryResult){
 		 				toastMsg(R.string.action_add_success);
 		 				if(getJobIntensionData()){
-		 					actionAync();
+		 					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+		 						actionAync();
+		 					}
 		 				}
 		 			}
 				}

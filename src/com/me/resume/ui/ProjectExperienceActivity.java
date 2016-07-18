@@ -245,7 +245,9 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 				queryResult = dbUtil.insertData(self, CommonText.PROJECT_EXPERIENCE, cValues);
 				if(queryResult){
 					toastMsg(R.string.action_add_success);
-					actionAync(1);
+					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+						actionAync(1);
+					}
 				}
 			}
 			break;
@@ -257,7 +259,9 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 						new String[]{uTokenId,info_projectnameStr,info_startworktimeStr,info_endworktimeStr,info_workdutiesStr,input_workdescStr,TimeUtils.getCurrentTimeInString()},3);
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
-					actionAync(1);
+					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+						actionAync(1);
+					}
 				}else{
 					toastMsg(R.string.action_update_fail);
 				}
