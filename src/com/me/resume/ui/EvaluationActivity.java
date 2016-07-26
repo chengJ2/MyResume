@@ -43,6 +43,8 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	
 	private TextView info_character;
 	
+	private TextView helpInfo;
+	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -66,11 +68,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 				}
 				break;
 			case OnTopMenu.MSG_MENU3:
-				if (actionFlag == 0) {
-					syncData(3);
-				}else{
-					actionAync();
-				}
+				actionAync();
 				break;
 			case OnTopMenu.MSG_MENU31:
 				toastMsg(R.string.action_login_head);
@@ -105,6 +103,8 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	private void findViews(){
+		helpInfo = findView(R.id.ev_helpInfo);
+		
 		info_self_evaluation = findView(R.id.info_self_evaluation);
 		info_career_goal = findView(R.id.info_career_goal);
 		info_character = findView(R.id.info_character);
@@ -169,9 +169,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 							new String[] { uTokenId,info_self_evaluationStr,info_career_goalStr,info_characterStr,TimeUtils.getCurrentTimeInString() }, 3);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-							actionAync();
-						}
+						actionAync();
 					}
 				} else {
 					actionFlag = 1;
@@ -187,9 +185,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 					queryResult = dbUtil.insertData(self,CommonText.EVALUATION, cValues);
 					if (queryResult) {
 						toastMsg(R.string.action_add_success);
-						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-							actionAync();
-						}
+						actionAync();
 					}
 				}
 			}
@@ -213,14 +209,22 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	 * @Description: 执行同步操作
 	 */
 	private void actionAync(){
-		if (!MyApplication.USERID.equals("0")) {
-			if (CommUtil.isNetworkAvailable(self)) {
-				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-				syncData(1);
-			}else{
-				set3Msg(R.string.check_network);
+		if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+			if (!MyApplication.USERID.equals("0")) {
+				if (CommUtil.isNetworkAvailable(self)) {
+					helpInfo.setVisibility(View.GONE);
+					set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+					if (actionFlag == 0) {
+						syncData(3);
+					}else{
+						syncData(1);
+					}
+				}else{
+					set3Msg(R.string.check_network);
+				}
 			}
 		}
+		
 	}
 	
 	
@@ -264,7 +268,8 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
-	 * @Description: 同步数据
+	 * 同步数据
+	 * @param style 请求类型
 	 */
 	private void syncData(final int style){ 
 		List<String> params = new ArrayList<String>();

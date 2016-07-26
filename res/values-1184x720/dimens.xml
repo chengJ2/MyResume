@@ -5,7 +5,7 @@
     <dimen name="home_cover_item_height">444px</dimen>
     <dimen name="home_cover_image_height">291px</dimen>
     <dimen name="home_refresh_height">74px</dimen>
-    <dimen name="home_topic_item_bg_line">2.46px</dimen>
+<!--     <dimen name="home_topic_item_bg_line">2.46px</dimen> -->
     
     <dimen name="main_tiny_text">29.6px</dimen>
     

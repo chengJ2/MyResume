@@ -9,9 +9,9 @@
     <string name="app_download">正在下载 有云简历 \u2026</string>
     <string name="app_declare1">特别声明</string>
     <string name="app_declare2">联系我们</string>
-    <string name="app_declare3">本软件平台上的大部分内容来源于网络,包括文字,图片等,我们提供的内容将服务使用者用于个人学习、参考或欣赏,以及其他非商业性或非盈利性用途.</string>
-    <string name="app_declare4">若有内容侵犯了原作者的权利或原作者不愿意在本软件平台上展示内容,请及时通知并联系我们,将予以删除。</string>
-    <string name="app_declare5">我们郑重承诺:严格保密用户同步的数据,保证用户数据隐私安全。</string>
+    <string name="app_declare3">●&#160;本软件平台上的大部分内容来源于网络,包括文字,图片等,我们提供的内容将服务使用者用于个人学习、参考或欣赏,以及其他非商业性或非盈利性用途。</string>
+    <string name="app_declare4">●&#160;若有内容侵犯了原作者的权利或原作者不愿意在本软件平台上展示内容,请及时通知并联系我们,将予以删除。</string>
+    <string name="app_declare5">●&#160;我们郑重承诺:&#160;严格保密用户同步的数据,保证用户数据隐私安全。</string>
     
     <!-- 网络相关 -->
     <string name="check_network">网络异常,请检查!</string>
@@ -36,11 +36,11 @@
     <string name="resume_otherinfo">附加信息</string>
     <string name="resume_message">留言板</string>
     <string name="resume_makemywords">自定义留言信息</string>
-    <string name="resume_mywords">&#160;&#160;&#160;&#160;我坚信在贵公司,我将学到更多知识,发挥出个人的最大效益.</string>
+    <string name="resume_mywords">&#160;&#160;&#160;&#160;我坚信在贵公司,我将学到更多知识,发挥出个人的最大效益。</string>
     <string name="resume_thinks">谢谢</string>
     
      <!-- Home -->
-    <string name="resume_center">简历中心</string>
+    <string name="resume_center">有云简历</string>
     <string name="make_resume">定制我的简历</string>
     <string name="review_resume">预&#160;&#160;览</string>
     <string name="edit_resume">编&#160;&#160;辑</string>
@@ -91,9 +91,9 @@
     <string name="settings_item6">关于我们</string>
     <string name="settings_item7">向好友分享</string>
     <string name="settings_item71">分享</string>
-    <string name="settings_item72">有云简历已上线App市场,请前往搜索 “有云简历”即可下载安装使用</string>
+    <string name="settings_item72">有云简历已上线App市场,请前往搜索 “有云简历”即可下载安装使用;关于App使用中有任何问题,请到设置-意见反馈里提交问题。</string>
     <string name="settings_item8">清除本地缓存</string>
-    <string name="settings_item9">联网操作同步更新</string>
+    <string name="settings_item9">联网同步更新</string>
     <string name="action_login_head">请先登录</string>
     <string name="action_syncing">正在同步,请稍后\u2026</string>
     <string name="action_sync_success">同步成功</string>
@@ -111,6 +111,12 @@
     <string name="feedback_ed_3">感谢您的反馈</string>
     <string name="feedback_info_3">您的反馈成功,我们将尽快处理你的意见,谢谢~</string>
     <string name="feedback_info_4">发送错误报告</string>
+    <string name="contactus_phone_show">手&#160;&#160;&#160;机:&#160;&#160;13667258212</string>
+    <string name="contactus_phone_hide">手&#160;&#160;&#160;机:&#160;&#160;*****&#160;(登录可见)</string>
+    <string name="contactus_weixin">微&#160;&#160;&#160;信:</string>
+    <string name="contactus_weixin_name">&#160;&#160;ppp_cj_qqq</string>
+    <string name="contactus_email">Email:</string>
+    <string name="contactus_email_name">&#160;&#160;1042838789@qq.com</string>
 
     <!-- user login register -->
     <string name="action_user_login">用户登录</string>
@@ -175,7 +181,7 @@
 	<string name="weibosdk_demo_toast_auth_success">授权成功</string>
     <string name="weibosdk_demo_toast_auth_failed">授权失败</string>
     <string name="weibosdk_demo_toast_auth_canceled">取消授权</string>
-    <string name="weibosdk_demo_token_has_existed">Token 仍在有效期内，无需再次登录。</string>
+    <string name="weibosdk_demo_token_has_existed">Token 仍在有效期内,无需再次登录。</string>
     
      <!-- personal center -->
     <string name="personal_center">个人中心</string>
@@ -263,7 +269,7 @@
     <string name="default_city">武汉</string>
     <string name="date_today">今天是:</string>
 
-    <!-- review link item -->
+    <!-- review link string -->
     <string name="re_link1">面试经验</string>
     <string name="re_link2">求职简历</string>
     <string name="re_link3">职场攻略</string>
@@ -321,8 +327,24 @@
     <string name="we_info_industryclassification">行业类别</string>
     <string name="we_info_companynature">企业性质</string>
     <string name="we_info_choose_companynature">请选择企业性质(选填)</string>
+    <string name="we_info_companynature_1">国家机关</string>
+    <string name="we_info_companynature_2">事业单位</string>
+    <string name="we_info_companynature_3">国企</string>
+    <string name="we_info_companynature_4">外商独资</string>
+    <string name="we_info_companynature_5">代表处</string>
+    <string name="we_info_companynature_6">合资企业</string>
+    <string name="we_info_companynature_7">民营企业</string>
+    <string name="we_info_companynature_8">股份制企业</string>
+    <string name="we_info_companynature_9">上市公司</string>
+    <string name="we_info_companynature_10">其他</string>
     <string name="we_info_companyscale">企业规模</string>
     <string name="we_info_choose_companyscale">请选择企业规模(选填)</string>
+    <string name="we_info_companyscale_1">20人以下</string>
+    <string name="we_info_companyscale_2">20~99人</string>
+    <string name="we_info_companyscale_3">100~499人</string>
+    <string name="we_info_companyscale_4">500~999人</string>
+    <string name="we_info_companyscale_5">1000~9999人</string>
+    <string name="we_info_companyscale_6">10000人以上</string>
     <string name="we_info_choose_industryclassification">请选择行业类别</string>
     <string name="we_info_jobtitle">职位名称</string>
     <string name="we_info_choose_jobtitle">请输入职位名称</string>
@@ -334,6 +356,16 @@
     <string name="we_info_choose_worktime2">请选择</string>
     <string name="we_info_jobsalary">职位月薪(税前)</string>
     <string name="we_info_choose_jobsalary">请选择职位月薪</string>
+    <string name="we_info_jobsalary_1">1000元/月以下</string>
+    <string name="we_info_jobsalary_2">1000-2000元/月</string>
+    <string name="we_info_jobsalary_3">2001-4000元/月</string>
+    <string name="we_info_jobsalary_4">4001-6000元/月</string>
+    <string name="we_info_jobsalary_5">6001-8000元/月</string>
+    <string name="we_info_jobsalary_6">8001-10000元/月</string>
+    <string name="we_info_jobsalary_7">10001-15000元/月</string>
+  	<string name="we_info_jobsalary_8">15000-25000元/月</string>
+    <string name="we_info_jobsalary_9">25000元/月以上</string>
+    <string name="we_info_jobsalary_10">保密</string>
     <string name="we_info_workdesc">工作描述</string>
     <string name="we_info_workdescdetail">请详细描述您的职责范围,工作任务以及取得的成绩等</string>
     <!-- 工作简历 -->
@@ -365,6 +397,17 @@
     <string name="ed_info_choose_majorname">请选择专业名称</string>
     <string name="ed_info_degree">学历/学位</string>
     <string name="ed_info_choose_degree">请选择学历/学位</string>
+    <string name="ed_info_degree_1">初中</string>
+    <string name="ed_info_degree_2">中技</string>
+    <string name="ed_info_degree_3">高中</string>
+    <string name="ed_info_degree_4">中专</string>
+    <string name="ed_info_degree_5">大专</string>
+    <string name="ed_info_degree_6">本科</string>
+    <string name="ed_info_degree_7">硕士</string>
+    <string name="ed_info_degree_8">MBA</string>
+    <string name="ed_info_degree_9">EMBA</string>
+    <string name="ed_info_degree_10">博士</string>
+    <string name="ed_info_degree_11">其他</string>
     <string name="ed_info_trainingorganization">培训机构</string>
     <string name="ed_info_input_trainingorganization">请输入培训机构</string>
     <string name="ed_info_trainingclass">培训课程</string>
@@ -376,7 +419,7 @@
     <!-- 教育培训经历 -->
 
     <!-- 求职意向 -->
-    <string name="ji_info_default_1">建议简明扼要，另外，不要将几个不相关的职位堆砌在一起，否则，这样会让HR认为您的职业方向不清晰。</string>
+    <string name="ji_info_default_1">建议简明扼要,不要将几个不相关的职位堆砌在一起,否则,这样会让HR认为您的职业方向不清晰。</string>
     <string name="ji_info_expectedworkingproperty">期望工作性质</string>
     <string name="ji_info_choose_expectedworkingproperty">请选择期望工作性质</string>
     <string name="ji_info_expectedworkingproperty_1">全职</string>
@@ -391,9 +434,24 @@
     <string name="ji_info_expectedmonthlysalary">期望月薪（税前）</string>
     <string name="ji_info_expectedmonthlysalary2">期望月薪</string>
     <string name="ji_info_choose_expectedmonthlysalary">请选择期望月薪（税前）</string>
+    <string name="ji_info_expectedmonthlysalary_1">2000元/月</string>
+    <string name="ji_info_expectedmonthlysalary_2">3000元/月</string>
+    <string name="ji_info_expectedmonthlysalary_3">4000元/月</string>
+    <string name="ji_info_expectedmonthlysalary_4">5000元/月</string>
+    <string name="ji_info_expectedmonthlysalary_5">6000元/月</string>
+    <string name="ji_info_expectedmonthlysalary_6">7000元/月</string>
+    <string name="ji_info_expectedmonthlysalary_7">8000元/月</string>
+    <string name="ji_info_expectedmonthlysalary_8">9000元/月</string>
+    <string name="ji_info_expectedmonthlysalary_9">10000元/月</string>
+    <string name="ji_info_expectedmonthlysalary_10">面议</string>
     <string name="ji_info_workingstate">工作状态</string>
     <string name="ji_info_choose_workingstate">请选择工作状态</string>
     <string name="ji_info_curworkingstate">目前工作状况:&#160;</string>
+    <string name="ji_info_curworkingstate_1">我目前在职,正考虑换个工作环境</string>
+    <string name="ji_info_curworkingstate_2">目前已离职,可立即上岗</string>
+    <string name="ji_info_curworkingstate_3">我对目前的工作比较满意,若有更好的工作机会,也可以考虑</string>
+    <string name="ji_info_curworkingstate_4">目前暂无跳槽的打算</string>
+    <string name="ji_info_curworkingstate_5">应届毕业生</string>
     
     <!-- 求职意向 -->
 
@@ -402,9 +460,36 @@
     <string name="ot_edit">编辑</string>
     <string name="ot_save">保存</string>
     <string name="ot_languages">语言能力</string>
+    <string name="ot_languages_name_1">无</string>
+    <string name="ot_languages_name_2">英语</string>
+    <string name="ot_languages_name_3">日语</string>
+    <string name="ot_languages_name_4">法语</string>
+    <string name="ot_languages_name_5">德语</string>
+    <string name="ot_languages_name_6">俄语</string>
+    <string name="ot_languages_name_7">韩语</string>
+    <string name="ot_languages_name_8">西班牙语</string>
+    <string name="ot_languages_name_9">葡萄牙语</string>
+    <string name="ot_languages_name_10">阿拉伯语</string>
+    <string name="ot_languages_name_11">意大利语</string>
+    <string name="ot_languages_name_12">其他</string>
+    <string name="ot_languages_1">一般</string>
+    <string name="ot_languages_2">良好</string>
+    <string name="ot_languages_3">熟练</string>
+    <string name="ot_languages_4">精通</string>
     <string name="ot_certificate">获得证书</string>
     <string name="ot_get_certificate">获得证书</string>
+    <string name="ot_certificate_name_1">外语证书</string>
+    <string name="ot_certificate_name_2">计算机证书</string>
+    <string name="ot_certificate_name_3">会计证书</string>
+    <string name="ot_certificate_name_4">职称证书</string>
+    <string name="ot_certificate_name_5">其他证书</string>
     <string name="ot_info">其他信息</string>
+    <string name="ot_info_name1">兴趣爱好</string>
+    <string name="ot_info_name2">获得荣誉</string>
+    <string name="ot_info_name3">特殊技能</string>
+    <string name="ot_info_name4">社会活动</string>
+    <string name="ot_info_name5">推荐信</string>
+    <string name="ot_info_name6">其他</string>
     <string name="ot_info_language">外语语种</string>
     <string name="ot_info_choose_language">请选择外语语种</string>
     <string name="ot_info_literacyskills">读写能力</string>
@@ -431,17 +516,32 @@
     <string name="pe_info_workdesc">项目描述</string>
     <string name="pe_input_workdesc">请输入项目描述(限2000字)</string>
     <!-- 人才附加内容 -->
+    
+    <!-- jazzy_effects -->
+     <string name="standard">无</string>
+     <string name="random">随机</string>
+     <string name="tablet">平移</string>
+     <string name="cubein">方盒淡入</string>
+     <string name="cubeout">方盒淡出</string>
+     <string name="flipvertical">垂直翻转</string>
+     <string name="fliphorizontal">水平翻转</string>
+     <string name="stack">层叠</string>
+     <string name="zoomin">放大</string>
+     <string name="zoomout">缩小</string>
+     <string name="rotateup">向上旋转</string>
+     <string name="rotatedown">向下旋转</string>
+     <string name="accordion">风车</string>
 
 	<string name="protocol_content">
-	    	在此特别提醒您（用户）在注册成为用户之前，请认真阅读本《用户协议》（以下简称“协议”），
-	    	确保您充分理解本协议中各条款。请您审慎阅读并选择接受或不接受本协议。<![CDATA[<br/><br/>]]>
-	    	除非您接受本协议所有条款，否则您无权注册、登录或使用本协议所涉服务。
-	    	您的注册、登录、使用等行为将视为对本协议的接受，并同意接受本协议各项条款的约束。
-	    	“用户”是指注册、登录、使用本服务的个人。<![CDATA[<br/><br/>]]>
-	    	本协议可由《有云简历》开发中心随时更新，更新后的协议条款一旦公布即代替原来的协议条款，恕不再另行通知，用户可在本APP中查阅最新版协议条款。
-	    	在修改协议条款后，如果用户不接受修改后的条款，请立即停止使用提供的服务，用户继续使用提供的服务将被视为接受修改后的协议。 <![CDATA[<br/><br/>]]>
-	    	请用户仔细阅读，自主考虑风险。未成年人应在法定监护人的陪同下阅读本协议。
-	    	若用户和开发中心之间发生任何纠纷或争议，首先应友好协商解决，协商不成的，用户同意将纠纷或争议提交住所地有管辖权的人民法院管辖。 <![CDATA[<br/><br/>]]>
-	    	本协议的任何条款无论因何种原因无效或不具可执行性，其余条款仍有效，对双方具有约束力。
+	   	在此特别提醒您（用户）在注册成为用户之前,请认真阅读本《用户协议》（以下简称“协议”）,
+	   	确保您充分理解本协议中各条款。请您审慎阅读并选择接受或不接受本协议。<![CDATA[<br/><br/>]]>
+	   	除非您接受本协议所有条款,否则您无权注册、登录或使用本协议所涉服务。
+	   	您的注册、登录、使用等行为将视为对本协议的接受,并同意接受本协议各项条款的约束。
+	   	“用户”是指注册、登录、使用本服务的个人。<![CDATA[<br/><br/>]]>
+	   	本协议可由《有云简历》开发中心随时更新,更新后的协议条款一旦公布即代替原来的协议条款,恕不再另行通知,用户可在本APP中查阅最新版协议条款。
+	   	在修改协议条款后,如果用户不接受修改后的条款,请立即停止使用提供的服务,用户继续使用提供的服务将被视为接受修改后的协议。 <![CDATA[<br/><br/>]]>
+	   	请用户仔细阅读,自主考虑风险。未成年人应在法定监护人的陪同下阅读本协议。
+	   	若用户和开发中心之间发生任何纠纷或争议,首先应友好协商解决,协商不成的,用户同意将纠纷或争议提交住所地有管辖权的人民法院管辖。 <![CDATA[<br/><br/>]]>
+	   	本协议的任何条款无论因何种原因无效或不具可执行性,其余条款仍有效,对双方具有约束力。
 	</string>
 </resources>

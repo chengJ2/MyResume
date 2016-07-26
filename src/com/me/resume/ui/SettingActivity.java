@@ -116,7 +116,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	private void initViews(){
 		setTopTitle(R.string.action_settings);
 		setMsgHide();
-		setRightIconVisible(View.INVISIBLE);
+//		setRightIcon(R.drawable.feedback);
+		setRightIconVisible(View.GONE);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		

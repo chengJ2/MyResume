@@ -31,6 +31,7 @@
                 <TextView
                     android:id="@+id/self_evaluation"
             		style="@style/main_common_padding_text"
+            		android:paddingLeft="0dip"
             		android:textSize="@dimen/small_middle_text_size" />
                 
                 <com.me.resume.views.TagFlowLayout 

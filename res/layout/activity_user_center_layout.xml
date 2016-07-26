@@ -173,6 +173,10 @@
                     android:id="@+id/info_layout0"
                     style="@style/noraml_item" >
 
+                    <View 
+                        android:id="@+id/view0"
+                        style="@style/usercenter_item_bar_style"/>
+                    
                     <TextView
                         style="@style/user_center_item_left"
                         android:text="@string/resume_evaluation" />
@@ -187,6 +191,9 @@
                     android:id="@+id/info_layout1"
                     style="@style/noraml_item" >
 
+                     <View 
+                        android:id="@+id/view1"
+                        style="@style/usercenter_item_bar_style"/>
                     <TextView
                         style="@style/user_center_item_left"
                         android:text="@string/resume_jobintension" />
@@ -203,6 +210,9 @@
                     android:id="@+id/info_layout2"
                     style="@style/noraml_item" >
 
+                     <View 
+                        android:id="@+id/view2"
+                        style="@style/usercenter_item_bar_style"/>
                     <TextView
                         style="@style/user_center_item_left"
                         android:text="@string/resume_education" />
@@ -219,6 +229,10 @@
                     android:id="@+id/info_layout3"
                     style="@style/noraml_item" >
 
+                     <View 
+                        android:id="@+id/view3"
+                        style="@style/usercenter_item_bar_style"/>
+                    
                     <TextView
                         style="@style/user_center_item_left"
                         android:text="@string/resume_workexperience2" />
@@ -235,6 +249,9 @@
                     android:id="@+id/info_layout4"
                     style="@style/noraml_item" >
 
+                     <View 
+                        android:id="@+id/view4"
+                        style="@style/usercenter_item_bar_style"/>
                     <TextView
                         style="@style/user_center_item_left"
                         android:text="@string/resume_project_experience" />

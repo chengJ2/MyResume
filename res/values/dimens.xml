@@ -59,4 +59,6 @@
     <dimen name="topbar_pop_item_height">40dip</dimen>
     
     <dimen name="button_use_textsize">13dip</dimen>
+    
+    <dimen name="otherinfo_bar_height">40dip</dimen>
 </resources>

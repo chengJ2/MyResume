@@ -41,6 +41,8 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	private String info_exp_workingpropertyStr,info_expworkplaceStr,info_expworkcareerStr; 
 	private String info_expworkindustryStr,info_expmonthlysalaryStr,info_workingstateStr;
 	
+	private TextView helpInfo;
+	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
@@ -104,6 +106,8 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	private void findViews(){
 		left_icon.setOnClickListener(this);
 		right_icon.setOnClickListener(this);
+		
+		helpInfo = findView(R.id.ji_helpInfo);
 		
 		info_exp_workingproperty = findView(R.id.info_exp_workingproperty);
 		info_expworkplace = findView(R.id.info_expworkplace);
@@ -170,16 +174,19 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	 * 执行同步操作
 	 */
 	private void actionAync(){
-		if (!MyApplication.USERID.equals("0")) {
-			if (CommUtil.isNetworkAvailable(self)) {
-				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-				if (actionFlag == 0) {
-					syncData(3);
+		if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+			if (!MyApplication.USERID.equals("0")) {
+				if (CommUtil.isNetworkAvailable(self)) {
+					helpInfo.setVisibility(View.GONE);
+					set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+					if (actionFlag == 0) {
+						syncData(3);
+					}else{
+						syncData(1);
+					}
 				}else{
-					syncData(1);
+					set3Msg(R.string.check_network);
 				}
-			}else{
-				set3Msg(R.string.check_network);
 			}
 		}
 	}
@@ -199,14 +206,12 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 											info_expworkcareerStr,info_expmonthlysalaryStr,info_workingstateStr,TimeUtils.getCurrentTimeInString()},3);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-							actionAync();
-						}
+						actionAync();
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
 				}else{
-					actionFlag = 3;
+					actionFlag = 1;
 					ContentValues cValues = new ContentValues();
 					cValues.put("tokenId", UUIDGenerator.getKUUID());
 					cValues.put("userId", uTokenId);
@@ -223,9 +228,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		 			if(queryResult){
 		 				toastMsg(R.string.action_add_success);
 		 				if(getJobIntensionData()){
-		 					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-		 						actionAync();
-		 					}
+	 						actionAync();
 		 				}
 		 			}
 				}

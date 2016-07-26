@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -67,6 +68,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	
 	private LinearLayout info_layout0,info_layout1,info_layout2,info_layout3,info_layout4;
 	private TextView info_item0,info_item1,info_item2,info_item3,info_item4;
+	private View view0,view1,view2,view3,view4;
 	
 	private TextView resume_complete,resume_updatime;
 	
@@ -194,6 +196,12 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		info_item3 = findView(R.id.info_item3);
 		info_item4 = findView(R.id.info_item4);
 		
+		view0 = findView(R.id.view0);
+		view1 = findView(R.id.view1);
+		view2 = findView(R.id.view2);
+		view3 = findView(R.id.view3);
+		view4 = findView(R.id.view4);
+		
 		mycollection.setOnClickListener(this);
 //		viewcalendar.setOnClickListener(this);
 		review_resume.setOnClickListener(this);
@@ -267,6 +275,21 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	}
 	
 	/**
+	 * 设置View bgcolor
+	 * @param ll
+	 * @param bgcolor
+	 */
+	private void initBarColor(View view,String bgcolor){
+		try {
+			if (RegexUtil.checkNotNull(bgcolor)) {
+				view.setBackgroundColor(Color.parseColor(bgcolor));
+			}
+		} catch (Exception e) {
+			view.setBackgroundColor(Color.parseColor("#CC0000"));
+		}
+	}
+	
+	/**
 	 * @Description:基本信息完整度
 	 */
 	private void getBaseInfoComplete(){
@@ -304,19 +327,21 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		}
 		
 	}
+	
 	/**
 	 * 
 	 * @Description:求职意向完整度
 	 */
 	private void getEvaluationComplete(){
-		queryWhere = "select (a1+a2+a3) num"
+		queryWhere = "select (a1+a2+a3) num,bgcolor"
 				+ " from ("
 				+ " select case when selfevaluation='' then 1 else 0 end a1,"
 				+ " case when careergoal='' then 1 else 0 end a2,"
-				+ " case when character='' then 1 else 0 end a3"
+				+ " case when character='' then 1 else 0 end a3,bgcolor"
 				+ " from "+ CommonText.EVALUATION +" where userId = '"+ uTokenId +"') a";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!=null && commMapArray.get("num").length>0) {
+			initBarColor(view0, commMapArray.get("bgcolor")[0]);
 			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
 			int nPercent = 0;
 			nPercent = (int) (((3 - num) * 100 / 3));
@@ -336,17 +361,18 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	 * @Description:求职意向完整度
 	 */
 	private void getJobIntensionComplete(){
-		queryWhere = "select (a1+a2+a3+a4+a5+a6) num"
+		queryWhere = "select (a1+a2+a3+a4+a5+a6) num,bgcolor"
 					+ " from ("
 					+ " select case when expworkingproperty='' then 1 else 0 end a1,"
 					+ " case when expdworkplace='' then 1 else 0 end a2,"
 					+ " case when expworkindustry='' then 1 else 0 end a3,"
 					+ " case when expworkcareer='' then 1 else 0 end a4,"
 					+ " case when expmonthlysalary='' then 1 else 0 end a5,"
-					+ " case when workingstate='' then 1 else 0 end a6"
+					+ " case when workingstate='' then 1 else 0 end a6,bgcolor"
 					+ " from "+ CommonText.JOBINTENSION +" where userId = '"+ uTokenId +"') a";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!=null && commMapArray.get("num").length>0) {
+			initBarColor(view1, commMapArray.get("bgcolor")[0]);
 			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
 			int nPercent = 0;
 			nPercent = (int) (((6 - num) * 100 / 6));
@@ -367,18 +393,20 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	 * @Description:教育背景完整度
 	 */
 	private void getEducationComplete(){
-		queryWhere = "select (a1+a2+a3+a4+a5+a6) num"
+		queryWhere = "select (a1+a2+a3+a4+a5+a6) num,bgcolor"
 					+ " from ("
 					+ " select case when educationtimestart='' then 1 else 0 end a1,"
 					+ " case when educationtimeend='' then 1 else 0 end a2,"
 					+ " case when school='' then 1 else 0 end a3,"
 					+ " case when examination='' then 1 else 0 end a4,"
 					+ " case when majorname='' then 1 else 0 end a5,"
-					+ " case when degree='' then 1 else 0 end a6"
-					+ " from "+ CommonText.EDUCATION +" where userId = '"+ uTokenId +"') a";
+					+ " case when degree='' then 1 else 0 end a6,bgcolor"
+					+ " from "+ CommonText.EDUCATION +" where userId = '"+ uTokenId +"' "
+					+ " order by id limit 1) a";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!=null && commMapArray.get("num").length>0) {
 			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
+			initBarColor(view2, commMapArray.get("bgcolor")[0]);
 			int nPercent = 0;
 			nPercent = (int) (((6 - num) * 100 / 6));
 			if (nPercent <= 0)
@@ -432,14 +460,16 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	 * @Description:项目经验
 	 */
 	private void getWEandPEComplete(String table,TextView text){
-		queryWhere = "select count(*) as num from "+ table +" where userId = '"+ uTokenId +"'";
+		queryWhere = "select count(*) as num,bgcolor from "+ table +" where userId = '"+ uTokenId +"' order by id";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray!=null && commMapArray.get("num").length>0) {
 			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
 			if (num > 0) {
 				if (table.equals(CommonText.WORKEXPERIENCE)) {
+					initBarColor(view3, commMapArray.get("bgcolor")[0]);
 					text.setText(String.format(getStrValue(R.string.personal_c_item19), num));
 				}else if (table.equals(CommonText.PROJECT_EXPERIENCE)){
+					initBarColor(view4, commMapArray.get("bgcolor")[0]);
 					text.setText(String.format(getStrValue(R.string.personal_c_item15), num));
 				}
 			}else{
@@ -448,6 +478,8 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		}else{
 			text.setText(getStrValue(R.string.personal_c_item13));
 		}
+		
+		
 	}
 	
 	/**

@@ -15,46 +15,26 @@
             android:focusableInTouchMode="true" >
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dip"
-                android:background="@color/grey_50"
-                android:orientation="horizontal" >
+                style="@style/otherinfo_itembar_style">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    style="@style/otherinfo_text_style"
                     android:layout_weight="1"
                     android:gravity="center|left"
-                    android:padding="5dip"
                     android:text="@string/ot_languages"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/small_middle_text_size" />
 
                 <TextView
                     android:id="@+id/ot_languages_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:padding="5dip"
+                    style="@style/otherinfo_text_style"
                     android:text="@string/ot_edit"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small_text_size"
                     android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/ot_languages_add"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:padding="5dip"
-                    android:text="@string/ot_add"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small_text_size" />
+                    style="@style/otherinfo_text_style"
+                    android:text="@string/ot_add" />
             </LinearLayout>
-
-            <View style="@style/line_padding10" />
 
             <LinearLayout
                 style="@style/noraml_item" >
@@ -109,49 +89,27 @@
                     android:visibility="visible" />
             </LinearLayout>
 
-            <View style="@style/line_padding10" />
-
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dip"
-                android:background="@color/grey_50"
-                android:orientation="horizontal" >
+                style="@style/otherinfo_itembar_style" >
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    style="@style/otherinfo_text_style"
                     android:layout_weight="1"
                     android:gravity="center|left"
-                    android:padding="5dip"
                     android:text="@string/ot_certificate"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/small_middle_text_size" />
 
                 <TextView
                     android:id="@+id/ot_certificate_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:padding="5dip"
+                    style="@style/otherinfo_text_style"
                     android:text="@string/ot_edit"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small_text_size"
                     android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/ot_certificate_add"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:padding="5dip"
-                    android:text="@string/ot_add"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small_text_size" />
+                    style="@style/otherinfo_text_style"
+                    android:text="@string/ot_add" />
             </LinearLayout>
-
-            <View style="@style/line_padding10" />
 
             <LinearLayout style="@style/noraml_item" >
 
@@ -187,49 +145,27 @@
                     android:visibility="visible" />
             </LinearLayout>
 
-            <View style="@style/line_padding10" />
-
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dip"
-                android:background="@color/grey_50"
-                android:orientation="horizontal" >
+                style="@style/otherinfo_itembar_style" >
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    style="@style/otherinfo_text_style"
                     android:layout_weight="1"
                     android:gravity="center|left"
-                    android:padding="5dip"
                     android:text="@string/ot_info"
-                    android:textColor="@color/black"
                     android:textSize="@dimen/small_middle_text_size" />
 
                 <TextView
                     android:id="@+id/ot_otherinfo_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:padding="5dip"
+                    style="@style/otherinfo_text_style"
                     android:text="@string/ot_edit"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small_text_size" 
                     android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/ot_otherinfo_add"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:gravity="center"
-                    android:padding="5dip"
-                    android:text="@string/ot_add"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small_text_size" />
+                    style="@style/otherinfo_text_style"
+                    android:text="@string/ot_add" />
             </LinearLayout>
-
-            <View style="@style/line_padding10" />
 
             <LinearLayout style="@style/noraml_item" >
 
@@ -265,7 +201,6 @@
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />
             </LinearLayout>
-
             <View style="@style/line_padding10" />
         </LinearLayout>
     </com.me.resume.views.CommScrollView>

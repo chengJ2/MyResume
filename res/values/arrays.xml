@@ -1,5 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <string-array name="review_link_topics">
+        <item>@string/re_link1</item>
+        <item>@string/re_link2</item>
+        <item>@string/re_link3</item>
+        <item>@string/re_link4</item>
+        <item>@string/re_link5</item>
+        <item>@string/re_link6</item>
+    </string-array>
+    <string-array name="review_bgcolor">
+        <item>#FF69B4</item>
+        <item>#9F79EE</item>
+        <item>#8470FF</item>
+        <item>#00BCD4</item>
+        <item>#FF5722</item>
+        <item>#795548</item>
+        <item>#EE7AE9</item>
+        <item>#32CD32</item>
+        <item>#B23AEE</item>
+        <item>#6699FF</item>
+    </string-array>
+    <string-array name="ba_maritalstatus_values">
+        <item>@string/info_maritalstatus_1</item>
+        <item>@string/info_maritalstatus_2</item>
+        <item>@string/info_maritalstatus_3</item>
+    </string-array>
+    <string-array name="ba_politicalstatus_values">
+        <item>@string/info_politicalstatus_1</item>
+        <item>@string/info_politicalstatus_2</item>
+        <item>@string/info_politicalstatus_3</item>
+        <item>@string/info_politicalstatus_4</item>
+        <item>@string/info_politicalstatus_5</item>
+    </string-array>
+    <string-array name="ba_expectedworkingproperty_values">
+        <item>@string/ji_info_expectedworkingproperty_1</item>
+        <item>@string/ji_info_expectedworkingproperty_2</item>
+        <item>@string/ji_info_expectedworkingproperty_2</item>
+    </string-array>
+    <string-array name="we_qwyx_values">
+        <item>@string/we_info_jobsalary_1</item>
+        <item>@string/we_info_jobsalary_2</item>
+        <item>@string/we_info_jobsalary_3</item>
+        <item>@string/we_info_jobsalary_4</item>
+        <item>@string/we_info_jobsalary_5</item>
+        <item>@string/we_info_jobsalary_6</item>
+        <item>@string/we_info_jobsalary_7</item>
+        <item>@string/we_info_jobsalary_8</item>
+        <item>@string/we_info_jobsalary_9</item>
+        <item>@string/we_info_jobsalary_10</item>
+    </string-array>
+    <string-array name="we_companyscale_values">
+        <item>@string/we_info_companyscale_1</item>
+        <item>@string/we_info_companyscale_2</item>
+        <item>@string/we_info_companyscale_3</item>
+        <item>@string/we_info_companyscale_4</item>
+        <item>@string/we_info_companyscale_5</item>
+        <item>@string/we_info_companyscale_6</item>
+    </string-array>
+    <string-array name="we_companynature_values">
+        <item>@string/we_info_companynature_1</item>
+        <item>@string/we_info_companynature_2</item>
+        <item>@string/we_info_companynature_3</item>
+        <item>@string/we_info_companynature_4</item>
+        <item>@string/we_info_companynature_5</item>
+        <item>@string/we_info_companynature_6</item>
+        <item>@string/we_info_companynature_7</item>
+        <item>@string/we_info_companynature_8</item>
+        <item>@string/we_info_companynature_9</item>
+        <item>@string/we_info_companynature_10</item>
+    </string-array>
+    <string-array name="ji_qwyx_values">
+        <item>@string/ji_info_expectedmonthlysalary_1</item>
+        <item>@string/ji_info_expectedmonthlysalary_2</item>
+        <item>@string/ji_info_expectedmonthlysalary_3</item>
+        <item>@string/ji_info_expectedmonthlysalary_4</item>
+        <item>@string/ji_info_expectedmonthlysalary_5</item>
+        <item>@string/ji_info_expectedmonthlysalary_6</item>
+        <item>@string/ji_info_expectedmonthlysalary_7</item>
+        <item>@string/ji_info_expectedmonthlysalary_8</item>
+        <item>@string/ji_info_expectedmonthlysalary_9</item>
+        <item>@string/ji_info_expectedmonthlysalary_10</item>
+    </string-array>
+    <string-array name="ji_jobstatue_values">
+        <item>@string/ji_info_curworkingstate_1</item>
+        <item>@string/ji_info_curworkingstate_2</item>
+        <item>@string/ji_info_curworkingstate_3</item>
+        <item>@string/ji_info_curworkingstate_4</item>
+        <item>@string/ji_info_curworkingstate_5</item>
+    </string-array>
+    <string-array name="ji_workingproperty_values">
+        <item>@string/ji_info_expectedworkingproperty_1</item>
+        <item>@string/ji_info_expectedworkingproperty_2</item>
+        <item>@string/ji_info_expectedworkingproperty_3</item>
+    </string-array>
+    <string-array name="ed_degress_values">
+        <item>@string/ed_info_degree_1</item>
+        <item>@string/ed_info_degree_2</item>
+        <item>@string/ed_info_degree_3</item>
+        <item>@string/ed_info_degree_4</item>
+        <item>@string/ed_info_degree_5</item>
+        <item>@string/ed_info_degree_6</item>
+        <item>@string/ed_info_degree_7</item>
+        <item>@string/ed_info_degree_8</item>
+        <item>@string/ed_info_degree_9</item>
+        <item>@string/ed_info_degree_10</item>
+        <item>@string/ed_info_degree_11</item>
+    </string-array>
+    <string-array name="oi_tsdx_values">
+        <item>@string/ot_languages_1</item>
+        <item>@string/ot_languages_2</item>
+        <item>@string/ot_languages_3</item>
+        <item>@string/ot_languages_4</item>
+    </string-array>
+     <string-array name="oi_wysp_values">
+        <item>@string/ot_languages_name_1</item>
+        <item>@string/ot_languages_name_2</item>
+        <item>@string/ot_languages_name_3</item>
+        <item>@string/ot_languages_name_4</item>
+        <item>@string/ot_languages_name_5</item>
+        <item>@string/ot_languages_name_6</item>
+        <item>@string/ot_languages_name_7</item>
+        <item>@string/ot_languages_name_8</item>
+        <item>@string/ot_languages_name_9</item>
+        <item>@string/ot_languages_name_10</item>
+        <item>@string/ot_languages_name_11</item>
+        <item>@string/ot_languages_name_12</item>
+    </string-array>
+    <string-array name="oi_certificatetype_values">
+        <item>@string/ot_certificate_name_1</item>
+        <item>@string/ot_certificate_name_2</item>
+        <item>@string/ot_certificate_name_3</item>
+        <item>@string/ot_certificate_name_4</item>
+        <item>@string/ot_certificate_name_5</item>
+    </string-array>
+    <string-array name="oi_topic_values">
+        <item>@string/ot_info_name1</item>
+        <item>@string/ot_info_name2</item>
+        <item>@string/ot_info_name3</item>
+        <item>@string/ot_info_name4</item>
+        <item>@string/ot_info_name5</item>
+        <item>@string/ot_info_name6</item>
+    </string-array>
     <string-array name="jazzy_effects">
         <item>Standard</item>
         <item>Random</item>
@@ -16,19 +158,19 @@
         <item>Accordion</item>
     </string-array>
     <string-array name="jazzy_effects_zh">
-        <item>无</item>
-        <item>随机</item>
-        <item>平移</item>
-        <item>方盒淡入</item>
-        <item>方盒淡出</item>
-        <item>垂直翻转</item>
-        <item>水平翻转</item>
-        <item>层叠</item>
-        <item>放大</item>
-        <item>缩小</item>
-        <item>向上旋转</item>
-        <item>向下旋转</item>
-        <item>风车</item>
+        <item>@string/standard</item>
+        <item>@string/random</item>
+        <item>@string/tablet</item>
+        <item>@string/cubein</item>
+        <item>@string/cubeout</item>
+        <item>@string/flipvertical</item>
+        <item>@string/fliphorizontal</item>
+        <item>@string/stack</item>
+        <item>@string/zoomin</item>
+        <item>@string/zoomout</item>
+        <item>@string/rotateup</item>
+        <item>@string/rotatedown</item>
+        <item>@string/accordion</item>
     </string-array>
     <string-array name="jazzy_effects_random">
         <item>Tablet</item>
@@ -49,147 +191,5 @@
         <item>@string/settings_item205</item>
         <item>@string/settings_item206</item>
     </string-array>
-    <string-array name="review_link_topics">
-        <item>@string/re_link1</item>
-        <item>@string/re_link2</item>
-        <item>@string/re_link3</item>
-        <item>@string/re_link4</item>
-        <item>@string/re_link5</item>
-        <item>@string/re_link6</item>
-    </string-array>
-    
-    <string-array name="review_bgcolor">
-        <item>#FF69B4</item>
-        <item>#9F79EE</item>
-        <item>#8470FF</item>
-        <item>#FFA500</item>
-        <item>#FF7F50</item>
-        <item>#CC0000</item>
-        <item>#EE7AE9</item>
-        <item>#32CD32</item>
-        <item>#B23AEE</item>
-        <item>#6699FF</item>
-    </string-array>
- 
-    <string-array name="ba_maritalstatus_values">
-        <item>@string/info_maritalstatus_1</item>
-        <item>@string/info_maritalstatus_2</item>
-        <item>@string/info_maritalstatus_3</item>
-    </string-array>
-    <string-array name="ba_politicalstatus_values">
-        <item>@string/info_politicalstatus_1</item>
-        <item>@string/info_politicalstatus_2</item>
-        <item>@string/info_politicalstatus_3</item>
-        <item>@string/info_politicalstatus_4</item>
-        <item>@string/info_politicalstatus_5</item>
-    </string-array>
-    <string-array name="ba_expectedworkingproperty_values">
-        <item>@string/ji_info_expectedworkingproperty_1</item>
-        <item>@string/ji_info_expectedworkingproperty_2</item>
-        <item>@string/ji_info_expectedworkingproperty_2</item>
-    </string-array>
-    <string-array name="we_qwyx_values">
-        <item>1000元/月以下</item>
-        <item>1000-2000元/月</item>
-        <item>2001-4000元/月</item>
-        <item>4001-6000元/月</item>
-        <item>6001-8000元/月</item>
-        <item>8001-10000元/月</item>
-        <item>10001-15000元/月</item>
-        <item>15000-25000元/月</item>
-        <item>25000元/月以上</item>
-        <item>保密</item>
-    </string-array>
-    <string-array name="ji_qwyx_values">
-        <item>2000元/月</item>
-        <item>3000元/月</item>
-        <item>4000元/月</item>
-        <item>5000元/月</item>
-        <item>6000元/月</item>
-        <item>7000元/月</item>
-        <item>8000元/月</item>
-        <item>9000元/月</item>
-        <item>10000元/月</item>
-        <item>面议</item>
-    </string-array>
-    <string-array name="ji_jobstatue_values">
-        <item>我目前在职,正考虑换个工作环境</item>
-        <item>目前已离职,可立即上岗</item>
-        <item>我对目前的工作比较满意,若有更好的工作机会,也可以考虑</item>
-        <item>目前暂无跳槽的打算</item>
-        <item>应届毕业生</item>
-    </string-array>
-    <string-array name="ji_workingproperty_values">
-        <item>全职</item>
-        <item>兼职</item>
-        <item>实习</item>
-    </string-array>
-    <string-array name="oi_wysp_values">
-        <item>无</item>
-        <item>英语</item>
-        <item>日语</item>
-        <item>法语</item>
-        <item>德语</item>
-        <item>俄语</item>
-        <item>韩语</item>
-        <item>西班牙语</item>
-        <item>葡萄牙语</item>
-        <item>阿拉伯语</item>
-        <item>意大利语</item>
-        <item>其他</item>
-    </string-array>
-    <string-array name="ed_degress_values">
-        <item>初中</item>
-        <item>中技</item>
-        <item>高中</item>
-        <item>中专</item>
-        <item>大专</item>
-        <item>本科</item>
-        <item>硕士</item>
-        <item>MBA</item>
-        <item>EMBA</item>
-        <item>博士</item>
-        <item>其他</item>
-    </string-array>
-    <string-array name="oi_tsdx_values">
-        <item>一般</item>
-        <item>良好</item>
-        <item>熟练</item>
-        <item>精通</item>
-    </string-array>
-    <string-array name="we_companyscale_values">
-        <item>20人以下</item>
-        <item>20~99人</item>
-        <item>100~499人</item>
-        <item>500~999人</item>
-        <item>1000~9999人</item>
-        <item>10000人以上</item>
-    </string-array>
-    <string-array name="oi_companynature_values">
-        <item>国家机关</item>
-        <item>事业单位</item>
-        <item>国企</item>
-        <item>外商独资</item>
-        <item>代表处</item>
-        <item>合资企业</item>
-        <item>民营企业</item>
-        <item>股份制企业</item>
-        <item>上市公司</item>
-        <item>其他</item>
-    </string-array>
-    <string-array name="oi_certificatetype_values">
-        <item>外语证书</item>
-        <item>计算机证书</item>
-        <item>会计证书</item>
-        <item>职称证书</item>
-        <item>其他证书</item>
-    </string-array>
-    <string-array name="oi_topic_values">
-        <item>兴趣爱好</item>
-        <item>获得荣誉</item>
-        <item>特殊技能</item>
-        <item>社会活动</item>
-        <item>推荐信</item>
-        <item>其他</item>
-    </string-array>
+
 </resources>

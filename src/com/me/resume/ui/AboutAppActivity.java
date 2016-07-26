@@ -1,7 +1,6 @@
 package com.me.resume.ui;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -14,16 +13,15 @@ import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
+import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.service.DownloadService;
-import com.me.resume.swipeback.SwipeBackActivity.HandlerData;
-import com.me.resume.tools.DataCleanManager;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 
 /**
- * APP申明条款
+ * 关于我们
  * @author Administrator
  *
  */
@@ -68,21 +66,20 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 		declare = findView(R.id.declare);
 		
 		StringBuffer sbStr = new StringBuffer();
-		sbStr.append("微&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;信:");
-		sbStr.append("<font color=\"red\">");
-		sbStr.append("&#160;&#160;ppp_cj_qqq");
-		sbStr.append("</font>");
+		if (!MyApplication.USERID.equals("0")) {
+			sbStr.append(getStrValue(R.string.contactus_phone_show));
+		}else{
+			sbStr.append("<font color=\"red\">");
+			sbStr.append(getStrValue(R.string.contactus_phone_hide));
+			sbStr.append("</font>");
+		}
 		sbStr.append("<br/>");
-		sbStr.append("QQ(Email):");
-		sbStr.append("<font color=\"red\">");
-		sbStr.append("&#160;&#160;1042838789");
-		sbStr.append("</font>");
+		sbStr.append(getStrValue(R.string.contactus_weixin));
+		sbStr.append(getStrValue(R.string.contactus_weixin_name));
 		sbStr.append("<br/>");
-//		sbStr.append("邮&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;箱:");
-//		sbStr.append("<font color=\"red\">");
-//		sbStr.append("&#160;&#160;sandy_cj910@163.com");
-//		sbStr.append("</font>");
-//		sbStr.append("<br/>");
+		sbStr.append(getStrValue(R.string.contactus_email));
+		sbStr.append(getStrValue(R.string.contactus_email_name));
+		sbStr.append("<br/>");
 		contactus.setText(Html.fromHtml(sbStr.toString()));
 		
 		sbStr = new StringBuffer();

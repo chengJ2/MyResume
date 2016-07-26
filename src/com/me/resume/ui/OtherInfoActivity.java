@@ -323,9 +323,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 				ot_languages_edit.setVisibility(View.VISIBLE);
 				
 //				if(getLanguagesData()){
-					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-						actionAync(OtherInfoMenu.language,1,R.string.action_syncing_lang);
-					}
+					actionAync(OtherInfoMenu.language,1,R.string.action_syncing_lang);
 //				}
 			}
 			break;
@@ -338,9 +336,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 						new String[]{uTokenId,info_languageStr,info_literacyskillsStr,info_listeningspeakingStr,TimeUtils.getCurrentTimeInString()},3);
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
-					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-						actionAync(OtherInfoMenu.language,1,R.string.action_syncing_lang);
-					}
+					actionAync(OtherInfoMenu.language,1,R.string.action_syncing_lang);
 				}else{
 					toastMsg(R.string.action_update_fail);
 				}
@@ -362,9 +358,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 				toastMsg(R.string.action_add_success);
 				actionAync(OtherInfoMenu.certificate,1,R.string.action_syncing_cert);
 //				if(getcertificateData()){
-					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-						ot_certificate_edit.setVisibility(View.VISIBLE);
-					}
+					ot_certificate_edit.setVisibility(View.VISIBLE);
 //				}
 			}
 			break;
@@ -377,9 +371,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 						new String[]{uTokenId,info_certificateStr,info_certificatetimesStr},3);
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
-					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-						actionAync(OtherInfoMenu.certificate,1,R.string.action_syncing_cert);
-					}
+					actionAync(OtherInfoMenu.certificate,1,R.string.action_syncing_cert);
 				}else{
 					toastMsg(R.string.action_update_fail);
 				}
@@ -467,12 +459,15 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 	 * @Description: 执行同步操作
 	 */
 	private void actionAync(OtherInfoMenu menu,int style,int resId){
-		if (!MyApplication.USERID.equals("0")) {
-			if (CommUtil.isNetworkAvailable(self)) {
-				set3Msg(resId,Constants.DEFAULTIME);
-				syncData(menu,style);
+		if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+			if (!MyApplication.USERID.equals("0")) {
+				if (CommUtil.isNetworkAvailable(self)) {
+					set3Msg(resId,Constants.DEFAULTIME);
+					syncData(menu,style);
+				}
 			}
 		}
+		
 	}
 	
 	/**

@@ -6,8 +6,8 @@
     android:orientation="vertical" >
 
     <com.me.resume.views.CommScrollView
-        style="@style/comm_scrollview_style"
-        android:layout_marginBottom="0dip" >
+        style="@style/main_scrollview_style"
+        android:padding="0dip" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,6 +32,8 @@
 
             <TextView
                 style="@style/about_app_item_text"
+                android:drawableLeft="@drawable/declare_icon"
+                android:drawablePadding="@dimen/margin_5"
                 android:layout_marginTop="@dimen/margin_10"
                 android:text="@string/app_declare1" />
 
@@ -42,10 +44,12 @@
 
             <TextView
                 style="@style/about_app_item_text"
+                android:drawableLeft="@drawable/contactus_icon"
+                android:drawablePadding="@dimen/margin_5"
                 android:text="@string/app_declare2" />
-
             <TextView
                 android:id="@+id/contactus"
+                android:lineSpacingExtra="3dip"
                 style="@style/about_app_item_content_text"/>
         </LinearLayout>
     </com.me.resume.views.CommScrollView>
