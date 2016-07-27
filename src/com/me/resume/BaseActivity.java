@@ -1179,5 +1179,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		if (mHandler != null) {
 			mHandler.removeCallbacksAndMessages(null);
 		}
+		DialogUtils.dismissProgressDialog();
+		DialogUtils.dismissPopwindow();
 	}
 }

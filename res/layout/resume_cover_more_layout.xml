@@ -6,15 +6,45 @@
     android:fitsSystemWindows="true" 
     android:orientation="vertical">
     
-    <GridView
-          android:id="@+id/covermoregridview"
-          style="@style/home_content_grilview"
-          android:layout_margin="0dip"
-          android:padding="@dimen/margin_10"
-          android:visibility="visible"/>
-    
+     <com.me.resume.views.CommScrollView 
+        style="@style/main_scrollview_style"
+        android:padding="0dip" >
+        
+          <LinearLayout 
+            android:id="@+id/coverllayout"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:background="@color/grey_50"
+		    android:fitsSystemWindows="true" 
+		    android:orientation="vertical">
+	    
+		    <include 
+		        android:id="@+id/localcover"
+		        layout="@layout/comm_item_expand"/>
+		        
+		    <com.me.resume.views.CustomGridView
+		          android:id="@+id/covermoregridview"
+		          style="@style/home_content_grilview"
+		          android:layout_margin="0dip"
+		          android:padding="@dimen/margin_10"
+		          android:visibility="visible"/>
+		    
+		    <include 
+		        android:id="@+id/updatecover"
+		        layout="@layout/comm_item_expand"/>
+		        
+		    <com.me.resume.views.CustomGridView
+		          android:id="@+id/covermoregridview_update"
+		          style="@style/home_content_grilview"
+		          android:layout_margin="0dip"
+		          android:padding="@dimen/margin_10"
+		          android:visibility="visible"/>
+		    </LinearLayout>
+     </com.me.resume.views.CommScrollView>
+   
      <TextView
           android:id="@+id/msgText"
+          android:visibility="gone"
           android:layout_centerInParent="true"
           style="@style/comm_nodata_style" />
 </RelativeLayout>

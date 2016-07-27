@@ -53,8 +53,11 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 		boayLayout.addView(v);
 		
 		version = findView(R.id.version);
-		version.setText(getStrValue(R.string.app_name) + "   " +CommUtil.getVersionName(this));
+		contactus = findView(R.id.contactus);
+		declare = findView(R.id.declare);
+		
 		version.setOnClickListener(this);
+		contactus.setOnClickListener(this);
 		
 		setTopTitle(R.string.settings_item6);
 		setMsgHide();
@@ -62,8 +65,15 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
-		contactus = findView(R.id.contactus);
-		declare = findView(R.id.declare);
+		showData();
+	}
+	
+	/**
+	 * 显示数据
+	 */
+	private void showData(){
+		version.setText(getStrValue(R.string.app_name) + "   " 
+							+ CommUtil.getVersionName(this));
 		
 		StringBuffer sbStr = new StringBuffer();
 		if (!MyApplication.USERID.equals("0")) {
@@ -77,10 +87,11 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 		sbStr.append(getStrValue(R.string.contactus_weixin));
 		sbStr.append(getStrValue(R.string.contactus_weixin_name));
 		sbStr.append("<br/>");
-		sbStr.append(getStrValue(R.string.contactus_email));
-		sbStr.append(getStrValue(R.string.contactus_email_name));
+		sbStr.append(getStrValue(R.string.contactus_qq));
+		sbStr.append(getStrValue(R.string.contactus_qq_name) + getStrValue(R.string.contactus_qq_name_note));
 		sbStr.append("<br/>");
 		contactus.setText(Html.fromHtml(sbStr.toString()));
+		
 		
 		sbStr = new StringBuffer();
 		sbStr.append(getStrValue(R.string.app_declare3));
@@ -102,10 +113,13 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 		case R.id.version:
 			checkNewVersin();
 			break;
+		case R.id.contactus:
+			CommUtil.copy(self, getStrValue(R.string.contactus_qq_name));
+			CommUtil.ToastMsg(self, R.string.contactus_copy_ok);
+			break;
 		default:
 			break;
 		}
-		
 	}
 	
 	

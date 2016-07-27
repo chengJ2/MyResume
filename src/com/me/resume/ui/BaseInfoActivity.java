@@ -56,7 +56,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	// 出生日期; 工作时间; 家乡所在地; 现居住地;婚姻;政治面貌
 	private TextView info_brithday,info_workyear,info_hometown,info_city,info_maritalstatus,info_politicalstatus;
 	
-	private RelativeLayout uselesstitleLayoyut;
+	private RelativeLayout expandLayoyut;
 	private LinearLayout uselessLayoyut;
 	private ImageView arrow_updown;
 	
@@ -207,7 +207,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		
 		rg_workingabroad = findView(R.id.rg_workingabroad);
 		
-		uselesstitleLayoyut = findView(R.id.uselesstitleLayoyut);
+		expandLayoyut = findView(R.id.expandLayoyut);
 		uselessLayoyut = findView(R.id.uselessLayoyut);
 		uselessLayoyut.setVisibility(View.GONE);
 		arrow_updown = findView(R.id.arrow_updown);
@@ -235,7 +235,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		info_maritalstatus.setOnClickListener(this);
 		info_politicalstatus.setOnClickListener(this);
 		
-		uselesstitleLayoyut.setOnClickListener(this);
+		expandLayoyut.setOnClickListener(this);
 		arrow_updown.setOnClickListener(this);
 		
 		info_realname.addTextChangedListener(this);
@@ -372,7 +372,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 		case R.id.right_icon_more:
 			DialogUtils.showTopMenuDialog(self, topLayout,0,mHandler);
 			break;
-		case R.id.uselesstitleLayoyut:
+		case R.id.expandLayoyut:
 		case R.id.arrow_updown:
 			isShow = !isShow;
 			if (isShow) {

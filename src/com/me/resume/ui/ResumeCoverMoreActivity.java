@@ -1,17 +1,21 @@
 package com.me.resume.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
+import com.me.resume.views.CustomGridView;
 
 /**
  * 更多简历封面
@@ -20,8 +24,20 @@ import com.me.resume.R;
  */
 public class ResumeCoverMoreActivity extends BaseActivity implements OnClickListener{
 
-	private GridView covermoregridview;
+	private CustomGridView covermoregridview,covermoregridview_update;
 	private TextView msgText;
+	
+	private TextView localText,updateText;
+	private ImageView localupdown,updateupdown;
+	
+	// 构建cover本地数据
+	private String[] id = {"1","2","3","4","5","6"};
+	private String[] note = {"只为心中淡淡的梦想","天行健以自强不息","阅历以存储更多的书香气质",
+							 "天行健以自强不息","阅历以存储更多的书香气质","只为心中淡淡的梦想"};
+	private String[] url = {R.drawable.default_cover1+"",R.drawable.default_cover2+"",R.drawable.default_cover3+"",
+							R.drawable.default_cover4+"",R.drawable.default_cover5+"",R.drawable.default_cover6+""};
+	
+	private boolean isShow = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +53,81 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
+		localText = (TextView) ((RelativeLayout)findView(R.id.localcover)).getChildAt(0);
+		localText.setText(getStrValue(R.string.item_cover_local));
+		updateText = (TextView) ((RelativeLayout)findView(R.id.updatecover)).getChildAt(0);
+		updateText.setText(getStrValue(R.string.item_cover_update));
+		
+		localupdown = (ImageView) ((RelativeLayout)findView(R.id.localcover)).getChildAt(1);
+		updateupdown = (ImageView) ((RelativeLayout)findView(R.id.updatecover)).getChildAt(1);
+		
 		covermoregridview = findView(R.id.covermoregridview);
+		covermoregridview_update = findView(R.id.covermoregridview_update);
 		msgText = findView(R.id.msgText);
-		msgText.setVisibility(View.VISIBLE);
-		msgText.setText(getStrValue(R.string.item_text43));
+		
+		setCoverView(true);
 		
 		getReCoverMoreData();
+		
+		localupdown.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				isShow = !isShow;
+				if (!isShow) {
+					localupdown.setImageResource(R.drawable.icon_arrow_up);
+					covermoregridview.setVisibility(View.VISIBLE);
+				}else{
+					localupdown.setImageResource(R.drawable.icon_arrow_down);
+					covermoregridview.setVisibility(View.GONE);
+				}
+			}
+		});
+		
+		updateupdown.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				isShow = !isShow;
+				if (!isShow) {
+					updateupdown.setImageResource(R.drawable.icon_arrow_up);
+					covermoregridview_update.setVisibility(View.VISIBLE);
+				}else{
+					updateupdown.setImageResource(R.drawable.icon_arrow_down);
+					covermoregridview_update.setVisibility(View.GONE);
+				}
+			}
+		});
+		
+		
+//		msgText.setVisibility(View.VISIBLE);
+//		msgText.setText(getStrValue(R.string.item_text43));
+		
+		
 	}
+	
+	/**
+	 * 初始化封面视图(default)
+	 * @param islocal
+	 */
+	private void setCoverView(boolean islocal){
+		Map<String, List<String>> map = new HashMap<String,List<String>>();
+		
+		List<String> idList = new ArrayList<String>();
+		idList = Arrays.asList(id);
+		map.put("id",idList);
+		
+		List<String> noteList = new ArrayList<String>();
+		noteList = Arrays.asList(note);
+		map.put("note",noteList);
+		
+		List<String> urlList = new ArrayList<String>();
+		urlList = Arrays.asList(url);
+		map.put("url",urlList);
+		
+		setCoverData(covermoregridview,map,islocal);
+	}
+	
 	
 	/**
 	 * 面试分享心得
@@ -60,7 +144,7 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 			public void success(Map<String, List<String>> map) {
 				try {
 					msgText.setVisibility(View.GONE);
-					setCoverData(covermoregridview,map,false);
+					setCoverData(covermoregridview_update,map,false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

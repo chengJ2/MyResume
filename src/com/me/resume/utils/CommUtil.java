@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 import android.app.Activity;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.drawable.Drawable;
@@ -170,6 +171,17 @@ public class CommUtil {
 	 */
 	public static String[] getArrayValue(Context context, int id) {
 		return context.getResources().getStringArray(id);
+	}
+	
+	/**
+	 * 得到剪贴板管理器
+	 * @param context
+	 * @param content
+	 */
+	public static void copy(Context context, String content){
+		ClipboardManager cmb = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+		cmb.setText(content.trim()); //将内容放入粘贴管理器,在别的地方长按选择"粘贴"即可
+//		cm.getText();//获取粘贴信息
 	}
 
 	/**
