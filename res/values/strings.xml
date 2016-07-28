@@ -62,12 +62,12 @@
     <string name="item_text71">更多分享</string>
     <string name="item_text72">暂无分享,快去分享你的面试心得~</string>
     <string name="item_text8">我也来分享\u2026</string>
-    <string name="item_text81">优质的分享将会置顶哦~</string>
+    <string name="item_text81">请分享面试心得或职场相关的信息哦~</string>
     <string name="item_text9">收藏成功</string>
     <string name="item_text91">取消收藏</string>
     <string name="item_text100">正在下载,请稍后\u2026</string>
     <string name="item_text101">简历预览封面说明</string>
-    <string name="item_cover_local">本地</string>
+    <string name="item_cover_local">本地预存</string>
     <string name="item_cover_update">联网更新</string>
     
     <!-- 设置界面 -->
@@ -120,7 +120,7 @@
     <string name="contactus_qq">QQ群:</string>
     <string name="contactus_qq_name">&#160;&#160;345939441</string>
     <string name="contactus_qq_name_note">&#160;(内测用户群,点击复制)</string>
-    <string name="contactus_copy_ok">已复制到粘贴板~</string>
+    <string name="contactus_copy_ok">已复制到粘贴板,欢迎加群~</string>
 
     <!-- user login register -->
     <string name="action_user_login">用户登录</string>

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -43,7 +44,6 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		boayLayout.removeAllViews();
-		
 		View v = View.inflate(self,R.layout.resume_cover_more_layout, null);
 		boayLayout.addView(v);
 		
@@ -67,7 +67,19 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 		
 		setCoverView(true);
 		
-		getReCoverMoreData();
+		new Handler().postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				getReCoverMoreData();
+			}
+		}, 800);
+		
+		localupdown.setImageResource(R.drawable.icon_arrow_up);
+		covermoregridview.setVisibility(View.VISIBLE);
+		
+		updateupdown.setImageResource(R.drawable.icon_arrow_down);
+		covermoregridview_update.setVisibility(View.GONE);
 		
 		localupdown.setOnClickListener(new OnClickListener() {
 			
@@ -143,7 +155,7 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 			
 			public void success(Map<String, List<String>> map) {
 				try {
-					msgText.setVisibility(View.GONE);
+					/*msgText.setVisibility(View.GONE);*/
 					setCoverData(covermoregridview_update,map,false);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -152,8 +164,8 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 
 			@Override
 			public void noData() {
-				msgText.setVisibility(View.VISIBLE);
-				msgText.setText(getStrValue(R.string.en_nodata));	
+				/*msgText.setVisibility(View.VISIBLE);
+				msgText.setText(getStrValue(R.string.en_nodata));*/	
 			}
 		});
 	}
