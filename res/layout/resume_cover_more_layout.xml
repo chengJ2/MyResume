@@ -7,8 +7,7 @@
     android:orientation="vertical">
     
      <com.me.resume.views.CommScrollView 
-        style="@style/main_scrollview_style"
-        android:padding="0dip" >
+        style="@style/main_scrollview_style">
         
           <LinearLayout 
             android:id="@+id/coverllayout"

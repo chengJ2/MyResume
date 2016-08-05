@@ -30,10 +30,14 @@
     
     <color name="color_green">#6699FF</color>
     
-    <!-- topic text color -->
+    <!-- topic text color unread-->
     <color name="t_primary">#212121</color>
     <color name="t_secondary">#727272</color>
     <color name="t_divider">#B6B6B6</color>
+    
+    <!-- topic text color read-->
+    <color name="t_primary_read">#212121</color>
+    <color name="t_secondary_read">#727272</color>
     
     <!-- review bgcolor -->
     <color name="color_1">#FF69B4</color>

@@ -173,7 +173,7 @@
 
                 <TextView
                     style="@style/setting_item_text"
-                    android:drawableLeft="@drawable/syncupdate_icon"
+                    android:drawableLeft="@drawable/sync_update_icon"
                     android:text="@string/settings_item9" />
 
                 <LinearLayout
@@ -197,6 +197,7 @@
                         android:textOn="" />
                 </LinearLayout>
             </LinearLayout>
+ 			
             <View style="@style/line_padding10" />
 
             <LinearLayout
