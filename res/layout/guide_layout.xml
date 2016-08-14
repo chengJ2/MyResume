@@ -14,22 +14,22 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/a001" />
+            android:background="@drawable/guide_1" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/a002" />
+            android:background="@drawable/guide_2" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/a003" />
+            android:background="@drawable/guide_3" />
 
          <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/a004" >
+            android:background="@drawable/guide_4" >
 			 <Button
 		         android:id="@+id/startBtn"
 		         android:layout_width="30dip"

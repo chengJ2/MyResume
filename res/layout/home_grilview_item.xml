@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="150.0dip"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/a001"
+        android:src="@drawable/default_cover"
         android:scaleType="fitCenter">
     </ImageView>
  
