@@ -11,7 +11,7 @@
         android:gravity="center|left"
         android:textSize="@dimen/small_text_size"
         android:textColor="@color/black"
-        android:paddingLeft="10dip"
+        android:paddingLeft="@dimen/margin_10"
         android:singleLine="true">
     </TextView>
 </RelativeLayout>

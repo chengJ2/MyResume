@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dip"
-        android:layout_marginBottom="80dip"
+        android:layout_marginBottom="70dip"
         android:src="@drawable/msgboard"
         android:scaleType="fitXY"
         android:layout_centerHorizontal="true"/>
@@ -26,8 +26,8 @@
         style="@style/main_common_text"
         android:paddingLeft="50dip"
         android:paddingRight="50dip"
-        android:layout_marginTop="94dip"
-        android:lineSpacingExtra="3dip"
+        android:layout_marginTop="110dip"
+        android:lineSpacingExtra="@dimen/margin_8"
         android:textSize="@dimen/small_text_size"
         android:text="@string/resume_mywords"
         android:textColor="@color/black" />

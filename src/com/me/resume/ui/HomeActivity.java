@@ -133,6 +133,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setSwipeBackEnable(false);
 		if (preferenceUtil.getPreferenceFData(Constants.FIRSTINSTALL)) {
 			startChildActivity(Constants.GUIDE, true);
 			return;
@@ -391,6 +392,8 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				holder.setText(R.id.itemName, mList.get(position).toString());
 				if (position == 5) {
 					holder.setTextColor(R.id.itemName,getColorValue(R.color.red));
+				}else{
+					holder.setTextColor(R.id.itemName,getColorValue(R.color.black));
 				}
 
 				holder.setOnClickEvent(R.id.itemName, new ClickEvent() {
@@ -399,7 +402,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					public void onClick(View view) {
 						ActivityUtils.startActivityPro(self, 
 								Constants.PACKAGENAMECHILD + Constants.TOPICLISTDETAIL, 
-								Constants.TOPICID,String.valueOf(position));
+								Constants.TOPICID,String.valueOf(position),false);
 					}
 				});
 			}

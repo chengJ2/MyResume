@@ -66,7 +66,6 @@ public class ImageUtils {
 	 * 
 	 * @Title:ImageUtils
 	 * @Description: 裁剪图片到指定大小
-	 * @author Comsys-WH1510032
 	 * @param act
 	 * @param data
 	 * @param width
@@ -87,22 +86,25 @@ public class ImageUtils {
 		intent.putExtra("aspectY", 1);
 		intent.putExtra("outputX", width);
 		intent.putExtra("outputY", height);
-		intent.putExtra("noFaceDetection", true);
+		intent.putExtra("scale", true);//是否保留比例
+		intent.putExtra("noFaceDetection", true);//关闭人脸检测
 		intent.putExtra("return-data", true);
 		act.startActivityForResult(intent, CROP_WITH_DATA);
 	}
 
 	public static File getPhotoFile(Intent data) {
-		Bitmap photo = data.getParcelableExtra("data");
-		if (photo == null) {
-			Uri uri = data.getData();
-			photo = BitmapFactory.decodeFile(uri.getPath());
-		}
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		photo.compress(CompressFormat.JPEG, 100, baos);
-		File file = null;
 		BufferedOutputStream bos = null;
+		ByteArrayOutputStream baos = null;
+		File file = null;
 		try {
+			Bitmap photo = data.getParcelableExtra("data");
+			if (photo == null) {
+				Uri uri = data.getData();
+				photo = BitmapFactory.decodeFile(uri.getPath());
+			}
+			baos = new ByteArrayOutputStream();
+			photo.compress(CompressFormat.JPEG, 100, baos);
+			
 			File dir = new File(FileUtils.TEMPDIR);
 			if (!dir.exists()) {
 				dir.mkdirs();

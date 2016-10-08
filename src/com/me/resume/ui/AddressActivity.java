@@ -28,6 +28,7 @@ import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
+import com.me.resume.service.LocationService;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 
@@ -48,8 +49,11 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 	private EditText index_search_edit;
 	private ImageView clearView;
 	private TextView search_cancle;
+	private TextView locationcity;
 	
 	private TextView msgText;
+	
+	private LocationService locationService;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -103,6 +107,7 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 		clearView = findView(R.id.clear);
 		hotaddress_gridview = findView(R.id.hotaddress_gridview);
 		alladdrListview = findView(R.id.alladdrListview);
+		locationcity = findView(R.id.locationcity);
 		
 		search_cancle.setOnClickListener(this);
 		clearView.setOnClickListener(this);
@@ -114,6 +119,8 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 		msgText = findView(R.id.msgText);
 		msgText.setVisibility(View.VISIBLE);
 		msgText.setText(getStrValue(R.string.item_text43));
+		
+		locationService = new LocationService(self, locationcity);
 	}
 	
 	private void initViews(){
@@ -340,6 +347,11 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 		super.onDestroy();
 		if (mHandler != null) {
 			mHandler.removeCallbacksAndMessages(null);
+		}
+		if(locationService != null){
+			locationService.mLocationClient.stop();
+			locationService.myListener = null;
+			locationService = null;
 		}
 	}
 }

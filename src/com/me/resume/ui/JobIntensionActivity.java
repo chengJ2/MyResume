@@ -64,7 +64,9 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 							new String[]{uTokenId,checkColor},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						actionAync();
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync();
+						}
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -174,19 +176,17 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	 * 执行同步操作
 	 */
 	private void actionAync(){
-		if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-			if (!MyApplication.USERID.equals("0")) {
-				if (CommUtil.isNetworkAvailable(self)) {
-					helpInfo.setVisibility(View.GONE);
-					set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-					if (actionFlag == 0) {
-						syncData(3);
-					}else{
-						syncData(1);
-					}
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				helpInfo.setVisibility(View.GONE);
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+				if (actionFlag == 0) {
+					syncData(3);
 				}else{
-					set3Msg(R.string.check_network);
+					syncData(1);
 				}
+			}else{
+				set3Msg(R.string.check_network);
 			}
 		}
 	}
@@ -206,7 +206,9 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 											info_expworkcareerStr,info_expmonthlysalaryStr,info_workingstateStr,TimeUtils.getCurrentTimeInString()},3);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						actionAync();
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync();
+						}
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -228,7 +230,9 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		 			if(queryResult){
 		 				toastMsg(R.string.action_add_success);
 		 				if(getJobIntensionData()){
-	 						actionAync();
+		 					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+		 						actionAync();
+		 					}
 		 				}
 		 			}
 				}

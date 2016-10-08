@@ -220,11 +220,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	 */
 	private void setEffectDuration(boolean enabled,int color){
 		llout020.setEnabled(enabled);
-		llout021.setEnabled(enabled);
+//		llout021.setEnabled(enabled);
 		effectsdurationfeild.setTextColor(getColorValue(color));
 		effectsduration.setTextColor(getColorValue(color));
-		animvaluefeild.setTextColor(getColorValue(color));
-		animvalue.setTextColor(getColorValue(color));
+//		animvaluefeild.setTextColor(getColorValue(color));
+//		animvalue.setTextColor(getColorValue(color));
 	}
 	
 	@Override
@@ -311,13 +311,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 			duration = 3 * 1000;
 		}else if(position == 1){
 			duration = 5 * 1000;
-		}else if(position == 1){
+		}else if(position == 2){
 			duration = 7 * 1000;
-		}else if(position == 1){
+		}else if(position == 3){
 			duration = 9 * 1000;
-		}else if(position == 1){
+		}else if(position == 4){
 			duration = 11 * 1000;
-		}else if(position == 1){
+		}else if(position == 5){
 			duration = 15 * 1000;
 		}
 		tv.setText(item_values[position]);

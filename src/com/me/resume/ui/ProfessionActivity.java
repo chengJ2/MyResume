@@ -241,6 +241,7 @@ public class ProfessionActivity extends BaseActivity implements OnClickListener{
 			index_search_edit.setText("");
 			getAllProfession("");
 			clearView.setVisibility(View.GONE);
+			search_cancle.setVisibility(View.GONE);
 			break;
 		case R.id.clear:
 			whichTab = 0;

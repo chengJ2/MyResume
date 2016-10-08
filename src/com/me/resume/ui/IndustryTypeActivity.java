@@ -121,6 +121,7 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 				L.d("ss:"+s.toString());
 				if (s.toString() != null && !"".equals(s.toString())) {
 					clearView.setVisibility(View.VISIBLE);
+					search_cancle.setVisibility(View.VISIBLE);
 					getAllIndustry(s.toString());
 				}else{
 					getAllIndustry("");
@@ -180,6 +181,7 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 			index_search_edit.setText("");
 			getAllIndustry("");
 			clearView.setVisibility(View.GONE);
+			search_cancle.setVisibility(View.GONE);
 			break;
 		case R.id.clear:
 			whichTab = 0;

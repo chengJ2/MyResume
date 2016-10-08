@@ -83,7 +83,9 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 							new String[]{uTokenId,checkColor},1);
 					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
-						actionAync(1);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(1);
+						}
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -236,7 +238,9 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 				if(queryResult){
 					toastMsg(R.string.action_add_success);
 					setEditBtnVisible(View.VISIBLE);
-					actionAync(1);
+					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+						actionAync(1);
+					}
 				}
 			}
 			break;
@@ -251,7 +255,9 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 									info_jobtitleStr,info_startworktimeStr,info_endworktimeStr,info_expectedsalaryStr,info_workdescdetailStr,TimeUtils.getCurrentTimeInString()},3);
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
-					actionAync(1);
+					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+						actionAync(1);
+					}
 				}else{
 					toastMsg(R.string.action_update_fail);
 				}
@@ -295,14 +301,12 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	 * @Description: 执行同步操作
 	 */
 	private void actionAync(int style){
-		if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-			if (!MyApplication.USERID.equals("0")) {
-				if (CommUtil.isNetworkAvailable(self)) {
-					set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-					syncData(style);
-				}else{
-					set3Msg(R.string.check_network);
-				}
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+				syncData(style);
+			}else{
+				set3Msg(R.string.check_network);
 			}
 		}
 	}

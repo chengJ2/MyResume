@@ -312,7 +312,6 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 					dbUtil.deleteData(self, queryWhere);
 					toastMsg(R.string.item_text91);
 					setRightIcon(R.drawable.icon_collection_small_nor);
-					MyCollectionActivity.loadFlag = true;
 					
 					syncDelData(topicId);
 				}

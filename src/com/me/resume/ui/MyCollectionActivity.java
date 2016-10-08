@@ -42,8 +42,6 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 
 	private ListView collectionListView;
 	private TextView nodata;
-
-	public static boolean loadFlag = true;
 	
 	private String cid;
 	
@@ -75,9 +73,8 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		boayLayout.addView(v);
 
 		setTopTitle(R.string.personal_c_item1);
-
 		setMsgHide();
-		
+		setRightIconVisible(View.GONE);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 
@@ -86,15 +83,12 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		nodata.setText(getStrValue(R.string.item_text43));
 		nodata.setVisibility(View.VISIBLE);
 		
+		initData();
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (loadFlag) {
-			loadFlag = false;
-			initData();
-		}
 	}
 
 	private void initData() {
@@ -195,7 +189,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 					String topicId = commMapArray.get("topicId")[position];
 					ActivityUtils.startActivityPro(self, 
 							Constants.PACKAGENAMECHILD + Constants.TOPICVIEW,
-							Constants.TOPICIDTYPE, topicId + ";" + type );
+							Constants.TOPICIDTYPE, topicId + ";" + type,false);
 				}
 			}
 		});

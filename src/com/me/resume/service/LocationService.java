@@ -53,13 +53,13 @@ public class LocationService {
 			if (location == null)
 				return;
 			StringBuffer sb = new StringBuffer(256);
-			if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// // 网络定位结果
+			if (location.getLocType() == BDLocation.TypeNetWorkLocation) {// 网络定位结果
 				sb.append(location.getCity());
 			}
 			if(RegexUtil.checkNotNull(sb.toString())){
 				logMsg(sb.toString());
 			}else{
-				logMsg("武汉市");
+				logMsg("武汉");
 			}
 		}
 

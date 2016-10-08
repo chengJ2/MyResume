@@ -64,7 +64,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 							new String[]{uTokenId,checkColor},1);
 					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
-						actionAync(0);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(0);
+						}
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -103,18 +105,16 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 	 * position 0 教育 1 培训
 	 */
 	private void actionAync(int position){
-		if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-			if (!MyApplication.USERID.equals("0")) {
-				if (CommUtil.isNetworkAvailable(self)) {
-					set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-					if (actionFlag == 0) {
-						syncData(position,3);
-					}else{
-						syncData(position,1);
-					}
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+				if (actionFlag == 0) {
+					syncData(position,3);
 				}else{
-					set3Msg(R.string.check_network);
+					syncData(position,1);
 				}
+			}else{
+				set3Msg(R.string.check_network);
 			}
 		}
 	}
@@ -211,7 +211,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					if (queryResult) {
 						toastMsg(R.string.action_add_success);
 						setEditBtnVisible(View.VISIBLE);
-						actionAync(0);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(0);
+						}
 					}
 				}
 			}else{ // 培训经历
@@ -234,7 +236,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 					if (queryResult) {
 						setEditBtnVisible(View.VISIBLE);
 						toastMsg(R.string.action_add_success);
-						actionAync(1);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(1);
+						}
 					}
 				}
 			}
@@ -250,7 +254,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 							info_degressStr,info_examinationStr},3);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						actionAync(0);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(0);
+						}
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -264,7 +270,9 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 							info_certificateStr,info_descriptionStr},3);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						actionAync(1);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(1);
+						}
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}

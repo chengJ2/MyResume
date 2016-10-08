@@ -51,8 +51,7 @@
                 android:background="@drawable/home_tag_text_corner_sel"
                 android:gravity="center"
                 android:paddingLeft="@dimen/margin_8"
-                android:paddingRight="@dimen/margin_8"
-                android:text="V3.14" />
+                android:paddingRight="@dimen/margin_8"/>
         </LinearLayout>
     </LinearLayout>
 

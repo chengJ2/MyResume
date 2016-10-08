@@ -185,7 +185,7 @@ public class JazzyViewPager extends ViewPager {
 				ViewHelper.setPivotY(left, left.getMeasuredHeight() / 2);
 				ViewHelper.setTranslationX(left, mTrans);
 				ViewHelper.setRotationY(left, mRot);
-				logState(left, "Left");
+//				logState(left, "Left");
 			}
 			if (right != null) {
 				mRot = -30.0f * (1 - positionOffset);
@@ -195,7 +195,7 @@ public class JazzyViewPager extends ViewPager {
 				ViewHelper.setPivotY(right, right.getMeasuredHeight() * 0.5f);
 				ViewHelper.setTranslationX(right, mTrans);
 				ViewHelper.setRotationY(right, mRot);
-				logState(right, "Right");
+//				logState(right, "Right");
 			}
 		}
 	}
@@ -254,7 +254,7 @@ public class JazzyViewPager extends ViewPager {
 			}
 		}
 	}
-
+	
 	private void animateRotate(View left, View right, float positionOffset,
 			boolean up) {
 		if (mState != State.IDLE) {
@@ -486,9 +486,8 @@ public class JazzyViewPager extends ViewPager {
 		if (effectOffset == 0) {
 			mState = State.IDLE;
 		}
-
 	}
-
+	
 	private boolean isSmall(float positionOffset) {
 		return Math.abs(positionOffset) < 0.0001;
 	}

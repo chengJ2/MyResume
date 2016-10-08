@@ -93,7 +93,7 @@
     <string name="settings_item6">关于我们</string>
     <string name="settings_item7">向好友分享</string>
     <string name="settings_item71">分享</string>
-    <string name="settings_item72">有云简历已上线App市场,请前往搜索 “有云简历”即可下载安装使用;关于App使用中有任何问题,请到设置-意见反馈里提交问题。</string>
+    <string name="settings_item72">有云简历已上线App市场,请前往搜索 “有云简历”即可;关于App使用中有任何问题,请到设置-意见反馈里提交问题。</string>
     <string name="settings_item8">清除本地缓存</string>
     <string name="settings_item9">联网同步更新</string>
     <string name="action_login_head">请先登录</string>

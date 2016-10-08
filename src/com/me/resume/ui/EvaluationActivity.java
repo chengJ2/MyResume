@@ -56,7 +56,9 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 							new String[]{uTokenId,checkColor},1);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						actionAync();
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync();
+						}
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -169,7 +171,9 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 							new String[] { uTokenId,info_self_evaluationStr,info_career_goalStr,info_characterStr,TimeUtils.getCurrentTimeInString() }, 3);
 					if (updResult == 1) {
 						toastMsg(R.string.action_update_success);
-						actionAync();
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync();
+						}
 					}
 				} else {
 					actionFlag = 1;
@@ -185,7 +189,9 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 					queryResult = dbUtil.insertData(self,CommonText.EVALUATION, cValues);
 					if (queryResult) {
 						toastMsg(R.string.action_add_success);
-						actionAync();
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync();
+						}
 					}
 				}
 			}
@@ -209,22 +215,19 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 	 * @Description: 执行同步操作
 	 */
 	private void actionAync(){
-		if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-			if (!MyApplication.USERID.equals("0")) {
-				if (CommUtil.isNetworkAvailable(self)) {
-					helpInfo.setVisibility(View.GONE);
-					set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-					if (actionFlag == 0) {
-						syncData(3);
-					}else{
-						syncData(1);
-					}
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				helpInfo.setVisibility(View.GONE);
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+				if (actionFlag == 0) {
+					syncData(3);
 				}else{
-					set3Msg(R.string.check_network);
+					syncData(1);
 				}
+			}else{
+				set3Msg(R.string.check_network);
 			}
 		}
-		
 	}
 	
 	

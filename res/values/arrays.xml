@@ -144,7 +144,6 @@
     </string-array>
     <string-array name="jazzy_effects">
         <item>Standard</item>
-        <item>Random</item>
         <item>Tablet</item>
         <item>CubeIn</item>
         <item>CubeOut</item>
@@ -159,7 +158,6 @@
     </string-array>
     <string-array name="jazzy_effects_zh">
         <item>@string/standard</item>
-        <item>@string/random</item>
         <item>@string/tablet</item>
         <item>@string/cubein</item>
         <item>@string/cubeout</item>

@@ -63,7 +63,9 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 							new String[]{uTokenId,checkColor},1);
 					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
-						actionAync(1);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(1);
+						}
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -164,17 +166,14 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	 * @Description: 执行同步操作
 	 */
 	private void actionAync(int style){
-		if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-			if (!MyApplication.USERID.equals("0")) {
-				if (CommUtil.isNetworkAvailable(self)) {
-					set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
-					syncData(style);
-				}else{
-					set3Msg(R.string.check_network);
-				}
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				set3Msg(R.string.action_syncing,Constants.DEFAULTIME);
+				syncData(style);
+			}else{
+				set3Msg(R.string.check_network);
 			}
 		}
-		
 	}
 	
 	/**
@@ -248,7 +247,9 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 				queryResult = dbUtil.insertData(self, CommonText.PROJECT_EXPERIENCE, cValues);
 				if(queryResult){
 					toastMsg(R.string.action_add_success);
-					actionAync(1);
+					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+						actionAync(1);
+					}
 				}
 			}
 			break;
@@ -260,7 +261,9 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 						new String[]{uTokenId,info_projectnameStr,info_startworktimeStr,info_endworktimeStr,info_workdutiesStr,input_workdescStr,TimeUtils.getCurrentTimeInString()},3);
 				if (updResult == 1) {
 					toastMsg(R.string.action_update_success);
-					actionAync(1);
+					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+						actionAync(1);
+					}
 				}else{
 					toastMsg(R.string.action_update_fail);
 				}

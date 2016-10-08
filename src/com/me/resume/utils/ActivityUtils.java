@@ -88,12 +88,15 @@ public class ActivityUtils {
 	 * @param data
 	 *            value
 	 */
-	public static void startActivityPro(Activity src, String obj,String key, String data) {
+	public static void startActivityPro(Activity src, String obj,String key, String data, boolean finish) {
 		try {
 			Class className = Class.forName(obj);
 			Intent intent = new Intent(src, className);
 			intent.putExtra(key, data);
 			src.startActivity(intent);
+			if (finish) {
+				((Activity) src).finish();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

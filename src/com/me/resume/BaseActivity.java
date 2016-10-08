@@ -42,6 +42,7 @@ import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.tools.SystemBarTintManager;
+import com.me.resume.ui.MyCollectionActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -981,7 +982,6 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		if (queryResult) {
 			toastMsg(R.string.item_text9);
 			commapBaseAdapter.notifyDataSetChanged();
-			
 			//TODO 同步到远程
 			setSyncData(new String[]{cid,uTokenId,"0","",content,"","","",shareuserId,sharename,shareuserCity,"-1"});
 		}

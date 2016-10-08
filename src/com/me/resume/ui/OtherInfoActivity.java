@@ -21,6 +21,7 @@ import com.me.resume.comm.ResponseCode;
 import com.me.resume.tools.UUIDGenerator;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
+import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
 import com.whjz.android.text.CommonText;
 
@@ -92,7 +93,9 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 							new String[]{uTokenId,checkColor},1);
 					if (updResult > 0) {
 						toastMsg(R.string.action_update_success);
-						actionAync(OtherInfoMenu.language,1);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(OtherInfoMenu.language,1);
+						}
 					}else{
 						toastMsg(R.string.action_update_fail);
 					}
@@ -288,6 +291,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
+		ContentValues cValues = null;
 		switch (v.getId()) {
 		case R.id.info_language:
 			whichTab = 1;
@@ -307,107 +311,139 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 		case R.id.ot_languages_add:
 			actionFlag = 1;
 			getlangFeild();
-			ContentValues cValues = new ContentValues();
-			langTokenId = UUIDGenerator.getKUUID();
-			cValues.put("tokenId", langTokenId);
-			cValues.put("userId", uTokenId);
-			cValues.put("language", info_languageStr);
-			cValues.put("literacyskills", info_literacyskillsStr);
-			cValues.put("listeningspeaking", info_listeningspeakingStr);
-			cValues.put("bgcolor", checkColor);
-			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
+			if(RegexUtil.checkNotNull(info_languageStr) 
+					&& RegexUtil.checkNotNull(info_literacyskillsStr) 
+					&& RegexUtil.checkNotNull(info_listeningspeakingStr) ){
+				cValues = new ContentValues();
+				langTokenId = UUIDGenerator.getKUUID();
+				cValues.put("tokenId", langTokenId);
+				cValues.put("userId", uTokenId);
+				cValues.put("language", info_languageStr);
+				cValues.put("literacyskills", info_literacyskillsStr);
+				cValues.put("listeningspeaking", info_listeningspeakingStr);
+				cValues.put("bgcolor", checkColor);
+				cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 
-			queryResult = dbUtil.insertData(self, CommonText.OTHERINFO, cValues);
-			if (queryResult) {
-				toastMsg(R.string.action_add_success);
-				ot_languages_edit.setVisibility(View.VISIBLE);
-				
-//				if(getLanguagesData()){
-					actionAync(OtherInfoMenu.language,1,R.string.action_syncing_lang);
-//				}
+				queryResult = dbUtil.insertData(self, CommonText.OTHERINFO, cValues);
+				if (queryResult) {
+					toastMsg(R.string.action_add_success);
+					ot_languages_edit.setVisibility(View.VISIBLE);
+					
+//					if(getLanguagesData()){
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(OtherInfoMenu.language,1,R.string.action_syncing_lang);
+						}
+//					}
+				}
 			}
 			break;
 		case R.id.ot_languages_edit:
 			getlangFeild();
-			if (getLanguagesData()) {
-				actionFlag = 2;
-				updResult = dbUtil.updateData(self, CommonText.OTHERINFO, 
-						new String[]{langTokenId,"language","literacyskills","listeningspeaking","updatetime"}, 
-						new String[]{uTokenId,info_languageStr,info_literacyskillsStr,info_listeningspeakingStr,TimeUtils.getCurrentTimeInString()},3);
-				if (updResult == 1) {
-					toastMsg(R.string.action_update_success);
-					actionAync(OtherInfoMenu.language,1,R.string.action_syncing_lang);
-				}else{
-					toastMsg(R.string.action_update_fail);
-				}
+			if(RegexUtil.checkNotNull(info_languageStr) 
+					&& RegexUtil.checkNotNull(info_literacyskillsStr) 
+					&& RegexUtil.checkNotNull(info_listeningspeakingStr) ){
+				if (getLanguagesData()) {
+					actionFlag = 2;
+					updResult = dbUtil.updateData(self, CommonText.OTHERINFO, 
+							new String[]{langTokenId,"language","literacyskills","listeningspeaking","updatetime"}, 
+							new String[]{uTokenId,info_languageStr,info_literacyskillsStr,info_listeningspeakingStr,TimeUtils.getCurrentTimeInString()},3);
+					if (updResult == 1) {
+						toastMsg(R.string.action_update_success);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(OtherInfoMenu.language,1,R.string.action_syncing_lang);
+						}
+					}else{
+						toastMsg(R.string.action_update_fail);
+					}
+				}	
 			}
+			
 			break;
 		case R.id.ot_certificate_add:
 			actionFlag = 1;
 			getCertFeild();
-			cValues = new ContentValues();
-			certTokenId = UUIDGenerator.getKUUID();
-			cValues.put("tokenId", certTokenId);
-			cValues.put("userId", uTokenId);
-			cValues.put("certificate", info_certificateStr);
-			cValues.put("certificatetime", info_certificatetimesStr);
-			cValues.put("createtime", TimeUtils.getCurrentTimeInString());
+			if(RegexUtil.checkNotNull(info_certificateStr) 
+					&& RegexUtil.checkNotNull(info_certificatetimesStr) ){
+				cValues = new ContentValues();
+				certTokenId = UUIDGenerator.getKUUID();
+				cValues.put("tokenId", certTokenId);
+				cValues.put("userId", uTokenId);
+				cValues.put("certificate", info_certificateStr);
+				cValues.put("certificatetime", info_certificatetimesStr);
+				cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 
-			queryResult = dbUtil.insertData(self, CommonText.OTHERINFO1, cValues);
-			if (queryResult) {
-				toastMsg(R.string.action_add_success);
-				actionAync(OtherInfoMenu.certificate,1,R.string.action_syncing_cert);
-//				if(getcertificateData()){
-					ot_certificate_edit.setVisibility(View.VISIBLE);
-//				}
+				queryResult = dbUtil.insertData(self, CommonText.OTHERINFO1, cValues);
+				if (queryResult) {
+					toastMsg(R.string.action_add_success);
+					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+						actionAync(OtherInfoMenu.certificate,1,R.string.action_syncing_cert);
+					}
+//					if(getcertificateData()){
+						ot_certificate_edit.setVisibility(View.VISIBLE);
+//					}
+				}
 			}
 			break;
 		case R.id.ot_certificate_edit:
 			getCertFeild();
-			if(getcertificateData()){
-				actionFlag = 2;
-				updResult = dbUtil.updateData(self, CommonText.OTHERINFO1, 
-						new String[]{certTokenId,"certificate","certificatetime"}, 
-						new String[]{uTokenId,info_certificateStr,info_certificatetimesStr},3);
-				if (updResult == 1) {
-					toastMsg(R.string.action_update_success);
-					actionAync(OtherInfoMenu.certificate,1,R.string.action_syncing_cert);
-				}else{
-					toastMsg(R.string.action_update_fail);
+			if(RegexUtil.checkNotNull(info_certificateStr) 
+					&& RegexUtil.checkNotNull(info_certificatetimesStr) ){
+				if(getcertificateData()){
+					actionFlag = 2;
+					updResult = dbUtil.updateData(self, CommonText.OTHERINFO1, 
+							new String[]{certTokenId,"certificate","certificatetime"}, 
+							new String[]{uTokenId,info_certificateStr,info_certificatetimesStr},3);
+					if (updResult == 1) {
+						toastMsg(R.string.action_update_success);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(OtherInfoMenu.certificate,1,R.string.action_syncing_cert);
+						}
+					}else{
+						toastMsg(R.string.action_update_fail);
+					}
 				}
 			}
+			
 			break;
 		case R.id.ot_otherinfo_add:
 			actionFlag = 1;
 			getOtherFeild();
-			cValues = new ContentValues();
-			otTokenId = UUIDGenerator.getKUUID();
-			cValues.put("tokenId", otTokenId);
-			cValues.put("userId", uTokenId);
-			cValues.put("title", info_titleStr);
-			cValues.put("description", info_descriptionStr);
+			if(RegexUtil.checkNotNull(info_titleStr)  ){
+				cValues = new ContentValues();
+				otTokenId = UUIDGenerator.getKUUID();
+				cValues.put("tokenId", otTokenId);
+				cValues.put("userId", uTokenId);
+				cValues.put("title", info_titleStr);
+				cValues.put("description", info_descriptionStr);
 
-			queryResult = dbUtil.insertData(self, CommonText.OTHERINFO2, cValues);
-			if (queryResult) {
-				toastMsg(R.string.action_add_success);
-				ot_otherinfo_edit.setVisibility(View.VISIBLE);
-//				if (getotherinfoData()) {
-					actionAync(OtherInfoMenu.otherinfo,1,R.string.action_syncing_other);
-//				}
+				queryResult = dbUtil.insertData(self, CommonText.OTHERINFO2, cValues);
+				if (queryResult) {
+					toastMsg(R.string.action_add_success);
+					ot_otherinfo_edit.setVisibility(View.VISIBLE);
+//					if (getotherinfoData()) {
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(OtherInfoMenu.otherinfo,1,R.string.action_syncing_other);
+						}
+//					}
+				}
 			}
 			break;
 		case R.id.ot_otherinfo_edit:
 			getOtherFeild();
-			if (getotherinfoData()) {
-				actionFlag = 2;
-				updResult = dbUtil.updateData(self, CommonText.OTHERINFO2, 
-						new String[]{otTokenId,"title","description"}, 
-						new String[]{uTokenId,info_titleStr,info_descriptionStr},3);
-				if (updResult == 1) {
-					toastMsg(R.string.action_update_success);
-					actionAync(OtherInfoMenu.otherinfo,1,R.string.action_syncing_other);
-				}else{
-					toastMsg(R.string.action_update_fail);
+			if(RegexUtil.checkNotNull(info_titleStr)  ){
+				if (getotherinfoData()) {
+					actionFlag = 2;
+					updResult = dbUtil.updateData(self, CommonText.OTHERINFO2, 
+							new String[]{otTokenId,"title","description"}, 
+							new String[]{uTokenId,info_titleStr,info_descriptionStr},3);
+					if (updResult == 1) {
+						toastMsg(R.string.action_update_success);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(OtherInfoMenu.otherinfo,1,R.string.action_syncing_other);
+						}
+					}else{
+						toastMsg(R.string.action_update_fail);
+					}
 				}
 			}
 			break;
@@ -459,12 +495,10 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 	 * @Description: 执行同步操作
 	 */
 	private void actionAync(OtherInfoMenu menu,int style,int resId){
-		if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-			if (!MyApplication.USERID.equals("0")) {
-				if (CommUtil.isNetworkAvailable(self)) {
-					set3Msg(resId,Constants.DEFAULTIME);
-					syncData(menu,style);
-				}
+		if (!MyApplication.USERID.equals("0")) {
+			if (CommUtil.isNetworkAvailable(self)) {
+				set3Msg(resId,Constants.DEFAULTIME);
+				syncData(menu,style);
 			}
 		}
 		

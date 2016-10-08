@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import com.me.resume.comm.Constants;
 import com.me.resume.tools.CrashHandler;
 import com.me.resume.tools.DbManager;
+import com.me.resume.tools.FontsOverride;
 import com.me.resume.tools.L;
 import com.me.resume.utils.PreferenceUtil;
 import com.tencent.bugly.crashreport.CrashReport;

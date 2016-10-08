@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.UserInfoCode;
 import com.me.resume.comm.ViewHolder;
+import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.FileUtils;
@@ -54,7 +56,7 @@ import com.whjz.android.util.interfa.DbLocalUtil;
  * @date 2016/3/29 下午2:13:45
  * 
  */
-public class MainActivity extends Activity {
+public class MainActivity extends Activity{
 	private MainActivity self;
 	
 	private MyPagerAdapter pagerAdapter = null;
@@ -129,12 +131,12 @@ public class MainActivity extends Activity {
 				}
 				jazzyViewPager.setCurrentItem(index + 1);
 				
-				String effectStr = preferenceUtil.getPreferenceData(Constants.SET_SWITCHANIM, Constants.DEFAULEFFECT);
+				/*String effectStr = preferenceUtil.getPreferenceData(Constants.SET_SWITCHANIM, Constants.DEFAULEFFECT);
 				if (effectStr.equals(Constants.EFFECT_RANDOM)) {
 					List<String> mList = Arrays.asList(CommUtil.getArrayValue(self,R.array.jazzy_effects_random));
 					TransitionEffect effect = TransitionEffect.valueOf(mList.get(new Random().nextInt(mList.size())));
 					jazzyViewPager.setTransitionEffect(effect);
-				}
+				}*/
 				
 				mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO,Constants.DEFAULTIME);
 				break;
@@ -165,35 +167,26 @@ public class MainActivity extends Activity {
 		super.onResume();
 		if (goFlag) {
 			goFlag = false;
-//			new Thread(new Runnable() {
-//				
-//				@Override
-//				public void run() {
-//					runOnUiThread(new  Runnable() {
-//						public void run() {
-							initCover(cover);
-							
-							initView1(view1);
-							
-							initView2(view2);
-							
-							initView3(view3);
-							
-							initView4(view4);
-							
-							initView5(view5);
-							
-							initView6(view6);
-							
-							initView7(view7);
-							
-							initView8(view8);
-							
-							showViews();
-//						}
-//					});
-//				}
-//			}).start();
+			
+			initCover(cover);
+			
+			initView1(view1);
+			
+			initView2(view2);
+			
+			initView3(view3);
+			
+			initView4(view4);
+			
+			initView5(view5);
+			
+			initView6(view6);
+			
+			initView7(view7);
+			
+			initView8(view8);
+			
+			showViews();
 		}
 	}
 
@@ -213,19 +206,21 @@ public class MainActivity extends Activity {
 		view7 = mInflater.inflate(R.layout.index_resume_7, null);
 		view8 = mInflater.inflate(R.layout.index_resume_8, null);
 		
+		String effectStr = preferenceUtil.getPreferenceData(Constants.SET_SWITCHANIM, Constants.DEFAULEFFECT);
+		TransitionEffect effect = null;
+		if (effectStr.equals(Constants.DEFAULEFFECT)) {
+			effect = TransitionEffect.valueOf(Constants.EFFECT_STANDARD);
+		}else if (effectStr.equals(Constants.EFFECT_RANDOM)) {
+			/*List<String> mList = Arrays.asList(CommUtil.getArrayValue(self,R.array.jazzy_effects_random));
+			effect = TransitionEffect.valueOf(mList.get(new Random().nextInt(mList.size())));*/
+		}else{
+			effect = TransitionEffect.valueOf(effectStr);
+		}
+		jazzyViewPager.setTransitionEffect(effect);
+		
 		if (preferenceUtil.getPreferenceData(Constants.SET_AUTOSHOW)) {
 			int switchDuration = preferenceUtil.getPreferenceData(Constants.SET_SWITCHEFFDURATION,Constants.DEFAULTEFFECTTIME);
-			String effectStr = preferenceUtil.getPreferenceData(Constants.SET_SWITCHANIM, Constants.DEFAULEFFECT);
-			TransitionEffect effect = null;
-			if (effectStr.equals(Constants.DEFAULEFFECT)) {
-				effect = TransitionEffect.valueOf(Constants.EFFECT_STANDARD);
-			}else if (effectStr.equals(Constants.EFFECT_RANDOM)) {
-				List<String> mList = Arrays.asList(CommUtil.getArrayValue(self,R.array.jazzy_effects_random));
-				effect = TransitionEffect.valueOf(mList.get(new Random().nextInt(mList.size())));
-			}else{
-				effect = TransitionEffect.valueOf(effectStr);
-			}
-			jazzyViewPager.setTransitionEffect(effect);
+			
 			mHandler.sendEmptyMessageDelayed(MSG_CHANGE_PHOTO,switchDuration);
 		}
 	}
@@ -405,7 +400,7 @@ public class MainActivity extends Activity {
 						int position, long id) {
 					ActivityUtils.startActivityPro(self, 
 							Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
-							Constants.TYPE,CommonText.WORKEXPERIENCE);
+							Constants.TYPE,CommonText.WORKEXPERIENCE,true);
 				}
 			});
 		}
@@ -563,7 +558,7 @@ public class MainActivity extends Activity {
 						int position, long id) {
 					ActivityUtils.startActivityPro(self, 
 							Constants.PACKAGENAMECHILD + Constants.INFOMANAGER, 
-							Constants.TYPE,CommonText.PROJECT_EXPERIENCE);
+							Constants.TYPE,CommonText.PROJECT_EXPERIENCE,true);
 				}
 			});
 		}
@@ -920,5 +915,6 @@ public class MainActivity extends Activity {
 			// return mTitleList.get(position);//页卡标题
 			return String.valueOf(position);
 		}
+		
 	}
 }

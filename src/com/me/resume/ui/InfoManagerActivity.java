@@ -170,6 +170,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 		} else {
 			setRightIcon(R.drawable.icon_sync);
 			msgText.setText(getStrValue(R.string.en_nodata));
+			infoMoreListView.setVisibility(View.GONE);
 			msgText.setVisibility(View.VISIBLE);
 		}
 	}

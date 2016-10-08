@@ -7,14 +7,17 @@ import java.util.Map;
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
@@ -167,6 +170,27 @@ public class UserLoginActivity extends BaseActivity implements
 		}
 		btnLogin.setText(getStrValue(R.string.action_login));
 		btnLogin.setEnabled(true);
+		
+		edtTxt_password.setOnEditorActionListener(new OnEditorActionListener() {
+			
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					CommUtil.hideKeyboard(self);
+					if (CommUtil.isNetworkAvailable(self)) {
+						if(checkInfo()){
+							btnLogin.setText(getStrValue(R.string.action_wait_loging));
+							btnLogin.setEnabled(false);
+
+							actionLogin();
+						}
+					}
+					return true;
+				}else{
+					return false;
+				}
+			}
+		});
 	}
 	
 	@Override
@@ -213,11 +237,11 @@ public class UserLoginActivity extends BaseActivity implements
 			break;
 		case R.id.resetPassWord:
 			ActivityUtils.startActivityPro(self,
-			Constants.PACKAGENAMECHILD +Constants.USERNEWPWD,Constants.TYPE,UserInfoCode.RESETPWD);
+			Constants.PACKAGENAMECHILD +Constants.USERNEWPWD,Constants.TYPE,UserInfoCode.RESETPWD,false);
 			break;
 		case R.id.forgotPassWord:
 			ActivityUtils.startActivityPro(self,
-					Constants.PACKAGENAMECHILD +Constants.USERNEWPWD,Constants.TYPE,UserInfoCode.FORGOTPWD);
+					Constants.PACKAGENAMECHILD +Constants.USERNEWPWD,Constants.TYPE,UserInfoCode.FORGOTPWD,false);
 			break;
 		case R.id.btn_login:
 			if (CommUtil.isNetworkAvailable(self)) {
@@ -267,6 +291,8 @@ public class UserLoginActivity extends BaseActivity implements
 			break;
 		}
 	}
+	
+	
 	
 	/**
 	 * 登录请求
