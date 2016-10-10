@@ -36,7 +36,7 @@
 		         android:layout_height="30dip"
 		         android:layout_alignParentBottom="true"
 		         android:layout_centerHorizontal="true"
-		         android:layout_marginBottom="@dimen/margin_16"
+		         android:layout_marginBottom="@dimen/margin_30"
 		         android:background="@drawable/icon_go" />
         </RelativeLayout>
     </com.me.resume.views.ScrollLayoutView>

@@ -177,14 +177,21 @@ public class UserLoginActivity extends BaseActivity implements
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE) {
 					CommUtil.hideKeyboard(self);
-					if (CommUtil.isNetworkAvailable(self)) {
-						if(checkInfo()){
-							btnLogin.setText(getStrValue(R.string.action_wait_loging));
-							btnLogin.setEnabled(false);
-
-							actionLogin();
-						}
-					}
+					doLogin();
+					return true;
+				}else{
+					return false;
+				}
+			}
+		});
+		
+		passwordEt.setOnEditorActionListener(new OnEditorActionListener() {
+			
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					CommUtil.hideKeyboard(self);
+					doRegister();
 					return true;
 				}else{
 					return false;
@@ -229,7 +236,7 @@ public class UserLoginActivity extends BaseActivity implements
 			showOrHidePwd(edtTxt_password,pwdshow);
 			break;
 		case R.id.regpwdshow:
-			showOrHidePwd(edtTxt_password,regpwdshow);
+			showOrHidePwd(passwordEt,regpwdshow);
 			break;
 		case R.id.save_checkbox:
 		case R.id.savePassWord:
@@ -244,29 +251,10 @@ public class UserLoginActivity extends BaseActivity implements
 					Constants.PACKAGENAMECHILD +Constants.USERNEWPWD,Constants.TYPE,UserInfoCode.FORGOTPWD,false);
 			break;
 		case R.id.btn_login:
-			if (CommUtil.isNetworkAvailable(self)) {
-				if(checkInfo()){
-					btnLogin.setText(getStrValue(R.string.action_wait_loging));
-					btnLogin.setEnabled(false);
-
-					actionLogin();
-				}
-			}
+			doLogin();
 			break;
 		case R.id.btn_register:
-			if (CommUtil.isNetworkAvailable(self)) {
-				if (agreeProtocol) {
-					if (showRegType) {
-						actionRegister(2);
-					}else{
-						actionRegister(1);
-					}
-				}else{
-					set3Msg(R.string.register_agress_protocol);
-				}
-			}else{
-				set3Msg(R.string.check_network);
-			}
+			doRegister();
 			break;
 		case R.id.proto_checkbox:
 			agreeProtocol = !agreeProtocol;
@@ -282,6 +270,7 @@ public class UserLoginActivity extends BaseActivity implements
 		case R.id.weixinlogin:
 			break;
 		case R.id.qqlogin:
+			
 			break;
 		case R.id.sinalogin:
 //			SinaLogin sinaLogin = new SinaLogin(self);
@@ -292,7 +281,32 @@ public class UserLoginActivity extends BaseActivity implements
 		}
 	}
 	
+	private void doLogin(){
+		if (CommUtil.isNetworkAvailable(self)) {
+			if(checkInfo()){
+				btnLogin.setText(getStrValue(R.string.action_wait_loging));
+				btnLogin.setEnabled(false);
+
+				actionLogin();
+			}
+		}
+	}
 	
+	private void doRegister(){
+		if (CommUtil.isNetworkAvailable(self)) {
+			if (agreeProtocol) {
+				if (showRegType) {
+					actionRegister(2);
+				}else{
+					actionRegister(1);
+				}
+			}else{
+				set3Msg(R.string.register_agress_protocol);
+			}
+		}else{
+			set3Msg(R.string.check_network);
+		}
+	}
 	
 	/**
 	 * 登录请求
@@ -328,6 +342,7 @@ public class UserLoginActivity extends BaseActivity implements
 			@Override
 			public void error() {
 				set3Msg(R.string.timeout_network);
+				errorLogin();
 			}
 
 			@Override
@@ -343,6 +358,11 @@ public class UserLoginActivity extends BaseActivity implements
 	private void errorLogin(){
 		btnLogin.setText(getStrValue(R.string.action_login));
 		btnLogin.setEnabled(true);
+	}
+	
+	private void errorRegist(){
+		registBtn.setText(getStrValue(R.string.action_register));
+		registBtn.setEnabled(true);
 	}
 	
 	/**
@@ -439,6 +459,7 @@ public class UserLoginActivity extends BaseActivity implements
 				@Override
 				public void error() {
 					set3Msg(R.string.timeout_network);
+					errorRegist();
 				}
 				
 				public void success(Map<String, List<String>> map) {
@@ -451,18 +472,15 @@ public class UserLoginActivity extends BaseActivity implements
 					} catch (Exception e) {
 						e.printStackTrace();
 						if(map.get(ResponseCode.MSG).get(0).equals(ResponseCode.USERNAME_REPEAT)){
-							registBtn.setText(getStrValue(R.string.action_register));
-							registBtn.setEnabled(true);
 							set3Msg(R.string.register_repeatedusername);
-						}
+							errorRegist();						}
 					}
 				}
 
 				@Override
 				public void noData() {
 					set3Msg(R.string.action_regist_fail);
-					registBtn.setText(getStrValue(R.string.action_register));
-					registBtn.setEnabled(true);
+					errorRegist();
 				}
 			});
 		}

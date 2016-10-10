@@ -185,4 +185,6 @@ public class Constants {
     public static final String SET_FEEDBACK= "feedback";
     public static final String MYWORDS= "mywords";
     
+    public static final String GOHOME= "gohome";
+    
 }

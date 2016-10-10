@@ -112,7 +112,7 @@
         android:lineSpacingExtra="3dip"
         android:text="@string/register_warn"
         android:textColor="@color/register_warn"
-        android:textSize="@dimen/micro_text_size" />
+        android:textSize="@dimen/small_text_size" />
 
     <TextView
         android:id="@+id/acclogin"

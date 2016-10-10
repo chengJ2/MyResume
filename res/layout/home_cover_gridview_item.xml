@@ -31,7 +31,7 @@
         android:maxLines="2"
         android:padding="2dip"
         android:text="@string/item_text101"
-        android:textSize="@dimen/micro_text_size"
+        android:textSize="@dimen/home_cover_text_size"
         android:textColor="@color/black"
         android:layout_below="@id/item1" >
     </TextView>

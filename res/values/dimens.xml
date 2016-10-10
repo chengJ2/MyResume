@@ -28,6 +28,10 @@
     <dimen name="home_refresh_height">30dp</dimen>
     <dimen name="home_topic_item_bg_line">1dp</dimen>
     
+    <dimen name="home_cover_text_size">12dip</dimen>
+    <dimen name="middle_text_size_dp">14dip</dimen>
+    
+    
     <!-- 元素之间的 间距-->
     <dimen name="margin_5">5dip</dimen>
     <dimen name="margin_8">8dip</dimen>

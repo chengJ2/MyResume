@@ -112,6 +112,8 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 		search_cancle.setOnClickListener(this);
 		clearView.setOnClickListener(this);
 		
+		locationcity.setOnClickListener(this);
+		
 		index_search_edit.setHint(getStrValue(R.string.hint_address_text));
 		index_search_edit.setHintTextColor(getColorValue(R.color.grey));
 		index_search_edit.requestFocus();
@@ -327,6 +329,9 @@ public class AddressActivity extends BaseActivity implements OnClickListener{
 			whichTab = 0;
 			index_search_edit.setText("");
 			clearView.setVisibility(View.GONE);
+			break;
+		case R.id.locationcity:
+			setKeyResult(locationcity.getText().toString().trim());
 			break;
 		default:
 			break;

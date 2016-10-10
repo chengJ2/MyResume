@@ -75,12 +75,12 @@
 
                 <TextView
                     style="@style/user_info_item_tv"
-                    android:text="@string/ed_info_input_trainingclass"/>
+                    android:text="@string/ed_info_trainingclass"/>
 
                 <EditText
                     android:id="@+id/info_trainingclass"
                     style="@style/user_info_item_ed"
-                    android:hint="@string/ed_info_trainingclass" />
+                    android:hint="@string/ed_info_input_trainingclass" />
                  <ImageView
                     style="@style/user_info_item_iv"
                     android:visibility="invisible" />

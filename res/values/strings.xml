@@ -38,6 +38,8 @@
     <string name="resume_makemywords">自定义留言信息</string>
     <string name="resume_mywords">&#160;&#160;&#160;&#160;我坚信在贵公司,我将学到更多知识,发挥出个人的最大效益。</string>
     <string name="resume_thinks">谢谢</string>
+    <string name="resume_exit">退出预览</string>
+    <string name="resume_home">首页</string>
     
      <!-- Home -->
     <string name="resume_center">有云简历</string>
@@ -62,7 +64,7 @@
     <string name="item_text71">更多分享</string>
     <string name="item_text72">暂无分享,快去分享你的面试心得~</string>
     <string name="item_text8">我也来分享\u2026</string>
-    <string name="item_text81">请分享面试心得或职场相关的信息哦~</string>
+    <string name="item_text81">请分享面试心得或职场相关的信息</string>
     <string name="item_text9">收藏成功</string>
     <string name="item_text91">取消收藏</string>
     <string name="item_text100">正在下载,请稍后\u2026</string>
@@ -134,7 +136,7 @@
     <string name="action_login_forgotpwd">忘记密码?</string>
     <string name="action_login_3pl">其他登录方式</string>
     <string name="action_input_isnull">不能为空</string>
-    <string name="action_input_up_isnull">用户名/手机号或密码</string>
+    <string name="action_input_up_isnull">用户名/手机号/邮箱或密码不能为空</string>
     <string name="action_input_username_null">用户名</string>
     <string name="action_input_usename_cn">用户名不能含中文</string>
     <string name="action_input_up_phone_email">手机号或邮箱用于找回密码,请选填</string>
@@ -232,6 +234,7 @@
     <string name="dialog_action_delete_alert">该操作会删除本地数据,确认删除吗？</string>
     <string name="dialog_action_delete_sure_alert">若联网中,本次操作也会同步删除远端这条记录</string>
     <string name="dialog_action_topic_delete_sure_alert"><![CDATA[ <font color=red>该操作会删除本地数据,确认删除吗？</font> <br/><br/>]]>若联网中,本次操作也会同步删除远端这条记录</string>
+    <string name="dialog_action_logout">确认退出登录吗？</string>
 
     <!-- UI button text -->
     <string name="show_button_cancle">取&#160;&#160;消</string>
@@ -270,7 +273,7 @@
     <string name="hot_city">热门城市</string>
     <string name="all_city">全国城市</string>
     <string name="search_cancle">取消</string>
-    <string name="default_city">武汉</string>
+    <string name="default_city">武汉市</string>
     <string name="date_today">今天是:</string>
 
     <!-- review link string -->

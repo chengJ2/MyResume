@@ -52,7 +52,7 @@
                 style="@style/user_center_text"
                 android:layout_alignParentLeft="true"
                 android:maxWidth="200dip"
-                android:text="张三疯"
+                android:text="--"
                 android:textColor="#303F9F"
                 android:textSize="@dimen/small_middle_text_size" />
 
@@ -77,8 +77,8 @@
                 style="@style/user_center_text"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:maxWidth="200dip"
-                android:text="Android开发工程师"
+                android:maxWidth="150dip"
+                android:text="--"
                 android:textColor="@color/grey_10"
                 android:textSize="@dimen/microd_text_size"
                 android:visibility="visible" />
@@ -90,7 +90,7 @@
                 android:layout_marginLeft="@dimen/margin_10"
                 android:layout_toRightOf="@id/share_jobtitle"
                 android:maxWidth="200dip"
-                android:text="2年工作经验"
+                android:text="--"
                 android:textColor="@color/grey_10"
                 android:textSize="@dimen/microd_text_size"
                 android:visibility="visible" />
@@ -108,7 +108,7 @@
             android:maxLines="3"
             android:paddingRight="8dip"
             android:singleLine="false"
-            android:text="测试测试测试测试测试测试测试测试测试测试测试测试"
+            android:text="--"
             android:textColor="@color/black"
             android:textSize="@dimen/small_text_size" />
 
@@ -130,7 +130,7 @@
                 style="@style/user_center_text"
                 android:layout_alignParentRight="true"
                 android:gravity="left|bottom"
-                android:text="2016.5.10"
+                android:text="--"
                 android:textColor="@color/grey_10"
                 android:textSize="@dimen/microd_text_size" />
         </RelativeLayout>

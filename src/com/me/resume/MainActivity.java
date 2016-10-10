@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +32,6 @@ import com.me.resume.comm.CommForMapArrayBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.UserInfoCode;
 import com.me.resume.comm.ViewHolder;
-import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.FileUtils;
@@ -153,6 +151,7 @@ public class MainActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		MyApplication.getApplication().addActivity(this);
 		self = MainActivity.this;
 		if(preferenceUtil == null)
 			preferenceUtil = new PreferenceUtil(self);
@@ -281,9 +280,8 @@ public class MainActivity extends Activity{
 		
 		initTopView(view,R.string.resume_baseinfo,Constants.BASEINFO);
 		
-		queryWhere = "select b.*,j.expworkcareer from " 
-				+ CommonText.BASEINFO + " b join "
-				+ CommonText.JOBINTENSION +" j on b.userId = j.userId where b.userId = '"
+		queryWhere = "select b.* from " 
+				+ CommonText.BASEINFO + " b  where b.userId = '"
 				+ BaseActivity.uTokenId +"' limit 1";
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
@@ -336,14 +334,6 @@ public class MainActivity extends Activity{
 				}
 			}
 			
-			info = commMapArray.get("expworkcareer")[0];
-			if(RegexUtil.checkNotNull(info)){
-				index_1_job.setVisibility(View.VISIBLE);
-				index_1_job.setText(Html.fromHtml("职&nbsp;&nbsp;&nbsp;位:&nbsp;"+info));
-			}else{
-				index_1_job.setVisibility(View.GONE);
-			}
-			
 			info = commMapArray.get("phone")[0];
 			if(RegexUtil.checkNotNull(info)){
 				index_1_phone.setVisibility(View.VISIBLE);
@@ -357,6 +347,22 @@ public class MainActivity extends Activity{
 				index_1_email.setText(Html.fromHtml("E-mail:&nbsp;"+info));
 			}else{
 				index_1_email.setVisibility(View.GONE);
+			}
+			
+			queryWhere = "select j.userId,j.expworkcareer from " 
+					+ CommonText.JOBINTENSION +" j  where j.userId = '"
+					+ BaseActivity.uTokenId +"' limit 1";
+			commMapArray = dbUtil.queryData(self, queryWhere);
+			if (commMapArray != null && commMapArray.get("userId").length > 0) {
+				info = commMapArray.get("expworkcareer")[0];
+				if(RegexUtil.checkNotNull(info)){
+					index_1_job.setVisibility(View.VISIBLE);
+					index_1_job.setText(Html.fromHtml("职&nbsp;&nbsp;&nbsp;位:&nbsp;"+info));
+				}else{
+					index_1_job.setVisibility(View.GONE);
+				}
+			}else{
+				index_1_job.setVisibility(View.GONE);
 			}
 		}
 	}
@@ -803,7 +809,6 @@ public class MainActivity extends Activity{
 	 */
 	private void initView8(View view){
 		mViewList.add(view8);
-		
 		TextView words = (TextView) view8.findViewById(R.id.item2);
 		String wordStr = preferenceUtil.getPreferenceData(Constants.MYWORDS,"");
 		if (RegexUtil.checkNotNull(wordStr)) {
@@ -822,8 +827,27 @@ public class MainActivity extends Activity{
 //				}
 			}
 		});
-		ImageView goHome = (ImageView) view8.findViewById(R.id.gohome);
+		TextView goHome = (TextView) view8.findViewById(R.id.gohome);
+		TextView exitReview = (TextView) view8.findViewById(R.id.exit_review);
+		
+		boolean bool = preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME);
+		goHome.setVisibility(View.VISIBLE);
+		if(bool){
+			exitReview.setVisibility(View.VISIBLE);
+		}else{
+			exitReview.setVisibility(View.GONE);
+		}
+		
 		goHome.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				preferenceUtil.setPreferenceData(Constants.GOHOME, true);
+				ActivityUtils.startActivity(self, Constants.PACKAGENAMECHILD + Constants.HOME,true);
+			}
+		});
+		
+		exitReview.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {

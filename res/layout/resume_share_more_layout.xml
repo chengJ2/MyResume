@@ -86,7 +86,7 @@
                 android:paddingRight="@dimen/margin_10"
                 android:text="@string/item_text81"
                 android:textColor="@color/grey_10"
-                android:textSize="@dimen/small_text_size" />
+                android:textSize="@dimen/home_cover_text_size" />
 
             <Button
                 android:id="@+id/submit_btn"

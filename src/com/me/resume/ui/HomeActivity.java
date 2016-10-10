@@ -106,7 +106,10 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 				if (CommUtil.isNetworkAvailable(self)) {
 					getNoticeInfo();
 				}else{
-					set2Msg(getStrValue(R.string.check_network));
+					set3Msg(R.string.check_network,Constants.DEFAULTIME);
+					
+					setShareView(false);
+					msgText.setText(getStrValue(R.string.item_text5));
 				}
 				break;
 			case 101:
@@ -138,7 +141,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			startChildActivity(Constants.GUIDE, true);
 			return;
 		}
-		if (preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME)) {
+		
+		boolean bool = preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME);
+		if(bool){
+			preferenceUtil.setPreferenceData(Constants.GOHOME, false);
+		}
+		
+		if (bool && !preferenceUtil.getPreferenceData(Constants.GOHOME)) {
 			startActivity(Constants.MAINACTIVITY, true);
 			return;
 		}
@@ -276,7 +285,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			 ContentValues cValues = new ContentValues();
 			 cValues.put("uid", uuid);
 			 cValues.put("deviceid", deviceID);
-			 cValues.put("patform", "app");// 默认 app qq,sina...
+			 cValues.put("patform", "app");// 默认 app qq,sina,wx...
 			 cValues.put("createtime", TimeUtils.getCurrentTimeInString());
 			 
 			 queryResult = dbUtil.insertData(self, CommonText.USERINFO, cValues);

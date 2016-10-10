@@ -191,6 +191,8 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		self = BaseActivity.this;
 		if(preferenceUtil == null)
 			preferenceUtil = new PreferenceUtil(self);
+		
+		uTokenId = preferenceUtil.getPreferenceData(UserInfoCode.UTOKENID, "0");
 		fieldNull = getStrValue(R.string.action_input_isnull);
 		
 		TelephonyManager telephonyMgr = (TelephonyManager)getSystemService(TELEPHONY_SERVICE);

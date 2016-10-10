@@ -116,6 +116,9 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
             case 101:
             	setAnimView(center_topbar,0);
             	break;
+            case 11:
+            	actionLogout();
+            	break;
 			default:
 				break;
 			}
@@ -557,7 +560,10 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			scrollToFinishActivity();
 			break;
 		case R.id.right_lable:
-			actionLogout();
+			DialogUtils.showAlertDialog(self, 
+					getStrValue(R.string.dialog_action_logout),View.GONE,
+					getStrValue(R.string.show_button_sure),mHandler);
+			
 			break;
 		case R.id.user_info_avatar:
 			DialogUtils.showPhotoPathDialog(self, user_info_avatar, mHandler);

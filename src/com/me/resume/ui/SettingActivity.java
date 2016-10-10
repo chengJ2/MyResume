@@ -160,7 +160,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 					onoff = true;
 					setting_start_cb.setChecked(true);
 				}
-				preferenceUtil.setPreferenceData(Constants.SET_STARTVERYTIME, onoff); 
+				preferenceUtil.setPreferenceData(Constants.SET_STARTVERYTIME, onoff);
+				preferenceUtil.setPreferenceData(Constants.GOHOME, false);
 			}
 		});
 		
