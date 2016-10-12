@@ -66,9 +66,6 @@ public class ActivityUtils {
 			Class className = Class.forName(obj);
 			Intent intent = new Intent(src, className);
 			src.startActivity(intent);
-			if (isAnim) {
-				src.overridePendingTransition(R.anim.slide_left_in, R.anim.slide_right_out);
-			}
 			if (finish) {
 				((Activity) src).finish();
 			}

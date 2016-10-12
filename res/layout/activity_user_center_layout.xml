@@ -125,35 +125,15 @@
                     android:layout_height="40dip"
                     android:layout_gravity="center" />
 
-                <!-- <RelativeLayout
-                    android:id="@+id/viewcalendar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:drawableTop="@drawable/icon_calendar"
-                        android:text="@string/personal_c_item2"
-                        style="@style/user_center_content_func"/>
-
-                    <TextView
-                        android:id="@+id/day"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="@dimen/margin_10"
-                        android:gravity="center"
-                        android:text="31"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/main_time_text"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
+                <TextView
+                    android:id="@+id/myshare"
+                    style="@style/user_center_content_func"
+                    android:drawableTop="@drawable/icon_fabu_middle"
+                    android:text="@string/personal_c_item2" />
                 <View
                     style="@style/line2"
                     android:layout_height="40dip"
-                    android:layout_gravity="center" /> -->
+                    android:layout_gravity="center" /> 
 
                 <TextView
                     android:id="@+id/review_resume"

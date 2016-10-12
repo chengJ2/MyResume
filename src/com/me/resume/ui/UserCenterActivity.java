@@ -65,7 +65,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	private TextView center_username,center_workyear,center_city;
 	
 	private RelativeLayout viewcalendar;
-	private TextView mycollection,review_resume,view_day;
+	private TextView mycollection,review_resume,myshare;
 	
 	private LinearLayout info_layout0,info_layout1,info_layout2,info_layout3,info_layout4;
 	private TextView info_item0,info_item1,info_item2,info_item3,info_item4;
@@ -172,9 +172,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		center_city = findView(R.id.center_city);
 		
 		mycollection = findView(R.id.mycollection);
-//		viewcalendar = findView(R.id.viewcalendar);
-//		view_day = findView(R.id.day);
-//		view_day.setText(TimeUtils.theToday());
+		myshare = findView(R.id.myshare);
 		review_resume = findView(R.id.review_resume);
 		
 		center_topbar.setOnClickListener(this);
@@ -207,7 +205,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		view4 = findView(R.id.view4);
 		
 		mycollection.setOnClickListener(this);
-//		viewcalendar.setOnClickListener(this);
+		myshare.setOnClickListener(this);
 		review_resume.setOnClickListener(this);
 		
 		info_layout0.setOnClickListener(this);
@@ -577,9 +575,9 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		case R.id.mycollection:
 			startChildActivity(Constants.MYCOLLECTION,false);
 			break;
-//		case R.id.viewcalendar:
-//			startChildActivity(Constants.TODOSOME,false);
-//			break;
+		case R.id.myshare:
+			startChildActivity(Constants.MYSHARE,false);
+			break;
 		case R.id.review_resume:
 			startActivity(Constants.MAINACTIVITY,false);
 			break;

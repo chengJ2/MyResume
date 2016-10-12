@@ -28,9 +28,19 @@
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
 	<!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
 	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
-	<!-- SD卡读取权限，用户写入离线定位数据-->
 	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission> 
 
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	
+	<uses-permission android:name="android.permission.GET_TASKS" />
+	<uses-permission android:name="android.permission.SET_DEBUG_APP" />
+	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<uses-permission android:name="android.permission.USE_CREDENTIALS" />
+	<uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+	
     <application
         android:name="com.me.resume.MyApplication"
         android:allowBackup="true"
@@ -159,6 +169,14 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="com.me.resume.ui.MyShareActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        <activity
             android:name="com.me.resume.ui.IndustryTypeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
@@ -229,13 +247,6 @@
             android:screenOrientation="portrait" >
         </activity>
         
-        <!-- 微信 -->
-        <activity
-            android:name="com.me.resume.wxapi.WXEntryActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:exported="true" >
-        </activity>
         <!-- QQ -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -248,13 +259,27 @@
                 <data android:scheme="tencent1105433372" />
             </intent-filter>
         </activity>
+        <activity
+	        android:name="com.tencent.connect.common.AssistActivity"
+	        android:screenOrientation="portrait"
+	        android:theme="@android:style/Theme.Translucent.NoTitleBar"
+	        android:configChanges="orientation|keyboardHidden|screenSize"/>
+	        
+        <!-- 微信 -->
+		<activity
+	        android:name=".wxapi.WXEntryActivity"
+	        android:configChanges="keyboardHidden|orientation|screenSize"
+	        android:exported="true"
+	        android:screenOrientation="portrait"
+	        android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        
         <!-- sina -->
-        <activity 
+        <!-- <activity 
 		     android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser" 
 		     android:configChanges="keyboardHidden|orientation"
 		     android:windowSoftInputMode="adjustResize"
 		     android:exported="false" >
-		</activity>
+		</activity> -->
         
          <service android:name="com.me.resume.service.DownloadService"
 			android:process=".updateService" />
@@ -271,6 +296,6 @@
         
         <meta-data android:value="57fc991967e58e65e6000b75" android:name="UMENG_APPKEY"></meta-data>
 		<meta-data android:value="360sjzs" android:name="UMENG_CHANNEL"/>
-        
+		
     </application>
 </manifest>

@@ -198,7 +198,7 @@
     <string name="file_failLoad">更新失败,请重试</string>
     <string name="file_successLoad">文件上传成功</string>
     <string name="personal_c_item1">我的收藏</string>
-    <string name="personal_c_item2">我的坚持</string>
+    <string name="personal_c_item2">我的分享</string>
     <string name="personal_c_item3">预览简历</string>
     <string name="personal_c_item31">我的简历</string>
     <string name="personal_c_item11">已完整</string>

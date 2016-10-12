@@ -117,6 +117,7 @@ public class Constants {
     
     // QQ ID
     public static final String APP_QQ_ID = "1105433372";
+    public static final String APP_QQ_SECRET = "AjBgYNP14hsjOM0p";
     
     // SINA ID
     public static final String APP_SINA_ID = "3466604642";
@@ -146,7 +147,7 @@ public class Constants {
     public static final String RESUMETEMPLMORE = "ResumeTemplMoreActivity";
     public static final String SETTING = "SettingActivity";
     public static final String STARTUP = "StartupActivity";
-    public static final String TODOSOME = "TodoActivity";
+    public static final String MYSHARE = "MyShareActivity";
     public static final String TOPICVIEW = "TopicViewActivity";
     public static final String TOPICLISTDETAIL = "TopicListDetailActivity";
     public static final String USERCENTER = "UserCenterActivity";

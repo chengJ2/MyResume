@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.me.resume.comm.Constants;
 import com.me.resume.tools.CrashHandler;
 import com.me.resume.tools.DbManager;
+import com.me.resume.tools.FontsOverride;
 import com.me.resume.utils.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -36,7 +37,7 @@ public class MyApplication extends Application {
 	public static String USERAVATORPATH = "";
 	
 	private PreferenceUtil preferenceUtil;
-
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -51,10 +52,10 @@ public class MyApplication extends Application {
 		if(preferenceUtil == null)
 			preferenceUtil = new PreferenceUtil(this);
 		
-		/*if (!preferenceUtil.getPreferenceData(Constants.SET_FEEDBACK)) {
+		if (!preferenceUtil.getPreferenceData(Constants.SET_FEEDBACK)) {
 			MobclickAgent.setCatchUncaughtExceptions(false); 
 			//CrashReport.initCrashReport(getApplicationContext(), Constants.APP_CRASH_ID, true);
-		}*/
+		}
 		
 		// LanguageSettings.getInstance().initLang(this);
 		// FontsOverride.setDefaultFont(this, "serif", "fonts/FZLT.TTF");
