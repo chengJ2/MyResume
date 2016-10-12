@@ -21,6 +21,7 @@ import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.views.CommScrollView;
+import com.umeng.analytics.MobclickAgent;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -236,6 +237,17 @@ public class EvaluationMoreActivity extends BaseActivity implements OnClickListe
 		default:
 			break;
 		}
-		
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 }

@@ -19,6 +19,7 @@ import com.me.resume.comm.Constants;
 import com.me.resume.service.DownloadService;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 关于我们
@@ -157,6 +158,18 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 			}
 		});
 	} 
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
 	@Override
 	protected void onDestroy() {

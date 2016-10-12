@@ -39,6 +39,7 @@ import com.me.resume.utils.FileUtils;
 import com.me.resume.utils.ImageUtils;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
+import com.umeng.analytics.MobclickAgent;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -72,5 +73,17 @@ public class UserRegProtocalActivity extends BaseActivity implements OnClickList
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 }

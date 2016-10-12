@@ -6,15 +6,12 @@ import java.util.List;
 import android.app.Activity;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.DisplayMetrics;
 
 import com.me.resume.comm.Constants;
 import com.me.resume.tools.CrashHandler;
 import com.me.resume.tools.DbManager;
-import com.me.resume.tools.FontsOverride;
-import com.me.resume.tools.L;
 import com.me.resume.utils.PreferenceUtil;
-import com.tencent.bugly.crashreport.CrashReport;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -54,9 +51,10 @@ public class MyApplication extends Application {
 		if(preferenceUtil == null)
 			preferenceUtil = new PreferenceUtil(this);
 		
-		if (preferenceUtil.getPreferenceData(Constants.SET_FEEDBACK)) {
-			CrashReport.initCrashReport(getApplicationContext(), Constants.APP_CRASH_ID, true);
-		}
+		/*if (!preferenceUtil.getPreferenceData(Constants.SET_FEEDBACK)) {
+			MobclickAgent.setCatchUncaughtExceptions(false); 
+			//CrashReport.initCrashReport(getApplicationContext(), Constants.APP_CRASH_ID, true);
+		}*/
 		
 		// LanguageSettings.getInstance().initLang(this);
 		// FontsOverride.setDefaultFont(this, "serif", "fonts/FZLT.TTF");
@@ -93,6 +91,7 @@ public class MyApplication extends Application {
 	 * 关闭全部Activity
 	 */
 	public void exitAll() {
+		MobclickAgent.onKillProcess(this);
 		for (Activity a : mActivityList) {
 			a.finish();
 		}

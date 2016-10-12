@@ -22,6 +22,7 @@ import com.me.resume.R;
 import com.me.resume.comm.CommonBaseAdapter;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -215,5 +216,17 @@ public class MajorActivity extends BaseActivity implements OnClickListener{
 		default:
 			break;
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 }

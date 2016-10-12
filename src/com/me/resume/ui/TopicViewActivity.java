@@ -32,6 +32,7 @@ import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.CommScrollView;
 import com.me.resume.views.CustomFAB;
 import com.me.resume.views.MarqueeText;
+import com.umeng.analytics.MobclickAgent;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -488,4 +489,15 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 		});
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 }

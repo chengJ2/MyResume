@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,11 +25,12 @@ import com.me.resume.comm.ResponseCode;
 import com.me.resume.comm.UserInfoCode;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
 * @ClassName: UserNewPwdActivity 
-* @Description: 找回/重置密码
+* @Description: 新密码
 * @date 2016/4/25 下午1:38:18 
 *
  */
@@ -48,12 +50,12 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 		View v = View.inflate(self,R.layout.activity_user_find_upd_pwd_layout, null);
 		boayLayout.addView(v);
 		boayLayout.setBackgroundResource(R.drawable.user_bg_shape);
-		findViews();
-		
+		setTopTitle(R.string.action_login_updatepwd);
 		setMsgHide();
 		setRightIconVisible(View.GONE);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
+		findViews();
 	}
 
 	private void findViews() {
@@ -78,10 +80,8 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 		
 		type = getIntent().getStringExtra(Constants.TYPE);
 		if (type.equals(UserInfoCode.RESETPWD)) {
-			setTopTitle(R.string.action_loginresetpwd);
 			passwordEt.setHint(getStrValue(R.string.login_input_old_pwd_hint));
 		}else if(type.equals(UserInfoCode.FORGOTPWD)){
-			setTopTitle(R.string.action_login_findgotpwd);
 			passwordEt.setHint(getStrValue(R.string.login_input_new_pwd_hint));
 		}
 		
@@ -90,7 +90,26 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					CommUtil.hideKeyboard(self);
 					check();
+					return true;
+				}else{
+					return false;
+				}
+			}
+		});
+		
+		password2Et.setOnEditorActionListener(new OnEditorActionListener() {
+			
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_DONE) {
+					CommUtil.hideKeyboard(self);
+					if (CommUtil.isNetworkAvailable(self)) {
+						syncNewPwd();
+					}else{
+						set3Msg(R.string.check_network);
+					}
 					return true;
 				}else{
 					return false;
@@ -325,10 +344,17 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 							}
 						}else{
 							if(map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)){
-								btn_check.setText(getStrValue(R.string.show_button_goto));
-								btn_check.setEnabled(false);
+								btn_newPwd.setText(getStrValue(R.string.show_button_update));
+								btn_newPwd.setEnabled(false);
 								preferenceUtil.setPreferenceData(UserInfoCode.PASSWORD,passwordStr);
-								scrollToFinishActivity();
+								new Handler().postDelayed(new Runnable() {
+									
+									@Override
+									public void run() {
+										scrollToFinishActivity();
+									}
+								}, 500);
+								
 							}
 						}
 					} catch (Exception e) {
@@ -347,6 +373,18 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 				}
 			});
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 	
 }

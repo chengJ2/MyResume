@@ -19,6 +19,7 @@ import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.utils.CommUtil;
+import com.umeng.analytics.MobclickAgent;
 import com.whjz.android.text.Info;
 import com.whjz.android.util.common.CommonUtil;
 import com.whjz.android.util.common.DataSetList;
@@ -69,6 +70,8 @@ public class SwipeBackActivity extends FragmentActivity implements
 		mHelper.onActivtyCreate();
 		
 	    mLocalStack.add(this);
+	    // youmeng日志加密
+	    // MobclickAgent.enableEncrypt(true);
 	}
 
 	@Override

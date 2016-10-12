@@ -26,6 +26,7 @@ import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
+import com.umeng.analytics.MobclickAgent;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -121,7 +122,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+		MobclickAgent.onResume(this);
 	}
 
 	private void initData(final String type) {
@@ -611,6 +612,7 @@ public class InfoManagerActivity extends BaseActivity implements OnClickListener
 	@Override
 	protected void onPause() {
 		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 	
 	@Override

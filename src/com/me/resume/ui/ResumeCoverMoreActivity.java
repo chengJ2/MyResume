@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
 import com.me.resume.views.CustomGridView;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 更多简历封面
@@ -168,6 +169,18 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 				msgText.setText(getStrValue(R.string.en_nodata));*/	
 			}
 		});
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 	
 	@Override

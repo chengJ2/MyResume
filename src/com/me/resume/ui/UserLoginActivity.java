@@ -30,6 +30,7 @@ import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
+import com.umeng.analytics.MobclickAgent;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -146,6 +147,7 @@ public class UserLoginActivity extends BaseActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		edtTxt_username.setText(preferenceUtil.getPreferenceData(UserInfoCode.USERNAME, ""));
 		if (preferenceUtil.getPreferenceData(UserInfoCode.SAVEPWD)) {
 			edtTxt_password.setText(preferenceUtil.getPreferenceData(UserInfoCode.PASSWORD, ""));
@@ -686,4 +688,9 @@ public class UserLoginActivity extends BaseActivity implements
 		v.startAnimation(dismiss);
 	}
 	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 }

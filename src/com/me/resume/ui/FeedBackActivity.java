@@ -18,6 +18,7 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.ResponseCode;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 意见反馈
@@ -61,6 +62,7 @@ public class FeedBackActivity extends BaseActivity {
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
+		feedback_cb.setChecked(true);
 		if(preferenceUtil.getPreferenceData(Constants.SET_FEEDBACK)){
 			feedback_cb.setChecked(true);
 		}else{
@@ -150,6 +152,17 @@ public class FeedBackActivity extends BaseActivity {
 				
 			}
 		});
-		
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 }

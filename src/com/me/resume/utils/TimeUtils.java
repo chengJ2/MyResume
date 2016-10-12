@@ -402,7 +402,7 @@ public class TimeUtils {
         } else if (days > 2 && days <= 10) {
             ftime = days + "天前";
         } else if (days > 10) {
-            ftime = sDate;
+            ftime = sDate.substring(0,10);
         }
         return ftime;
     }

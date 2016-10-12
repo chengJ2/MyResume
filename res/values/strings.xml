@@ -35,7 +35,7 @@
     <string name="resume_educationtraining">教育/培训经历</string>
     <string name="resume_otherinfo">附加信息</string>
     <string name="resume_message">留言板</string>
-    <string name="resume_makemywords">自定义留言信息</string>
+    <string name="resume_makemywords">我的留言,自己来定\u2026</string>
     <string name="resume_mywords">&#160;&#160;&#160;&#160;我坚信在贵公司,我将学到更多知识,发挥出个人的最大效益。</string>
     <string name="resume_thinks">谢谢</string>
     <string name="resume_exit">退出预览</string>
@@ -133,7 +133,7 @@
     <string name="action_login_savepwd">保存密码</string>
     <string name="action_loginresetpwd">重置密码</string>
     <string name="action_login_findgotpwd">找回密码</string>
-    <string name="action_login_forgotpwd">忘记密码?</string>
+    <string name="action_login_updatepwd">更新密码</string>
     <string name="action_login_3pl">其他登录方式</string>
     <string name="action_input_isnull">不能为空</string>
     <string name="action_input_up_isnull">用户名/手机号/邮箱或密码不能为空</string>
@@ -241,10 +241,11 @@
     <string name="show_button_sure">确&#160;&#160;认</string>
     <string name="show_button_continue">继&#160;&#160;续</string>
     <string name="show_nolonger">不再显示</string>
-    <string name="show_button_check">正在校验用户,请稍后\u2026</string>
+    <string name="show_button_check">正在校验信息,请稍后\u2026</string>
     <string name="show_button_getpwd">重置密码</string>
     <string name="show_button_updatepwd">正在更新,请稍后\u2026</string>
     <string name="show_button_goto">正在跳转\u2026</string>
+    <string name="show_button_update">密码更新成功</string>
     <string name="button_use">使&#160;用</string>
     <string name="button_downloading">下载中</string>
     <string name="button_canuse">启&#160;用</string>
@@ -510,7 +511,8 @@
     <string name="ot_info_title">标&#160;&#160;题</string>
     <string name="ot_info_choose_title">请选择标题</string>
     <string name="ot_info_description">描&#160;&#160;述</string>
-    <string name="ot_info_input_description">请输入描述信息</string>
+    <string name="ot_info_input_description">请输入描述信息(限512字)</string>
+    <string name="ot_info_input_description_toolong">描述信息输入过长</string>
     <!-- 其他信息 -->
 
     <!-- 人才附加内容 -->

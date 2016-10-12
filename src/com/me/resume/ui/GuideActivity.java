@@ -17,6 +17,7 @@ import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.PreferenceUtil;
 import com.me.resume.views.ScrollLayoutView;
 import com.me.resume.views.ScrollLayoutView.OnViewChangeListener;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * App第一次安装向导界面
@@ -93,6 +94,18 @@ public class GuideActivity extends Activity implements
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		return false;
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 
 }

@@ -41,6 +41,7 @@ import com.me.resume.views.CommScrollView;
 import com.me.resume.views.CustomListView;
 import com.me.resume.views.RefreshableView;
 import com.me.resume.views.RefreshableView.RefreshListener;
+import com.umeng.analytics.MobclickAgent;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -206,13 +207,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					if (!view.isRefreshing()) {
 //						view.setRefreshText("刷新时间: " + TimeUtils.getCurrentTimeInString());
 						mHandler.sendEmptyMessage(100);
-						mHandler.postDelayed(new Runnable() {
+						/*mHandler.postDelayed(new Runnable() {
 							
 							@Override
 							public void run() {
 								mHandler.sendEmptyMessage(101);
 							}
-						},100);
+						},100);*/
 					} 
 				} else {
 					mHandler.sendEmptyMessageDelayed(-1, 1000);
@@ -224,11 +225,16 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		initData();
 		initUserInfo();
 		commscrollview.scrollTo(0, 0);
 	}
-	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	/**
 	 * 初始化用户信息
 	 */
@@ -537,6 +543,13 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		default:
 			break;
 		}
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		if (refreshview != null)
+			refreshview.finishRefresh();
 	}
 	
 	@Override

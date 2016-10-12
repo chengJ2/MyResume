@@ -26,6 +26,7 @@ import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
+import com.umeng.analytics.MobclickAgent;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -130,11 +131,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		
 		findViews();
 		initViews();
-	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
 	}
 	
 	private void findViews(){
@@ -532,11 +528,6 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 	}
 	
 	@Override
-	protected void onPause() {
-		super.onPause();
-	}
-	
-	@Override
 	protected void onStop() {
 		super.onStop();
 	}
@@ -576,5 +567,17 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			setFeildValue(commMapArray);
 		}
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 }

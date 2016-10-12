@@ -18,6 +18,7 @@ import com.me.resume.service.DownloadService;
 import com.me.resume.tools.DataCleanManager;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -231,6 +232,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		boolean startVerytime = preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME);
 		boolean autoShow = preferenceUtil.getPreferenceData(Constants.SET_AUTOSHOW);
 		boolean editmode = preferenceUtil.getPreferenceData(Constants.EDITMODE);
@@ -355,5 +357,11 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		if (mHandler != null) {
 			mHandler.removeCallbacksAndMessages(null);
 		}
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 }

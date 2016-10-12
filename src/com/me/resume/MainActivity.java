@@ -43,6 +43,7 @@ import com.me.resume.views.CustomListView;
 import com.me.resume.views.JazzyViewPager;
 import com.me.resume.views.JazzyViewPager.TransitionEffect;
 import com.me.resume.views.TagFlowLayout;
+import com.umeng.analytics.MobclickAgent;
 import com.whjz.android.text.CommonText;
 import com.whjz.android.util.common.DbUtilImplement;
 import com.whjz.android.util.interfa.DbLocalUtil;
@@ -164,6 +165,7 @@ public class MainActivity extends Activity{
 	@Override
 	protected void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(self);
 		if (goFlag) {
 			goFlag = false;
 			
@@ -316,6 +318,19 @@ public class MainActivity extends Activity{
 				sbStr.append(CommUtil.getStrValue(self, R.string.info_maritalstatus_3));
 			}else{
 				sbStr.append(CommUtil.getStrValue(self, R.string.info_maritalstatus_1));
+			}
+			
+			String workyear = commMapArray.get("joinworktime")[0];
+			if (RegexUtil.checkNotNull(workyear)) {
+				int theWYear = CommUtil.parseInt(workyear.substring(0, 4));
+				int work = (theYear - theWYear);
+				if (work <= 0) {
+					sbStr.append("&nbsp;|&nbsp;"+ CommUtil.getStrValue(self,R.string.personal_c_item17));
+				}else{
+					sbStr.append("&nbsp;|&nbsp;"+ String.format(CommUtil.getStrValue(self,R.string.personal_c_item18), work));
+				}
+			}else{
+				sbStr.append("");
 			}
 		
 			index_1_info.setText(Html.fromHtml(sbStr.toString()));
@@ -808,7 +823,9 @@ public class MainActivity extends Activity{
 	 * @param view
 	 */
 	private void initView8(View view){
-		mViewList.add(view8);
+		if(!mViewList.contains(view8)){
+			mViewList.add(view8);
+		}
 		TextView words = (TextView) view8.findViewById(R.id.item2);
 		String wordStr = preferenceUtil.getPreferenceData(Constants.MYWORDS,"");
 		if (RegexUtil.checkNotNull(wordStr)) {
@@ -940,5 +957,11 @@ public class MainActivity extends Activity{
 			return String.valueOf(position);
 		}
 		
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(self);
 	}
 }

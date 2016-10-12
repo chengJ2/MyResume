@@ -29,6 +29,7 @@ import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.tools.L;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -231,5 +232,15 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 		}).start();
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
 	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 }

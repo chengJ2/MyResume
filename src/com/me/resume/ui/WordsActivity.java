@@ -26,6 +26,7 @@ import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.RegexUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 
@@ -136,5 +137,17 @@ public class WordsActivity extends BaseActivity {
 			}
 		}
 		return null;
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 }

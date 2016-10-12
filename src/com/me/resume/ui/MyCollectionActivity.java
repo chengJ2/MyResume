@@ -29,6 +29,7 @@ import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
+import com.umeng.analytics.MobclickAgent;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -86,11 +87,6 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		initData();
 	}
 	
-	@Override
-	protected void onResume() {
-		super.onResume();
-	}
-
 	private void initData() {
 		queryWhere = "select * from " + CommonText.MYCOLLECTION
 				+ " where userId = '" + uTokenId + "' order by createtime desc";
@@ -303,4 +299,15 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		}
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 }

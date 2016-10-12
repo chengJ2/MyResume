@@ -92,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/action_login_forgotpwd"
+                android:text="@string/action_login_updatepwd"
                 android:textColor="@color/white"
                 android:textSize="@dimen/micro_text_size" />
         </LinearLayout>

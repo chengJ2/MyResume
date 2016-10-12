@@ -23,6 +23,7 @@ import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
+import com.umeng.analytics.MobclickAgent;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -408,7 +409,12 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 		case R.id.ot_otherinfo_add:
 			actionFlag = 1;
 			getOtherFeild();
-			if(RegexUtil.checkNotNull(info_titleStr)  ){
+			if(!RegexUtil.checkStringLength(info_descriptionStr, 512)){
+				toastMsg(R.string.ot_info_input_description_toolong);
+				return;
+			}
+			if(RegexUtil.checkNotNull(info_titleStr) 
+					){
 				cValues = new ContentValues();
 				otTokenId = UUIDGenerator.getKUUID();
 				cValues.put("tokenId", otTokenId);
@@ -749,4 +755,15 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 		});
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 }

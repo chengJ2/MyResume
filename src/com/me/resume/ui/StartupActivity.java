@@ -1,9 +1,17 @@
 package com.me.resume.ui;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import android.Manifest.permission;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,6 +28,7 @@ import com.me.resume.tools.SystemBarTintManager;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.PreferenceUtil;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * 启动界面
@@ -72,6 +81,7 @@ public class StartupActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 			setTranslucentStatus(true);
 		}
@@ -91,5 +101,11 @@ public class StartupActivity extends Activity {
 			winParams.flags &= ~bits;
 		}
 		win.setAttributes(winParams);
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 }

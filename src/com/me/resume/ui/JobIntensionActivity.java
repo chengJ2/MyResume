@@ -24,6 +24,7 @@ import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
+import com.umeng.analytics.MobclickAgent;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -136,11 +137,6 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 		setFeildValue();
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-	}
-	
 	/**
 	 * 获取UI数据
 	 * @return
@@ -489,8 +485,15 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 	}
 	
 	@Override
+	protected void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
 	protected void onPause() {
 		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 	
 	@Override

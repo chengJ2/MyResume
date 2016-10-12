@@ -39,6 +39,7 @@ import com.me.resume.utils.FileUtils;
 import com.me.resume.utils.ImageUtils;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
+import com.umeng.analytics.MobclickAgent;
 import com.whjz.android.text.CommonText;
 
 /**
@@ -517,6 +518,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 		getBaseInfo();
 		getBaseInfoComplete();
 		getEvaluationComplete();
@@ -668,6 +670,11 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		}
 	};
 	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
 	@Override
 	protected void onDestroy() {
