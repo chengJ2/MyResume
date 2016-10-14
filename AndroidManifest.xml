@@ -175,7 +175,13 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" >
         </activity>
-        
+        <activity
+            android:name="com.me.resume.ui.UserShareActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
         <activity
             android:name="com.me.resume.ui.IndustryTypeActivity"
             android:label="@string/app_name"

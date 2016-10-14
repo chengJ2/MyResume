@@ -148,6 +148,7 @@ public class Constants {
     public static final String SETTING = "SettingActivity";
     public static final String STARTUP = "StartupActivity";
     public static final String MYSHARE = "MyShareActivity";
+    public static final String USERSHARE = "UserShareActivity";
     public static final String TOPICVIEW = "TopicViewActivity";
     public static final String TOPICLISTDETAIL = "TopicListDetailActivity";
     public static final String USERCENTER = "UserCenterActivity";
@@ -161,6 +162,7 @@ public class Constants {
     public static final String TOPICID = "topicId";
     public static final String TOPICIDTYPE = "topicidtype";
     public static final String TOPICINFO = "topicinfo";
+    public static final String SHAREINFO = "shareinfo";
     public static final String TAB = "tab";
     public static final String TOKENID = "tokenId";
     

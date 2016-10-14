@@ -128,7 +128,7 @@
                 <TextView
                     android:id="@+id/myshare"
                     style="@style/user_center_content_func"
-                    android:drawableTop="@drawable/icon_fabu_middle"
+                    android:drawableTop="@drawable/icon_share_middle"
                     android:text="@string/personal_c_item2" />
                 <View
                     style="@style/line2"
@@ -138,7 +138,7 @@
                 <TextView
                     android:id="@+id/review_resume"
                     style="@style/user_center_content_func"
-                    android:drawableTop="@drawable/icon_review_small"
+                    android:drawableTop="@drawable/icon_review_middle"
                     android:text="@string/personal_c_item31" />
             </LinearLayout>
 

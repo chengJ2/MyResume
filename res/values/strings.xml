@@ -65,6 +65,9 @@
     <string name="item_text72">暂无分享,快去分享你的面试心得~</string>
     <string name="item_text8">我也来分享\u2026</string>
     <string name="item_text81">请分享面试心得或职场相关的信息</string>
+    <string name="item_share_status1">公开</string>
+    <string name="item_share_status2">不公开</string>
+    
     <string name="item_text9">收藏成功</string>
     <string name="item_text91">取消收藏</string>
     <string name="item_text100">正在下载,请稍后\u2026</string>
@@ -199,6 +202,8 @@
     <string name="file_successLoad">文件上传成功</string>
     <string name="personal_c_item1">我的收藏</string>
     <string name="personal_c_item2">我的分享</string>
+    <string name="personal_c_item21">新建分享</string>
+    <string name="personal_c_item22">更新分享</string>
     <string name="personal_c_item3">预览简历</string>
     <string name="personal_c_item31">我的简历</string>
     <string name="personal_c_item11">已完整</string>
@@ -226,6 +231,7 @@
     <string name="action_delete_success">删除成功</string>
     <string name="action_delete_fail">删除失败,请重试</string>
 	<string name="action_button_cancle">取&#160;&#160;消</string>
+	<string name="action_do">更多操作</string>
 	
     <!-- UI dialog msg -->
     <string name="upload_loading">更新中</string>

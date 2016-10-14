@@ -616,6 +616,57 @@ public class DialogUtils {
 	}
 	
 	
+	/**
+	 * 
+	 * @param context 上下文
+	 */
+	public static void showShareMenuDialog(Context context,View parent,int resourId,final String params,final String params2,List<String> mList,Handler handler){
+		try {
+			mHandler = handler;
+			View layout = View.inflate(context,R.layout.pop_simple_list_layout, null);
+			showPopupView(layout,parent);
+			TextView popTitle = (TextView)layout.findViewById(R.id.top_text);
+			popTitle.setText(CommUtil.getStrValue(context, resourId));
+			ImageView rightIcon = (ImageView)layout.findViewById(R.id.icon_cancle);
+			rightIcon.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					dismissPopwindow();
+				}
+			});
+			
+			ListView dataListView = (ListView)layout.findViewById(R.id.data_list);
+			CommonBaseAdapter<String> commAdapter = new CommonBaseAdapter<String>(context,
+						mList,
+						R.layout.myshare_menu_item) {
+				
+				@Override
+				public void convert(ViewHolder holder, String item, final int position) {
+					final String [] array = mList.get(position).split(";");
+					holder.setText(R.id.item_text,array[0]);
+					holder.setOnClickEvent(R.id.checkLayout, new ClickEvent() {
+
+						@Override
+						public void onClick(View view) {
+							if(position == 0 || position == 1){
+								sendMsg(11,array[1] + ";" + params);
+							}else if(position == 2 ){
+								sendMsg(12,params + ";" + params2);
+							}else if(position == 3){
+								sendMsg(13);
+							}
+							dismissPopwindow();
+						}
+					});
+				}
+			};
+			dataListView.setAdapter(commAdapter);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	/**
 	 * 

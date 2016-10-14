@@ -64,7 +64,6 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	private RelativeLayout rlout01;
 	private TextView center_username,center_workyear,center_city;
 	
-	private RelativeLayout viewcalendar;
 	private TextView mycollection,review_resume,myshare;
 	
 	private LinearLayout info_layout0,info_layout1,info_layout2,info_layout3,info_layout4;
@@ -422,41 +421,6 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		}
 	}
 	
-	
-	/**
-	 * 
-	 * @Description:工作实习完整度
-	 */
-	private void getWorkExperienceComplete(){
-		queryWhere = "select (a1+a2+a3+a4+a5+a6+a7+a8+a9) num"
-					+ " from ("
-					+ " select case when companyname='' then 1 else 0 end a1,"
-					+ " case when companynature='' then 1 else 0 end a2,"
-					+ " case when companyscale='' then 1 else 0 end a3,"
-					+ " case when industryclassification='' then 1 else 0 end a4,"
-					+ " case when jobtitle='' then 1 else 0 end a5,"
-					+ " case when worktimestart='' then 1 else 0 end a6,"
-					+ " case when worktimeend='' then 1 else 0 end a7,"
-					+ " case when expectedsalary='' then 1 else 0 end a8,"
-					+ " case when workdesc='' then 1 else 0 end a9"
-					+ " from "+ CommonText.WORKEXPERIENCE +" where userId = '"+ uTokenId +"') a";
-		commMapArray = dbUtil.queryData(self, queryWhere);
-		if (commMapArray!=null && commMapArray.get("num").length>0) {
-			int num = CommUtil.parseInt(commMapArray.get("num")[0]);
-			int nPercent = 0;
-			nPercent = (int) (((9 - num) * 100 / 9));
-			if (nPercent <= 0)
-				nPercent = 0;
-			info_item3.setText(String.format(getStrValue(R.string.personal_c_item14), nPercent));
-			if (nPercent >= 100){
-				info_item3.setText(getStrValue(R.string.personal_c_item11));
-			}
-		}else{
-			info_item3.setText(getStrValue(R.string.personal_c_item13));
-		}
-	}
-	
-	
 	/**
 	 * 
 	 * @Description:项目经验
@@ -480,8 +444,6 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		}else{
 			text.setText(getStrValue(R.string.personal_c_item13));
 		}
-		
-		
 	}
 	
 	/**
