@@ -241,6 +241,7 @@
     <string name="dialog_action_delete_sure_alert">若联网中,本次操作也会同步删除远端这条记录</string>
     <string name="dialog_action_topic_delete_sure_alert"><![CDATA[ <font color=red>该操作会删除本地数据,确认删除吗？</font> <br/><br/>]]>若联网中,本次操作也会同步删除远端这条记录</string>
     <string name="dialog_action_logout">确认退出登录吗？</string>
+    <string name="dialog_action_golink">确定访问&#160;%1$s&#160;网站吗？</string>
 
     <!-- UI button text -->
     <string name="show_button_cancle">取&#160;&#160;消</string>

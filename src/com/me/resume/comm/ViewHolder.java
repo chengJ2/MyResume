@@ -115,6 +115,12 @@ public class ViewHolder {
 		return this;
 	}
 	
+	public ViewHolder setTextBgColor(int ViewID, int color) {
+		TextView tv = getView(ViewID);
+		tv.setBackgroundResource(color);
+		return this;
+	}
+	
 	public TextView getText(int ViewID) {
 		TextView tv = getView(ViewID);
 		return tv;

@@ -25,6 +25,7 @@ import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.XListView;
@@ -55,6 +56,15 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 11:
+				if (RegexUtil.checkNotNull(linksite)) {
+					Intent intent = new Intent();
+					intent.setAction(Intent.ACTION_VIEW);
+					Uri content_url = Uri.parse(linksite);
+					intent.setData(content_url);
+					startActivity(intent);
+				}
+				break;
+			case 13:
 				if (msg.obj != null) {
 					Map<String, List<String>> newMap = (Map<String, List<String>>)msg.obj;
 					if(pos == 0){//刷新
@@ -157,7 +167,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 				}else{
 					isAll = false;
 				}
-				mHandler.sendMessage(mHandler.obtainMessage(11, map));
+				mHandler.sendMessage(mHandler.obtainMessage(13, map));
 				
 			}
 
@@ -167,6 +177,8 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 			}
 		});
 	}
+	
+	private String linksite = null;
 	
 	private void setTopicListData(final Map<String, List<String>> map){
 		commapBaseAdapter = new CommForMapBaseAdapter(self,map,R.layout.topic_list_detail_item,"id") {
@@ -178,7 +190,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 				final String fromUrl = map.get("from_url").get(position);
 				final String createtime = map.get("createtime").get(position);
 				final String sitename = map.get("site_name").get(position);
-				final String linksite = map.get("link_site").get(position);
+				linksite = map.get("link_site").get(position);
 				
 				if (!RegexUtil.checkNotNull(fromUrl)) {
 					holder.setImageVisibe(R.id.topic_icon, View.GONE);
@@ -232,13 +244,11 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 					
 					@Override
 					public void onClick(View view) {
-						if (RegexUtil.checkNotNull(linksite)) {
-							Intent intent = new Intent();
-							intent.setAction(Intent.ACTION_VIEW);
-							Uri content_url = Uri.parse(linksite);
-							intent.setData(content_url);
-							startActivity(intent);
-						}
+						linksite  = map.get("link_site").get(position);
+						DialogUtils.showAlertDialog(self, 
+								String.format(getStrValue(R.string.dialog_action_golink),sitename),
+								View.GONE,
+								getStrValue(R.string.show_button_continue), mHandler);
 					}
 				});
 			}

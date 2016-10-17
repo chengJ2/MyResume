@@ -24,34 +24,38 @@
             android:lineSpacingExtra="3dip"
             android:maxLines="4"
             android:singleLine="false"
-            android:text="@string/dialog_action_alert"
+            android:text="--"
             android:textColor="@color/black"
-            android:textSize="@dimen/middle_text_size_dp" />
+            android:textSize="@dimen/small_middle_text_size" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="15dip"
+            android:layout_height="22dip"
             android:layout_marginBottom="@dimen/margin_5"
             android:layout_marginLeft="@dimen/margin_8"
-            android:layout_marginRight="@dimen/margin_8"
-            android:orientation="horizontal" >
+            android:layout_marginRight="@dimen/margin_8">
 
             <TextView
                 android:id="@+id/status"
-                style="@style/topic_item_bottom_text"
-                android:gravity="center|left"
-                android:text="已发布"
-                android:textColor="@color/grey_10"
+                android:layout_width="wrap_content"
+            	android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_alignParentLeft="true"
+                android:text="--"
+                android:textColor="@color/white"
                 android:textSize="@dimen/home_cover_text_size"
-                android:textStyle="bold" />
+                android:textStyle="bold" 
+                android:background="@drawable/button_bg_red"/>
 
             <TextView
                 android:id="@+id/datetime"
-                style="@style/topic_item_bottom_text"
-                android:gravity="center|right"
-                android:text="2016.5.10"
+                android:layout_width="wrap_content"
+            	android:layout_height="match_parent"
+            	android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:text="--"
                 android:textSize="@dimen/home_cover_text_size" />
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 
     <ImageView

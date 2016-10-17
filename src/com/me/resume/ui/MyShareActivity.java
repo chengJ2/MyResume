@@ -123,13 +123,13 @@ public class MyShareActivity extends BaseActivity {
 								final String status = sMap.get("status").get(position);
 								if ("1".equals(status)) {
 									holder.setText(R.id.status, "已发布");
-									holder.setTextColor(R.id.status, getColorValue(R.color.top_bar));
+									holder.setTextBgColor(R.id.status, R.drawable.button_bg_green);
 								}else if("2".equals(status)){
 									holder.setText(R.id.status, "未公开");
-									holder.setTextColor(R.id.status, getColorValue(R.color.red));
+									holder.setTextBgColor(R.id.status, R.drawable.button_bg_red);
 								}else if("-1".equals(status)){
 									holder.setText(R.id.status, "已删除");
-									holder.setTextColor(R.id.status, getColorValue(R.color.grey_10));
+									holder.setTextBgColor(R.id.status, R.drawable.button_bg_grey);
 								}
 								holder.setText(R.id.datetime, 
 										TimeUtils.showTimeFriendly(sMap.get("createtime").get(position)));
