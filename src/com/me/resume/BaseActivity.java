@@ -42,7 +42,6 @@ import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.swipeback.SwipeBackActivity;
 import com.me.resume.tools.SystemBarTintManager;
-import com.me.resume.ui.MyCollectionActivity;
 import com.me.resume.utils.ActivityUtils;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
@@ -709,7 +708,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		return value;
 	}
 	
-	
+	 int maxDescripLine = 3; //TextView默认最大展示行数
 	/**
 	 * @Description: 面试分享心得
 	 */
@@ -774,7 +773,6 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 				}
 				
 				holder.setText(R.id.share_content, map.get("content").get(position));
-				
 				holder.setText(R.id.share_city, map.get("city").get(position));
 				holder.setText(R.id.share_datime, TimeUtils.showTimeFriendly(map.get("createtime").get(position)));
 				
@@ -790,6 +788,14 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 						holder.setImageResource(R.id.share_collection, R.drawable.icon_collection_sel);
 					}
 				}
+				
+				holder.setOnClickEvent(R.id.share_content, new ClickEvent() {
+					@Override
+					public void onClick(View view) {
+						String content = map.get("content").get(position);
+						DialogUtils.showTextDialog(self, content);
+					}
+				});
 				
 				holder.setOnClickEvent(R.id.share_collection, new ClickEvent() {
 					

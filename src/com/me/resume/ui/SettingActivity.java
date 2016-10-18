@@ -14,11 +14,13 @@ import android.widget.ToggleButton;
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
+import com.me.resume.comm.UserInfoCode;
 import com.me.resume.service.DownloadService;
 import com.me.resume.tools.DataCleanManager;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.umeng.analytics.MobclickAgent;
+import com.whjz.android.text.CommonText;
 
 /**
  * 
@@ -117,8 +119,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	private void initViews(){
 		setTopTitle(R.string.action_settings);
 		setMsgHide();
-//		setRightIcon(R.drawable.feedback);
-		setRightIconVisible(View.GONE);
+		if (preferenceUtil.getPreferenceData(UserInfoCode.ISADMIN, "0").equals("1")
+				&& CommonText.ADMIN) {
+			setRightIcon(R.drawable.icon_admin);
+		}else{
+			setRightIconVisible(View.GONE);
+		}
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
@@ -263,8 +269,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	
 	@Override
 	public void onClick(View v) {
-		super.onClick(v);
 		switch (v.getId()) {
+		case R.id.left_lable:
+			scrollToFinishActivity();
+			break;
+		case R.id.right_icon:
+			startChildActivity(Constants.ADMINFUNCTIONS, false);
+			break;
 		case R.id.feedbackLayout:
 			startChildActivity(Constants.FEEDBACK, false);
 			break;

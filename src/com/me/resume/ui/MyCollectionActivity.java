@@ -50,15 +50,20 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 11:
-				queryWhere = "delete from " + CommonText.MYCOLLECTION
-						+ " where userId = '" + uTokenId +"' and cId = " + cid;
-				dbUtil.deleteData(self, queryWhere);
-				
-				set3Msg(R.string.action_delete_success);
-				
-				initData();
-				
-				syncDelData(cid);
+				if(flag == 1){
+					Intent intent = new Intent();
+					intent.setAction(Intent.ACTION_VIEW);
+					Uri content_url = Uri.parse(linksite);
+					intent.setData(content_url);
+					startActivity(intent);
+				}else{
+					queryWhere = "delete from " + CommonText.MYCOLLECTION
+							+ " where userId = '" + uTokenId +"' and cId = " + cid;
+					dbUtil.deleteData(self, queryWhere);
+					set3Msg(R.string.action_delete_success);
+					initData();
+					syncDelData(cid);
+				}
 				break;
 			default:
 				break;
@@ -84,7 +89,6 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		nodata.setText(getStrValue(R.string.item_text43));
 		nodata.setVisibility(View.VISIBLE);
 		
-		initData();
 	}
 	
 	private void initData() {
@@ -114,6 +118,9 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		}
 	}
 	
+	private String sitename,linksite = null;
+	private int flag = 0;
+	
 	/**
 	 * @Description: 我的收藏
 	 * @param holder
@@ -136,6 +143,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 			holder.setTextForHtml(R.id.topic_title, sbStr.toString());
 			
 			holder.setText(R.id.topic_from, "面试心得"); // TODO 
+			holder.setTextColor(R.id.topic_from, getColorValue(R.color.grey_10));
 			holder.setText(R.id.topic_datetime, TimeUtils.showTimeFriendly(commMapArray.get("createtime")[position]));
 		}else{
 			String fromUrl = commMapArray.get("from_url")[position];
@@ -145,10 +153,10 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 				holder.setImageVisibe(R.id.topic_icon, View.VISIBLE);
 				holder.showImage(R.id.topic_icon,CommUtil.getHttpLink(fromUrl),false);
 			}
-			
+			sitename = commMapArray.get("site_name")[position];
 			holder.setText(R.id.topic_title, commMapArray.get("title")[position]);
 			holder.setText(R.id.topic_content, commMapArray.get("content")[position]);
-			holder.setText(R.id.topic_from, commMapArray.get("site_name")[position]);
+			holder.setText(R.id.topic_from, sitename);
 			holder.setText(R.id.topic_datetime, TimeUtils.showTimeFriendly(commMapArray.get("createtime")[position]));
 			
 		}
@@ -157,13 +165,14 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 			@Override
 			public void onClick(View view) {
 				if (type >= 0) {
-					String linksite = commMapArray.get("link_site")[position];
+					flag = 1;
+					linksite = commMapArray.get("link_site")[position];
+					sitename = commMapArray.get("site_name")[position];
 					if (RegexUtil.checkNotNull(linksite)) {
-						Intent intent = new Intent();
-						intent.setAction(Intent.ACTION_VIEW);
-						Uri content_url = Uri.parse(linksite);
-						intent.setData(content_url);
-						startActivity(intent);
+						DialogUtils.showAlertDialog(self, 
+								String.format(getStrValue(R.string.dialog_action_golink),sitename),
+								View.GONE,
+								getStrValue(R.string.show_button_continue), mHandler);
 					}
 				}
 			}
@@ -197,6 +206,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 					int position, long id) {
 				int type = CommUtil.parseInt(commMapArray.get("type")[position]);
 				if (type < 0) {
+					flag = 0;
 					cid = commMapArray.get("cId")[position];
 					DialogUtils.showAlertDialog(self, 
 							getStrValue(R.string.dialog_action_topic_delete_sure_alert),View.GONE,
@@ -302,6 +312,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 	@Override
 	protected void onResume() {
 		super.onResume();
+		initData();
 		MobclickAgent.onResume(this);
 	}
 	

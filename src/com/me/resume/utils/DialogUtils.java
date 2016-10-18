@@ -106,6 +106,45 @@ public class DialogUtils {
 		}
 	}
 	
+	/**
+	 * App更新弹出框
+	 * @param context 上下文
+	 */
+	public static void showTextDialog(final Context context,final String content){
+		try {
+			dialog = new Dialog(context);
+			dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			dialog.setContentView(R.layout.share_textview_dialog);
+			WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
+			dialog.getWindow().setAttributes(layoutParams);
+			dialog.getWindow().setBackgroundDrawable(new BitmapDrawable());
+			dialog.setCanceledOnTouchOutside(true);
+			TextView msg = (TextView)dialog.findViewById(R.id.content);
+			msg.setText(content);
+			
+			ImageView rightIcon = (ImageView)dialog.findViewById(R.id.icon_cancle);
+			rightIcon.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					dismissDialog();
+				}
+			});
+			msg.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					dismissDialog();
+					CommUtil.copy(context, content);
+					CommUtil.ToastMsg(context, R.string.contactus_copy_ok2);
+				}
+			});
+			dialog.show();
+		} catch (Exception e) {
+			L.e(e);
+		}
+	}
+	
 	
 	/**
 	 * 显示STK初始化时的加载框

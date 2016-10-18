@@ -412,12 +412,12 @@ public class UserLoginActivity extends BaseActivity implements
 			return false;
 		}
 		
-		if (!RegexUtil.checkStringLength(str_username,120)) {
+		if (str_username.trim().length() > 120) {
 			set3Msg(R.string.action_input_username_toolong);
 			return false;
 		}
 		
-		if (!RegexUtil.checkStringLength(str_password,16)) {
+		if (str_password.trim().length() > 30) {
 			set3Msg(R.string.action_input_password_toolong);
 			return false;
 		}
@@ -506,6 +506,8 @@ public class UserLoginActivity extends BaseActivity implements
 		String feildStr6 = map.get("lastlogintime").get(0);
 		String feildStr7 = map.get("active").get(0);
 		
+		String isAdmin = map.get("isadmin").get(0);
+		preferenceUtil.setPreferenceData(UserInfoCode.ISADMIN,isAdmin);
 		preferenceUtil.setPreferenceData(UserInfoCode.USERNAME,feildStr1);
 		preferenceUtil.setPreferenceData(UserInfoCode.PASSWORD,str_password);
 		

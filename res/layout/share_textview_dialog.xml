@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/margin_40"
+    android:layout_marginRight="@dimen/margin_40"
+    android:background="@color/transparent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="230dip"
+        android:background="@drawable/dialog_corner"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin_10">
+        
+         <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/topbar_pop_item_height"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_10"
+            android:background="@drawable/dialog_corner_topbar" >
+
+            <TextView
+                android:id="@+id/a01"
+                style="@style/diglog_menu_item_text"
+                android:text="@string/action_detail"
+                android:textColor="@color/white"/>
+
+             <TextView
+                style="@style/diglog_menu_item_text_small"
+                android:text="@string/action_copy"
+                android:textColor="@color/white" 
+                android:layout_toRightOf="@id/a01"/>
+            
+             <ImageView
+		        android:id="@+id/icon_cancle"
+		        android:layout_width="50dip"
+		        android:layout_height="match_parent"
+		        android:layout_alignParentRight="true"
+		        android:src="@drawable/icon_cancle"
+		        android:scaleType="centerInside"
+		        android:visibility="visible"/>
+            
+        </RelativeLayout>
+       
+
+        <com.me.resume.views.CommScrollView 
+            style="@style/main_scrollview_style" >
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="3dip"
+                android:padding="@dimen/margin_10"
+                android:textColor="@color/black"
+                android:textSize="@dimen/small_middle_text_size" />
+        </com.me.resume.views.CommScrollView>
+    </LinearLayout>
+
+</LinearLayout>

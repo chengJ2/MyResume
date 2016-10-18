@@ -181,9 +181,13 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 			if (!MyApplication.USERID.equals("0")) {
 				String content = input_share.getText().toString().trim();
 				if (RegexUtil.checkNotNull(content)) {
-					shareLayout.setVisibility(View.VISIBLE);
-					inputshareLayout.setVisibility(View.GONE);
-					postShareData(content);
+					if(content.trim().length() <= 512){
+						shareLayout.setVisibility(View.VISIBLE);
+						inputshareLayout.setVisibility(View.GONE);
+						postShareData(content);
+					}else{
+						toastMsg(R.string.item_text82);
+					}
 				}
 			}else{
 				toastMsg(R.string.action_login_head);

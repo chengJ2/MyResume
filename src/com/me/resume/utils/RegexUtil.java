@@ -13,12 +13,12 @@ public class RegexUtil {
 	}
 
 	// 非空字符长度限制
-	public static boolean checkStringLength(String s, int length) {
+	/*public static boolean checkStringLength(String s, int length) {
 		Pattern pattern = Pattern.compile("\\S{1," + length + "}");
 		Matcher matcher = pattern.matcher(s);
 		return matcher.matches();
 
-	}
+	}*/
 
 	// 整数
 	public static boolean checkIsDigital(String s) {

@@ -409,12 +409,11 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 		case R.id.ot_otherinfo_add:
 			actionFlag = 1;
 			getOtherFeild();
-			if(!RegexUtil.checkStringLength(info_descriptionStr, 512)){
+			if(info_descriptionStr.trim().length() > 512){
 				toastMsg(R.string.ot_info_input_description_toolong);
 				return;
 			}
-			if(RegexUtil.checkNotNull(info_titleStr) 
-					){
+			if(RegexUtil.checkNotNull(info_titleStr)){
 				cValues = new ContentValues();
 				otTokenId = UUIDGenerator.getKUUID();
 				cValues.put("tokenId", otTokenId);
@@ -436,7 +435,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.ot_otherinfo_edit:
 			getOtherFeild();
-			if(RegexUtil.checkNotNull(info_titleStr)  ){
+			if(RegexUtil.checkNotNull(info_titleStr)){
 				if (getotherinfoData()) {
 					actionFlag = 2;
 					updResult = dbUtil.updateData(self, CommonText.OTHERINFO2, 

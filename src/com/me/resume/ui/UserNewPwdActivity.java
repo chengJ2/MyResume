@@ -226,7 +226,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 				return false;
 			}
 			
-			if (!RegexUtil.checkStringLength(password2Str, 30)) {
+			if (password2Str.trim().length() > 30) {
 				set3Msg(R.string.action_input_password_toolong);
 				return false;
 			}
@@ -236,7 +236,7 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 				return false;
 			}
 			
-			if (!RegexUtil.checkStringLength(passwordStr, 30)) {
+			if (passwordStr.trim().length() > 30) {
 				set3Msg(R.string.action_input_password_toolong);
 				return false;
 			}

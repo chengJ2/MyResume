@@ -56,13 +56,11 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case 11:
-				if (RegexUtil.checkNotNull(linksite)) {
-					Intent intent = new Intent();
-					intent.setAction(Intent.ACTION_VIEW);
-					Uri content_url = Uri.parse(linksite);
-					intent.setData(content_url);
-					startActivity(intent);
-				}
+				Intent intent = new Intent();
+				intent.setAction(Intent.ACTION_VIEW);
+				Uri content_url = Uri.parse(linksite);
+				intent.setData(content_url);
+				startActivity(intent);
 				break;
 			case 13:
 				if (msg.obj != null) {
@@ -245,10 +243,12 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 					@Override
 					public void onClick(View view) {
 						linksite  = map.get("link_site").get(position);
-						DialogUtils.showAlertDialog(self, 
-								String.format(getStrValue(R.string.dialog_action_golink),sitename),
-								View.GONE,
-								getStrValue(R.string.show_button_continue), mHandler);
+						if (RegexUtil.checkNotNull(linksite)) {
+							DialogUtils.showAlertDialog(self, 
+									String.format(getStrValue(R.string.dialog_action_golink),sitename),
+									View.GONE,
+									getStrValue(R.string.show_button_continue), mHandler);
+						}
 					}
 				});
 			}

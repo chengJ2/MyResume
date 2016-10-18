@@ -65,6 +65,7 @@
     <string name="item_text72">暂无分享,快去分享你的面试心得~</string>
     <string name="item_text8">我也来分享\u2026</string>
     <string name="item_text81">请分享面试心得或职场相关的信息</string>
+    <string name="item_text82">分享内容最多为512字</string>
     <string name="item_share_status1">公开</string>
     <string name="item_share_status2">不公开</string>
     
@@ -124,8 +125,9 @@
     <string name="contactus_weixin_name">&#160;&#160;ppp_cj_qqq</string>
     <string name="contactus_qq">QQ群:</string>
     <string name="contactus_qq_name">&#160;&#160;345939441</string>
-    <string name="contactus_qq_name_note">&#160;(内测用户群,点击复制)</string>
+    <string name="contactus_qq_name_note">&#160;(用户内测群,点击复制)</string>
     <string name="contactus_copy_ok">已复制到粘贴板,欢迎加群~</string>
+    <string name="contactus_copy_ok2">已复制到粘贴板~</string>
 
     <!-- user login register -->
     <string name="action_user_login">用户登录</string>
@@ -216,6 +218,11 @@
     <string name="personal_c_item18">%d年工作经验</string>
     <string name="personal_c_item19">已有%d项经历</string>
     
+  	<!-- admin -->  
+    <string name="admin_text1">管理员</string>
+    
+    
+    
     <!-- UI button click msg -->
     <string name="action_notice">提&#160;&#160;示</string>
     <string name="action_app_version">新版本</string>
@@ -232,6 +239,8 @@
     <string name="action_delete_fail">删除失败,请重试</string>
 	<string name="action_button_cancle">取&#160;&#160;消</string>
 	<string name="action_do">更多操作</string>
+	<string name="action_detail">详&#160;&#160;情</string>
+	<string name="action_copy">&#160;&#160;(点击文本复制)</string>
 	
     <!-- UI dialog msg -->
     <string name="upload_loading">更新中</string>

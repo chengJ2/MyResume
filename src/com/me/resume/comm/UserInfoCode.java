@@ -7,6 +7,8 @@ package com.me.resume.comm;
  */
 public class UserInfoCode {
 
+	public static final String ISADMIN = "isadmin";
+	
 	public static final String UTOKENID = "utokenid";
 	public static final String USEID = "useid";
     public static final String USERNAME = "username";

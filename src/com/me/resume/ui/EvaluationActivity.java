@@ -254,7 +254,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			return false;
 		}
 		
-		if (!RegexUtil.checkStringLength(info_self_evaluationStr, 1000)) {
+		if (info_self_evaluationStr.length() >1000) {
 			set3Msg(R.string.ev_info_self_evaluation_length);
 			return false;
 		}
@@ -264,7 +264,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 			return false;
 		}*/
 		
-		if (!RegexUtil.checkStringLength(info_career_goalStr, 1000)) {
+		if (info_career_goalStr.length() > 1000) {
 			set3Msg(R.string.ev_info_career_goal_length);
 			return false;
 		}

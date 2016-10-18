@@ -158,6 +158,8 @@ public class Constants {
     public static final String WORKEXPERIENCE = "WorkExperienceActivity";
     public static final String WORDS = "WordsActivity";
     
+    public static final String ADMINFUNCTIONS = "AdminFunctionsActivity";
+    
     public static final String TYPE = "type";
     public static final String TOPICID = "topicId";
     public static final String TOPICIDTYPE = "topicidtype";
