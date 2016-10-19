@@ -165,16 +165,17 @@ public class MyShareActivity extends BaseActivity {
 					}
 					myshareListView.setVisibility(View.VISIBLE);
 					myshareListView.setAdapter(commapBaseAdapter);
+					setMsgHide();
 					nodata.setVisibility(View.GONE);
 				} catch (Exception e) {
-					setMsgVisibility(View.GONE);
+					setMsgHide();
 					L.e(e.getMessage());
 				}
 			}
 
 			@Override
 			public void noData() {
-				setMsgVisibility(View.GONE);
+				setMsgHide();
 				nodata.setText(getStrValue(R.string.en_nodata));
 				nodata.setVisibility(View.VISIBLE);
 			}
@@ -205,7 +206,7 @@ public class MyShareActivity extends BaseActivity {
 				DialogUtils.dismissPopwindow();
 			}
 			
-			public void success(final Map<String, List<String>> map) {
+			public void success(Map<String, List<String>> map) {
 				try {
 					if (map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)) {
 						DialogUtils.dismissPopwindow();
@@ -213,14 +214,14 @@ public class MyShareActivity extends BaseActivity {
 						initData();
 					}
 				} catch (Exception e) {
-					setMsgVisibility(View.GONE);
+					setMsgHide();
 					L.e(e.getMessage());
 				}
 			}
 
 			@Override
 			public void noData() {
-				setMsgVisibility(View.GONE);
+				setMsgHide();
 				DialogUtils.dismissPopwindow();
 			}
 		});

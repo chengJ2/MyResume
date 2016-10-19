@@ -220,7 +220,7 @@
     
   	<!-- admin -->  
     <string name="admin_text1">管理员</string>
-    
+    <string name="admin_text11">用户管理</string>
     
     
     <!-- UI button click msg -->

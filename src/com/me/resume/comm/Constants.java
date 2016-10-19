@@ -160,6 +160,9 @@ public class Constants {
     
     public static final String ADMINFUNCTIONS = "AdminFunctionsActivity";
     
+    public static final String USERMANAGE = "admin.UserManageActivity";
+    
+    
     public static final String TYPE = "type";
     public static final String TOPICID = "topicId";
     public static final String TOPICIDTYPE = "topicidtype";

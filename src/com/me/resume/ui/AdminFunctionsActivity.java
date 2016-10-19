@@ -5,11 +5,14 @@ import java.util.Map;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
 import com.me.resume.BaseActivity;
 import com.me.resume.R;
 import com.me.resume.comm.CommForMapArrayBaseAdapter;
+import com.me.resume.comm.Constants;
 import com.me.resume.comm.ViewHolder;
 import com.me.resume.utils.CommUtil;
 
@@ -56,8 +59,19 @@ public class AdminFunctionsActivity extends BaseActivity {
 			public void convert(ViewHolder holder, String[] item, int position) {
 				holder.setText(R.id.item2, maps.get("name")[position]);
 				holder.setImageResource(R.id.item1,CommUtil.parseInt(maps.get("icon")[position]));
+				
 			}
 		};
 		funViews.setAdapter(commMapArrayAdapter);
+		funViews.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				if(position == 0){
+					startChildActivity(Constants.USERMANAGE, false);
+				}
+			}
+		});
 	}
 }
