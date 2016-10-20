@@ -16,7 +16,6 @@
 
         <TextView
             android:id="@+id/item1"
-            android:layout_height="18dip"
             style="@style/main_common_text"
             android:text="@string/ot_get_certificate"/>
 

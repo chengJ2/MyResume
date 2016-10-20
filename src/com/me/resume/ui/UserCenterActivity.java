@@ -589,7 +589,9 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 						preferenceUtil.setPreferenceData(UserInfoCode.USEID,"0");
 						preferenceUtil.setPreferenceData(UserInfoCode.REALNAME,"");
 						preferenceUtil.setPreferenceData(UserInfoCode.UTOKENID,"0");
+						preferenceUtil.setPreferenceData(UserInfoCode.ISADMIN, "0");// 非Admin
 						preferenceUtil.setPreferenceData(UserInfoCode.ISREGISTER, false);// 注销仍不能再注册
+						preferenceUtil.setPreferenceData(Constants.MYWORDS,"");// 清除留言
 						scrollToFinishActivity();
 					}
 				} catch (Exception e) {

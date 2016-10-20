@@ -448,6 +448,7 @@
         <item name="android:layout_height">@dimen/margin_16</item>
         <item name="android:background">@drawable/main_bar_bg_corner</item>
         <item name="android:gravity">top|left</item>
+        <item name="android:layout_marginTop">4dip</item>
     </style>
 
     <style name="user_center_text">

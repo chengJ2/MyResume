@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
@@ -28,7 +29,10 @@ import com.umeng.analytics.MobclickAgent;
  */
 public class AboutAppActivity extends BaseActivity implements OnClickListener{
 
+	private ImageView logo;
 	private TextView version,contactus,declare;
+	
+	private TextView qqcode,weixincode;
 	
 	private boolean isupdate = false;
 	
@@ -53,12 +57,18 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 		View v = View.inflate(self,R.layout.about_app_layout, null);
 		boayLayout.addView(v);
 		
+		logo = findView(R.id.logo);
 		version = findView(R.id.version);
 		contactus = findView(R.id.contactus);
 		declare = findView(R.id.declare);
+		qqcode = findView(R.id.qqcode);
+		weixincode = findView(R.id.weixincode);
 		
+		logo.setOnClickListener(this);
 		version.setOnClickListener(this);
 		contactus.setOnClickListener(this);
+		qqcode.setOnClickListener(this);
+		weixincode.setOnClickListener(this);
 		
 		setTopTitle(R.string.settings_item6);
 		setMsgHide();
@@ -84,13 +94,13 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 			sbStr.append(getStrValue(R.string.contactus_phone_hide));
 			sbStr.append("</font>");
 		}
-		sbStr.append("<br/>");
+		/*sbStr.append("<br/>");
 		sbStr.append(getStrValue(R.string.contactus_weixin));
 		sbStr.append(getStrValue(R.string.contactus_weixin_name));
 		sbStr.append("<br/>");
 		sbStr.append(getStrValue(R.string.contactus_qq));
 		sbStr.append(getStrValue(R.string.contactus_qq_name) + getStrValue(R.string.contactus_qq_name_note));
-		sbStr.append("<br/>");
+		sbStr.append("<br/>");*/
 		contactus.setText(Html.fromHtml(sbStr.toString()));
 		
 		
@@ -111,11 +121,16 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 	public void onClick(View v) {
 		super.onClick(v);
 		switch (v.getId()) {
+		case R.id.logo:
 		case R.id.version:
 			checkNewVersin();
 			break;
-		case R.id.contactus:
+		case R.id.qqcode:
 			CommUtil.copy(self, getStrValue(R.string.contactus_qq_name));
+			CommUtil.ToastMsg(self, R.string.contactus_copy_ok);
+			break;
+		case R.id.weixincode:
+			CommUtil.copy(self, getStrValue(R.string.contactus_weixin_name));
 			CommUtil.ToastMsg(self, R.string.contactus_copy_ok);
 			break;
 		default:

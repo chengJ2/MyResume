@@ -79,7 +79,7 @@
     <!-- 设置界面 -->
     <string name="action_settings">设置</string>
     <string name="settings_item0">简历预览界面</string>
-    <string name="settings_item1">每次启动显示预览模式</string>
+    <string name="settings_item1">每次启动预览模式</string>
     <string name="settings_item11">简历预览切换效果</string>
     <string name="settings_item2">自动切换简历预览</string>
     <string name="settings_item20">自动切换预览间隔</string>
@@ -101,7 +101,7 @@
     <string name="settings_item71">分享</string>
     <string name="settings_item72">有云简历已上线App市场,请前往搜索 “有云简历”即可;关于App使用中有任何问题,请到设置-意见反馈里提交问题。</string>
     <string name="settings_item8">清除本地缓存</string>
-    <string name="settings_item9">联网同步更新</string>
+    <string name="settings_item9">编辑自动同步</string>
     <string name="action_login_head">请先登录</string>
     <string name="action_syncing">正在同步,请稍后\u2026</string>
     <string name="action_sync_success">同步成功</string>
@@ -121,11 +121,11 @@
     <string name="feedback_info_4">发送错误报告</string>
     <string name="contactus_phone_show">手&#160;&#160;机:&#160;&#160;13667258212</string>
     <string name="contactus_phone_hide">手&#160;&#160;机:&#160;&#160;******&#160;(登录可见)</string>
-    <string name="contactus_weixin">微&#160;&#160;信:</string>
-    <string name="contactus_weixin_name">&#160;&#160;ppp_cj_qqq</string>
+    <string name="contactus_weixin">微信:ppp_cj_qqq</string>
+    <string name="contactus_weixin_name">ppp_cj_qqq</string>
     <string name="contactus_qq">QQ群:</string>
-    <string name="contactus_qq_name">&#160;&#160;345939441</string>
-    <string name="contactus_qq_name_note">&#160;(用户内测群,点击复制)</string>
+    <string name="contactus_qq_name">345939441</string>
+    <string name="contactus_qq_name_note">&#160;QQ群(用户内测群)</string>
     <string name="contactus_copy_ok">已复制到粘贴板,欢迎加群~</string>
     <string name="contactus_copy_ok2">已复制到粘贴板~</string>
 

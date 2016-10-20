@@ -70,9 +70,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 				}
 				break;
 			case 100:
-				Intent intentService = new Intent(self,DownloadService.class);
-				intentService.putExtra("url", Constants.APKURLPATH);
-				startService(intentService);
 				break;
 			default:
 				break;
@@ -119,12 +116,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	private void initViews(){
 		setTopTitle(R.string.action_settings);
 		setMsgHide();
-		if (preferenceUtil.getPreferenceData(UserInfoCode.ISADMIN, "0").equals("1")
-				&& CommonText.ADMIN) {
-			setRightIcon(R.drawable.icon_admin);
-		}else{
-			setRightIconVisible(View.GONE);
-		}
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
@@ -239,6 +230,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	protected void onResume() {
 		super.onResume();
 		MobclickAgent.onResume(this);
+		if (preferenceUtil.getPreferenceData(UserInfoCode.ISADMIN, "0").equals("1")
+				&& CommonText.ADMIN) {
+			setRightIcon(R.drawable.icon_admin);
+		}else{
+			setRightIconVisible(View.GONE);
+		}
+		
 		boolean startVerytime = preferenceUtil.getPreferenceData(Constants.SET_STARTVERYTIME);
 		boolean autoShow = preferenceUtil.getPreferenceData(Constants.SET_AUTOSHOW);
 		boolean editmode = preferenceUtil.getPreferenceData(Constants.EDITMODE);
