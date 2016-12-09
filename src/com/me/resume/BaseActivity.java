@@ -201,14 +201,15 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	@Override
 	protected void onResume() {
 		super.onResume();
-    	// 初始化语言环境
-//    	LanguageSettings.getInstance().initLang(this);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 			setTranslucentStatus(true);
 		}
 		SystemBarTintManager tintManager = new SystemBarTintManager(this);
 		tintManager.setStatusBarTintEnabled(true);
 		tintManager.setStatusBarTintResource(R.color.top_bar);
+		// tintManager.setStatusBarAlpha(1); // 透明度
+		// tintManager.setStatusBarTintDrawable(drawable); // 设置Drawable
+		// tintManager.setStatusBarTintColor(color); // 设置Color 
 	}
 	
 	@TargetApi(19)
@@ -872,12 +873,12 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 			@Override
 			public void convert(final ViewHolder holder, List<String> item, final int position) {
 				preferenceUtil.setPreferenceData(Constants.ISLOCAL, isLocal);
-				String note = map.get("note").get(position);
+				/*String note = map.get("note").get(position);
 				if (RegexUtil.checkNotNull(note)) {
 					holder.setText(R.id.item2, note);
 				}else{
 					holder.setText(R.id.item2, getStrValue(R.string.item_text101));
-				}
+				}*/
 				
 				if (isLocal) {
 					holder.setText(R.id.item3, getStrValue(R.string.button_canuse));

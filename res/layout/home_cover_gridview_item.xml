@@ -33,14 +33,14 @@
         android:text="@string/item_text101"
         android:textSize="@dimen/home_cover_text_size"
         android:textColor="@color/black"
-        android:layout_below="@id/item1" >
+        android:layout_below="@id/item1"
+        android:visibility="invisible" >
     </TextView>
     
     <Button
         android:id="@+id/item3"
         android:layout_width="match_parent"
         android:layout_height="26dip"
-        android:layout_marginTop="2dip"
         android:layout_marginRight="@dimen/margin_16"
         android:layout_marginLeft="@dimen/margin_16"
         android:layout_gravity="center_horizontal"

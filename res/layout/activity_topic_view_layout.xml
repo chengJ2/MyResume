@@ -31,7 +31,7 @@
                 android:paddingRight="@dimen/margin_20"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="职场跟对人很重要？但如何跟对人呢？"
+                android:text="--"
                 android:textColor="@color/grey_10"
                 android:textSize="@dimen/small_text_size" />
 
@@ -46,14 +46,14 @@
                     style="@style/topic_item_bottom_text"
                     android:gravity="center|right"
                     android:paddingRight="@dimen/margin_10"
-                    android:text="今日头条" />
+                    android:text="--" />
 
                 <TextView
                     android:id="@+id/topic_datetime"
                     style="@style/topic_item_bottom_text"
                     android:gravity="center|left"
                     android:paddingLeft="@dimen/margin_10"
-                    android:text="2016.5.10" />
+                    android:text="--" />
             </LinearLayout>
 
             <ImageView
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dip"
                 android:layout_marginTop="@dimen/margin_10"
-                android:scaleType="centerInside" />
+                android:scaleType="fitXY" />
 
             <TextView
                 android:id="@+id/topic_content"
@@ -70,7 +70,7 @@
                 android:layout_marginTop="@dimen/margin_10"
                 android:lineSpacingExtra="3dip"
                 android:padding="@dimen/margin_8"
-                android:text="         2016求职找工作的8条经验2016求职找工作的8条经验2016求职找工作的8条经验2016求职找工作的8条经验2016求职找工作的8条经验2016求职找工作的8条经验"
+                android:text="--"
                 android:textColor="@color/t_primary"
                 android:textSize="@dimen/small_text_size" />
 
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dip"
                 android:layout_marginTop="@dimen/margin_10"
-                android:scaleType="centerInside" />
+                android:scaleType="fitXY" />
 
             <TextView
                 android:id="@+id/topic_content2"

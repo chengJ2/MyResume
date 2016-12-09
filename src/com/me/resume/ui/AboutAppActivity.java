@@ -131,7 +131,7 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 			break;
 		case R.id.weixincode:
 			CommUtil.copy(self, getStrValue(R.string.contactus_weixin_name));
-			CommUtil.ToastMsg(self, R.string.contactus_copy_ok);
+			CommUtil.ToastMsg(self, R.string.contactus_copy_ok2);
 			break;
 		default:
 			break;

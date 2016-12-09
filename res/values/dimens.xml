@@ -23,8 +23,9 @@
     <dimen name="home_bottombar_height">48dip</dimen>
     <dimen name="home_content_gridview_columnWidth">80dip</dimen>
     
-    <dimen name="home_cover_item_height">180dp</dimen>
+    <dimen name="home_cover_item_height">130dp</dimen>
     <dimen name="home_cover_image_height">118dp</dimen>
+    
     <dimen name="home_refresh_height">30dp</dimen>
     <dimen name="home_topic_item_bg_line">1dp</dimen>
     

@@ -197,7 +197,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 					holder.showImage(R.id.topic_icon,CommUtil.getHttpLink(fromUrl),false);
 				}
 				holder.setText(R.id.topic_title, title);
-				holder.setText(R.id.topic_content, detail);
+				holder.setTextForHtml(R.id.topic_content, CommUtil.getHtml(detail));
 				holder.setText(R.id.topic_from, sitename);
 				holder.setText(R.id.topic_datetime, TimeUtils.showTimeFriendly(createtime));
 				
