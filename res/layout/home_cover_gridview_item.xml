@@ -26,15 +26,14 @@
         android:id="@+id/item2"
         android:layout_width="match_parent"
         android:layout_height="34dip"
-        android:gravity="left|top"
+        android:gravity="center"
         android:singleLine="false"
-        android:maxLines="2"
-        android:padding="2dip"
+        android:maxLines="1"
         android:text="@string/item_text101"
         android:textSize="@dimen/home_cover_text_size"
         android:textColor="@color/black"
         android:layout_below="@id/item1"
-        android:visibility="invisible" >
+        android:visibility="visible" >
     </TextView>
     
     <Button

@@ -4,5 +4,5 @@
     <item android:state_enabled="true" android:state_pressed="true" android:drawable="@drawable/home_tag_text_corner_sel" /> 
   
     <!-- 默认时的背景图片 -->  
-    <item android:drawable="@drawable/home_tag_text_corner" /> 
+    <item android:drawable="@drawable/home_tag2_text_corner" /> 
 </selector>

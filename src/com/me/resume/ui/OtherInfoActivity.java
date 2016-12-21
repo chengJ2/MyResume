@@ -315,6 +315,13 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			if(RegexUtil.checkNotNull(info_languageStr) 
 					&& RegexUtil.checkNotNull(info_literacyskillsStr) 
 					&& RegexUtil.checkNotNull(info_listeningspeakingStr) ){
+				Map<String, String[]> map = dbUtil.queryData(OtherInfoActivity.this, 
+						"select * from " + CommonText.OTHERINFO + " where language like '%"+ info_languageStr +"%'");
+				if (map != null) {
+					toastMsg(R.string.ot_languages_toast);
+					return;
+				}
+
 				cValues = new ContentValues();
 				langTokenId = UUIDGenerator.getKUUID();
 				cValues.put("tokenId", langTokenId);
@@ -324,7 +331,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 				cValues.put("listeningspeaking", info_listeningspeakingStr);
 				cValues.put("bgcolor", checkColor);
 				cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-
+				
 				queryResult = dbUtil.insertData(self, CommonText.OTHERINFO, cValues);
 				if (queryResult) {
 					toastMsg(R.string.action_add_success);

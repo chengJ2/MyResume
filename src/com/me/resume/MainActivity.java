@@ -338,7 +338,7 @@ public class MainActivity extends Activity{
 			info = commMapArray.get("hometown")[0];
 			if(RegexUtil.checkNotNull(info)){
 				index_2_info.setVisibility(View.VISIBLE);
-				index_2_info.setText(Html.fromHtml("家&nbsp;&nbsp;乡:&nbsp;"+info));
+				index_2_info.setText(Html.fromHtml("家&nbsp;&nbsp;&nbsp;乡:&nbsp;"+info));
 			}else{
 				info = commMapArray.get("city")[0];
 				if(RegexUtil.checkNotNull(info)){

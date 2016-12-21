@@ -67,7 +67,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	
 	// 构建cover本地数据
 	private String[] id = {"1","2","3"};
-	//private String[] note = {"只为心中淡淡的梦想","天行健以自强不息","阅历以存储更多的书香气质"};
+	private String[] note = {"只为心中淡淡的梦想","天行健以自强不息","阅历以存储更多的书香气质"};
 	private String[] url = {R.drawable.default_cover1+"",R.drawable.default_cover2+"",R.drawable.default_cover3+""};
 	
 	private boolean isExit = false;
@@ -381,9 +381,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		idList = Arrays.asList(id);
 		map.put("id",idList);
 		
-		/*List<String> noteList = new ArrayList<String>();
+		List<String> noteList = new ArrayList<String>();
 		noteList = Arrays.asList(note);
-		map.put("note",noteList);*/
+		map.put("note",noteList);
 		
 		List<String> urlList = new ArrayList<String>();
 		urlList = Arrays.asList(url);

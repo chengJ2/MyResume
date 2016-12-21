@@ -72,7 +72,7 @@
     <string name="item_text9">收藏成功</string>
     <string name="item_text91">取消收藏</string>
     <string name="item_text100">正在下载,请稍后\u2026</string>
-    <string name="item_text101">简历预览封面说明</string>
+    <string name="item_text101">简历封面预览</string>
     <string name="item_cover_local">本地预存</string>
     <string name="item_cover_update">联网更新</string>
     
@@ -529,6 +529,7 @@
     <string name="ot_info_description">描&#160;&#160;述</string>
     <string name="ot_info_input_description">请输入描述信息(限512字)</string>
     <string name="ot_info_input_description_toolong">描述信息输入过长</string>
+    <string name="ot_languages_toast">已添加该语言能力</string>
     <!-- 其他信息 -->
 
     <!-- 人才附加内容 -->

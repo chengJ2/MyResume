@@ -39,10 +39,11 @@
     </style>
     
     <style name="home_item_icon">
-        <item name="android:layout_width">8dip</item>
-        <item name="android:layout_height">18dip</item>
+        <item name="android:layout_width">6dip</item>
+        <item name="android:layout_height">16dip</item>
+        <item name="android:layout_marginTop">2dip</item>
         <item name="android:layout_alignParentLeft">true</item>
-        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_centerInParent">true</item>
         <item name="android:layout_marginLeft">@dimen/margin_5</item>
     </style>
     

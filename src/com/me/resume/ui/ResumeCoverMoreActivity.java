@@ -34,8 +34,8 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 	
 	// 构建cover本地数据
 	private String[] id = {"1","2","3","4","5","6"};
-	/*private String[] note = {"只为心中淡淡的梦想","天行健以自强不息","阅历以存储更多的书香气质",
-							 "天行健以自强不息11","阅历以存储更多的书香气质22","只为心中淡淡的梦想33"};*/
+	private String[] note = {"只为心中淡淡的梦想","天行健以自强不息","阅历以存储更多的书香气质",
+							 "天行健以自强不息11","阅历以存储更多的书香气质22","只为心中淡淡的梦想33"};
 	private String[] url = {R.drawable.default_cover1+"",R.drawable.default_cover2+"",R.drawable.default_cover3+"",
 							R.drawable.default_cover4+"",R.drawable.default_cover5+"",R.drawable.default_cover6+""};
 	
@@ -130,9 +130,9 @@ public class ResumeCoverMoreActivity extends BaseActivity implements OnClickList
 		idList = Arrays.asList(id);
 		map.put("id",idList);
 		
-		/*List<String> noteList = new ArrayList<String>();
+		List<String> noteList = new ArrayList<String>();
 		noteList = Arrays.asList(note);
-		map.put("note",noteList);*/
+		map.put("note",noteList);
 		
 		List<String> urlList = new ArrayList<String>();
 		urlList = Arrays.asList(url);
