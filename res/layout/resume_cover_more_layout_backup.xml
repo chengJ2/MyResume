@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true" 
+    android:orientation="vertical">
+    
+     <com.me.resume.views.CommScrollView 
+        style="@style/main_scrollview_style">
+        
+          <LinearLayout 
+            android:id="@+id/coverllayout"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:background="@color/white"
+		    android:fitsSystemWindows="true" 
+		    android:orientation="vertical">
+	    
+		    <include 
+		        android:id="@+id/localcover"
+		        layout="@layout/comm_item_expand"/>
+		        
+		    <com.me.resume.views.CustomGridView
+		          android:id="@+id/covermoregridview"
+		          style="@style/home_content_grilview"
+		          android:layout_margin="0dip"
+		          android:padding="@dimen/margin_10"
+		          android:visibility="visible"/>
+		    
+		    <View  style="@style/line_h15"
+		        android:background="@color/transparent"/>
+		    
+		    <include 
+		        android:id="@+id/updatecover"
+		        android:layout_marginTop="1dip"
+		        layout="@layout/comm_item_expand"/>
+		        
+		    <com.me.resume.views.CustomGridView
+		          android:id="@+id/covermoregridview_update"
+		          style="@style/home_content_grilview"
+		          android:layout_margin="0dip"
+		          android:padding="@dimen/margin_10"
+		          android:visibility="visible"/>
+		    </LinearLayout>
+     </com.me.resume.views.CommScrollView>
+   
+     <TextView
+          android:id="@+id/msgText"
+          android:visibility="gone"
+          android:layout_centerInParent="true"
+          style="@style/comm_nodata_style" />
+</RelativeLayout>

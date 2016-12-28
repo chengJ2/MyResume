@@ -149,7 +149,7 @@ public class Constants {
     public static final String STARTUP = "StartupActivity";
     public static final String MYSHARE = "MyShareActivity";
     public static final String USERSHARE = "UserShareActivity";
-    public static final String TOPICVIEW = "TopicViewActivity";
+    public static final String TOPICVIEW = "TopicViewDetailActivity";
     public static final String TOPICLISTDETAIL = "TopicListDetailActivity";
     public static final String USERCENTER = "UserCenterActivity";
     public static final String USERLOGIN = "UserLoginActivity";

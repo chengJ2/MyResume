@@ -67,7 +67,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 	
 	// 构建cover本地数据
 	private String[] id = {"1","2","3"};
-	private String[] note = {"只为心中淡淡的梦想","天行健以自强不息","阅历以存储更多的书香气质"};
+	private String[] note = {"心中的梦想","书香气质","自强不息"};
 	private String[] url = {R.drawable.default_cover1+"",R.drawable.default_cover2+"",R.drawable.default_cover3+""};
 	
 	private boolean isExit = false;
@@ -519,7 +519,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			}
 			break;
 		case R.id.review_btn:
-			startActivity(Constants.MAINACTIVITY, false);
+			String realName = preferenceUtil.getPreferenceData(UserInfoCode.REALNAME, "");
+			if (RegexUtil.checkNotNull(realName)) {
+				startActivity(Constants.MAINACTIVITY,false);
+			}else{
+				toastMsg(R.string.action_baseinfo_null);
+			}
 			break;
 		case R.id.left_lable:
 			if (MyApplication.USERID.equals("0")) {

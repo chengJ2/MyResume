@@ -1,53 +1,53 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<?xml version="1.0" encoding="utf-8"?>  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"  
+    android:layout_width="match_parent"  
+    android:layout_height="match_parent"  
+    android:orientation="vertical"
     android:background="@color/white"
-    android:fitsSystemWindows="true" 
-    android:orientation="vertical">
-    
-     <com.me.resume.views.CommScrollView 
-        style="@style/main_scrollview_style">
-        
-          <LinearLayout 
-            android:id="@+id/coverllayout"
-		    android:layout_width="match_parent"
-		    android:layout_height="match_parent"
-		    android:background="@color/white"
-		    android:fitsSystemWindows="true" 
-		    android:orientation="vertical">
-	    
-		    <include 
-		        android:id="@+id/localcover"
-		        layout="@layout/comm_item_expand"/>
-		        
-		    <com.me.resume.views.CustomGridView
-		          android:id="@+id/covermoregridview"
-		          style="@style/home_content_grilview"
-		          android:layout_margin="0dip"
-		          android:padding="@dimen/margin_10"
-		          android:visibility="visible"/>
-		    
-		    <View  style="@style/line_h15"
-		        android:background="@color/transparent"/>
-		    
-		    <include 
-		        android:id="@+id/updatecover"
-		        android:layout_marginTop="1dip"
-		        layout="@layout/comm_item_expand"/>
-		        
-		    <com.me.resume.views.CustomGridView
-		          android:id="@+id/covermoregridview_update"
-		          style="@style/home_content_grilview"
-		          android:layout_margin="0dip"
-		          android:padding="@dimen/margin_10"
-		          android:visibility="visible"/>
-		    </LinearLayout>
-     </com.me.resume.views.CommScrollView>
-   
-     <TextView
-          android:id="@+id/msgText"
-          android:visibility="gone"
-          android:layout_centerInParent="true"
-          style="@style/comm_nodata_style" />
-</RelativeLayout>
+    android:fitsSystemWindows="true">  
+  
+    <LinearLayout  
+        android:id="@+id/linearLayout1"  
+        android:layout_width="match_parent"  
+        android:layout_height="40.0dip"  
+        android:background="@color/white" >  
+  
+        <TextView  
+            android:id="@+id/text1"  
+            android:layout_width="match_parent"  
+            android:layout_height="match_parent"  
+            android:layout_weight="1.0"  
+            android:gravity="center"  
+            android:text="@string/item_cover_local"  
+            android:textColor="@color/black"  
+            android:textSize="@dimen/small_middle_text_size" />  
+  
+        <TextView  
+            android:id="@+id/text2"  
+            android:layout_width="match_parent"  
+            android:layout_height="match_parent"  
+            android:layout_weight="1.0"  
+            android:gravity="center"  
+            android:text="@string/item_cover_update"  
+            android:textColor="@color/black"  
+            android:textSize="@dimen/small_middle_text_size" />  
+  
+    </LinearLayout>  
+  
+    <ImageView  
+        android:id="@+id/cursor"  
+        android:layout_width="match_parent"  
+        android:layout_height="2dip"  
+        android:scaleType="matrix"  
+        android:src="@drawable/cursor" />  
+  
+    <android.support.v4.view.ViewPager  
+        android:id="@+id/vPager"  
+        android:layout_width="wrap_content"  
+        android:layout_height="0dp"  
+        android:layout_gravity="center"  
+        android:layout_weight="1.0"  
+        android:background="@color/white"  
+        android:flipInterval="30"  
+        android:persistentDrawingCache="animation" />  
+</LinearLayout>  

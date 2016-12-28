@@ -186,6 +186,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 				final String title = map.get("title").get(position);
 				final String detail = map.get("detail").get(position);
 				final String fromUrl = map.get("from_url").get(position);
+				//final String detailUrl = map.get("detail_url").get(position);
 				final String createtime = map.get("createtime").get(position);
 				final String sitename = map.get("site_name").get(position);
 				linksite = map.get("link_site").get(position);
@@ -209,8 +210,8 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 					public void onClick(View view) {
 						String id = map.get("id").get(position);
 						String type = map.get("type").get(position);
-						String detail2 = map.get("detail_part2").get(position);
-						String fromUrl2 = map.get("from_url2").get(position);
+						String detailUrl = map.get("detail_part2").get(position);
+						//String fromUrl2 = map.get("from_url2").get(position);
 						/*String detail3 = map.get("detail_part3").get(position);
 						String fromUrl3 = map.get("from_url3").get(position);
 						String fromUrl4 = map.get("from_url4").get(position);
@@ -222,8 +223,8 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 						bundle.putString("type", type);
 						bundle.putString("detail", detail);
 						bundle.putString("from_url", fromUrl);
-						bundle.putString("detail2", detail2);
-						bundle.putString("from_url2", fromUrl2);
+						bundle.putString("detail_url", detailUrl);
+						//bundle.putString("from_url2", fromUrl2);
 						/*bundle.putString("detail3", detail3);
 						bundle.putString("from_url3", fromUrl3);
 						bundle.putString("from_url4", fromUrl4);

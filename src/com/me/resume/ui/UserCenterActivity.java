@@ -541,7 +541,12 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			startChildActivity(Constants.MYSHARE,false);
 			break;
 		case R.id.review_resume:
-			startActivity(Constants.MAINACTIVITY,false);
+			String realName = preferenceUtil.getPreferenceData(UserInfoCode.REALNAME, "");
+			if (RegexUtil.checkNotNull(realName)) {
+				startActivity(Constants.MAINACTIVITY,false);
+			}else{
+				toastMsg(R.string.action_baseinfo_null);
+			}
 			break;
 		case R.id.info_layout0:
 			startChildActivity(Constants.EVALUATION,false);
@@ -592,6 +597,11 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 						preferenceUtil.setPreferenceData(UserInfoCode.ISADMIN, "0");// 非Admin
 						preferenceUtil.setPreferenceData(UserInfoCode.ISREGISTER, false);// 注销仍不能再注册
 						preferenceUtil.setPreferenceData(Constants.MYWORDS,"");// 清除留言
+						
+						MyApplication.USERAVATORPATH = FileUtils.BASE_PATH + File.separator + MyApplication.USERNAME 
+        						+ File.separator + Constants.FILENAME; // 创建用户名文件夹
+						FileUtils.deleteFile(new File(MyApplication.USERAVATORPATH));
+						
 						scrollToFinishActivity();
 					}
 				} catch (Exception e) {

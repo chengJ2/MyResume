@@ -191,10 +191,34 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 							getStrValue(R.string.show_button_sure),mHandler);*/
 				}else{
 					// 跳转到详情
-					String topicId = commMapArray.get("topicId")[position];
+					/*String topicId = commMapArray.get("topicId")[position];
 					ActivityUtils.startActivityPro(self, 
 							Constants.PACKAGENAMECHILD + Constants.TOPICVIEW,
-							Constants.TOPICIDTYPE, topicId + ";" + type,false);
+							Constants.TOPICIDTYPE, topicId + ";" + type,false);*/
+					String tid = commMapArray.get("id")[position];
+					String title = commMapArray.get("title")[position];
+					String detail = commMapArray.get("content")[position];
+					String fromUrl = commMapArray.get("from_url")[position];
+					String detailUrl = commMapArray.get("detail_url")[position];
+					
+					String createtime = commMapArray.get("createtime")[position];
+					String sitename = commMapArray.get("site_name")[position];
+					String linksite = commMapArray.get("link_site")[position];
+					
+					Bundle bundle = new Bundle();
+					bundle.putString("id", tid);
+					bundle.putString("title", title); // 标题
+					bundle.putString("type", String.valueOf(type));
+					bundle.putString("detail", detail); // 简介
+					bundle.putString("from_url", fromUrl); // 文章头像
+					bundle.putString("detail_url", detailUrl);// 文章请求网址
+					bundle.putString("createtime", createtime);
+					bundle.putString("site_name", sitename);
+					bundle.putString("link_site", linksite);
+					
+					ActivityUtils.startActivityPro(self, 
+							Constants.PACKAGENAMECHILD + Constants.TOPICVIEW, 
+							Constants.TOPICINFO,bundle);
 				}
 			}
 		});

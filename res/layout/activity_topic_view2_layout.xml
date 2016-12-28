@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true">
+
+     <com.me.resume.views.CommScrollView
+        android:id="@+id/viewlayout"
+        style="@style/comm_scrollview_style"
+        android:layout_marginBottom="0dip"
+        android:visibility="visible">
+
+        <WebView 
+	    android:id="@+id/webView"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"/>
+     </com.me.resume.views.CommScrollView>
+    
+   
+   
+    <TextView
+        android:id="@+id/msgText"
+        style="@style/comm_nodata_style"
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        android:text="@string/item_text111" />
+    
+    <com.me.resume.views.CustomFAB
+        android:id="@+id/top"
+        android:layout_width="50dip"
+        android:layout_height="50dip"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        style="@style/fab_button_right_style" 
+        android:src="@drawable/icon_btn_top"/>
+</RelativeLayout>
+      

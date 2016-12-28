@@ -19,6 +19,9 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AbsListView;
@@ -315,6 +318,20 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	protected void setRight2IconVisible(int visibility) {
 		right_icon_more.setVisibility(visibility);
 	}
+	
+	protected void loadWaitting() {
+		Animation operatingAnim = AnimationUtils.loadAnimation(self, R.anim.resetup);
+		LinearInterpolator lin = new LinearInterpolator();
+		operatingAnim.setInterpolator(lin);
+		right_icon.startAnimation(operatingAnim);
+		right_icon.setClickable(false);
+	}
+	
+	protected void stopLoad() {
+		right_icon.clearAnimation();
+		right_icon.setClickable(true);
+	}
+
 	
 	/**
 	 * 
@@ -1051,6 +1068,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		params.add("p_title");
 		params.add("p_content");
 		params.add("p_from_url");
+		params.add("p_detail_url");
 		params.add("p_site_name");
 		params.add("p_link_site");
 		params.add("p_shareUserId");
@@ -1070,6 +1088,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		values.add(data[9]);
 		values.add(data[10]);
 		values.add(data[11]);
+		values.add(data[12]);
 		
 		requestData("pro_set_collection", style, params, values, new HandlerData() {
 			@Override
