@@ -395,7 +395,7 @@ public class DialogUtils {
 	 * @param parent
 	 */
 	private static void showPopupView(View layout,View parent){
-		mPopupWindow = new PopupWindow(layout, LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT,true);
+		mPopupWindow = new PopupWindow(layout, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT,true);
 		mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
 		mPopupWindow.setFocusable(true);
 		mPopupWindow.setOutsideTouchable(true);

@@ -349,6 +349,7 @@ public class UserLoginActivity extends BaseActivity implements
 
 			@Override
 			public void noData() {
+				set3Msg(R.string.action_login_fail);
 				errorLogin();
 			}
 		});

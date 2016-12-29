@@ -1,17 +1,9 @@
 package com.me.resume.ui;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
-import android.Manifest.permission;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;

@@ -57,7 +57,7 @@
     <string name="item_text42">暂无面试心得分享</string>
     <string name="item_text43">正在加载,请稍后\u2026</string>
     <string name="item_text44">正在更新,请稍后\u2026</string>
-    <string name="item_text5">抱歉!该模块需求联网查看~</string>
+    <string name="item_text5">抱歉!该模块需求联网~</string>
     <string name="item_text6">简历预览封面</string>
     <string name="item_text61">简历封面</string>
     <string name="item_text7">提交成功,感谢您的分享~</string>
@@ -180,6 +180,7 @@
     <string name="action_logout_success">注销成功</string>
     <string name="action_logout_fail">注销失败,请重试</string>
     <string name="action_no_login">未登录</string>
+    <string name="action_login_fail">登录失败,请重试</string>
     
     
     <!-- 第三方登录 -->
@@ -301,6 +302,8 @@
     <string name="re_link4">求职指南</string>
     <string name="re_link5">面试问题</string>
     <string name="re_link6">每日推荐</string>
+    
+    <string name="re_from">来自：</string>
 
     <!-- 基本资料 -->
     <string name="reg_info_email">电子邮箱不合法！</string>

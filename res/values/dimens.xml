@@ -4,13 +4,21 @@
     <dimen name="top_bar_height">48.0dp</dimen>
 
     <!-- 常用字体大小 -->
-    <dimen name="tiny_text_size">8sp</dimen>
+   <!--  <dimen name="tiny_text_size">8sp</dimen>
     <dimen name="microd_text_size">10sp</dimen>
     <dimen name="micro_text_size">12sp</dimen>
     <dimen name="small_text_size">14sp</dimen>
     <dimen name="small_middle_text_size">16sp</dimen>
     <dimen name="medium_text_size">18sp</dimen>
-    <dimen name="large_text_size">22sp</dimen>
+    <dimen name="large_text_size">22sp</dimen> -->
+    
+    <dimen name="tiny_text_size">8dip</dimen>
+    <dimen name="microd_text_size">10dip</dimen>
+    <dimen name="micro_text_size">14dip</dimen>
+    <dimen name="small_text_size">16dip</dimen>
+    <dimen name="small_middle_text_size">18dip</dimen>
+    <dimen name="medium_text_size">20dip</dimen>
+    <dimen name="large_text_size">22dip</dimen>
     
     <dimen name="main_tiny_text">12dip</dimen>
     <dimen name="main_time_text">13dip</dimen>
@@ -52,7 +60,7 @@
     
     <dimen name="btn_text_padding">100.0dp</dimen>
     <dimen name="btn_text_margin">10.0dp</dimen>
-    <dimen name="button_text_size">16.0sp</dimen>
+    <dimen name="button_text_size">16.0dip</dimen>
     
     <dimen name="normal_item_height">42.0dp</dimen>
     <dimen name="mul_item_height">120.0dp</dimen>

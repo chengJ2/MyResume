@@ -1,20 +1,19 @@
 package com.me.resume.ui;
 
-import java.util.List;
-import java.util.Map;
-
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Html;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.webkit.WebSettings;
+import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ScrollView;
@@ -25,6 +24,7 @@ import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.Constants;
 import com.me.resume.utils.CommUtil;
+import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.RegexUtil;
 import com.me.resume.utils.TimeUtils;
 import com.me.resume.views.CommScrollView;
@@ -55,6 +55,20 @@ public class TopicViewDetailActivity extends BaseActivity implements OnClickList
 	private String sitename = "";
 	private String linksite = "";
 	private String detailUrl = "";
+	
+	private Handler mHandler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case 11:
+				Intent intent = new Intent();
+				intent.setAction(Intent.ACTION_VIEW);
+				Uri content_url = Uri.parse(linksite);
+				intent.setData(content_url);
+				startActivity(intent);
+				break;
+			}
+		};
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -148,16 +162,18 @@ public class TopicViewDetailActivity extends BaseActivity implements OnClickList
 	 * @param bundle
 	 */
 	private void setTopicView(Bundle bundle) {
-		topicId = bundle.getString("id");
+		topicId = bundle.getString("topicId");
 		title = bundle.getString("title");
 		type = bundle.getString("type");
-		setTopTitle(getTitle(CommUtil.parseInt(type)));
+		// setTopTitle(getTitle(CommUtil.parseInt(type)));
 		detail = bundle.getString("detail");
 		fromUrl = bundle.getString("from_url");
 		detailUrl = bundle.getString("detail_url"); // 请求url
 		
 		sitename = bundle.getString("site_name");
 		linksite = bundle.getString("link_site");
+		
+		setTopTitle(getString(R.string.re_from) + sitename);
 		
 		webView.loadUrl(detailUrl);
 		webView.setWebViewClient(new WebViewClient(){
@@ -183,9 +199,12 @@ public class TopicViewDetailActivity extends BaseActivity implements OnClickList
 		
 		WebSettings settings = webView.getSettings();
 		settings.setJavaScriptEnabled(true);
+		settings.setDisplayZoomControls(false); //隐藏webview缩放按钮
+		settings.setLayoutAlgorithm(LayoutAlgorithm.NARROW_COLUMNS);
+		settings.setUseWideViewPort(true);
 
 		queryWhere = "select * from " + CommonText.MYCOLLECTION
-				+ " where cid = " + topicId + " and userId = '" + uTokenId
+				+ " where topicId = " + topicId + " and userId = '" + uTokenId
 				+ "' and type >= 0";
 		commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray == null) {
@@ -201,6 +220,14 @@ public class TopicViewDetailActivity extends BaseActivity implements OnClickList
 		switch (v.getId()) {
 		case R.id.left_lable:
 			scrollToFinishActivity();
+			break;
+		case R.id.top_text:
+			if (RegexUtil.checkNotNull(linksite)) {
+				DialogUtils.showAlertDialog(self, 
+						String.format(getStrValue(R.string.dialog_action_golink),sitename),
+						View.GONE,
+						getStrValue(R.string.show_button_continue), mHandler);
+			}
 			break;
 		case R.id.right_icon:
 			if (!MyApplication.USERID.equals("0")) {
@@ -394,5 +421,13 @@ public class TopicViewDetailActivity extends BaseActivity implements OnClickList
 	protected void onPause() {
 		super.onPause();
 		MobclickAgent.onPause(this);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (mHandler != null) {
+			mHandler.removeCallbacksAndMessages(null);
+		}
 	}
 }

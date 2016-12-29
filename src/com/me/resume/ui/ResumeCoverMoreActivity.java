@@ -19,16 +19,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.me.resume.BaseActivity;
-import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.utils.CommUtil;
 import com.me.resume.views.CustomGridView;
@@ -46,17 +41,14 @@ public class ResumeCoverMoreActivity extends BaseActivity implements
 	private CustomGridView covermoregridview, covermoregridview_update;
 	private TextView msgText;
 
-	private TextView localText, updateText;
-	private ImageView localupdown, updateupdown;
-
 	private ViewPager viewPager;// 页卡内容
 	private ImageView imageView;// 动画图片
-	private TextView textView1, textView2, textView3;
+	private TextView textView1, textView2;
 	private List<View> views;// Tab页面列表
 	private int offset = 0;// 动画图片偏移量
 	private int currIndex = 0;// 当前页卡编号
 	private int bmpW;// 动画图片宽度
-	private View view1, view2, view3;// 各个页卡
+	private View view1, view2;// 各个页卡
 
 	// 构建cover本地数据
 	private String[] id = { "1", "2", "3", "4", "5", "6" };
@@ -65,8 +57,6 @@ public class ResumeCoverMoreActivity extends BaseActivity implements
 			R.drawable.default_cover2 + "", R.drawable.default_cover3 + "",
 			R.drawable.default_cover4 + "", R.drawable.default_cover5 + "",
 			R.drawable.default_cover6 + "" };
-
-	private boolean isShow = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,16 +91,23 @@ public class ResumeCoverMoreActivity extends BaseActivity implements
 
 		covermoregridview = (CustomGridView) view1.findViewById(R.id.covermoregridview);
 		covermoregridview_update = (CustomGridView) view2.findViewById(R.id.covermoregridview);
-
+		msgText = (TextView) view2.findViewById(R.id.msgText);
+		
 		setCoverView(true);
 		
-		new Handler().postDelayed(new Runnable() {
+		if (CommUtil.isNetworkAvailable(self)) {
+			new Handler().postDelayed(new Runnable() {
 
-			@Override
-			public void run() {
-				getReCoverMoreData();
-			}
-		}, 800);
+				@Override
+				public void run() {
+					getReCoverMoreData();
+				}
+			}, 800);
+		}else{
+			msgText.setText(getString(R.string.check_network));
+			msgText.setVisibility(View.VISIBLE);
+			covermoregridview_update.setVisibility(View.GONE);
+		}
 
 		views.add(view1);
 		views.add(view2);
@@ -258,13 +255,16 @@ public class ResumeCoverMoreActivity extends BaseActivity implements
 		requestData("pro_getcover_info", 2, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				set3Msg(R.string.timeout_network);
+				msgText.setText(getString(R.string.timeout_network));
+				msgText.setVisibility(View.VISIBLE);
+				covermoregridview_update.setVisibility(View.GONE);
 				stopLoad();
 			}
 
 			public void success(Map<String, List<String>> map) {
 				try {
-					/* msgText.setVisibility(View.GONE); */
+					msgText.setVisibility(View.GONE); 
+					covermoregridview_update.setVisibility(View.VISIBLE);
 					setCoverData(covermoregridview_update, map, false);
 					stopLoad();
 				} catch (Exception e) {
@@ -275,10 +275,9 @@ public class ResumeCoverMoreActivity extends BaseActivity implements
 			@Override
 			public void noData() {
 				stopLoad();
-				/*
-				 * msgText.setVisibility(View.VISIBLE);
-				 * msgText.setText(getStrValue(R.string.en_nodata));
-				 */
+				covermoregridview_update.setVisibility(View.GONE);
+				msgText.setVisibility(View.VISIBLE);
+				msgText.setText(getStrValue(R.string.en_nodata));
 			}
 		});
 	}
@@ -306,7 +305,10 @@ public class ResumeCoverMoreActivity extends BaseActivity implements
 			if (CommUtil.isNetworkAvailable(self)) {
 				getReCoverMoreData();
 			}else{
-				set3Msg(R.string.check_network);
+				msgText.setText(getString(R.string.check_network));
+				msgText.setVisibility(View.VISIBLE);
+				covermoregridview_update.setVisibility(View.GONE);
+				stopLoad();
 			}
 			break;
 		default:

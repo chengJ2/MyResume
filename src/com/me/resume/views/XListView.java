@@ -171,7 +171,7 @@ public class XListView extends ListView implements OnScrollListener {
 	public void stopLoadMore() {
 		if (mPullLoading == true) {
 			mPullLoading = false;
-			mFooterView.setState(XListViewFooter.STATE_NORMAL);
+			mFooterView.setState(XListViewFooter.STATE_READY);
 		}
 	}
 

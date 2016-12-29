@@ -195,7 +195,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 					ActivityUtils.startActivityPro(self, 
 							Constants.PACKAGENAMECHILD + Constants.TOPICVIEW,
 							Constants.TOPICIDTYPE, topicId + ";" + type,false);*/
-					String tid = commMapArray.get("id")[position];
+					String topicId = commMapArray.get("topicId")[position];
 					String title = commMapArray.get("title")[position];
 					String detail = commMapArray.get("content")[position];
 					String fromUrl = commMapArray.get("from_url")[position];
@@ -206,7 +206,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 					String linksite = commMapArray.get("link_site")[position];
 					
 					Bundle bundle = new Bundle();
-					bundle.putString("id", tid);
+					bundle.putString("topicId", topicId);
 					bundle.putString("title", title); // 标题
 					bundle.putString("type", String.valueOf(type));
 					bundle.putString("detail", detail); // 简介

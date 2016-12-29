@@ -54,7 +54,7 @@ public class ImageLoader {
 		imageViews.put(imageView, url);
 		String tag = imageViews.get(imageView);
 		if (!RegexUtil.checkNotNull(url) || !tag.equals(url)){
-			imageView.setImageResource(R.drawable.ic_launcher);
+			imageView.setImageResource(R.drawable.null_image);
 		}else{
 			// 先从内存缓存中查找
 			Bitmap bitmap = memoryCache.get(url);

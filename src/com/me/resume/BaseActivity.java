@@ -180,6 +180,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		nextButton = findView(R.id.next);
 		
 		left_icon.setOnClickListener(this);
+		toptext.setOnClickListener(this);
 		right_icon.setOnClickListener(this);
 		
 		right_icon_more.setOnClickListener(this);
@@ -992,7 +993,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		}
 
 		String shareuserId = map.get("userId").get(position);
-		String shareuserCity = map.get("userId").get(position);
+		String shareuserCity = map.get("city").get(position);
 		
 		ContentValues cValues = new ContentValues();
 		cValues.put("cId", cid);
@@ -1009,7 +1010,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 			toastMsg(R.string.item_text9);
 			commapBaseAdapter.notifyDataSetChanged();
 			//TODO 同步到远程
-			setSyncData(new String[]{cid,uTokenId,"0","",content,"","","",shareuserId,sharename,shareuserCity,"-1"});
+			setSyncData(new String[]{cid,uTokenId,"0","",content,"","","","",shareuserId,sharename,shareuserCity,"-1"});
 		}
 	}
 	

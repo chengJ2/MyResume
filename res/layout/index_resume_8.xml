@@ -28,7 +28,7 @@
         android:paddingRight="50dip"
         android:layout_marginTop="110dip"
         android:lineSpacingExtra="@dimen/margin_8"
-        android:textSize="@dimen/small_text_size"
+        android:textSize="@dimen/middle_text_size_dp"
         android:text="@string/resume_mywords"
         android:textColor="@color/black" />
     

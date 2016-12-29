@@ -10,5 +10,10 @@
       android:layout_margin="0dip"
       android:padding="@dimen/margin_10"/>
  
+  <TextView
+      android:id="@+id/msgText"
+      style="@style/comm_nodata_style"
+      android:layout_centerInParent="true"
+      android:visibility="gone" />
  	
  </RelativeLayout>

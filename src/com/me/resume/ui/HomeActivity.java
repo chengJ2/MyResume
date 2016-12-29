@@ -493,11 +493,12 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 		mHandler.sendEmptyMessageDelayed(-1, 100);
 		if(hasdata){
 			reviewsharingListView.setVisibility(View.VISIBLE);
-			sharemore.setVisibility(View.VISIBLE);
+			//sharemore.setVisibility(View.VISIBLE);
+			sharemore.setImageResource(R.drawable.more);
 			msgText.setVisibility(View.GONE);
 		}else{
 			reviewsharingListView.setVisibility(View.GONE);
-			sharemore.setVisibility(View.GONE);
+			sharemore.setImageResource(R.drawable.icon_home_edit);
 			msgText.setVisibility(View.VISIBLE);
 		}
 	}

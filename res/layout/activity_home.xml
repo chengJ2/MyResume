@@ -77,12 +77,13 @@
                     <TextView
                         style="@style/home_item_text"
                         android:layout_toRightOf="@id/view3"
-                        android:text="@string/item_text4" />
+                        android:text="@string/item_text4"
+                         />
 
                     <ImageView
                         android:id="@+id/sharemore"
                         style="@style/home_item_more"
-                        android:src="@drawable/more" />
+                        android:src="@drawable/icon_home_edit" />
                 </RelativeLayout>
 
                 <com.me.resume.views.CustomListView

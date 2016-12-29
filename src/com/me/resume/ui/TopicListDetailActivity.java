@@ -71,11 +71,17 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 						}
 						commMapList.putAll(newMap);
 						setTopicListData(commMapList);
+						
+						if(isAll){
+							finishLoading();
+						}else{
+							topicdetailListView.setPullLoadEnable(true);
+						}
 					}else{//加载更多
 						commMapList.putAll(getNewMap(commMapList, newMap));
 						commapBaseAdapter.notifyDataSetChanged(pos);
 					}
-					finishLoading();
+					
 				}
 				break;
 			case 12:
@@ -160,7 +166,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 			}
 			
 			public void success(Map<String, List<String>> map) {
-				if (map.get("id").size() < 3) {
+				if (map.get("id").size() < 2) {
 					isAll = true;
 				}else{
 					isAll = false;
@@ -218,7 +224,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 						String fromUrl5 = map.get("from_url5").get(position);*/
 						
 						Bundle bundle = new Bundle();
-						bundle.putString("id", id);
+						bundle.putString("topicId", id);
 						bundle.putString("title", title);
 						bundle.putString("type", type);
 						bundle.putString("detail", detail);
@@ -315,6 +321,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		if(!isAll){
 			pos++;
 			getTopciListData(pos);
+			topicdetailListView.setPullLoadEnable(isLoadMore);
 		}else{
 			toastMsg(R.string.xlistview_footer_loadfinish);
 			finishLoading();
@@ -325,8 +332,8 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 	 * 停止刷新
 	 */
 	public void finishLoading(){
-		topicdetailListView.stopLoadMore();
 		topicdetailListView.stopRefresh();
+		topicdetailListView.stopLoadMore();
 	}
 	
 	/**
