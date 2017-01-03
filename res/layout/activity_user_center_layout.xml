@@ -82,7 +82,8 @@
                             style="@style/user_center_small_text"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="--" />
+                            android:text="--"
+                            android:textColor="@color/red" />
                     </LinearLayout>
                 </LinearLayout>
 

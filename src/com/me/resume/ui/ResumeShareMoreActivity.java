@@ -36,7 +36,11 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 	private RelativeLayout sharemore_layout;
 	private XListView reviewsharemoreListView;
 	
-	private TextView msgtext;
+	private TextView flag;
+	
+	private RelativeLayout msgLayout;
+	private TextView msgText;
+	private Button reloadBtn;
 	
 	private LinearLayout shareLayout;
 	
@@ -54,8 +58,6 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 			switch (msg.what) {
 			case 11:
 				if (msg.obj != null) {
-					msgtext.setVisibility(View.GONE);
-					reviewsharemoreListView.setVisibility(View.VISIBLE);
 					Map<String, List<String>> newMap = (Map<String, List<String>>)msg.obj;
 					if(pos == 0){ //刷新
 						if(commMapList != null){
@@ -81,8 +83,9 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 				finishLoading();
 				if(!isLoadMore){
 					reviewsharemoreListView.setVisibility(View.GONE); 
-					msgtext.setVisibility(View.VISIBLE);
-					msgtext.setText(getStrValue(R.string.item_text72));
+					msgLayout.setVisibility(View.GONE);
+					flag.setText(getString(R.string.item_text72));
+					flag.setVisibility(View.VISIBLE);
 				}
 				break;
 			case 100:
@@ -100,18 +103,28 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		boayLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.resume_share_more_layout, null);
 		boayLayout.addView(v);
-		
+		initView();
+	}
+	
+	private void initView(){
 		setTopTitle(R.string.item_text71);
 		setMsgHide();
 		setRightIconVisible(View.INVISIBLE);
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
+		flag = findView(R.id.flag);
+		
+		msgLayout = (RelativeLayout)findView(R.id.msgLayout);
+		msgText  = (TextView)findView(R.id.msgText);
+		reloadBtn = (Button) findView(R.id.reloadBtn);
+		reloadBtn.setOnClickListener(this);
+		
 		sharemore_layout = findView(R.id.sharemore_layout);
 		reviewsharemoreListView = findView(R.id.reviewsharemoreListView);
 		reviewsharemoreListView.setPullLoadEnable(true);
 		reviewsharemoreListView.setXListViewListener(this);
-		msgtext = findView(R.id.msgtext);
+		
 		shareLayout = findView(R.id.shareLayout);
 		inputshareLayout = findView(R.id.inputshareLayout);
 		input_share = findView(R.id.input_share);
@@ -123,13 +136,19 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		
 		commMapList = new HashMap<String, List<String>>();
 		
+		loadData();
+	}
+	
+	private void loadData(){
 		if (CommUtil.isNetworkAvailable(self)) {
+			flag.setText(getStrValue(R.string.item_text43));
+			flag.setVisibility(View.VISIBLE);
 			mHandler.sendEmptyMessageDelayed(100, 200);
 		}else{
-			msgtext.setVisibility(View.VISIBLE);
-			msgtext.setText(getStrValue(R.string.item_text5));
+			msgLayout.setVisibility(View.VISIBLE);
+			msgText.setText(getString(R.string.check_network));
+			reviewsharemoreListView.setVisibility(View.GONE);
 		}
-		
 	}
 	
 	/**
@@ -145,12 +164,18 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		requestData("pro_getshareinfo_bypage", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				set3Msg(R.string.timeout_network);
+				flag.setVisibility(View.GONE);
+				msgLayout.setVisibility(View.VISIBLE);
+				msgText.setText(getString(R.string.timeout_network));
+				reviewsharemoreListView.setVisibility(View.GONE);
 			}
 			
 			public void success(Map<String, List<String>> map) {
+				reviewsharemoreListView.setVisibility(View.VISIBLE); 
+				msgLayout.setVisibility(View.GONE);
+				flag.setVisibility(View.GONE);
 				try {
-					if (map.get("id").size() < 3) {
+					if (map.get("id").size() < 10) {
 						isAll = true;
 					}else{
 						isAll = false;
@@ -176,6 +201,9 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		case R.id.shareLayout:
 			shareLayout.setVisibility(View.GONE);
 			inputshareLayout.setVisibility(View.VISIBLE);
+			break;
+		case R.id.reloadBtn:
+			loadData();
 			break;
 		case R.id.submit_btn:
 			if (!MyApplication.USERID.equals("0")) {
@@ -219,7 +247,7 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		requestData("pro_setshareinfo", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				
+				toastMsg(R.string.request_error);
 			}
 			
 			public void success(Map<String, List<String>> map) {

@@ -294,10 +294,14 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	 * @Description:基本信息完整度
 	 */
 	private void getBaseInfoComplete(){
-		resume_updatime.setText(
-				String.format(getStrValue(R.string.personal_c_item16),
-						preferenceUtil.getPreferenceData(UserInfoCode.RESUMEUPDTIME,
-								TimeUtils.getCurrentTimeString())));
+		String syncTime = preferenceUtil.getPreferenceData(Constants.SYNC_TIME,"");
+		if(RegexUtil.checkNotNull(syncTime)){
+			resume_updatime.setText(
+					String.format(getStrValue(R.string.personal_c_item16),syncTime));
+		}else{
+			resume_updatime.setText(getStrValue(R.string.personal_c_item161));
+		}
+		
 		queryWhere = "select (a1+a2+a3+a4+a5+a6+a7+a8+a9+a10+a11) num"
 					+ " from ("
 					+ " select case when realname='' then 1 else 0 end a1,"
@@ -581,7 +585,7 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		requestData("pro_user_loginout", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				set3Msg(R.string.timeout_network);
+				toastMsg(R.string.timeout_network);
 			}
 			
 			public void success(Map<String, List<String>> map) {

@@ -8,12 +8,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.LayoutAlgorithm;
+import android.webkit.WebSettings.ZoomDensity;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ScrollView;
@@ -161,6 +163,8 @@ public class TopicViewDetailActivity extends BaseActivity implements OnClickList
 	 * 显示话题详情内容
 	 * @param bundle
 	 */
+	@SuppressWarnings("deprecation")
+	@SuppressLint("SetJavaScriptEnabled")
 	private void setTopicView(Bundle bundle) {
 		topicId = bundle.getString("topicId");
 		title = bundle.getString("title");
@@ -200,8 +204,28 @@ public class TopicViewDetailActivity extends BaseActivity implements OnClickList
 		WebSettings settings = webView.getSettings();
 		settings.setJavaScriptEnabled(true);
 		settings.setDisplayZoomControls(false); //隐藏webview缩放按钮
-		settings.setLayoutAlgorithm(LayoutAlgorithm.NARROW_COLUMNS);
 		settings.setUseWideViewPort(true);
+		settings.setLoadWithOverviewMode(true); 
+		settings.setBuiltInZoomControls(true);
+		settings.setSupportZoom(true);//设定支持缩放   
+		  
+		DisplayMetrics metrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		int mDensity = metrics.densityDpi;
+		if (mDensity == 240) {
+			settings.setDefaultZoom(ZoomDensity.FAR);
+		} else if (mDensity == 160) {
+			settings.setDefaultZoom(ZoomDensity.MEDIUM);
+		} else if (mDensity == 120) {
+			settings.setDefaultZoom(ZoomDensity.CLOSE);
+		} else if (mDensity == DisplayMetrics.DENSITY_XHIGH) {
+			settings.setDefaultZoom(ZoomDensity.FAR);
+		} else if (mDensity == DisplayMetrics.DENSITY_TV) {
+			settings.setDefaultZoom(ZoomDensity.FAR);
+		} else {
+			settings.setDefaultZoom(ZoomDensity.MEDIUM);
+		}
+		settings.setLayoutAlgorithm(LayoutAlgorithm.NARROW_COLUMNS);
 
 		queryWhere = "select * from " + CommonText.MYCOLLECTION
 				+ " where topicId = " + topicId + " and userId = '" + uTokenId

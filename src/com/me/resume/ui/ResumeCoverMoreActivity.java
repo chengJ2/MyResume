@@ -20,7 +20,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.me.resume.BaseActivity;
@@ -39,7 +41,9 @@ public class ResumeCoverMoreActivity extends BaseActivity implements
 		OnClickListener {
 
 	private CustomGridView covermoregridview, covermoregridview_update;
+	private RelativeLayout msgLayout;
 	private TextView msgText;
+	private Button reloadBtn;
 
 	private ViewPager viewPager;// 页卡内容
 	private ImageView imageView;// 动画图片
@@ -91,8 +95,9 @@ public class ResumeCoverMoreActivity extends BaseActivity implements
 
 		covermoregridview = (CustomGridView) view1.findViewById(R.id.covermoregridview);
 		covermoregridview_update = (CustomGridView) view2.findViewById(R.id.covermoregridview);
-		msgText = (TextView) view2.findViewById(R.id.msgText);
-		
+		msgLayout = (RelativeLayout) view2.findViewById(R.id.msgLayout);
+		msgText  = (TextView) view2.findViewById(R.id.msgText);
+		reloadBtn = (Button) view2.findViewById(R.id.reloadBtn);
 		setCoverView(true);
 		
 		if (CommUtil.isNetworkAvailable(self)) {
@@ -104,8 +109,8 @@ public class ResumeCoverMoreActivity extends BaseActivity implements
 				}
 			}, 800);
 		}else{
+			msgLayout.setVisibility(View.VISIBLE);
 			msgText.setText(getString(R.string.check_network));
-			msgText.setVisibility(View.VISIBLE);
 			covermoregridview_update.setVisibility(View.GONE);
 		}
 
@@ -126,6 +131,8 @@ public class ResumeCoverMoreActivity extends BaseActivity implements
 
 		textView1.setOnClickListener(new MyOnClickListener(0));
 		textView2.setOnClickListener(new MyOnClickListener(1));
+		
+		reloadBtn.setOnClickListener(this);
 	}
 
 	/**
@@ -255,15 +262,15 @@ public class ResumeCoverMoreActivity extends BaseActivity implements
 		requestData("pro_getcover_info", 2, params, values, new HandlerData() {
 			@Override
 			public void error() {
+				msgLayout.setVisibility(View.VISIBLE);
 				msgText.setText(getString(R.string.timeout_network));
-				msgText.setVisibility(View.VISIBLE);
 				covermoregridview_update.setVisibility(View.GONE);
 				stopLoad();
 			}
 
 			public void success(Map<String, List<String>> map) {
 				try {
-					msgText.setVisibility(View.GONE); 
+					msgLayout.setVisibility(View.GONE);
 					covermoregridview_update.setVisibility(View.VISIBLE);
 					setCoverData(covermoregridview_update, map, false);
 					stopLoad();
@@ -276,8 +283,6 @@ public class ResumeCoverMoreActivity extends BaseActivity implements
 			public void noData() {
 				stopLoad();
 				covermoregridview_update.setVisibility(View.GONE);
-				msgText.setVisibility(View.VISIBLE);
-				msgText.setText(getStrValue(R.string.en_nodata));
 			}
 		});
 	}
@@ -301,12 +306,13 @@ public class ResumeCoverMoreActivity extends BaseActivity implements
 			scrollToFinishActivity();
 			break;
 		case R.id.right_icon:
+		case R.id.reloadBtn:
 			loadWaitting();
 			if (CommUtil.isNetworkAvailable(self)) {
 				getReCoverMoreData();
 			}else{
+				msgLayout.setVisibility(View.VISIBLE);
 				msgText.setText(getString(R.string.check_network));
-				msgText.setVisibility(View.VISIBLE);
 				covermoregridview_update.setVisibility(View.GONE);
 				stopLoad();
 			}

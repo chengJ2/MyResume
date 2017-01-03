@@ -74,4 +74,6 @@
     <dimen name="button_use_textsize">13dip</dimen>
     
     <dimen name="otherinfo_bar_height">40dip</dimen>
+    
+    <dimen name="common_neterror_height">38dip</dimen>
 </resources>

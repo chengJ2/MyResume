@@ -4,21 +4,22 @@
     <string name="app_name">有云简历</string>
     <string name="app_about">无需联网&#160;&#160;完善预览</string>
     <string name="app_about2">可选同步&#160;&#160;有云简历</string>
-    <string name="app_crash">App发生异常,请重启</string>
+    <string name="app_crash">App发生异常，请重启</string>
     <string name="app_exit">再按一次退出</string>
     <string name="app_download">正在下载 有云简历 \u2026</string>
     <string name="app_declare1">特别声明</string>
     <string name="app_declare2">联系我们</string>
-    <string name="app_declare3">●&#160;本软件平台上的大部分内容来源于网络,包括文字,图片等,我们提供的内容将服务使用者用于个人学习、参考或欣赏,以及其他非商业性或非盈利性用途。</string>
-    <string name="app_declare4">●&#160;若有内容侵犯了原作者的权利或原作者不愿意在本软件平台上展示内容,请及时通知并联系我们,将予以删除。</string>
-    <string name="app_declare5">●&#160;我们郑重承诺:&#160;严格保密用户同步的数据,保证用户数据隐私安全。</string>
+    <string name="app_declare3">●&#160;本软件平台上的大部分内容来源于网络，包括文字，图片等，我们提供的内容将服务使用者用于个人学习、参考或欣赏，以及其他非商业性或非盈利性用途。</string>
+    <string name="app_declare4">●&#160;若有内容侵犯了原作者的权利或原作者不愿意在本软件平台上展示内容，请及时通知并联系我们，将予以删除。</string>
+    <string name="app_declare5">●&#160;我们郑重承诺:&#160;严格保密用户同步的数据，保证用户数据隐私安全。</string>
     
     <!-- 网络相关 -->
-    <string name="check_network">网络异常,请检查!</string>
+    <string name="check_network">网络异常，请检查!</string>
     <string name="en_nodata">暂无数据</string>
     <string name="timeout_network">网络请求数据超时</string>
-    <string name="request_error">请求异常,请检查!</string>
-    <string name="app_server_error">因服务器升级维护,请稍后重试,敬请大家谅解！</string>
+    <string name="request_error">请求异常，请检查!</string>
+    <string name="app_server_error">因服务器升级维护，请稍后重试，敬请大家谅解！</string>
+    <string name="reload_network">重新加载</string>
     
   	 <!-- Main -->
     <string name="resume_baseinfo">基本资料</string>
@@ -35,8 +36,8 @@
     <string name="resume_educationtraining">教育/培训经历</string>
     <string name="resume_otherinfo">附加信息</string>
     <string name="resume_message">留言板</string>
-    <string name="resume_makemywords">我的留言,自己来定\u2026</string>
-    <string name="resume_mywords">&#160;&#160;&#160;&#160;我坚信在贵公司,我将学到更多知识,发挥出个人的最大效益。</string>
+    <string name="resume_makemywords">我的留言，自己来定\u2026</string>
+    <string name="resume_mywords">&#160;&#160;&#160;&#160;我坚信在贵公司，我将学到更多知识，发挥出个人的最大效益。</string>
     <string name="resume_thinks">谢谢</string>
     <string name="resume_exit">退出预览</string>
     <string name="resume_home">首页</string>
@@ -55,14 +56,14 @@
     <string name="item_text4">说说面试心得</string>
     <string name="item_text41">我来说</string>
     <string name="item_text42">暂无面试心得分享</string>
-    <string name="item_text43">正在加载,请稍后\u2026</string>
-    <string name="item_text44">正在更新,请稍后\u2026</string>
+    <string name="item_text43">正在加载，请稍后\u2026</string>
+    <string name="item_text44">正在更新，请稍后\u2026</string>
     <string name="item_text5">抱歉!该模块需求联网~</string>
     <string name="item_text6">简历预览封面</string>
     <string name="item_text61">简历封面</string>
-    <string name="item_text7">提交成功,感谢您的分享~</string>
+    <string name="item_text7">提交成功，感谢您的分享~</string>
     <string name="item_text71">更多分享</string>
-    <string name="item_text72">暂无分享,快去分享你的面试心得~</string>
+    <string name="item_text72">暂无分享，快去分享你的面试心得~</string>
     <string name="item_text8">我也来分享\u2026</string>
     <string name="item_text81">请分享面试心得或职场相关的信息</string>
     <string name="item_text82">分享内容最多为512字</string>
@@ -71,8 +72,8 @@
     
     <string name="item_text9">收藏成功</string>
     <string name="item_text91">取消收藏</string>
-    <string name="item_text100">正在下载,请稍后\u2026</string>
-    <string name="item_text111">正在加载,请稍后\u2026</string>
+    <string name="item_text100">正在下载，请稍后\u2026</string>
+    <string name="item_text111">正在加载，请稍后\u2026</string>
     <string name="item_text101">简历封面预览</string>
     <string name="item_cover_local">本地</string>
     <string name="item_cover_update">更多</string>
@@ -100,25 +101,25 @@
     <string name="settings_item6">关于我们</string>
     <string name="settings_item7">向好友分享</string>
     <string name="settings_item71">分享</string>
-    <string name="settings_item72">有云简历已上线App市场,请前往搜索 “有云简历”即可;关于App使用中有任何问题,请到设置-意见反馈里提交问题。</string>
+    <string name="settings_item72">有云简历已上线App市场，请前往搜索 “有云简历”即可;关于App使用中有任何问题，请到设置-意见反馈里提交问题。</string>
     <string name="settings_item8">清除本地缓存</string>
     <string name="settings_item9">编辑自动同步</string>
     <string name="action_login_head">请先登录</string>
-    <string name="action_syncing">正在同步,请稍后\u2026</string>
+    <string name="action_syncing">正在同步，请稍后\u2026</string>
     <string name="action_sync_success">同步成功</string>
-    <string name="action_sync_fail">同步失败,请重试</string>
+    <string name="action_sync_fail">同步失败，请重试</string>
     <string name="completion_info_frist">请先完善资料</string>
     <string name="action_clearcache_success">已成功清除缓存</string>
-    <string name="action_syncing_lang">正在同步语言能力,请稍后\u2026</string>
-    <string name="action_syncing_cert">正在同步证书信息,请稍后\u2026</string>
-    <string name="action_syncing_other">正在同步其他信息,请稍后\u2026</string>
+    <string name="action_syncing_lang">正在同步语言能力，请稍后\u2026</string>
+    <string name="action_syncing_cert">正在同步证书信息，请稍后\u2026</string>
+    <string name="action_syncing_other">正在同步其他信息，请稍后\u2026</string>
     <string name="viewpager_indicator">%1$d/%2$d</string>
-    <string name="feedback_ed_1">请尽详细地描述您的反馈问题或用户体验不足之处,以帮助我们改善产品体验,我们将尽快处理你的意见,谢谢~</string>
+    <string name="feedback_ed_1">请尽详细地描述您的反馈问题或用户体验不足之处，以帮助我们改善产品体验，我们将尽快处理你的意见，谢谢~</string>
     <string name="feedback_info_1">意见描述</string>
-    <string name="feedback_ed_2">请留下您的QQ/微信/邮箱</string>
+    <string name="feedback_ed_2">请留下您的QQ/微信/邮箱(选填)</string>
     <string name="feedback_info_2">联系方式</string>
     <string name="feedback_ed_3">感谢您的反馈</string>
-    <string name="feedback_info_3">您的反馈成功,我们将尽快处理你的意见,谢谢~</string>
+    <string name="feedback_info_3">您的反馈成功，我们将尽快处理你的意见，谢谢~</string>
     <string name="feedback_info_4">发送错误报告</string>
     <string name="contactus_phone_show">手&#160;&#160;机:&#160;&#160;13667258212</string>
     <string name="contactus_phone_hide">手&#160;&#160;机:&#160;&#160;******&#160;(登录可见)</string>
@@ -127,7 +128,7 @@
     <string name="contactus_qq">QQ群:</string>
     <string name="contactus_qq_name">345939441</string>
     <string name="contactus_qq_name_note">&#160;QQ群(用户内测群)</string>
-    <string name="contactus_copy_ok">已复制到粘贴板,欢迎加群~</string>
+    <string name="contactus_copy_ok">已复制到粘贴板，欢迎加群~</string>
     <string name="contactus_copy_ok2">已复制到粘贴板~</string>
 
     <!-- user login register -->
@@ -145,21 +146,21 @@
     <string name="action_input_up_isnull">用户名/手机号/邮箱或密码不能为空</string>
     <string name="action_input_username_null">用户名</string>
     <string name="action_input_usename_cn">用户名不能含中文</string>
-    <string name="action_input_up_phone_email">手机号或邮箱用于找回密码,请选填</string>
+    <string name="action_input_up_phone_email">手机号或邮箱用于找回密码，请选填</string>
     <string name="action_input_username_isnull">手机号/邮箱</string>
     <string name="action_input_username_toolong">用户名太长!</string>
     <string name="action_input_password_isnull">密码</string>
     <string name="action_input_newpassword_isnull">新密码</string>
     <string name="action_input_password_equal">两次密码不一致!</string>
     <string name="action_input_password_toolong">密码不能超过30位</string>
-    <string name="register_repeatedusername">用户名,手机号或邮箱已存在</string>
-    <string name="register_username_noexist">该用户名或手机号未注册,请重试!</string>
+    <string name="register_repeatedusername">用户名，手机号或邮箱已存在</string>
+    <string name="register_username_noexist">该用户名或手机号未注册，请重试!</string>
     <string name="new_password">请记住您的新密码:</string>
-    <string name="action_wait_loging">正在登录,请稍后\u2026</string>
-    <string name="action_wait_loginsuccess">登录成功,正在跳转\u2026</string>
-    <string name="action_wait_reging">正在注册,请稍后\u2026</string>
-    <string name="action_wait_regsuccess">注册成功,正在跳转\u2026</string>
-    <string name="action_login_error"> 用户名或密码不正确,请重试!</string>
+    <string name="action_wait_loging">正在登录，请稍后\u2026</string>
+    <string name="action_wait_loginsuccess">登录成功，正在跳转\u2026</string>
+    <string name="action_wait_reging">正在注册，请稍后\u2026</string>
+    <string name="action_wait_regsuccess">注册成功，正在跳转\u2026</string>
+    <string name="action_login_error"> 用户名或密码不正确，请重试!</string>
     <string name="login_input_hint">请输入用户名/手机号/邮箱</string>
     <string name="register_input_hint">请输入用户名</string>
     <string name="login_input1_hint">请输入手机号/邮箱</string>
@@ -169,18 +170,18 @@
     <string name="login_input_old_pwd_hint">请输入原密码</string>
     <string name="login_input_new_pwd_hint">请输入新密码</string>
     <string name="login_input_snew_pwd_hint">请确认新密码</string>
-    <string name="login_input_updatepwd_success">密码修改成功,请记住您的新密码~</string>
-    <string name="action_regist_fail">注册失败,请重试!</string>
+    <string name="login_input_updatepwd_success">密码修改成功，请记住您的新密码~</string>
+    <string name="action_regist_fail">注册失败，请重试!</string>
     <string name="register_protocol">同意《用户注册服务协议》</string>
     <string name="register_agress_protocol">请先同意《用户注册服务协议》</string>
     <string name="protocol_title">《用户注册服务协议》</string>
-    <string name="register_warn">提示:每个用户只能注册一次,请注意同步资料！ 若想重新注册,请清除App缓存或者到设置界面进行清除本地缓存操作。</string>
-    <string name="account_go_login">已有账号,登录>></string>
+    <string name="register_warn">提示:每个用户只能注册一次，请注意同步资料！ 若想重新注册，请清除App缓存或者到设置界面进行清除本地缓存操作。</string>
+    <string name="account_go_login">已有账号，登录>></string>
     <string name="action_logout">退出登录</string>
     <string name="action_logout_success">注销成功</string>
-    <string name="action_logout_fail">注销失败,请重试</string>
+    <string name="action_logout_fail">注销失败，请重试</string>
     <string name="action_no_login">未登录</string>
-    <string name="action_login_fail">登录失败,请重试</string>
+    <string name="action_login_fail">登录失败，请重试</string>
     
     
     <!-- 第三方登录 -->
@@ -194,15 +195,15 @@
 	<string name="weibosdk_demo_toast_auth_success">授权成功</string>
     <string name="weibosdk_demo_toast_auth_failed">授权失败</string>
     <string name="weibosdk_demo_toast_auth_canceled">取消授权</string>
-    <string name="weibosdk_demo_token_has_existed">Token 仍在有效期内,无需再次登录。</string>
+    <string name="weibosdk_demo_token_has_existed">Token 仍在有效期内，无需再次登录。</string>
     
      <!-- personal center -->
     <string name="personal_center">个人中心</string>
     <string name="action_upload_file">通过本地图库</string>
     <string name="action_upload_camera">通过照相机</string>
     <string name="max_photo_size">抱歉!上传的图片不能超过1M!</string>
-    <string name="m_failLoad">请求失败,请重试</string>
-    <string name="file_failLoad">更新失败,请重试</string>
+    <string name="m_failLoad">请求失败，请重试</string>
+    <string name="file_failLoad">更新失败，请重试</string>
     <string name="file_successLoad">文件上传成功</string>
     <string name="personal_c_item1">我的收藏</string>
     <string name="personal_c_item2">我的分享</string>
@@ -215,7 +216,8 @@
     <string name="personal_c_item13">未填写</string>
     <string name="personal_c_item14">完整度:%d%%</string>
     <string name="personal_c_item15">已有%d项经验</string>
-    <string name="personal_c_item16">上次更新:%s</string>
+    <string name="personal_c_item16">上次同步:%s</string>
+    <string name="personal_c_item161">数据未同步</string>
     <string name="personal_c_item17">应届生</string>
     <string name="personal_c_item18">%d年工作经验</string>
     <string name="personal_c_item19">已有%d项经历</string>
@@ -234,11 +236,11 @@
     <string name="action_edit_success">编辑成功</string>
     <string name="action_edit_fail">编辑失败</string>
     <string name="action_update_success">更新成功</string>
-    <string name="action_update_fail">更新失败,请重试</string>
+    <string name="action_update_fail">更新失败，请重试</string>
     <string name="action_favorites">收藏</string>
     <string name="action_submit">提&#160;&#160;交</string>
     <string name="action_delete_success">删除成功</string>
-    <string name="action_delete_fail">删除失败,请重试</string>
+    <string name="action_delete_fail">删除失败，请重试</string>
 	<string name="action_button_cancle">取&#160;&#160;消</string>
 	<string name="action_do">更多操作</string>
 	<string name="action_detail">详&#160;&#160;情</string>
@@ -246,11 +248,11 @@
 	
     <!-- UI dialog msg -->
     <string name="upload_loading">更新中</string>
-    <string name="dialog_action_alert">您还没登录,创建的简历会保存到本地,<![CDATA[ <font color=red>若卸载或清除APP数据,将不会显示您创建的简历信息</font> ]]>,建议先登录或继续操作！</string>
-    <string name="dialog_action_cache_alert">该操作会清除您创建的简历信息,请确保你的简历数据已同步！</string>
-    <string name="dialog_action_delete_alert">该操作会删除本地数据,确认删除吗？</string>
-    <string name="dialog_action_delete_sure_alert">若联网中,本次操作也会同步删除远端这条记录</string>
-    <string name="dialog_action_topic_delete_sure_alert"><![CDATA[ <font color=red>该操作会删除本地数据,确认删除吗？</font> <br/><br/>]]>若联网中,本次操作也会同步删除远端这条记录</string>
+    <string name="dialog_action_alert">您还没登录，创建的简历会保存到本地，<![CDATA[ <font color=red>若卸载或清除APP数据，将不会显示您创建的简历信息</font> ]]>，建议先登录或继续操作！</string>
+    <string name="dialog_action_cache_alert">该操作会清除您创建的简历信息，请确保你的简历数据已同步！</string>
+    <string name="dialog_action_delete_alert">该操作会删除本地数据，确认删除吗？</string>
+    <string name="dialog_action_delete_sure_alert">若联网中，本次操作也会同步删除远端这条记录</string>
+    <string name="dialog_action_topic_delete_sure_alert"><![CDATA[ <font color=red>该操作会删除本地数据，确认删除吗？</font> <br/><br/>]]>若联网中，本次操作也会同步删除远端这条记录</string>
     <string name="dialog_action_logout">确认退出登录吗？</string>
     <string name="dialog_action_golink">确定访问&#160;%1$s&#160;网站吗？</string>
 
@@ -259,9 +261,9 @@
     <string name="show_button_sure">确&#160;&#160;认</string>
     <string name="show_button_continue">继&#160;&#160;续</string>
     <string name="show_nolonger">不再显示</string>
-    <string name="show_button_check">正在校验信息,请稍后\u2026</string>
+    <string name="show_button_check">正在校验信息，请稍后\u2026</string>
     <string name="show_button_getpwd">重置密码</string>
-    <string name="show_button_updatepwd">正在更新,请稍后\u2026</string>
+    <string name="show_button_updatepwd">正在更新，请稍后\u2026</string>
     <string name="show_button_goto">正在跳转\u2026</string>
     <string name="show_button_update">密码更新成功</string>
     <string name="button_use">使&#160;用</string>
@@ -310,7 +312,7 @@
     <string name="reg_info_phone">手机号不合法！</string>
     <string name="resume_address">城市列表</string>
     <string name="action_baseinfo_null">请先填写基本信息</string>
-    <string name="baseinfo_bt_item">完善以下,就可预览属于自己的简历喽~</string>
+    <string name="baseinfo_bt_item">完善以下，就可预览属于自己的简历喽~</string>
     <string name="baseinfo_xt_item">选填信息</string>
     <string name="tag_time_between">至</string>
     <string name="info_name">姓名</string>
@@ -395,13 +397,13 @@
     <string name="we_info_jobsalary_9">25000元/月以上</string>
     <string name="we_info_jobsalary_10">保密</string>
     <string name="we_info_workdesc">工作描述</string>
-    <string name="we_info_workdescdetail">请详细描述您的职责范围,工作任务以及取得的成绩等</string>
+    <string name="we_info_workdescdetail">请详细描述您的职责范围，工作任务以及取得的成绩等</string>
     <!-- 工作简历 -->
 
     <!-- 自我评价 -->
-    <string name="ev_info_default_1">对自己做一个简短评价,简明扼要地描述您的职业优势,让用人单位快速地了解您!</string>
+    <string name="ev_info_default_1">对自己做一个简短评价，简明扼要地描述您的职业优势，让用人单位快速地了解您!</string>
     <string name="ev_info_default_2">以上请填写内容在1000字以内!</string>
-    <string name="ev_info_default_3">留一份性格标签,让他人更能了解你</string>
+    <string name="ev_info_default_3">留一份性格标签，让他人更能了解你</string>
     <string name="ev_info_self_evaluation">自我评价</string>
     <string name="ev_info_input_self_evaluation">请输入自我评价(限1000字)</string>
     <string name="ev_info_career_goal">职业目标</string>
@@ -447,7 +449,7 @@
     <!-- 教育培训经历 -->
 
     <!-- 求职意向 -->
-    <string name="ji_info_default_1">建议简明扼要,不要将几个不相关的职位堆砌在一起,否则,这样会让HR认为您的职业方向不清晰。</string>
+    <string name="ji_info_default_1">建议简明扼要，不要将几个不相关的职位堆砌在一起，否则，这样会让HR认为您的职业方向不清晰。</string>
     <string name="ji_info_expectedworkingproperty">期望工作性质</string>
     <string name="ji_info_choose_expectedworkingproperty">请选择期望工作性质</string>
     <string name="ji_info_expectedworkingproperty_1">全职</string>
@@ -475,9 +477,9 @@
     <string name="ji_info_workingstate">工作状态</string>
     <string name="ji_info_choose_workingstate">请选择工作状态</string>
     <string name="ji_info_curworkingstate">目前工作状况:&#160;</string>
-    <string name="ji_info_curworkingstate_1">我目前在职,正考虑换个工作环境</string>
-    <string name="ji_info_curworkingstate_2">目前已离职,可立即上岗</string>
-    <string name="ji_info_curworkingstate_3">我对目前的工作比较满意,若有更好的工作机会,也可以考虑</string>
+    <string name="ji_info_curworkingstate_1">我目前在职，正考虑换个工作环境</string>
+    <string name="ji_info_curworkingstate_2">目前已离职，可立即上岗</string>
+    <string name="ji_info_curworkingstate_3">我对目前的工作比较满意，若有更好的工作机会，也可以考虑</string>
     <string name="ji_info_curworkingstate_4">目前暂无跳槽的打算</string>
     <string name="ji_info_curworkingstate_5">应届毕业生</string>
     
@@ -563,15 +565,15 @@
      <string name="accordion">风车</string>
 
 	<string name="protocol_content">
-	   	在此特别提醒您（用户）在注册成为用户之前,请认真阅读本《用户协议》（以下简称“协议”）,
+	   	在此特别提醒您（用户）在注册成为用户之前，请认真阅读本《用户协议》（以下简称“协议”），
 	   	确保您充分理解本协议中各条款。请您审慎阅读并选择接受或不接受本协议。<![CDATA[<br/><br/>]]>
-	   	除非您接受本协议所有条款,否则您无权注册、登录或使用本协议所涉服务。
-	   	您的注册、登录、使用等行为将视为对本协议的接受,并同意接受本协议各项条款的约束。
+	   	除非您接受本协议所有条款，否则您无权注册、登录或使用本协议所涉服务。
+	   	您的注册、登录、使用等行为将视为对本协议的接受，并同意接受本协议各项条款的约束。
 	   	“用户”是指注册、登录、使用本服务的个人。<![CDATA[<br/><br/>]]>
-	   	本协议可由《有云简历》开发中心随时更新,更新后的协议条款一旦公布即代替原来的协议条款,恕不再另行通知,用户可在本APP中查阅最新版协议条款。
-	   	在修改协议条款后,如果用户不接受修改后的条款,请立即停止使用提供的服务,用户继续使用提供的服务将被视为接受修改后的协议。 <![CDATA[<br/><br/>]]>
-	   	请用户仔细阅读,自主考虑风险。未成年人应在法定监护人的陪同下阅读本协议。
-	   	若用户和开发中心之间发生任何纠纷或争议,首先应友好协商解决,协商不成的,用户同意将纠纷或争议提交住所地有管辖权的人民法院管辖。 <![CDATA[<br/><br/>]]>
-	   	本协议的任何条款无论因何种原因无效或不具可执行性,其余条款仍有效,对双方具有约束力。
+	   	本协议可由《有云简历》开发中心随时更新，更新后的协议条款一旦公布即代替原来的协议条款，恕不再另行通知，用户可在本APP中查阅最新版协议条款。
+	   	在修改协议条款后，如果用户不接受修改后的条款，请立即停止使用提供的服务，用户继续使用提供的服务将被视为接受修改后的协议。 <![CDATA[<br/><br/>]]>
+	   	请用户仔细阅读，自主考虑风险。未成年人应在法定监护人的陪同下阅读本协议。
+	   	若用户和开发中心之间发生任何纠纷或争议，首先应友好协商解决，协商不成的，用户同意将纠纷或争议提交住所地有管辖权的人民法院管辖。 <![CDATA[<br/><br/>]]>
+	   	本协议的任何条款无论因何种原因无效或不具可执行性，其余条款仍有效，对双方具有约束力。
 	</string>
 </resources>

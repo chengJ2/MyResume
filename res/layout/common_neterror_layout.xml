@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+ 
+  <TextView
+      android:id="@+id/msgText"
+      style="@style/comm_error_style"
+      android:drawableTop="@drawable/net_error"/>
+  
+  <Button
+      android:id="@+id/reloadBtn"
+      style="@style/comm_error_style"
+      android:layout_height="@dimen/common_neterror_height"
+      android:background="@drawable/button_reload"
+      android:padding="@dimen/margin_8"
+      android:layout_marginTop="@dimen/margin_10"
+      android:text="@string/reload_network" 
+      android:layout_below="@id/msgText"/>
+ 	
+ </RelativeLayout>

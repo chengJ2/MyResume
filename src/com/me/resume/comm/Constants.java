@@ -195,4 +195,5 @@ public class Constants {
     
     public static final String GOHOME= "gohome";
     
+    public static final String SYNC_TIME = "SYNC_TIME";
 }

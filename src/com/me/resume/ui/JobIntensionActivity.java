@@ -469,6 +469,7 @@ public class JobIntensionActivity extends BaseActivity implements OnClickListene
 					try {
 						if (map.get("msg").get(0).equals(ResponseCode.RESULT_OK)) {
 							set3Msg(R.string.action_sync_success);
+							preferenceUtil.setPreferenceData(Constants.SYNC_TIME, TimeUtils.getCurrentTimeString());
 						}
 					} catch (Exception e) {
 						set3Msg(R.string.action_sync_fail);

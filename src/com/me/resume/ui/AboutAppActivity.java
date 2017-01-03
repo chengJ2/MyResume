@@ -164,7 +164,7 @@ public class AboutAppActivity extends BaseActivity implements OnClickListener{
 			}
 			
 			public void error() {
-				set3Msg(R.string.timeout_network);
+				toastMsg(R.string.timeout_network);
 			}
 
 			@Override

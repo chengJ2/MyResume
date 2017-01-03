@@ -14,6 +14,8 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.TextView;
 
@@ -43,7 +45,12 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 
 	private ViewHolder viewHolder;
 	private XListView topicdetailListView;
+	
 	private TextView flag;
+	
+	private RelativeLayout msgLayout;
+	private TextView msgText;
+	private Button reloadBtn;
 	
 	private boolean isAll=false;//是否加载完毕
 	private int pos=0;
@@ -72,16 +79,16 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 						commMapList.putAll(newMap);
 						setTopicListData(commMapList);
 						
-						if(isAll){
+						/*if(isAll){
 							finishLoading();
 						}else{
 							topicdetailListView.setPullLoadEnable(true);
-						}
+						}*/
 					}else{//加载更多
 						commMapList.putAll(getNewMap(commMapList, newMap));
 						commapBaseAdapter.notifyDataSetChanged(pos);
 					}
-					
+					finishLoading();
 				}
 				break;
 			case 12:
@@ -89,6 +96,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 				finishLoading();
 				if(!isLoadMore){
 					topicdetailListView.setVisibility(View.GONE); 
+					msgLayout.setVisibility(View.GONE);
 					flag.setText(getString(R.string.en_nodata));
 					flag.setVisibility(View.VISIBLE);
 				}
@@ -110,16 +118,6 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		View v = View.inflate(self,R.layout.activity_topic_list_layout, null);
 		boayLayout.addView(v);
 		
-		topicdetailListView = findView(R.id.topicdetailListView);
-		topicdetailListView.setPullLoadEnable(true);
-		topicdetailListView.setXListViewListener(this);
-		
-		flag = findView(R.id.flag);
-		flag.setText(getStrValue(R.string.item_text43));
-		flag.setVisibility(View.VISIBLE);
-		
-		commMapList = new HashMap<String, List<String>>();
-		
 		initView();
 	}
 	
@@ -130,6 +128,18 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		setRight2IconVisible(View.GONE);
 		setfabLayoutVisible(View.GONE);
 		
+		topicdetailListView = findView(R.id.topicdetailListView);
+		topicdetailListView.setPullLoadEnable(true);
+		topicdetailListView.setXListViewListener(this);
+		
+		flag = findView(R.id.flag);
+		
+		msgLayout = (RelativeLayout)findView(R.id.msgLayout);
+		msgText  = (TextView)findView(R.id.msgText);
+		reloadBtn = (Button) findView(R.id.reloadBtn);
+		reloadBtn.setOnClickListener(this);
+		commMapList = new HashMap<String, List<String>>();
+		
 		String topicId = getIntent().getStringExtra(Constants.TOPICID);
 		if (RegexUtil.checkNotNull(topicId)) {
 			setTopTitle(getTitle(CommUtil.parseInt(topicId)));
@@ -137,7 +147,20 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		}else{
 			typeStr = "!=0";
 		}
-		mHandler.sendEmptyMessageDelayed(100, 200);
+		
+		loadData();
+	}
+	
+	private void loadData(){
+		if (CommUtil.isNetworkAvailable(self)) {
+			flag.setText(getStrValue(R.string.item_text43));
+			flag.setVisibility(View.VISIBLE);
+			mHandler.sendEmptyMessageDelayed(100, 200);
+		}else{
+			msgLayout.setVisibility(View.VISIBLE);
+			msgText.setText(getString(R.string.check_network));
+			topicdetailListView.setVisibility(View.GONE);
+		}
 	}
 	
 	/**
@@ -162,17 +185,22 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		requestData("pro_gettopic_bypage", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				set3Msg(R.string.timeout_network);
+				flag.setVisibility(View.GONE);
+				msgLayout.setVisibility(View.VISIBLE);
+				msgText.setText(getString(R.string.timeout_network));
+				topicdetailListView.setVisibility(View.GONE);
 			}
 			
 			public void success(Map<String, List<String>> map) {
-				if (map.get("id").size() < 2) {
+				topicdetailListView.setVisibility(View.VISIBLE); 
+				msgLayout.setVisibility(View.GONE);
+				flag.setVisibility(View.GONE);
+				if (map.get("id").size() < 10) {
 					isAll = true;
 				}else{
 					isAll = false;
 				}
 				mHandler.sendMessage(mHandler.obtainMessage(13, map));
-				
 			}
 
 			@Override
@@ -217,11 +245,6 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 						String id = map.get("id").get(position);
 						String type = map.get("type").get(position);
 						String detailUrl = map.get("detail_part2").get(position);
-						//String fromUrl2 = map.get("from_url2").get(position);
-						/*String detail3 = map.get("detail_part3").get(position);
-						String fromUrl3 = map.get("from_url3").get(position);
-						String fromUrl4 = map.get("from_url4").get(position);
-						String fromUrl5 = map.get("from_url5").get(position);*/
 						
 						Bundle bundle = new Bundle();
 						bundle.putString("topicId", id);
@@ -230,11 +253,6 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 						bundle.putString("detail", detail);
 						bundle.putString("from_url", fromUrl);
 						bundle.putString("detail_url", detailUrl);
-						//bundle.putString("from_url2", fromUrl2);
-						/*bundle.putString("detail3", detail3);
-						bundle.putString("from_url3", fromUrl3);
-						bundle.putString("from_url4", fromUrl4);
-						bundle.putString("from_url5", fromUrl5);*/
 						bundle.putString("createtime", createtime);
 						bundle.putString("site_name", sitename);
 						bundle.putString("link_site", linksite);
@@ -262,8 +280,6 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		};
 		
 		topicdetailListView.setAdapter(commapBaseAdapter);
-		topicdetailListView.setVisibility(View.VISIBLE); 
-		flag.setVisibility(View.GONE);
 		
 		topicdetailListView.setOnScrollListener(new OnScrollListener() {
 			@Override
@@ -301,6 +317,9 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 	public void onClick(View v) {
 		super.onClick(v);
 		switch (v.getId()) {
+		case R.id.reloadBtn:
+			loadData();
+			break;
 		default:
 			break;
 		}
@@ -321,7 +340,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		if(!isAll){
 			pos++;
 			getTopciListData(pos);
-			topicdetailListView.setPullLoadEnable(isLoadMore);
+			//topicdetailListView.setPullLoadEnable(isLoadMore);
 		}else{
 			toastMsg(R.string.xlistview_footer_loadfinish);
 			finishLoading();

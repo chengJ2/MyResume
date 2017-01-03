@@ -78,7 +78,7 @@ public class FeedBackActivity extends BaseActivity {
 						postData();
 					}
 				}else{
-					set3Msg(R.string.check_network);
+					toastMsg(R.string.check_network);
 				}
 			}
 		});
@@ -110,10 +110,10 @@ public class FeedBackActivity extends BaseActivity {
 			setMsg(R.string.feedback_info_1);
 			return false;
 		}
-		if(!RegexUtil.checkNotNull(feedcontactStr)){
+		/*if(!RegexUtil.checkNotNull(feedcontactStr)){
 			setMsg(R.string.feedback_info_2);
 			return false;
-		}
+		}*/
 		return true;
 	}
 	
@@ -134,13 +134,15 @@ public class FeedBackActivity extends BaseActivity {
 		requestData("pro_set_feedback", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				set3Msg(R.string.timeout_network);
+				toastMsg(R.string.timeout_network);
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				try {
 					if (map.get(ResponseCode.MSG).get(0).equals(ResponseCode.RESULT_OK)) {
-						set3Msg(R.string.feedback_info_3);
+						toastMsg(R.string.feedback_info_3);
+						feeddesc.setText("");
+						feedcontact.setText("");
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
