@@ -19,11 +19,11 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.EditText;
@@ -74,7 +74,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 	
 	protected MarqueeText msg;
 	
-	protected LinearLayout boayLayout;
+	protected LinearLayout bodyLayout;
 	
 	private RelativeLayout fabLayout;
 	
@@ -172,7 +172,7 @@ public class BaseActivity extends SwipeBackActivity implements OnClickListener,T
 		right_icon_more = findView(R.id.right_icon_more);
 		msg = findView(R.id.msg);
 		
-		boayLayout = findView(R.id.bodyLayout);
+		bodyLayout = findView(R.id.bodyLayout);
 		
 		fabLayout = findView(R.id.fabLayout);
 		saveButton = findView(R.id.save);

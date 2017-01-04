@@ -153,9 +153,9 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 			return;
 		}
 		CommUtil.getDisplay(self);
-		boayLayout.removeAllViews();
+		bodyLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_home, null);
-		boayLayout.addView(v);
+		bodyLayout.addView(v);
 			
 		findViews();
 		setCoverView(true);
@@ -417,7 +417,7 @@ public class HomeActivity extends BaseActivity implements OnClickListener {
 					public void onClick(View view) {
 						ActivityUtils.startActivityPro(self, 
 								Constants.PACKAGENAMECHILD + Constants.TOPICLISTDETAIL, 
-								Constants.TOPICID,String.valueOf(position),false);
+								Constants.TOPICID,String.valueOf(position+1),false);
 					}
 				});
 			}

@@ -105,9 +105,9 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		boayLayout.removeAllViews();
+		bodyLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_projectexperience_layout, null);
-		boayLayout.addView(v);
+		bodyLayout.addView(v);
 		
 		findViews();
 		initViews();

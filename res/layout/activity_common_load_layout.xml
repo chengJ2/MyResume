@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+     <LinearLayout
+        android:id="@+id/commbodyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="visible" >
+    </LinearLayout>
+
+     <TextView
+        android:id="@+id/flag"
+        style="@style/comm_nodata_style"
+        android:layout_centerInParent="true"
+        android:visibility="visible" />
+
+     <include
+        android:id="@+id/msgLayout"
+        layout="@layout/common_neterror_layout"
+        android:visibility="gone" />
+     
+</RelativeLayout>

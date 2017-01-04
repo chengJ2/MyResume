@@ -75,9 +75,9 @@ public class TopicViewDetailActivity extends BaseActivity implements OnClickList
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		boayLayout.removeAllViews();
+		bodyLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_topic_view2_layout, null);
-		boayLayout.addView(v);
+		bodyLayout.addView(v);
 		
 		findView();
 		initView();

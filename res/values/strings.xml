@@ -16,7 +16,7 @@
     <!-- 网络相关 -->
     <string name="check_network">网络异常，请检查!</string>
     <string name="en_nodata">暂无数据</string>
-    <string name="timeout_network">网络请求数据超时</string>
+    <string name="timeout_network">网络请求数据超时!</string>
     <string name="request_error">请求异常，请检查!</string>
     <string name="app_server_error">因服务器升级维护，请稍后重试，敬请大家谅解！</string>
     <string name="reload_network">重新加载</string>
@@ -52,7 +52,7 @@
     <string name="item_text2">热门简历预览</string>
     <string name="item_text21">更多</string>
     <string name="item_text3">相关话题推荐</string>
-    <string name="item_text31">更多推荐</string>
+    <string name="item_text31">全部话题</string>
     <string name="item_text4">说说面试心得</string>
     <string name="item_text41">我来说</string>
     <string name="item_text42">暂无面试心得分享</string>

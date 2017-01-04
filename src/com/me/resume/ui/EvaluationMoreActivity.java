@@ -43,9 +43,9 @@ public class EvaluationMoreActivity extends BaseActivity implements OnClickListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		boayLayout.removeAllViews();
+		bodyLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_evalution_more_layout, null);
-		boayLayout.addView(v);
+		bodyLayout.addView(v);
 		
 		findView();
 		

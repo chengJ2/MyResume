@@ -129,9 +129,9 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		boayLayout.removeAllViews();
+		bodyLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_user_center_layout, null);
-		boayLayout.addView(v);
+		bodyLayout.addView(v);
 		findViews();
 		
 		setMsgHide();

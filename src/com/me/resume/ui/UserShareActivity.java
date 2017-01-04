@@ -44,9 +44,9 @@ public class UserShareActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		boayLayout.removeAllViews();
+		bodyLayout.removeAllViews();
 		View v = View.inflate(self, R.layout.user_share_layout, null);
-		boayLayout.addView(v);
+		bodyLayout.addView(v);
 
 		content = findView(R.id.input_share);
 		rg_status = findView(R.id.rg_status);

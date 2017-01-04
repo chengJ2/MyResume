@@ -56,9 +56,9 @@ public class UserRegProtocalActivity extends BaseActivity implements OnClickList
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		boayLayout.removeAllViews();
+		bodyLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_user_regprotocol_layout, null);
-		boayLayout.addView(v);
+		bodyLayout.addView(v);
 		
 		setTopTitle(getString(R.string.protocol_title));
 		setMsgHide();

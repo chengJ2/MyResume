@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.me.resume.BaseActivity;
 import com.me.resume.R;
 import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.Constants;
@@ -21,6 +20,7 @@ import com.me.resume.comm.ViewHolder;
 import com.me.resume.comm.ViewHolder.ClickEvent;
 import com.me.resume.tools.L;
 import com.me.resume.utils.ActivityUtils;
+import com.me.resume.utils.CommUtil;
 import com.me.resume.utils.DialogUtils;
 import com.me.resume.utils.TimeUtils;
 import com.umeng.analytics.MobclickAgent;
@@ -32,10 +32,9 @@ import com.umeng.analytics.MobclickAgent;
 * @date 2016/10/12 下午3:08:13 
 *
  */
-public class MyShareActivity extends BaseActivity {
+public class MyShareActivity extends CommLoadActivity {
 
 	private ListView myshareListView;
-	private TextView nodata;
 	
 	private Map<String, List<String>> sMap = new HashMap<String, List<String>>();
 	
@@ -63,6 +62,9 @@ public class MyShareActivity extends BaseActivity {
 			case 13:
 				startChildActivity(Constants.USERSHARE, false);
 				break;
+			case 100:
+				initData();
+				break;
 			default:
 				break;
 			}
@@ -72,21 +74,11 @@ public class MyShareActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		boayLayout.removeAllViews();
+		commbodyLayout.removeAllViews();
 		View v = View.inflate(self, R.layout.my_collection_layout, null);
-		boayLayout.addView(v);
-
+		commbodyLayout.addView(v);
 		setTopTitle(R.string.personal_c_item2);
-		setMsgHide();
-		setRightIcon(R.drawable.icon_sync);
-		setRight2IconVisible(View.GONE);
-		setfabLayoutVisible(View.GONE);
-
 		myshareListView = findView(R.id.collectionListView);
-		nodata = findView(R.id.nodata);
-		nodata.setText(getStrValue(R.string.item_text43));
-		nodata.setVisibility(View.VISIBLE);
-		
 	}
 	
 	private void initData() {
@@ -101,9 +93,9 @@ public class MyShareActivity extends BaseActivity {
 		requestData("pro_getmyshare", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				set2Msg(getStrValue(R.string.timeout_network));
-				nodata.setText(getStrValue(R.string.en_nodata));
-				nodata.setVisibility(View.VISIBLE);
+				setFlagHide();
+				setMsgLayoutShow(R.string.timeout_network);
+				myshareListView.setVisibility(View.GONE);
 			}
 			
 			public void success(final Map<String, List<String>> map) {
@@ -163,21 +155,20 @@ public class MyShareActivity extends BaseActivity {
 							}
 						};
 					}
+					setFlagHide();
+					setMsgLayoutHide();
 					myshareListView.setVisibility(View.VISIBLE);
 					myshareListView.setAdapter(commapBaseAdapter);
-					setMsgHide();
-					nodata.setVisibility(View.GONE);
 				} catch (Exception e) {
-					setMsgHide();
 					L.e(e.getMessage());
 				}
 			}
 
 			@Override
 			public void noData() {
-				setMsgHide();
-				nodata.setText(getStrValue(R.string.en_nodata));
-				nodata.setVisibility(View.VISIBLE);
+				setFlagShow(R.string.en_nodata);
+				setMsgLayoutHide();
+				myshareListView.setVisibility(View.GONE);
 			}
 		});
 	}
@@ -202,7 +193,7 @@ public class MyShareActivity extends BaseActivity {
 		requestData("pro_setmyshare", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				set2Msg(getStrValue(R.string.timeout_network));
+				toastMsg(R.string.timeout_network);
 				DialogUtils.dismissPopwindow();
 			}
 			
@@ -214,14 +205,12 @@ public class MyShareActivity extends BaseActivity {
 						initData();
 					}
 				} catch (Exception e) {
-					setMsgHide();
 					L.e(e.getMessage());
 				}
 			}
 
 			@Override
 			public void noData() {
-				setMsgHide();
 				DialogUtils.dismissPopwindow();
 			}
 		});
@@ -231,7 +220,16 @@ public class MyShareActivity extends BaseActivity {
 	protected void onResume() {
 		super.onResume();
 		MobclickAgent.onResume(this);
-		initData();
+		reloadData();
+	}
+	
+	private void reloadData(){
+		if (CommUtil.isNetworkAvailable(self)) {
+			setFlagShow(R.string.item_text43);
+			mHandler.sendEmptyMessageDelayed(100, 200);
+		}else{
+			setMsgLayoutShow(R.string.check_network);
+		}
 	}
 	
 	@Override
@@ -246,8 +244,9 @@ public class MyShareActivity extends BaseActivity {
 		case R.id.left_lable:
 			scrollToFinishActivity();
 			break;
+		case R.id.reloadBtn:
 		case R.id.right_icon:
-			initData();
+			reloadData();
 			break;
 		default:
 			break;

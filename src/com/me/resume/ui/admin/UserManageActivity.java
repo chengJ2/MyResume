@@ -30,9 +30,9 @@ public class UserManageActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		boayLayout.removeAllViews();
+		bodyLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.admin_activity_usermanager_layout, null);
-		boayLayout.addView(v);
+		bodyLayout.addView(v);
 		
 		weeknewusers = findView(R.id.weeknewusers);
 		totalusers = findView(R.id.totalusers);

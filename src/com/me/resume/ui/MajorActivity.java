@@ -68,9 +68,9 @@ public class MajorActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		boayLayout.removeAllViews();
+		bodyLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_category_layout, null);
-		boayLayout.addView(v);
+		bodyLayout.addView(v);
 		
 		setTopTitle(R.string.ed_info_majorname);
 		setMsgHide();

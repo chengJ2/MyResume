@@ -46,10 +46,10 @@ public class UserNewPwdActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		boayLayout.removeAllViews();
+		bodyLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_user_find_upd_pwd_layout, null);
-		boayLayout.addView(v);
-		boayLayout.setBackgroundResource(R.drawable.user_bg_shape);
+		bodyLayout.addView(v);
+		bodyLayout.setBackgroundResource(R.drawable.user_bg_shape);
 		setTopTitle(R.string.action_login_updatepwd);
 		setMsgHide();
 		setRightIconVisible(View.GONE);

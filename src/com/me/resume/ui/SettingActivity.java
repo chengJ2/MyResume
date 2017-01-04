@@ -80,10 +80,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		boayLayout.removeAllViews();
+		bodyLayout.removeAllViews();
 		
 		View v = View.inflate(self,R.layout.activity_setting, null);
-		boayLayout.addView(v);
+		bodyLayout.addView(v);
 	
 		findViews();
 		initViews();

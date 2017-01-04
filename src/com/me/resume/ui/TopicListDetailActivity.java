@@ -41,16 +41,10 @@ import com.umeng.analytics.MobclickAgent;
 * @date 2016/5/12 上午9:07:55 
 *
  */
-public class TopicListDetailActivity extends BaseActivity implements OnClickListener,IXListViewListener{
+public class TopicListDetailActivity extends CommLoadActivity implements OnClickListener,IXListViewListener{
 
 	private ViewHolder viewHolder;
 	private XListView topicdetailListView;
-	
-	private TextView flag;
-	
-	private RelativeLayout msgLayout;
-	private TextView msgText;
-	private Button reloadBtn;
 	
 	private boolean isAll=false;//是否加载完毕
 	private int pos=0;
@@ -96,9 +90,8 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 				finishLoading();
 				if(!isLoadMore){
 					topicdetailListView.setVisibility(View.GONE); 
-					msgLayout.setVisibility(View.GONE);
-					flag.setText(getString(R.string.en_nodata));
-					flag.setVisibility(View.VISIBLE);
+					setMsgLayoutHide();
+					setFlagShow(R.string.en_nodata);
 				}
 				break;
 			case 100:
@@ -114,30 +107,20 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		boayLayout.removeAllViews();
+		commbodyLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_topic_list_layout, null);
-		boayLayout.addView(v);
+		commbodyLayout.addView(v);
 		
 		initView();
 	}
 	
 	private void initView(){
 		setTopTitle(R.string.item_text31);
-		setMsgHide();
-		setRightIconVisible(View.GONE);
-		setRight2IconVisible(View.GONE);
-		setfabLayoutVisible(View.GONE);
 		
 		topicdetailListView = findView(R.id.topicdetailListView);
 		topicdetailListView.setPullLoadEnable(true);
 		topicdetailListView.setXListViewListener(this);
 		
-		flag = findView(R.id.flag);
-		
-		msgLayout = (RelativeLayout)findView(R.id.msgLayout);
-		msgText  = (TextView)findView(R.id.msgText);
-		reloadBtn = (Button) findView(R.id.reloadBtn);
-		reloadBtn.setOnClickListener(this);
 		commMapList = new HashMap<String, List<String>>();
 		
 		String topicId = getIntent().getStringExtra(Constants.TOPICID);
@@ -145,7 +128,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 			setTopTitle(getTitle(CommUtil.parseInt(topicId)));
 			typeStr = "="+topicId;
 		}else{
-			typeStr = "!=0";
+			typeStr = "!=0"; // All Data
 		}
 		
 		loadData();
@@ -153,13 +136,10 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 	
 	private void loadData(){
 		if (CommUtil.isNetworkAvailable(self)) {
-			flag.setText(getStrValue(R.string.item_text43));
-			flag.setVisibility(View.VISIBLE);
+			setFlagShow(R.string.item_text43);
 			mHandler.sendEmptyMessageDelayed(100, 200);
 		}else{
-			msgLayout.setVisibility(View.VISIBLE);
-			msgText.setText(getString(R.string.check_network));
-			topicdetailListView.setVisibility(View.GONE);
+			setMsgLayoutShow(R.string.check_network);
 		}
 	}
 	
@@ -170,7 +150,7 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 	 */
 	private String getTitle(int topicId){
 		String[] item_text = CommUtil.getArrayValue(self,R.array.review_link_topics); 
-		return item_text[topicId];
+		return item_text[topicId-1];
 	}
 	
 	private void getTopciListData(int position){
@@ -185,16 +165,15 @@ public class TopicListDetailActivity extends BaseActivity implements OnClickList
 		requestData("pro_gettopic_bypage", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				flag.setVisibility(View.GONE);
-				msgLayout.setVisibility(View.VISIBLE);
-				msgText.setText(getString(R.string.timeout_network));
+				setFlagHide();
+				setMsgLayoutShow(R.string.timeout_network);
 				topicdetailListView.setVisibility(View.GONE);
 			}
 			
 			public void success(Map<String, List<String>> map) {
 				topicdetailListView.setVisibility(View.VISIBLE); 
-				msgLayout.setVisibility(View.GONE);
-				flag.setVisibility(View.GONE);
+				setFlagHide();
+				setMsgLayoutHide();
 				if (map.get("id").size() < 10) {
 					isAll = true;
 				}else{

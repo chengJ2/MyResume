@@ -8,8 +8,7 @@
      <ImageView 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dip"
-        android:layout_marginBottom="70dip"
+        android:layout_marginBottom="80dip"
         android:src="@drawable/msgboard"
         android:scaleType="fitXY"
         android:layout_centerHorizontal="true"/>
@@ -17,18 +16,19 @@
       <TextView
         android:id="@+id/item1"
         style="@style/index_top_text"
-        android:layout_marginTop="25dip"
+        android:layout_marginTop="15dip"
         android:textColor="@color/red"
         android:text="@string/resume_message" />
      
 	<TextView
         android:id="@+id/item2"
         style="@style/main_common_text"
-        android:paddingLeft="50dip"
-        android:paddingRight="50dip"
-        android:layout_marginTop="110dip"
-        android:lineSpacingExtra="@dimen/margin_8"
-        android:textSize="@dimen/middle_text_size_dp"
+        android:paddingLeft="40dip"
+        android:paddingRight="40dip"
+        android:layout_below="@id/item1"
+        android:layout_marginTop="@dimen/margin_10"
+        android:lineSpacingExtra="@dimen/margin_5"
+        android:textSize="@dimen/small_text_size"
         android:text="@string/resume_mywords"
         android:textColor="@color/black" />
     

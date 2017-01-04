@@ -10,16 +10,5 @@
         android:id="@+id/topicdetailListView"
         style="@style/comm_listview_style"
         android:footerDividersEnabled="false"
-        android:visibility="visible" />
-
-    <TextView
-        android:id="@+id/flag"
-        style="@style/comm_nodata_style"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
-
-     <include
-        android:id="@+id/msgLayout"
-        layout="@layout/common_neterror_layout"
         android:visibility="gone" />
 </RelativeLayout>

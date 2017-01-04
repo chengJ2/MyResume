@@ -70,9 +70,9 @@ public class IndustryTypeActivity extends BaseActivity implements OnClickListene
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		boayLayout.removeAllViews();
+		bodyLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_industry_type_layout, null);
-		boayLayout.addView(v);
+		bodyLayout.addView(v);
 		
 		setTopTitle(R.string.resume_industrytype);
 		setMsgHide();

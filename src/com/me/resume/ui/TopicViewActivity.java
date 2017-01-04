@@ -74,9 +74,9 @@ public class TopicViewActivity extends BaseActivity implements OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		boayLayout.removeAllViews();
+		bodyLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.activity_topic_view_layout, null);
-		boayLayout.addView(v);
+		bodyLayout.addView(v);
 		
 		findView();
 		initView();

@@ -15,9 +15,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.CommForMapArrayBaseAdapter;
@@ -39,12 +37,13 @@ import com.whjz.android.text.CommonText;
 * @date 2016/5/20 上午10:28:49 
 *
  */
-public class MyCollectionActivity extends BaseActivity implements OnClickListener{
+public class MyCollectionActivity extends CommLoadActivity implements OnClickListener{
 
 	private ListView collectionListView;
-	private TextView nodata;
 	
 	private String cid;
+	private String sitename,linksite = null;
+	private int flag = 0;
 	
 	private Handler mHandler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
@@ -60,10 +59,13 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 					queryWhere = "delete from " + CommonText.MYCOLLECTION
 							+ " where userId = '" + uTokenId +"' and cId = " + cid;
 					dbUtil.deleteData(self, queryWhere);
-					set3Msg(R.string.action_delete_success);
+					toastMsg(R.string.action_delete_success);
 					initData();
 					syncDelData(cid);
 				}
+				break;
+			case 100:
+				initData();
 				break;
 			default:
 				break;
@@ -74,21 +76,15 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		boayLayout.removeAllViews();
+		commbodyLayout.removeAllViews();
 		View v = View.inflate(self, R.layout.my_collection_layout, null);
-		boayLayout.addView(v);
+		commbodyLayout.addView(v);
 
 		setTopTitle(R.string.personal_c_item1);
-		setMsgHide();
-		setRightIconVisible(View.GONE);
-		setRight2IconVisible(View.GONE);
-		setfabLayoutVisible(View.GONE);
 
 		collectionListView = findView(R.id.collectionListView);
-		nodata = findView(R.id.nodata);
-		nodata.setText(getStrValue(R.string.item_text43));
-		nodata.setVisibility(View.VISIBLE);
 		
+		setMsgLayoutHide();
 	}
 	
 	private void initData() {
@@ -109,17 +105,14 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 			};
 			collectionListView.setVisibility(View.VISIBLE);
 			collectionListView.setAdapter(commMapArrayAdapter);
-			nodata.setVisibility(View.GONE);
+			setFlagHide();
 		} else {
 			localHasData = false;
 			setRightIcon(R.drawable.icon_sync);
-			nodata.setText(getStrValue(R.string.en_nodata));
-			nodata.setVisibility(View.VISIBLE);
+			setFlagShow(R.string.en_nodata);
+			collectionListView.setVisibility(View.GONE);
 		}
 	}
-	
-	private String sitename,linksite = null;
-	private int flag = 0;
 	
 	/**
 	 * @Description: 我的收藏
@@ -256,7 +249,10 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 		requestData("pro_get_collection", 2, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				
+				set3Msg(R.string.timeout_network);
+				//setFlagHide();
+				//setMsgLayoutShow(R.string.timeout_network);
+				//collectionListView.setVisibility(View.GONE);
 			}
 			
 			public void success(Map<String, List<String>> map) {
@@ -269,9 +265,6 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 
 			@Override
 			public void noData() {
-				setMsgHide();
-				nodata.setText(getStrValue(R.string.en_nodata));
-				nodata.setVisibility(View.VISIBLE);
 			}
 		});
 		
@@ -282,6 +275,7 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 	 * @param map
 	 */
 	private void setDataFromServer(Map<String, List<String>> map){
+		dbUtil.deleteData(self, "delete from " + CommonText.MYCOLLECTION); // 删除本地
 		int size = map.get("userId").size();
 		for (int i = 0; i < size; i++) {
 			ContentValues cValues = new ContentValues();
@@ -292,13 +286,13 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 			cValues.put("content", getServerKeyValue(map,"content",i));
 			cValues.put("site_name", getServerKeyValue(map,"site_name",i));
 			cValues.put("from_url", getServerKeyValue(map,"from_url",i));
+			cValues.put("detail_url", getServerKeyValue(map,"detail_url",i));
 			cValues.put("link_site", getServerKeyValue(map,"link_site",i));
 			cValues.put("shareUserId", getServerKeyValue(map,"shareUserId",i));
 			cValues.put("sharename", getServerKeyValue(map,"sharename",i));
 			cValues.put("sharenamecity", getServerKeyValue(map,"sharenamecity",i));
 			cValues.put("createtime", getServerKeyValue(map,"createtime",i));
 			cValues.put("type", getServerKeyValue(map,"type",i));
-			
 			queryResult = dbUtil.insertData(self, CommonText.MYCOLLECTION, cValues);
 		}
 		
@@ -336,7 +330,8 @@ public class MyCollectionActivity extends BaseActivity implements OnClickListene
 	@Override
 	protected void onResume() {
 		super.onResume();
-		initData();
+		setFlagShow(R.string.item_text43);
+		mHandler.sendEmptyMessageDelayed(100, 200);
 		MobclickAgent.onResume(this);
 	}
 	

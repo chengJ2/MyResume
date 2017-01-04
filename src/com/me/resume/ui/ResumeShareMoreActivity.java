@@ -13,9 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.me.resume.BaseActivity;
 import com.me.resume.MyApplication;
 import com.me.resume.R;
 import com.me.resume.comm.ResponseCode;
@@ -31,16 +29,10 @@ import com.umeng.analytics.MobclickAgent;
  * @author Administrator
  *
  */
-public class ResumeShareMoreActivity extends BaseActivity implements OnClickListener,IXListViewListener{
+public class ResumeShareMoreActivity extends CommLoadActivity implements OnClickListener,IXListViewListener{
 
 	private RelativeLayout sharemore_layout;
 	private XListView reviewsharemoreListView;
-	
-	private TextView flag;
-	
-	private RelativeLayout msgLayout;
-	private TextView msgText;
-	private Button reloadBtn;
 	
 	private LinearLayout shareLayout;
 	
@@ -83,9 +75,8 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 				finishLoading();
 				if(!isLoadMore){
 					reviewsharemoreListView.setVisibility(View.GONE); 
-					msgLayout.setVisibility(View.GONE);
-					flag.setText(getString(R.string.item_text72));
-					flag.setVisibility(View.VISIBLE);
+					setMsgLayoutHide();
+					setFlagShow(R.string.item_text72);
 				}
 				break;
 			case 100:
@@ -100,25 +91,14 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		boayLayout.removeAllViews();
+		commbodyLayout.removeAllViews();
 		View v = View.inflate(self,R.layout.resume_share_more_layout, null);
-		boayLayout.addView(v);
+		commbodyLayout.addView(v);
 		initView();
 	}
 	
 	private void initView(){
 		setTopTitle(R.string.item_text71);
-		setMsgHide();
-		setRightIconVisible(View.INVISIBLE);
-		setRight2IconVisible(View.GONE);
-		setfabLayoutVisible(View.GONE);
-		
-		flag = findView(R.id.flag);
-		
-		msgLayout = (RelativeLayout)findView(R.id.msgLayout);
-		msgText  = (TextView)findView(R.id.msgText);
-		reloadBtn = (Button) findView(R.id.reloadBtn);
-		reloadBtn.setOnClickListener(this);
 		
 		sharemore_layout = findView(R.id.sharemore_layout);
 		reviewsharemoreListView = findView(R.id.reviewsharemoreListView);
@@ -141,13 +121,10 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 	
 	private void loadData(){
 		if (CommUtil.isNetworkAvailable(self)) {
-			flag.setText(getStrValue(R.string.item_text43));
-			flag.setVisibility(View.VISIBLE);
+			setFlagShow(R.string.item_text43);
 			mHandler.sendEmptyMessageDelayed(100, 200);
 		}else{
-			msgLayout.setVisibility(View.VISIBLE);
-			msgText.setText(getString(R.string.check_network));
-			reviewsharemoreListView.setVisibility(View.GONE);
+			setMsgLayoutShow(R.string.check_network);
 		}
 	}
 	
@@ -164,16 +141,15 @@ public class ResumeShareMoreActivity extends BaseActivity implements OnClickList
 		requestData("pro_getshareinfo_bypage", 1, params, values, new HandlerData() {
 			@Override
 			public void error() {
-				flag.setVisibility(View.GONE);
-				msgLayout.setVisibility(View.VISIBLE);
-				msgText.setText(getString(R.string.timeout_network));
+				setFlagHide();
+				setMsgLayoutShow(R.string.timeout_network);
 				reviewsharemoreListView.setVisibility(View.GONE);
 			}
 			
 			public void success(Map<String, List<String>> map) {
-				reviewsharemoreListView.setVisibility(View.VISIBLE); 
-				msgLayout.setVisibility(View.GONE);
-				flag.setVisibility(View.GONE);
+				setFlagHide();
+				setMsgLayoutHide();
+				reviewsharemoreListView.setVisibility(View.VISIBLE);
 				try {
 					if (map.get("id").size() < 10) {
 						isAll = true;

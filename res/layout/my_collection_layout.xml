@@ -9,11 +9,4 @@
         android:id="@+id/collectionListView"
         style="@style/comm_listview_style"
         android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/nodata"
-        android:visibility="visible"
-        android:layout_centerInParent="true"
-        style="@style/comm_nodata_style" />
-
 </RelativeLayout>
