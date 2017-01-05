@@ -128,7 +128,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 							toastMsg(R.string.action_update_success);
 							actionAync();
 						}else{
-							set3Msg(R.string.action_update_fail);
+							set3Msg(R.string.action_update_bgcolor_fail);
 						}
 					}
 				}else{
@@ -410,7 +410,7 @@ public class BaseInfoActivity extends BaseActivity implements OnClickListener{
 	 * 同步本地库数据
 	 */
 	private void syncLocalData(){
-		preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
+		//preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
 		updResult = dbUtil.updateData(self, CommonText.BASEINFO, 
 				new String[]{"userId=?",
 				"realname","gender","brithday","joinworktime",

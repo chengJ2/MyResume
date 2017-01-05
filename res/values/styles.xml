@@ -138,7 +138,7 @@
         <item name="android:layout_height">match_parent</item>
 	    <item name="android:layout_weight">1</item>
 	    <item name="android:gravity">center</item>
-	    <item name="android:textColor">@color/grey_10</item>
+	    <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/main_time_text</item>
 	</style>
 	
@@ -522,6 +522,7 @@
            <item name="android:gravity">center</item>
 	      <item name="android:textColor">@android:color/black</item>
 	      <item name="android:textSize">@dimen/microd_text_size</item>
+	      <item name="android:typeface">serif</item>
      </style>
 
     <!-- 暂无数据 -->
@@ -536,6 +537,7 @@
         <item name="android:textSize">@dimen/small_middle_text_size</item>
         <item name="android:drawableLeft">@drawable/icon_warn</item>
         <item name="android:visibility">gone</item>
+        <item name="android:typeface">serif</item>
     </style>
     
     <style name="comm_error_style">
@@ -546,6 +548,7 @@
         <item name="android:text">@string/check_network</item>
         <item name="android:textColor">@color/grey_10</item>
         <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:typeface">serif</item>
     </style>
     
       <style name="comm_resume_guide_style">
@@ -558,6 +561,7 @@
         <item name="android:textSize">@dimen/micro_text_size</item>
         <item name="android:drawableLeft">@drawable/icon_warn</item>
         <item name="android:drawablePadding">@dimen/margin_5</item>
+        <item name="android:typeface">serif</item>
     </style>
     
       <style name="otherinfo_itembar_style">
@@ -575,12 +579,15 @@
         <item name="android:padding">@dimen/margin_5</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">@dimen/small_text_size</item>
+        <item name="android:typeface">serif</item>
     </style>
     
       <style name="usercenter_item_bar_style">
         <item name="android:layout_width">6dip</item>
-        <item name="android:layout_height">20dip</item>
+        <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/red</item>
+        <item name="android:layout_marginTop">@dimen/margin_12</item>
+        <item name="android:layout_marginBottom">@dimen/margin_12</item>
        </style>
 
     <style name="popupAnim" parent="@android:style/Animation.Activity">

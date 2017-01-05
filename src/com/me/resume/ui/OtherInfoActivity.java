@@ -98,7 +98,7 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 							actionAync(OtherInfoMenu.language,1);
 						}
 					}else{
-						toastMsg(R.string.action_update_fail);
+						toastMsg(R.string.action_update_bgcolor_fail);
 					}
 				}
 				break;
@@ -315,9 +315,9 @@ public class OtherInfoActivity extends BaseActivity implements OnClickListener {
 			if(RegexUtil.checkNotNull(info_languageStr) 
 					&& RegexUtil.checkNotNull(info_literacyskillsStr) 
 					&& RegexUtil.checkNotNull(info_listeningspeakingStr) ){
-				Map<String, String[]> map = dbUtil.queryData(OtherInfoActivity.this, 
+				Map<String, String[]> map = dbUtil.queryData(self, 
 						"select * from " + CommonText.OTHERINFO + " where language like '%"+ info_languageStr +"%'");
-				if (map != null) {
+				if (map != null && !map.isEmpty()) {
 					toastMsg(R.string.ot_languages_toast);
 					return;
 				}

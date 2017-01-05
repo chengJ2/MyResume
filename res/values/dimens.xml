@@ -37,7 +37,7 @@
     <dimen name="home_refresh_height">30dp</dimen>
     <dimen name="home_topic_item_bg_line">1dp</dimen>
     
-    <dimen name="home_cover_text_size">12dip</dimen>
+    <dimen name="home_cover_text_size">13dip</dimen>
     <dimen name="middle_text_size_dp">14dip</dimen>
     
     
@@ -45,6 +45,7 @@
     <dimen name="margin_5">5dip</dimen>
     <dimen name="margin_8">8dip</dimen>
     <dimen name="margin_10">10dip</dimen>
+    <dimen name="margin_12">12dip</dimen>
     <dimen name="margin_16">16dip</dimen>
      <dimen name="margin_20">20dip</dimen>
      <dimen name="margin_30">30dip</dimen>
@@ -62,7 +63,7 @@
     <dimen name="btn_text_margin">10.0dp</dimen>
     <dimen name="button_text_size">16.0dip</dimen>
     
-    <dimen name="normal_item_height">42.0dp</dimen>
+    <dimen name="normal_item_height">44.0dp</dimen>
     <dimen name="mul_item_height">120.0dp</dimen>
     <dimen name="normal_item_padding_left">10.0dp</dimen>
     <dimen name="normal_item_height_set">50.0dp</dimen>

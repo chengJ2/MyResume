@@ -212,6 +212,7 @@
     <string name="personal_c_item3">预览简历</string>
     <string name="personal_c_item31">我的简历</string>
     <string name="personal_c_item11">已完整</string>
+    <string name="personal_c_item111">我的资料已完整</string>
     <string name="personal_c_item12">完整度</string>
     <string name="personal_c_item13">未填写</string>
     <string name="personal_c_item14">完整度:%d%%</string>
@@ -237,6 +238,8 @@
     <string name="action_edit_fail">编辑失败</string>
     <string name="action_update_success">更新成功</string>
     <string name="action_update_fail">更新失败，请重试</string>
+    <string name="action_add_exist">已存在，不能重复添加</string>
+    <string name="action_update_bgcolor_fail">请先完善资料！</string>
     <string name="action_favorites">收藏</string>
     <string name="action_submit">提&#160;&#160;交</string>
     <string name="action_delete_success">删除成功</string>

@@ -68,7 +68,7 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 							actionAync(1);
 						}
 					}else{
-						toastMsg(R.string.action_update_fail);
+						toastMsg(R.string.action_update_bgcolor_fail);
 					}
 				}
 				break;
@@ -228,24 +228,30 @@ public class ProjectExperienceActivity extends BaseActivity implements OnClickLi
 		case R.id.save:
 			actionFlag = 1;
 			if (judgeField()) {
-				preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
-				ContentValues cValues = new ContentValues();
-				tokenId = UUIDGenerator.getKUUID();
-				cValues.put("tokenId", tokenId);
-				cValues.put("userId", uTokenId);
-				cValues.put("projectname", info_projectnameStr);
-				cValues.put("worktimestart", info_startworktimeStr);
-				cValues.put("worktimeend", info_endworktimeStr);
-				cValues.put("duties", info_workdutiesStr);
-				cValues.put("prokectdesc", input_workdescStr);
-				cValues.put("bgcolor", checkColor);
-				cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-				queryResult = dbUtil.insertData(self, CommonText.PROJECT_EXPERIENCE, cValues);
-				if(queryResult){
-					toastMsg(R.string.action_add_success);
-					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-						actionAync(1);
+				//preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
+				Map<String, String[]> map = dbUtil.queryData(self, "select 1 from " + CommonText.PROJECT_EXPERIENCE 
+						+ "where userId=" + uTokenId + " and projectname=" +  info_projectnameStr);
+				if(map != null && !map.isEmpty()){
+					ContentValues cValues = new ContentValues();
+					tokenId = UUIDGenerator.getKUUID();
+					cValues.put("tokenId", tokenId);
+					cValues.put("userId", uTokenId);
+					cValues.put("projectname", info_projectnameStr);
+					cValues.put("worktimestart", info_startworktimeStr);
+					cValues.put("worktimeend", info_endworktimeStr);
+					cValues.put("duties", info_workdutiesStr);
+					cValues.put("prokectdesc", input_workdescStr);
+					cValues.put("bgcolor", checkColor);
+					cValues.put("createtime", TimeUtils.getCurrentTimeInString());
+					queryResult = dbUtil.insertData(self, CommonText.PROJECT_EXPERIENCE, cValues);
+					if(queryResult){
+						toastMsg(R.string.action_add_success);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(1);
+						}
 					}
+				}else{
+					toastMsg(R.string.action_add_exist);
 				}
 			}
 			break;

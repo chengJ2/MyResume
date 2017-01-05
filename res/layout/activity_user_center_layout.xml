@@ -22,7 +22,7 @@
             <RelativeLayout
                 android:id="@+id/rlout01"
                 android:layout_width="match_parent"
-                android:layout_height="150dip"
+                android:layout_height="162dip"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/margin_10"
                 android:orientation="vertical" >
@@ -30,28 +30,29 @@
                 <LinearLayout
                     android:id="@+id/llout01"
                     android:layout_width="match_parent"
-                    android:layout_height="160dip"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginTop="40dip"
                     android:background="@drawable/user_center_corner_bg"
-                    android:orientation="vertical" >
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:id="@+id/llout02"
                         android:layout_width="match_parent"
-                        android:layout_height="32dip"
+                        android:layout_height="36dip"
+                        android:paddingLeft="@dimen/margin_16"
+                        android:paddingRight="@dimen/margin_16"
                         android:layout_gravity="center"
                         android:layout_marginTop="50dip"
                         android:gravity="center"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/center_username"
+                            android:id="@+id/userinfo"
                             style="@style/user_center_text"
-                            android:maxWidth="80dip"
                             android:text="-" />
 
-                        <TextView
+                       <!--  <TextView
                             android:id="@+id/center_workyear"
                             style="@style/user_center_text"
                             android:text="|-" />
@@ -59,23 +60,24 @@
                         <TextView
                             android:id="@+id/center_city"
                             style="@style/user_center_text"
-                            android:text="|-" />
+                            android:text="|-" /> -->
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/llout03"
                         android:layout_width="match_parent"
-                        android:layout_height="30dip"
+                        android:layout_height="36dip"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:orientation="horizontal" >
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/resume_complete"
                             style="@style/user_center_small_text"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="--" />
+                            android:text="--"
+                            android:visibility="visible" />
 
                         <TextView
                             android:id="@+id/resume_updatime"
@@ -107,7 +109,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dip"
+                android:layout_height="66dip"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/margin_10"
                 android:layout_marginRight="@dimen/margin_10"

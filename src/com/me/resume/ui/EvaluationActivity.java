@@ -61,7 +61,7 @@ public class EvaluationActivity extends BaseActivity implements OnClickListener{
 							actionAync();
 						}
 					}else{
-						toastMsg(R.string.action_update_fail);
+						toastMsg(R.string.action_update_bgcolor_fail);
 					}
 				}
 				break;

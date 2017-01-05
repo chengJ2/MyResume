@@ -88,7 +88,7 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 							actionAync(1);
 						}
 					}else{
-						toastMsg(R.string.action_update_fail);
+						toastMsg(R.string.action_update_bgcolor_fail);
 					}
 				}
 				break;
@@ -214,36 +214,42 @@ public class WorkExperienceActivity extends BaseActivity implements OnClickListe
 		case R.id.save:
 			actionFlag = 1;
 			if(judgeField()){
-				preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
-				ContentValues cValues = new ContentValues();
-				tokenId = UUIDGenerator.getKUUID();
-				cValues.put("tokenId", tokenId);
-				cValues.put("userId", uTokenId);
-				cValues.put("companyname", info_companynameStr);
-				cValues.put("companynature", info_companynatureStr);
-				cValues.put("companyscale", info_companyscaleStr);
-				cValues.put("industryclassification", info_industryclassificationStr);
-				cValues.put("jobtitle", info_jobtitleStr);
-				cValues.put("worktimeStart", info_startworktimeStr);
-				cValues.put("worktimeEnd", info_endworktimeStr);
-				cValues.put("expectedsalary", info_expectedsalaryStr);
-				cValues.put("bgcolor", checkColor);
-				cValues.put("workdesc", info_workdescdetailStr);
-				cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-				queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);
-				if(queryResult){
-					toastMsg(R.string.action_add_success);
-					setEditBtnVisible(View.VISIBLE);
-					if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-						actionAync(1);
+				//preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
+				Map<String, String[]> map = dbUtil.queryData(self, "select 1 from " + CommonText.WORKEXPERIENCE 
+										+ "where userId=" + uTokenId + " and companyname=" +  info_companynameStr);
+				if(map != null && !map.isEmpty()){
+					ContentValues cValues = new ContentValues();
+					tokenId = UUIDGenerator.getKUUID();
+					cValues.put("tokenId", tokenId);
+					cValues.put("userId", uTokenId);
+					cValues.put("companyname", info_companynameStr);
+					cValues.put("companynature", info_companynatureStr);
+					cValues.put("companyscale", info_companyscaleStr);
+					cValues.put("industryclassification", info_industryclassificationStr);
+					cValues.put("jobtitle", info_jobtitleStr);
+					cValues.put("worktimeStart", info_startworktimeStr);
+					cValues.put("worktimeEnd", info_endworktimeStr);
+					cValues.put("expectedsalary", info_expectedsalaryStr);
+					cValues.put("bgcolor", checkColor);
+					cValues.put("workdesc", info_workdescdetailStr);
+					cValues.put("createtime", TimeUtils.getCurrentTimeInString());
+					queryResult = dbUtil.insertData(self, CommonText.WORKEXPERIENCE, cValues);
+					if(queryResult){
+						toastMsg(R.string.action_add_success);
+						setEditBtnVisible(View.VISIBLE);
+						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+							actionAync(1);
+						}
 					}
+				}else{
+					toastMsg(R.string.action_add_exist);
 				}
 			}
 			break;
 		case R.id.edit:
 			actionFlag = 2;
 			if(judgeField()){
-				preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
+				//preferenceUtil.setPreferenceData(UserInfoCode.RESUMEUPDTIME, TimeUtils.getCurrentTimeString());
 				updResult = dbUtil.updateData(self, CommonText.WORKEXPERIENCE, 
 						new String[]{tokenId,"companyname","companynature","companyscale","industryclassification",
 										  "jobtitle","worktimestart","worktimeend","expectedsalary","workdesc","updatetime"}, 

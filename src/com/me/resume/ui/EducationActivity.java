@@ -69,7 +69,7 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 							actionAync(0);
 						}
 					}else{
-						toastMsg(R.string.action_update_fail);
+						toastMsg(R.string.action_update_bgcolor_fail);
 					}
 				}
 				break;
@@ -195,51 +195,67 @@ public class EducationActivity extends BaseActivity implements OnClickListener{
 			actionFlag = 1;
 			if(cposition == 0){ // 教育背景
 				if(judgeEduField()){
-					ContentValues cValues = new ContentValues();
-					tokenId = UUIDGenerator.getKUUID();
-					cValues.put("tokenId", tokenId);
-					cValues.put("userId", uTokenId);
-					cValues.put("educationtimestart", info_starttimeStr);
-					cValues.put("educationtimeend", info_endtimeStr);
-					cValues.put("school", info_schoolStr);
-					cValues.put("majorname", info_majornameStr);
-					cValues.put("degree", info_degressStr);
-					cValues.put("examination", info_examinationStr);
-					cValues.put("bgcolor", checkColor);
-					cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-					
-					queryResult= dbUtil.insertData(self, CommonText.EDUCATION, cValues);
-					if (queryResult) {
-						toastMsg(R.string.action_add_success);
-						setEditBtnVisible(View.VISIBLE);
-						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-							actionAync(0);
+					Map<String, String[]> map = dbUtil.queryData(self, 
+							"select 1 from " + CommonText.EDUCATION 
+							+ "where userId=" + uTokenId + " and school=" +  info_schoolStr +
+							" and majorname=" + info_majornameStr + " and degree="+info_degressStr);
+					if(map != null && !map.isEmpty()){
+						ContentValues cValues = new ContentValues();
+						tokenId = UUIDGenerator.getKUUID();
+						cValues.put("tokenId", tokenId);
+						cValues.put("userId", uTokenId);
+						cValues.put("educationtimestart", info_starttimeStr);
+						cValues.put("educationtimeend", info_endtimeStr);
+						cValues.put("school", info_schoolStr);
+						cValues.put("majorname", info_majornameStr);
+						cValues.put("degree", info_degressStr);
+						cValues.put("examination", info_examinationStr);
+						cValues.put("bgcolor", checkColor);
+						cValues.put("createtime", TimeUtils.getCurrentTimeInString());
+						
+						queryResult= dbUtil.insertData(self, CommonText.EDUCATION, cValues);
+						if (queryResult) {
+							toastMsg(R.string.action_add_success);
+							setEditBtnVisible(View.VISIBLE);
+							if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+								actionAync(0);
+							}
 						}
+					}else{
+						toastMsg(R.string.action_add_exist);
 					}
 				}
 			}else{ // 培训经历
 				if(judgeTraField()){
-					ContentValues cValues = new ContentValues();
-					tokenId = UUIDGenerator.getKUUID();
-					cValues.put("tokenId", tokenId);
-					cValues.put("userId", uTokenId);
-					cValues.put("trainingtimestart", info_starttimeStr);
-					cValues.put("trainingtimeend", info_endtimeStr);
-					cValues.put("trainingorganization", info_trainingorganizationStr);
-					cValues.put("trainingclass", info_trainingclassStr);
-					cValues.put("certificate", info_certificateStr);
-					cValues.put("description", info_descriptionStr);
-					cValues.put("bgcolor", checkColor);
-					cValues.put("createtime", TimeUtils.getCurrentTimeInString());
-					
-					queryResult = dbUtil.insertData(self, 
-							CommonText.EDUCATION_TRAIN, cValues);
-					if (queryResult) {
-						setEditBtnVisible(View.VISIBLE);
-						toastMsg(R.string.action_add_success);
-						if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
-							actionAync(1);
+					Map<String, String[]> map = dbUtil.queryData(self, 
+							"select 1 from " + CommonText.EDUCATION_TRAIN 
+							+ "where userId=" + uTokenId + " and trainingorganization=" +  info_trainingorganizationStr +
+							" and trainingclass=" + info_trainingclassStr);
+					if(map != null && !map.isEmpty()){
+						ContentValues cValues = new ContentValues();
+						tokenId = UUIDGenerator.getKUUID();
+						cValues.put("tokenId", tokenId);
+						cValues.put("userId", uTokenId);
+						cValues.put("trainingtimestart", info_starttimeStr);
+						cValues.put("trainingtimeend", info_endtimeStr);
+						cValues.put("trainingorganization", info_trainingorganizationStr);
+						cValues.put("trainingclass", info_trainingclassStr);
+						cValues.put("certificate", info_certificateStr);
+						cValues.put("description", info_descriptionStr);
+						cValues.put("bgcolor", checkColor);
+						cValues.put("createtime", TimeUtils.getCurrentTimeInString());
+						
+						queryResult = dbUtil.insertData(self, 
+								CommonText.EDUCATION_TRAIN, cValues);
+						if (queryResult) {
+							setEditBtnVisible(View.VISIBLE);
+							toastMsg(R.string.action_add_success);
+							if (preferenceUtil.getPreferenceData(Constants.AUTOSYNC)) {
+								actionAync(1);
+							}
 						}
+					}else{
+						toastMsg(R.string.action_add_exist);
 					}
 				}
 			}

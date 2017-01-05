@@ -58,7 +58,7 @@ public class MyApplication extends Application {
 		}
 		
 		// LanguageSettings.getInstance().initLang(this);
-		// FontsOverride.setDefaultFont(this, "serif", "fonts/FZLT.TTF");
+		// FontsOverride.setDefaultFont(this, "serif", "fonts/FZY1JW.ttf");
 	}
 
 	/**

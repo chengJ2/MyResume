@@ -20,7 +20,7 @@
         android:textSize="@dimen/large_text_size"
         android:gravity="center"
         android:paddingLeft="0dip"
-        android:text="张三" />
+        android:text="--" />
    
     <TextView
         android:id="@+id/index_1_info"
@@ -29,7 +29,7 @@
         android:textSize="@dimen/micro_text_size"
         android:gravity="center"
         android:paddingLeft="0dip"
-        android:text="26岁 | 未婚"/>
+        android:text="--"/>
     
     <LinearLayout
 	    android:layout_width="match_parent"
@@ -40,21 +40,21 @@
      <TextView
         android:id="@+id/index_2_info"
         style="@style/main_common_center_text"
-        android:text="家   乡：黄石"/>
+        android:text="家   乡：--"/>
     
      <TextView
         android:id="@+id/index_1_job"
         style="@style/main_common_center_text"
-        android:text="职   位：移动开发工程师"/>
+        android:text="职   位：--"/>
     
      <TextView
         android:id="@+id/index_1_phone"
         style="@style/main_common_center_text"
-        android:text="手机号：13611111111"/>
+        android:text="手机号：--"/>
      
       <TextView
         android:id="@+id/index_1_email"
         style="@style/main_common_center_text"
-        android:text="E-mail：123456@qq.com"/>
+        android:text="E-mail：--"/>
 	</LinearLayout>
 </LinearLayout>

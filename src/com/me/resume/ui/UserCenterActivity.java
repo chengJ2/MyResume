@@ -2,8 +2,10 @@ package com.me.resume.ui;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,6 +18,7 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.text.TextPaint;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.AlphaAnimation;
@@ -62,7 +65,8 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 	
 	private ImageView user_info_avatar;
 	private RelativeLayout rlout01;
-	private TextView center_username,center_workyear,center_city;
+	private TextView userinfo;
+	//private TextView center_username,center_workyear,center_city;
 	
 	private TextView mycollection,review_resume,myshare;
 	
@@ -166,9 +170,9 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		user_info_avatar = findView(R.id.user_info_avatar);
 		user_info_avatar.setOnClickListener(this);
 		
-		center_username = findView(R.id.center_username);
-		center_workyear = findView(R.id.center_workyear);
-		center_city = findView(R.id.center_city);
+		userinfo = findView(R.id.userinfo);
+		//center_workyear = findView(R.id.center_workyear);
+		//center_city = findView(R.id.center_city);
 		
 		mycollection = findView(R.id.mycollection);
 		myshare = findView(R.id.myshare);
@@ -246,10 +250,11 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 		Map<String, String[]> commMapArray = dbUtil.queryData(self, queryWhere);
 		if (commMapArray != null && commMapArray.get("userId").length > 0) {
 			String realname = commMapArray.get("realname")[0];
+			StringBuffer sb = new StringBuffer();
 			if (RegexUtil.checkNotNull(realname)) {
-				center_username.setText(realname);
+				sb.append(realname);
 			}else{
-				center_username.setText(commMapArray.get("username")[0]);
+				sb.append(commMapArray.get("username")[0]);
 			}
 			
 			String workyear = commMapArray.get("joinworktime")[0];
@@ -258,20 +263,22 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 				int theYear = CommUtil.parseInt(TimeUtils.theYear());
 				int work = (theYear - year);
 				if (work <= 0) {
-					center_workyear.setText("|"+ getStrValue(R.string.personal_c_item17));
+					sb.append(("|"+ getStrValue(R.string.personal_c_item17)));
 				}else{
-					center_workyear.setText("|"+ String.format(getStrValue(R.string.personal_c_item18), work));
+					sb.append(("|"+ String.format(getStrValue(R.string.personal_c_item18), work)));
 				}
 			}else{
-				center_workyear.setText("");
+				sb.append("");
 			}
 			
 			String city = commMapArray.get("city")[0];
 			if (RegexUtil.checkNotNull(city)) {
-				center_city.setText("|"+city); 
+				sb.append("|"+city); 
 			}else{
-				center_city.setText("");
+				sb.append("");
 			}
+			userinfo.setTextColor(getColorValue(R.color.black));
+			userinfo.setText(sb.toString());
 		}
 	}
 	
@@ -323,14 +330,25 @@ public class UserCenterActivity extends BaseActivity implements OnClickListener{
 			nPercent = (int) (((11 - num) * 100 / 11));
 			if (nPercent <= 0)
 				nPercent = 0;
+			resume_complete.setVisibility(View.VISIBLE);
 			resume_complete.setText(String.format(getStrValue(R.string.personal_c_item14), nPercent));
 			if (nPercent >= 100){
-				resume_complete.setText(getStrValue(R.string.personal_c_item11));
+				//resume_complete.setText(getStrValue(R.string.personal_c_item111));
+				resume_complete.setVisibility(View.GONE);
+				TextPaint tp = userinfo.getPaint(); 
+				tp.setFakeBoldText(true); 
+				userinfo.setTextColor(Color.RED);
+				//userinfo.setTextColor(Color.parseColor(getRanColor().get(new Random().nextInt(10))));
 			}
 		}else{
 			resume_complete.setText(getStrValue(R.string.personal_c_item13));
 		}
-		
+	}
+	
+	private List<String> getRanColor(){
+		String[] item_text = CommUtil.getArrayValue(self,R.array.review_bgcolor); 
+		List<String> nList = Arrays.asList(item_text);
+		return nList;
 	}
 	
 	/**

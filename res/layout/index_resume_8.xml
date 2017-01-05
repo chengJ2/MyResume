@@ -22,7 +22,8 @@
      
 	<TextView
         android:id="@+id/item2"
-        style="@style/main_common_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:paddingLeft="40dip"
         android:paddingRight="40dip"
         android:layout_below="@id/item1"
@@ -30,7 +31,8 @@
         android:lineSpacingExtra="@dimen/margin_5"
         android:textSize="@dimen/small_text_size"
         android:text="@string/resume_mywords"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:typeface="serif" />
     
    <!--  <ImageView 
         android:id="@+id/gohome"
