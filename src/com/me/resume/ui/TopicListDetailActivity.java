@@ -14,12 +14,8 @@ import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
-import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.TextView;
 
-import com.me.resume.BaseActivity;
 import com.me.resume.R;
 import com.me.resume.comm.CommForMapBaseAdapter;
 import com.me.resume.comm.Constants;
@@ -72,17 +68,18 @@ public class TopicListDetailActivity extends CommLoadActivity implements OnClick
 						}
 						commMapList.putAll(newMap);
 						setTopicListData(commMapList);
-						
-						/*if(isAll){
-							finishLoading();
-						}else{
-							topicdetailListView.setPullLoadEnable(true);
-						}*/
+						topicdetailListView.setPullLoadEnable(true);
 					}else{//加载更多
 						commMapList.putAll(getNewMap(commMapList, newMap));
 						commapBaseAdapter.notifyDataSetChanged(pos);
+						
+						if(isAll){
+							topicdetailListView.stopLoadMore();
+						}else{
+							topicdetailListView.setPullLoadEnable(true);
+						}
 					}
-					finishLoading();
+					topicdetailListView.stopRefresh();
 				}
 				break;
 			case 12:
@@ -211,7 +208,7 @@ public class TopicListDetailActivity extends CommLoadActivity implements OnClick
 					holder.showImage(R.id.topic_icon,CommUtil.getHttpLink(fromUrl),false);
 				}
 				holder.setText(R.id.topic_title, title);
-				holder.setTextForHtml(R.id.topic_content, CommUtil.getHtml(detail));
+				//holder.setTextForHtml(R.id.topic_content, CommUtil.getHtml(detail));
 				holder.setText(R.id.topic_from, sitename);
 				holder.setText(R.id.topic_datetime, TimeUtils.showTimeFriendly(createtime));
 				
@@ -321,7 +318,7 @@ public class TopicListDetailActivity extends CommLoadActivity implements OnClick
 			getTopciListData(pos);
 			//topicdetailListView.setPullLoadEnable(isLoadMore);
 		}else{
-			toastMsg(R.string.xlistview_footer_loadfinish);
+			//toastMsg(R.string.xlistview_footer_loadfinish);
 			finishLoading();
 		}
 	}

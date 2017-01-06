@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -63,11 +64,18 @@ public class ResumeShareMoreActivity extends CommLoadActivity implements OnClick
 						}else{
 							setShareData(reviewsharemoreListView,commMapList);
 						}
+						reviewsharemoreListView.setPullLoadEnable(true);
 					}else{//加载更多
 						commMapList.putAll(CommUtil.getNewMap(commMapList, newMap));
 						commapBaseAdapter.notifyDataSetChanged(pos);
+						// reviewsharemoreListView.stopLoadMore();
+						if(isAll){
+							reviewsharemoreListView.stopLoadMore();
+						}else{
+							reviewsharemoreListView.setPullLoadEnable(true);
+						}
 					}
-					finishLoading();
+					reviewsharemoreListView.stopRefresh();
 				}
 				break;
 			case 12:
@@ -169,6 +177,20 @@ public class ResumeShareMoreActivity extends CommLoadActivity implements OnClick
 		});
 	}
 	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if(inputshareLayout.getVisibility() == View.VISIBLE){
+				shareLayout.setVisibility(View.VISIBLE);
+				inputshareLayout.setVisibility(View.GONE);
+			}else{
+				scrollToFinishActivity();
+			}
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+	
 	
 	@Override
 	public void onClick(View v) {
@@ -263,7 +285,7 @@ public class ResumeShareMoreActivity extends CommLoadActivity implements OnClick
 			pos++;
 			getShareMoreData(pos);
 		}else{
-			toastMsg(R.string.xlistview_footer_loadfinish);
+			//toastMsg(R.string.xlistview_footer_loadfinish);
 			finishLoading();
 		}
 	}

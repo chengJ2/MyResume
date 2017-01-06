@@ -10,5 +10,7 @@
         android:id="@+id/topicdetailListView"
         style="@style/comm_listview_style"
         android:footerDividersEnabled="false"
+        android:layout_marginLeft="@dimen/margin_8"
+        android:layout_marginRight="@dimen/margin_8"
         android:visibility="gone" />
 </RelativeLayout>

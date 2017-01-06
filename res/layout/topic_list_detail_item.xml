@@ -18,27 +18,32 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="82dip"
-        android:layout_margin="@dimen/margin_8"
-        android:background="@color/white"
+        android:layout_height="84dip"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginLeft="@dimen/margin_8"
+        android:layout_marginRight="@dimen/margin_8"
+        android:layout_marginBottom="@dimen/margin_5"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/topic_title"
             style="@style/user_center_text"
-            android:layout_height="wrap_content"
-            android:gravity="center|left"
-            android:singleLine="true"
+            android:layout_weight="1"
+            android:gravity="top|left"
             android:text="@string/dialog_action_cache_alert"
             android:textColor="@color/t_primary"
-            android:textSize="@dimen/small_text_size" />
+            android:textSize="@dimen/small_text_size"
+            android:lineSpacingExtra="2dip"
+            android:singleLine="false"
+            android:maxLines="2"
+            android:ellipsize="end" />
 
-        <TextView
+        <!-- <TextView
             android:id="@+id/topic_content"
             android:layout_width="match_parent"
             android:layout_height="36dip"
             android:layout_gravity="left"
-            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginTop="@dimen/margin_5"
             android:ellipsize="end"
             android:gravity="left|center_horizontal"
             android:lineSpacingExtra="3dip"
@@ -46,12 +51,14 @@
             android:singleLine="false"
             android:text="@string/dialog_action_alert"
             android:textColor="@color/grey_10"
-            android:textSize="@dimen/home_cover_text_size" />
+            android:textSize="@dimen/home_cover_text_size"
+            android:visibility="gone" /> -->
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="20dip"
-            android:orientation="horizontal" >
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/topic_from"

@@ -473,7 +473,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/t_secondary</item>
-        <item name="android:textSize">@dimen/microd_text_size</item>
+        <item name="android:textSize">@dimen/micro_text_size</item>
         <item name="android:singleLine">true</item>
         <item name="android:typeface">serif</item>
     </style>
